@@ -9,12 +9,7 @@ export default function Docs() {
     <div className="min-h-screen bg-background">
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Code2 className="h-5 w-5" />
-            </div>
-            <span className="text-xl font-bold">Parrot</span>
-          </div>
+          <Logo />
           <nav className="flex items-center space-x-6">
             <Link to="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               Home
@@ -23,7 +18,7 @@ export default function Docs() {
               Dashboard
             </Link>
             <Button asChild>
-              <Link to="/dashboard">Get Started</Link>
+              <Link to="/login">Login</Link>
             </Button>
           </nav>
         </div>
