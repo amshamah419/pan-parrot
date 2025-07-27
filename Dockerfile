@@ -34,8 +34,8 @@ COPY --from=builder --chown=panparrot:nodejs /app/package*.json ./
 COPY --from=builder --chown=panparrot:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=panparrot:nodejs /app/scripts/start.sh ./scripts/start.sh
 
-# Create data directory for persistent storage
-RUN mkdir -p /app/data && chown panparrot:nodejs /app/data
+# Make scripts executable
+RUN chmod +x /app/scripts/start.sh
 
 # Switch to non-root user
 USER panparrot
