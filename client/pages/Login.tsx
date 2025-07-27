@@ -133,13 +133,25 @@ export default function Login() {
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-muted-foreground">
-                Don't have access?{" "}
-                <Link to="/docs" className="text-primary hover:underline">
-                  Contact your admin
-                </Link>
-              </p>
+            <div className="mt-6 space-y-3">
+              <div className="p-3 bg-muted/50 rounded-lg border">
+                <p className="text-sm font-medium mb-1">Test Credentials:</p>
+                <p className="text-sm text-muted-foreground">
+                  Email: <code className="bg-background px-1 py-0.5 rounded">test@paloaltonetworks.com</code>
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Password: <code className="bg-background px-1 py-0.5 rounded">test123</code>
+                </p>
+              </div>
+
+              <div className="text-center">
+                <p className="text-sm text-muted-foreground">
+                  Don't have access?{" "}
+                  <Link to="/docs" className="text-primary hover:underline">
+                    Contact your admin
+                  </Link>
+                </p>
+              </div>
             </div>
           </CardContent>
         </Card>
