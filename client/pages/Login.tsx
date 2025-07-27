@@ -149,7 +149,17 @@ export default function Login() {
 
             <div className="mt-6 space-y-3">
               <div className="p-3 bg-muted/50 rounded-lg border">
-                <p className="text-sm font-medium mb-1">Test Credentials:</p>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm font-medium">Test Credentials:</p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleTestLogin}
+                    disabled={isLoading}
+                  >
+                    Quick Login
+                  </Button>
+                </div>
                 <p className="text-sm text-muted-foreground">
                   Email: <code className="bg-background px-1 py-0.5 rounded">test@paloaltonetworks.com</code>
                 </p>
