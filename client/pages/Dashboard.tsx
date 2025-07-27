@@ -153,7 +153,10 @@ export default function Dashboard() {
         {/* Endpoints Section */}
         <div className="mb-6">
           <div className="mb-4 flex items-center justify-between">
-            <h1 className="text-2xl font-bold">Your Endpoints</h1>
+            <div>
+              <h1 className="text-2xl font-bold">Hey {user?.name}! 👋</h1>
+              <p className="text-muted-foreground">Your HTTP debugging endpoints</p>
+            </div>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
               Create Endpoint
