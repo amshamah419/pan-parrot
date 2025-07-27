@@ -115,10 +115,10 @@ export default function Index() {
           <div className="mx-auto max-w-6xl">
             <div className="mb-12 text-center">
               <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-                Everything you need for HTTP inspection
+                Built for PAN Developers
               </h2>
               <p className="text-lg text-muted-foreground">
-                All the features you expect from a modern webhook testing platform
+                All the HTTP debugging tools you need, with a touch of parrot personality
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
