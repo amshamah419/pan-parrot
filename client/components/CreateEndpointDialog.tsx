@@ -2,7 +2,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { createEndpoint } from "@/lib/api";
 import { UserEndpoint } from "@shared/api";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,7 +21,9 @@ interface CreateEndpointDialogProps {
   onEndpointCreated?: (endpoint: UserEndpoint) => void;
 }
 
-export function CreateEndpointDialog({ onEndpointCreated }: CreateEndpointDialogProps) {
+export function CreateEndpointDialog({
+  onEndpointCreated,
+}: CreateEndpointDialogProps) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -32,7 +41,7 @@ export function CreateEndpointDialog({ onEndpointCreated }: CreateEndpointDialog
       const endpoint = await createEndpoint({
         name: name || "Untitled Endpoint",
         customPath: useCustomPath && customPath ? customPath : undefined,
-        description
+        description,
       });
 
       onEndpointCreated?.(endpoint);
@@ -44,7 +53,7 @@ export function CreateEndpointDialog({ onEndpointCreated }: CreateEndpointDialog
       setCustomPath("");
       setUseCustomPath(false);
     } catch (error) {
-      console.error('Failed to create endpoint:', error);
+      console.error("Failed to create endpoint:", error);
       // In a real app, show user-friendly error message
     }
   };
@@ -68,7 +77,7 @@ export function CreateEndpointDialog({ onEndpointCreated }: CreateEndpointDialog
             Set up a new HTTP endpoint to start catching requests
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Endpoint Name</Label>
@@ -108,7 +117,9 @@ export function CreateEndpointDialog({ onEndpointCreated }: CreateEndpointDialog
                   id="custom-path-input"
                   placeholder="my-custom-endpoint"
                   value={customPath}
-                  onChange={(e) => setCustomPath(e.target.value.replace(/[^a-zA-Z0-9-_]/g, ''))}
+                  onChange={(e) =>
+                    setCustomPath(e.target.value.replace(/[^a-zA-Z0-9-_]/g, ""))
+                  }
                 />
               </div>
             )}

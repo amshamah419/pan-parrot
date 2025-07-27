@@ -392,91 +392,95 @@ export default function Dashboard() {
               <CardContent>
                 {selectedRequest ? (
                   <Tabs defaultValue="overview">
-                  <TabsList className="grid w-full grid-cols-4">
-                    <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="headers">Headers</TabsTrigger>
-                    <TabsTrigger value="body">Body</TabsTrigger>
-                    <TabsTrigger value="response">Response</TabsTrigger>
-                  </TabsList>
+                    <TabsList className="grid w-full grid-cols-4">
+                      <TabsTrigger value="overview">Overview</TabsTrigger>
+                      <TabsTrigger value="headers">Headers</TabsTrigger>
+                      <TabsTrigger value="body">Body</TabsTrigger>
+                      <TabsTrigger value="response">Response</TabsTrigger>
+                    </TabsList>
 
-                  <TabsContent value="overview" className="space-y-4">
-                    <div className="grid gap-4 md:grid-cols-2">
-                      <div>
-                        <label className="text-sm font-medium">Method</label>
-                        <div className="mt-1">
-                          <Badge
-                            className={getMethodColor(selectedRequest?.method || 'GET')}
-                          >
-                            {selectedRequest?.method}
-                          </Badge>
-                        </div>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium">Status</label>
-                        <div className="mt-1">
-                          <Badge variant="outline">
-                            {selectedRequest?.status}
-                          </Badge>
-                        </div>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium">Timestamp</label>
-                        <div className="mt-1 text-sm text-muted-foreground">
-                          {selectedRequest?.timestamp}
-                        </div>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium">
-                          IP Address
-                        </label>
-                        <div className="mt-1 text-sm text-muted-foreground">
-                          {selectedRequest?.ip}
-                        </div>
-                      </div>
-                      <div className="md:col-span-2">
-                        <label className="text-sm font-medium">
-                          User Agent
-                        </label>
-                        <div className="mt-1 text-sm text-muted-foreground">
-                          {selectedRequest?.userAgent}
-                        </div>
-                      </div>
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent value="headers">
-                    <div className="space-y-2">
-                      {Object.entries(selectedRequest?.headers || {}).map(
-                        ([key, value]) => (
-                          <div
-                            key={key}
-                            className="grid grid-cols-3 gap-4 py-2 border-b"
-                          >
-                            <code className="text-sm font-medium">{key}</code>
-                            <code className="col-span-2 text-sm text-muted-foreground">
-                              {value}
-                            </code>
+                    <TabsContent value="overview" className="space-y-4">
+                      <div className="grid gap-4 md:grid-cols-2">
+                        <div>
+                          <label className="text-sm font-medium">Method</label>
+                          <div className="mt-1">
+                            <Badge
+                              className={getMethodColor(
+                                selectedRequest?.method || "GET",
+                              )}
+                            >
+                              {selectedRequest?.method}
+                            </Badge>
                           </div>
-                        ),
-                      )}
-                    </div>
-                  </TabsContent>
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium">Status</label>
+                          <div className="mt-1">
+                            <Badge variant="outline">
+                              {selectedRequest?.status}
+                            </Badge>
+                          </div>
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium">
+                            Timestamp
+                          </label>
+                          <div className="mt-1 text-sm text-muted-foreground">
+                            {selectedRequest?.timestamp}
+                          </div>
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium">
+                            IP Address
+                          </label>
+                          <div className="mt-1 text-sm text-muted-foreground">
+                            {selectedRequest?.ip}
+                          </div>
+                        </div>
+                        <div className="md:col-span-2">
+                          <label className="text-sm font-medium">
+                            User Agent
+                          </label>
+                          <div className="mt-1 text-sm text-muted-foreground">
+                            {selectedRequest?.userAgent}
+                          </div>
+                        </div>
+                      </div>
+                    </TabsContent>
 
-                  <TabsContent value="body">
-                    <ScrollArea className="h-64 w-full rounded border">
-                      <pre className="p-4 text-sm">
-                        {selectedRequest?.body
-                          ? JSON.stringify(selectedRequest.body, null, 2)
-                          : "No body"}
-                      </pre>
-                    </ScrollArea>
-                  </TabsContent>
+                    <TabsContent value="headers">
+                      <div className="space-y-2">
+                        {Object.entries(selectedRequest?.headers || {}).map(
+                          ([key, value]) => (
+                            <div
+                              key={key}
+                              className="grid grid-cols-3 gap-4 py-2 border-b"
+                            >
+                              <code className="text-sm font-medium">{key}</code>
+                              <code className="col-span-2 text-sm text-muted-foreground">
+                                {value}
+                              </code>
+                            </div>
+                          ),
+                        )}
+                      </div>
+                    </TabsContent>
 
-                  <TabsContent value="response">
-                    <div className="text-sm text-muted-foreground">
-                      Configure mock responses in the endpoint settings.
-                    </div>
-                  </TabsContent>
+                    <TabsContent value="body">
+                      <ScrollArea className="h-64 w-full rounded border">
+                        <pre className="p-4 text-sm">
+                          {selectedRequest?.body
+                            ? JSON.stringify(selectedRequest.body, null, 2)
+                            : "No body"}
+                        </pre>
+                      </ScrollArea>
+                    </TabsContent>
+
+                    <TabsContent value="response">
+                      <div className="text-sm text-muted-foreground">
+                        Configure mock responses in the endpoint settings.
+                      </div>
+                    </TabsContent>
                   </Tabs>
                 ) : (
                   <div className="p-8 text-center text-muted-foreground">
