@@ -11,6 +11,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Logo } from "@/components/Logo";
 import { CreateEndpointDialog } from "@/components/CreateEndpointDialog";
 import { RequestReplayDialog } from "@/components/RequestReplayDialog";
+import { MockResponseDialog } from "@/components/MockResponseDialog";
 import { useAuth } from "@/hooks/use-auth";
 import {
   Plus,
