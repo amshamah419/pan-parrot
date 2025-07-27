@@ -47,5 +47,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD node -e "require('http').get('http://localhost:3000/api/ping', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"
 
-# Start the application
-CMD ["node", "dist/server/node-build.mjs"]
+# Start the application with database initialization
+CMD ["./scripts/start.sh", "node", "dist/server/node-build.mjs"]
