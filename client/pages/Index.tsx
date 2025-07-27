@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Logo } from "@/components/Logo";
 import {
@@ -14,7 +20,7 @@ import {
   Clock,
   ArrowRight,
   Check,
-  LogIn
+  LogIn,
 } from "lucide-react";
 
 export default function Index() {
@@ -22,33 +28,36 @@ export default function Index() {
     {
       icon: Globe,
       title: "Custom Endpoints",
-      description: "Create unique endpoint paths with UUID-based or custom naming"
+      description:
+        "Create unique endpoint paths with UUID-based or custom naming",
     },
     {
       icon: Monitor,
       title: "Real-Time Console",
-      description: "Watch HTTP requests in real-time with WebSocket streaming"
+      description: "Watch HTTP requests in real-time with WebSocket streaming",
     },
     {
       icon: Search,
       title: "Advanced Filtering",
-      description: "Filter by method, endpoint, status, or keyword in body/headers"
+      description:
+        "Filter by method, endpoint, status, or keyword in body/headers",
     },
     {
       icon: RotateCcw,
       title: "Request Replay",
-      description: "Inspect and replay requests with modifications"
+      description: "Inspect and replay requests with modifications",
     },
     {
       icon: Settings,
       title: "Mock Responses",
-      description: "Configure static or conditional mock responses per endpoint"
+      description:
+        "Configure static or conditional mock responses per endpoint",
     },
     {
       icon: Shield,
       title: "Request Persistence",
-      description: "Store and access your request history across sessions"
-    }
+      description: "Store and access your request history across sessions",
+    },
   ];
 
   const useCases = [
@@ -57,7 +66,7 @@ export default function Index() {
     "Panorama Integration Testing",
     "XSOAR Playbook Development",
     "GlobalProtect API Mocking",
-    "Cloud Security Development"
+    "Cloud Security Development",
   ];
 
   return (
@@ -66,7 +75,10 @@ export default function Index() {
         <div className="container flex h-16 items-center justify-between">
           <Logo />
           <nav className="flex items-center space-x-6">
-            <Link to="/docs" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              to="/docs"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
               Docs
             </Link>
             <Button asChild>
@@ -93,8 +105,9 @@ export default function Index() {
               HTTP Debugging Made Fun
             </h1>
             <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
-              Your friendly internal HTTP inspection companion. Create endpoints, catch webhooks,
-              and mock responses while developing PAN's next-generation security solutions. 🦜
+              Your friendly internal HTTP inspection companion. Create
+              endpoints, catch webhooks, and mock responses while developing
+              PAN's next-generation security solutions. 🦜
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button size="lg" asChild className="text-base">
@@ -118,12 +131,16 @@ export default function Index() {
                 Built for PAN Developers
               </h2>
               <p className="text-lg text-muted-foreground">
-                All the HTTP debugging tools you need, with a touch of parrot personality
+                All the HTTP debugging tools you need, with a touch of parrot
+                personality
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {features.map((feature, index) => (
-                <Card key={index} className="transition-all hover:shadow-lg hover:shadow-primary/5">
+                <Card
+                  key={index}
+                  className="transition-all hover:shadow-lg hover:shadow-primary/5"
+                >
                   <CardHeader>
                     <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
                       <feature.icon className="h-6 w-6 text-primary" />
@@ -146,9 +163,12 @@ export default function Index() {
           <div className="mx-auto max-w-4xl">
             <Card className="overflow-hidden border-primary/20 bg-gradient-to-r from-primary/5 to-primary/10">
               <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-bold">Perfect for Development Teams</CardTitle>
+                <CardTitle className="text-2xl font-bold">
+                  Perfect for Development Teams
+                </CardTitle>
                 <CardDescription className="text-base">
-                  Streamline your API development workflow with these common use cases
+                  Streamline your API development workflow with these common use
+                  cases
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -174,7 +194,8 @@ export default function Index() {
               Ready to squawk at some APIs? 🦜
             </h2>
             <p className="mb-8 text-lg text-muted-foreground">
-              Login with your PAN credentials and start catching those pesky webhooks.
+              Login with your PAN credentials and start catching those pesky
+              webhooks.
             </p>
             <Button size="lg" asChild className="text-base">
               <Link to="/login">

@@ -1,19 +1,41 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Logo } from "@/components/Logo";
 import { CreateEndpointDialog } from "@/components/CreateEndpointDialog";
 import { RequestReplayDialog } from "@/components/RequestReplayDialog";
 import { MockResponseDialog } from "@/components/MockResponseDialog";
 import { useAuth } from "@/hooks/use-auth";
-import { getUserEndpoints, getCapturedRequests, deleteEndpoint } from "@/lib/api";
+import {
+  getUserEndpoints,
+  getCapturedRequests,
+  deleteEndpoint,
+} from "@/lib/api";
 import { UserEndpoint, CapturedRequest } from "@shared/api";
 import {
   Plus,
@@ -29,17 +51,20 @@ import {
   Clock,
   Monitor,
   LogOut,
-  User
+  User,
 } from "lucide-react";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const [isStreaming, setIsStreaming] = useState(true);
-  const [selectedRequest, setSelectedRequest] = useState<CapturedRequest | null>(null);
+  const [selectedRequest, setSelectedRequest] =
+    useState<CapturedRequest | null>(null);
   const [filterMethod, setFilterMethod] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [userEndpoints, setUserEndpoints] = useState<UserEndpoint[]>([]);
-  const [capturedRequests, setCapturedRequests] = useState<CapturedRequest[]>([]);
+  const [capturedRequests, setCapturedRequests] = useState<CapturedRequest[]>(
+    [],
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   // Load data from API
@@ -48,7 +73,7 @@ export default function Dashboard() {
       setIsLoading(true);
       const [endpoints, requests] = await Promise.all([
         getUserEndpoints(),
-        getCapturedRequests()
+        getCapturedRequests(),
       ]);
 
       setUserEndpoints(endpoints);
@@ -59,7 +84,7 @@ export default function Dashboard() {
         setSelectedRequest(requests[0]);
       }
     } catch (error) {
-      console.error('Failed to load data:', error);
+      console.error("Failed to load data:", error);
     } finally {
       setIsLoading(false);
     }
@@ -70,14 +95,16 @@ export default function Dashboard() {
     loadData();
 
     // Auto-refresh requests if streaming is enabled
-    const interval = isStreaming ? setInterval(async () => {
-      try {
-        const requests = await getCapturedRequests();
-        setCapturedRequests(requests);
-      } catch (error) {
-        console.error('Failed to refresh requests:', error);
-      }
-    }, 2000) : null;
+    const interval = isStreaming
+      ? setInterval(async () => {
+          try {
+            const requests = await getCapturedRequests();
+            setCapturedRequests(requests);
+          } catch (error) {
+            console.error("Failed to refresh requests:", error);
+          }
+        }, 2000)
+      : null;
 
     return () => {
       if (interval) clearInterval(interval);
@@ -86,11 +113,16 @@ export default function Dashboard() {
 
   const getMethodColor = (method: string) => {
     switch (method) {
-      case "GET": return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
-      case "POST": return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
-      case "PUT": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
-      case "DELETE": return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
-      default: return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
+      case "GET":
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+      case "POST":
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+      case "PUT":
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+      case "DELETE":
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+      default:
+        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
     }
   };
 
@@ -99,28 +131,32 @@ export default function Dashboard() {
   };
 
   const handleEndpointCreated = (endpoint: UserEndpoint) => {
-    setUserEndpoints(prev => [...prev, endpoint]);
+    setUserEndpoints((prev) => [...prev, endpoint]);
   };
 
   const handleDeleteEndpoint = async (endpointId: string) => {
     try {
       await deleteEndpoint(endpointId);
-      setUserEndpoints(prev => prev.filter(e => e.id !== endpointId));
+      setUserEndpoints((prev) => prev.filter((e) => e.id !== endpointId));
       // Refresh data to update request counts
       loadData();
     } catch (error) {
-      console.error('Failed to delete endpoint:', error);
+      console.error("Failed to delete endpoint:", error);
     }
   };
 
   // Filter requests based on search and method
-  const filteredRequests = capturedRequests.filter(request => {
-    const matchesMethod = filterMethod === "all" || request.method === filterMethod;
-    const matchesSearch = searchQuery === "" ||
+  const filteredRequests = capturedRequests.filter((request) => {
+    const matchesMethod =
+      filterMethod === "all" || request.method === filterMethod;
+    const matchesSearch =
+      searchQuery === "" ||
       request.endpoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      JSON.stringify(request.body).toLowerCase().includes(searchQuery.toLowerCase()) ||
-      Object.values(request.headers).some(value =>
-        String(value).toLowerCase().includes(searchQuery.toLowerCase())
+      JSON.stringify(request.body)
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      Object.values(request.headers).some((value) =>
+        String(value).toLowerCase().includes(searchQuery.toLowerCase()),
       );
     return matchesMethod && matchesSearch;
   });
@@ -151,10 +187,13 @@ export default function Dashboard() {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                <Button
+                  variant="ghost"
+                  className="relative h-8 w-8 rounded-full"
+                >
                   <Avatar className="h-8 w-8">
                     <AvatarFallback className="bg-primary text-primary-foreground">
-                      {user?.name?.charAt(0).toUpperCase() || 'U'}
+                      {user?.name?.charAt(0).toUpperCase() || "U"}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
@@ -189,25 +228,38 @@ export default function Dashboard() {
           <div className="mb-4 flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold">Hey {user?.name}! 👋</h1>
-              <p className="text-muted-foreground">Your HTTP debugging endpoints</p>
+              <p className="text-muted-foreground">
+                Your HTTP debugging endpoints
+              </p>
             </div>
             <CreateEndpointDialog onEndpointCreated={handleEndpointCreated} />
           </div>
-          
+
           <div className="grid gap-4 md:grid-cols-3">
             {userEndpoints.map((endpoint) => (
-              <Card key={endpoint.id} className="transition-all hover:shadow-md">
+              <Card
+                key={endpoint.id}
+                className="transition-all hover:shadow-md"
+              >
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-base">{endpoint.name}</CardTitle>
-                    <Badge variant="secondary">{endpoint.requests} requests</Badge>
+                    <Badge variant="secondary">
+                      {endpoint.requests} requests
+                    </Badge>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <code className="text-sm text-muted-foreground">{endpoint.url}</code>
-                      <Button variant="ghost" size="sm" onClick={() => copyToClipboard(endpoint.url)}>
+                      <code className="text-sm text-muted-foreground">
+                        {endpoint.url}
+                      </code>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => copyToClipboard(endpoint.url)}
+                      >
                         <Copy className="h-4 w-4" />
                       </Button>
                     </div>
@@ -280,7 +332,9 @@ export default function Dashboard() {
                       <div
                         key={request.id}
                         className={`cursor-pointer rounded-lg border p-3 transition-colors hover:bg-muted/50 ${
-                          selectedRequest.id === request.id ? "bg-muted border-primary" : ""
+                          selectedRequest.id === request.id
+                            ? "bg-muted border-primary"
+                            : ""
                         }`}
                         onClick={() => setSelectedRequest(request)}
                       >
@@ -329,13 +383,15 @@ export default function Dashboard() {
                     <TabsTrigger value="body">Body</TabsTrigger>
                     <TabsTrigger value="response">Response</TabsTrigger>
                   </TabsList>
-                  
+
                   <TabsContent value="overview" className="space-y-4">
                     <div className="grid gap-4 md:grid-cols-2">
                       <div>
                         <label className="text-sm font-medium">Method</label>
                         <div className="mt-1">
-                          <Badge className={getMethodColor(selectedRequest.method)}>
+                          <Badge
+                            className={getMethodColor(selectedRequest.method)}
+                          >
                             {selectedRequest.method}
                           </Badge>
                         </div>
@@ -343,7 +399,9 @@ export default function Dashboard() {
                       <div>
                         <label className="text-sm font-medium">Status</label>
                         <div className="mt-1">
-                          <Badge variant="outline">{selectedRequest.status}</Badge>
+                          <Badge variant="outline">
+                            {selectedRequest.status}
+                          </Badge>
                         </div>
                       </div>
                       <div>
@@ -353,39 +411,52 @@ export default function Dashboard() {
                         </div>
                       </div>
                       <div>
-                        <label className="text-sm font-medium">IP Address</label>
+                        <label className="text-sm font-medium">
+                          IP Address
+                        </label>
                         <div className="mt-1 text-sm text-muted-foreground">
                           {selectedRequest.ip}
                         </div>
                       </div>
                       <div className="md:col-span-2">
-                        <label className="text-sm font-medium">User Agent</label>
+                        <label className="text-sm font-medium">
+                          User Agent
+                        </label>
                         <div className="mt-1 text-sm text-muted-foreground">
                           {selectedRequest.userAgent}
                         </div>
                       </div>
                     </div>
                   </TabsContent>
-                  
+
                   <TabsContent value="headers">
                     <div className="space-y-2">
-                      {Object.entries(selectedRequest.headers).map(([key, value]) => (
-                        <div key={key} className="grid grid-cols-3 gap-4 py-2 border-b">
-                          <code className="text-sm font-medium">{key}</code>
-                          <code className="col-span-2 text-sm text-muted-foreground">{value}</code>
-                        </div>
-                      ))}
+                      {Object.entries(selectedRequest.headers).map(
+                        ([key, value]) => (
+                          <div
+                            key={key}
+                            className="grid grid-cols-3 gap-4 py-2 border-b"
+                          >
+                            <code className="text-sm font-medium">{key}</code>
+                            <code className="col-span-2 text-sm text-muted-foreground">
+                              {value}
+                            </code>
+                          </div>
+                        ),
+                      )}
                     </div>
                   </TabsContent>
-                  
+
                   <TabsContent value="body">
                     <ScrollArea className="h-64 w-full rounded border">
                       <pre className="p-4 text-sm">
-                        {selectedRequest.body ? JSON.stringify(selectedRequest.body, null, 2) : "No body"}
+                        {selectedRequest.body
+                          ? JSON.stringify(selectedRequest.body, null, 2)
+                          : "No body"}
                       </pre>
                     </ScrollArea>
                   </TabsContent>
-                  
+
                   <TabsContent value="response">
                     <div className="text-sm text-muted-foreground">
                       Configure mock responses in the endpoint settings.

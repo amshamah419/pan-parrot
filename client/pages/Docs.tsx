@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Logo } from "@/components/Logo";
 import { ArrowLeft, Book, FileText, Zap } from "lucide-react";
 
@@ -11,10 +17,16 @@ export default function Docs() {
         <div className="container flex h-16 items-center justify-between">
           <Logo />
           <nav className="flex items-center space-x-6">
-            <Link to="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              to="/"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
               Home
             </Link>
-            <Link to="/dashboard" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              to="/dashboard"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
               Dashboard
             </Link>
             <Button asChild>
@@ -46,7 +58,8 @@ export default function Docs() {
                 Documentation Coming Soon
               </CardTitle>
               <CardDescription>
-                We're working on comprehensive documentation to help you get the most out of Parrot.
+                We're working on comprehensive documentation to help you get the
+                most out of Parrot.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -72,7 +85,8 @@ export default function Docs() {
               </CardHeader>
               <CardContent>
                 <p className="mb-4 text-muted-foreground">
-                  Jump right in and start using Parrot to inspect your HTTP requests.
+                  Jump right in and start using Parrot to inspect your HTTP
+                  requests.
                 </p>
                 <Button asChild>
                   <Link to="/dashboard">Go to Dashboard</Link>

@@ -20,10 +20,16 @@ const NotFound = () => {
         <div className="container flex h-16 items-center justify-between">
           <Logo />
           <nav className="flex items-center space-x-6">
-            <Link to="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              to="/"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
               Home
             </Link>
-            <Link to="/dashboard" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              to="/dashboard"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
               Dashboard
             </Link>
             <Button asChild>
@@ -35,7 +41,9 @@ const NotFound = () => {
 
       <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center space-y-6">
         <div className="space-y-2 text-center">
-          <h1 className="text-6xl font-bold tracking-tighter text-primary">404</h1>
+          <h1 className="text-6xl font-bold tracking-tighter text-primary">
+            404
+          </h1>
           <h2 className="text-2xl font-semibold">Page Not Found</h2>
           <p className="text-muted-foreground max-w-md">
             The page you are looking for doesn't exist or has been moved.
