@@ -178,40 +178,46 @@ export const catchRequest: RequestHandler = async (req, res) => {
 };
 
 // Delete an endpoint
-export const deleteEndpoint: RequestHandler = (req, res) => {
-  const { endpointId } = req.params;
-  const userId = getUserId(req);
-  
-  const index = userEndpoints.findIndex(e => e.id === endpointId && e.userId === userId);
-  if (index === -1) {
-    return res.status(404).json({ error: 'Endpoint not found' });
-  }
-  
-  const endpoint = userEndpoints[index];
-  userEndpoints.splice(index, 1);
-  
-  // Also remove associated requests
-  const requestIndicesToRemove = [];
-  for (let i = capturedRequests.length - 1; i >= 0; i--) {
-    if (capturedRequests[i].endpoint === `/catch/${endpoint.path}` && capturedRequests[i].userId === userId) {
-      requestIndicesToRemove.push(i);
+export const deleteEndpoint: RequestHandler = async (req, res) => {
+  try {
+    const { endpointId } = req.params;
+    const userId = getUserId(req);
+
+    const endpoint = await EndpointService.findEndpointById(endpointId);
+    if (!endpoint || endpoint.userId !== userId) {
+      return res.status(404).json({ error: 'Endpoint not found' });
     }
+
+    await EndpointService.deleteEndpoint(endpointId);
+
+    res.json({ message: 'Endpoint deleted' });
+  } catch (error) {
+    console.error('Error deleting endpoint:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-  
-  requestIndicesToRemove.forEach(index => capturedRequests.splice(index, 1));
-  
-  res.json({ message: 'Endpoint deleted' });
 };
 
 // Get a specific request details
-export const getRequestDetails: RequestHandler = (req, res) => {
-  const { requestId } = req.params;
-  const userId = getUserId(req);
-  
-  const request = capturedRequests.find(r => r.id === requestId && r.userId === userId);
-  if (!request) {
-    return res.status(404).json({ error: 'Request not found' });
+export const getRequestDetails: RequestHandler = async (req, res) => {
+  try {
+    const { requestId } = req.params;
+    const userId = getUserId(req);
+
+    const request = await RequestService.getRequestById(requestId);
+    if (!request || request.userId !== userId) {
+      return res.status(404).json({ error: 'Request not found' });
+    }
+
+    // Transform the data to match frontend expectations
+    const transformedRequest = {
+      ...request,
+      endpoint: `/catch/${request.endpoint?.path || request.path}`,
+      timestamp: request.createdAt.toISOString()
+    };
+
+    res.json(transformedRequest);
+  } catch (error) {
+    console.error('Error getting request details:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-  
-  res.json(request);
 };
