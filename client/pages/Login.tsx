@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Loader2, Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
