@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  role      Role     @default(USER)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lastLogin DateTime?
+
+  // Relations
+  endpoints Endpoint[]
+  requests  CapturedRequest[]
+
+  @@map("users")
+}
+
+model Endpoint {
+  id          String   @id @default(cuid())
+  name        String
+  path        String   @unique
+  url         String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Mock response configuration
+  mockEnabled    Boolean @default(false)
+  mockStatusCode Int?
+  mockHeaders    Json?
+  mockBody       String?
+  mockDelay      Int?    @default(0)
+
+  // Relations
+  userId   String
+  user     User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  requests CapturedRequest[]
+
+  @@map("endpoints")
+}
+
+model CapturedRequest {
+  id        String   @id @default(cuid())
+  method    String
+  path      String
+  status    Int      @default(200)
+  ip        String?
+  userAgent String?
+  headers   Json
+  body      Json?
+  query     Json?
+  createdAt DateTime @default(now())
+
+  // Relations
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpointId String
+  endpoint   Endpoint @relation(fields: [endpointId], references: [id], onDelete: Cascade)
+
+  @@map("captured_requests")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
