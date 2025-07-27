@@ -41,7 +41,7 @@ export default function Login() {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 800));
 
-      // Store user session (in real app, this would be handled by auth service)
+      // Store user session using auth context
       const userData = {
         email,
         name: isTestUser ? "Test User" : email.split("@")[0].replace(/[._]/g, ' ').replace(/\w\S*/g, (txt) =>
@@ -50,8 +50,7 @@ export default function Login() {
         id: isTestUser ? "test-user-123" : Math.random().toString(36).substr(2, 9)
       };
 
-      localStorage.setItem("pan-parrot-user", JSON.stringify(userData));
-
+      login(userData);
       navigate("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
