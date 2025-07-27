@@ -23,21 +23,33 @@ export default function Login() {
 
     // Simulate authentication
     try {
+      // Test user credentials
+      const isTestUser = email === "test@paloaltonetworks.com" && password === "test123";
+
       // Basic validation
-      if (!email.includes("@paloaltonetworks.com")) {
-        throw new Error("Please use your PAN email address");
+      if (!isTestUser && !email.includes("@paloaltonetworks.com")) {
+        throw new Error("Please use your PAN email address or test credentials");
       }
-      
+
+      // Check password for non-test users
+      if (!isTestUser && password.length < 6) {
+        throw new Error("Password must be at least 6 characters");
+      }
+
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise(resolve => setTimeout(resolve, 800));
+
       // Store user session (in real app, this would be handled by auth service)
-      localStorage.setItem("pan-parrot-user", JSON.stringify({
+      const userData = {
         email,
-        name: email.split("@")[0],
-        id: Math.random().toString(36).substr(2, 9)
-      }));
-      
+        name: isTestUser ? "Test User" : email.split("@")[0].replace(/[._]/g, ' ').replace(/\w\S*/g, (txt) =>
+          txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+        ),
+        id: isTestUser ? "test-user-123" : Math.random().toString(36).substr(2, 9)
+      };
+
+      localStorage.setItem("pan-parrot-user", JSON.stringify(userData));
+
       navigate("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
