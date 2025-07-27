@@ -115,61 +115,66 @@ export const configureMockResponse: RequestHandler = async (req, res) => {
 
 // The main catch-all handler for user endpoints
 export const catchRequest: RequestHandler = async (req, res) => {
-  const { path } = req.params;
-  
-  // Find the endpoint
-  const endpoint = userEndpoints.find(e => e.path === path);
-  if (!endpoint) {
-    return res.status(404).json({ error: 'Endpoint not found' });
-  }
-  
-  // Capture the request
-  const capturedRequest: CapturedRequest = {
-    id: Math.random().toString(36).substr(2, 9),
-    method: req.method,
-    endpoint: `/catch/${path}`,
-    timestamp: new Date().toISOString(),
-    status: 200,
-    ip: req.ip || req.connection.remoteAddress || 'unknown',
-    userAgent: req.get('User-Agent') || 'unknown',
-    headers: req.headers,
-    body: req.body,
-    query: req.query,
-    userId: endpoint.userId
-  };
-  
-  capturedRequests.push(capturedRequest);
-  
-  // Emit to connected clients (we'll implement WebSocket later)
-  // For now, just store it
-  
-  // Check if there's a mock response configured
-  if (endpoint.mockResponse) {
-    const { statusCode, headers, body, delay } = endpoint.mockResponse;
-    
-    // Apply delay if configured
-    if (delay > 0) {
-      await new Promise(resolve => setTimeout(resolve, delay));
+  try {
+    const { path } = req.params;
+
+    // Find the endpoint
+    const endpoint = await EndpointService.findEndpointByPath(path);
+    if (!endpoint) {
+      return res.status(404).json({ error: 'Endpoint not found' });
     }
-    
-    // Set custom headers
-    Object.entries(headers).forEach(([key, value]) => {
-      res.setHeader(key, value);
+
+    let responseStatus = 200;
+
+    // Check if there's a mock response configured
+    if (endpoint.mockEnabled && endpoint.mockStatusCode) {
+      responseStatus = endpoint.mockStatusCode;
+
+      // Apply delay if configured
+      if (endpoint.mockDelay && endpoint.mockDelay > 0) {
+        await new Promise(resolve => setTimeout(resolve, endpoint.mockDelay));
+      }
+
+      // Set custom headers
+      if (endpoint.mockHeaders) {
+        const headers = endpoint.mockHeaders as Record<string, string>;
+        Object.entries(headers).forEach(([key, value]) => {
+          res.setHeader(key, value);
+        });
+      }
+    }
+
+    // Capture the request
+    await RequestService.captureRequest({
+      method: req.method,
+      path: `/catch/${path}`,
+      status: responseStatus,
+      ip: req.ip || (req.connection as any)?.remoteAddress || 'unknown',
+      userAgent: req.get('User-Agent') || 'unknown',
+      headers: req.headers,
+      body: req.body,
+      query: req.query,
+      userId: endpoint.userId,
+      endpointId: endpoint.id
     });
-    
-    capturedRequest.status = statusCode;
-    
-    return res.status(statusCode).send(body);
+
+    // Return mock response if configured
+    if (endpoint.mockEnabled && endpoint.mockBody) {
+      return res.status(responseStatus).send(endpoint.mockBody);
+    }
+
+    // Default response
+    res.status(responseStatus).json({
+      message: `Hello from PAN Parrot! 🦜`,
+      timestamp: new Date().toISOString(),
+      method: req.method,
+      endpoint: path,
+      captured: true
+    });
+  } catch (error) {
+    console.error('Error handling catch request:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-  
-  // Default response
-  res.json({
-    message: `Hello from PAN Parrot! 🦜`,
-    timestamp: new Date().toISOString(),
-    method: req.method,
-    endpoint: path,
-    captured: true
-  });
 };
 
 // Delete an endpoint
