@@ -77,6 +77,7 @@ export default function Dashboard() {
   const [selectedRequest, setSelectedRequest] = useState(mockRequests[0]);
   const [filterMethod, setFilterMethod] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [userEndpoints, setUserEndpoints] = useState(mockEndpoints);
 
   const getMethodColor = (method: string) => {
     switch (method) {
