@@ -328,32 +328,44 @@ export default function Dashboard() {
                 {/* Request List */}
                 <ScrollArea className="h-96">
                   <div className="space-y-1 p-2">
-                    {mockRequests.map((request) => (
-                      <div
-                        key={request.id}
-                        className={`cursor-pointer rounded-lg border p-3 transition-colors hover:bg-muted/50 ${
-                          selectedRequest.id === request.id
-                            ? "bg-muted border-primary"
-                            : ""
-                        }`}
-                        onClick={() => setSelectedRequest(request)}
-                      >
-                        <div className="flex items-center justify-between">
-                          <Badge className={getMethodColor(request.method)}>
-                            {request.method}
-                          </Badge>
-                          <span className="text-xs text-muted-foreground">
-                            {request.timestamp.split(" ")[1]}
-                          </span>
-                        </div>
-                        <div className="mt-1">
-                          <code className="text-sm">{request.endpoint}</code>
-                        </div>
-                        <div className="mt-1 text-xs text-muted-foreground">
-                          {request.ip}
-                        </div>
+                    {isLoading ? (
+                      <div className="p-4 text-center text-muted-foreground">
+                        Loading requests...
                       </div>
-                    ))}
+                    ) : filteredRequests.length === 0 ? (
+                      <div className="p-4 text-center text-muted-foreground">
+                        {capturedRequests.length === 0
+                          ? "No requests captured yet. Try sending a request to one of your endpoints!"
+                          : "No requests match your filters."}
+                      </div>
+                    ) : (
+                      filteredRequests.map((request) => (
+                        <div
+                          key={request.id}
+                          className={`cursor-pointer rounded-lg border p-3 transition-colors hover:bg-muted/50 ${
+                            selectedRequest?.id === request.id
+                              ? "bg-muted border-primary"
+                              : ""
+                          }`}
+                          onClick={() => setSelectedRequest(request)}
+                        >
+                          <div className="flex items-center justify-between">
+                            <Badge className={getMethodColor(request.method)}>
+                              {request.method}
+                            </Badge>
+                            <span className="text-xs text-muted-foreground">
+                              {new Date(request.timestamp).toLocaleTimeString()}
+                            </span>
+                          </div>
+                          <div className="mt-1">
+                            <code className="text-sm">{request.endpoint}</code>
+                          </div>
+                          <div className="mt-1 text-xs text-muted-foreground">
+                            {request.ip}
+                          </div>
+                        </div>
+                      ))
+                    )}
                   </div>
                 </ScrollArea>
               </CardContent>
