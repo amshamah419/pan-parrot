@@ -28,5 +28,17 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // PAN Parrot API routes
+  app.post("/api/endpoints", createEndpoint);
+  app.get("/api/endpoints", getUserEndpoints);
+  app.delete("/api/endpoints/:endpointId", deleteEndpoint);
+  app.post("/api/endpoints/:endpointId/mock", configureMockResponse);
+
+  app.get("/api/requests", getCapturedRequests);
+  app.get("/api/requests/:requestId", getRequestDetails);
+
+  // Dynamic catch-all routes for user endpoints (must be last)
+  app.all("/catch/:path", catchRequest);
+
   return app;
 }
