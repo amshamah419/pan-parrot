@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  pan-parrot:
+    build: .
+    container_name: pan-parrot-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATA_PATH=/app/data
+      # Add your internal domain here
+      - CORS_ORIGIN=https://parrot.pan.internal
+      # Optional: Enable HTTPS
+      - HTTPS_ENABLED=false
+      - SSL_CERT_PATH=/app/certs/cert.pem
+      - SSL_KEY_PATH=/app/certs/key.pem
+    volumes:
+      # Persistent data storage
+      - pan-parrot-data:/app/data
+      # Optional: Mount SSL certificates
+      # - ./certs:/app/certs:ro
+    networks:
+      - pan-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Add a reverse proxy for SSL termination and domain routing
+  nginx:
+    image: nginx:alpine
+    container_name: pan-parrot-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      # Mount your SSL certificates
+      # - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - pan-parrot
+    networks:
+      - pan-network
+
+volumes:
+  pan-parrot-data:
+    driver: local
+
+networks:
+  pan-network:
+    driver: bridge
