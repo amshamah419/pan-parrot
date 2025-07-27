@@ -56,3 +56,33 @@ export interface MockResponseConfig {
   body: string;
   delay: number;
 }
+
+/**
+ * Admin API Types
+ */
+export interface AdminUser {
+  id: string;
+  email: string;
+  name: string;
+  role: 'user' | 'admin';
+  created: string;
+  lastLogin?: string;
+  active: boolean;
+}
+
+export interface CreateUserRequest {
+  email: string;
+  name: string;
+  password: string;
+  role?: 'user' | 'admin';
+}
+
+export interface AuthResponse {
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    role: 'user' | 'admin';
+  };
+  token: string;
+}
