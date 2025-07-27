@@ -167,7 +167,7 @@ export default function Dashboard() {
           </div>
           
           <div className="grid gap-4 md:grid-cols-3">
-            {mockEndpoints.map((endpoint) => (
+            {userEndpoints.map((endpoint) => (
               <Card key={endpoint.id} className="transition-all hover:shadow-md">
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
