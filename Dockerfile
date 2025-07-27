@@ -31,6 +31,7 @@ WORKDIR /app
 COPY --from=builder --chown=panparrot:nodejs /app/dist ./dist
 COPY --from=builder --chown=panparrot:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=panparrot:nodejs /app/package*.json ./
+COPY --from=builder --chown=panparrot:nodejs /app/prisma ./prisma
 
 # Create data directory for persistent storage
 RUN mkdir -p /app/data && chown panparrot:nodejs /app/data
