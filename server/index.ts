@@ -37,6 +37,17 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // Authentication routes
+  app.post("/api/auth/login", authenticateUser);
+  app.get("/api/auth/user", getCurrentUser);
+
+  // Admin routes
+  app.get("/api/admin/users", getAllUsers);
+  app.post("/api/admin/users", createUser);
+  app.put("/api/admin/users/:userId", updateUser);
+  app.delete("/api/admin/users/:userId", deleteUser);
+  app.post("/api/admin/users/:userId/reset-password", resetUserPassword);
+
   // PAN Parrot API routes
   app.post("/api/endpoints", createEndpoint);
   app.get("/api/endpoints", getUserEndpoints);
