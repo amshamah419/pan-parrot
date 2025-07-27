@@ -47,49 +47,70 @@ export const createEndpoint: RequestHandler = async (req, res) => {
 };
 
 // Get user's endpoints
-export const getUserEndpoints: RequestHandler = (req, res) => {
-  const userId = getUserId(req);
-  const endpoints = userEndpoints.filter(e => e.userId === userId);
-  
-  // Add request counts
-  const endpointsWithCounts = endpoints.map(endpoint => ({
-    ...endpoint,
-    requests: capturedRequests.filter(r => r.endpoint === `/catch/${endpoint.path}` && r.userId === userId).length
-  }));
-  
-  res.json(endpointsWithCounts);
+export const getUserEndpoints: RequestHandler = async (req, res) => {
+  try {
+    const userId = getUserId(req);
+    const endpoints = await EndpointService.getUserEndpoints(userId);
+
+    // Transform the data to match frontend expectations
+    const endpointsWithCounts = endpoints.map(endpoint => ({
+      ...endpoint,
+      requests: endpoint._count.requests,
+      created: endpoint.createdAt.toISOString()
+    }));
+
+    res.json(endpointsWithCounts);
+  } catch (error) {
+    console.error('Error getting user endpoints:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
 // Get captured requests for user
-export const getCapturedRequests: RequestHandler = (req, res) => {
-  const userId = getUserId(req);
-  const requests = capturedRequests.filter(r => r.userId === userId);
-  
-  // Sort by timestamp, newest first
-  requests.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-  
-  res.json(requests);
+export const getCapturedRequests: RequestHandler = async (req, res) => {
+  try {
+    const userId = getUserId(req);
+    const requests = await RequestService.getUserRequests(userId);
+
+    // Transform the data to match frontend expectations
+    const transformedRequests = requests.map(request => ({
+      ...request,
+      endpoint: `/catch/${request.endpoint?.path || request.path}`,
+      timestamp: request.createdAt.toISOString()
+    }));
+
+    res.json(transformedRequests);
+  } catch (error) {
+    console.error('Error getting captured requests:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
 // Configure mock response for an endpoint
-export const configureMockResponse: RequestHandler = (req, res) => {
-  const { endpointId } = req.params;
-  const { statusCode, headers, body, delay } = req.body;
-  const userId = getUserId(req);
-  
-  const endpoint = userEndpoints.find(e => e.id === endpointId && e.userId === userId);
-  if (!endpoint) {
-    return res.status(404).json({ error: 'Endpoint not found' });
+export const configureMockResponse: RequestHandler = async (req, res) => {
+  try {
+    const { endpointId } = req.params;
+    const { statusCode, headers, body, delay } = req.body;
+    const userId = getUserId(req);
+
+    const endpoint = await EndpointService.findEndpointById(endpointId);
+    if (!endpoint || endpoint.userId !== userId) {
+      return res.status(404).json({ error: 'Endpoint not found' });
+    }
+
+    await EndpointService.configureMockResponse(endpointId, {
+      mockEnabled: true,
+      mockStatusCode: statusCode || 200,
+      mockHeaders: headers || { 'Content-Type': 'application/json' },
+      mockBody: body || '{"status": "success"}',
+      mockDelay: delay || 0
+    });
+
+    res.json({ message: 'Mock response configured' });
+  } catch (error) {
+    console.error('Error configuring mock response:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-  
-  endpoint.mockResponse = {
-    statusCode: statusCode || 200,
-    headers: headers || { 'Content-Type': 'application/json' },
-    body: body || '{"status": "success"}',
-    delay: delay || 0
-  };
-  
-  res.json({ message: 'Mock response configured' });
 };
 
 // The main catch-all handler for user endpoints
