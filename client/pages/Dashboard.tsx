@@ -213,7 +213,11 @@ export default function Dashboard() {
                     </div>
                     <div className="flex space-x-2">
                       <MockResponseDialog endpointName={endpoint.name} />
-                      <Button variant="ghost" size="sm">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDeleteEndpoint(endpoint.id)}
+                      >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
