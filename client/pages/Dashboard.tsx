@@ -93,6 +93,10 @@ export default function Dashboard() {
     navigator.clipboard.writeText(text);
   };
 
+  const handleEndpointCreated = (endpoint: any) => {
+    setUserEndpoints(prev => [...prev, endpoint]);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
