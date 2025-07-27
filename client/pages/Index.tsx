@@ -2,18 +2,19 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Monitor, 
-  Globe, 
-  Zap, 
-  Search, 
-  RotateCcw, 
-  Settings, 
-  Shield, 
-  Clock, 
-  Code2,
+import { Logo } from "@/components/Logo";
+import {
+  Monitor,
+  Globe,
+  Zap,
+  Search,
+  RotateCcw,
+  Settings,
+  Shield,
+  Clock,
   ArrowRight,
-  Check
+  Check,
+  LogIn
 } from "lucide-react";
 
 export default function Index() {
