@@ -85,27 +85,26 @@ export default function Index() {
           <div className="mx-auto max-w-4xl text-center">
             <Badge variant="secondary" className="mb-4">
               <Zap className="mr-1 h-3 w-3" />
-              Self-hosted HTTP inspection tool
+              Internal PAN Development Tool
             </Badge>
             <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl md:text-7xl">
-              HTTP Webhook
-              <span className="text-primary"> Inspection</span>
+              <span className="text-primary">PAN Parrot</span>
               <br />
-              Made Simple
+              HTTP Debugging Made Fun
             </h1>
             <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
-              Parrot is your self-hosted clone of Beeceptor. Create custom endpoints, 
-              inspect HTTP requests in real-time, and mock responses for seamless API development.
+              Your friendly internal HTTP inspection companion. Create endpoints, catch webhooks,
+              and mock responses while developing PAN's next-generation security solutions. 🦜
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button size="lg" asChild className="text-base">
-                <Link to="/dashboard">
-                  Start Inspecting
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                <Link to="/login">
+                  <LogIn className="mr-2 h-4 w-4" />
+                  Login to Start
                 </Link>
               </Button>
               <Button variant="outline" size="lg" className="text-base">
-                View Documentation
+                <Link to="/docs">Read the Docs</Link>
               </Button>
             </div>
           </div>
