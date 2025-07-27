@@ -171,15 +171,15 @@ export default function Index() {
         <section className="container px-4 py-24">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-tight">
-              Ready to start debugging?
+              Ready to squawk at some APIs? 🦜
             </h2>
             <p className="mb-8 text-lg text-muted-foreground">
-              Create your first endpoint and start capturing HTTP requests in seconds.
+              Login with your PAN credentials and start catching those pesky webhooks.
             </p>
             <Button size="lg" asChild className="text-base">
-              <Link to="/dashboard">
-                <Clock className="mr-2 h-4 w-4" />
-                Get Started Now
+              <Link to="/login">
+                <LogIn className="mr-2 h-4 w-4" />
+                Login to PAN Parrot
               </Link>
             </Button>
           </div>
