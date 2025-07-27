@@ -1,12 +1,31 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Settings, Plus, Trash2, Save } from "lucide-react";
 
@@ -34,8 +53,8 @@ export function MockResponseDialog({ endpointName }: MockResponseDialogProps) {
       headers: { "Content-Type": "application/json" },
       body: '{"status": "success", "message": "Hello from PAN Parrot! 🦜"}',
       delay: 0,
-      enabled: true
-    }
+      enabled: true,
+    },
   ]);
 
   const addMockRule = () => {
@@ -46,27 +65,28 @@ export function MockResponseDialog({ endpointName }: MockResponseDialogProps) {
       headers: { "Content-Type": "application/json" },
       body: "{}",
       delay: 0,
-      enabled: true
+      enabled: true,
     };
     setMockRules([...mockRules, newRule]);
   };
 
   const updateMockRule = (id: string, updates: Partial<MockRule>) => {
-    setMockRules(rules => 
-      rules.map(rule => 
-        rule.id === id ? { ...rule, ...updates } : rule
-      )
+    setMockRules((rules) =>
+      rules.map((rule) => (rule.id === id ? { ...rule, ...updates } : rule)),
     );
   };
 
   const deleteMockRule = (id: string) => {
-    setMockRules(rules => rules.filter(rule => rule.id !== id));
+    setMockRules((rules) => rules.filter((rule) => rule.id !== id));
   };
 
   const getStatusCodeColor = (status: number) => {
-    if (status >= 200 && status < 300) return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
-    if (status >= 300 && status < 400) return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
-    if (status >= 400 && status < 500) return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+    if (status >= 200 && status < 300)
+      return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+    if (status >= 300 && status < 400)
+      return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+    if (status >= 400 && status < 500)
+      return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
     return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
   };
 
@@ -88,7 +108,7 @@ export function MockResponseDialog({ endpointName }: MockResponseDialogProps) {
             Configure automatic responses for incoming requests
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <p className="text-sm text-muted-foreground">
@@ -106,7 +126,9 @@ export function MockResponseDialog({ endpointName }: MockResponseDialogProps) {
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <CardTitle className="text-base">Rule {index + 1}</CardTitle>
+                      <CardTitle className="text-base">
+                        Rule {index + 1}
+                      </CardTitle>
                       <Badge className={getStatusCodeColor(rule.statusCode)}>
                         {rule.statusCode}
                       </Badge>
@@ -117,7 +139,9 @@ export function MockResponseDialog({ endpointName }: MockResponseDialogProps) {
                     <div className="flex items-center space-x-2">
                       <Switch
                         checked={rule.enabled}
-                        onCheckedChange={(enabled) => updateMockRule(rule.id, { enabled })}
+                        onCheckedChange={(enabled) =>
+                          updateMockRule(rule.id, { enabled })
+                        }
                       />
                       <Button
                         variant="ghost"
@@ -134,9 +158,11 @@ export function MockResponseDialog({ endpointName }: MockResponseDialogProps) {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label>Condition</Label>
-                      <Select 
-                        value={rule.condition} 
-                        onValueChange={(condition) => updateMockRule(rule.id, { condition })}
+                      <Select
+                        value={rule.condition}
+                        onValueChange={(condition) =>
+                          updateMockRule(rule.id, { condition })
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue />
@@ -144,7 +170,9 @@ export function MockResponseDialog({ endpointName }: MockResponseDialogProps) {
                         <SelectContent>
                           <SelectItem value="all">All requests</SelectItem>
                           <SelectItem value="get">GET requests only</SelectItem>
-                          <SelectItem value="post">POST requests only</SelectItem>
+                          <SelectItem value="post">
+                            POST requests only
+                          </SelectItem>
                           <SelectItem value="put">PUT requests only</SelectItem>
                         </SelectContent>
                       </Select>
@@ -154,7 +182,11 @@ export function MockResponseDialog({ endpointName }: MockResponseDialogProps) {
                       <Input
                         type="number"
                         value={rule.statusCode}
-                        onChange={(e) => updateMockRule(rule.id, { statusCode: parseInt(e.target.value) || 200 })}
+                        onChange={(e) =>
+                          updateMockRule(rule.id, {
+                            statusCode: parseInt(e.target.value) || 200,
+                          })
+                        }
                       />
                     </div>
                   </div>
@@ -180,7 +212,9 @@ export function MockResponseDialog({ endpointName }: MockResponseDialogProps) {
                     <Label>Response Body</Label>
                     <Textarea
                       value={rule.body}
-                      onChange={(e) => updateMockRule(rule.id, { body: e.target.value })}
+                      onChange={(e) =>
+                        updateMockRule(rule.id, { body: e.target.value })
+                      }
                       rows={4}
                       className="font-mono text-sm"
                     />
@@ -191,7 +225,11 @@ export function MockResponseDialog({ endpointName }: MockResponseDialogProps) {
                     <Input
                       type="number"
                       value={rule.delay}
-                      onChange={(e) => updateMockRule(rule.id, { delay: parseInt(e.target.value) || 0 })}
+                      onChange={(e) =>
+                        updateMockRule(rule.id, {
+                          delay: parseInt(e.target.value) || 0,
+                        })
+                      }
                     />
                   </div>
                 </CardContent>

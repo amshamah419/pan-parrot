@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/Logo";
@@ -24,7 +30,7 @@ export default function Login() {
 
     // Trigger login after a short delay to show the form update
     setTimeout(() => {
-      const form = document.querySelector('form') as HTMLFormElement;
+      const form = document.querySelector("form") as HTMLFormElement;
       if (form) {
         form.requestSubmit();
       }
@@ -39,11 +45,14 @@ export default function Login() {
     // Simulate authentication
     try {
       // Test user credentials
-      const isTestUser = email === "test@paloaltonetworks.com" && password === "test123";
+      const isTestUser =
+        email === "test@paloaltonetworks.com" && password === "test123";
 
       // Basic validation
       if (!isTestUser && !email.includes("@paloaltonetworks.com")) {
-        throw new Error("Please use your PAN email address or test credentials");
+        throw new Error(
+          "Please use your PAN email address or test credentials",
+        );
       }
 
       // Check password for non-test users
@@ -52,15 +61,24 @@ export default function Login() {
       }
 
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise((resolve) => setTimeout(resolve, 800));
 
       // Store user session using auth context
       const userData = {
         email,
-        name: isTestUser ? "Test User" : email.split("@")[0].replace(/[._]/g, ' ').replace(/\w\S*/g, (txt) =>
-          txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-        ),
-        id: isTestUser ? "test-user-123" : Math.random().toString(36).substr(2, 9)
+        name: isTestUser
+          ? "Test User"
+          : email
+              .split("@")[0]
+              .replace(/[._]/g, " ")
+              .replace(
+                /\w\S*/g,
+                (txt) =>
+                  txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(),
+              ),
+        id: isTestUser
+          ? "test-user-123"
+          : Math.random().toString(36).substr(2, 9),
       };
 
       login(userData);
@@ -78,7 +96,9 @@ export default function Login() {
         <div className="text-center mb-8">
           <Logo className="justify-center mb-4" size="lg" />
           <h1 className="text-2xl font-bold">Welcome to PAN Parrot</h1>
-          <p className="text-muted-foreground">Login with your PAN credentials</p>
+          <p className="text-muted-foreground">
+            Login with your PAN credentials
+          </p>
         </div>
 
         <Card>
@@ -101,7 +121,7 @@ export default function Login() {
                   required
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <div className="relative">
@@ -161,10 +181,16 @@ export default function Login() {
                   </Button>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Email: <code className="bg-background px-1 py-0.5 rounded">test@paloaltonetworks.com</code>
+                  Email:{" "}
+                  <code className="bg-background px-1 py-0.5 rounded">
+                    test@paloaltonetworks.com
+                  </code>
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Password: <code className="bg-background px-1 py-0.5 rounded">test123</code>
+                  Password:{" "}
+                  <code className="bg-background px-1 py-0.5 rounded">
+                    test123
+                  </code>
                 </p>
               </div>
 

@@ -9,7 +9,7 @@ import {
   configureMockResponse,
   catchRequest,
   deleteEndpoint,
-  getRequestDetails
+  getRequestDetails,
 } from "./routes/parrot";
 
 export function createServer() {
