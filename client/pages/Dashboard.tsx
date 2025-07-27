@@ -178,11 +178,19 @@ export default function Dashboard() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center justify-between">
-                    <code className="text-sm text-muted-foreground">{endpoint.url}</code>
-                    <Button variant="ghost" size="sm" onClick={() => copyToClipboard(endpoint.url)}>
-                      <Copy className="h-4 w-4" />
-                    </Button>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <code className="text-sm text-muted-foreground">{endpoint.url}</code>
+                      <Button variant="ghost" size="sm" onClick={() => copyToClipboard(endpoint.url)}>
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <div className="flex space-x-2">
+                      <MockResponseDialog endpointName={endpoint.name} />
+                      <Button variant="ghost" size="sm">
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
