@@ -390,7 +390,8 @@ export default function Dashboard() {
                 </div>
               </CardHeader>
               <CardContent>
-                <Tabs defaultValue="overview">
+                {selectedRequest ? (
+                  <Tabs defaultValue="overview">
                   <TabsList className="grid w-full grid-cols-4">
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="headers">Headers</TabsTrigger>
@@ -476,7 +477,13 @@ export default function Dashboard() {
                       Configure mock responses in the endpoint settings.
                     </div>
                   </TabsContent>
-                </Tabs>
+                  </Tabs>
+                ) : (
+                  <div className="p-8 text-center text-muted-foreground">
+                    <Monitor className="mx-auto h-12 w-12 mb-4 opacity-50" />
+                    <p>Select a request to view details</p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
