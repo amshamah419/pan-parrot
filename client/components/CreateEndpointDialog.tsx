@@ -27,25 +27,26 @@ export function CreateEndpointDialog({ onEndpointCreated }: CreateEndpointDialog
     return `https://parrot.pan.dev/${path}`;
   };
 
-  const handleCreate = () => {
-    const endpoint = {
-      id: Math.random().toString(36).substr(2, 9),
-      name: name || "Untitled Endpoint",
-      description,
-      url: getEndpointUrl(),
-      path: useCustomPath && customPath ? customPath : generatedId,
-      requests: 0,
-      created: new Date().toISOString()
-    };
+  const handleCreate = async () => {
+    try {
+      const endpoint = await createEndpoint({
+        name: name || "Untitled Endpoint",
+        customPath: useCustomPath && customPath ? customPath : undefined,
+        description
+      });
 
-    onEndpointCreated?.(endpoint);
-    setOpen(false);
-    
-    // Reset form
-    setName("");
-    setDescription("");
-    setCustomPath("");
-    setUseCustomPath(false);
+      onEndpointCreated?.(endpoint);
+      setOpen(false);
+
+      // Reset form
+      setName("");
+      setDescription("");
+      setCustomPath("");
+      setUseCustomPath(false);
+    } catch (error) {
+      console.error('Failed to create endpoint:', error);
+      // In a real app, show user-friendly error message
+    }
   };
 
   const copyUrl = () => {
