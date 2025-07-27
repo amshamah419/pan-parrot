@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { createEndpoint } from "@/lib/api";
+import { UserEndpoint } from "@shared/api";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,9 +14,7 @@ interface CreateEndpointDialogProps {
   onEndpointCreated?: (endpoint: any) => void;
 }
 
-export function CreateEndpointDialog({
-  onEndpointCreated,
-}: CreateEndpointDialogProps) {
+export function CreateEndpointDialog({ onEndpointCreated }: CreateEndpointDialogProps) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -42,12 +35,12 @@ export function CreateEndpointDialog({
       url: getEndpointUrl(),
       path: useCustomPath && customPath ? customPath : generatedId,
       requests: 0,
-      created: new Date().toISOString(),
+      created: new Date().toISOString()
     };
 
     onEndpointCreated?.(endpoint);
     setOpen(false);
-
+    
     // Reset form
     setName("");
     setDescription("");
@@ -74,7 +67,7 @@ export function CreateEndpointDialog({
             Set up a new HTTP endpoint to start catching requests
           </DialogDescription>
         </DialogHeader>
-
+        
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Endpoint Name</Label>
@@ -114,9 +107,7 @@ export function CreateEndpointDialog({
                   id="custom-path-input"
                   placeholder="my-custom-endpoint"
                   value={customPath}
-                  onChange={(e) =>
-                    setCustomPath(e.target.value.replace(/[^a-zA-Z0-9-_]/g, ""))
-                  }
+                  onChange={(e) => setCustomPath(e.target.value.replace(/[^a-zA-Z0-9-_]/g, ''))}
                 />
               </div>
             )}
