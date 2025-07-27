@@ -71,6 +71,7 @@ const mockRequests = [
 ];
 
 export default function Dashboard() {
+  const { user, logout } = useAuth();
   const [isStreaming, setIsStreaming] = useState(true);
   const [selectedRequest, setSelectedRequest] = useState(mockRequests[0]);
   const [filterMethod, setFilterMethod] = useState("all");
