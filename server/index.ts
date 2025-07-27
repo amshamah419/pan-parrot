@@ -30,10 +30,15 @@ export function createServer() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  // Example API routes
-  app.get("/api/ping", (_req, res) => {
+  // Health check routes
+  app.get("/api/ping", async (_req, res) => {
     const ping = process.env.PING_MESSAGE ?? "ping";
-    res.json({ message: ping });
+    const dbConnected = await checkDatabaseConnection();
+    res.json({
+      message: ping,
+      database: dbConnected ? "connected" : "disconnected",
+      timestamp: new Date().toISOString()
+    });
   });
 
   app.get("/api/demo", handleDemo);
