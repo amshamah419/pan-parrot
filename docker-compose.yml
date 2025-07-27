@@ -1,6 +1,24 @@
 version: "3.8"
 
 services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: pan-parrot-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: panparrot
+      POSTGRES_USER: panparrot
+      POSTGRES_PASSWORD: panparrot_secure_password_change_me
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - pan-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U panparrot -d panparrot"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   pan-parrot:
     build: .
     container_name: pan-parrot-app
