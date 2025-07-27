@@ -42,6 +42,48 @@ export default function Dashboard() {
   const [capturedRequests, setCapturedRequests] = useState<CapturedRequest[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Load data from API
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      const [endpoints, requests] = await Promise.all([
+        getUserEndpoints(),
+        getCapturedRequests()
+      ]);
+
+      setUserEndpoints(endpoints);
+      setCapturedRequests(requests);
+
+      // Set first request as selected if none selected
+      if (!selectedRequest && requests.length > 0) {
+        setSelectedRequest(requests[0]);
+      }
+    } catch (error) {
+      console.error('Failed to load data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Load data on mount and set up refresh interval
+  useEffect(() => {
+    loadData();
+
+    // Auto-refresh requests if streaming is enabled
+    const interval = isStreaming ? setInterval(async () => {
+      try {
+        const requests = await getCapturedRequests();
+        setCapturedRequests(requests);
+      } catch (error) {
+        console.error('Failed to refresh requests:', error);
+      }
+    }, 2000) : null;
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isStreaming]);
+
   const getMethodColor = (method: string) => {
     switch (method) {
       case "GET": return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
@@ -56,9 +98,32 @@ export default function Dashboard() {
     navigator.clipboard.writeText(text);
   };
 
-  const handleEndpointCreated = (endpoint: any) => {
+  const handleEndpointCreated = (endpoint: UserEndpoint) => {
     setUserEndpoints(prev => [...prev, endpoint]);
   };
+
+  const handleDeleteEndpoint = async (endpointId: string) => {
+    try {
+      await deleteEndpoint(endpointId);
+      setUserEndpoints(prev => prev.filter(e => e.id !== endpointId));
+      // Refresh data to update request counts
+      loadData();
+    } catch (error) {
+      console.error('Failed to delete endpoint:', error);
+    }
+  };
+
+  // Filter requests based on search and method
+  const filteredRequests = capturedRequests.filter(request => {
+    const matchesMethod = filterMethod === "all" || request.method === filterMethod;
+    const matchesSearch = searchQuery === "" ||
+      request.endpoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      JSON.stringify(request.body).toLowerCase().includes(searchQuery.toLowerCase()) ||
+      Object.values(request.headers).some(value =>
+        String(value).toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    return matchesMethod && matchesSearch;
+  });
 
   return (
     <div className="min-h-screen bg-background">
