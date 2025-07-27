@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Code2, ArrowLeft, Book, FileText, Zap } from "lucide-react";
+import { Logo } from "@/components/Logo";
+import { ArrowLeft, Book, FileText, Zap } from "lucide-react";
 
 export default function Docs() {
   return (
