@@ -274,10 +274,7 @@ export default function Dashboard() {
                 <div className="flex items-center justify-between">
                   <CardTitle>Request Details</CardTitle>
                   <div className="flex space-x-2">
-                    <Button variant="outline" size="sm">
-                      <RotateCcw className="mr-2 h-4 w-4" />
-                      Replay
-                    </Button>
+                    <RequestReplayDialog request={selectedRequest} />
                     <Button variant="outline" size="sm">
                       <Copy className="mr-2 h-4 w-4" />
                       Copy as cURL
