@@ -17,25 +17,33 @@ function getUserId(req: any): string {
 }
 
 // Create a new endpoint
-export const createEndpoint: RequestHandler = (req, res) => {
-  const { name, customPath, description } = req.body;
-  const userId = getUserId(req);
-  
-  const endpointId = Math.random().toString(36).substr(2, 9);
-  const path = customPath || Math.random().toString(36).substr(2, 8);
-  
-  const endpoint: UserEndpoint = {
-    id: endpointId,
-    name: name || 'Untitled Endpoint',
-    path,
-    url: `${req.protocol}://${req.get('host')}/catch/${path}`,
-    userId,
-    created: new Date().toISOString()
-  };
-  
-  userEndpoints.push(endpoint);
-  
-  res.json(endpoint);
+export const createEndpoint: RequestHandler = async (req, res) => {
+  try {
+    const { name, customPath, description } = req.body;
+    const userId = getUserId(req);
+
+    const path = customPath || Math.random().toString(36).substr(2, 8);
+    const url = `${req.protocol}://${req.get('host')}/catch/${path}`;
+
+    // Check if path already exists
+    const existingEndpoint = await EndpointService.findEndpointByPath(path);
+    if (existingEndpoint) {
+      return res.status(400).json({ error: 'Path already exists' });
+    }
+
+    const endpoint = await EndpointService.createEndpoint({
+      name: name || 'Untitled Endpoint',
+      path,
+      url,
+      description,
+      userId
+    });
+
+    res.json(endpoint);
+  } catch (error) {
+    console.error('Error creating endpoint:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
 // Get user's endpoints
