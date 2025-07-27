@@ -446,7 +446,7 @@ export default function Dashboard() {
 
                   <TabsContent value="headers">
                     <div className="space-y-2">
-                      {Object.entries(selectedRequest.headers).map(
+                      {Object.entries(selectedRequest?.headers || {}).map(
                         ([key, value]) => (
                           <div
                             key={key}
@@ -465,7 +465,7 @@ export default function Dashboard() {
                   <TabsContent value="body">
                     <ScrollArea className="h-64 w-full rounded border">
                       <pre className="p-4 text-sm">
-                        {selectedRequest.body
+                        {selectedRequest?.body
                           ? JSON.stringify(selectedRequest.body, null, 2)
                           : "No body"}
                       </pre>
