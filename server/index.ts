@@ -37,7 +37,7 @@ export function createServer() {
     res.json({
       message: ping,
       database: dbConnected ? "connected" : "disconnected",
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   });
 

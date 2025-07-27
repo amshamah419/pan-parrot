@@ -1,7 +1,13 @@
-import { PrismaClient, User, Endpoint, CapturedRequest, Role } from '@prisma/client';
+import {
+  PrismaClient,
+  User,
+  Endpoint,
+  CapturedRequest,
+  Role,
+} from "@prisma/client";
 
 const prisma = new PrismaClient({
-  log: ['error', 'warn'],
+  log: ["error", "warn"],
 });
 
 // Database connection health check
@@ -10,7 +16,7 @@ export async function checkDatabaseConnection(): Promise<boolean> {
     await prisma.$queryRaw`SELECT 1`;
     return true;
   } catch (error) {
-    console.error('Database connection failed:', error);
+    console.error("Database connection failed:", error);
     return false;
   }
 }
@@ -24,7 +30,7 @@ export class UserService {
     password: string;
   }): Promise<User> {
     const { password, ...userData } = data;
-    
+
     // Store password in separate credentials table or external auth service
     // For now, we'll still use in-memory credentials store
     const user = await prisma.user.create({
@@ -48,7 +54,7 @@ export class UserService {
 
   static async getAllUsers(): Promise<User[]> {
     return prisma.user.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
   }
 
@@ -87,7 +93,9 @@ export class EndpointService {
     });
   }
 
-  static async getUserEndpoints(userId: string): Promise<(Endpoint & { _count: { requests: number } })[]> {
+  static async getUserEndpoints(
+    userId: string,
+  ): Promise<(Endpoint & { _count: { requests: number } })[]> {
     return prisma.endpoint.findMany({
       where: { userId },
       include: {
@@ -95,7 +103,7 @@ export class EndpointService {
           select: { requests: true },
         },
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
   }
 
@@ -111,7 +119,10 @@ export class EndpointService {
     });
   }
 
-  static async updateEndpoint(id: string, data: Partial<Endpoint>): Promise<Endpoint> {
+  static async updateEndpoint(
+    id: string,
+    data: Partial<Endpoint>,
+  ): Promise<Endpoint> {
     return prisma.endpoint.update({
       where: { id },
       data,
@@ -124,13 +135,16 @@ export class EndpointService {
     });
   }
 
-  static async configureMockResponse(id: string, config: {
-    mockEnabled: boolean;
-    mockStatusCode?: number;
-    mockHeaders?: any;
-    mockBody?: string;
-    mockDelay?: number;
-  }): Promise<Endpoint> {
+  static async configureMockResponse(
+    id: string,
+    config: {
+      mockEnabled: boolean;
+      mockStatusCode?: number;
+      mockHeaders?: any;
+      mockBody?: string;
+      mockDelay?: number;
+    },
+  ): Promise<Endpoint> {
     return prisma.endpoint.update({
       where: { id },
       data: config,
@@ -157,10 +171,13 @@ export class RequestService {
     });
   }
 
-  static async getUserRequests(userId: string, limit = 100): Promise<CapturedRequest[]> {
+  static async getUserRequests(
+    userId: string,
+    limit = 100,
+  ): Promise<CapturedRequest[]> {
     return prisma.capturedRequest.findMany({
       where: { userId },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
       take: limit,
       include: {
         endpoint: {
@@ -221,21 +238,21 @@ export class RequestService {
         },
       }),
       prisma.capturedRequest.groupBy({
-        by: ['method'],
+        by: ["method"],
         where: { userId },
         _count: {
           method: true,
         },
         orderBy: {
           _count: {
-            method: 'desc',
+            method: "desc",
           },
         },
         take: 5,
       }),
     ]);
 
-    const topMethods = methodStats.map(stat => ({
+    const topMethods = methodStats.map((stat) => ({
       method: stat.method,
       count: stat._count.method,
     }));
@@ -257,7 +274,7 @@ export class MaintenanceService {
     totalRequests: number;
   }> {
     const deletedRequests = await RequestService.deleteOldRequests(30);
-    
+
     const [totalUsers, totalEndpoints, totalRequests] = await Promise.all([
       prisma.user.count(),
       prisma.endpoint.count(),
