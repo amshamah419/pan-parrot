@@ -378,13 +378,15 @@ export default function Dashboard() {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle>Request Details</CardTitle>
-                  <div className="flex space-x-2">
-                    <RequestReplayDialog request={selectedRequest} />
-                    <Button variant="outline" size="sm">
-                      <Copy className="mr-2 h-4 w-4" />
-                      Copy as cURL
-                    </Button>
-                  </div>
+                  {selectedRequest && (
+                    <div className="flex space-x-2">
+                      <RequestReplayDialog request={selectedRequest} />
+                      <Button variant="outline" size="sm">
+                        <Copy className="mr-2 h-4 w-4" />
+                        Copy as cURL
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </CardHeader>
               <CardContent>
