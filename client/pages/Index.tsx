@@ -52,12 +52,12 @@ export default function Index() {
   ];
 
   const useCases = [
-    "API Development & Testing",
-    "Webhook Debugging",
-    "Third-party Integration Testing",
-    "Mock Server Setup",
-    "Request Analysis",
-    "Development Workflow"
+    "Prisma Access API Testing",
+    "Cortex Webhook Debugging",
+    "Panorama Integration Testing",
+    "XSOAR Playbook Development",
+    "GlobalProtect API Mocking",
+    "Cloud Security Development"
   ];
 
   return (
