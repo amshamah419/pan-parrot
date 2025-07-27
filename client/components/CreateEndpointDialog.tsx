@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Copy, Plus, RefreshCw } from "lucide-react";
 
 interface CreateEndpointDialogProps {
-  onEndpointCreated?: (endpoint: any) => void;
+  onEndpointCreated?: (endpoint: UserEndpoint) => void;
 }
 
 export function CreateEndpointDialog({ onEndpointCreated }: CreateEndpointDialogProps) {
