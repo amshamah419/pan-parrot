@@ -18,6 +18,19 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const handleTestLogin = async () => {
+    setEmail("test@paloaltonetworks.com");
+    setPassword("test123");
+
+    // Trigger login after a short delay to show the form update
+    setTimeout(() => {
+      const form = document.querySelector('form') as HTMLFormElement;
+      if (form) {
+        form.requestSubmit();
+      }
+    }, 100);
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
