@@ -28,7 +28,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - DATA_PATH=/app/data
+      - DATABASE_URL=postgresql://panparrot:panparrot_secure_password_change_me@postgres:5432/panparrot
       # Add your internal domain here
       - CORS_ORIGIN=https://parrot.pan.internal
       # Optional: Enable HTTPS
@@ -36,12 +36,13 @@ services:
       - SSL_CERT_PATH=/app/certs/cert.pem
       - SSL_KEY_PATH=/app/certs/key.pem
     volumes:
-      # Persistent data storage
-      - pan-parrot-data:/app/data
       # Optional: Mount SSL certificates
       # - ./certs:/app/certs:ro
     networks:
       - pan-network
+    depends_on:
+      postgres:
+        condition: service_healthy
     healthcheck:
       test:
         [
