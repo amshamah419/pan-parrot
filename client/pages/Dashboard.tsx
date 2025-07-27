@@ -13,6 +13,8 @@ import { CreateEndpointDialog } from "@/components/CreateEndpointDialog";
 import { RequestReplayDialog } from "@/components/RequestReplayDialog";
 import { MockResponseDialog } from "@/components/MockResponseDialog";
 import { useAuth } from "@/hooks/use-auth";
+import { getUserEndpoints, getCapturedRequests, deleteEndpoint } from "@/lib/api";
+import { UserEndpoint, CapturedRequest } from "@shared/api";
 import {
   Plus,
   Globe,
