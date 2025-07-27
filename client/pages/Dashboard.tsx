@@ -405,9 +405,9 @@ export default function Dashboard() {
                         <label className="text-sm font-medium">Method</label>
                         <div className="mt-1">
                           <Badge
-                            className={getMethodColor(selectedRequest.method)}
+                            className={getMethodColor(selectedRequest?.method || 'GET')}
                           >
-                            {selectedRequest.method}
+                            {selectedRequest?.method}
                           </Badge>
                         </div>
                       </div>
@@ -415,14 +415,14 @@ export default function Dashboard() {
                         <label className="text-sm font-medium">Status</label>
                         <div className="mt-1">
                           <Badge variant="outline">
-                            {selectedRequest.status}
+                            {selectedRequest?.status}
                           </Badge>
                         </div>
                       </div>
                       <div>
                         <label className="text-sm font-medium">Timestamp</label>
                         <div className="mt-1 text-sm text-muted-foreground">
-                          {selectedRequest.timestamp}
+                          {selectedRequest?.timestamp}
                         </div>
                       </div>
                       <div>
@@ -430,7 +430,7 @@ export default function Dashboard() {
                           IP Address
                         </label>
                         <div className="mt-1 text-sm text-muted-foreground">
-                          {selectedRequest.ip}
+                          {selectedRequest?.ip}
                         </div>
                       </div>
                       <div className="md:col-span-2">
@@ -438,7 +438,7 @@ export default function Dashboard() {
                           User Agent
                         </label>
                         <div className="mt-1 text-sm text-muted-foreground">
-                          {selectedRequest.userAgent}
+                          {selectedRequest?.userAgent}
                         </div>
                       </div>
                     </div>
