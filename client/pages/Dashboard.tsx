@@ -6,20 +6,25 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { 
-  Plus, 
-  Globe, 
-  Play, 
-  Pause, 
-  Filter, 
-  Search, 
-  Copy, 
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Logo } from "@/components/Logo";
+import { useAuth } from "@/hooks/use-auth";
+import {
+  Plus,
+  Globe,
+  Play,
+  Pause,
+  Filter,
+  Search,
+  Copy,
   RotateCcw,
   Settings,
   Trash2,
   Clock,
-  Code2,
-  Monitor
+  Monitor,
+  LogOut,
+  User
 } from "lucide-react";
 
 // Mock data for demonstration
