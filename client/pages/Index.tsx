@@ -189,14 +189,9 @@ export default function Index() {
       <footer className="border-t bg-muted/30">
         <div className="container px-4 py-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <div className="flex items-center space-x-2">
-              <div className="flex h-6 w-6 items-center justify-center rounded bg-primary text-primary-foreground">
-                <Code2 className="h-4 w-4" />
-              </div>
-              <span className="font-semibold">Parrot</span>
-            </div>
+            <Logo size="sm" />
             <p className="text-sm text-muted-foreground">
-              Self-hosted HTTP webhook inspection and mocking platform
+              Internal Palo Alto Networks development tool 🦜
             </p>
           </div>
         </div>
