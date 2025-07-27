@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Logo } from "@/components/Logo";
 import { CreateEndpointDialog } from "@/components/CreateEndpointDialog";
+import { RequestReplayDialog } from "@/components/RequestReplayDialog";
 import { useAuth } from "@/hooks/use-auth";
 import {
   Plus,
