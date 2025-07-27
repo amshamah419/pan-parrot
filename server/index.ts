@@ -2,6 +2,15 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+import {
+  createEndpoint,
+  getUserEndpoints,
+  getCapturedRequests,
+  configureMockResponse,
+  catchRequest,
+  deleteEndpoint,
+  getRequestDetails
+} from "./routes/parrot";
 
 export function createServer() {
   const app = express();
