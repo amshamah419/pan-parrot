@@ -9,8 +9,17 @@ import {
   configureMockResponse,
   catchRequest,
   deleteEndpoint,
-  getRequestDetails,
+  getRequestDetails
 } from "./routes/parrot";
+import {
+  getAllUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+  authenticateUser,
+  getCurrentUser,
+  resetUserPassword
+} from "./routes/admin";
 
 export function createServer() {
   const app = express();
