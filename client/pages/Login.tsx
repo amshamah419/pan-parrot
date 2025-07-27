@@ -36,21 +36,7 @@ export default function Login() {
     setIsLoading(true);
     setError("");
 
-    // Simulate authentication
     try {
-      // Test user credentials
-      const isTestUser = email === "test@paloaltonetworks.com" && password === "test123";
-
-      // Basic validation
-      if (!isTestUser && !email.includes("@paloaltonetworks.com")) {
-        throw new Error("Please use your PAN email address or test credentials");
-      }
-
-      // Check password for non-test users
-      if (!isTestUser && password.length < 6) {
-        throw new Error("Password must be at least 6 characters");
-      }
-
       // Call authentication API
       const response = await fetch('/api/auth/login', {
         method: 'POST',
