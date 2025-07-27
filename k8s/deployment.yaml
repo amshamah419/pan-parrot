@@ -38,7 +38,7 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: fast-ssd  # Adjust to your storage class
+  storageClassName: fast-ssd # Adjust to your storage class
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -58,46 +58,46 @@ spec:
         app: pan-parrot
     spec:
       containers:
-      - name: pan-parrot
-        image: pan-parrot:latest
-        ports:
-        - containerPort: 3000
-        envFrom:
-        - configMapRef:
-            name: pan-parrot-config
-        - secretRef:
-            name: pan-parrot-secrets
-        volumeMounts:
-        - name: data
-          mountPath: /app/data
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-        livenessProbe:
-          httpGet:
-            path: /api/ping
-            port: 3000
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /api/ping
-            port: 3000
-          initialDelaySeconds: 5
-          periodSeconds: 5
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 1001
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: false
+        - name: pan-parrot
+          image: pan-parrot:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: pan-parrot-config
+            - secretRef:
+                name: pan-parrot-secrets
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /api/ping
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/ping
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1001
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: pan-parrot-data
+        - name: data
+          persistentVolumeClaim:
+            claimName: pan-parrot-data
       securityContext:
         fsGroup: 1001
 ---
@@ -112,9 +112,9 @@ spec:
   selector:
     app: pan-parrot
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1
@@ -130,20 +130,20 @@ metadata:
     nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
 spec:
   tls:
-  - hosts:
-    - parrot.pan.internal
-    secretName: pan-parrot-tls
+    - hosts:
+        - parrot.pan.internal
+      secretName: pan-parrot-tls
   rules:
-  - host: parrot.pan.internal
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: pan-parrot-service
-            port:
-              number: 80
+    - host: parrot.pan.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pan-parrot-service
+                port:
+                  number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -155,15 +155,15 @@ spec:
     matchLabels:
       app: pan-parrot
   policyTypes:
-  - Ingress
-  - Egress
+    - Ingress
+    - Egress
   ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          name: ingress-nginx
-    ports:
-    - protocol: TCP
-      port: 3000
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 3000
   egress:
-  - {} # Allow all egress traffic
+    - {} # Allow all egress traffic

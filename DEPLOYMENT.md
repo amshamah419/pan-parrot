@@ -25,6 +25,7 @@ sudo ./deploy.sh
 ```
 
 **Advantages**:
+
 - Simple setup and maintenance
 - Includes Nginx reverse proxy
 - Automatic SSL configuration
@@ -50,6 +51,7 @@ kubectl patch ingress pan-parrot-ingress -n pan-parrot -p '{"spec":{"rules":[{"h
 ```
 
 **Advantages**:
+
 - High availability with multiple replicas
 - Automatic scaling and healing
 - Network policies for security
@@ -130,6 +132,7 @@ chmod 600 /opt/pan-parrot/certs/*
 ### Network Security
 
 1. **Firewall Configuration**:
+
    ```bash
    # Allow only internal networks
    sudo ufw deny in on eth0
@@ -139,6 +142,7 @@ chmod 600 /opt/pan-parrot/certs/*
    ```
 
 2. **DNS Configuration**:
+
    - Add internal DNS record: `parrot.pan.internal → your-server-ip`
    - Use internal certificate authority
    - Consider split-horizon DNS
@@ -152,6 +156,7 @@ chmod 600 /opt/pan-parrot/certs/*
 ### Application Security
 
 1. **User Management**:
+
    - Disable self-registration in production
    - Use strong passwords
    - Regular user audit
@@ -238,18 +243,20 @@ kubectl rollout status deployment/pan-parrot -n pan-parrot
 ### Common Issues
 
 1. **Application won't start**:
+
    ```bash
    # Check logs
    docker-compose logs pan-parrot
-   
+
    # Check permissions
    ls -la /opt/pan-parrot/
-   
+
    # Check port conflicts
    netstat -tulpn | grep :3000
    ```
 
 2. **Cannot access from network**:
+
    - Check firewall rules
    - Verify internal DNS resolution
    - Check nginx configuration
@@ -264,6 +271,7 @@ kubectl rollout status deployment/pan-parrot -n pan-parrot
 ### Emergency Procedures
 
 1. **Complete service restart**:
+
    ```bash
    systemctl restart pan-parrot
    # or
@@ -271,6 +279,7 @@ kubectl rollout status deployment/pan-parrot -n pan-parrot
    ```
 
 2. **Emergency rollback**:
+
    ```bash
    ./scripts/backup.sh restore <last-good-backup>
    ```

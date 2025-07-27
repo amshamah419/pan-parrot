@@ -64,7 +64,7 @@ export interface AdminUser {
   id: string;
   email: string;
   name: string;
-  role: 'user' | 'admin';
+  role: "user" | "admin";
   created: string;
   lastLogin?: string;
   active: boolean;
@@ -74,7 +74,7 @@ export interface CreateUserRequest {
   email: string;
   name: string;
   password: string;
-  role?: 'user' | 'admin';
+  role?: "user" | "admin";
 }
 
 export interface AuthResponse {
@@ -82,7 +82,7 @@ export interface AuthResponse {
     id: string;
     email: string;
     name: string;
-    role: 'user' | 'admin';
+    role: "user" | "admin";
   };
   token: string;
 }

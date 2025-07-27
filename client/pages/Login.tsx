@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/Logo";
@@ -24,7 +30,7 @@ export default function Login() {
 
     // Trigger login after a short delay to show the form update
     setTimeout(() => {
-      const form = document.querySelector('form') as HTMLFormElement;
+      const form = document.querySelector("form") as HTMLFormElement;
       if (form) {
         form.requestSubmit();
       }
@@ -38,17 +44,17 @@ export default function Login() {
 
     try {
       // Call authentication API
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Login failed');
+        throw new Error(errorData.error || "Login failed");
       }
 
       const { user: userData } = await response.json();
@@ -68,7 +74,9 @@ export default function Login() {
         <div className="text-center mb-8">
           <Logo className="justify-center mb-4" size="lg" />
           <h1 className="text-2xl font-bold">Welcome to PAN Parrot</h1>
-          <p className="text-muted-foreground">Login with your PAN credentials</p>
+          <p className="text-muted-foreground">
+            Login with your PAN credentials
+          </p>
         </div>
 
         <Card>
@@ -91,7 +99,7 @@ export default function Login() {
                   required
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <div className="relative">
@@ -151,10 +159,16 @@ export default function Login() {
                   </Button>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Email: <code className="bg-background px-1 py-0.5 rounded">test@paloaltonetworks.com</code>
+                  Email:{" "}
+                  <code className="bg-background px-1 py-0.5 rounded">
+                    test@paloaltonetworks.com
+                  </code>
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Password: <code className="bg-background px-1 py-0.5 rounded">test123</code>
+                  Password:{" "}
+                  <code className="bg-background px-1 py-0.5 rounded">
+                    test123
+                  </code>
                 </p>
               </div>
 

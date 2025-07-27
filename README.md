@@ -25,6 +25,7 @@ PAN Parrot is a self-hosted clone of Beeceptor, designed specifically for intern
 ### Tech Stack
 
 **Frontend:**
+
 - **React 18** with TypeScript
 - **React Router 6** (SPA mode)
 - **TailwindCSS 3** for styling
@@ -33,12 +34,14 @@ PAN Parrot is a self-hosted clone of Beeceptor, designed specifically for intern
 - **Tanstack Query** for data fetching
 
 **Backend:**
+
 - **Express.js** with TypeScript
 - **Zod** for validation
 - **CORS** enabled
 - **In-memory storage** (easily replaceable with database)
 
 **Development:**
+
 - **Vitest** for testing
 - **ESLint** + **Prettier** for code quality
 - **Hot reload** for both client and server
@@ -92,7 +95,7 @@ Admin Account:
 - Email: ashamah@paloaltonetworks.com
 - Password: admin2024!
 
-Test Account: 
+Test Account:
 - Email: test@paloaltonetworks.com
 - Password: test123
 ```
@@ -209,12 +212,14 @@ POST /api/admin/users/:id/reset-password # Reset password (admin only)
 ### How It Works
 
 1. **Login Process**:
+
    - User submits credentials to `/api/auth/login`
    - Server validates against in-memory user store
    - Returns user object and token (currently user ID)
    - Frontend stores in React context + localStorage
 
 2. **Authorization**:
+
    - All API requests include `Authorization: Bearer <token>` header
    - Server extracts user ID from token
    - User isolation enforced at data level
@@ -231,7 +236,7 @@ interface User {
   id: string;
   email: string;
   name: string;
-  role?: 'user' | 'admin';
+  role?: "user" | "admin";
 }
 
 interface AuthContextType {
@@ -247,15 +252,18 @@ interface AuthContextType {
 ### Key Frontend Components
 
 **Layout Components:**
+
 - `Logo.tsx` - PAN Parrot branding with configurable sizes
 - `ProtectedRoute.tsx` - Route wrapper for authenticated pages
 
 **Feature Components:**
+
 - `CreateEndpointDialog.tsx` - Modal for creating new endpoints
 - `RequestReplayDialog.tsx` - Interface for modifying and replaying requests
 - `MockResponseDialog.tsx` - Configuration UI for mock responses
 
 **Page Components:**
+
 - `Dashboard.tsx` - Main interface with endpoint management and request console
 - `Admin.tsx` - User management interface (admin only)
 - `Login.tsx` - Authentication form with test user quick-login
@@ -263,15 +271,18 @@ interface AuthContextType {
 ### State Management
 
 **Global State:**
+
 - Authentication: React Context (`useAuth`)
 - Toast notifications: Radix UI (`useToast`)
 
 **Local State:**
+
 - Component state with `useState`
 - API data fetching with `useEffect`
 - Form state managed locally
 
 **Data Fetching:**
+
 - Custom API functions in `client/lib/api.ts`
 - Real-time updates via polling (2-second intervals when streaming enabled)
 - Error handling with try/catch and user feedback
@@ -281,6 +292,7 @@ interface AuthContextType {
 ### Adding New Features
 
 1. **Backend First Approach**:
+
    ```bash
    # 1. Add API route in server/routes/
    # 2. Update shared types in shared/api.ts
@@ -300,18 +312,21 @@ interface AuthContextType {
 ### Code Style & Conventions
 
 **TypeScript:**
+
 - Strict mode enabled
 - Explicit return types for functions
 - Interface definitions in shared types
 - No `any` types in production code
 
 **React:**
+
 - Functional components with hooks
 - Custom hooks for reusable logic
 - Props interfaces for all components
 - Error boundaries for production
 
 **Styling:**
+
 - TailwindCSS utility classes
 - Radix UI components as base
 - Consistent color scheme via CSS variables
@@ -331,6 +346,7 @@ npm run typecheck
 ```
 
 **Testing Approach:**
+
 - Unit tests for utility functions
 - Integration tests for API endpoints
 - Component testing for complex UI logic
@@ -344,7 +360,7 @@ npm run typecheck
 1. User creates endpoint via CreateEndpointDialog
    ↓ POST /api/endpoints
 2. Server stores endpoint with user association
-   ↓ 
+   ↓
 3. External service makes request to /catch/:path
    ↓
 4. Server captures request data + user context
@@ -364,7 +380,7 @@ npm run typecheck
 1. Admin accesses /admin page (role checked)
    ↓ GET /api/admin/users
 2. Admin creates user via form
-   ↓ POST /api/admin/users  
+   ↓ POST /api/admin/users
 3. User credentials stored in server memory
    ↓
 4. New user can login with provided credentials
@@ -385,11 +401,13 @@ npm run start  # Start production server
 ### Production Options
 
 1. **Docker Compose** (Recommended for single server):
+
    ```bash
    sudo ./deploy.sh
    ```
 
 2. **Kubernetes** (Enterprise deployment):
+
    ```bash
    kubectl apply -f k8s/deployment.yaml
    ```
@@ -406,18 +424,21 @@ See `DEPLOYMENT.md` for detailed deployment instructions.
 ## 🔒 Security Considerations
 
 ### Network Security
+
 - **Internal Use Only** - Never expose to public internet
 - **IP Whitelisting** - Restrict to internal network ranges
 - **Rate Limiting** - Built-in protection against abuse
 - **CORS Configuration** - Limited to internal domains
 
 ### Application Security
+
 - **Input Validation** - Zod schemas for API endpoints
 - **XSS Protection** - React's built-in escaping
 - **CSRF Protection** - SameSite cookies and CORS
 - **Authentication** - Token-based with user isolation
 
 ### Data Security
+
 - **User Isolation** - All data scoped to user ID
 - **No Data Persistence** - Memory-only storage (configurable)
 - **Request Sanitization** - Large payloads handled gracefully
@@ -428,12 +449,14 @@ See `DEPLOYMENT.md` for detailed deployment instructions.
 ### Common Development Issues
 
 1. **Port Conflicts**:
+
    ```bash
    # Check what's using port 8080
    lsof -i :8080
    ```
 
 2. **Build Errors**:
+
    ```bash
    # Clear node modules and reinstall
    rm -rf node_modules package-lock.json
@@ -449,11 +472,13 @@ See `DEPLOYMENT.md` for detailed deployment instructions.
 ### Production Debugging
 
 1. **Check Application Health**:
+
    ```bash
    curl http://localhost:3000/api/ping
    ```
 
 2. **View Logs**:
+
    ```bash
    docker-compose logs -f pan-parrot
    # or
@@ -505,16 +530,19 @@ See `DEPLOYMENT.md` for detailed deployment instructions.
 ### Optimization Opportunities
 
 1. **Database Integration**:
+
    - Replace in-memory storage with PostgreSQL/MongoDB
    - Add request pagination and search
    - Implement data retention policies
 
 2. **Real-time Updates**:
+
    - WebSocket connection for live updates
    - Server-sent events (SSE) alternative
    - Reduce polling frequency
 
 3. **Caching**:
+
    - Redis for session storage
    - Request response caching
    - API response caching
@@ -527,6 +555,7 @@ See `DEPLOYMENT.md` for detailed deployment instructions.
 ## 🎯 Roadmap
 
 ### Short Term (1-2 months)
+
 - [ ] WebSocket integration for real-time updates
 - [ ] Database persistence layer
 - [ ] Request search and filtering
@@ -534,6 +563,7 @@ See `DEPLOYMENT.md` for detailed deployment instructions.
 - [ ] Export/import functionality
 
 ### Medium Term (3-6 months)
+
 - [ ] API versioning
 - [ ] Webhook forwarding
 - [ ] Request transformation rules
@@ -541,6 +571,7 @@ See `DEPLOYMENT.md` for detailed deployment instructions.
 - [ ] Advanced user permissions
 
 ### Long Term (6+ months)
+
 - [ ] GraphQL support
 - [ ] Plugin system
 - [ ] Integration with PAN tools
@@ -567,4 +598,4 @@ For development questions or issues:
 
 **Built with ❤️ for Palo Alto Networks developers** 🦜
 
-*PAN Parrot - Making HTTP debugging fun again!*
+_PAN Parrot - Making HTTP debugging fun again!_

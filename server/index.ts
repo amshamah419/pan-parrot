@@ -9,7 +9,7 @@ import {
   configureMockResponse,
   catchRequest,
   deleteEndpoint,
-  getRequestDetails
+  getRequestDetails,
 } from "./routes/parrot";
 import {
   getAllUsers,
@@ -18,7 +18,7 @@ import {
   deleteUser,
   authenticateUser,
   getCurrentUser,
-  resetUserPassword
+  resetUserPassword,
 } from "./routes/admin";
 
 export function createServer() {

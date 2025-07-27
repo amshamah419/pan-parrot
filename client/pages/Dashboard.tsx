@@ -212,8 +212,10 @@ export default function Dashboard() {
                   <Settings className="mr-2 h-4 w-4" />
                   Settings
                 </DropdownMenuItem>
-                {user?.role === 'admin' && (
-                  <DropdownMenuItem onClick={() => window.location.href = '/admin'}>
+                {user?.role === "admin" && (
+                  <DropdownMenuItem
+                    onClick={() => (window.location.href = "/admin")}
+                  >
                     <User className="mr-2 h-4 w-4" />
                     Admin Panel
                   </DropdownMenuItem>
