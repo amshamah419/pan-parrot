@@ -32,56 +32,15 @@ import {
   User
 } from "lucide-react";
 
-// Mock data for demonstration
-const mockEndpoints = [
-  { id: "1", name: "my-webhook", url: "https://parrot.dev/my-webhook", requests: 42 },
-  { id: "2", name: "payment-callback", url: "https://parrot.dev/payment-callback", requests: 15 },
-  { id: "3", name: "user-signup", url: "https://parrot.dev/user-signup", requests: 8 }
-];
-
-const mockRequests = [
-  {
-    id: "1",
-    method: "POST",
-    endpoint: "/my-webhook",
-    timestamp: "2024-01-20 10:30:45",
-    status: 200,
-    ip: "192.168.1.1",
-    userAgent: "Mozilla/5.0...",
-    headers: { "Content-Type": "application/json", "Authorization": "Bearer token123" },
-    body: { user: "john", action: "login" }
-  },
-  {
-    id: "2",
-    method: "GET",
-    endpoint: "/payment-callback",
-    timestamp: "2024-01-20 10:29:12",
-    status: 200,
-    ip: "10.0.0.1",
-    userAgent: "PostmanRuntime/7.29.2",
-    headers: { "Accept": "application/json" },
-    body: null
-  },
-  {
-    id: "3",
-    method: "PUT",
-    endpoint: "/user-signup",
-    timestamp: "2024-01-20 10:25:33",
-    status: 201,
-    ip: "172.16.0.1",
-    userAgent: "curl/7.68.0",
-    headers: { "Content-Type": "application/json" },
-    body: { email: "user@example.com", name: "Jane Doe" }
-  }
-];
-
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const [isStreaming, setIsStreaming] = useState(true);
-  const [selectedRequest, setSelectedRequest] = useState(mockRequests[0]);
+  const [selectedRequest, setSelectedRequest] = useState<CapturedRequest | null>(null);
   const [filterMethod, setFilterMethod] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [userEndpoints, setUserEndpoints] = useState(mockEndpoints);
+  const [userEndpoints, setUserEndpoints] = useState<UserEndpoint[]>([]);
+  const [capturedRequests, setCapturedRequests] = useState<CapturedRequest[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getMethodColor = (method: string) => {
     switch (method) {
