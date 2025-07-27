@@ -163,10 +163,7 @@ export default function Dashboard() {
               <h1 className="text-2xl font-bold">Hey {user?.name}! 👋</h1>
               <p className="text-muted-foreground">Your HTTP debugging endpoints</p>
             </div>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Create Endpoint
-            </Button>
+            <CreateEndpointDialog onEndpointCreated={handleEndpointCreated} />
           </div>
           
           <div className="grid gap-4 md:grid-cols-3">
