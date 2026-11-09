@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,24 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   DropdownMenu,
@@ -35,71 +18,34 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Logo } from "@/components/Logo";
 import { useAuth } from "@/hooks/use-auth";
+import type { AdminUser } from "@shared/api";
 import {
-  Users,
-  Plus,
   MoreHorizontal,
-  Edit,
-  Trash2,
-  Key,
   Shield,
   UserCheck,
   UserX,
   LogOut,
+  Users,
+  Trash2,
 } from "lucide-react";
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: "user" | "admin";
-  created: string;
-  lastLogin?: string;
-  active: boolean;
-}
 
 export default function Admin() {
   const { user, logout } = useAuth();
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<AdminUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-  const [createUserOpen, setCreateUserOpen] = useState(false);
-  const [editUserOpen, setEditUserOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-
-  // Create user form state
-  const [newUser, setNewUser] = useState({
-    email: "",
-    name: "",
-    password: "",
-    role: "user" as "user" | "admin",
-  });
-
-  // Check if current user is admin
-  const isCurrentUserAdmin = user?.role === "admin";
 
   useEffect(() => {
-    if (!isCurrentUserAdmin) {
-      return;
-    }
-    loadUsers();
-  }, [isCurrentUserAdmin]);
+    if (user?.role === "admin") void loadUsers();
+  }, [user?.role]);
 
   const loadUsers = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/admin/users", {
-        headers: {
-          Authorization: `Bearer ${user?.id}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to load users");
-      }
-
-      const userData = await response.json();
-      setUsers(userData);
+      const response = await fetch("/api/admin/users", { credentials: "include" });
+      if (!response.ok) throw new Error("Failed to load users");
+      setUsers(await response.json());
+      setError("");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load users");
     } finally {
@@ -107,122 +53,49 @@ export default function Admin() {
     }
   };
 
-  const handleCreateUser = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch("/api/admin/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.id}`,
-        },
-        body: JSON.stringify(newUser),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to create user");
-      }
-
-      await loadUsers();
-      setCreateUserOpen(false);
-      setNewUser({ email: "", name: "", password: "", role: "user" });
-      setError("");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to create user");
+  const updateUser = async (userId: string, updates: Partial<AdminUser>) => {
+    const response = await fetch(`/api/admin/users/${userId}`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updates),
+    });
+    if (!response.ok) {
+      const data = (await response.json().catch(() => ({}))) as { error?: string };
+      throw new Error(data.error || "Failed to update user");
     }
+    await loadUsers();
   };
 
-  const handleUpdateUser = async (userId: string, updates: Partial<User>) => {
-    try {
-      const response = await fetch(`/api/admin/users/${userId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.id}`,
-        },
-        body: JSON.stringify(updates),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update user");
-      }
-
-      await loadUsers();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to update user");
-    }
-  };
-
-  const handleDeleteUser = async (userId: string) => {
-    if (!confirm("Are you sure you want to delete this user?")) {
+  const deleteUser = async (userId: string) => {
+    if (!confirm("Delete this user and their captured requests?")) return;
+    const response = await fetch(`/api/admin/users/${userId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const data = (await response.json().catch(() => ({}))) as { error?: string };
+      setError(data.error || "Failed to delete user");
       return;
     }
-
-    try {
-      const response = await fetch(`/api/admin/users/${userId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${user?.id}`,
-        },
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to delete user");
-      }
-
-      await loadUsers();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to delete user");
-    }
+    await loadUsers();
   };
 
-  const handleResetPassword = async (userId: string) => {
-    const newPassword = prompt("Enter new password (min 6 characters):");
-    if (!newPassword || newPassword.length < 6) {
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `/api/admin/users/${userId}/reset-password`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.id}`,
-          },
-          body: JSON.stringify({ newPassword }),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to reset password");
-      }
-
-      alert("Password reset successfully");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to reset password");
-    }
-  };
-
-  if (!isCurrentUserAdmin) {
+  if (user?.role !== "admin") {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle className="flex items-center">
               <Shield className="mr-2 h-5 w-5 text-destructive" />
-              Access Denied
+              Access denied
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground mb-4">
-              You need admin privileges to access this page.
+              You need the admin role to open this page.
             </p>
-            <Button onClick={() => window.history.back()}>Go Back</Button>
+            <Button onClick={() => window.history.back()}>Go back</Button>
           </CardContent>
         </Card>
       </div>
@@ -231,172 +104,35 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="border-b bg-background/95 backdrop-blur">
         <div className="container flex h-16 items-center justify-between">
           <Logo />
           <div className="flex items-center space-x-4">
-            <Button
-              variant="outline"
-              onClick={() => (window.location.href = "/dashboard")}
-            >
-              Back to Dashboard
+            <Button variant="outline" onClick={() => (window.location.href = "/dashboard")}>
+              Back to dashboard
             </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="relative h-8 w-8 rounded-full"
-                >
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                    {user?.name?.charAt(0).toUpperCase() || "A"}
-                  </div>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end">
-                <div className="flex items-center justify-start gap-2 p-2">
-                  <div className="flex flex-col space-y-1 leading-none">
-                    <p className="font-medium">{user?.name}</p>
-                    <p className="w-[200px] truncate text-sm text-muted-foreground">
-                      {user?.email}
-                    </p>
-                  </div>
-                </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={logout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Log out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Button variant="ghost" onClick={() => void logout()}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Log out
+            </Button>
           </div>
         </div>
       </header>
 
       <div className="container mx-auto p-6">
         <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold flex items-center">
-                <Users className="mr-2 h-6 w-6" />
-                User Management
-              </h1>
-              <p className="text-muted-foreground">
-                Manage PAN Parrot users and permissions
-              </p>
-            </div>
-
-            <Dialog open={createUserOpen} onOpenChange={setCreateUserOpen}>
-              <DialogTrigger asChild>
-                <Button>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Add User
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Create New User</DialogTitle>
-                  <DialogDescription>
-                    Add a new user to PAN Parrot
-                  </DialogDescription>
-                </DialogHeader>
-
-                <form onSubmit={handleCreateUser} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="user@paloaltonetworks.com"
-                      value={newUser.email}
-                      onChange={(e) =>
-                        setNewUser((prev) => ({
-                          ...prev,
-                          email: e.target.value,
-                        }))
-                      }
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                      id="name"
-                      placeholder="John Doe"
-                      value={newUser.name}
-                      onChange={(e) =>
-                        setNewUser((prev) => ({
-                          ...prev,
-                          name: e.target.value,
-                        }))
-                      }
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="Minimum 6 characters"
-                      value={newUser.password}
-                      onChange={(e) =>
-                        setNewUser((prev) => ({
-                          ...prev,
-                          password: e.target.value,
-                        }))
-                      }
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="role">Role</Label>
-                    <Select
-                      value={newUser.role}
-                      onValueChange={(value) =>
-                        setNewUser((prev) => ({
-                          ...prev,
-                          role: value as "user" | "admin",
-                        }))
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="user">User</SelectItem>
-                        <SelectItem value="admin">Admin</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  {error && (
-                    <Alert variant="destructive">
-                      <AlertDescription>{error}</AlertDescription>
-                    </Alert>
-                  )}
-
-                  <div className="flex space-x-2">
-                    <Button type="submit" className="flex-1">
-                      Create User
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => setCreateUserOpen(false)}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </form>
-              </DialogContent>
-            </Dialog>
-          </div>
+          <h1 className="text-2xl font-bold flex items-center">
+            <Users className="mr-2 h-6 w-6" />
+            People
+          </h1>
+          <p className="text-muted-foreground">
+            Anyone with a verified @paloaltonetworks.com address can sign in.
+            You can deactivate them or change their role. There is no password
+            to reset.
+          </p>
         </div>
 
-        {error && !createUserOpen && (
+        {error && (
           <Alert variant="destructive" className="mb-6">
             <AlertDescription>{error}</AlertDescription>
           </Alert>
@@ -404,66 +140,31 @@ export default function Admin() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Users ({users.length})</CardTitle>
+            <CardTitle>Accounts ({users.length})</CardTitle>
             <CardDescription>
-              Manage user accounts and permissions
+              Deactivating someone signs them out immediately.
             </CardDescription>
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <div className="p-8 text-center text-muted-foreground">
-                Loading users...
-              </div>
-            ) : users.length === 0 ? (
-              <div className="p-8 text-center text-muted-foreground">
-                No users found
-              </div>
+              <p className="p-8 text-center text-muted-foreground">Loading…</p>
             ) : (
               <div className="space-y-4">
-                {users.map((userItem) => (
+                {users.map((person) => (
                   <div
-                    key={userItem.id}
+                    key={person.id}
                     className="flex items-center justify-between p-4 border rounded-lg"
                   >
-                    <div className="flex items-center space-x-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                        {userItem.name.charAt(0).toUpperCase()}
+                    <div>
+                      <div className="flex items-center space-x-2">
+                        <p className="font-medium">{person.name}</p>
+                        <Badge variant={person.role === "admin" ? "default" : "secondary"}>
+                          {person.role}
+                        </Badge>
+                        {!person.active && <Badge variant="destructive">Inactive</Badge>}
                       </div>
-                      <div>
-                        <div className="flex items-center space-x-2">
-                          <p className="font-medium">{userItem.name}</p>
-                          <Badge
-                            variant={
-                              userItem.role === "admin"
-                                ? "default"
-                                : "secondary"
-                            }
-                          >
-                            {userItem.role}
-                          </Badge>
-                          {!userItem.active && (
-                            <Badge variant="destructive">Inactive</Badge>
-                          )}
-                        </div>
-                        <p className="text-sm text-muted-foreground">
-                          {userItem.email}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          Created:{" "}
-                          {new Date(userItem.created).toLocaleDateString()}
-                          {userItem.lastLogin && (
-                            <>
-                              {" "}
-                              • Last login:{" "}
-                              {new Date(
-                                userItem.lastLogin,
-                              ).toLocaleDateString()}
-                            </>
-                          )}
-                        </p>
-                      </div>
+                      <p className="text-sm text-muted-foreground">{person.email}</p>
                     </div>
-
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="sm">
@@ -473,12 +174,12 @@ export default function Admin() {
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem
                           onClick={() =>
-                            handleUpdateUser(userItem.id, {
-                              active: !userItem.active,
-                            })
+                            updateUser(person.id, { active: !person.active }).catch((err) =>
+                              setError(err.message),
+                            )
                           }
                         >
-                          {userItem.active ? (
+                          {person.active ? (
                             <>
                               <UserX className="mr-2 h-4 w-4" />
                               Deactivate
@@ -491,19 +192,23 @@ export default function Admin() {
                           )}
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                          onClick={() => handleResetPassword(userItem.id)}
+                          onClick={() =>
+                            updateUser(person.id, {
+                              role: person.role === "admin" ? "user" : "admin",
+                            }).catch((err) => setError(err.message))
+                          }
                         >
-                          <Key className="mr-2 h-4 w-4" />
-                          Reset Password
+                          <Shield className="mr-2 h-4 w-4" />
+                          {person.role === "admin" ? "Make user" : "Make admin"}
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                          onClick={() => handleDeleteUser(userItem.id)}
                           className="text-destructive"
-                          disabled={userItem.id === user?.id}
+                          disabled={person.id === user.id}
+                          onClick={() => void deleteUser(person.id)}
                         >
                           <Trash2 className="mr-2 h-4 w-4" />
-                          Delete User
+                          Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>

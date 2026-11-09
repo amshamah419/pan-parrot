@@ -1,4 +1,7 @@
 #!/bin/bash
+# UNSUPPORTED. PAN Parrot deploys on Netlify. See DEPLOYMENT.md.
+echo "This backup script is unsupported. Read DEPLOYMENT.md." >&2
+exit 1
 
 # PAN Parrot Backup and Maintenance Script
 # This script handles backup, restore, and maintenance tasks

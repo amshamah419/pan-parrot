@@ -1,4 +1,7 @@
 #!/bin/bash
+# UNSUPPORTED. PAN Parrot deploys on Netlify. See DEPLOYMENT.md.
+echo "This startup script is unsupported. Read DEPLOYMENT.md." >&2
+exit 1
 
 # PAN Parrot Startup Script
 # This script handles database initialization and starts the application

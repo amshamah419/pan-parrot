@@ -1,3 +1,5 @@
+# UNSUPPORTED. PAN Parrot deploys on Netlify. See DEPLOYMENT.md.
+# This image is not maintained and will not build against the current app.
 # Multi-stage build for production
 FROM node:18-alpine AS builder
 

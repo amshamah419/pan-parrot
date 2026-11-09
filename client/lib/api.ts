@@ -5,42 +5,36 @@ import {
   MockResponseConfig,
 } from "@shared/api";
 
-// Helper to get auth token (in real app, this would be a JWT)
-function getAuthToken(): string {
-  const user = localStorage.getItem("pan-parrot-user");
-  if (user) {
-    try {
-      const userData = JSON.parse(user);
-      return userData.id; // Use user ID as token for demo
-    } catch (error) {
-      return "anonymous";
-    }
-  }
-  return "anonymous";
-}
-
-// Helper to make authenticated requests
 async function apiRequest<T>(
   endpoint: string,
   options: RequestInit = {},
 ): Promise<T> {
   const response = await fetch(endpoint, {
     ...options,
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getAuthToken()}`,
       ...options.headers,
     },
   });
 
   if (!response.ok) {
-    throw new Error(`API request failed: ${response.statusText}`);
+    let message = response.statusText || "Request failed";
+    try {
+      const data = (await response.json()) as { error?: string };
+      if (data?.error) message = data.error;
+    } catch {
+      // The body was not JSON.
+    }
+    if (response.status === 401) {
+      window.dispatchEvent(new Event("pan-parrot-unauthorized"));
+    }
+    throw new Error(message);
   }
 
   return response.json();
 }
 
-// Endpoint Management
 export async function createEndpoint(
   data: CreateEndpointRequest,
 ): Promise<UserEndpoint> {
@@ -72,7 +66,6 @@ export async function configureMockResponse(
   });
 }
 
-// Request Management
 export async function getCapturedRequests(): Promise<CapturedRequest[]> {
   return apiRequest<CapturedRequest[]>("/api/requests");
 }
@@ -83,15 +76,15 @@ export async function getRequestDetails(
   return apiRequest<CapturedRequest>(`/api/requests/${requestId}`);
 }
 
-// Helper to make a request to a user endpoint (for testing/replay)
 export async function makeRequestToEndpoint(
   url: string,
   method: string = "GET",
   headers: Record<string, string> = {},
-  body?: any,
+  body?: unknown,
 ): Promise<Response> {
   const options: RequestInit = {
     method,
+    credentials: "omit",
     headers: {
       "Content-Type": "application/json",
       ...headers,

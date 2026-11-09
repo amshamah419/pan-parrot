@@ -46,7 +46,6 @@ import {
   Search,
   Copy,
   RotateCcw,
-  Settings,
   Trash2,
   Clock,
   Monitor,
@@ -126,8 +125,36 @@ export default function Dashboard() {
     }
   };
 
+  const formatCapturedBody = (body: unknown) => {
+    if (body == null) return "No body";
+    if (typeof body === "string") return body;
+    return JSON.stringify(body, null, 2);
+  };
+
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
+  };
+
+  const copyCurl = (request: CapturedRequest) => {
+    const url = new URL(request.endpoint, window.location.origin).toString();
+    const lines = [`curl -X ${request.method} '${url}'`];
+    for (const [key, value] of Object.entries(request.headers || {})) {
+      if (value === "[redacted]") continue;
+      lines.push(`  -H '${key}: ${String(value).replace(/'/g, "'\\''")}'`);
+    }
+    if (request.body != null) {
+      const raw =
+        typeof request.body === "string"
+          ? request.body
+          : typeof request.body === "object" &&
+              request.body &&
+              "raw" in request.body &&
+              typeof (request.body as { raw?: unknown }).raw === "string"
+            ? (request.body as { raw: string }).raw
+            : JSON.stringify(request.body);
+      lines.push(`  --data '${raw.replace(/'/g, "'\\''")}'`);
+    }
+    navigator.clipboard.writeText(lines.join(" \\\n"));
   };
 
   const handleEndpointCreated = (endpoint: UserEndpoint) => {
@@ -208,10 +235,6 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  Settings
-                </DropdownMenuItem>
                 {user?.role === "admin" && (
                   <DropdownMenuItem
                     onClick={() => (window.location.href = "/admin")}
@@ -220,7 +243,7 @@ export default function Dashboard() {
                     Admin Panel
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuItem onClick={logout}>
+                <DropdownMenuItem onClick={() => void logout()}>
                   <LogOut className="mr-2 h-4 w-4" />
                   Log out
                 </DropdownMenuItem>
@@ -272,7 +295,7 @@ export default function Dashboard() {
                       </Button>
                     </div>
                     <div className="flex space-x-2">
-                      <MockResponseDialog endpointName={endpoint.name} />
+                      <MockResponseDialog endpoint={endpoint} />
                       <Button
                         variant="ghost"
                         size="sm"
@@ -389,7 +412,11 @@ export default function Dashboard() {
                   {selectedRequest && (
                     <div className="flex space-x-2">
                       <RequestReplayDialog request={selectedRequest} />
-                      <Button variant="outline" size="sm">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => copyCurl(selectedRequest)}
+                      >
                         <Copy className="mr-2 h-4 w-4" />
                         Copy as cURL
                       </Button>
@@ -465,8 +492,10 @@ export default function Dashboard() {
                               className="grid grid-cols-3 gap-4 py-2 border-b"
                             >
                               <code className="text-sm font-medium">{key}</code>
-                              <code className="col-span-2 text-sm text-muted-foreground">
-                                {value}
+                              <code className="col-span-2 text-sm text-muted-foreground break-all">
+                                {typeof value === "string"
+                                  ? value
+                                  : JSON.stringify(value)}
                               </code>
                             </div>
                           ),
@@ -476,10 +505,8 @@ export default function Dashboard() {
 
                     <TabsContent value="body">
                       <ScrollArea className="h-64 w-full rounded border">
-                        <pre className="p-4 text-sm">
-                          {selectedRequest?.body
-                            ? JSON.stringify(selectedRequest.body, null, 2)
-                            : "No body"}
+                        <pre className="p-4 text-sm whitespace-pre-wrap break-all">
+                          {formatCapturedBody(selectedRequest?.body)}
                         </pre>
                       </ScrollArea>
                     </TabsContent>

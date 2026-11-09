@@ -1,320 +1,103 @@
-# PAN Parrot Deployment Guide
+# Deploying PAN Parrot on Netlify
 
-This guide covers deploying PAN Parrot as an internal tool within your corporate network.
+This is the only supported deploy path. Docker, Kubernetes, nginx, and `deploy.sh` are not maintained.
 
-## 🏗️ Deployment Options
+PAN Parrot is an unofficial personal tool. Put that in the site name if you want, and do not place it behind a Palo Alto Networks domain that would make it look official.
 
-### Option 1: Docker Compose (Recommended for Simple Setups)
+## 1. Accounts you need
 
-**Best for**: Small teams, single server deployment, quick setup
+1. **Netlify** — the site, the functions, and Netlify Database (managed Postgres). You do not create a separate Neon account. Installing `@netlify/database` provisions the database on deploy, and you can also turn it on under the site's database settings before the first deploy.
+2. **Resend** — sends the sign-in codes. A Resend account, an API key, and a domain you control with Resend's DNS records. The onboarding sender (`@resend.dev`) can only mail your own inbox, so it is not enough for other `@paloaltonetworks.com` addresses.
+3. **GitHub** — connect this repo to the Netlify site. Netlify applies database migrations from `netlify/database/migrations` during the deploy. You do not run them against production yourself.
 
-```bash
-# 1. Clone/copy the application
-git clone <your-repo> /opt/pan-parrot
-cd /opt/pan-parrot
+## 2. Connect the repo
 
-# 2. Configure environment
-cp .env.production .env
-# Edit .env with your settings
+In the Netlify UI:
 
-# 3. Deploy using the automated script
-chmod +x deploy.sh
-sudo ./deploy.sh
+1. **Add new project → Import an existing project** and choose this GitHub repository.
+2. Confirm the settings Netlify reads from `netlify.toml`:
+   - Build command: `npm run build:client`
+   - Publish directory: `dist/spa`
+   - Node: 22 (`NODE_VERSION` in `netlify.toml`)
+   - Functions directory: `netlify/functions`
+3. Do not add a custom build that runs `prisma migrate` or `drizzle-kit migrate`. Hosted schema changes ship as SQL files in `netlify/database/migrations` and Netlify applies them.
 
-# 4. Access at http://your-server-ip:3000
-```
+The functions declare their own routes (`/api/*` and `/catch/*`). A daily scheduled function deletes expired captures, sessions, and rate-limit rows. Per-endpoint caps and age limits also run when a request is captured, so the database stays bounded even if a scheduled run is skipped. Scheduled functions run on published production deploys.
 
-**Advantages**:
+## 3. Turn on Netlify Database
 
-- Simple setup and maintenance
-- Includes Nginx reverse proxy
-- Automatic SSL configuration
-- Built-in backup system
+1. Open the site → **Database** (Netlify Database, the current managed Postgres — not the retired "Netlify DB" extension).
+2. Enable it if the first deploy has not already created it because `@netlify/database` is installed.
+3. Leave `NETLIFY_DB_URL` alone. The platform injects it. Do not copy it into `DATABASE_URL`.
 
-### Option 2: Kubernetes (Recommended for Enterprise)
+Preview deploys get a database branch forked from production. Merging to the production branch applies any new migration files.
 
-**Best for**: Large deployments, high availability, existing K8s infrastructure
+## 4. Environment variables
 
-```bash
-# 1. Build and push Docker image to your registry
-docker build -t your-registry/pan-parrot:latest .
-docker push your-registry/pan-parrot:latest
+Site configuration → Environment variables. Set these for production (and for deploy previews if you want previews to send real email — usually you should not):
 
-# 2. Update image reference in k8s/deployment.yaml
-sed -i 's|pan-parrot:latest|your-registry/pan-parrot:latest|' k8s/deployment.yaml
+| Variable | Required | Value |
+| --- | --- | --- |
+| `SESSION_SECRET` | yes | `openssl rand -base64 32` — at least 32 characters. This signs session cookies. |
+| `ADMIN_EMAILS` | yes | `ashamah@paloaltonetworks.com` (comma-separated if you add more). Promoted to admin the next time that person signs in. |
+| `SITE_URL` | yes | The public origin, no path, for example `https://your-site.netlify.app`. Used in emails and endpoint URLs. |
+| `RESEND_API_KEY` | yes | From the Resend dashboard. |
+| `EMAIL_FROM` | yes | A sender on the domain you verified in Resend, for example `PAN Parrot <noreply@your-domain>`. |
+| `REQUEST_RETENTION_DAYS` | no | Default `14`. |
+| `MAX_REQUESTS_PER_ENDPOINT` | no | Default `200`. |
+| `MAX_BODY_BYTES` | no | Default `262144` (256 KB). Hard ceiling 1 MB. |
 
-# 3. Deploy to Kubernetes
-kubectl apply -f k8s/deployment.yaml
+Do **not** set:
 
-# 4. Configure ingress with your domain
-kubectl patch ingress pan-parrot-ingress -n pan-parrot -p '{"spec":{"rules":[{"host":"parrot.your-domain.com"}]}}'
-```
+- `AUTH_DEV_EXPOSE_CODE` — that returns sign-in codes in the HTTP response. The server ignores it when `NODE_ENV=production`, and Netlify sets that, but do not set the variable anyway.
+- `DATABASE_URL` — production uses the Netlify Database adapter.
+- Any admin password. There isn't one.
 
-**Advantages**:
+Netlify also provides `URL` and `DEPLOY_PRIME_URL`. The API allows those origins in addition to `SITE_URL`, so deploy previews can call their own API. `EXTRA_ORIGINS` is an optional comma-separated list if you add a custom domain before `SITE_URL` is updated.
 
-- High availability with multiple replicas
-- Automatic scaling and healing
-- Network policies for security
-- Enterprise-grade monitoring
+## 5. Resend
 
-### Option 3: Traditional VM Deployment
+1. Create a Resend account and an API key.
+2. Add the domain you will send from and create the DNS records Resend shows you.
+3. Put the API key in `RESEND_API_KEY` and the full from-address in `EMAIL_FROM`.
+4. Send yourself a test code from the live site after the first deploy.
 
-**Best for**: Existing VM infrastructure, security-sensitive environments
+The message is plain text. It contains an 8-digit code and a link. The link opens `/login` and waits for a button click so mail-gateway prefetchers do not consume the sign-in.
 
-```bash
-# 1. Install Node.js 18+ on your VM
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
+## 6. First sign-in
 
-# 2. Create application user
-sudo useradd -r -s /bin/false panparrot
-sudo mkdir -p /opt/pan-parrot
-sudo chown panparrot:panparrot /opt/pan-parrot
+1. Deploy, then open the site.
+2. Request a code for `ashamah@paloaltonetworks.com` (or whatever you put in `ADMIN_EMAILS`).
+3. Enter the code. That account is the admin.
+4. Create an endpoint and send a request to the `/catch/...` URL it shows.
 
-# 3. Deploy application
-sudo -u panparrot cp -r . /opt/pan-parrot/
-cd /opt/pan-parrot
-sudo -u panparrot npm ci --production
-sudo -u panparrot npm run build
+If you set `ADMIN_EMAILS` after you already signed in, sign out and sign in again. The role is applied at sign-in, not on a timer.
 
-# 4. Create systemd service
-sudo cp systemd/pan-parrot.service /etc/systemd/system/
-sudo systemctl enable pan-parrot
-sudo systemctl start pan-parrot
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Key configuration options in `.env`:
+## 7. Local checks before you push
 
 ```bash
-# Network & Security
-DOMAIN=parrot.your-domain.com
-CORS_ORIGIN=https://parrot.your-domain.com
-ALLOWED_NETWORKS=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-
-# SSL Configuration
-HTTPS_ENABLED=true
-SSL_CERT_PATH=/opt/pan-parrot/certs/cert.pem
-SSL_KEY_PATH=/opt/pan-parrot/certs/key.pem
-
-# Admin Account
-ADMIN_EMAIL=ashamah@paloaltonetworks.com
-ADMIN_PASSWORD=your-secure-password
-
-# Security
-SESSION_SECRET=your-32-character-secret-key
-RATE_LIMIT_MAX_REQUESTS=100
+npm test
+npm run typecheck
+npm run build
 ```
 
-### SSL Certificate Setup
-
-For internal CA or self-signed certificates:
+For a local Postgres instead of Netlify's embedded database:
 
 ```bash
-# Generate self-signed certificate (for testing)
-mkdir -p /opt/pan-parrot/certs
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-  -keyout /opt/pan-parrot/certs/key.pem \
-  -out /opt/pan-parrot/certs/cert.pem \
-  -subj "/C=US/ST=CA/L=Santa Clara/O=Palo Alto Networks/CN=parrot.pan.internal"
-
-# Or use your internal CA certificate
-cp your-ca-cert.pem /opt/pan-parrot/certs/cert.pem
-cp your-ca-key.pem /opt/pan-parrot/certs/key.pem
-chmod 600 /opt/pan-parrot/certs/*
+# DATABASE_URL=postgresql://localhost:5432/panparrot in .env
+npm run db:migrate:local
+AUTH_DEV_EXPOSE_CODE=true npm run dev
 ```
 
-## 🔒 Security Considerations
+`npm run db:migrate` (`netlify database migrations apply`) is only for the local Netlify database. It refuses to be a way to migrate production. Production migrations happen when Netlify deploys the commit.
 
-### Network Security
+Schema changes: edit `db/schema.ts`, run `npm run db:generate`, commit the new files under `netlify/database/migrations`, and deploy. Do not edit a migration that has already shipped. Add another one.
 
-1. **Firewall Configuration**:
+## 8. What "good" looks like after deploy
 
-   ```bash
-   # Allow only internal networks
-   sudo ufw deny in on eth0
-   sudo ufw allow from 10.0.0.0/8 to any port 80,443
-   sudo ufw allow from 172.16.0.0/12 to any port 80,443
-   sudo ufw allow from 192.168.0.0/16 to any port 80,443
-   ```
-
-2. **DNS Configuration**:
-
-   - Add internal DNS record: `parrot.pan.internal → your-server-ip`
-   - Use internal certificate authority
-   - Consider split-horizon DNS
-
-3. **Reverse Proxy Configuration**:
-   - Rate limiting (included in nginx.conf)
-   - Request size limits
-   - IP whitelisting
-   - SSL termination
-
-### Application Security
-
-1. **User Management**:
-
-   - Disable self-registration in production
-   - Use strong passwords
-   - Regular user audit
-   - Role-based access control
-
-2. **Data Protection**:
-   - Encrypt data at rest (if using persistent storage)
-   - Regular backups
-   - Audit logging
-   - Request data retention policies
-
-## 📊 Monitoring & Maintenance
-
-### Health Monitoring
-
-```bash
-# Check application health
-curl http://localhost:3000/api/ping
-
-# Docker health check
-docker-compose ps
-
-# Kubernetes health check
-kubectl get pods -n pan-parrot
-kubectl describe pod <pod-name> -n pan-parrot
-```
-
-### Backup & Recovery
-
-Using the included backup script:
-
-```bash
-# Create backup
-./scripts/backup.sh backup
-
-# List backups
-./scripts/backup.sh list-backups
-
-# Restore from backup
-./scripts/backup.sh restore /opt/pan-parrot/backups/panparrot_backup_20241201_143022.tar.gz
-```
-
-### Log Management
-
-```bash
-# View application logs
-docker-compose logs -f pan-parrot
-
-# System logs
-journalctl -u pan-parrot -f
-
-# Kubernetes logs
-kubectl logs -f deployment/pan-parrot -n pan-parrot
-```
-
-## 🔄 Updates & Upgrades
-
-### Docker Compose Updates
-
-```bash
-# Automated update
-./scripts/backup.sh update
-
-# Manual update
-cd /opt/pan-parrot
-docker-compose down
-git pull origin main  # or copy new files
-docker-compose build
-docker-compose up -d
-```
-
-### Kubernetes Updates
-
-```bash
-# Update image
-kubectl set image deployment/pan-parrot pan-parrot=your-registry/pan-parrot:v1.1.0 -n pan-parrot
-
-# Rolling update with zero downtime
-kubectl rollout status deployment/pan-parrot -n pan-parrot
-```
-
-## 🚨 Troubleshooting
-
-### Common Issues
-
-1. **Application won't start**:
-
-   ```bash
-   # Check logs
-   docker-compose logs pan-parrot
-
-   # Check permissions
-   ls -la /opt/pan-parrot/
-
-   # Check port conflicts
-   netstat -tulpn | grep :3000
-   ```
-
-2. **Cannot access from network**:
-
-   - Check firewall rules
-   - Verify internal DNS resolution
-   - Check nginx configuration
-   - Verify SSL certificates
-
-3. **Performance issues**:
-   - Monitor resource usage: `docker stats`
-   - Check application logs for errors
-   - Verify database connections
-   - Monitor request rates
-
-### Emergency Procedures
-
-1. **Complete service restart**:
-
-   ```bash
-   systemctl restart pan-parrot
-   # or
-   docker-compose restart
-   ```
-
-2. **Emergency rollback**:
-
-   ```bash
-   ./scripts/backup.sh restore <last-good-backup>
-   ```
-
-3. **Emergency shutdown**:
-   ```bash
-   systemctl stop pan-parrot
-   docker-compose down
-   ```
-
-## 📞 Support
-
-For deployment issues:
-
-1. Check this documentation
-2. Review application logs
-3. Check system resources
-4. Verify network connectivity
-5. Contact your infrastructure team
-
-## 🎯 Production Checklist
-
-Before going live:
-
-- [ ] SSL certificates configured
-- [ ] Internal DNS configured
-- [ ] Firewall rules applied
-- [ ] User accounts created
-- [ ] Backup system tested
-- [ ] Monitoring configured
-- [ ] Emergency procedures documented
-- [ ] Team training completed
-- [ ] Security review completed
-- [ ] Performance testing done
-
----
-
-**Security Note**: PAN Parrot is designed for internal use only. Never expose it to the public internet without proper security measures.
+- `https://<site>/api/ping` returns `{"ok":true,"database":"up"}`.
+- A non-PAN email is rejected by `POST /api/auth/request`.
+- A PAN email receives a code, and only then can create an endpoint.
+- `POST /catch/<path>` stores the request and, if you configured one, returns the mock.
+- The yellow banner on every page says this is an unofficial personal tool.
+- `robots.txt` disallows the whole site.
