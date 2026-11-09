@@ -183,31 +183,38 @@ export default function MockStudio() {
         </div>
       )}
 
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Label className="text-xs">
+          Operation
+          <select
+            className="mt-1 block rounded border bg-background px-2 py-2 text-sm"
+            value={operation.id}
+            onChange={(event) => setOperationId(event.target.value)}
+          >
+            {spec.operations.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.method} {item.pathTemplate}
+                {item.fallback ? " · fallback" : ""}
+                {item.priority ? ` · priority ${item.priority}` : ""}
+              </option>
+            ))}
+          </select>
+        </Label>
+      </div>
+
       <Tabs defaultValue="preview">
         <TabsList className="flex h-auto flex-wrap">
           <TabsTrigger value="preview">Preview</TabsTrigger>
           <TabsTrigger value="shape">Shape</TabsTrigger>
           <TabsTrigger value="chaos">Chaos</TabsTrigger>
+          <TabsTrigger value="match">Match</TabsTrigger>
           <TabsTrigger value="flow">Flow</TabsTrigger>
           <TabsTrigger value="auth">Auth</TabsTrigger>
         </TabsList>
         <TabsContent value="preview" className="space-y-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <select
-              className="rounded border bg-background px-2 py-2 text-sm"
-              value={operation.id}
-              onChange={(event) => setOperationId(event.target.value)}
-            >
-              {spec.operations.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.method} {item.pathTemplate}
-                </option>
-              ))}
-            </select>
-            <div className="flex items-center gap-2 text-sm">
-              <span>Show chaos</span>
-              <Switch checked={previewChaos} onCheckedChange={setPreviewChaos} />
-            </div>
+          <div className="flex items-center justify-end gap-2 text-sm">
+            <span>Show chaos</span>
+            <Switch checked={previewChaos} onCheckedChange={setPreviewChaos} />
           </div>
           <pre className="max-h-[32rem] overflow-auto rounded border bg-muted/40 p-3 text-xs whitespace-pre-wrap break-all">
             {preview}
@@ -239,6 +246,95 @@ export default function MockStudio() {
             totalRecords={spec.totalRecords}
             onChange={(chaos, totalRecords) => setSpec({ ...spec, chaos, totalRecords })}
           />
+        </TabsContent>
+        <TabsContent value="match" className="space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="text-sm text-muted-foreground">
+              This operation is chosen when the method and path match, and these rules match too. A higher priority wins. If nothing stricter matches, the operation marked as the fallback answers.
+            </p>
+            <Button
+              variant="outline"
+              onClick={() => {
+                const id = `rule-${Date.now().toString(36)}`;
+                const clone: MockOperation = {
+                  ...operation,
+                  id,
+                  priority: (operation.priority || 0) + 1,
+                  fallback: false,
+                  headerMatch: undefined,
+                  bodyMatch: undefined,
+                  queryMatch: undefined,
+                };
+                setSpec({ ...spec, operations: [...spec.operations, clone] });
+                setOperationId(id);
+                setSaved("");
+              }}
+            >
+              Add a rule for this path
+            </Button>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Label className="text-xs">Priority
+              <Input
+                type="number"
+                value={operation.priority ?? 0}
+                onChange={(event) => updateOperation({ ...operation, priority: Number(event.target.value) || 0 })}
+              />
+            </Label>
+            <div className="flex items-center justify-between rounded border px-3">
+              <span className="text-sm">Fallback if nothing else matches</span>
+              <Switch
+                checked={Boolean(operation.fallback)}
+                onCheckedChange={(fallback) => updateOperation({ ...operation, fallback })}
+              />
+            </div>
+          </div>
+          <Label className="text-xs">Query rules, one key=value per line
+            <Textarea
+              rows={3}
+              className="font-mono text-xs"
+              value={pairsToText(operation.queryMatch)}
+              onChange={(event) => updateOperation({ ...operation, queryMatch: textToPairs(event.target.value) })}
+            />
+          </Label>
+          <Label className="text-xs">Header rules, one name=value per line. Leave the value empty to require only the header.
+            <Textarea
+              rows={3}
+              className="font-mono text-xs"
+              value={pairsToText(operation.headerMatch)}
+              onChange={(event) => updateOperation({ ...operation, headerMatch: textToPairs(event.target.value) })}
+            />
+          </Label>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Label className="text-xs">Body path, JSONPath or XPath
+              <Input
+                placeholder="$.status or /response/@status"
+                value={operation.bodyMatch?.path || ""}
+                onChange={(event) =>
+                  updateOperation({
+                    ...operation,
+                    bodyMatch: event.target.value
+                      ? { path: event.target.value, equals: operation.bodyMatch?.equals }
+                      : undefined,
+                  })
+                }
+              />
+            </Label>
+            <Label className="text-xs">Body value
+              <Input
+                placeholder="closed"
+                value={operation.bodyMatch?.equals || ""}
+                onChange={(event) =>
+                  updateOperation({
+                    ...operation,
+                    bodyMatch: operation.bodyMatch?.path
+                      ? { path: operation.bodyMatch.path, equals: event.target.value }
+                      : undefined,
+                  })
+                }
+              />
+            </Label>
+          </div>
         </TabsContent>
         <TabsContent value="flow">
           <FlowPanel
@@ -283,6 +379,22 @@ function buildTryUrl(url: string, operation: MockOperation, auth: MockSpec["auth
   }
   const query = params.toString();
   return query ? `${base}?${query}` : base;
+}
+
+function pairsToText(pairs: Record<string, string> | undefined): string {
+  return Object.entries(pairs || {}).map(([key, value]) => `${key}=${value}`).join("\n");
+}
+
+function textToPairs(text: string): Record<string, string> | undefined {
+  const out: Record<string, string> = {};
+  for (const line of text.split("\n")) {
+    if (!line.trim()) continue;
+    const index = line.indexOf("=");
+    const key = (index === -1 ? line : line.slice(0, index)).trim();
+    const value = index === -1 ? "" : line.slice(index + 1).trim();
+    if (key) out[key] = value;
+  }
+  return Object.keys(out).length ? out : undefined;
 }
 
 function samplePath(operation: MockOperation): string {
@@ -366,6 +478,13 @@ function FieldEditor({
             />
             XML attribute
           </label>
+        )}
+        {field.kind === "const" && (
+          <Input
+            value={String(field.constValue ?? "")}
+            onChange={(event) => onChange({ ...field, constValue: event.target.value })}
+            placeholder="constant value"
+          />
         )}
         {field.kind === "string" && (
         <Input
