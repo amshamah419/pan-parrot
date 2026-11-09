@@ -20,7 +20,7 @@ If the mock came from a preset or an integration YAML, the same screen lists the
 - Paste an OpenAPI 3, Swagger 2, Postman collection, WSDL, or XSOAR integration YAML. A YAML becomes one operation per command, at most 12.
 - The **Match** tab picks an operation by method, path, query, headers, and a small JSONPath or XPath.
 - The **Flow** tab can save records, play a sequence, or reveal one time window per poll. Those stay off until you turn them on.
-- The **Auth** tab checks dummy credentials (API key, basic, bearer, OAuth2, AWS SigV4, Digest, HS256 JWT, WS-Security, NTLM, and a few vendor formats). Use dummy values. Mutual TLS is not available.
+- The **Auth** tab checks dummy credentials (API key, basic, bearer, OAuth2, AWS SigV4, Digest, HS256 JWT, WS-Security, NTLM, and a few vendor formats). OAuth2 can return `expires_in` and a `refresh_token`. Use dummy values. Mutual TLS is not available.
 - The **Push** tab can POST generated events to a public `https` webhook. The signing secret is stored encrypted and is not shown again.
 
 A normal page stops at 500 records and 2 MB. Streamed NDJSON and file downloads stop at 6 MB. Ask for the next page with the preset's `limit` and offset or cursor.

@@ -45,7 +45,7 @@ export function checkMockAuth(
     effects.push("auth-denied");
     return fail(403, "Forbidden", effects, auth);
   }
-  if (auth.mode === "oauth2" && auth.oauth2 && normalizePath(request.path) === normalizePath(auth.oauth2.tokenPath)) {
+  if (auth.mode === "oauth2" && auth.oauth2 && pathMatches(request.path, auth.oauth2.tokenPath)) {
     if (tripped && chaos?.authTokenFailure) {
       effects.push("auth-token-failure");
       return {
@@ -59,7 +59,7 @@ export function checkMockAuth(
     }
     return issueOAuth(auth, request, now, effects);
   }
-  if (auth.mode === "session" && auth.session && normalizePath(request.path) === normalizePath(auth.session.loginPath)) {
+  if (auth.mode === "session" && auth.session && pathMatches(request.path, auth.session.loginPath)) {
     return issueSession(auth, request, now, effects);
   }
   if (auth.mode === "panos-key" && auth.panos && request.query.type === "keygen") {
@@ -98,7 +98,13 @@ export function checkMockAuth(
     return fail(401, "Clock skew", effects, auth);
   }
   const ok = credentialMatches(auth, request, now);
-  if (!ok) return fail(401, "Unauthorized", effects, auth);
+  if (!ok) {
+    if (auth.mode === "oauth2" && auth.oauth2) {
+      const token = header(request, "authorization").replace(/^Bearer\s+/i, "");
+      return fail(401, token.startsWith("pptok.") ? "Token expired" : "invalid_token", effects, auth);
+    }
+    return fail(401, "Unauthorized", effects, auth);
+  }
   return pass(effects);
 }
 
@@ -143,12 +149,13 @@ function credentialMatches(auth: MockAuth, request: AuthRequest, now: number): b
     return header(request, "authorization") === `Bearer ${auth.bearer.token}`;
   }
   if (auth.mode === "oauth2" && auth.oauth2) {
-    const token = header(request, "authorization").replace(/^Bearer /i, "");
-    return verifyIssuedToken(token, auth.oauth2.clientSecret, now);
+    const token = header(request, "authorization").replace(/^Bearer\s+/i, "");
+    if (verifyIssuedToken(token, "pptok", auth.oauth2.clientSecret, now)) return true;
+    return false;
   }
   if (auth.mode === "session" && auth.session) {
     const cookie = readCookie(header(request, "cookie"), COOKIE);
-    return verifyIssuedToken(cookie, auth.session.password, now);
+    return verifyIssuedToken(cookie, "pptok", auth.session.password, now);
   }
   if (auth.mode === "panos-key" && auth.panos) {
     return safeEqual(request.query.key || formValue(request.body, "key"), auth.panos.apiKey);
@@ -251,17 +258,50 @@ function issueOAuth(auth: MockAuth, request: AuthRequest, now: number, effects: 
   const oauth = auth.oauth2;
   if (!oauth) return fail(401, "invalid_client", effects, auth);
   const body = new URLSearchParams(request.body);
+  const grant = body.get("grant_type") || "client_credentials";
+  const refreshOn = oauth.refresh ?? oauth.shape !== "crowdstrike";
+  if (grant === "refresh_token") {
+    if (!refreshOn) return oauthError(400, "unsupported_grant_type", "This mock does not issue refresh tokens", effects);
+    const presented = body.get("refresh_token") || "";
+    if (!verifyRefreshToken(presented, oauth.clientSecret, now)) {
+      return oauthError(400, "invalid_grant", "Refresh token is not valid", effects);
+    }
+    if (!clientMatches(oauth, request, body, false)) return fail(401, "invalid_client", effects, auth);
+    return tokenResponse(oauth, now, effects, true);
+  }
+  if (grant !== "client_credentials") {
+    return oauthError(400, "unsupported_grant_type", "grant_type must be client_credentials or refresh_token", effects);
+  }
+  if (!clientMatches(oauth, request, body, true)) return fail(401, "invalid_client", effects, auth);
+  return tokenResponse(oauth, now, effects, refreshOn);
+}
+
+function clientMatches(
+  oauth: NonNullable<MockAuth["oauth2"]>,
+  request: AuthRequest,
+  body: URLSearchParams,
+  required: boolean,
+): boolean {
   const id = body.get("client_id") || request.query.client_id || "";
   const secret = body.get("client_secret") || request.query.client_secret || "";
   const basic = decodeBasic(header(request, "authorization"));
   const clientId = id || basic?.username || "";
   const clientSecret = secret || basic?.password || "";
-  if (clientId !== oauth.clientId || clientSecret !== oauth.clientSecret) {
-    return fail(401, "invalid_client", effects, auth);
-  }
+  if (!clientId && !clientSecret && !required) return true;
+  return clientId === oauth.clientId && clientSecret === oauth.clientSecret;
+}
+
+function tokenResponse(
+  oauth: NonNullable<MockAuth["oauth2"]>,
+  now: number,
+  effects: string[],
+  includeRefresh: boolean,
+): AuthDecision {
   const exp = Math.floor(now / 1000) + oauth.ttlSeconds;
-  const access = issueToken(oauth.clientSecret, exp);
-  const payload =
+  const access = issueToken("pptok", oauth.clientSecret, exp);
+  const refreshExp = Math.floor(now / 1000) + 24 * 60 * 60;
+  const refresh = includeRefresh ? issueToken("ppref", oauth.clientSecret, refreshExp) : undefined;
+  const base =
     oauth.shape === "microsoft"
       ? { token_type: "Bearer", expires_in: oauth.ttlSeconds, ext_expires_in: oauth.ttlSeconds, access_token: access }
       : oauth.shape === "crowdstrike"
@@ -271,7 +311,7 @@ function issueOAuth(auth: MockAuth, request: AuthRequest, now: number, effects: 
     handled: true,
     ok: true,
     status: 200,
-    body: JSON.stringify(payload),
+    body: JSON.stringify(refresh ? { ...base, refresh_token: refresh } : base),
     headers: { "content-type": "application/json; charset=utf-8" },
     chaosEffects: effects,
   };
@@ -285,7 +325,7 @@ function issueSession(auth: MockAuth, request: AuthRequest, now: number, effects
     return fail(401, "Unauthorized", effects, auth);
   }
   const exp = Math.floor(now / 1000) + 3600;
-  const token = issueToken(session.password, exp);
+  const token = issueToken("pptok", session.password, exp);
   return {
     handled: true,
     ok: true,
@@ -299,19 +339,34 @@ function issueSession(auth: MockAuth, request: AuthRequest, now: number, effects
   };
 }
 
-function issueToken(secret: string, exp: number): string {
+function issueToken(prefix: string, secret: string, exp: number): string {
   const payload = String(exp);
-  const sig = createHmac("sha256", secret).update(payload).digest("base64url");
-  return `pptok.${payload}.${sig}`;
+  const sig = createHmac("sha256", secret).update(`${prefix}.${payload}`).digest("base64url");
+  return `${prefix}.${payload}.${sig}`;
 }
 
-function verifyIssuedToken(token: string, secret: string, now: number): boolean {
+function verifyIssuedToken(token: string, prefix: string, secret: string, now: number): boolean {
   const parts = token.split(".");
-  if (parts.length !== 3 || parts[0] !== "pptok") return false;
+  if (parts.length !== 3 || parts[0] !== prefix) return false;
   const exp = Number(parts[1]);
-  if (!Number.isFinite(exp) || exp * 1000 < now) return false;
-  const expected = createHmac("sha256", secret).update(parts[1]).digest("base64url");
+  if (!Number.isFinite(exp) || exp * 1000 <= now) return false;
+  const expected = createHmac("sha256", secret).update(`${prefix}.${parts[1]}`).digest("base64url");
   return safeEqual(parts[2], expected);
+}
+
+function verifyRefreshToken(token: string, secret: string, now: number): boolean {
+  return verifyIssuedToken(token, "ppref", secret, now);
+}
+
+function oauthError(status: number, error: string, description: string, effects: string[]): AuthDecision {
+  return {
+    handled: true,
+    ok: false,
+    status,
+    body: JSON.stringify({ error, error_description: description }),
+    headers: { "content-type": "application/json; charset=utf-8" },
+    chaosEffects: effects,
+  };
 }
 
 function panosKeygenXml(apiKey: string): string {
@@ -397,6 +452,12 @@ function queryString(query: Record<string, string>): string {
 function normalizePath(path: string): string {
   if (!path.startsWith("/")) return `/${path}`;
   return path.length > 1 && path.endsWith("/") ? path.slice(0, -1) : path;
+}
+
+function pathMatches(requestPath: string, configured: string): boolean {
+  const path = normalizePath(requestPath);
+  const want = normalizePath(configured);
+  return path === want || path.endsWith(want);
 }
 
 function safeEqual(left: string | undefined, right: string): boolean {

@@ -165,6 +165,8 @@ export interface MockAuth {
     clientSecret: string;
     ttlSeconds: number;
     shape: "generic" | "microsoft" | "crowdstrike";
+    /** When true, the token response includes a refresh_token and that grant is accepted. */
+    refresh?: boolean;
   };
   session?: { loginPath: string; username: string; password: string };
   panos?: { username: string; password: string; apiKey: string };
@@ -650,6 +652,7 @@ function normalizeAuth(auth: MockAuth | undefined): MockAuth {
         clientSecret: secretText(auth.oauth2.clientSecret),
         ttlSeconds: clampInt(auth.oauth2.ttlSeconds, 60, 86_400, 3600),
         shape,
+        refresh: auth.oauth2.refresh ?? shape !== "crowdstrike",
       },
     };
   }

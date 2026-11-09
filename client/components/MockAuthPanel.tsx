@@ -70,7 +70,10 @@ export function MockAuthPanel({
         <div className="grid gap-2 sm:grid-cols-2">
           <Label className="text-xs">Token path<Input value={auth.oauth2.tokenPath} onChange={(event) => onChange({ ...auth, oauth2: { ...auth.oauth2!, tokenPath: event.target.value } })} /></Label>
           <Label className="text-xs">Shape
-            <select className="mt-1 w-full rounded border bg-background px-2 py-1" value={auth.oauth2.shape} onChange={(event) => onChange({ ...auth, oauth2: { ...auth.oauth2!, shape: event.target.value as "generic" | "microsoft" | "crowdstrike" } })}>
+            <select className="mt-1 w-full rounded border bg-background px-2 py-1" value={auth.oauth2.shape} onChange={(event) => {
+              const shape = event.target.value as "generic" | "microsoft" | "crowdstrike";
+              onChange({ ...auth, oauth2: { ...auth.oauth2!, shape, refresh: shape !== "crowdstrike" } });
+            }}>
               <option value="generic">Generic</option>
               <option value="microsoft">Microsoft identity</option>
               <option value="crowdstrike">CrowdStrike</option>
@@ -78,6 +81,23 @@ export function MockAuthPanel({
           </Label>
           <Label className="text-xs">Dummy client id<Input value={auth.oauth2.clientId} onChange={(event) => onChange({ ...auth, oauth2: { ...auth.oauth2!, clientId: event.target.value } })} /></Label>
           <Label className="text-xs">Dummy client secret<Input value={auth.oauth2.clientSecret} onChange={(event) => onChange({ ...auth, oauth2: { ...auth.oauth2!, clientSecret: event.target.value } })} /></Label>
+          <Label className="text-xs">Access token lifetime, seconds
+            <Input
+              type="number"
+              min={60}
+              max={86400}
+              value={auth.oauth2.ttlSeconds}
+              onChange={(event) => onChange({ ...auth, oauth2: { ...auth.oauth2!, ttlSeconds: Number(event.target.value) || 3600 } })}
+            />
+          </Label>
+          <label className="flex items-center gap-2 self-end text-sm">
+            <input
+              type="checkbox"
+              checked={auth.oauth2.refresh ?? auth.oauth2.shape !== "crowdstrike"}
+              onChange={(event) => onChange({ ...auth, oauth2: { ...auth.oauth2!, refresh: event.target.checked } })}
+            />
+            Return a refresh token
+          </label>
         </div>
       )}
       {auth.mode === "session" && auth.session && (
@@ -156,7 +176,7 @@ function blankAuth(mode: AuthMode): MockAuth {
   if (mode === "basic") return { mode, basic: { username: "lab", password: "dummy-not-a-real-password" } };
   if (mode === "bearer") return { mode, bearer: { token: "dummy-bearer" } };
   if (mode === "oauth2") {
-    return { mode, oauth2: { tokenPath: "/oauth/token", clientId: "dummy-client", clientSecret: "dummy-secret", ttlSeconds: 3600, shape: "generic" } };
+    return { mode, oauth2: { tokenPath: "/oauth/token", clientId: "dummy-client", clientSecret: "dummy-secret", ttlSeconds: 3600, shape: "generic", refresh: true } };
   }
   if (mode === "session") return { mode, session: { loginPath: "/login", username: "lab", password: "dummy-not-a-real-password" } };
   if (mode === "panos-key") return { mode, panos: { username: "lab-admin", password: "dummy-not-a-real-password", apiKey: "dummy-panos-api-key" } };
@@ -177,7 +197,12 @@ function describe(auth: MockAuth): string {
   if (auth.mode === "api-key") return "The named header, query parameter, or form field must equal the dummy value.";
   if (auth.mode === "basic") return "Send Authorization: Basic with the dummy username and password.";
   if (auth.mode === "bearer") return "Send Authorization: Bearer and the dummy token.";
-  if (auth.mode === "oauth2") return "POST the token path with the dummy client id and secret. Later calls use the access token that endpoint returns. Tokens expire.";
+  if (auth.mode === "oauth2") {
+    const refresh = auth.oauth2?.refresh ?? auth.oauth2?.shape !== "crowdstrike";
+    return refresh
+      ? "POST the token path with grant_type=client_credentials and the dummy client id and secret. The response includes access_token, expires_in, and refresh_token. POST again with grant_type=refresh_token to get a new pair. An expired access token is 401 invalid_token."
+      : "POST the token path with the dummy client id and secret. The response is access_token and expires_in, with no refresh token. An expired access token is 401 invalid_token.";
+  }
   if (auth.mode === "session") return "POST the login path. The mock sets a pp-mock cookie. Later calls must send that cookie.";
   if (auth.mode === "panos-key") return "type=keygen with the dummy user and password returns the API key. Other calls must send that key.";
   if (auth.mode === "edgegrid") return auth.edgegrid?.verify === "format-only"
