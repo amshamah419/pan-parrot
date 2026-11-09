@@ -219,7 +219,7 @@ Tick these against the deploy, not against a laptop running `AUTH_DEV_EXPOSE_COD
 - [ ] `robots.txt` is `Disallow: /` and the HTML meta robots tag is `noindex`.
 - [ ] Record and push fetch only public `https` URLs on port 443. Private, loopback, link-local, and metadata hosts are rejected, including after DNS lookup. Push does not follow redirects. A recorded redirect is checked again and does not receive credential headers on a host change.
 - [ ] The rate limits in section 9 are the ones in the function logs' 429s, and you have not raised them on the production environment without a reason.
-- [ ] `npm audit --omit=dev` was read. As of this commit it reports one high advisory: [GHSA-mrhx-c7xc-m3w5](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5) in `zod` 3.x. Request JSON is capped (96 KB for API bodies, 512 KB for a spec) before it is parsed. Zod 4 is a breaking upgrade and is not part of this deploy. Re-run the audit when you next touch dependencies.
+- [ ] `npm audit --omit=dev` reports no high or critical advisories. Zod 4.6.7 or newer is what cleared GHSA-mrhx-c7xc-m3w5. Request JSON is still capped (96 KB for API bodies, 512 KB for a spec) before it is parsed. Dev-dependency findings are outside this check.
 - [ ] `/admin` is limited to `ADMIN_EMAILS`. Signals, purge, deactivate, and role changes return 403 for everyone else.
 - [ ] Dummy mock secrets and the push signing secret are sealed with `SESSION_SECRET` (`enc:v1` AES-GCM). The push secret is not returned to the browser after it is saved. Personal tokens are stored as SHA-256 and shown once.
 - [ ] The yellow banner and the sign-in email both say this is an unofficial personal tool. Do not send real secrets or customer data.

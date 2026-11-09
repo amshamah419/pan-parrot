@@ -34,7 +34,7 @@ Status: **done**, **in progress**, **todo**.
 - `GET /api/health` and `GET /api/ping` are the same database check. They stay unauthenticated and do not report whether Resend is configured. That line is on Admin → Signals. The smoke script is `npm run smoke -- https://<site>`. A personal token is optional and only used to create, call, and delete one mock.
 - Git history is not rewritten. The committed secrets were starter defaults (`your-super-secret-session-key-here`, `admin2024!`, a local Postgres password, and a Builder.io public key). Live `SESSION_SECRET` and `RESEND_API_KEY` belong only in the Netlify production environment.
 - Captured calls expire after 14 days and 200 per mock. There is no backup service. Export a mock before deleting the Netlify project if you still want it.
-- `npm audit --omit=dev` reports one high advisory in zod 3 (GHSA-mrhx-c7xc-m3w5). Bodies are size-capped before parse. Zod 4 is not part of this deploy.
+- Request JSON is still capped before Zod parses it (96 KB for API bodies, 512 KB for a spec). Zod is 4.6.7 or newer so GHSA-mrhx-c7xc-m3w5 is not in the production tree. `z.record` takes a key schema and a value schema.
 
 ## Next ideas
 
@@ -49,4 +49,3 @@ Things a content developer would still have to work around:
 - Dark mode.
 - Richer JSONPath and XPath in the Match tab. The current subset is documented in the defaults above.
 - Playwright against a Netlify preview inside CI. That needs a Netlify token in GitHub, which this pass does not add.
-- A zod 4 upgrade for GHSA-mrhx-c7xc-m3w5. It is a breaking change for the schemas in this repo.
