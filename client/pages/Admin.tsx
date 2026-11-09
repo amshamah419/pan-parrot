@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Logo } from "@/components/Logo";
 import { useAuth } from "@/hooks/use-auth";
-import type { AdminUser } from "@shared/api";
+import type { AdminSignals, AdminUser } from "@shared/api";
 import {
   MoreHorizontal,
   Shield,
@@ -138,6 +138,7 @@ export default function Admin() {
           </Alert>
         )}
 
+        <AdminSignals />
         <AdminUsage />
         <Card>
           <CardHeader>
@@ -234,6 +235,54 @@ export default function Admin() {
         </Card>
       </div>
     </div>
+  );
+}
+
+function AdminSignals() {
+  const [signals, setSignals] = useState<AdminSignals | null>(null);
+  const [problem, setProblem] = useState("");
+  useEffect(() => {
+    void fetch("/api/admin/signals", { credentials: "include" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Could not load signals");
+        setSignals(await response.json());
+      })
+      .catch((err) => setProblem(err instanceof Error ? err.message : "Could not load signals"));
+  }, []);
+  return (
+    <Card className="mb-6">
+      <CardHeader>
+        <CardTitle>Signals</CardTitle>
+        <CardDescription>
+          Database, sign-in email, and retention. Netlify function logs are the other place these show up. There is no separate monitoring service.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-2 text-sm">
+        {problem && <p className="text-destructive">{problem}</p>}
+        {signals && (
+          <>
+            <p>Database: {signals.database}</p>
+            <p className={signals.email === "missing" ? "text-destructive" : undefined}>
+              Sign-in email: {signals.email === "configured" ? "configured" : "missing RESEND_API_KEY or EMAIL_FROM"}
+            </p>
+            <p className={signals.sessionSecret === "missing" ? "text-destructive" : undefined}>
+              Session secret: {signals.sessionSecret === "ok" ? "set" : "missing or shorter than 32 characters"}
+            </p>
+            <p className={signals.devCodeExposed ? "text-destructive" : undefined}>
+              Sign-in codes in API responses: {signals.devCodeExposed ? "on" : "off"}
+            </p>
+            <p>Public origin: {signals.siteUrl}</p>
+            <p>
+              Retention: {signals.retentionDays} days, {signals.maxRequestsPerEndpoint} captured calls per mock, bodies up to {signals.maxBodyBytes} bytes.
+            </p>
+            <p>
+              {signals.users} accounts ({signals.inactiveUsers} inactive), {signals.endpoints} mocks, {signals.capturedRequests} captured calls, {signals.auditEvents} audit events.
+            </p>
+            <p>{signals.newestAudit ? `Newest audit event: ${signals.newestAudit}` : "No audit events yet."}</p>
+          </>
+        )}
+      </CardContent>
+    </Card>
   );
 }
 

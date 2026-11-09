@@ -15,7 +15,7 @@ Status: **done**, **in progress**, **todo**.
 | 7 | Remaining auth | done | Catch URLs can require AWS SigV4, HTTP Digest, HS256 JWT (issuer, audience, expiry), WS-Security UsernameToken, or a stateless NTLM Type 1/2/3 handshake. Mimecast stays format-only. Mutual TLS is unsupported because Netlify functions cannot request a client certificate. |
 | 8 | Large responses | done | Normal pages stay at 500 records and 2 MB. Stream NDJSON is sent in chunks, with a slow-drip chaos option of at most eight pauses. CSV, zip, and gzip downloads can be generated up to 6 MB, Netlify's buffered payload limit. A single byte Range returns 206. The platform can stream 20 MB and the function stops at 60 seconds, so this mock does not try to fill that larger ceiling. |
 | 9 | Collaboration and enterprise polish | done | Owners can share a mock view or edit with other @paloaltonetworks.com addresses, publish it to a shared catalog, and let someone clone a copy. Saves keep 15 versions and can be reverted. Admins see usage, an audit log, and can disable a user or purge captured data. The empty dashboard explains the first three steps. No new vendors. |
-| 10 | Ops readiness | todo | Error monitoring hooks, a health check, backup and retention notes, Playwright in CI, a recorded load-test result, and `docs/GO_LIVE.md` with the exact Netlify, Netlify DB, Resend, env var, secret rotation, and smoke-test steps. |
+| 10 | Ops readiness | done | `docs/GO_LIVE.md` is the Netlify, Netlify Database, Resend, env var, secret-rotation, backup, and smoke-test checklist. `GET /api/health` checks the database. Admin → Signals shows email, the session secret, retention, and counts. `npm run smoke` runs against the deployed site. `docs/USER_GUIDE.md` is the content-dev page. No new monitoring vendor, no Playwright in CI, and no load-test recording. |
 
 ## Defaults chosen without waiting
 
@@ -31,3 +31,22 @@ Status: **done**, **in progress**, **todo**.
 - SigV4 checks the header form only, with a 15 minute clock window, and the credential's region and service must match the mock. Digest uses MD5 and a stateless nonce that lasts 10 minutes. JWT is HS256 only; `alg: none` and asymmetric algorithms are rejected; `exp` is required. WS-Security accepts PasswordText or PasswordDigest. NTLM verifies an NTLMv2 response against a challenge derived from the dummy password, because a Netlify function cannot pin the TCP connection between Type 2 and Type 3. Mutual TLS is not offered.
 - A normal mock page stays at 2 MB. Opt-in NDJSON streams and file downloads stop at 6 MB, which is Netlify's buffered response limit. Netlify's streamed ceiling is 20 MB and the function timeout is 60 seconds. Slow drip pauses at most eight times, 200 ms apart, then sends the rest. Partial responses keep the first 40 percent of the body. Range supports one `bytes=` interval on a file download and is ignored for a live stream. Multiple ranges are rejected with 416.
 - Sharing is by @paloaltonetworks.com address, at most 20 people, view or edit. The owner is the only one who can share, publish, or delete. A published mock can be opened read-only and cloned by anyone signed in. The catch URL stays open, the same as before. History keeps 15 specs. Audit keeps 400 events. Purge deletes captured calls and runtime, not the mock. Dark mode is not in this pass.
+- `GET /api/health` and `GET /api/ping` are the same database check. They stay unauthenticated and do not report whether Resend is configured. That line is on Admin → Signals. The smoke script is `npm run smoke -- https://<site>`. A personal token is optional and only used to create, call, and delete one mock.
+- Git history is not rewritten. The committed secrets were starter defaults (`your-super-secret-session-key-here`, `admin2024!`, a local Postgres password, and a Builder.io public key). Live `SESSION_SECRET` and `RESEND_API_KEY` belong only in the Netlify production environment.
+- Captured calls expire after 14 days and 200 per mock. There is no backup service. Export a mock before deleting the Netlify project if you still want it.
+- `npm audit --omit=dev` reports one high advisory in zod 3 (GHSA-mrhx-c7xc-m3w5). Bodies are size-capped before parse. Zod 4 is not part of this deploy.
+
+## Next ideas
+
+Things a content developer would still have to work around:
+
+- Verify more than the 21 presets that were checked against a public vendor reference. The rest are a guessed shape.
+- A diff on the version list, so revert shows what would change.
+- A way to close a catch URL (a second token or an IP allowlist). Today every catch URL is public and the rate limits are the only brake.
+- An email to the owner when a catch URL receives its first call. Resend is already the mail path.
+- One download of every mock you own that imports back into the studio. Pytest export is a test fixture, not a backup.
+- XSIAM dataset and correlation samples, in addition to XSOAR integration packs.
+- Dark mode.
+- Richer JSONPath and XPath in the Match tab. The current subset is documented in the defaults above.
+- Playwright against a Netlify preview inside CI. That needs a Netlify token in GitHub, which this pass does not add.
+- A zod 4 upgrade for GHSA-mrhx-c7xc-m3w5. It is a breaking change for the schemas in this repo.

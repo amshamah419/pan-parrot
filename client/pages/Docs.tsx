@@ -47,16 +47,30 @@ export default function Docs() {
             </Button>
             <h1 className="text-4xl font-bold tracking-tight">Documentation</h1>
             <p className="mt-4 text-lg text-muted-foreground">
-              PAN Parrot is an unofficial personal webhook catcher. It is not
-              a Palo Alto Networks product. Sign in with a one-time code sent
-              to a verified @paloaltonetworks.com address, create an endpoint,
-              and point a client at the /catch URL. The dashboard polls for
-              new requests. Captured bodies are shown as text. Requests older
-              than the retention window, and requests past the per-endpoint
-              cap, are deleted automatically. Do not send secrets or customer
-              data.
+              Unofficial personal webhook catcher for a @paloaltonetworks.com
+              address. Do not send secrets, credentials, customer data, or
+              production traffic.
             </p>
           </div>
+
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle>First minute</CardTitle>
+              <CardDescription>
+                Sign in with the 8-digit code from your email. There is no password.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ol className="list-decimal space-y-2 pl-5 text-sm text-muted-foreground">
+                <li>Choose Mock an integration and start with Akamai WAF SIEM, or paste one JSON sample.</li>
+                <li>Copy the catch URL. It looks like https://&lt;site&gt;/catch/&lt;path&gt;.</li>
+                <li>Paste it into the XSOAR server field and send one call. The dashboard log shows what arrived.</li>
+              </ol>
+              <p className="mt-4 text-sm text-muted-foreground">
+                A guessed-shape preset is a starting point. The badge says when a preset was checked against a public vendor reference. Match, Flow, Auth, and Push are on the mock page. A normal page stops at 500 records and 2 MB. The catch URL is public; sharing only changes who can edit the studio. The same notes are in docs/USER_GUIDE.md.
+              </p>
+            </CardContent>
+          </Card>
 
           <Card className="mb-8">
             <CardHeader>

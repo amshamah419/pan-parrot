@@ -60,9 +60,9 @@ import {
 } from "./data";
 import { clientIp, HttpError, readJson } from "./http";
 import { runMaintenance } from "./maintenance";
+import { adminSignals, readHealth } from "./ops";
 import { enforceRateLimit, limitAuthed, limitPing } from "./rate-limit";
 import { sessionCookieOptions } from "./session";
-import { sql } from "drizzle-orm";
 
 export type AppEnv = {
   Variables: {
@@ -169,16 +169,20 @@ export function createServer(options?: {
     return app;
   }
 
-  app.get("/api/ping", async (c) => {
+  const health = async (c: Context<AppEnv>) => {
     const db = c.get("db");
-    await limitPing(db, c.get("ip"));
     try {
-      await db.execute(sql`select 1`);
-      return c.json({ ok: true, database: "up" });
-    } catch {
+      await limitPing(db, c.get("ip"));
+    } catch (error) {
+      if (error instanceof HttpError) throw error;
+      console.error("health check failed");
       return c.json({ ok: false, database: "down" }, 503);
     }
-  });
+    const body = await readHealth(db);
+    return c.json(body, body.ok ? 200 : 503);
+  };
+  app.get("/api/health", health);
+  app.get("/api/ping", health);
 
   app.post("/api/auth/request", async (c) => {
     const body = await readJson(c.req.raw, POLICY.apiJsonBytes);
@@ -504,6 +508,12 @@ export function createServer(options?: {
     );
   });
 
+  app.get("/api/admin/signals", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await adminSignals(c.get("db")));
+  });
+
   app.get("/api/admin/usage", async (c) => {
     const user = await requireAdmin(c);
     await limitAuthed(c.get("db"), user.id);
@@ -695,5 +705,6 @@ export { pushScheduleHandler };
 export async function maintenanceHandler(): Promise<Response> {
   const db = await getDb();
   const result = await runMaintenance(db);
+  console.info(`maintenance deleted_requests=${result.deletedRequests}`);
   return Response.json(result);
 }
