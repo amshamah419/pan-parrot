@@ -45,6 +45,30 @@ const request = {
 };
 
 describe("mock auth", () => {
+  it("answers a Digest client with a challenge, then accepts the response", () => {
+    const now = Date.parse("2026-11-09T12:00:00Z");
+    const mock = spec({
+      mode: "digest",
+      digest: { realm: "pan-parrot", username: "lab", password: "dummy-not-a-real-password" },
+    });
+    const challenge = checkMockAuth(mock, request, now);
+    expect(challenge.status).toBe(401);
+    expect(challenge.headers["www-authenticate"]).toContain("Digest");
+    const nonce = /nonce="([^"]+)"/.exec(challenge.headers["www-authenticate"])?.[1] || "";
+    const crypto = require("node:crypto");
+    const md5 = (value: string) => crypto.createHash("md5").update(value).digest("hex");
+    const ha1 = md5("lab:pan-parrot:dummy-not-a-real-password");
+    const ha2 = md5("GET:/catch/demo/data");
+    const response = md5(`${ha1}:${nonce}:00000001:abc:auth:${ha2}`);
+    const ok = checkMockAuth(mock, {
+      ...request,
+      headers: {
+        authorization: `Digest username="lab", realm="pan-parrot", nonce="${nonce}", uri="/catch/demo/data", qop=auth, nc=00000001, cnonce="abc", response="${response}"`,
+      },
+    }, now + 1000);
+    expect(ok.ok).toBe(true);
+  });
+
   it("issues a CrowdStrike-shaped token and accepts it until it expires", () => {
     const now = Date.parse("2026-11-09T00:00:00Z");
     const mock = spec({

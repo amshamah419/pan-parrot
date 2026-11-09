@@ -139,7 +139,12 @@ export type AuthMode =
   | "session"
   | "panos-key"
   | "edgegrid"
-  | "signed-headers";
+  | "signed-headers"
+  | "sigv4"
+  | "digest"
+  | "jwt"
+  | "wsse"
+  | "ntlm";
 
 export interface MockAuth {
   mode: AuthMode;
@@ -162,6 +167,11 @@ export interface MockAuth {
     verify: "signature" | "format-only";
   };
   signedHeaders?: { names: string[]; verify: "format-only" };
+  sigv4?: { accessKeyId: string; secretAccessKey: string; region: string; service: string };
+  digest?: { realm: string; username: string; password: string };
+  jwt?: { hmacSecret: string; issuer: string; audience: string };
+  wsse?: { username: string; password: string };
+  ntlm?: { username: string; password: string; domain: string };
 }
 
 export interface MockSpec {
@@ -623,6 +633,53 @@ function normalizeAuth(auth: MockAuth | undefined): MockAuth {
       .filter((name) => /^[a-z0-9-]{1,40}$/.test(name))
       .slice(0, 8);
     return { mode, signedHeaders: { names, verify: "format-only" } };
+  }
+  if (mode === "sigv4" && auth.sigv4) {
+    return {
+      mode,
+      sigv4: {
+        accessKeyId: secretText(auth.sigv4.accessKeyId),
+        secretAccessKey: secretText(auth.sigv4.secretAccessKey),
+        region: token(auth.sigv4.region, "us-east-1"),
+        service: token(auth.sigv4.service, "execute-api"),
+      },
+    };
+  }
+  if (mode === "digest" && auth.digest) {
+    return {
+      mode,
+      digest: {
+        realm: token(auth.digest.realm, "pan-parrot"),
+        username: secretText(auth.digest.username),
+        password: secretText(auth.digest.password),
+      },
+    };
+  }
+  if (mode === "jwt" && auth.jwt) {
+    return {
+      mode,
+      jwt: {
+        hmacSecret: secretText(auth.jwt.hmacSecret),
+        issuer: cleanOptional(auth.jwt.issuer, 120) || "",
+        audience: cleanOptional(auth.jwt.audience, 120) || "",
+      },
+    };
+  }
+  if (mode === "wsse" && auth.wsse) {
+    return {
+      mode,
+      wsse: { username: secretText(auth.wsse.username), password: secretText(auth.wsse.password) },
+    };
+  }
+  if (mode === "ntlm" && auth.ntlm) {
+    return {
+      mode,
+      ntlm: {
+        username: secretText(auth.ntlm.username),
+        password: secretText(auth.ntlm.password),
+        domain: cleanOptional(auth.ntlm.domain, 40) || "",
+      },
+    };
   }
   return { mode: "none" };
 }

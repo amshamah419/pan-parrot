@@ -1,4 +1,13 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
+import {
+  awsSigV4Matches,
+  digestChallenge,
+  digestMatches,
+  jwtMatches,
+  ntlmMatches,
+  ntlmType2,
+  wsSecurityMatches,
+} from "./auth-schemes";
 import type { ChaosSpec, MockAuth, MockSpec } from "./mock-spec";
 
 export interface AuthRequest {
@@ -70,7 +79,21 @@ export function checkMockAuth(
     effects.push("auth-expired");
     return fail(401, "Token expired", effects, auth);
   }
-  if (tripped && chaos?.authClockSkew && (auth.mode === "edgegrid" || auth.mode === "signed-headers")) {
+  if (auth.mode === "digest" && auth.digest) {
+    if (tripped && chaos?.authClockSkew) {
+      effects.push("auth-clock-skew");
+      return fail(401, "Clock skew", effects, auth);
+    }
+    return decideDigest(auth, request, now, effects);
+  }
+  if (auth.mode === "ntlm" && auth.ntlm) {
+    return decideNtlm(auth, request, effects);
+  }
+  if (
+    tripped &&
+    chaos?.authClockSkew &&
+    (auth.mode === "edgegrid" || auth.mode === "signed-headers" || auth.mode === "sigv4" || auth.mode === "jwt" || auth.mode === "wsse")
+  ) {
     effects.push("auth-clock-skew");
     return fail(401, "Clock skew", effects, auth);
   }
@@ -136,7 +159,54 @@ function credentialMatches(auth: MockAuth, request: AuthRequest, now: number): b
   if (auth.mode === "signed-headers" && auth.signedHeaders) {
     return auth.signedHeaders.names.every((name) => header(request, name).length > 0);
   }
+  if (auth.mode === "sigv4" && auth.sigv4) {
+    return awsSigV4Matches(request, auth.sigv4, now);
+  }
+  if (auth.mode === "jwt" && auth.jwt) {
+    const token = header(request, "authorization").replace(/^Bearer\s+/i, "");
+    return jwtMatches(token, auth.jwt, now);
+  }
+  if (auth.mode === "wsse" && auth.wsse) {
+    return wsSecurityMatches(request.body, auth.wsse, now);
+  }
   return false;
+}
+
+function decideDigest(auth: MockAuth, request: AuthRequest, now: number, effects: string[]): AuthDecision {
+  const digest = auth.digest;
+  if (!digest) return fail(401, "Unauthorized", effects, auth);
+  const authorization = header(request, "authorization");
+  const challenge = digestChallenge(digest.password, digest.realm, now);
+  if (!authorization.toLowerCase().startsWith("digest ") || !digestMatches(request, digest, now)) {
+    return {
+      handled: true,
+      ok: false,
+      status: 401,
+      body: JSON.stringify({ error: "Unauthorized", status: 401 }),
+      headers: { "content-type": "application/json; charset=utf-8", "www-authenticate": challenge },
+      chaosEffects: effects,
+    };
+  }
+  return pass(effects);
+}
+
+function decideNtlm(auth: MockAuth, request: AuthRequest, effects: string[]): AuthDecision {
+  const ntlm = auth.ntlm;
+  if (!ntlm) return fail(401, "Unauthorized", effects, auth);
+  const result = ntlmMatches(header(request, "authorization"), ntlm);
+  if (result === true) return pass(effects);
+  const challenge = result === "challenge" ? ntlmType2(ntlm.password) : "";
+  return {
+    handled: true,
+    ok: false,
+    status: 401,
+    body: JSON.stringify({ error: "Unauthorized", status: 401 }),
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "www-authenticate": challenge ? `NTLM ${challenge}` : "NTLM",
+    },
+    chaosEffects: effects,
+  };
 }
 
 function verifyEdgeGrid(auth: MockAuth, request: AuthRequest): boolean {

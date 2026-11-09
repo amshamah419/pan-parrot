@@ -76,6 +76,9 @@ npm run parrot -- export <endpoint-id> --out ./tests`}</pre>
                 <code>create --preset &lt;id&gt;</code> uses a catalog preset. <code>mocks</code> lists what you already have.
                 Export writes <code>test_pan_parrot.py</code> and <code>test_data.json</code> for <code>requests_mock</code>. The tests do not call the live catch URL, and dummy mock credentials are not included.
               </p>
+              <p>
+                A mock can require AWS SigV4, HTTP Digest, an HS256 JWT, a SOAP UsernameToken, or an NTLM handshake. Use dummy secrets only. Mutual TLS is not supported: a Netlify function cannot ask the client for a certificate.
+              </p>
             </CardContent>
           </Card>
 

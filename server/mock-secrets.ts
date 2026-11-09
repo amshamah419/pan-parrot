@@ -2,7 +2,7 @@ import { createCipheriv, createDecipheriv, createHash, randomBytes } from "node:
 import { sessionSecret } from "./config";
 import type { MockAuth } from "../shared/mock-spec";
 
-const SECRET_KEYS = ["value", "password", "token", "clientSecret", "apiKey", "clientToken", "accessToken"] as const;
+const SECRET_KEYS = ["value", "password", "token", "clientSecret", "apiKey", "clientToken", "accessToken", "secretAccessKey", "hmacSecret"] as const;
 
 export function sealAuth(auth: MockAuth | undefined): MockAuth | undefined {
   if (!auth || auth.mode === "none") return auth;
