@@ -27,3 +27,8 @@ small structural examples, and HTTP paths inferred from an integration's YAML,
 client, and test_data samples. Regenerate them with `npm run presets:import`
 against a local checkout of demisto/content. Hand-curated presets are marked
 `curated: true` and are not overwritten by the importer.
+
+`instance-params.json` keeps the configuration parameter names (server URL,
+credentials, insecure, proxy, fetch) from those same YAML files, so the studio
+can tell a content developer what to type into the XSOAR instance. Regenerate
+it with `npm run presets:instances -- --content /path/to/demisto/content`.

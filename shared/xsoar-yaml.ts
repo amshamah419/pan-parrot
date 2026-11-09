@@ -1,5 +1,6 @@
 import { parse as parseYaml } from "yaml";
 import { defaultChaos, validateMockSpec, type FieldSpec, type MockOperation, type MockSpec } from "./mock-spec";
+import { xsoarFromDocument } from "./xsoar-instance";
 import { fieldsFromOutputs, type OutputField } from "./xsoar-shape";
 
 interface Command {
@@ -70,9 +71,10 @@ export function mockFromIntegrationYaml(text: string): MockSpec {
     "Built from an integration YAML. Each command is one operation. A path is /command-name unless the command description contains METHOD /path.",
   ];
   if (fromArguments) notes.push("Commands without outputs echo their argument names.");
+  const xsoar = xsoarFromDocument(document);
   return validateMockSpec({
     version: 1,
-    source: { kind: "manual", name, fidelity: "shape", notes },
+    source: { kind: "manual", name, fidelity: "shape", notes, ...(xsoar ? { xsoar } : {}) },
     operations,
     chaos: defaultChaos("xsoar"),
     totalRecords: 3,

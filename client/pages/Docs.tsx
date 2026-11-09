@@ -67,7 +67,7 @@ export default function Docs() {
                 <li>Paste it into the XSOAR server field and send one call. The dashboard log shows what arrived.</li>
               </ol>
               <p className="mt-4 text-sm text-muted-foreground">
-                A guessed-shape preset is a starting point. The badge says when a preset was checked against a public vendor reference. Match, Flow, Auth, and Push are on the mock page. A normal page stops at 500 records and 2 MB. The catch URL is public; sharing only changes who can edit the studio. The same notes are in docs/USER_GUIDE.md.
+                A guessed-shape preset is a starting point. The badge says when a preset was checked against a public vendor reference. Match, Flow, Auth, and Push are on the mock page. Presets and integration YAML imports also list the XSOAR instance fields, with copy buttons and an instance JSON download. A normal page stops at 500 records and 2 MB. The catch URL is public; sharing only changes who can edit the studio. The same notes are in docs/USER_GUIDE.md.
               </p>
             </CardContent>
           </Card>

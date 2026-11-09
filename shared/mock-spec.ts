@@ -182,6 +182,23 @@ export interface MockAuth {
   ntlm?: { username: string; password: string; domain: string };
 }
 
+export interface XsoarParam {
+  name: string;
+  display: string;
+  /** XSOAR configuration type. 0 short text, 4 encrypted, 8 boolean, 9 credentials. */
+  type: number;
+  required?: boolean;
+  defaultValue?: string;
+  /** Label of the password side of a type 9 credentials parameter. */
+  passwordLabel?: string;
+}
+
+export interface XsoarIntegration {
+  brand: string;
+  display: string;
+  params: XsoarParam[];
+}
+
 export interface MockSpec {
   version: 1;
   source: {
@@ -199,6 +216,8 @@ export interface MockSpec {
       checkedAt?: string;
       differences?: string[];
     };
+    /** Parameter names taken from an XSOAR integration YAML configuration list. */
+    xsoar?: XsoarIntegration;
   };
   operations: MockOperation[];
   chaos: ChaosSpec;
@@ -339,6 +358,7 @@ export function validateMockSpec(input: unknown): MockSpec {
       notes: cleanList(raw.source.notes, 12, 500),
       unsupported: cleanList(raw.source.unsupported, 20, 300),
       verification: normalizeVerification(raw.source.verification),
+      xsoar: normalizeXsoar(raw.source.xsoar),
     },
     operations,
     chaos: normalizeChaos(raw.chaos),
@@ -450,6 +470,31 @@ function normalizePagination(pagination: PaginationSpec | undefined): Pagination
     timeOverridesOffset: Boolean(pagination.timeOverridesOffset),
     headerName: pagination.headerName ? token(pagination.headerName, "x-next-token") : undefined,
   };
+}
+
+function normalizeXsoar(value: unknown): XsoarIntegration | undefined {
+  if (!value || typeof value !== "object") return undefined;
+  const raw = value as Partial<XsoarIntegration>;
+  const brand = cleanOptional(raw.brand, 80);
+  const display = cleanOptional(raw.display, 120);
+  if (!brand || !display || !Array.isArray(raw.params)) return undefined;
+  const params: XsoarParam[] = [];
+  for (const param of raw.params.slice(0, 16)) {
+    if (!param || typeof param !== "object") continue;
+    const name = cleanOptional(param.name, 80);
+    if (!name || !/^[A-Za-z_][A-Za-z0-9_]{0,79}$/.test(name)) continue;
+    const type = Number(param.type);
+    if (!Number.isInteger(type) || type < 0 || type > 30) continue;
+    params.push({
+      name,
+      display: cleanOptional(param.display, 160) || name,
+      type,
+      required: Boolean(param.required),
+      defaultValue: cleanOptional(param.defaultValue, 80),
+      passwordLabel: cleanOptional(param.passwordLabel, 80),
+    });
+  }
+  return params.length ? { brand, display, params } : undefined;
 }
 
 function normalizeVerification(

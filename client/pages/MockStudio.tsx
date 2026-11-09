@@ -12,6 +12,7 @@ import { FlowPanel } from "@/components/FlowPanel";
 import { PushPanel } from "@/components/PushPanel";
 import { getEndpoint, resetRuntime, saveMockSpec } from "@/lib/api";
 import { CollabPanel } from "@/components/CollabPanel";
+import { InstanceGuidePanel } from "@/components/InstanceGuide";
 import { generateMockResponse, matchOperation } from "@shared/generate";
 import {
   defaultAuth,
@@ -178,6 +179,8 @@ export default function MockStudio() {
           {operation.pack ? ` The response is a ${operation.pack.format} file named ${operation.pack.filename}.` : ""}
         </p>
       </section>
+
+      <InstanceGuidePanel spec={spec} catchUrl={url} />
 
       {verification && (
         <section className="rounded-lg border p-4 text-sm">

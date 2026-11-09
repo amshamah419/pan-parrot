@@ -12,6 +12,8 @@ Sign-in is an 8-digit code emailed to a `@paloaltonetworks.com` address. There i
 
 The studio also shows a "try" URL with the path the integration will append, such as `/siem/v1/configs/{configId}`.
 
+If the mock came from a preset or an integration YAML, the same screen lists the XSOAR instance fields: the server parameter (the catch URL), the dummy credential in that integration's own parameter name, Trust any certificate, Use system proxy, and fetch. Copy one field or download the instance JSON. The JSON is the `{ brand, data: [{ name, value }] }` object XSOAR imports. Leave Fetch incidents off until a manual command shows up in the log.
+
 ## What you can point at a catch URL
 
 - A verified preset follows a public vendor reference. The badge says so. Most catalog presets are a **guessed shape** built from the integration's sample, README, or YAML. Treat a guessed shape as a starting point and edit it.
