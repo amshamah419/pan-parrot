@@ -202,7 +202,7 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
   if (chaosOn && spec.chaos.wrongTypes) effects.push("wrong-types");
 
   let body = encodeBody(operation, records, page, input.requestUrl, chaosOn ? spec.chaos : null, effects);
-  let contentType = operation.contentType;
+  let contentType = operation.pagination.style === "akamai" ? "application/x-ndjson; charset=utf-8" : operation.contentType;
   if (chaosOn && spec.chaos.malformedXml && isXmlOperation(operation)) {
     body = `${body.slice(0, Math.max(1, body.length - 8))}<<<`;
     effects.push("malformed-xml");
@@ -373,7 +373,7 @@ function resolvePage(
     start = (page - 1) * requested;
   } else if (!ignoreOffset && (pagination.style === "cursor" || pagination.style === "link" || pagination.style === "header")) {
     start = decodeToken(query[pagination.cursorParam]);
-  } else if (!ignoreOffset && pagination.style === "offset") {
+  } else if (!ignoreOffset && (pagination.style === "offset" || pagination.style === "akamai")) {
     start = decodeToken(query[pagination.offsetParam]);
   }
 
@@ -423,9 +423,10 @@ function encodeBody(
   if (!operation.list) {
     return JSON.stringify(records[0] ?? {});
   }
-  if (envelope.type === "ndjson") {
+  if (envelope.type === "ndjson" || operation.pagination.style === "akamai") {
     const lines = records.map((record) => JSON.stringify(record));
-    if (envelope.trailer === "akamai-offset") {
+    const akamai = operation.pagination.style === "akamai" || (envelope.type === "ndjson" && envelope.trailer === "akamai-offset");
+    if (akamai) {
       if (records.length === 0) return '{ "total": 0 }';
       lines.push(
         `{ "total": ${records.length}, "offset": "${encodeToken(page.next ?? page.start + records.length)}", "limit": ${records.length} }`,

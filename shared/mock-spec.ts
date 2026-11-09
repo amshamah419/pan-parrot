@@ -57,7 +57,7 @@ export type Envelope =
   | { type: "soap"; version: "1.1" | "1.2" };
 
 export interface PaginationSpec {
-  style: "none" | "offset" | "cursor" | "page" | "link" | "header";
+  style: "none" | "offset" | "cursor" | "page" | "link" | "header" | "akamai";
   limitParam: string;
   offsetParam: string;
   pageParam: string;
@@ -227,6 +227,15 @@ export interface MockSpec {
   auth?: MockAuth;
   behavior?: MockBehavior;
   push?: PushSpec;
+  /** Deterministic 429 after N calls in a window. Off unless enabled. */
+  rateLimit?: RateQuota;
+}
+
+export interface RateQuota {
+  enabled: boolean;
+  limit: number;
+  windowSeconds: number;
+  retryAfterSeconds: number;
 }
 
 export interface PushSpec {
@@ -368,6 +377,7 @@ export function validateMockSpec(input: unknown): MockSpec {
     auth: normalizeAuth(raw.auth),
     behavior: normalizeBehavior(raw.behavior),
     push: normalizePush(raw.push),
+    rateLimit: normalizeRateLimit(raw.rateLimit),
   };
 }
 
@@ -451,7 +461,7 @@ function normalizeEnvelope(envelope: Envelope | undefined, list: boolean): Envel
 function normalizePagination(pagination: PaginationSpec | undefined): PaginationSpec {
   const base = defaultPagination();
   if (!pagination) return base;
-  const style = ["none", "offset", "cursor", "page", "link", "header"].includes(pagination.style)
+  const style = ["none", "offset", "cursor", "page", "link", "header", "akamai"].includes(pagination.style)
     ? pagination.style
     : "none";
   const maxLimit = clampInt(
@@ -471,6 +481,21 @@ function normalizePagination(pagination: PaginationSpec | undefined): Pagination
     timeParam: pagination.timeParam ? token(pagination.timeParam, "from") : undefined,
     timeOverridesOffset: Boolean(pagination.timeOverridesOffset),
     headerName: pagination.headerName ? token(pagination.headerName, "x-next-token") : undefined,
+  };
+}
+
+export function defaultRateLimit(): RateQuota {
+  return { enabled: false, limit: 5, windowSeconds: 60, retryAfterSeconds: 2 };
+}
+
+function normalizeRateLimit(value: RateQuota | undefined): RateQuota {
+  const base = defaultRateLimit();
+  if (!value) return base;
+  return {
+    enabled: Boolean(value.enabled),
+    limit: clampInt(value.limit, 1, 10_000, base.limit),
+    windowSeconds: clampInt(value.windowSeconds, 1, 3600, base.windowSeconds),
+    retryAfterSeconds: clampInt(value.retryAfterSeconds, 0, 3600, base.retryAfterSeconds),
   };
 }
 

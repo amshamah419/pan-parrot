@@ -15,9 +15,11 @@ import { CollabPanel } from "@/components/CollabPanel";
 import { InstanceGuidePanel } from "@/components/InstanceGuide";
 import { FixturePanel } from "@/components/FixturePanel";
 import { generateMockResponse, matchOperation } from "@shared/generate";
+import { applyVendorPagination, type VendorPageStyle } from "@shared/pagination";
 import {
   defaultAuth,
   defaultBehavior,
+  defaultRateLimit,
   FIELD_KINDS,
   validateMockSpec,
   type ChaosSpec,
@@ -25,6 +27,7 @@ import {
   type FieldSpec,
   type MockOperation,
   type MockSpec,
+  type RateQuota,
 } from "@shared/mock-spec";
 import { MOCK_LIMITS } from "@shared/policy";
 
@@ -228,6 +231,24 @@ export default function MockStudio() {
             ))}
           </select>
         </Label>
+        <Label className="text-xs">
+          Pagination
+          <select
+            aria-label="Pagination style"
+            className="mt-1 block rounded border bg-background px-2 py-2 text-sm"
+            value={operation.pagination.style === "header" ? "cursor" : operation.pagination.style}
+            onChange={(event) =>
+              updateOperation(applyVendorPagination(operation, event.target.value as VendorPageStyle))
+            }
+          >
+            <option value="none">Single page</option>
+            <option value="offset">Offset and limit</option>
+            <option value="page">Page number</option>
+            <option value="cursor">Cursor / next token</option>
+            <option value="link">Link header</option>
+            <option value="akamai">Akamai offset line</option>
+          </select>
+        </Label>
       </div>
 
       <Tabs defaultValue="preview">
@@ -295,11 +316,15 @@ export default function MockStudio() {
             />
           )}
         </TabsContent>
-        <TabsContent value="chaos">
+        <TabsContent value="chaos" className="space-y-3">
           <ChaosEditor
             chaos={spec.chaos}
             totalRecords={spec.totalRecords}
             onChange={(chaos, totalRecords) => setSpec({ ...spec, chaos, totalRecords })}
+          />
+          <FetchBackoff
+            quota={spec.rateLimit ?? defaultRateLimit()}
+            onChange={(rateLimit) => setSpec({ ...spec, rateLimit })}
           />
         </TabsContent>
         <TabsContent value="match" className="space-y-3">
@@ -600,6 +625,70 @@ function FieldEditor({
           </Button>
         </div>
       )}
+    </div>
+  );
+}
+
+function FetchBackoff({
+  quota,
+  onChange,
+}: {
+  quota: RateQuota;
+  onChange: (quota: RateQuota) => void;
+}) {
+  const setNumber = (key: "limit" | "windowSeconds" | "retryAfterSeconds", value: string) =>
+    onChange({ ...quota, [key]: Number(value) || 0 });
+  return (
+    <div className="space-y-3 rounded border p-3">
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <Label htmlFor="fetch-backoff">Fetch backoff</Label>
+          <p className="text-xs text-muted-foreground">
+            After this many calls in the window, the catch URL returns 429 with Retry-After and X-RateLimit-Limit, Remaining, and Reset. Reset is the unix time the window ends. This is separate from the random 429 switch above.
+          </p>
+        </div>
+        <Switch
+          id="fetch-backoff"
+          checked={quota.enabled}
+          onCheckedChange={(enabled) => onChange({ ...quota, enabled })}
+          aria-label="Fetch backoff"
+        />
+      </div>
+      <div className="grid grid-cols-3 gap-2">
+        <Label className="text-xs">
+          Calls before 429
+          <Input
+            aria-label="Calls before 429"
+            type="number"
+            min={1}
+            max={10000}
+            value={quota.limit}
+            onChange={(event) => setNumber("limit", event.target.value)}
+          />
+        </Label>
+        <Label className="text-xs">
+          Window seconds
+          <Input
+            aria-label="Window seconds"
+            type="number"
+            min={1}
+            max={3600}
+            value={quota.windowSeconds}
+            onChange={(event) => setNumber("windowSeconds", event.target.value)}
+          />
+        </Label>
+        <Label className="text-xs">
+          Retry-After seconds
+          <Input
+            aria-label="Retry-After seconds"
+            type="number"
+            min={0}
+            max={3600}
+            value={quota.retryAfterSeconds}
+            onChange={(event) => setNumber("retryAfterSeconds", event.target.value)}
+          />
+        </Label>
+      </div>
     </div>
   );
 }

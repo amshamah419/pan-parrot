@@ -163,6 +163,8 @@ export const endpointRuntime = pgTable("endpoint_runtime", {
   seenIds: jsonb("seen_ids").$type<string[]>().notNull(),
   scenarioIndex: integer("scenario_index").notNull().default(0),
   fetchCursor: text("fetch_cursor"),
+  rateCount: integer("rate_count").notNull().default(0),
+  rateWindowStart: timestamp("rate_window_start", { withTimezone: true, mode: "date" }),
   updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" })
     .notNull()
     .defaultNow(),

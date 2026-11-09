@@ -1,9 +1,10 @@
 import { randomBytes } from "node:crypto";
 import { and, count, desc, eq, sql } from "drizzle-orm";
-import { applyBehavior } from "../shared/behavior";
+import { applyBehavior, emptyRuntime } from "../shared/behavior";
 import { chaosTriggers, generateMockResponse, matchOperation } from "../shared/generate";
 import { checkMockAuth } from "../shared/mock-auth";
-import { validateMockSpec, type MockSpec } from "../shared/mock-spec";
+import { defaultRateLimit, validateMockSpec, type MockSpec } from "../shared/mock-spec";
+import { nextRateSlot, rateLimitHeaders } from "../shared/rate-quota";
 import { parseXml, localName, type XmlElement } from "../shared/xml";
 import { gzipBytes, zipEntries } from "./pack";
 import { singleByteRange } from "../shared/range";
@@ -507,6 +508,32 @@ async function produceResponse(
         capped: false,
       };
     }
+    const quota = spec.rateLimit ?? defaultRateLimit();
+    const trackRuntime = quota.enabled || behaviorActive(spec);
+    let state = trackRuntime ? await loadRuntime(db, endpoint.id) : emptyRuntime();
+    const slot = nextRateSlot({
+      quota,
+      count: state.rateCount || 0,
+      windowStart: state.rateWindowStart || 0,
+      now: Date.now(),
+    });
+    if (quota.enabled) {
+      state = { ...state, rateCount: slot.count, rateWindowStart: slot.windowStart };
+    }
+    const quotaHeaders = rateLimitHeaders(quota, slot);
+    if (slot.limited) {
+      await saveRuntime(db, endpoint.id, state);
+      return {
+        status: 429,
+        body: JSON.stringify({ error: "Too Many Requests", status: 429 }),
+        headers: { "content-type": "application/json; charset=utf-8", ...quotaHeaders },
+        json: true,
+        chaosEffects: [],
+        recordCount: 0,
+        delayMs: 0,
+        capped: false,
+      };
+    }
     let generated = generateMockResponse({
       spec,
       operation: matched.operation,
@@ -527,11 +554,12 @@ async function produceResponse(
         bodyText,
         requestIndex,
         generated,
-        state: await loadRuntime(db, endpoint.id),
+        state,
       });
       generated = applied.result;
-      await saveRuntime(db, endpoint.id, applied.state);
+      state = applied.state;
     }
+    if (trackRuntime) await saveRuntime(db, endpoint.id, state);
     const packed = packBody(generated.pack);
     const ranged = applyRange(
       packed?.bytes ?? new TextEncoder().encode(generated.body),
@@ -548,6 +576,7 @@ async function produceResponse(
       headers: {
         ...(packed ? { ...generated.headers, ...packed.headers } : generated.headers),
         ...(ranged?.headers ?? {}),
+        ...quotaHeaders,
       },
       json: false,
       stream: generated.stream && !packed && !ranged,

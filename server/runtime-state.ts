@@ -15,6 +15,8 @@ export async function loadRuntime(db: AppDb, endpointId: string): Promise<Runtim
     seenIds: Array.isArray(row.seenIds) ? row.seenIds : [],
     scenarioIndex: row.scenarioIndex || 0,
     fetchCursor: row.fetchCursor || undefined,
+    rateCount: row.rateCount || 0,
+    rateWindowStart: row.rateWindowStart ? row.rateWindowStart.getTime() : 0,
   };
 }
 
@@ -27,6 +29,8 @@ export async function saveRuntime(db: AppDb, endpointId: string, state: RuntimeS
       seenIds: state.seenIds,
       scenarioIndex: state.scenarioIndex,
       fetchCursor: state.fetchCursor,
+      rateCount: state.rateCount || 0,
+      rateWindowStart: state.rateWindowStart ? new Date(state.rateWindowStart) : null,
       updatedAt: new Date(),
     })
     .onConflictDoUpdate({
@@ -36,6 +40,8 @@ export async function saveRuntime(db: AppDb, endpointId: string, state: RuntimeS
         seenIds: state.seenIds,
         scenarioIndex: state.scenarioIndex,
         fetchCursor: state.fetchCursor,
+        rateCount: state.rateCount || 0,
+        rateWindowStart: state.rateWindowStart ? new Date(state.rateWindowStart) : null,
         updatedAt: new Date(),
       },
     });
