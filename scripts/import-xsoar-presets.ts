@@ -15,7 +15,23 @@ if (!contentRoot) {
   process.exit(1);
 }
 
-const curatedIds = new Set(["akamai-waf-siem"]);
+const curatedIds = new Set([
+  "akamai-waf-siem",
+  "okta-okta-v2",
+  "crowdstrikefalcon-crowdstrikefalcon",
+  "microsoftgraphsecurity-microsoftgraphsecurity",
+  "virustotal-virustotalv3",
+  "jira-jirav3",
+  "servicenow-servicenowv2",
+  "slack-slackv3",
+  "proofpointtap-proofpointtap-v2",
+  "zscaler-zscaler",
+  "azuresentinel-azuresentinel",
+  "gsuitesecurityalertcenter-gsuitesecurityalertcenter",
+  "ciscoumbrellareporting-ciscoumbrellareporting",
+  "microsoft365defender-microsoft365defender",
+  "splunkpy-splunkpy",
+]);
 const stats = {
   scanned: 0,
   usable: 0,
@@ -310,7 +326,7 @@ function indexEntry(preset: {
   curated?: boolean;
   summary?: string;
   operations?: number | unknown[];
-  spec?: { operations?: unknown[] };
+  spec?: { operations?: unknown[]; source?: { verification?: unknown } };
 }): Record<string, unknown> {
   const operations = Array.isArray(preset.operations)
     ? preset.operations.length
@@ -325,6 +341,7 @@ function indexEntry(preset: {
     curated: Boolean(preset.curated),
     summary: preset.summary,
     operations,
+    verification: preset.spec?.source?.verification,
   };
 }
 

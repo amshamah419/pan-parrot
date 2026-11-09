@@ -35,6 +35,7 @@ describe("akamai siem preset", () => {
     expect(events).toHaveLength(2);
     expect(events[0].type).toBe("akamai_siem");
     expect(events[0].attackData.configId).toBe("50170");
+    expect(events[0].httpMessage.query).toBe("q=login");
     expect(events[0].httpMessage.start).toMatch(/^\d+$/);
     expect(events[0].httpMessage.requestId).not.toBe(events[1].httpMessage.requestId);
     expect(trailer.total).toBe(2);
@@ -71,6 +72,54 @@ describe("akamai siem preset", () => {
     expect(result.chaosEffects).toContain("missing-fields");
     expect(page(spec, { limit: "1" }, 1).body).toBe(result.body);
   });
+
+  it("ignores offset when a time window is present, matching Akamai", () => {
+    const withOffset = page(akamai, { limit: "1", offset: "pp_a" });
+    const withTime = page(akamai, { limit: "1", offset: "pp_a", from: "1700000000" });
+    const first = page(akamai, { limit: "1", from: "1700000000" });
+    expect(withTime.body).toBe(first.body);
+    expect(withTime.body).not.toBe(withOffset.body);
+  });
+});
+
+describe("verified vendor envelopes", () => {
+  it("pages Okta logs with a Link header and Graph alerts with nextLink", () => {
+    const okta = validateMockSpec(
+      JSON.parse(readFileSync("public/presets/integrations/okta-okta-v2.json", "utf8")).spec,
+    );
+    const logs = matchOperation(okta, "GET", "/api/v1/logs");
+    if (!logs) throw new Error("okta");
+    const oktaPage = generateMockResponse({
+      spec: okta,
+      operation: logs.operation,
+      pathParams: logs.pathParams,
+      query: { limit: "1" },
+      requestIndex: 1,
+      requestUrl: "https://parrot.example/catch/okta/api/v1/logs",
+    });
+    expect(Array.isArray(JSON.parse(oktaPage.body))).toBe(true);
+    expect(oktaPage.headers.link).toContain('rel="next"');
+    expect(oktaPage.headers["x-rate-limit-limit"]).toBe("100");
+
+    const graph = validateMockSpec(
+      JSON.parse(
+        readFileSync("public/presets/integrations/microsoftgraphsecurity-microsoftgraphsecurity.json", "utf8"),
+      ).spec,
+    );
+    const alerts = matchOperation(graph, "GET", "/v1.0/security/alerts_v2");
+    if (!alerts) throw new Error("graph");
+    const graphPage = generateMockResponse({
+      spec: graph,
+      operation: alerts.operation,
+      pathParams: alerts.pathParams,
+      query: { $top: "1" },
+      requestIndex: 1,
+      requestUrl: "https://parrot.example/catch/graph/v1.0/security/alerts_v2",
+    });
+    const body = JSON.parse(graphPage.body);
+    expect(body.value).toHaveLength(1);
+    expect(decodeURIComponent(body["@odata.nextLink"])).toContain("$skip=");
+  });
 });
 
 describe("sample and openapi import", () => {
@@ -83,6 +132,19 @@ describe("sample and openapi import", () => {
     const validated = validateMockSpec(spec);
     expect(validated.operations[0].list).toBe(true);
     expect(validated.operations[0].record.kind).toBe("object");
+    const matched = matchOperation(validated, "GET", "/");
+    if (!matched) throw new Error("sample");
+    const body = JSON.parse(
+      generateMockResponse({
+        spec: validated,
+        operation: matched.operation,
+        pathParams: matched.pathParams,
+        query: { limit: "1" },
+        requestIndex: 1,
+      }).body,
+    );
+    expect(body[0].created).toBe("2024-01-01T00:00:00Z");
+    expect(body[0].ip).toBe("203.0.113.4");
   });
 
   it("builds an operation per OpenAPI path and honors offset parameters", () => {

@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TrustBadge } from "@/components/TrustBadge";
 import { getEndpoint, saveMockSpec } from "@/lib/api";
 import { generateMockResponse, matchOperation } from "@shared/generate";
 import {
@@ -97,55 +98,108 @@ export default function MockStudio() {
     );
   }
 
+  const tryUrl = `${url.replace(/\/$/, "")}${samplePath(operation)}?${operation.pagination.limitParam}=2`;
+  const verification = spec.source.verification;
+  const copy = async (value: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setSaved("Copied.");
+    } catch {
+      setSaved("Select the URL and copy it.");
+    }
+  };
+
   return (
     <div className="container space-y-6 py-6">
-      <div className="flex flex-wrap items-start justify-between gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-sm text-muted-foreground">Plug this into the integration server URL</p>
-          <code className="text-sm">{url}</code>
-          <h1 className="mt-2 text-2xl font-bold">{spec.source.name}</h1>
-          <div className="mt-2 flex gap-2">
-            <Badge>{spec.source.fidelity || spec.source.kind}</Badge>
-            <Badge variant="secondary">{spec.operations.length} operations</Badge>
-          </div>
+          <p className="text-sm text-muted-foreground">
+            <Link to="/dashboard" className="underline">Mocks</Link>
+          </p>
+          <h1 className="text-2xl font-bold">{spec.source.name}</h1>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" asChild>
-            <Link to="/dashboard">Dashboard</Link>
-          </Button>
-          <Button onClick={save}>Save mock</Button>
+          <TrustBadge status={verification?.status} fidelity={spec.source.fidelity} />
+          <Button onClick={save}>Save</Button>
         </div>
       </div>
-      {(spec.source.notes || []).map((note) => (
-        <p key={note} className="text-sm text-muted-foreground">{note}</p>
-      ))}
+
+      <section className="rounded-lg border bg-card p-4">
+        <p className="text-sm font-medium">1. Paste this into the integration server URL</p>
+        <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+          <code className="flex-1 break-all rounded bg-muted px-3 py-2 text-sm">{url}</code>
+          <Button variant="outline" onClick={() => copy(url)}>Copy URL</Button>
+        </div>
+        <p className="mt-4 text-sm font-medium">2. Hit it once to see a page of records</p>
+        <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+          <code className="flex-1 break-all rounded bg-muted px-3 py-2 text-xs">{tryUrl}</code>
+          <Button variant="outline" onClick={() => copy(tryUrl)}>Copy try URL</Button>
+        </div>
+        <p className="mt-3 text-xs text-muted-foreground">
+          A page holds at most {MOCK_LIMITS.maxRecordsPerResponse} records and{" "}
+          {Math.round(MOCK_LIMITS.maxResponseBytes / 1_000_000)} MB.
+          This catalog has {spec.totalRecords.toLocaleString()} unique records.
+        </p>
+      </section>
+
+      {verification && (
+        <section className="rounded-lg border p-4 text-sm">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="font-medium">How this mock was checked</p>
+            {verification.docUrl && (
+              <a className="underline" href={verification.docUrl} target="_blank" rel="noreferrer">
+                Vendor docs
+              </a>
+            )}
+          </div>
+          {verification.checkedAt && (
+            <p className="mt-1 text-muted-foreground">Checked {verification.checkedAt}</p>
+          )}
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-muted-foreground">
+            {(verification.differences || []).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {(spec.source.unsupported || []).length > 0 && (
         <div className="rounded border border-amber-300 bg-amber-50 p-3 text-sm text-amber-950">
           Not imported: {spec.source.unsupported?.join(" · ")}
         </div>
       )}
-      <p className="text-sm">
-        One response returns at most {MOCK_LIMITS.maxRecordsPerResponse} records and{" "}
-        {Math.round(MOCK_LIMITS.maxResponseBytes / 1_000_000)} MB. Ask for more with pagination.
-        The virtual catalog can hold {spec.totalRecords.toLocaleString()} unique records
-        (ceiling {MOCK_LIMITS.maxVirtualRecords.toLocaleString()}).
-      </p>
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="space-y-4">
-          <Label>Operation</Label>
-          <select
-            className="w-full rounded border bg-background px-2 py-2 text-sm"
-            value={operation.id}
-            onChange={(event) => setOperationId(event.target.value)}
-          >
-            {spec.operations.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.method} {item.pathTemplate}
-              </option>
-            ))}
-          </select>
+
+      <Tabs defaultValue="preview">
+        <TabsList>
+          <TabsTrigger value="preview">Preview</TabsTrigger>
+          <TabsTrigger value="shape">Shape</TabsTrigger>
+          <TabsTrigger value="chaos">Chaos</TabsTrigger>
+        </TabsList>
+        <TabsContent value="preview" className="space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <select
+              className="rounded border bg-background px-2 py-2 text-sm"
+              value={operation.id}
+              onChange={(event) => setOperationId(event.target.value)}
+            >
+              {spec.operations.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.method} {item.pathTemplate}
+                </option>
+              ))}
+            </select>
+            <div className="flex items-center gap-2 text-sm">
+              <span>Show chaos</span>
+              <Switch checked={previewChaos} onCheckedChange={setPreviewChaos} />
+            </div>
+          </div>
+          <pre className="max-h-[32rem] overflow-auto rounded border bg-muted/40 p-3 text-xs whitespace-pre-wrap break-all">
+            {preview}
+          </pre>
+        </TabsContent>
+        <TabsContent value="shape" className="space-y-3">
           <div className="flex items-center justify-between">
-            <Label htmlFor="advanced">Advanced JSON</Label>
+            <Label htmlFor="advanced">Edit the raw spec</Label>
             <Switch id="advanced" checked={advanced} onCheckedChange={setAdvanced} />
           </div>
           {advanced ? (
@@ -161,25 +215,15 @@ export default function MockStudio() {
               onChange={(record) => updateOperation({ ...operation, record })}
             />
           )}
-        </div>
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="font-medium">Live preview</h2>
-            <div className="flex items-center gap-2 text-sm">
-              <span>Show chaos</span>
-              <Switch checked={previewChaos} onCheckedChange={setPreviewChaos} />
-            </div>
-          </div>
-          <pre className="max-h-[28rem] overflow-auto rounded border p-3 text-xs whitespace-pre-wrap break-all">
-            {preview}
-          </pre>
+        </TabsContent>
+        <TabsContent value="chaos">
           <ChaosEditor
             chaos={spec.chaos}
             totalRecords={spec.totalRecords}
             onChange={(chaos, totalRecords) => setSpec({ ...spec, chaos, totalRecords })}
           />
-        </div>
-      </div>
+        </TabsContent>
+      </Tabs>
       {error && <p className="text-sm text-destructive">{error}</p>}
       {saved && <p className="text-sm text-green-700">{saved}</p>}
     </div>
@@ -193,10 +237,13 @@ function samplePath(operation: MockOperation): string {
 function FieldEditor({
   field,
   onChange,
+  depth = 0,
 }: {
   field: FieldSpec;
   onChange: (field: FieldSpec) => void;
+  depth?: number;
 }) {
+  const [open, setOpen] = useState(depth < 1);
   return (
     <div className="space-y-2 rounded border p-3">
       <div className="flex flex-wrap items-center gap-2">
@@ -257,10 +304,14 @@ function FieldEditor({
       )}
       {field.kind === "object" && (
         <div className="space-y-2 pl-3">
-          {(field.children || []).map((child, index) => (
+          <Button type="button" variant="ghost" size="sm" onClick={() => setOpen((value) => !value)}>
+            {open ? "Hide" : "Show"} {field.children?.length || 0} nested fields
+          </Button>
+          {open && (field.children || []).map((child, index) => (
             <div key={`${child.name}-${index}`}>
               <FieldEditor
                 field={child}
+                depth={depth + 1}
                 onChange={(next) => {
                   const children = field.children?.slice() || [];
                   children[index] = next;

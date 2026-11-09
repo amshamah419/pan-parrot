@@ -1,0 +1,144 @@
+{
+  "id": "splunkpy-splunkpy",
+  "name": "SplunkPy",
+  "pack": "SplunkPy",
+  "vendor": "Splunk",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Search job export as JSON lines, which is what JSONResultsReader consumes when output_mode=json.",
+  "notes": [
+    "The pack was not in the inferred catalog because its client uses splunklib rather than a JSON sample. This preset was added from the public REST reference."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SplunkPy",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "splunkpy-splunkpy",
+      "name": "SplunkPy",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-tutorials/10.2/rest-api-tutorials/creating-searches-using-the-rest-api",
+      "notes": [
+        "The pack was not in the inferred catalog because its client uses splunklib rather than a JSON sample. This preset was added from the public REST reference."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-tutorials/10.2/rest-api-tutorials/creating-searches-using-the-rest-api",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "Creating a job at POST /services/search/jobs returns XML by default. This mock returns JSON { sid } as if output_mode=json was set.",
+          "POST /services/search/jobs/export returns one JSON object per line with a result field. That matches the export reader the XSOAR pack uses for oneshot search.",
+          "Splunk authentication and the management port are not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "create-job",
+        "method": "POST",
+        "pathTemplate": "/services/search/jobs",
+        "summary": "Create a search job",
+        "status": 201,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "job",
+          "kind": "object",
+          "children": [
+            {
+              "name": "sid",
+              "kind": "id"
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "count",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 100,
+          "maxLimit": 500
+        },
+        "id": "export",
+        "method": "POST",
+        "pathTemplate": "/services/search/jobs/export",
+        "summary": "Stream search results",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "splunk-export"
+        },
+        "record": {
+          "name": "event",
+          "kind": "object",
+          "children": [
+            {
+              "name": "_time",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "host",
+              "kind": "string",
+              "example": "search-head"
+            },
+            {
+              "name": "source",
+              "kind": "string",
+              "example": "pan-parrot"
+            },
+            {
+              "name": "sourcetype",
+              "kind": "const",
+              "constValue": "parrot:mock"
+            },
+            {
+              "name": "_raw",
+              "kind": "string",
+              "example": "user=ada action=login"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "splunkpy-splunkpy",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 500
+  }
+}

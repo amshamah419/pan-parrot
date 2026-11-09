@@ -1,1 +1,186 @@
-{"id":"okta-okta-v2","name":"Okta v2","pack":"Okta","fidelity":"shape","curated":false,"summary":"Integration with Okta's cloud-based identity management service.","operations":1,"spec":{"version":1,"source":{"kind":"preset","id":"okta-okta-v2","name":"Okta v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Okta/Integrations/Okta_v2","fidelity":"shape","notes":["No HTTP path was recovered from the client. The sample shape is served at the catch URL root.","Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture."]},"operations":[{"id":"test-data-get-logs-response-json","method":"GET","pathTemplate":"/","summary":"test_data/get_logs_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"actor","kind":"object","optional":false,"children":[{"name":"alternateId","kind":"id","optional":false,"example":"example"},{"name":"detailEntry","kind":"string","optional":true},{"name":"displayName","kind":"string","optional":false,"example":"dummy name"},{"name":"id","kind":"id","optional":false,"example":"123"},{"name":"type","kind":"string","optional":false,"example":"User"}]},{"name":"authenticationContext","kind":"object","optional":false,"children":[{"name":"authenticationProvider","kind":"string","optional":true},{"name":"authenticationStep","kind":"integer","optional":false},{"name":"credentialProvider","kind":"string","optional":true},{"name":"credentialType","kind":"string","optional":true},{"name":"externalSessionId","kind":"id","optional":false,"example":"123"},{"name":"interface","kind":"string","optional":true},{"name":"issuer","kind":"string","optional":true}]},{"name":"client","kind":"object","optional":false,"children":[{"name":"device","kind":"string","optional":false,"example":"Unknown"},{"name":"geographicalContext","kind":"object","optional":false,"children":[{"name":"city","kind":"string","optional":false,"example":"Boardman"},{"name":"country","kind":"string","optional":false,"example":"United States"},{"name":"geolocation","kind":"object","optional":false,"children":[{"name":"lat","kind":"number","optional":false},{"name":"lon","kind":"number","optional":false}]},{"name":"postalCode","kind":"string","optional":false,"example":"123"},{"name":"state","kind":"string","optional":false,"example":"Oregon"}]},{"name":"id","kind":"string","optional":true},{"name":"ipAddress","kind":"ip","optional":false,"example":"8.8.8.8"},{"name":"userAgent","kind":"object","optional":false,"children":[{"name":"browser","kind":"string","optional":false,"example":"UNKNOWN"},{"name":"os","kind":"string","optional":false,"example":"Unknown"},{"name":"rawUserAgent","kind":"string","optional":false,"example":"1.0"}]},{"name":"zone","kind":"string","optional":false,"example":"null"}]},{"name":"debugContext","kind":"object","optional":false,"children":[{"name":"debugData","kind":"object","optional":false,"children":[{"name":"requestId","kind":"id","optional":false,"example":"123"},{"name":"requestUri","kind":"string","optional":false,"example":"/api/v1/groups"},{"name":"url","kind":"string","optional":false,"example":"/api/v1/groups"}]}]},{"name":"device","kind":"string","optional":true},{"name":"displayMessage","kind":"string","optional":false,"example":"Remove user from group membership"},{"name":"eventType","kind":"string","optional":false,"example":"group.user_membership.remove"},{"name":"legacyEventType","kind":"string","optional":false,"example":"core.user_group_member.user_remove"},{"name":"outcome","kind":"object","optional":false,"children":[{"name":"reason","kind":"string","optional":true},{"name":"result","kind":"string","optional":false,"example":"SUCCESS"}]},{"name":"published","kind":"timestamp","optional":false,"format":"iso"},{"name":"request","kind":"object","optional":false,"children":[{"name":"ipChain","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"geographicalContext","kind":"object","optional":false,"children":[{"name":"city","kind":"string","optional":false,"example":"Boardman"},{"name":"country","kind":"string","optional":false,"example":"United States"},{"name":"geolocation","kind":"object","optional":false,"children":[{"name":"lat","kind":"string","optional":false,"example":"nested"},{"name":"lon","kind":"string","optional":false,"example":"nested"}]},{"name":"postalCode","kind":"string","optional":false,"example":"123"},{"name":"state","kind":"string","optional":false,"example":"Oregon"}]},{"name":"ip","kind":"ip","optional":false,"example":"8.8.8.8"},{"name":"source","kind":"string","optional":true},{"name":"version","kind":"string","optional":false,"example":"V4"}]},"minItems":0,"maxItems":1}]},{"name":"securityContext","kind":"object","optional":false,"children":[{"name":"asNumber","kind":"string","optional":true},{"name":"asOrg","kind":"string","optional":true},{"name":"domain","kind":"string","optional":true},{"name":"isProxy","kind":"string","optional":true},{"name":"isp","kind":"string","optional":true}]},{"name":"severity","kind":"string","optional":false,"example":"INFO"},{"name":"target","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"alternateId","kind":"id","optional":false,"example":"test.com"},{"name":"detailEntry","kind":"string","optional":true},{"name":"displayName","kind":"string","optional":false,"example":"test this"},{"name":"id","kind":"id","optional":false,"example":"123"},{"name":"type","kind":"string","optional":false,"example":"User"}]},"minItems":0,"maxItems":2},{"name":"transaction","kind":"object","optional":false,"children":[{"name":"detail","kind":"object","optional":false,"children":[]},{"name":"id","kind":"id","optional":false,"example":"123"},{"name":"type","kind":"string","optional":false,"example":"WEB"}]},{"name":"uuid","kind":"id","optional":false,"example":"123"},{"name":"version","kind":"string","optional":false,"example":"0"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200}}
+{
+  "id": "okta-okta-v2",
+  "name": "Okta v2",
+  "pack": "Okta",
+  "vendor": "Okta",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Okta System Log. GET /api/v1/logs returns a JSON array and pages with a Link header.",
+  "notes": [
+    "Official limit is 0–1000 and defaults to 100. This mock still caps a page at 500 records and 2 MB.",
+    "Polling requests (no until, sortOrder ASCENDING) always include rel=next even when the page is empty. Set pagination glitch to endless to simulate that.",
+    "since and after are mutually exclusive in the real API. This mock accepts both and uses after as the page token."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Okta/Integrations/Okta_v2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "okta-okta-v2",
+      "name": "Okta v2",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://developer.okta.com/docs/api/openapi/okta-management/management/tags/systemlog/other/listlogevents",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.okta.com/docs/api/openapi/okta-management/management/tags/systemlog/other/listlogevents",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "Official limit is 0–1000 and defaults to 100. This mock still caps a page at 500 records and 2 MB.",
+          "Polling requests (no until, sortOrder ASCENDING) always include rel=next even when the page is empty. Set pagination glitch to endless to simulate that.",
+          "since and after are mutually exclusive in the real API. This mock accepts both and uses after as the page token."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {
+          "x-rate-limit-limit": "100",
+          "x-rate-limit-remaining": "99"
+        },
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "link",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "after",
+          "defaultLimit": 100,
+          "maxLimit": 500
+        },
+        "id": "list-logs",
+        "method": "GET",
+        "pathTemplate": "/api/v1/logs",
+        "summary": "List System Log events",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "event",
+          "kind": "object",
+          "children": [
+            {
+              "name": "uuid",
+              "kind": "uuid"
+            },
+            {
+              "name": "published",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "eventType",
+              "kind": "enum",
+              "enumValues": [
+                "user.session.start",
+                "user.authentication.sso",
+                "user.account.update"
+              ]
+            },
+            {
+              "name": "version",
+              "kind": "const",
+              "constValue": "0"
+            },
+            {
+              "name": "severity",
+              "kind": "enum",
+              "enumValues": [
+                "INFO",
+                "WARN",
+                "ERROR"
+              ]
+            },
+            {
+              "name": "displayMessage",
+              "kind": "string",
+              "example": "User login to Okta"
+            },
+            {
+              "name": "actor",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "id",
+                  "kind": "id"
+                },
+                {
+                  "name": "type",
+                  "kind": "const",
+                  "constValue": "User"
+                },
+                {
+                  "name": "alternateId",
+                  "kind": "email"
+                },
+                {
+                  "name": "displayName",
+                  "kind": "string",
+                  "example": "Ada Lovelace"
+                }
+              ]
+            },
+            {
+              "name": "client",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "ipAddress",
+                  "kind": "ip"
+                },
+                {
+                  "name": "userAgent",
+                  "kind": "string",
+                  "example": "Mozilla/5.0"
+                }
+              ]
+            },
+            {
+              "name": "outcome",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "result",
+                  "kind": "enum",
+                  "enumValues": [
+                    "SUCCESS",
+                    "FAILURE"
+                  ]
+                },
+                {
+                  "name": "reason",
+                  "kind": "string",
+                  "example": "INVALID_CREDENTIALS",
+                  "optional": true
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "okta-okta-v2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 500
+  }
+}

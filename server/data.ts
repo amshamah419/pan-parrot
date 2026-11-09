@@ -255,7 +255,14 @@ export async function captureOnPath(
   const url = new URL(request.url);
   const query = clampQuery(Object.fromEntries(url.searchParams.entries()));
   const userAgent = (request.headers.get("user-agent") ?? "unknown").slice(0, 512);
-  const produced = await produceResponse(db, endpoint, request.method, subpath, query);
+  const produced = await produceResponse(
+    db,
+    endpoint,
+    request.method,
+    subpath,
+    query,
+    url.origin + url.pathname,
+  );
 
   await db.insert(capturedRequests).values({
     method: request.method.slice(0, 16),
@@ -305,6 +312,7 @@ async function produceResponse(
   method: string,
   subpath: string,
   query: Record<string, string>,
+  requestUrl?: string,
 ): Promise<{
   status: number;
   body: string;
@@ -356,6 +364,7 @@ async function produceResponse(
       pathParams: matched.pathParams,
       query,
       requestIndex,
+      requestUrl,
     });
     return { ...generated, json: false };
   }

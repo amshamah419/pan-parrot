@@ -1,1 +1,192 @@
-{"id":"microsoftgraphsecurity-microsoftgraphsecurity","name":"Microsoft Graph Security","pack":"MicrosoftGraphSecurity","fidelity":"sample","curated":false,"summary":"Unified gateway to security insights - all from a unified Microsoft Graph Security API.","operations":6,"spec":{"version":1,"source":{"kind":"preset","id":"microsoftgraphsecurity-microsoftgraphsecurity","name":"Microsoft Graph Security","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSecurity/Integrations/MicrosoftGraphSecurity","fidelity":"sample","notes":["HTTP paths were guessed from string literals in the integration client and may not match every command.","Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture."]},"operations":[{"id":"test-data-advanced-hunting-response-json","method":"GET","pathTemplate":"/security/cases/ediscoveryCases/{case_id}/searches/{search_id}","summary":"test_data/advanced_hunting_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"@odata.context","kind":"string","optional":false,"example":"https://graph.microsoft.com/v1.0/$metadata#microsoft.graph.security.huntingQueryResults"},{"name":"schema","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"Timestamp"},{"name":"type","kind":"string","optional":false,"example":"DateTime"}]},"minItems":0,"maxItems":3},{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"Timestamp","kind":"timestamp","optional":false,"format":"iso"},{"name":"AlertId","kind":"id","optional":false},{"name":"Title","kind":"string","optional":false,"example":"DLP policy (Custom policy) matched for email with subject (Splunk Report: High Or Critical Priority Host With Malware -"},{"name":"Category","kind":"string","optional":false,"example":"Exfiltration"},{"name":"Severity","kind":"string","optional":false,"example":"Medium"},{"name":"ServiceSource","kind":"string","optional":false,"example":"Microsoft Data Loss Prevention"},{"name":"DetectionSource","kind":"string","optional":false,"example":"Microsoft Data Loss Prevention"},{"name":"AttackTechniques","kind":"string","optional":false}]},"minItems":0,"maxItems":2}]}},{"id":"test-data-advanced-hunting-results-json","method":"GET","pathTemplate":"/security/cases/ediscoveryCases/{case_id}/searches","summary":"test_data/advanced_hunting_results.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"outputs_prefix","kind":"string","optional":false,"example":"MsGraph.Hunt"},{"name":"outputs_key_field","kind":"string","optional":false,"example":"query"},{"name":"readable_output","kind":"string","optional":false,"example":"###  Result of query: AlertInfo | limit 2:\n|Timestamp|AlertId|Title|Category|Severity|ServiceSource|DetectionSource|Atta"},{"name":"outputs","kind":"object","optional":false,"children":[{"name":"query","kind":"string","optional":false,"example":"AlertInfo | limit 2"},{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"Timestamp","kind":"timestamp","optional":false,"format":"iso"},{"name":"AlertId","kind":"id","optional":false},{"name":"Title","kind":"string","optional":false,"example":"DLP policy (Custom policy) matched for email with subject (Splunk Report: High Or Critical Priority Host With Malware -"},{"name":"Category","kind":"string","optional":false,"example":"Exfiltration"},{"name":"Severity","kind":"string","optional":false,"example":"Medium"},{"name":"ServiceSource","kind":"string","optional":false,"example":"Microsoft Data Loss Prevention"},{"name":"DetectionSource","kind":"string","optional":false,"example":"Microsoft Data Loss Prevention"},{"name":"AttackTechniques","kind":"string","optional":false}]},"minItems":0,"maxItems":2}]}]}},{"id":"test-data-advanced-hunting-results-365-defenfer-json","method":"GET","pathTemplate":"/{tenant}/oauth2/v2.0/token","summary":"test_data/advanced_hunting_results_365_defenfer.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"outputs_prefix","kind":"string","optional":false,"example":"Microsoft365Defender.Hunt"},{"name":"outputs_key_field","kind":"string","optional":false,"example":"query"},{"name":"readable_output","kind":"string","optional":false,"example":"See Results Above"},{"name":"outputs","kind":"object","optional":false,"children":[{"name":"query","kind":"string","optional":false,"example":"AlertInfo | limit 2"},{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"Timestamp","kind":"timestamp","optional":false,"format":"iso"},{"name":"AlertId","kind":"id","optional":false},{"name":"Title","kind":"string","optional":false,"example":"DLP policy (Custom policy) matched for email with subject (Splunk Report: High Or Critical Priority Host With Malware -"},{"name":"Category","kind":"string","optional":false,"example":"Exfiltration"},{"name":"Severity","kind":"string","optional":false,"example":"Medium"},{"name":"ServiceSource","kind":"string","optional":false,"example":"Microsoft Data Loss Prevention"},{"name":"DetectionSource","kind":"string","optional":false,"example":"Microsoft Data Loss Prevention"},{"name":"AttackTechniques","kind":"string","optional":false}]},"minItems":0,"maxItems":2}]}]}},{"id":"test-data-email-file-assessment-request-json","method":"GET","pathTemplate":"/{custodian_id}","summary":"test_data/email_file_assessment_request.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"email_file_id"},{"name":"createdDateTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"contentType","kind":"string","optional":false,"example":"mail"},{"name":"expectedAssessment","kind":"string","optional":false,"example":"unblock"},{"name":"category","kind":"string","optional":false,"example":"phishing"},{"name":"status","kind":"string","optional":false,"example":"completed"},{"name":"requestSource","kind":"string","optional":false,"example":"administrator"},{"name":"recipientEmail","kind":"string","optional":false,"example":"test_email"},{"name":"destinationRoutingReason","kind":"string","optional":false,"example":"notJunk"},{"name":"createdBy","kind":"object","optional":false,"children":[{"name":"user","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"id"},{"name":"displayName","kind":"string","optional":false,"example":"Test Admin"}]}]},{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"id"},{"name":"createdDateTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"resultType","kind":"string","optional":false,"example":"rescan"},{"name":"message","kind":"string","optional":false,"example":"Not Spam"}]},"minItems":0,"maxItems":1}]}},{"id":"test-data-file-assessment-request-json","method":"GET","pathTemplate":"/{source_id}","summary":"test_data/file_assessment_request.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"file_test_id"},{"name":"createdDateTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"contentType","kind":"string","optional":false,"example":"file"},{"name":"expectedAssessment","kind":"string","optional":false,"example":"block"},{"name":"category","kind":"string","optional":false,"example":"phishing"},{"name":"status","kind":"string","optional":false,"example":"completed"},{"name":"requestSource","kind":"string","optional":false,"example":"administrator"},{"name":"fileName","kind":"string","optional":false,"example":"file_name.csv"},{"name":"contentData","kind":"string","optional":false},{"name":"createdBy","kind":"object","optional":false,"children":[{"name":"user","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"c52ce8db-3e4b-4181-93c4-7d6b6bffaf60"},{"name":"displayName","kind":"string","optional":false,"example":"Ronald Admin"}]}]},{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"id"},{"name":"createdDateTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"resultType","kind":"string","optional":false,"example":"rescan"},{"name":"message","kind":"string","optional":false,"example":"Phishing"}]},"minItems":0,"maxItems":1}]}},{"id":"test-data-incident-update-response-json","method":"GET","pathTemplate":"/{search_id}","summary":"test_data/incident_update_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"@odata.context","kind":"string","optional":false,"example":"https://graph.microsoft.com/v1.0/$metadata#security/incidents/$entity"},{"name":"id","kind":"id","optional":false,"example":"12345"},{"name":"tenantId","kind":"id","optional":false,"example":"dummy-tenant-id"},{"name":"status","kind":"string","optional":false,"example":"redirected"},{"name":"incidentWebUrl","kind":"string","optional":false,"example":"https://security.microsoft.com/incidents/1234"},{"name":"redirectIncidentId","kind":"id","optional":false,"example":"1234"},{"name":"displayName","kind":"string","optional":false,"example":"DLP policy (Custom policy) matched for email with subject (Splunk Report: High Or Critical Priority Host With Malware -"},{"name":"createdDateTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"lastUpdateDateTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"assignedTo","kind":"string","optional":false,"example":"Cortex XSOAR MS Graph Dev"},{"name":"classification","kind":"string","optional":false,"example":"truePositive"},{"name":"determination","kind":"string","optional":false,"example":"unknown"},{"name":"severity","kind":"string","optional":false,"example":"medium"},{"name":"customTags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"systemTags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"description","kind":"string","optional":true},{"name":"lastModifiedBy","kind":"string","optional":false,"example":"API-App:Cortex XSOAR MS Graph Dev"},{"name":"comments","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200}}
+{
+  "id": "microsoftgraphsecurity-microsoftgraphsecurity",
+  "name": "Microsoft Graph Security",
+  "pack": "MicrosoftGraphSecurity",
+  "vendor": "Microsoft",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /security/alerts_v2 with a value array and @odata.nextLink.",
+  "notes": [
+    "Microsoft Graph pages with @odata.nextLink. This mock also honors $top and $skip.",
+    "The real API may omit @odata.nextLink when a page happens to contain everything. That is not simulated unless you stop before the virtual catalog ends.",
+    "Bearer tokens are not checked."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSecurity",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "microsoftgraphsecurity-microsoftgraphsecurity",
+      "name": "Microsoft Graph Security",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/security-list-alerts_v2?view=graph-rest-1.0",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/security-list-alerts_v2?view=graph-rest-1.0",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "Microsoft Graph pages with @odata.nextLink. This mock also honors $top and $skip.",
+          "The real API may omit @odata.nextLink when a page happens to contain everything. That is not simulated unless you stop before the virtual catalog ends.",
+          "Bearer tokens are not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "$top",
+          "offsetParam": "$skip",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "id": "list-alerts-v2",
+        "method": "GET",
+        "pathTemplate": "/v1.0/security/alerts_v2",
+        "summary": "List security alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "odata",
+          "context": "https://graph.microsoft.com/v1.0/$metadata#security/alerts_v2"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "uuid"
+            },
+            {
+              "name": "title",
+              "kind": "string",
+              "example": "Suspicious sign-in"
+            },
+            {
+              "name": "severity",
+              "kind": "enum",
+              "enumValues": [
+                "low",
+                "medium",
+                "high",
+                "unknown"
+              ]
+            },
+            {
+              "name": "status",
+              "kind": "enum",
+              "enumValues": [
+                "new",
+                "inProgress",
+                "resolved"
+              ]
+            },
+            {
+              "name": "serviceSource",
+              "kind": "enum",
+              "enumValues": [
+                "microsoftDefenderForEndpoint",
+                "microsoftSentinel"
+              ]
+            },
+            {
+              "name": "createdDateTime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "lastUpdateDateTime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "Multiple failed sign-ins from a new location."
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "$top",
+          "offsetParam": "$skip",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "id": "list-alerts-root",
+        "method": "GET",
+        "pathTemplate": "/security/alerts_v2",
+        "summary": "List security alerts without the version prefix",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "odata",
+          "context": "https://graph.microsoft.com/v1.0/$metadata#security/alerts_v2"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "uuid"
+            },
+            {
+              "name": "title",
+              "kind": "string",
+              "example": "Malware detected"
+            },
+            {
+              "name": "severity",
+              "kind": "enum",
+              "enumValues": [
+                "informational",
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            {
+              "name": "createdDateTime",
+              "kind": "timestamp",
+              "format": "iso"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "microsoftgraphsecurity-microsoftgraphsecurity",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 500
+  }
+}

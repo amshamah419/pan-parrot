@@ -196,24 +196,6 @@ export default function Dashboard() {
         <div className="container flex h-16 items-center justify-between">
           <Logo />
           <div className="flex items-center space-x-4">
-            <Button
-              variant={isStreaming ? "default" : "outline"}
-              size="sm"
-              onClick={() => setIsStreaming(!isStreaming)}
-            >
-              {isStreaming ? (
-                <>
-                  <Pause className="mr-2 h-4 w-4" />
-                  Pause Stream
-                </>
-              ) : (
-                <>
-                  <Play className="mr-2 h-4 w-4" />
-                  Resume Stream
-                </>
-              )}
-            </Button>
-
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -258,18 +240,31 @@ export default function Dashboard() {
       <div className="container mx-auto p-6">
         {/* Endpoints Section */}
         <div className="mb-6">
-          <div className="mb-4 flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold">Hey {user?.name}! 👋</h1>
+          <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
+            <div className="max-w-xl">
+              <h1 className="text-2xl font-bold">Mocks</h1>
               <p className="text-muted-foreground">
-                Your HTTP debugging endpoints
+                Point an XSOAR integration at a catch URL. Verified mocks follow the vendor's public API. The log below shows what the integration actually sent.
               </p>
             </div>
-            <IntegrationPicker onCreated={handleEndpointCreated} />
-            <CreateEndpointDialog onEndpointCreated={handleEndpointCreated} />
+            <div className="flex flex-wrap gap-2">
+              <IntegrationPicker onCreated={handleEndpointCreated} />
+              <CreateEndpointDialog onEndpointCreated={handleEndpointCreated} />
+            </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-3">
+          {userEndpoints.length === 0 && !isLoading && (
+            <Card className="mb-4">
+              <CardHeader>
+                <CardTitle>No mocks yet</CardTitle>
+                <CardDescription>
+                  Start with Akamai WAF SIEM if you want a working integration in a couple of clicks. You can also paste a JSON response or an OpenAPI spec.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          )}
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {userEndpoints.map((endpoint) => (
               <Card
                 key={endpoint.id}
@@ -285,8 +280,8 @@ export default function Dashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <code className="text-sm text-muted-foreground">
+                    <div className="flex items-start justify-between gap-2">
+                      <code className="break-all text-xs text-muted-foreground">
                         {endpoint.url}
                       </code>
                       <Button
@@ -298,8 +293,8 @@ export default function Dashboard() {
                       </Button>
                     </div>
                     <div className="flex space-x-2">
-                      <Button variant="outline" size="sm" asChild>
-                        <Link to={`/mock/${endpoint.id}`}>Shape</Link>
+                      <Button size="sm" asChild>
+                        <Link to={`/mock/${endpoint.id}`}>Open</Link>
                       </Button>
                       <MockResponseDialog endpoint={endpoint} />
                       <Button
@@ -323,17 +318,31 @@ export default function Dashboard() {
           <div className="lg:col-span-1">
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2">
                   <CardTitle className="flex items-center">
                     <Monitor className="mr-2 h-5 w-5" />
-                    Request Console
+                    Requests
                   </CardTitle>
-                  <Badge variant={isStreaming ? "default" : "secondary"}>
-                    {isStreaming ? "Live" : "Paused"}
-                  </Badge>
+                  <Button
+                    variant={isStreaming ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setIsStreaming(!isStreaming)}
+                  >
+                    {isStreaming ? (
+                      <>
+                        <Pause className="mr-2 h-4 w-4" />
+                        Live
+                      </>
+                    ) : (
+                      <>
+                        <Play className="mr-2 h-4 w-4" />
+                        Paused
+                      </>
+                    )}
+                  </Button>
                 </div>
                 <CardDescription>
-                  Real-time HTTP request monitoring
+                  Calls that hit your catch URLs, including chaos status codes.
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-0">
@@ -398,7 +407,11 @@ export default function Dashboard() {
                             <code className="text-sm">{request.endpoint}</code>
                           </div>
                           <div className="mt-1 text-xs text-muted-foreground">
-                            {request.ip}
+                            {request.status}
+                            {request.recordCount != null ? ` · ${request.recordCount} records` : ""}
+                            {request.chaosEffects?.length
+                              ? ` · ${request.chaosEffects.join(", ")}`
+                              : ""}
                           </div>
                         </div>
                       ))

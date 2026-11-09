@@ -250,7 +250,12 @@ export function createServer(options?: {
       throw new HttpError(400, "Spec is not valid JSON or YAML");
     }
     try {
-      return c.json(specFromDocument(document));
+      const imported = specFromDocument(document);
+      return c.json({
+        mockSpec: imported.spec,
+        warnings: imported.warnings,
+        unsupported: imported.unsupported,
+      });
     } catch (error) {
       throw new HttpError(400, error instanceof Error ? error.message : "Could not import spec");
     }

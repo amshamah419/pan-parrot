@@ -1,1 +1,118 @@
-{"id":"zscaler-zscaler","name":"Zscaler Internet Access","pack":"Zscaler","fidelity":"sample","curated":false,"summary":"Zscaler is a cloud security solution built for performance and flexible scalability. This integration enables you to manage URL and IP address allow lists and block lists, manage a","operations":6,"spec":{"version":1,"source":{"kind":"preset","id":"zscaler-zscaler","name":"Zscaler Internet Access","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Zscaler/Integrations/Zscaler","fidelity":"sample","notes":["HTTP paths were guessed from string literals in the integration client and may not match every command.","Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture."]},"operations":[{"id":"test-data-responses-blacklist-urls-json","method":"GET","pathTemplate":"/ipDestinationGroups/ipv6DestinationGroups","summary":"test_data/responses/blacklist_urls.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"blacklistUrls","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":".demisto.com"},"minItems":0,"maxItems":3}]}},{"id":"test-data-responses-categories-json","method":"GET","pathTemplate":"/ipDestinationGroups/{ip_group_id}","summary":"test_data/responses/categories.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"configuredName","kind":"string","optional":false,"example":"Phishing-Suspected"},{"name":"customCategory","kind":"boolean","optional":false},{"name":"dbCategorizedUrls","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"editable","kind":"boolean","optional":false},{"name":"id","kind":"id","optional":false,"example":"CUSTOM_1"},{"name":"keywordsRetainingParentCategory","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"type","kind":"string","optional":false,"example":"URL_CATEGORY"},{"name":"urls","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"demisto.com"},"minItems":0,"maxItems":3},{"name":"val","kind":"integer","optional":false}]}},{"id":"test-data-responses-categories2-json","method":"GET","pathTemplate":"/urlCategories/urlQuota","summary":"test_data/responses/categories2.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"configuredName","kind":"string","optional":false,"example":"Phishing-Suspected"},{"name":"customCategory","kind":"boolean","optional":false},{"name":"dbCategorizedUrls","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"editable","kind":"boolean","optional":false},{"name":"id","kind":"id","optional":false,"example":"CUSTOM_1"},{"name":"keywordsRetainingParentCategory","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"type","kind":"string","optional":false,"example":"URL_CATEGORY"},{"name":"urls","kind":"array","optional":false,"item":{"name":"item","kind":"ip","optional":false,"example":"1.2.3.4"},"minItems":0,"maxItems":3},{"name":"val","kind":"integer","optional":false}]}},{"id":"test-data-responses-categories2-no-urls-json","method":"GET","pathTemplate":"/authenticatedSession","summary":"test_data/responses/categories2_no_urls.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"configuredName","kind":"string","optional":false,"example":"Phishing-Suspected"},{"name":"customCategory","kind":"boolean","optional":false},{"name":"dbCategorizedUrls","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"editable","kind":"boolean","optional":false},{"name":"id","kind":"id","optional":false,"example":"CUSTOM_1"},{"name":"keywordsRetainingParentCategory","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"type","kind":"string","optional":false,"example":"URL_CATEGORY"},{"name":"urls","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"val","kind":"integer","optional":false}]}},{"id":"test-data-responses-create-ip-destination-group-json","method":"GET","pathTemplate":"/ipDestinationGroups","summary":"test_data/responses/create_ip_destination_group.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"2000359"},{"name":"name","kind":"string","optional":false,"example":"Test99"},{"name":"type","kind":"string","optional":false,"example":"DSTN_IP"},{"name":"addresses","kind":"array","optional":false,"item":{"name":"item","kind":"ip","optional":false,"example":"127.0.0.2"},"minItems":0,"maxItems":2},{"name":"description","kind":"string","optional":false,"example":"Localhost"},{"name":"ipCategories","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"countries","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"isNonEditable","kind":"boolean","optional":false}]}},{"id":"test-data-responses-delete-ip-destination-group-json","method":"GET","pathTemplate":"/urlCategories/lite","summary":"test_data/responses/delete_ip_destination_group.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200}}
+{
+  "id": "zscaler-zscaler",
+  "name": "Zscaler Internet Access",
+  "pack": "Zscaler",
+  "vendor": "Zscaler",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "POST /api/v1/urlLookup returns one classification object per URL.",
+  "notes": [
+    "The public lookup response is a JSON array of url, urlClassifications, and urlClassificationsWithSecurityAlert. The request body of URLs is not echoed back; each row uses a sample URL.",
+    "Session cookies and the obfuscated API key are not checked."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Zscaler/Integrations/Zscaler",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "zscaler-zscaler",
+      "name": "Zscaler Internet Access",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://help.zscaler.com/zia/url-lookup",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.zscaler.com/zia/url-lookup",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "The public lookup response is a JSON array of url, urlClassifications, and urlClassificationsWithSecurityAlert. The request body of URLs is not echoed back; each row uses a sample URL.",
+          "Session cookies and the obfuscated API key are not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 2,
+          "maxLimit": 20
+        },
+        "id": "url-lookup",
+        "method": "POST",
+        "pathTemplate": "/api/v1/urlLookup",
+        "summary": "Look up URL categories",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "classification",
+          "kind": "object",
+          "children": [
+            {
+              "name": "url",
+              "kind": "string",
+              "example": "example.com"
+            },
+            {
+              "name": "urlClassifications",
+              "kind": "array",
+              "item": {
+                "name": "category",
+                "kind": "enum",
+                "enumValues": [
+                  "NEWS_AND_MEDIA",
+                  "FINANCE",
+                  "MALWARE"
+                ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+            },
+            {
+              "name": "urlClassificationsWithSecurityAlert",
+              "kind": "array",
+              "item": {
+                "name": "category",
+                "kind": "enum",
+                "enumValues": [
+                  "MALWARE"
+                ]
+              },
+              "minItems": 0,
+              "maxItems": 1
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "zscaler-zscaler",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 500
+  }
+}

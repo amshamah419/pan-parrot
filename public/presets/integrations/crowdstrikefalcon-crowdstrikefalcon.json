@@ -1,1 +1,198 @@
-{"id":"crowdstrikefalcon-crowdstrikefalcon","name":"CrowdStrike Falcon","pack":"CrowdStrikeFalcon","fidelity":"sample","curated":false,"summary":"The CrowdStrike Falcon OAuth 2 API (formerly the Falcon Firehose API), enables fetching and resolving detections, searching devices, getting behaviors by ID, containing hosts, and ","operations":6,"spec":{"version":1,"source":{"kind":"preset","id":"crowdstrikefalcon-crowdstrikefalcon","name":"CrowdStrike Falcon","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CrowdStrikeFalcon/Integrations/CrowdStrikeFalcon","fidelity":"sample","notes":["HTTP paths were guessed from string literals in the integration client and may not match every command.","Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture."]},"operations":[{"id":"test-data-create-ioa-exclusion-json","method":"GET","pathTemplate":"/real-time-response/combined/batch-active-responder-command/v1","summary":"test_data/create_ioa_exclusion.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"meta","kind":"object","optional":false,"children":[{"name":"query_time","kind":"number","optional":false},{"name":"trace_id","kind":"id","optional":false,"example":"123456"}]},{"name":"errors","kind":"string","optional":true},{"name":"resources","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"123456"},{"name":"name","kind":"string","optional":false,"example":"test"},{"name":"description","kind":"string","optional":false,"example":"example description"},{"name":"pattern_id","kind":"id","optional":false,"example":"123456"},{"name":"pattern_name","kind":"string","optional":false,"example":"name for 123456"},{"name":"ifn_regex","kind":"string","optional":false,"example":"c:\\\\windows\\\\system32\\\\poqexec\\.exe"},{"name":"cl_regex","kind":"string","optional":false,"example":".*"},{"name":"detection_json","kind":"string","optional":false,"example":"{'foo': 'bar'}"},{"name":"groups","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"applied_globally","kind":"boolean","optional":false},{"name":"last_modified","kind":"timestamp","optional":false,"format":"iso"},{"name":"modified_by","kind":"string","optional":false,"example":"admin"},{"name":"created_on","kind":"timestamp","optional":false,"format":"iso"},{"name":"created_by","kind":"string","optional":false,"example":"admin"}]},"minItems":0,"maxItems":1}]}},{"id":"test-data-create-ml-exclusion-json","method":"GET","pathTemplate":"/humio/api/v1/repositories/{repository}/queryjobs/{job_id}","summary":"test_data/create_ml_exclusion.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"meta","kind":"object","optional":false,"children":[{"name":"query_time","kind":"number","optional":false},{"name":"trace_id","kind":"id","optional":false,"example":"123456"}]},{"name":"errors","kind":"string","optional":true},{"name":"resources","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"123456"},{"name":"value","kind":"string","optional":false,"example":"/test"},{"name":"regexp_value","kind":"string","optional":false,"example":"\\/test"},{"name":"value_hash","kind":"string","optional":false,"example":"123456"},{"name":"excluded_from","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"blocking"},"minItems":0,"maxItems":1},{"name":"groups","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"123456"},{"name":"group_type","kind":"string","optional":false,"example":"static"},{"name":"name","kind":"string","optional":false,"example":"Lab env"},{"name":"description","kind":"string","optional":false},{"name":"assignment_rule","kind":"string","optional":false,"example":"some rule"},{"name":"created_by","kind":"string","optional":false,"example":"user"},{"name":"created_timestamp","kind":"timestamp","optional":false,"format":"iso"},{"name":"modified_by","kind":"string","optional":false,"example":"user"},{"name":"modified_timestamp","kind":"timestamp","optional":false,"format":"iso"}]},"minItems":0,"maxItems":1},{"name":"applied_globally","kind":"boolean","optional":false},{"name":"last_modified","kind":"timestamp","optional":false,"format":"iso"},{"name":"modified_by","kind":"string","optional":false,"example":"admin"},{"name":"created_on","kind":"timestamp","optional":false,"format":"iso"},{"name":"created_by","kind":"string","optional":false,"example":"admin"}]},"minItems":0,"maxItems":1}]}},{"id":"test-data-entities-behaviors-response-json","method":"GET","pathTemplate":"/real-time-response/entities/active-responder-command/v1","summary":"test_data/entities_behaviors_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"meta","kind":"object","optional":false,"children":[{"name":"query_time","kind":"number","optional":false},{"name":"powered_by","kind":"string","optional":false,"example":"incident-api"},{"name":"trace_id","kind":"id","optional":false,"example":"329223f1-af55-4055-9da6-ca7c52c35e86"}]},{"name":"resources","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"behavior_id","kind":"id","optional":false,"example":"ind:XX:XX"},{"name":"cid","kind":"id","optional":false,"example":"CID"},{"name":"aid","kind":"id","optional":false,"example":"AID"},{"name":"incident_id","kind":"id","optional":false,"example":"inc:XX:XX"},{"name":"incident_ids","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"inc:XX:XX"},"minItems":0,"maxItems":1},{"name":"pattern_id","kind":"integer","optional":false},{"name":"template_instance_id","kind":"integer","optional":false},{"name":"timestamp","kind":"timestamp","optional":false,"format":"iso"},{"name":"cmdline","kind":"string","optional":false,"example":"\"C:\\Windows\\system32\\ServerManagerLauncher.exe\""},{"name":"filepath","kind":"string","optional":false,"example":"\\Device\\HarddiskVolume\\Windows\\System32\\ServerManagerLauncher.exe"},{"name":"domain","kind":"string","optional":false,"example":"DOMAIN"},{"name":"pattern_disposition","kind":"integer","optional":false},{"name":"pattern_disposition_details","kind":"object","optional":false,"children":[{"name":"indicator","kind":"boolean","optional":false},{"name":"detect","kind":"boolean","optional":false},{"name":"inddet_mask","kind":"boolean","optional":false},{"name":"sensor_only","kind":"boolean","optional":false},{"name":"rooting","kind":"boolean","optional":false},{"name":"kill_process","kind":"boolean","optional":false},{"name":"kill_subprocess","kind":"boolean","optional":false},{"name":"quarantine_machine","kind":"boolean","optional":false},{"name":"quarantine_file","kind":"boolean","optional":false},{"name":"policy_disabled","kind":"boolean","optional":false},{"name":"kill_parent","kind":"boolean","optional":false},{"name":"operation_blocked","kind":"boolean","optional":false},{"name":"process_blocked","kind":"boolean","optional":false},{"name":"registry_operation_blocked","kind":"boolean","optional":false},{"name":"critical_process_disabled","kind":"boolean","optional":false},{"name":"bootup_safeguard_enabled","kind":"boolean","optional":false},{"name":"fs_operation_blocked","kind":"boolean","optional":false},{"name":"handle_operation_downgraded","kind":"boolean","optional":false},{"name":"kill_action_failed","kind":"boolean","optional":false},{"name":"blocking_unsupported_or_disabled","kind":"boolean","optional":false},{"name":"suspend_process","kind":"boolean","optional":false},{"name":"suspend_parent","kind":"boolean","optional":false}]},{"name":"sha256","kind":"string","optional":false,"example":"SHA256"},{"name":"user_name","kind":"string","optional":false,"example":"admin"},{"name":"tactic","kind":"string","optional":false,"example":"Privilege Escalation"},{"name":"tactic_id","kind":"id","optional":false,"example":"TA0004"},{"name":"technique","kind":"string","optional":false,"example":"Access Token Manipulation"},{"name":"technique_id","kind":"id","optional":false,"example":"T1134"},{"name":"display_name","kind":"string","optional":false,"example":"UserTokenImpersonation"},{"name":"objective","kind":"string","optional":false,"example":"Gain Access"},{"name":"compound_tto","kind":"string","optional":false,"example":"GainAccess__PrivilegeEscalation__AccessTokenManipulation__0__0__0__0"}]},"minItems":0,"maxItems":1},{"name":"errors","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1}]}},{"id":"test-data-get-evidence-for-case-response-json","method":"GET","pathTemplate":"/real-time-response/entities/extracted-file-contents/v1","summary":"test_data/get_evidence_for_case_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"resources","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"case_id_1"},{"name":"evidence","kind":"object","optional":false,"children":[{"name":"alerts","kind":"object","optional":false,"children":[{"name":"records","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1}]},{"name":"events","kind":"object","optional":false,"children":[{"name":"records","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1}]},{"name":"leads","kind":"object","optional":false,"children":[{"name":"records","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1}]}]}]},"minItems":0,"maxItems":1}]}},{"id":"test-data-iom-fetch-incidents-iom-resource-ids-page-1-raw-re","method":"GET","pathTemplate":"/real-time-response/combined/batch-refresh-session/v1","summary":"test_data/iom_fetch_incidents/iom_resource_ids_page_1_raw_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"meta","kind":"object","optional":false,"children":[{"name":"query_time","kind":"number","optional":false},{"name":"powered_by","kind":"string","optional":false,"example":"cspm-registration"},{"name":"trace_id","kind":"id","optional":false,"example":"dummy"},{"name":"pagination","kind":"object","optional":false,"children":[{"name":"offset","kind":"integer","optional":false},{"name":"limit","kind":"integer","optional":false},{"name":"total","kind":"integer","optional":false},{"name":"next_token","kind":"string","optional":false,"example":"redacted"}]}]},{"name":"errors","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"resources","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"resource_1"},"minItems":0,"maxItems":2}]}},{"id":"test-data-iom-fetch-incidents-iom-resource-ids-page-2-raw-re","method":"GET","pathTemplate":"/real-time-response/combined/batch-admin-command/v1","summary":"test_data/iom_fetch_incidents/iom_resource_ids_page_2_raw_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"meta","kind":"object","optional":false,"children":[{"name":"query_time","kind":"number","optional":false},{"name":"powered_by","kind":"string","optional":false,"example":"cspm-registration"},{"name":"trace_id","kind":"id","optional":false,"example":"dummy"},{"name":"pagination","kind":"object","optional":false,"children":[{"name":"offset","kind":"integer","optional":false},{"name":"limit","kind":"integer","optional":false},{"name":"total","kind":"integer","optional":false},{"name":"next_token","kind":"string","optional":false,"example":"redacted"}]}]},{"name":"errors","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"resources","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"resource_3"},"minItems":0,"maxItems":1}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200}}
+{
+  "id": "crowdstrikefalcon-crowdstrikefalcon",
+  "name": "CrowdStrike Falcon",
+  "pack": "CrowdStrikeFalcon",
+  "vendor": "CrowdStrike",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Falcon Alerts query plus entity fetch. Legacy Detects routes are included because XSOAR still calls them.",
+  "notes": [
+    "CrowdStrike's public docs mark the Detects collection deprecated and decommissioned on 2025-09-30. XSOAR's client still calls /detects/queries/detects/v1 in older tests, so those paths are mocked too.",
+    "Query endpoints return resource ids inside meta.pagination. Entity endpoints are POST and return alert objects. This mock does not check the OAuth token.",
+    "Falcon's documented query limit can be far above this mock's 500-record page cap."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeFalcon/Integrations/CrowdStrikeFalcon",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "crowdstrikefalcon-crowdstrikefalcon",
+      "name": "CrowdStrike Falcon",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://developer.crowdstrike.com/api-reference/collections/alerts/",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.crowdstrike.com/api-reference/collections/alerts/",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "CrowdStrike's public docs mark the Detects collection deprecated and decommissioned on 2025-09-30. XSOAR's client still calls /detects/queries/detects/v1 in older tests, so those paths are mocked too.",
+          "Query endpoints return resource ids inside meta.pagination. Entity endpoints are POST and return alert objects. This mock does not check the OAuth token.",
+          "Falcon's documented query limit can be far above this mock's 500-record page cap."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {
+          "x-ratelimit-limit": "6000",
+          "x-ratelimit-remaining": "5999"
+        },
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 100,
+          "maxLimit": 500
+        },
+        "id": "query-alerts",
+        "method": "GET",
+        "pathTemplate": "/alerts/queries/alerts/v2",
+        "summary": "Query alert ids",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "falcon"
+        },
+        "record": {
+          "name": "resource",
+          "kind": "id"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "id": "get-alerts",
+        "method": "POST",
+        "pathTemplate": "/alerts/entities/alerts/v2",
+        "summary": "Fetch alert entities",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "falcon"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "composite_id",
+              "kind": "id"
+            },
+            {
+              "name": "created_timestamp",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "updated_timestamp",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "status",
+              "kind": "enum",
+              "enumValues": [
+                "new",
+                "in_progress",
+                "closed"
+              ]
+            },
+            {
+              "name": "severity",
+              "kind": "integer"
+            },
+            {
+              "name": "severity_name",
+              "kind": "enum",
+              "enumValues": [
+                "Low",
+                "Medium",
+                "High",
+                "Critical"
+              ]
+            },
+            {
+              "name": "product",
+              "kind": "const",
+              "constValue": "epp"
+            },
+            {
+              "name": "tactic",
+              "kind": "string",
+              "example": "Defense Evasion"
+            },
+            {
+              "name": "technique",
+              "kind": "string",
+              "example": "Masquerading"
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 100,
+          "maxLimit": 500
+        },
+        "id": "query-detects",
+        "method": "GET",
+        "pathTemplate": "/detects/queries/detects/v1",
+        "summary": "Deprecated detection id query",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "falcon"
+        },
+        "record": {
+          "name": "resource",
+          "kind": "id"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "crowdstrikefalcon-crowdstrikefalcon",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 500
+  }
+}

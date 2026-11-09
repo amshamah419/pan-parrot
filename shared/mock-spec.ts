@@ -39,16 +39,25 @@ export type Envelope =
   | { type: "array" }
   | { type: "object" }
   | { type: "ndjson"; trailer: "akamai-offset" | "none" }
-  | { type: "wrapped"; arrayKey: string };
+  | { type: "wrapped"; arrayKey: string }
+  | { type: "odata"; context: string }
+  | { type: "falcon" }
+  | { type: "slack" }
+  | { type: "azure" }
+  | { type: "splunk-export" }
+  | { type: "token-page"; arrayKey: string; tokenKey: string };
 
 export interface PaginationSpec {
-  style: "none" | "offset" | "cursor" | "page";
+  style: "none" | "offset" | "cursor" | "page" | "link";
   limitParam: string;
   offsetParam: string;
   pageParam: string;
   cursorParam: string;
   defaultLimit: number;
   maxLimit: number;
+  /** When set, a time query such as Akamai `from` ignores offset. */
+  timeParam?: string;
+  timeOverridesOffset?: boolean;
 }
 
 export interface MockOperation {
@@ -92,9 +101,15 @@ export interface MockSpec {
     name: string;
     attribution?: string;
     sourceUrl?: string;
-    fidelity?: "high" | "sample" | "shape" | "generated";
+    fidelity?: "verified" | "high" | "sample" | "shape" | "generated";
     notes?: string[];
     unsupported?: string[];
+    verification?: {
+      status: "verified" | "sample" | "shape";
+      docUrl?: string;
+      checkedAt?: string;
+      differences?: string[];
+    };
   };
   operations: MockOperation[];
   chaos: ChaosSpec;
@@ -175,8 +190,9 @@ export function validateMockSpec(input: unknown): MockSpec {
       attribution: cleanOptional(raw.source.attribution, 500),
       sourceUrl: cleanOptional(raw.source.sourceUrl, 300),
       fidelity: raw.source.fidelity,
-      notes: cleanList(raw.source.notes, 12, 400),
+      notes: cleanList(raw.source.notes, 12, 500),
       unsupported: cleanList(raw.source.unsupported, 20, 300),
+      verification: normalizeVerification(raw.source.verification),
     },
     operations,
     chaos: normalizeChaos(raw.chaos),
@@ -229,6 +245,22 @@ function normalizeEnvelope(envelope: Envelope | undefined, list: boolean): Envel
       trailer: envelope.trailer === "akamai-offset" ? "akamai-offset" : "none",
     };
   }
+  if (envelope.type === "odata") {
+    const context = String(envelope.context || "").slice(0, 240);
+    if (!context.startsWith("http")) throw new Error("OData context must be an https URL");
+    return { type: "odata", context };
+  }
+  if (envelope.type === "falcon") return { type: "falcon" };
+  if (envelope.type === "slack") return { type: "slack" };
+  if (envelope.type === "azure") return { type: "azure" };
+  if (envelope.type === "splunk-export") return { type: "splunk-export" };
+  if (envelope.type === "token-page") {
+    return {
+      type: "token-page",
+      arrayKey: token(envelope.arrayKey, "items"),
+      tokenKey: token(envelope.tokenKey, "nextPageToken"),
+    };
+  }
   if (envelope.type === "array" || envelope.type === "object") return envelope;
   return list ? { type: "array" } : { type: "object" };
 }
@@ -236,7 +268,7 @@ function normalizeEnvelope(envelope: Envelope | undefined, list: boolean): Envel
 function normalizePagination(pagination: PaginationSpec | undefined): PaginationSpec {
   const base = defaultPagination();
   if (!pagination) return base;
-  const style = ["none", "offset", "cursor", "page"].includes(pagination.style)
+  const style = ["none", "offset", "cursor", "page", "link"].includes(pagination.style)
     ? pagination.style
     : "none";
   const maxLimit = clampInt(
@@ -253,6 +285,22 @@ function normalizePagination(pagination: PaginationSpec | undefined): Pagination
     cursorParam: token(pagination.cursorParam, "cursor"),
     defaultLimit: clampInt(pagination.defaultLimit, 1, maxLimit, base.defaultLimit),
     maxLimit,
+    timeParam: pagination.timeParam ? token(pagination.timeParam, "from") : undefined,
+    timeOverridesOffset: Boolean(pagination.timeOverridesOffset),
+  };
+}
+
+function normalizeVerification(
+  verification: MockSpec["source"]["verification"],
+): MockSpec["source"]["verification"] {
+  if (!verification || typeof verification !== "object") return undefined;
+  const status = verification.status;
+  if (status !== "verified" && status !== "sample" && status !== "shape") return undefined;
+  return {
+    status,
+    docUrl: cleanOptional(verification.docUrl, 300),
+    checkedAt: cleanOptional(verification.checkedAt, 20),
+    differences: cleanList(verification.differences, 8, 400),
   };
 }
 

@@ -1,1 +1,215 @@
-{"id":"virustotal-virustotalv3","name":"VirusTotal (API v3)","pack":"VirusTotal","fidelity":"sample","curated":false,"summary":"Analyzes suspicious hashes, URLs, domains, and IP addresses.","operations":2,"spec":{"version":1,"source":{"kind":"preset","id":"virustotal-virustotalv3","name":"VirusTotal (API v3)","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/VirusTotal/Integrations/VirusTotalV3","fidelity":"sample","notes":["HTTP paths were guessed from string literals in the integration client and may not match every command.","Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture."]},"operations":[{"id":"test-data-file-json","method":"GET","pathTemplate":"/private/urls","summary":"test_data/file.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"file"},{"name":"id","kind":"id","optional":false,"example":":sha256:"},{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://www.virustotal.com/api/v3/files/:sha256:"}]},{"name":"data","kind":"object","optional":false,"children":[{"name":"relationships","kind":"object","optional":false,"children":[{"name":"contacted_domains","kind":"object","optional":false,"children":[{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"nested"},{"name":"id","kind":"string","optional":false,"example":"nested"}]},"minItems":0,"maxItems":1},{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://www.virustotal.com/api/v3/files/699ec052ecc898bdbdafea0027c4ab44c3d01ae011c17745dd2b7fbddaa077f3/relationships/c"},{"name":"related","kind":"string","optional":false,"example":"https://www.virustotal.com/api/v3/files/699ec052ecc898bdbdafea0027c4ab44c3d01ae011c17745dd2b7fbddaa077f3/contacted_domai"}]}]}]},{"name":"attributes","kind":"object","optional":false,"children":[{"name":"first_seen_itw_date","kind":"integer","optional":false},{"name":"first_submission_date","kind":"integer","optional":false},{"name":"last_analysis_date","kind":"integer","optional":false},{"name":"last_analysis_results","kind":"object","optional":false,"children":[{"name":"AVG","kind":"object","optional":false,"children":[{"name":"category","kind":"string","optional":false,"example":"undetected"},{"name":"engine_name","kind":"string","optional":false,"example":"AVG"},{"name":"engine_update","kind":"string","optional":false,"example":"20170810"},{"name":"engine_version","kind":"string","optional":false,"example":"8.0.1489.320"},{"name":"method","kind":"string","optional":false,"example":"blacklist"},{"name":"result","kind":"string","optional":true}]}]},{"name":"last_analysis_stats","kind":"object","optional":false,"children":[{"name":"harmless","kind":"integer","optional":false},{"name":"malicious","kind":"integer","optional":false},{"name":"suspicious","kind":"integer","optional":false},{"name":"timeout","kind":"integer","optional":false},{"name":"type-unsupported","kind":"integer","optional":false},{"name":"undetected","kind":"integer","optional":false}]},{"name":"last_submission_date","kind":"integer","optional":false},{"name":"magic","kind":"string","optional":false,"example":"data"},{"name":"md5","kind":"string","optional":false,"example":":md5:"},{"name":"names","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"zipnew.dat"},"minItems":0,"maxItems":3},{"name":"nsrl_info","kind":"object","optional":false,"children":[{"name":"filenames","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"WINDOWS DIALUP.ZIP"},"minItems":0,"maxItems":3},{"name":"products","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Master Hacker Internet Terrorism (Core Publishing Inc.)"},"minItems":0,"maxItems":3}]},{"name":"reputation","kind":"integer","optional":false},{"name":"sha1","kind":"string","optional":false,"example":":sha1:"},{"name":"sha256","kind":"string","optional":false,"example":":sha256:"},{"name":"size","kind":"integer","optional":false},{"name":"ssdeep","kind":"string","optional":false,"example":":ssdeep:"},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"software-collection"},"minItems":0,"maxItems":3},{"name":"times_submitted","kind":"integer","optional":false},{"name":"total_votes","kind":"object","optional":false,"children":[{"name":"harmless","kind":"integer","optional":false},{"name":"malicious","kind":"integer","optional":false}]},{"name":"trid","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"file_type","kind":"string","optional":false,"example":"ZIP compressed archive (empty)"},{"name":"probability","kind":"integer","optional":false}]},"minItems":0,"maxItems":1},{"name":"trusted_verdict","kind":"object","optional":false,"children":[{"name":"filename","kind":"string","optional":false,"example":"somefile.zip"},{"name":"link","kind":"string","optional":false,"example":"example.com/somefile.zip"},{"name":"organization","kind":"string","optional":false,"example":"Google"},{"name":"verdict","kind":"string","optional":false,"example":"goodware"}]},{"name":"type_description","kind":"string","optional":false,"example":"unknown"}]}]}]}},{"id":"test-data-ip-results-json","method":"GET","pathTemplate":"/","summary":"test_data/ip_results.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"attributes","kind":"object","optional":false,"children":[{"name":"as_owner","kind":"string","optional":false,"example":"EMERALD-ONION"},{"name":"asn","kind":"integer","optional":false},{"name":"continent","kind":"string","optional":false,"example":"NA"},{"name":"country","kind":"string","optional":false,"example":"US"},{"name":"jarm","kind":"string","optional":false,"example":":jarm:"},{"name":"last_analysis_stats","kind":"object","optional":false,"children":[{"name":"harmless","kind":"integer","optional":false},{"name":"malicious","kind":"integer","optional":false},{"name":"suspicious","kind":"integer","optional":false},{"name":"timeout","kind":"integer","optional":false},{"name":"undetected","kind":"integer","optional":false}]},{"name":"last_modification_date","kind":"integer","optional":false},{"name":"network","kind":"string","optional":false,"example":":cidr:"},{"name":"regional_internet_registry","kind":"string","optional":false,"example":"ARIN"},{"name":"reputation","kind":"integer","optional":false},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"total_votes","kind":"object","optional":false,"children":[{"name":"harmless","kind":"integer","optional":false},{"name":"malicious","kind":"integer","optional":false}]},{"name":"whois","kind":"email","optional":false},{"name":"whois_date","kind":"integer","optional":false}]},{"name":"id","kind":"id","optional":false,"example":":ip:"},{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://www.virustotal.com/api/v3/ip_addresses/:ip:"}]},{"name":"type","kind":"string","optional":false,"example":"ip_address"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200}}
+{
+  "id": "virustotal-virustotalv3",
+  "name": "VirusTotal v3",
+  "pack": "VirusTotal",
+  "vendor": "VirusTotal",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /files/{id} and /ip_addresses/{ip} in the v3 data/attributes envelope.",
+  "notes": [
+    "Set the integration base URL to the catch URL. XSOAR appends files/{id}, which replaces https://www.virustotal.com/api/v3.",
+    "Relationship links and the analysis stats object are shortened. last_analysis_stats counts are examples, not a live engine vote.",
+    "x-api-key is not required."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VirusTotal/Integrations/VirusTotalV3",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "virustotal-virustotalv3",
+      "name": "VirusTotal v3",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://docs.virustotal.com/reference/file-info",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.virustotal.com/reference/file-info",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "Set the integration base URL to the catch URL. XSOAR appends files/{id}, which replaces https://www.virustotal.com/api/v3.",
+          "Relationship links and the analysis stats object are shortened. last_analysis_stats counts are examples, not a live engine vote.",
+          "x-api-key is not required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "file-info",
+        "method": "GET",
+        "pathTemplate": "/files/{id}",
+        "summary": "Get a file report",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "report",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "id",
+                  "kind": "id"
+                },
+                {
+                  "name": "type",
+                  "kind": "const",
+                  "constValue": "file"
+                },
+                {
+                  "name": "attributes",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "md5",
+                      "kind": "id"
+                    },
+                    {
+                      "name": "sha1",
+                      "kind": "id"
+                    },
+                    {
+                      "name": "sha256",
+                      "kind": "id"
+                    },
+                    {
+                      "name": "last_analysis_date",
+                      "kind": "timestamp",
+                      "format": "unix"
+                    },
+                    {
+                      "name": "last_analysis_stats",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "malicious",
+                          "kind": "integer"
+                        },
+                        {
+                          "name": "suspicious",
+                          "kind": "integer"
+                        },
+                        {
+                          "name": "undetected",
+                          "kind": "integer"
+                        },
+                        {
+                          "name": "harmless",
+                          "kind": "integer"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "ip-info",
+        "method": "GET",
+        "pathTemplate": "/ip_addresses/{ip}",
+        "summary": "Get an IP address report",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "report",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "id",
+                  "kind": "ip"
+                },
+                {
+                  "name": "type",
+                  "kind": "const",
+                  "constValue": "ip_address"
+                },
+                {
+                  "name": "attributes",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "country",
+                      "kind": "enum",
+                      "enumValues": [
+                        "US",
+                        "DE",
+                        "JP"
+                      ]
+                    },
+                    {
+                      "name": "as_owner",
+                      "kind": "string",
+                      "example": "Example ISP"
+                    },
+                    {
+                      "name": "last_analysis_date",
+                      "kind": "timestamp",
+                      "format": "unix"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "virustotal-virustotalv3",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 500
+  }
+}

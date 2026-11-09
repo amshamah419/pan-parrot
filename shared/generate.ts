@@ -13,6 +13,8 @@ export interface GenerateInput {
   query: Record<string, string | undefined>;
   pathParams: Record<string, string>;
   requestIndex: number;
+  /** Absolute URL of this request without the query string, used for Link / nextLink. */
+  requestUrl?: string;
 }
 
 export interface GenerateResult {
@@ -81,7 +83,12 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
     };
   }
 
-  const page = resolvePage(operation.pagination, input.query, spec.totalRecords, chaosOn ? spec.chaos : null);
+  const page = resolvePage(
+    operation.pagination,
+    input.query,
+    spec.totalRecords,
+    chaosOn ? spec.chaos : null,
+  );
   if (chaosOn && spec.chaos.paginationGlitch !== "none") {
     effects.push(`pagination-${spec.chaos.paginationGlitch}`);
   }
@@ -110,7 +117,7 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
   if (chaosOn && spec.chaos.mixedTimestamps) effects.push("mixed-timestamps");
   if (chaosOn && spec.chaos.wrongTypes) effects.push("wrong-types");
 
-  let body = encodeBody(operation, records, page);
+  let body = encodeBody(operation, records, page, input.requestUrl);
   let contentType = operation.contentType;
   if (chaosOn && spec.chaos.malformedJson) {
     body = `${body.slice(0, Math.max(1, body.length - 1))}<<<`;
@@ -140,6 +147,8 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
   };
   if (capped) headers["x-pan-parrot-page-cap"] = String(MOCK_LIMITS.maxRecordsPerResponse);
   if (effects.length) headers["x-pan-parrot-effects"] = effects.join(",");
+  const link = nextLinkHeader(operation, page, input.requestUrl, input.query);
+  if (link) headers.link = link;
 
   return {
     status: operation.status,
@@ -167,21 +176,24 @@ function resolvePage(
   totalRecords: number,
   chaos: ChaosSpec | null,
 ): PagePlan {
-  const from = Number(query.from);
-  const baseEpoch = Number.isFinite(from) && from > 1_000_000_000 ? Math.floor(from) : 1_700_000_000;
+  const timeValue = pagination.timeParam ? Number(query[pagination.timeParam]) : NaN;
+  const hasTime = Number.isFinite(timeValue) && timeValue > 1_000_000_000;
+  const baseEpoch = hasTime ? Math.floor(timeValue) : 1_700_000_000;
   const requested = clamp(
     Number(query[pagination.limitParam] ?? pagination.defaultLimit),
     1,
     pagination.maxLimit,
   );
-  const capped = requested < Number(query[pagination.limitParam] ?? requested);
+  const asked = Number(query[pagination.limitParam]);
+  const capped = Number.isFinite(asked) && requested < asked;
   let start = 0;
-  if (pagination.style === "page") {
+  const ignoreOffset = Boolean(pagination.timeOverridesOffset && hasTime);
+  if (!ignoreOffset && pagination.style === "page") {
     const page = Math.max(1, Math.floor(Number(query[pagination.pageParam] || 1)));
     start = (page - 1) * requested;
-  } else if (pagination.style === "cursor") {
+  } else if (!ignoreOffset && (pagination.style === "cursor" || pagination.style === "link")) {
     start = decodeToken(query[pagination.cursorParam]);
-  } else if (pagination.style === "offset") {
+  } else if (!ignoreOffset && pagination.style === "offset") {
     start = decodeToken(query[pagination.offsetParam]);
   }
 
@@ -207,7 +219,12 @@ function resolvePage(
   };
 }
 
-function encodeBody(operation: MockOperation, records: unknown[], page: PagePlan): string {
+function encodeBody(
+  operation: MockOperation,
+  records: unknown[],
+  page: PagePlan,
+  requestUrl?: string,
+): string {
   if (!operation.list) {
     return JSON.stringify(records[0] ?? {});
   }
@@ -228,6 +245,64 @@ function encodeBody(operation: MockOperation, records: unknown[], page: PagePlan
     body.limit = records.length;
     return JSON.stringify(body);
   }
+  if (envelope.type === "odata") {
+    const body: Record<string, unknown> = {
+      "@odata.context": envelope.context,
+      value: records,
+    };
+    if (page.next != null && requestUrl) {
+      const next = new URL(requestUrl);
+      next.searchParams.set(operation.pagination.limitParam, String(page.requestedLimit));
+      next.searchParams.set(operation.pagination.offsetParam, String(page.next));
+      body["@odata.nextLink"] = next.toString();
+    }
+    return JSON.stringify(body);
+  }
+  if (envelope.type === "azure") {
+    const body: Record<string, unknown> = { value: records };
+    if (page.next != null && requestUrl) {
+      const next = new URL(requestUrl);
+      next.searchParams.set(operation.pagination.limitParam, String(page.requestedLimit));
+      next.searchParams.set(operation.pagination.cursorParam, encodeToken(page.next));
+      body.nextLink = next.toString();
+    }
+    return JSON.stringify(body);
+  }
+  if (envelope.type === "token-page") {
+    return JSON.stringify({
+      [envelope.arrayKey]: records,
+      [envelope.tokenKey]: page.next != null ? encodeToken(page.next) : "",
+    });
+  }
+  if (envelope.type === "splunk-export") {
+    return records
+      .map((record, offset) =>
+        JSON.stringify({ preview: false, offset: page.start + offset, lastrow: offset === records.length - 1, result: record }),
+      )
+      .join("\n");
+  }
+  if (envelope.type === "slack") {
+    return JSON.stringify({
+      ok: true,
+      messages: records,
+      has_more: page.next != null,
+      response_metadata: page.next != null ? { next_cursor: encodeToken(page.next) } : {},
+    });
+  }
+  if (envelope.type === "falcon") {
+    return JSON.stringify({
+      meta: {
+        query_time: 0.012,
+        pagination: {
+          offset: page.start,
+          limit: page.requestedLimit,
+          total: records.length,
+        },
+      },
+      resources: records,
+      errors: [],
+    });
+  }
   if (envelope.type === "array") return JSON.stringify(records);
   return JSON.stringify(records[0] ?? {});
 }
@@ -240,6 +315,23 @@ function trimToBytes(operation: MockOperation, records: unknown[], page: PagePla
     body = encodeBody(operation, kept, page);
   }
   return body;
+}
+
+function nextLinkHeader(
+  operation: MockOperation,
+  page: PagePlan,
+  requestUrl: string | undefined,
+  query: Record<string, string | undefined>,
+): string | undefined {
+  if (operation.pagination.style !== "link" || page.next == null || !requestUrl) return undefined;
+  const next = new URL(requestUrl);
+  for (const [key, value] of Object.entries(query)) {
+    if (value) next.searchParams.set(key, value);
+  }
+  next.searchParams.set(operation.pagination.limitParam, String(page.requestedLimit));
+  next.searchParams.set(operation.pagination.cursorParam, encodeToken(page.next));
+  const self = new URL(requestUrl);
+  return `<${self.toString()}>; rel="self", <${next.toString()}>; rel="next"`;
 }
 
 interface RecordCtx {
@@ -299,11 +391,12 @@ function generateField(field: FieldSpec, ctx: RecordCtx): unknown {
     case "id":
       return `${field.name}_${ctx.index.toString(16).padStart(6, "0")}`;
     case "ip":
+      if (field.example && ctx.index === 0) return field.example;
       return `${198 + (ctx.index % 2)}.51.${(ctx.index >> 8) & 255}.${(ctx.index & 255) || 1}`;
     case "email":
       return `user${ctx.index}@example.com`;
     case "timestamp":
-      return formatTime(ctx.baseEpoch + ctx.index, field.format, ctx, rng);
+      return formatTime((timestampAnchor(field.example) ?? ctx.baseEpoch) + ctx.index, field.format, ctx, rng);
     case "string":
       if (field.format === "akamai-rule") {
         const labels = field.enumValues?.length
@@ -322,6 +415,14 @@ function shouldDrop(field: FieldSpec, ctx: RecordCtx): boolean {
   if (!ctx.chaos?.missingFields) return false;
   if (field.kind === "timestamp") return true;
   return /time|date|^start$/i.test(field.name);
+}
+
+function timestampAnchor(example: string | undefined): number | null {
+  if (!example) return null;
+  if (/^\d{10}$/.test(example)) return Number(example);
+  if (/^\d{13}$/.test(example)) return Math.floor(Number(example) / 1000);
+  const parsed = Date.parse(example);
+  return Number.isFinite(parsed) ? Math.floor(parsed / 1000) : null;
 }
 
 function formatTime(

@@ -12,7 +12,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TrustBadge } from "@/components/TrustBadge";
 import { createEndpoint, importSpec } from "@/lib/api";
 import type { UserEndpoint } from "@shared/api";
 import { Sparkles } from "lucide-react";
@@ -25,6 +26,7 @@ interface CatalogEntry {
   curated?: boolean;
   summary?: string;
   operations?: number;
+  verification?: { status?: string; docUrl?: string };
 }
 
 export function IntegrationPicker({
@@ -35,7 +37,8 @@ export function IntegrationPicker({
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [catalog, setCatalog] = useState<CatalogEntry[]>([]);
-  const [query, setQuery] = useState("Akamai WAF SIEM");
+  const [query, setQuery] = useState("");
+  const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [sample, setSample] = useState("");
@@ -52,14 +55,16 @@ export function IntegrationPicker({
 
   const matches = useMemo(() => {
     const needle = query.trim().toLowerCase();
-    const ranked = [...catalog].sort((a, b) => Number(b.curated) - Number(a.curated));
-    if (!needle) return ranked.slice(0, 20);
+    const rank = (entry: CatalogEntry) =>
+      entry.verification?.status === "verified" || entry.fidelity === "verified" ? 2 : entry.curated ? 1 : 0;
+    const ranked = [...catalog].sort((a, b) => rank(b) - rank(a) || a.name.localeCompare(b.name));
     return ranked
+      .filter((entry) => !verifiedOnly || rank(entry) === 2)
       .filter((entry) =>
-        `${entry.name} ${entry.pack} ${entry.summary || ""}`.toLowerCase().includes(needle),
+        !needle || `${entry.name} ${entry.pack} ${entry.summary || ""}`.toLowerCase().includes(needle),
       )
-      .slice(0, 20);
-  }, [catalog, query]);
+      .slice(0, 30);
+  }, [catalog, query, verifiedOnly]);
 
   const usePreset = async (id: string, name: string) => {
     setBusy(true);
@@ -87,9 +92,11 @@ export function IntegrationPicker({
     setError("");
     try {
       const result = await importSpec({ kind, text, url });
+      const mockSpec = result.mockSpec as { source?: { name?: string } } | undefined;
+      if (!mockSpec) throw new Error("Import did not return a mock");
       const endpoint = await createEndpoint({
-        name: (result.mockSpec as { source?: { name?: string } }).source?.name || "Imported API",
-        mockSpec: result.mockSpec,
+        name: mockSpec.source?.name || "Imported API",
+        mockSpec,
       });
       onCreated?.(endpoint);
       setOpen(false);
@@ -109,30 +116,44 @@ export function IntegrationPicker({
           Mock an integration
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-3xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Start from a real API</DialogTitle>
+          <DialogTitle>Create a mock</DialogTitle>
           <DialogDescription>
-            Pick an XSOAR integration, paste a sample, or import an OpenAPI, Swagger, or Postman spec. You will get a catch URL to paste into the integration's server field.
+            Pick a vendor API, paste one JSON response, or import a spec. The next screen gives you a URL to paste into the XSOAR integration.
           </DialogDescription>
         </DialogHeader>
-        <div className="space-y-4">
-          <Button
-            className="w-full"
-            disabled={busy}
-            onClick={() => usePreset("akamai-waf-siem", "Akamai WAF SIEM")}
-          >
-            Start with Akamai WAF SIEM
-          </Button>
-          <div className="space-y-2">
-            <Label htmlFor="preset-search">Search XSOAR integrations</Label>
-            <Input
-              id="preset-search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Okta, CrowdStrike, Defender, Graph..."
-            />
-            <div className="max-h-48 overflow-y-auto rounded border">
+        <Tabs defaultValue="catalog">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="catalog">Catalog</TabsTrigger>
+            <TabsTrigger value="sample">Sample JSON</TabsTrigger>
+            <TabsTrigger value="spec">API spec</TabsTrigger>
+          </TabsList>
+          <TabsContent value="catalog" className="space-y-3">
+            <Button
+              className="w-full"
+              disabled={busy}
+              onClick={() => usePreset("akamai-waf-siem", "Akamai WAF SIEM")}
+            >
+              Start with Akamai WAF SIEM
+            </Button>
+            <div className="flex items-center gap-3">
+              <Input
+                id="preset-search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search Okta, CrowdStrike, Sentinel..."
+              />
+              <label className="flex shrink-0 items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={verifiedOnly}
+                  onChange={(event) => setVerifiedOnly(event.target.checked)}
+                />
+                Verified
+              </label>
+            </div>
+            <div className="max-h-80 overflow-y-auto rounded border">
               {matches.map((entry) => (
                 <button
                   key={entry.id}
@@ -144,45 +165,40 @@ export function IntegrationPicker({
                   <span>
                     <span className="block text-sm font-medium">{entry.name}</span>
                     <span className="block text-xs text-muted-foreground">
-                      {entry.pack}
-                      {entry.summary ? ` · ${entry.summary.slice(0, 110)}` : ""}
+                      {entry.summary ? entry.summary.slice(0, 140) : entry.pack}
                     </span>
                   </span>
-                  <Badge variant={entry.curated ? "default" : "secondary"}>
-                    {entry.curated ? "curated" : entry.fidelity || "sample"}
-                  </Badge>
+                  <TrustBadge status={entry.verification?.status} fidelity={entry.fidelity} />
                 </button>
               ))}
               {matches.length === 0 && (
                 <p className="p-3 text-sm text-muted-foreground">No matches.</p>
               )}
             </div>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="sample-json">Or paste a sample JSON response</Label>
+          </TabsContent>
+          <TabsContent value="sample" className="space-y-3">
+            <Label htmlFor="sample-json">Paste one real response</Label>
             <Textarea
               id="sample-json"
               value={sample}
               onChange={(event) => setSample(event.target.value)}
-              rows={4}
+              rows={8}
               className="font-mono text-xs"
               placeholder='[{"id":"1","created":"2024-01-01T00:00:00Z"}]'
             />
-            <Button
-              variant="outline"
-              disabled={busy || !sample.trim()}
-              onClick={() => importText("sample", sample)}
-            >
-              Infer shape from sample
+            <Button disabled={busy || !sample.trim()} onClick={() => importText("sample", sample)}>
+              Build a mock from this JSON
             </Button>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="spec-text">Or OpenAPI 3 / Swagger 2 / Postman collection</Label>
+          </TabsContent>
+          <TabsContent value="spec" className="space-y-3">
+            <p className="text-sm text-muted-foreground">
+              OpenAPI 3, Swagger 2, or a Postman v2 collection. JSON or YAML. URLs must be public https.
+            </p>
             <Textarea
               id="spec-text"
               value={specText}
               onChange={(event) => setSpecText(event.target.value)}
-              rows={4}
+              rows={6}
               className="font-mono text-xs"
               placeholder="Paste JSON or YAML"
             />
@@ -191,19 +207,11 @@ export function IntegrationPicker({
               onChange={(event) => setSpecUrl(event.target.value)}
               placeholder="https://example.com/openapi.yaml"
             />
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                disabled={busy || !specText.trim()}
-                onClick={() => importText("spec", specText)}
-              >
+            <div className="flex flex-wrap gap-2">
+              <Button disabled={busy || !specText.trim()} onClick={() => importText("spec", specText)}>
                 Import pasted spec
               </Button>
-              <Button
-                variant="outline"
-                disabled={busy || !specUrl.trim()}
-                onClick={() => importText("spec", "", specUrl)}
-              >
+              <Button variant="outline" disabled={busy || !specUrl.trim()} onClick={() => importText("spec", "", specUrl)}>
                 Import from URL
               </Button>
               <label className="inline-flex items-center">
@@ -224,9 +232,9 @@ export function IntegrationPicker({
                 />
               </label>
             </div>
-          </div>
-          {error && <p className="text-sm text-destructive">{error}</p>}
-        </div>
+          </TabsContent>
+        </Tabs>
+        {error && <p className="text-sm text-destructive">{error}</p>}
       </DialogContent>
     </Dialog>
   );

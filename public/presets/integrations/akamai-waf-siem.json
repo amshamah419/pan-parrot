@@ -3,7 +3,7 @@
   "name": "Akamai WAF SIEM",
   "pack": "Akamai_SIEM",
   "vendor": "Akamai",
-  "fidelity": "high",
+  "fidelity": "verified",
   "curated": true,
   "summary": "Newline-delimited WAF events plus an offset trailer, which is what the XSOAR Akamai WAF SIEM integration parses.",
   "notes": [
@@ -11,8 +11,10 @@
     "Each response is one JSON object per line. The last line is { total, offset, limit }, matching the pack's test fixture. There is no trailing blank line, so the current get_events_with_offset parser can pop the trailer.",
     "Non-empty rule* fields are URL-encoded base64, which decode_message() expects. The pack's unit-test fixture leaves those fields empty; both are accepted.",
     "httpMessage.start is a unix-seconds string. The integration does int(start) and datetime.utcfromtimestamp.",
-    "Akamai's own API can return on the order of 20,000 events per call. This mock returns at most 500 per response (and stays under 2 MB) and hands back an offset for the next page.",
-    "Unsure: production events often include more attackData keys than the XSOAR fixture. This preset follows the fixture plus the fields events_to_ec() reads."
+    "Checked against https://techdocs.akamai.com/siem-integration/reference/get-config on 2026-11-09. Official limit default is 10000 and the maximum is 600000. This mock returns at most 500 events and 2 MB, then an offset.",
+    "If from and offset are both set, Akamai uses the time window. This mock ignores offset when from is present.",
+    "httpMessage.query is required by the public event schema. botData, clientData, and userRiskData are omitted.",
+    "Production offset tokens are long. This mock uses a shorter pp_ token. 416 for an expired offset is not simulated."
   ],
   "attribution": "Field names and encoding follow Packs/Akamai_SIEM in https://github.com/demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Akamai_SIEM/Integrations/Akamai_SIEM",
@@ -22,9 +24,21 @@
       "kind": "preset",
       "id": "akamai-waf-siem",
       "name": "Akamai WAF SIEM",
-      "fidelity": "high",
-      "attribution": "Derived from demisto/content Packs/Akamai_SIEM (MIT).",
-      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Akamai_SIEM/Integrations/Akamai_SIEM",
+      "fidelity": "verified",
+      "attribution": "Checked against Akamai's SIEM integration reference and demisto/content (MIT).",
+      "sourceUrl": "https://techdocs.akamai.com/siem-integration/reference/get-config",
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://techdocs.akamai.com/siem-integration/reference/get-config",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "Akamai's default limit is 10000 and the documented maximum is 600000. This mock returns at most 500 events and 2 MB per call, then an offset.",
+          "If from and offset are both present, Akamai uses time mode. This mock does the same.",
+          "Production offset tokens are long opaque strings. This mock uses a shorter pp_ token that still round-trips.",
+          "botData, clientData, and userRiskData are omitted. httpMessage.query is included because the public event schema requires it.",
+          "Akamai 429 bodies are application/problem+json. Chaos errors here are a small JSON object, with Retry-After on 429 and 503."
+        ]
+      },
       "notes": [
         "Server URL should be this endpoint's catch URL. The integration requests /siem/v1/configs/{configIds}."
       ]
@@ -66,7 +80,9 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 500,
+          "timeParam": "from",
+          "timeOverridesOffset": true
         },
         "record": {
           "name": "event",
@@ -102,6 +118,7 @@
                 { "name": "host", "kind": "enum", "enumValues": ["www.example.com", "api.example.com", "login.example.com"] },
                 { "name": "port", "kind": "enum", "enumValues": ["443", "80"] },
                 { "name": "path", "kind": "enum", "enumValues": ["/login", "/search", "/api/v1/orders"] },
+                { "name": "query", "kind": "string", "example": "q=login" },
                 { "name": "requestHeaders", "kind": "string", "example": "User-Agent: pan-parrot" },
                 { "name": "status", "kind": "enum", "enumValues": ["403", "200", "406"] },
                 { "name": "bytes", "kind": "enum", "enumValues": ["0", "128", "2048"] },

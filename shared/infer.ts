@@ -100,9 +100,9 @@ export function inferValue(name: string, value: unknown, depth = 0): FieldSpec {
     return { name, kind: "string", example: "redacted" };
   }
   if (isIdentifier(name)) return { name, kind: "id", example: text.slice(0, 80) };
-  if (/^\d{4}-\d{2}-\d{2}T/.test(text)) return { name, kind: "timestamp", format: "iso" };
+  if (/^\d{4}-\d{2}-\d{2}T/.test(text)) return { name, kind: "timestamp", format: "iso", example: text };
   if (/^\d{10}$/.test(text) && /time|date|start|stamp/i.test(name)) {
-    return { name, kind: "timestamp", format: "unix-string" };
+    return { name, kind: "timestamp", format: "unix-string", example: text };
   }
   if (/^(?:\d{1,3}\.){3}\d{1,3}$/.test(text)) return { name, kind: "ip", example: text };
   if (text.includes("@") && text.includes(".")) return { name, kind: "email" };

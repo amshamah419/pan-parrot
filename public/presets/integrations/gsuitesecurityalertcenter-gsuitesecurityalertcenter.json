@@ -1,1 +1,134 @@
-{"id":"gsuitesecurityalertcenter-gsuitesecurityalertcenter","name":"G Suite Security Alert Center","pack":"GSuiteSecurityAlertCenter","fidelity":"shape","curated":false,"summary":"G Suite Security Alert Center allows users to fetch different alert types such as Suspicious login, Device compromised, Leaked password, and more. Users can delete or recover a sin","operations":6,"spec":{"version":1,"source":{"kind":"preset","id":"gsuitesecurityalertcenter-gsuitesecurityalertcenter","name":"G Suite Security Alert Center","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/GSuiteSecurityAlertCenter/Integrations/GSuiteSecurityAlertCenter","fidelity":"shape","notes":["No HTTP path was recovered from the client. The sample shape is served at the catch URL root.","Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture."]},"operations":[{"id":"test-data-batch-delete-alerts-raw-response-json","method":"GET","pathTemplate":"/","summary":"test_data/batch_delete_alerts_raw_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"successAlertIds","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"dummy_alertId1"},"minItems":0,"maxItems":1},{"name":"failedAlertStatus","kind":"object","optional":false,"children":[{"name":"dummy_alertId2","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"message","kind":"string","optional":false,"example":"NOT_FOUND"}]}]}]}},{"id":"test-data-batch-recover-alerts-raw-response-json","method":"GET","pathTemplate":"/","summary":"test_data/batch_recover_alerts_raw_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"successAlertIds","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"dummy_alertId1"},"minItems":0,"maxItems":1},{"name":"failedAlertStatus","kind":"object","optional":false,"children":[{"name":"dummy_alertId2","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"message","kind":"string","optional":false,"example":"NOT_FOUND"}]}]}]}},{"id":"test-data-create-alert-feedback-response-json","method":"GET","pathTemplate":"/","summary":"test_data/create_alert_feedback_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"customerId","kind":"id","optional":false,"example":"dummy_customerId"},{"name":"alertId","kind":"id","optional":false,"example":"dummy_alertId"},{"name":"feedbackId","kind":"id","optional":false,"example":"dummy_feedbackId"},{"name":"createTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"type","kind":"string","optional":false,"example":"NOT_USEFUL"},{"name":"email","kind":"email","optional":false}]}},{"id":"test-data-fetch-incidents-alert-response-json","method":"GET","pathTemplate":"/","summary":"test_data/fetch_incidents_alert_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"alerts","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"customerId","kind":"id","optional":false,"example":"demo_customerId"},{"name":"alertId","kind":"id","optional":false,"example":"demo_alertId"},{"name":"createTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"startTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"endTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"type","kind":"string","optional":false,"example":"Customer takeout initiated"},{"name":"source","kind":"string","optional":false,"example":"Domain wide takeout"},{"name":"data","kind":"object","optional":false,"children":[{"name":"takeoutRequestId","kind":"id","optional":false,"example":"demo_takeoutRequestId"},{"name":"email","kind":"string","optional":false,"example":"demo_email"}]},{"name":"metadata","kind":"object","optional":false,"children":[{"name":"customerId","kind":"id","optional":false,"example":"demo_customerId"},{"name":"alertId","kind":"id","optional":false,"example":"demo_alertId"},{"name":"status","kind":"string","optional":false,"example":"NOT_STARTED"},{"name":"updateTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"severity","kind":"string","optional":false,"example":"LOW"},{"name":"etag","kind":"string","optional":false,"example":"demo_etag="}]},{"name":"updateTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"etag","kind":"string","optional":false,"example":"demo_etag=="}]},"minItems":0,"maxItems":1}]}},{"id":"test-data-fetch-incidents-output-json","method":"GET","pathTemplate":"/","summary":"test_data/fetch_incidents_output.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"incidents","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"Customer takeout initiated - Domain wide takeout"},{"name":"occurred","kind":"timestamp","optional":false,"format":"iso"},{"name":"rawJSON","kind":"string","optional":false,"example":"{\"customerId\": \"demo_customerId\", \"alertId\": \"demo_alertId\", \"createTime\": \"2020-10-28T20:43:34.381Z\", \"startTime\": \"202"}]},"minItems":0,"maxItems":1},{"name":"last_fetch","kind":"object","optional":false,"children":[{"name":"last_fetch","kind":"timestamp","optional":false,"format":"iso"},{"name":"next_page_token","kind":"string","optional":false,"example":"redacted"},{"name":"alert_filter","kind":"string","optional":false,"example":"createTime >= \"2020-10-28T20:43:34.381Z\" AND type=\"Suspicious login\""}]}]}},{"id":"test-data-get-alert-response-json","method":"GET","pathTemplate":"/","summary":"test_data/get_alert_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"customerId","kind":"id","optional":false,"example":"demo_customerId"},{"name":"alertId","kind":"id","optional":false,"example":"demo_alertId"},{"name":"createTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"startTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"endTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"type","kind":"string","optional":false,"example":"Customer takeout initiated"},{"name":"source","kind":"string","optional":false,"example":"Domain wide takeout"},{"name":"data","kind":"object","optional":false,"children":[{"name":"@type","kind":"string","optional":false,"example":"demo type"},{"name":"takeoutRequestId","kind":"id","optional":false,"example":"demo_takeoutRequestId"},{"name":"email","kind":"string","optional":false,"example":"demo_email"}]},{"name":"metadata","kind":"object","optional":false,"children":[{"name":"customerId","kind":"id","optional":false,"example":"demo_customerId"},{"name":"alertId","kind":"id","optional":false,"example":"demo_alertId"},{"name":"status","kind":"string","optional":false,"example":"NOT_STARTED"},{"name":"updateTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"severity","kind":"string","optional":false,"example":"LOW"},{"name":"etag","kind":"string","optional":false,"example":"demo_etag="}]},{"name":"updateTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"etag","kind":"string","optional":false,"example":"demo_etag=="}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200}}
+{
+  "id": "gsuitesecurityalertcenter-gsuitesecurityalertcenter",
+  "name": "G Suite Security Alert Center",
+  "pack": "GSuiteSecurityAlertCenter",
+  "vendor": "Google",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /v1beta1/alerts returns alerts and nextPageToken.",
+  "notes": [
+    "pageSize and pageToken match the Alert Center list method. An empty nextPageToken means the last page.",
+    "Alert data payloads differ by source. This mock includes the common alert fields and a short data object."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GSuiteSecurityAlertCenter",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "gsuitesecurityalertcenter-gsuitesecurityalertcenter",
+      "name": "G Suite Security Alert Center",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://developers.google.com/workspace/admin/alertcenter/reference/rest/v1beta1/alerts/list",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developers.google.com/workspace/admin/alertcenter/reference/rest/v1beta1/alerts/list",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "pageSize and pageToken match the Alert Center list method. An empty nextPageToken means the last page.",
+          "Alert data payloads differ by source. This mock includes the common alert fields and a short data object."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "pageSize",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "pageToken",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "id": "list-alerts",
+        "method": "GET",
+        "pathTemplate": "/v1beta1/alerts",
+        "summary": "List Workspace alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "token-page",
+          "arrayKey": "alerts",
+          "tokenKey": "nextPageToken"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "alertId",
+              "kind": "id"
+            },
+            {
+              "name": "customerId",
+              "kind": "const",
+              "constValue": "C01234567"
+            },
+            {
+              "name": "type",
+              "kind": "enum",
+              "enumValues": [
+                "Suspicious login",
+                "Phishing"
+              ]
+            },
+            {
+              "name": "source",
+              "kind": "const",
+              "constValue": "Google Operations"
+            },
+            {
+              "name": "createTime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "startTime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "updateTime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "email",
+                  "kind": "email"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "gsuitesecurityalertcenter-gsuitesecurityalertcenter",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 500
+  }
+}
