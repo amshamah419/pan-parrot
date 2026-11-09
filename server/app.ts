@@ -7,6 +7,7 @@ import { specFromXml } from "../shared/wsdl";
 import { readZip, zipEntries } from "./pack";
 import { POLICY } from "../shared/policy";
 import { parse as parseYaml } from "yaml";
+import { capturedPackFiles, contentPackFiles } from "../shared/content-pack";
 import { exportFixture } from "../shared/export-fixture";
 import { validateMockSpec } from "../shared/mock-spec";
 import { isOpenApiDocument, isXsoarIntegration, mockFromIntegrationYaml } from "../shared/xsoar-yaml";
@@ -52,6 +53,7 @@ import {
   getRequest,
   cloneEndpointForUser,
   listEndpoints,
+  listEndpointCaptures,
   listRequests,
   listUsers,
   resetEndpointRuntime,
@@ -449,8 +451,19 @@ export function createServer(options?: {
     await limitAuthed(c.get("db"), user.id);
     const endpoint = await getEndpointForUser(c.get("db"), user.id, c.req.param("endpointId"));
     if (!endpoint.mockSpec) throw new HttpError(400, "This endpoint has no mock");
-    const files = exportFixture(validateMockSpec(endpoint.mockSpec), endpoint.url);
-    if (c.req.query("format") === "zip") {
+    const spec = validateMockSpec(endpoint.mockSpec);
+    const format = c.req.query("format");
+    if (format === "content-pack" || format === "captured") {
+      const pack = format === "captured"
+        ? capturedPackFiles(relativeCaptures(await listEndpointCaptures(c.get("db"), endpoint.id), endpoint.path))
+        : contentPackFiles(spec);
+      const zip = zipEntries(pack.map((file) => ({ name: file.name, data: Buffer.from(file.text) })));
+      c.header("content-type", "application/zip");
+      c.header("content-disposition", `attachment; filename="${format === "captured" ? "captured-fixtures" : "content-pack"}.zip"`);
+      return c.body(new Uint8Array(zip));
+    }
+    const files = exportFixture(spec, endpoint.url);
+    if (format === "zip") {
       const zip = zipEntries([
         { name: "test_pan_parrot.py", data: Buffer.from(files.pytest) },
         { name: "test_data.json", data: Buffer.from(files.testData) },
@@ -694,6 +707,20 @@ function applySecurityHeaders(c: {
       "max-age=31536000; includeSubDomains",
     );
   }
+}
+
+function relativeCaptures(
+  calls: Array<{ method: string; path: string; status: number; responsePreview?: string | null; truncated?: boolean }>,
+  endpointPath: string,
+) {
+  return calls.map((call) => ({
+    ...call,
+    path: call.path === endpointPath
+      ? "/"
+      : call.path.startsWith(`${endpointPath}/`)
+        ? call.path.slice(endpointPath.length)
+        : `/${call.path}`,
+  }));
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
