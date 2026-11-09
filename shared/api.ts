@@ -4,16 +4,10 @@
  * and/or small pure JS functions that can be used on both client and server
  */
 
-/**
- * Example response type for /api/demo
- */
 export interface DemoResponse {
   message: string;
 }
 
-/**
- * PAN Parrot API Types
- */
 export interface CapturedRequest {
   id: string;
   method: string;
@@ -22,10 +16,14 @@ export interface CapturedRequest {
   status: number;
   ip: string;
   userAgent: string;
-  headers: Record<string, any>;
-  body: any;
-  query: Record<string, any>;
+  headers: Record<string, string>;
+  body: unknown;
+  query: Record<string, string>;
   userId: string;
+  truncated?: boolean;
+  responsePreview?: string | null;
+  chaosEffects?: string[];
+  recordCount?: number | null;
 }
 
 export interface UserEndpoint {
@@ -33,15 +31,18 @@ export interface UserEndpoint {
   name: string;
   path: string;
   url: string;
+  description?: string | null;
   userId: string;
   created: string;
-  requests?: number; // Request count, added by API
+  requests?: number;
   mockResponse?: {
     statusCode: number;
     headers: Record<string, string>;
     body: string;
     delay: number;
+    enabled?: boolean;
   };
+  mockSpec?: unknown;
 }
 
 export interface CreateEndpointRequest {
@@ -55,11 +56,9 @@ export interface MockResponseConfig {
   headers: Record<string, string>;
   body: string;
   delay: number;
+  enabled?: boolean;
 }
 
-/**
- * Admin API Types
- */
 export interface AdminUser {
   id: string;
   email: string;
@@ -70,19 +69,9 @@ export interface AdminUser {
   active: boolean;
 }
 
-export interface CreateUserRequest {
+export interface AuthUser {
+  id: string;
   email: string;
   name: string;
-  password: string;
-  role?: "user" | "admin";
-}
-
-export interface AuthResponse {
-  user: {
-    id: string;
-    email: string;
-    name: string;
-    role: "user" | "admin";
-  };
-  token: string;
+  role: "user" | "admin";
 }

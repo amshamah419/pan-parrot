@@ -1,0 +1,215 @@
+{
+  "id": "crowdstrikefalcon-crowdstrikefalcon",
+  "name": "CrowdStrike Falcon",
+  "pack": "CrowdStrikeFalcon",
+  "vendor": "CrowdStrike",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Falcon Alerts query plus entity fetch. Legacy Detects routes are included because XSOAR still calls them.",
+  "notes": [
+    "CrowdStrike's public docs mark the Detects collection deprecated and decommissioned on 2025-09-30. XSOAR's client still calls /detects/queries/detects/v1 in older tests, so those paths are mocked too.",
+    "Query endpoints return resource ids inside meta.pagination. Entity endpoints are POST and return alert objects. This mock does not check the OAuth token.",
+    "Falcon's documented query limit can be far above this mock's 500-record page cap."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeFalcon/Integrations/CrowdStrikeFalcon",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "crowdstrikefalcon-crowdstrikefalcon",
+      "name": "CrowdStrike Falcon",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://developer.crowdstrike.com/api-reference/collections/alerts/",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.crowdstrike.com/api-reference/collections/alerts/",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "CrowdStrike's public docs mark the Detects collection deprecated and decommissioned on 2025-09-30. XSOAR's client still calls /detects/queries/detects/v1 in older tests, so those paths are mocked too.",
+          "Query endpoints return resource ids inside meta.pagination. Entity endpoints are POST and return alert objects. This mock does not check the OAuth token.",
+          "Falcon's documented query limit can be far above this mock's 500-record page cap."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {
+          "x-ratelimit-limit": "6000",
+          "x-ratelimit-remaining": "5999"
+        },
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 100,
+          "maxLimit": 500
+        },
+        "id": "query-alerts",
+        "method": "GET",
+        "pathTemplate": "/alerts/queries/alerts/v2",
+        "summary": "Query alert ids",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "falcon"
+        },
+        "record": {
+          "name": "resource",
+          "kind": "id"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "id": "get-alerts",
+        "method": "POST",
+        "pathTemplate": "/alerts/entities/alerts/v2",
+        "summary": "Fetch alert entities",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "falcon"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "composite_id",
+              "kind": "id"
+            },
+            {
+              "name": "created_timestamp",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "updated_timestamp",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "status",
+              "kind": "enum",
+              "enumValues": [
+                "new",
+                "in_progress",
+                "closed"
+              ]
+            },
+            {
+              "name": "severity",
+              "kind": "integer"
+            },
+            {
+              "name": "severity_name",
+              "kind": "enum",
+              "enumValues": [
+                "Low",
+                "Medium",
+                "High",
+                "Critical"
+              ]
+            },
+            {
+              "name": "product",
+              "kind": "const",
+              "constValue": "epp"
+            },
+            {
+              "name": "tactic",
+              "kind": "string",
+              "example": "Defense Evasion"
+            },
+            {
+              "name": "technique",
+              "kind": "string",
+              "example": "Masquerading"
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 100,
+          "maxLimit": 500
+        },
+        "id": "query-detects",
+        "method": "GET",
+        "pathTemplate": "/detects/queries/detects/v1",
+        "summary": "Deprecated detection id query",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "falcon"
+        },
+        "record": {
+          "name": "resource",
+          "kind": "id"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "crowdstrikefalcon-crowdstrikefalcon",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "oauth2",
+      "oauth2": {
+        "tokenPath": "/oauth2/token",
+        "clientId": "dummy-falcon-client",
+        "clientSecret": "dummy-falcon-secret",
+        "ttlSeconds": 1800,
+        "shape": "crowdstrike"
+      }
+    }
+  }
+}

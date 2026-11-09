@@ -1,0 +1,144 @@
+{
+  "id": "gsuitesecurityalertcenter-gsuitesecurityalertcenter",
+  "name": "G Suite Security Alert Center",
+  "pack": "GSuiteSecurityAlertCenter",
+  "vendor": "Google",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /v1beta1/alerts returns alerts and nextPageToken.",
+  "notes": [
+    "pageSize and pageToken match the Alert Center list method. An empty nextPageToken means the last page.",
+    "Alert data payloads differ by source. This mock includes the common alert fields and a short data object."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GSuiteSecurityAlertCenter",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "gsuitesecurityalertcenter-gsuitesecurityalertcenter",
+      "name": "G Suite Security Alert Center",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://developers.google.com/workspace/admin/alertcenter/reference/rest/v1beta1/alerts/list",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developers.google.com/workspace/admin/alertcenter/reference/rest/v1beta1/alerts/list",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "pageSize and pageToken match the Alert Center list method. An empty nextPageToken means the last page.",
+          "Alert data payloads differ by source. This mock includes the common alert fields and a short data object."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "pageSize",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "pageToken",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "id": "list-alerts",
+        "method": "GET",
+        "pathTemplate": "/v1beta1/alerts",
+        "summary": "List Workspace alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "token-page",
+          "arrayKey": "alerts",
+          "tokenKey": "nextPageToken"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "alertId",
+              "kind": "id"
+            },
+            {
+              "name": "customerId",
+              "kind": "const",
+              "constValue": "C01234567"
+            },
+            {
+              "name": "type",
+              "kind": "enum",
+              "enumValues": [
+                "Suspicious login",
+                "Phishing"
+              ]
+            },
+            {
+              "name": "source",
+              "kind": "const",
+              "constValue": "Google Operations"
+            },
+            {
+              "name": "createTime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "startTime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "updateTime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "email",
+                  "kind": "email"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "gsuitesecurityalertcenter-gsuitesecurityalertcenter",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

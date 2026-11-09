@@ -1,5 +1,13 @@
-import serverless from "serverless-http";
+import type { Config, Context } from "@netlify/functions";
+import { createServer } from "../../server/app";
+import { withClientIp } from "./_shared/request";
 
-import { createServer } from "../../server";
+const app = createServer({ surface: "api" });
 
-export const handler = serverless(createServer());
+export default function handler(request: Request, context: Context) {
+  return app.fetch(withClientIp(request, context.ip));
+}
+
+export const config: Config = {
+  path: "/api/*",
+};

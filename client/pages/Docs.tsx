@@ -47,7 +47,14 @@ export default function Docs() {
             </Button>
             <h1 className="text-4xl font-bold tracking-tight">Documentation</h1>
             <p className="mt-4 text-lg text-muted-foreground">
-              Learn how to use Parrot for HTTP webhook inspection and mocking.
+              PAN Parrot is an unofficial personal webhook catcher. It is not
+              a Palo Alto Networks product. Sign in with a one-time code sent
+              to a verified @paloaltonetworks.com address, create an endpoint,
+              and point a client at the /catch URL. The dashboard polls for
+              new requests. Captured bodies are shown as text. Requests older
+              than the retention window, and requests past the per-endpoint
+              cap, are deleted automatically. Do not send secrets or customer
+              data.
             </p>
           </div>
 

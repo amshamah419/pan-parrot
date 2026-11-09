@@ -1,40 +1,24 @@
-import path from "path";
-import { createServer } from "./index";
-import * as express from "express";
+import "dotenv/config";
+import { serve } from "@hono/node-server";
+import { serveStatic } from "@hono/node-server/serve-static";
+import { Hono } from "hono";
+import { createServer } from "./app";
 
-const app = createServer();
-const port = process.env.PORT || 3000;
+const api = createServer();
+const app = new Hono();
 
-// In production, serve the built SPA files
-const __dirname = import.meta.dirname;
-const distPath = path.join(__dirname, "../spa");
-
-// Serve static files
-app.use(express.static(distPath));
-
-// Handle React Router - serve index.html for all non-API routes
-app.get("*", (req, res) => {
-  // Don't serve index.html for API routes
-  if (req.path.startsWith("/api/") || req.path.startsWith("/health")) {
-    return res.status(404).json({ error: "API endpoint not found" });
+app.all("/api/*", (c) => api.fetch(c.req.raw));
+app.all("/catch/*", (c) => api.fetch(c.req.raw));
+app.use("*", serveStatic({ root: "./dist/spa" }));
+app.get("*", async (c, next) => {
+  if (c.req.path.startsWith("/api") || c.req.path.startsWith("/catch")) {
+    return c.json({ error: "Not found" }, 404);
   }
-
-  res.sendFile(path.join(distPath, "index.html"));
+  const staticFile = serveStatic({ root: "./dist/spa", path: "index.html" });
+  return staticFile(c, next);
 });
 
-app.listen(port, () => {
-  console.log(`🚀 Fusion Starter server running on port ${port}`);
-  console.log(`📱 Frontend: http://localhost:${port}`);
-  console.log(`🔧 API: http://localhost:${port}/api`);
-});
-
-// Graceful shutdown
-process.on("SIGTERM", () => {
-  console.log("🛑 Received SIGTERM, shutting down gracefully");
-  process.exit(0);
-});
-
-process.on("SIGINT", () => {
-  console.log("🛑 Received SIGINT, shutting down gracefully");
-  process.exit(0);
+const port = Number(process.env.PORT || 8080);
+serve({ fetch: app.fetch, port }, () => {
+  console.log(`PAN Parrot listening on http://localhost:${port}`);
 });

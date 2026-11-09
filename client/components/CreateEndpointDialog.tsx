@@ -29,11 +29,11 @@ export function CreateEndpointDialog({
   const [description, setDescription] = useState("");
   const [customPath, setCustomPath] = useState("");
   const [useCustomPath, setUseCustomPath] = useState(false);
-  const [generatedId] = useState(() => Math.random().toString(36).substr(2, 8));
+  const [error, setError] = useState("");
 
   const getEndpointUrl = () => {
-    const path = useCustomPath && customPath ? customPath : generatedId;
-    return `https://parrot.pan.dev/${path}`;
+    const path = useCustomPath && customPath ? customPath : "<assigned>";
+    return `${window.location.origin}/catch/${path}`;
   };
 
   const handleCreate = async () => {
@@ -45,6 +45,7 @@ export function CreateEndpointDialog({
       });
 
       onEndpointCreated?.(endpoint);
+      setError("");
       setOpen(false);
 
       // Reset form
@@ -52,9 +53,8 @@ export function CreateEndpointDialog({
       setDescription("");
       setCustomPath("");
       setUseCustomPath(false);
-    } catch (error) {
-      console.error("Failed to create endpoint:", error);
-      // In a real app, show user-friendly error message
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not create endpoint");
     }
   };
 
@@ -136,6 +136,8 @@ export function CreateEndpointDialog({
               </div>
             </div>
           </div>
+
+          {error && <p className="text-sm text-destructive">{error}</p>}
 
           <div className="flex items-center space-x-2 pt-4">
             <Button onClick={handleCreate} className="flex-1">

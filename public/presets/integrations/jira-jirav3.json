@@ -1,0 +1,199 @@
+{
+  "id": "jira-jirav3",
+  "name": "Atlassian Jira v3",
+  "pack": "Jira",
+  "vendor": "Atlassian",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /rest/api/3/search/jql returns issues and nextPageToken. The older /search path is included for on-prem clients.",
+  "notes": [
+    "XSOAR calls GET /rest/api/3/search/jql and reads issues plus nextPageToken. The older GET /rest/api/3/search is also mocked.",
+    "Issue fields are a subset of the official issue schema. names and renderedFields are omitted."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Jira/Integrations/JiraV3",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "jira-jirav3",
+      "name": "Atlassian Jira v3",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "XSOAR calls GET /rest/api/3/search/jql and reads issues plus nextPageToken. The older GET /rest/api/3/search is also mocked.",
+          "Issue fields are a subset of the official issue schema. names and renderedFields are omitted."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "maxResults",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "nextPageToken",
+          "defaultLimit": 50,
+          "maxLimit": 100
+        },
+        "id": "search-jql",
+        "method": "GET",
+        "pathTemplate": "/rest/api/3/search/jql",
+        "summary": "Search issues",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "token-page",
+          "arrayKey": "issues",
+          "tokenKey": "nextPageToken"
+        },
+        "record": {
+          "name": "issue",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "key",
+              "kind": "id"
+            },
+            {
+              "name": "self",
+              "kind": "string",
+              "example": "https://example.atlassian.net/rest/api/3/issue/10001"
+            },
+            {
+              "name": "fields",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "summary",
+                  "kind": "string",
+                  "example": "Investigate failed logins"
+                },
+                {
+                  "name": "status",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "name",
+                      "kind": "enum",
+                      "enumValues": [
+                        "To Do",
+                        "In Progress",
+                        "Done"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "created",
+                  "kind": "timestamp",
+                  "format": "iso"
+                },
+                {
+                  "name": "updated",
+                  "kind": "timestamp",
+                  "format": "iso"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "maxResults",
+          "offsetParam": "startAt",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 100
+        },
+        "id": "search-legacy",
+        "method": "GET",
+        "pathTemplate": "/rest/api/3/search",
+        "summary": "Legacy issue search",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "issues"
+        },
+        "record": {
+          "name": "issue",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "key",
+              "kind": "id"
+            },
+            {
+              "name": "fields",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "summary",
+                  "kind": "string",
+                  "example": "Legacy search result"
+                },
+                {
+                  "name": "created",
+                  "kind": "timestamp",
+                  "format": "iso"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "jira-jirav3",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

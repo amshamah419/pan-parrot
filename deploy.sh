@@ -1,4 +1,8 @@
 #!/bin/bash
+# UNSUPPORTED. PAN Parrot deploys on Netlify. See DEPLOYMENT.md.
+# This script is not maintained. Exit so it cannot be run by accident.
+echo "This deploy script is unsupported. Read DEPLOYMENT.md." >&2
+exit 1
 
 # PAN Parrot Deployment Script
 # This script helps deploy PAN Parrot to your internal infrastructure

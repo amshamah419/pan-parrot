@@ -1,0 +1,143 @@
+{
+  "id": "proofpointtap-proofpointtap-v2",
+  "name": "Proofpoint TAP v2",
+  "pack": "ProofpointTAP",
+  "vendor": "Proofpoint",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "SIEM clicks and messages are blocked and permitted arrays for an interval.",
+  "notes": [
+    "Proofpoint's SIEM API is /v2/siem/clicks and /v2/siem/messages with an interval query such as PT1H. The body is not a generic offset list.",
+    "clicksBlocked and clicksPermitted are both generated from the same click shape."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ProofpointTAP/Integrations/ProofpointTAP_v2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "proofpointtap-proofpointtap-v2",
+      "name": "Proofpoint TAP v2",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "Proofpoint's SIEM API is /v2/siem/clicks and /v2/siem/messages with an interval query such as PT1H. The body is not a generic offset list.",
+          "clicksBlocked and clicksPermitted are both generated from the same click shape."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "siem-clicks",
+        "method": "GET",
+        "pathTemplate": "/v2/siem/clicks",
+        "summary": "Clicks for an interval",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "clicks",
+          "kind": "object",
+          "children": [
+            {
+              "name": "queryEndTime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "clicksPermitted",
+              "kind": "array",
+              "item": {
+                "name": "click",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "uuid"
+                  },
+                  {
+                    "name": "clickTime",
+                    "kind": "timestamp",
+                    "format": "iso"
+                  },
+                  {
+                    "name": "recipient",
+                    "kind": "email"
+                  },
+                  {
+                    "name": "sender",
+                    "kind": "email"
+                  },
+                  {
+                    "name": "url",
+                    "kind": "string",
+                    "example": "https://example.com/phish"
+                  },
+                  {
+                    "name": "threatStatus",
+                    "kind": "enum",
+                    "enumValues": [
+                      "active",
+                      "cleared",
+                      "falsePositive"
+                    ]
+                  }
+                ]
+              },
+              "minItems": 1,
+              "maxItems": 2
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "proofpointtap-proofpointtap-v2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

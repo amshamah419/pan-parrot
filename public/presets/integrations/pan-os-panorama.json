@@ -1,0 +1,425 @@
+{
+  "id": "pan-os-panorama",
+  "name": "Palo Alto Networks PAN-OS",
+  "pack": "PAN-OS",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "XML API for keygen, operational commands, config, and log jobs.",
+  "notes": [
+    "XSOAR calls GET /api/ with type=op, type=config, and type=log. type=keygen is included so you can test the API key exchange.",
+    "Log query returns a job id. action=get with job-id returns log entries. nlogs is capped at 500.",
+    "The dummy user, password, and API key are not a real firewall credential. Commit, export, and user-id commands are not modeled."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PAN-OS/Integrations/Panorama",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "pan-os-panorama",
+      "name": "Palo Alto Networks PAN-OS",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://docs.paloaltonetworks.com/ngfw/api/pan-os",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.paloaltonetworks.com/ngfw/api/pan-os",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "XSOAR calls GET /api/ with type=op, type=config, and type=log. type=keygen is included so you can test the API key exchange.",
+          "Log query returns a job id. action=get with job-id returns log entries. nlogs is capped at 500.",
+          "The dummy user, password, and API key are not a real firewall credential. Commit, export, and user-id commands are not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "keygen",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Generate an API key",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "key",
+                  "kind": "const",
+                  "constValue": "dummy-panos-api-key"
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "keygen"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "op",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Operational command",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "system",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "hostname",
+                      "kind": "string",
+                      "example": "lab-fw"
+                    },
+                    {
+                      "name": "sw-version",
+                      "kind": "const",
+                      "constValue": "11.1.0"
+                    },
+                    {
+                      "name": "model",
+                      "kind": "const",
+                      "constValue": "PA-VM"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "op"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "config",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Read config",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "entry",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "name",
+                      "kind": "string",
+                      "example": "localhost.localdomain",
+                      "xml": {
+                        "attribute": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "config"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "log-job",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Start a log query job",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "job",
+                  "kind": "const",
+                  "constValue": "1"
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "log"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "nlogs",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        },
+        "id": "log-get",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Fetch logs for a job",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "job",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "id",
+                      "kind": "const",
+                      "constValue": "1"
+                    },
+                    {
+                      "name": "status",
+                      "kind": "const",
+                      "constValue": "FIN"
+                    }
+                  ]
+                },
+                {
+                  "name": "log",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "logs",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "count",
+                          "kind": "const",
+                          "constValue": "20",
+                          "xml": {
+                            "attribute": true
+                          }
+                        },
+                        {
+                          "name": "entry",
+                          "kind": "array",
+                          "pageItems": true,
+                          "item": {
+                            "name": "entry",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "logid",
+                                "kind": "id",
+                                "xml": {
+                                  "attribute": true
+                                }
+                              },
+                              {
+                                "name": "receive_time",
+                                "kind": "timestamp",
+                                "format": "iso"
+                              },
+                              {
+                                "name": "src",
+                                "kind": "ip"
+                              },
+                              {
+                                "name": "dst",
+                                "kind": "ip"
+                              },
+                              {
+                                "name": "action",
+                                "kind": "enum",
+                                "enumValues": [
+                                  "allow",
+                                  "deny"
+                                ]
+                              },
+                              {
+                                "name": "rule",
+                                "kind": "string",
+                                "example": "allow-lab"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "log",
+          "action": "get"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "pan-os-panorama",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "panos-key",
+      "panos": {
+        "username": "lab-admin",
+        "password": "dummy-not-a-real-password",
+        "apiKey": "dummy-panos-api-key"
+      }
+    }
+  }
+}

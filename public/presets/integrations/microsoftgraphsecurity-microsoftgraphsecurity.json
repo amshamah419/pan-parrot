@@ -1,0 +1,209 @@
+{
+  "id": "microsoftgraphsecurity-microsoftgraphsecurity",
+  "name": "Microsoft Graph Security",
+  "pack": "MicrosoftGraphSecurity",
+  "vendor": "Microsoft",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /security/alerts_v2 with a value array and @odata.nextLink.",
+  "notes": [
+    "Microsoft Graph pages with @odata.nextLink. This mock also honors $top and $skip.",
+    "The real API may omit @odata.nextLink when a page happens to contain everything. That is not simulated unless you stop before the virtual catalog ends.",
+    "Bearer tokens are not checked."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSecurity",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "microsoftgraphsecurity-microsoftgraphsecurity",
+      "name": "Microsoft Graph Security",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/security-list-alerts_v2?view=graph-rest-1.0",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/security-list-alerts_v2?view=graph-rest-1.0",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "Microsoft Graph pages with @odata.nextLink. This mock also honors $top and $skip.",
+          "The real API may omit @odata.nextLink when a page happens to contain everything. That is not simulated unless you stop before the virtual catalog ends.",
+          "Bearer tokens are not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "$top",
+          "offsetParam": "$skip",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "id": "list-alerts-v2",
+        "method": "GET",
+        "pathTemplate": "/v1.0/security/alerts_v2",
+        "summary": "List security alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "odata",
+          "context": "https://graph.microsoft.com/v1.0/$metadata#security/alerts_v2"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "uuid"
+            },
+            {
+              "name": "title",
+              "kind": "string",
+              "example": "Suspicious sign-in"
+            },
+            {
+              "name": "severity",
+              "kind": "enum",
+              "enumValues": [
+                "low",
+                "medium",
+                "high",
+                "unknown"
+              ]
+            },
+            {
+              "name": "status",
+              "kind": "enum",
+              "enumValues": [
+                "new",
+                "inProgress",
+                "resolved"
+              ]
+            },
+            {
+              "name": "serviceSource",
+              "kind": "enum",
+              "enumValues": [
+                "microsoftDefenderForEndpoint",
+                "microsoftSentinel"
+              ]
+            },
+            {
+              "name": "createdDateTime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "lastUpdateDateTime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "Multiple failed sign-ins from a new location."
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "$top",
+          "offsetParam": "$skip",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "id": "list-alerts-root",
+        "method": "GET",
+        "pathTemplate": "/security/alerts_v2",
+        "summary": "List security alerts without the version prefix",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "odata",
+          "context": "https://graph.microsoft.com/v1.0/$metadata#security/alerts_v2"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "uuid"
+            },
+            {
+              "name": "title",
+              "kind": "string",
+              "example": "Malware detected"
+            },
+            {
+              "name": "severity",
+              "kind": "enum",
+              "enumValues": [
+                "informational",
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            {
+              "name": "createdDateTime",
+              "kind": "timestamp",
+              "format": "iso"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "microsoftgraphsecurity-microsoftgraphsecurity",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "oauth2",
+      "oauth2": {
+        "tokenPath": "/oauth2/v2.0/token",
+        "clientId": "dummy-graph-client",
+        "clientSecret": "dummy-graph-secret",
+        "ttlSeconds": 3600,
+        "shape": "microsoft"
+      }
+    }
+  }
+}

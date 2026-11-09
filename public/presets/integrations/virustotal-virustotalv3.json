@@ -1,0 +1,225 @@
+{
+  "id": "virustotal-virustotalv3",
+  "name": "VirusTotal v3",
+  "pack": "VirusTotal",
+  "vendor": "VirusTotal",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /files/{id} and /ip_addresses/{ip} in the v3 data/attributes envelope.",
+  "notes": [
+    "Set the integration base URL to the catch URL. XSOAR appends files/{id}, which replaces https://www.virustotal.com/api/v3.",
+    "Relationship links and the analysis stats object are shortened. last_analysis_stats counts are examples, not a live engine vote.",
+    "x-api-key is not required."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VirusTotal/Integrations/VirusTotalV3",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "virustotal-virustotalv3",
+      "name": "VirusTotal v3",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://docs.virustotal.com/reference/file-info",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.virustotal.com/reference/file-info",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "Set the integration base URL to the catch URL. XSOAR appends files/{id}, which replaces https://www.virustotal.com/api/v3.",
+          "Relationship links and the analysis stats object are shortened. last_analysis_stats counts are examples, not a live engine vote.",
+          "x-api-key is not required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "file-info",
+        "method": "GET",
+        "pathTemplate": "/files/{id}",
+        "summary": "Get a file report",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "report",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "id",
+                  "kind": "id"
+                },
+                {
+                  "name": "type",
+                  "kind": "const",
+                  "constValue": "file"
+                },
+                {
+                  "name": "attributes",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "md5",
+                      "kind": "id"
+                    },
+                    {
+                      "name": "sha1",
+                      "kind": "id"
+                    },
+                    {
+                      "name": "sha256",
+                      "kind": "id"
+                    },
+                    {
+                      "name": "last_analysis_date",
+                      "kind": "timestamp",
+                      "format": "unix"
+                    },
+                    {
+                      "name": "last_analysis_stats",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "malicious",
+                          "kind": "integer"
+                        },
+                        {
+                          "name": "suspicious",
+                          "kind": "integer"
+                        },
+                        {
+                          "name": "undetected",
+                          "kind": "integer"
+                        },
+                        {
+                          "name": "harmless",
+                          "kind": "integer"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "ip-info",
+        "method": "GET",
+        "pathTemplate": "/ip_addresses/{ip}",
+        "summary": "Get an IP address report",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "report",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "id",
+                  "kind": "ip"
+                },
+                {
+                  "name": "type",
+                  "kind": "const",
+                  "constValue": "ip_address"
+                },
+                {
+                  "name": "attributes",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "country",
+                      "kind": "enum",
+                      "enumValues": [
+                        "US",
+                        "DE",
+                        "JP"
+                      ]
+                    },
+                    {
+                      "name": "as_owner",
+                      "kind": "string",
+                      "example": "Example ISP"
+                    },
+                    {
+                      "name": "last_analysis_date",
+                      "kind": "timestamp",
+                      "format": "unix"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "virustotal-virustotalv3",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

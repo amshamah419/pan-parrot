@@ -1,0 +1,128 @@
+{
+  "id": "palo-alto-networks-wildfire-palo-alto-networks-wildfire-v2",
+  "name": "Palo Alto Networks WildFire v2",
+  "pack": "Palo_Alto_Networks_WildFire",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "POST /publicapi/get/verdict returns the XML verdict document.",
+  "notes": [
+    "The public verdict response is XML. Verdict codes are 0 benign, 1 malware, 2 grayware, 4 phishing, 5 C2, and the negative pending codes.",
+    "XSOAR posts to /publicapi/get/verdict with an apikey form field. This mock checks the dummy key. An invalid hash is not turned into HTTP 421.",
+    "File submission and the sample download are not modeled."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Palo_Alto_Networks_WildFire/Integrations/Palo_Alto_Networks_WildFire_v2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "palo-alto-networks-wildfire-palo-alto-networks-wildfire-v2",
+      "name": "Palo Alto Networks WildFire v2",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://docs.paloaltonetworks.com/wildfire/u-v/wildfire-api/get-wildfire-information-through-the-wildfire-api/get-a-wildfire-verdict-wildfire-api",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.paloaltonetworks.com/wildfire/u-v/wildfire-api/get-wildfire-information-through-the-wildfire-api/get-a-wildfire-verdict-wildfire-api",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "The public verdict response is XML. Verdict codes are 0 benign, 1 malware, 2 grayware, 4 phishing, 5 C2, and the negative pending codes.",
+          "XSOAR posts to /publicapi/get/verdict with an apikey form field. This mock checks the dummy key. An invalid hash is not turned into HTTP 421.",
+          "File submission and the sample download are not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "verdict",
+        "method": "POST",
+        "pathTemplate": "/publicapi/get/verdict",
+        "summary": "Get a WildFire verdict",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "wildfire",
+          "kind": "object",
+          "children": [
+            {
+              "name": "get-verdict-info",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "md5",
+                  "kind": "id"
+                },
+                {
+                  "name": "sha256",
+                  "kind": "id"
+                },
+                {
+                  "name": "verdict",
+                  "kind": "enum",
+                  "enumValues": [
+                    "0",
+                    "1",
+                    "2",
+                    "4",
+                    "5",
+                    "-100"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "palo-alto-networks-wildfire-palo-alto-networks-wildfire-v2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "form",
+        "name": "apikey",
+        "value": "dummy-wildfire-key"
+      }
+    }
+  }
+}

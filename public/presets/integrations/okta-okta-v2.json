@@ -1,0 +1,201 @@
+{
+  "id": "okta-okta-v2",
+  "name": "Okta v2",
+  "pack": "Okta",
+  "vendor": "Okta",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Okta System Log. GET /api/v1/logs returns a JSON array and pages with a Link header.",
+  "notes": [
+    "Official limit is 0–1000 and defaults to 100. This mock still caps a page at 500 records and 2 MB.",
+    "Polling requests (no until, sortOrder ASCENDING) always include rel=next even when the page is empty. Set pagination glitch to endless to simulate that.",
+    "since and after are mutually exclusive in the real API. This mock accepts both and uses after as the page token."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Okta/Integrations/Okta_v2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "okta-okta-v2",
+      "name": "Okta v2",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://developer.okta.com/docs/api/openapi/okta-management/management/tags/systemlog/other/listlogevents",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.okta.com/docs/api/openapi/okta-management/management/tags/systemlog/other/listlogevents",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "Official limit is 0–1000 and defaults to 100. This mock still caps a page at 500 records and 2 MB.",
+          "Polling requests (no until, sortOrder ASCENDING) always include rel=next even when the page is empty. Set pagination glitch to endless to simulate that.",
+          "since and after are mutually exclusive in the real API. This mock accepts both and uses after as the page token."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {
+          "x-rate-limit-limit": "100",
+          "x-rate-limit-remaining": "99"
+        },
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "link",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "after",
+          "defaultLimit": 100,
+          "maxLimit": 500
+        },
+        "id": "list-logs",
+        "method": "GET",
+        "pathTemplate": "/api/v1/logs",
+        "summary": "List System Log events",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "event",
+          "kind": "object",
+          "children": [
+            {
+              "name": "uuid",
+              "kind": "uuid"
+            },
+            {
+              "name": "published",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "eventType",
+              "kind": "enum",
+              "enumValues": [
+                "user.session.start",
+                "user.authentication.sso",
+                "user.account.update"
+              ]
+            },
+            {
+              "name": "version",
+              "kind": "const",
+              "constValue": "0"
+            },
+            {
+              "name": "severity",
+              "kind": "enum",
+              "enumValues": [
+                "INFO",
+                "WARN",
+                "ERROR"
+              ]
+            },
+            {
+              "name": "displayMessage",
+              "kind": "string",
+              "example": "User login to Okta"
+            },
+            {
+              "name": "actor",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "id",
+                  "kind": "id"
+                },
+                {
+                  "name": "type",
+                  "kind": "const",
+                  "constValue": "User"
+                },
+                {
+                  "name": "alternateId",
+                  "kind": "email"
+                },
+                {
+                  "name": "displayName",
+                  "kind": "string",
+                  "example": "Ada Lovelace"
+                }
+              ]
+            },
+            {
+              "name": "client",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "ipAddress",
+                  "kind": "ip"
+                },
+                {
+                  "name": "userAgent",
+                  "kind": "string",
+                  "example": "Mozilla/5.0"
+                }
+              ]
+            },
+            {
+              "name": "outcome",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "result",
+                  "kind": "enum",
+                  "enumValues": [
+                    "SUCCESS",
+                    "FAILURE"
+                  ]
+                },
+                {
+                  "name": "reason",
+                  "kind": "string",
+                  "example": "INVALID_CREDENTIALS",
+                  "optional": true
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "okta-okta-v2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "authorization",
+        "value": "SSWS dummy-okta-token"
+      }
+    }
+  }
+}

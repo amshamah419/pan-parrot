@@ -1,0 +1,146 @@
+{
+  "id": "mimecast-mimecastv2",
+  "name": "Mimecast v2",
+  "pack": "Mimecast",
+  "vendor": "Mimecast",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "SIEM logs as a zip plus an mc-siem-token header.",
+  "notes": [
+    "POST /api/audit/get-siem-logs returns application/octet-stream with Content-Disposition filename ending in .zip, which is what the XSOAR event collector accepts.",
+    "The zip contains one JSON file with type MTA and a data array. The next page token is the mc-siem-token response header. Send it back as data[0].token.",
+    "Production signs the request. This mock only checks that Authorization, x-mc-date, x-mc-req-id, and x-mc-app-id are present. The signature is not verified.",
+    "A JSON body meaning there are no further logs is not the default. Stop paging when the catalog ends and the header is absent."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "mimecast-mimecastv2",
+      "name": "Mimecast v2",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "POST /api/audit/get-siem-logs returns application/octet-stream with Content-Disposition filename ending in .zip, which is what the XSOAR event collector accepts.",
+          "The zip contains one JSON file with type MTA and a data array. The next page token is the mc-siem-token response header. Send it back as data[0].token.",
+          "Production signs the request. This mock only checks that Authorization, x-mc-date, x-mc-req-id, and x-mc-app-id are present. The signature is not verified.",
+          "A JSON body meaning there are no further logs is not the default. Stop paging when the catalog ends and the header is absent."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "header",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "token",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "headerName": "mc-siem-token"
+        },
+        "id": "siem-logs",
+        "method": "POST",
+        "pathTemplate": "/api/audit/get-siem-logs",
+        "summary": "Download the next SIEM log batch",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "event",
+          "kind": "object",
+          "children": [
+            {
+              "name": "datetime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "aCode",
+              "kind": "id"
+            },
+            {
+              "name": "Act",
+              "kind": "enum",
+              "enumValues": [
+                "Acc",
+                "Hld",
+                "Rej"
+              ]
+            },
+            {
+              "name": "MsgId",
+              "kind": "id"
+            },
+            {
+              "name": "Sender",
+              "kind": "email"
+            },
+            {
+              "name": "Rcpt",
+              "kind": "email"
+            }
+          ]
+        },
+        "pack": {
+          "format": "zip",
+          "filename": "siem.zip",
+          "entryName": "mta.json",
+          "entryFormat": "wrapped-json",
+          "wrapperType": "MTA"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "mimecast-mimecastv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "signed-headers",
+      "signedHeaders": {
+        "names": [
+          "authorization",
+          "x-mc-date",
+          "x-mc-req-id",
+          "x-mc-app-id"
+        ],
+        "verify": "format-only"
+      }
+    }
+  }
+}

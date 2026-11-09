@@ -1,0 +1,151 @@
+{
+  "id": "azuresentinel-azuresentinel",
+  "name": "Microsoft Sentinel",
+  "pack": "AzureSentinel",
+  "vendor": "Microsoft",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET incidents returns value and nextLink. XSOAR calls this under the SecurityInsights workspace URL.",
+  "notes": [
+    "Point the integration server URL at the catch URL plus the workspace path ending in Microsoft.SecurityInsights. The client appends incidents and api-version=2024-03-01.",
+    "Pages use nextLink. $top is honored up to 500. Azure's documented maximum for $top is 1000.",
+    "Arm authorization is not checked."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureSentinel/Integrations/AzureSentinel",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "azuresentinel-azuresentinel",
+      "name": "Microsoft Sentinel",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://learn.microsoft.com/en-us/rest/api/securityinsights/incidents/list?view=rest-securityinsights-2024-03-01",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/rest/api/securityinsights/incidents/list?view=rest-securityinsights-2024-03-01",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "Point the integration server URL at the catch URL plus the workspace path ending in Microsoft.SecurityInsights. The client appends incidents and api-version=2024-03-01.",
+          "Pages use nextLink. $top is honored up to 500. Azure's documented maximum for $top is 1000.",
+          "Arm authorization is not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "$top",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "$skipToken",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "id": "list-incidents",
+        "method": "GET",
+        "pathTemplate": "/incidents",
+        "summary": "List Sentinel incidents",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "azure"
+        },
+        "record": {
+          "name": "incident",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.OperationalInsights/workspaces/ws/providers/Microsoft.SecurityInsights/incidents/1"
+            },
+            {
+              "name": "name",
+              "kind": "id"
+            },
+            {
+              "name": "type",
+              "kind": "const",
+              "constValue": "Microsoft.SecurityInsights/incidents"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "title",
+                  "kind": "string",
+                  "example": "Suspicious sign-in"
+                },
+                {
+                  "name": "severity",
+                  "kind": "enum",
+                  "enumValues": [
+                    "Informational",
+                    "Low",
+                    "Medium",
+                    "High"
+                  ]
+                },
+                {
+                  "name": "status",
+                  "kind": "enum",
+                  "enumValues": [
+                    "New",
+                    "Active",
+                    "Closed"
+                  ]
+                },
+                {
+                  "name": "createdTimeUtc",
+                  "kind": "timestamp",
+                  "format": "iso"
+                },
+                {
+                  "name": "lastModifiedTimeUtc",
+                  "kind": "timestamp",
+                  "format": "iso"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "azuresentinel-azuresentinel",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

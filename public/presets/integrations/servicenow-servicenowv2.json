@@ -1,0 +1,142 @@
+{
+  "id": "servicenow-servicenowv2",
+  "name": "ServiceNow v2",
+  "pack": "ServiceNow",
+  "vendor": "ServiceNow",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Table API GET /api/now/table/{table} with a result array.",
+  "notes": [
+    "ServiceNow pages with sysparm_limit and sysparm_offset and returns X-Total-Count. Those headers are set. Link headers are not.",
+    "Only the incident table shape is modeled. Other table names still match {table} and return the same incident-shaped rows."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ServiceNow/Integrations/ServiceNowv2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "servicenow-servicenowv2",
+      "name": "ServiceNow v2",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "ServiceNow pages with sysparm_limit and sysparm_offset and returns X-Total-Count. Those headers are set. Link headers are not.",
+          "Only the incident table shape is modeled. Other table names still match {table} and return the same incident-shaped rows."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {
+          "x-total-count": "500"
+        },
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "sysparm_limit",
+          "offsetParam": "sysparm_offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        },
+        "id": "table-get",
+        "method": "GET",
+        "pathTemplate": "/api/now/table/{table}",
+        "summary": "Retrieve records from a table",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "result"
+        },
+        "record": {
+          "name": "incident",
+          "kind": "object",
+          "children": [
+            {
+              "name": "sys_id",
+              "kind": "uuid"
+            },
+            {
+              "name": "number",
+              "kind": "id"
+            },
+            {
+              "name": "short_description",
+              "kind": "string",
+              "example": "Suspicious outbound connection"
+            },
+            {
+              "name": "state",
+              "kind": "enum",
+              "enumValues": [
+                "1",
+                "2",
+                "3",
+                "6",
+                "7"
+              ]
+            },
+            {
+              "name": "priority",
+              "kind": "enum",
+              "enumValues": [
+                "1",
+                "2",
+                "3",
+                "4"
+              ]
+            },
+            {
+              "name": "sys_created_on",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "sys_updated_on",
+              "kind": "timestamp",
+              "format": "iso"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "servicenow-servicenowv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

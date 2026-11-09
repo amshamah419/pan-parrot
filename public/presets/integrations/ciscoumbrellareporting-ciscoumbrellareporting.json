@@ -1,0 +1,153 @@
+{
+  "id": "ciscoumbrellareporting-ciscoumbrellareporting",
+  "name": "Cisco Umbrella Reporting",
+  "pack": "CiscoUmbrellaReporting",
+  "vendor": "Cisco",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /reports/v2/activity/dns returns a data array. The XSOAR client reads data.",
+  "notes": [
+    "from, to, and limit are required by Cisco. This mock still answers if they are omitted.",
+    "A real deployment may 302 to a regional reports host. This mock returns 200 directly.",
+    "OAuth is not checked."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoUmbrellaReporting",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "ciscoumbrellareporting-ciscoumbrellareporting",
+      "name": "Cisco Umbrella Reporting",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-api-reference-reports-reporting-api-activity-get-activity-dns/",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-api-reference-reports-reporting-api-activity-get-activity-dns/",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "from, to, and limit are required by Cisco. This mock still answers if they are omitted.",
+          "A real deployment may 302 to a regional reports host. This mock returns 200 directly.",
+          "OAuth is not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 100,
+          "maxLimit": 500
+        },
+        "id": "activity-dns",
+        "method": "GET",
+        "pathTemplate": "/reports/v2/activity/dns",
+        "summary": "List DNS activity",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "data"
+        },
+        "record": {
+          "name": "activity",
+          "kind": "object",
+          "children": [
+            {
+              "name": "timestamp",
+              "kind": "timestamp",
+              "format": "unix-ms"
+            },
+            {
+              "name": "domain",
+              "kind": "string",
+              "example": "example.com"
+            },
+            {
+              "name": "verdict",
+              "kind": "enum",
+              "enumValues": [
+                "allowed",
+                "blocked"
+              ]
+            },
+            {
+              "name": "categories",
+              "kind": "array",
+              "item": {
+                "name": "category",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "label",
+                    "kind": "enum",
+                    "enumValues": [
+                      "Malware",
+                      "Phishing"
+                    ]
+                  }
+                ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+            },
+            {
+              "name": "identities",
+              "kind": "array",
+              "item": {
+                "name": "identity",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "label",
+                    "kind": "string",
+                    "example": "laptop"
+                  }
+                ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "ciscoumbrellareporting-ciscoumbrellareporting",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

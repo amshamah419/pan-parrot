@@ -5,52 +5,56 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  role?: "user" | "admin";
-}
+import type { AuthUser } from "@shared/api";
 
 interface AuthContextType {
-  user: User | null;
-  login: (user: User) => void;
-  logout: () => void;
+  user: AuthUser | null;
+  login: (user: AuthUser) => void;
+  logout: () => Promise<void>;
   isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check for existing session on mount
-    const storedUser = localStorage.getItem("pan-parrot-user");
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        localStorage.removeItem("pan-parrot-user");
-      }
-    }
-    setIsLoading(false);
+    let cancelled = false;
+    fetch("/api/auth/user", { credentials: "include" })
+      .then(async (response) => {
+        if (!response.ok) return null;
+        return (await response.json()) as AuthUser;
+      })
+      .then((next) => {
+        if (!cancelled) setUser(next);
+      })
+      .catch(() => {
+        if (!cancelled) setUser(null);
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    const onUnauthorized = () => setUser(null);
+    window.addEventListener("pan-parrot-unauthorized", onUnauthorized);
+    return () => {
+      cancelled = true;
+      window.removeEventListener("pan-parrot-unauthorized", onUnauthorized);
+    };
   }, []);
 
-  const login = (userData: User) => {
-    setUser(userData);
-    localStorage.setItem("pan-parrot-user", JSON.stringify(userData));
-  };
-
-  const logout = () => {
+  const logout = async () => {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
     setUser(null);
-    localStorage.removeItem("pan-parrot-user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, login: setUser, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

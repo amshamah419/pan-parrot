@@ -34,7 +34,7 @@ export default function Index() {
     {
       icon: Monitor,
       title: "Real-Time Console",
-      description: "Watch HTTP requests in real-time with WebSocket streaming",
+      description: "Watch HTTP requests as they arrive. The console polls every few seconds.",
     },
     {
       icon: Search,
@@ -97,7 +97,7 @@ export default function Index() {
           <div className="mx-auto max-w-4xl text-center">
             <Badge variant="secondary" className="mb-4">
               <Zap className="mr-1 h-3 w-3" />
-              Internal PAN Development Tool
+              Unofficial personal tool
             </Badge>
             <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl md:text-7xl">
               <span className="text-primary">PAN Parrot</span>
@@ -105,9 +105,9 @@ export default function Index() {
               HTTP Debugging Made Fun
             </h1>
             <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
-              Your friendly internal HTTP inspection companion. Create
-              endpoints, catch webhooks, and mock responses while developing
-              PAN's next-generation security solutions. 🦜
+              A personal webhook catcher for people with a verified
+              @paloaltonetworks.com email. Create endpoints, inspect
+              requests, and mock responses. Not a Palo Alto Networks service.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button size="lg" asChild className="text-base">
@@ -128,7 +128,7 @@ export default function Index() {
           <div className="mx-auto max-w-6xl">
             <div className="mb-12 text-center">
               <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-                Built for PAN Developers
+                Webhook debugging, without the corporate stamp
               </h2>
               <p className="text-lg text-muted-foreground">
                 All the HTTP debugging tools you need, with a touch of parrot
@@ -194,8 +194,8 @@ export default function Index() {
               Ready to squawk at some APIs? 🦜
             </h2>
             <p className="mb-8 text-lg text-muted-foreground">
-              Login with your PAN credentials and start catching those pesky
-              webhooks.
+              Sign in with a one-time code sent to your @paloaltonetworks.com
+              email.
             </p>
             <Button size="lg" asChild className="text-base">
               <Link to="/login">
@@ -212,7 +212,7 @@ export default function Index() {
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <Logo size="sm" />
             <p className="text-sm text-muted-foreground">
-              Internal Palo Alto Networks development tool 🦜
+              Unofficial personal tool. Not a Palo Alto Networks service.
             </p>
           </div>
         </div>

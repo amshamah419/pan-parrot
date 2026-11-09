@@ -8,12 +8,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { UnofficialNotice } from "@/components/UnofficialNotice";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import Docs from "./pages/Docs";
 import NotFound from "./pages/NotFound";
+import MockStudio from "./pages/MockStudio";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +25,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <UnofficialNotice />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
@@ -44,6 +47,14 @@ const App = () => (
               }
             />
             <Route path="/docs" element={<Docs />} />
+            <Route
+              path="/mock/:endpointId"
+              element={
+                <ProtectedRoute>
+                  <MockStudio />
+                </ProtectedRoute>
+              }
+            />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

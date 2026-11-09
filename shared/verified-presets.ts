@@ -1,0 +1,1054 @@
+import { defaultChaos, defaultPagination, type FieldSpec, type MockAuth, type MockSpec } from "./mock-spec";
+
+const checkedAt = "2026-11-09";
+
+function op(
+  partial: Omit<MockSpec["operations"][number], "headers" | "pagination" | "contentType"> & {
+    pagination?: Partial<MockSpec["operations"][number]["pagination"]>;
+    headers?: Record<string, string>;
+    contentType?: string;
+  },
+): MockSpec["operations"][number] {
+  return {
+    headers: partial.headers ?? {},
+    contentType: partial.contentType ?? "application/json; charset=utf-8",
+    pagination: { ...defaultPagination(), ...partial.pagination },
+    id: partial.id,
+    method: partial.method,
+    pathTemplate: partial.pathTemplate,
+    summary: partial.summary,
+    status: partial.status,
+    list: partial.list,
+    envelope: partial.envelope,
+    record: partial.record,
+    queryMatch: partial.queryMatch,
+    soapAction: partial.soapAction,
+    requestElement: partial.requestElement,
+    pack: partial.pack,
+  };
+}
+
+function field(name: string, kind: FieldSpec["kind"], extra: Partial<FieldSpec> = {}): FieldSpec {
+  return { name, kind, ...extra };
+}
+
+function object(name: string, children: FieldSpec[]): FieldSpec {
+  return { name, kind: "object", children };
+}
+
+export interface VerifiedPresetFile {
+  id: string;
+  name: string;
+  pack: string;
+  vendor: string;
+  fidelity: "verified";
+  curated: true;
+  summary: string;
+  notes: string[];
+  attribution: string;
+  sourceUrl: string;
+  spec: MockSpec;
+}
+
+function preset(input: {
+  id: string;
+  name: string;
+  pack: string;
+  vendor: string;
+  summary: string;
+  docUrl: string;
+  sourceUrl: string;
+  differences: string[];
+  notes?: string[];
+  operations: MockSpec["operations"];
+  totalRecords?: number;
+  auth?: MockAuth;
+}): VerifiedPresetFile {
+  return {
+    id: input.id,
+    name: input.name,
+    pack: input.pack,
+    vendor: input.vendor,
+    fidelity: "verified",
+    curated: true,
+    summary: input.summary,
+    notes: input.notes ?? input.differences,
+    attribution: "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+    sourceUrl: input.sourceUrl,
+    spec: {
+      version: 1,
+      source: {
+        kind: "preset",
+        id: input.id,
+        name: input.name,
+        fidelity: "verified",
+        attribution: "Vendor public API reference plus demisto/content (MIT).",
+        sourceUrl: input.docUrl,
+        notes: input.notes ?? [],
+        verification: {
+          status: "verified",
+          docUrl: input.docUrl,
+          checkedAt,
+          differences: input.differences,
+        },
+      },
+      operations: input.operations,
+      chaos: defaultChaos(input.id),
+      totalRecords: input.totalRecords ?? 500,
+      auth: input.auth ?? { mode: "none" },
+    },
+  };
+}
+
+const oktaEvent = object("event", [
+  field("uuid", "uuid"),
+  field("published", "timestamp", { format: "iso" }),
+  field("eventType", "enum", {
+    enumValues: ["user.session.start", "user.authentication.sso", "user.account.update"],
+  }),
+  field("version", "const", { constValue: "0" }),
+  field("severity", "enum", { enumValues: ["INFO", "WARN", "ERROR"] }),
+  field("displayMessage", "string", { example: "User login to Okta" }),
+  object("actor", [
+    field("id", "id"),
+    field("type", "const", { constValue: "User" }),
+    field("alternateId", "email"),
+    field("displayName", "string", { example: "Ada Lovelace" }),
+  ]),
+  object("client", [
+    field("ipAddress", "ip"),
+    field("userAgent", "string", { example: "Mozilla/5.0" }),
+  ]),
+  object("outcome", [
+    field("result", "enum", { enumValues: ["SUCCESS", "FAILURE"] }),
+    field("reason", "string", { example: "INVALID_CREDENTIALS", optional: true }),
+  ]),
+]);
+
+const falconId = field("resource", "id");
+
+export const verifiedPresets: VerifiedPresetFile[] = [
+  preset({
+    auth: { mode: "api-key", apiKey: { in: "header", name: "authorization", value: "SSWS dummy-okta-token" } },
+    id: "okta-okta-v2",
+    name: "Okta v2",
+    pack: "Okta",
+    vendor: "Okta",
+    summary: "Okta System Log. GET /api/v1/logs returns a JSON array and pages with a Link header.",
+    docUrl: "https://developer.okta.com/docs/api/openapi/okta-management/management/tags/systemlog/other/listlogevents",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Okta/Integrations/Okta_v2",
+    differences: [
+      "Official limit is 0–1000 and defaults to 100. This mock still caps a page at 500 records and 2 MB.",
+      "Polling requests (no until, sortOrder ASCENDING) always include rel=next even when the page is empty. Set pagination glitch to endless to simulate that.",
+      "since and after are mutually exclusive in the real API. This mock accepts both and uses after as the page token.",
+    ],
+    operations: [
+      op({
+        id: "list-logs",
+        method: "GET",
+        pathTemplate: "/api/v1/logs",
+        summary: "List System Log events",
+        status: 200,
+        list: true,
+        envelope: { type: "array" },
+        pagination: {
+          style: "link",
+          limitParam: "limit",
+          cursorParam: "after",
+          defaultLimit: 100,
+          maxLimit: 500,
+        },
+        record: oktaEvent,
+        headers: {
+          "x-rate-limit-limit": "100",
+          "x-rate-limit-remaining": "99",
+        },
+      }),
+    ],
+  }),
+  preset({
+    auth: {
+      mode: "oauth2",
+      oauth2: {
+        tokenPath: "/oauth2/token",
+        clientId: "dummy-falcon-client",
+        clientSecret: "dummy-falcon-secret",
+        ttlSeconds: 1800,
+        shape: "crowdstrike",
+      },
+    },
+    id: "crowdstrikefalcon-crowdstrikefalcon",
+    name: "CrowdStrike Falcon",
+    pack: "CrowdStrikeFalcon",
+    vendor: "CrowdStrike",
+    summary: "Falcon Alerts query plus entity fetch. Legacy Detects routes are included because XSOAR still calls them.",
+    docUrl: "https://developer.crowdstrike.com/api-reference/collections/alerts/",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeFalcon/Integrations/CrowdStrikeFalcon",
+    differences: [
+      "CrowdStrike's public docs mark the Detects collection deprecated and decommissioned on 2025-09-30. XSOAR's client still calls /detects/queries/detects/v1 in older tests, so those paths are mocked too.",
+      "Query endpoints return resource ids inside meta.pagination. Entity endpoints are POST and return alert objects. This mock does not check the OAuth token.",
+      "Falcon's documented query limit can be far above this mock's 500-record page cap.",
+    ],
+    operations: [
+      op({
+        id: "query-alerts",
+        method: "GET",
+        pathTemplate: "/alerts/queries/alerts/v2",
+        summary: "Query alert ids",
+        status: 200,
+        list: true,
+        envelope: { type: "falcon" },
+        pagination: { style: "offset", defaultLimit: 100, maxLimit: 500 },
+        record: falconId,
+        headers: { "x-ratelimit-limit": "6000", "x-ratelimit-remaining": "5999" },
+      }),
+      op({
+        id: "get-alerts",
+        method: "POST",
+        pathTemplate: "/alerts/entities/alerts/v2",
+        summary: "Fetch alert entities",
+        status: 200,
+        list: true,
+        envelope: { type: "falcon" },
+        pagination: { style: "none", defaultLimit: 20, maxLimit: 100 },
+        record: object("alert", [
+          field("id", "id"),
+          field("composite_id", "id"),
+          field("created_timestamp", "timestamp", { format: "iso" }),
+          field("updated_timestamp", "timestamp", { format: "iso" }),
+          field("status", "enum", { enumValues: ["new", "in_progress", "closed"] }),
+          field("severity", "integer"),
+          field("severity_name", "enum", { enumValues: ["Low", "Medium", "High", "Critical"] }),
+          field("product", "const", { constValue: "epp" }),
+          field("tactic", "string", { example: "Defense Evasion" }),
+          field("technique", "string", { example: "Masquerading" }),
+        ]),
+      }),
+      op({
+        id: "query-detects",
+        method: "GET",
+        pathTemplate: "/detects/queries/detects/v1",
+        summary: "Deprecated detection id query",
+        status: 200,
+        list: true,
+        envelope: { type: "falcon" },
+        pagination: { style: "offset", defaultLimit: 100, maxLimit: 500 },
+        record: falconId,
+      }),
+    ],
+  }),
+  preset({
+    auth: {
+      mode: "oauth2",
+      oauth2: {
+        tokenPath: "/oauth2/v2.0/token",
+        clientId: "dummy-graph-client",
+        clientSecret: "dummy-graph-secret",
+        ttlSeconds: 3600,
+        shape: "microsoft",
+      },
+    },
+    id: "microsoftgraphsecurity-microsoftgraphsecurity",
+    name: "Microsoft Graph Security",
+    pack: "MicrosoftGraphSecurity",
+    vendor: "Microsoft",
+    summary: "GET /security/alerts_v2 with a value array and @odata.nextLink.",
+    docUrl: "https://learn.microsoft.com/en-us/graph/api/security-list-alerts_v2?view=graph-rest-1.0",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSecurity",
+    differences: [
+      "Microsoft Graph pages with @odata.nextLink. This mock also honors $top and $skip.",
+      "The real API may omit @odata.nextLink when a page happens to contain everything. That is not simulated unless you stop before the virtual catalog ends.",
+      "Bearer tokens are not checked.",
+    ],
+    operations: [
+      op({
+        id: "list-alerts-v2",
+        method: "GET",
+        pathTemplate: "/v1.0/security/alerts_v2",
+        summary: "List security alerts",
+        status: 200,
+        list: true,
+        envelope: {
+          type: "odata",
+          context: "https://graph.microsoft.com/v1.0/$metadata#security/alerts_v2",
+        },
+        pagination: {
+          style: "offset",
+          limitParam: "$top",
+          offsetParam: "$skip",
+          defaultLimit: 50,
+          maxLimit: 500,
+        },
+        record: object("alert", [
+          field("id", "uuid"),
+          field("title", "string", { example: "Suspicious sign-in" }),
+          field("severity", "enum", { enumValues: ["low", "medium", "high", "unknown"] }),
+          field("status", "enum", { enumValues: ["new", "inProgress", "resolved"] }),
+          field("serviceSource", "enum", { enumValues: ["microsoftDefenderForEndpoint", "microsoftSentinel"] }),
+          field("createdDateTime", "timestamp", { format: "iso" }),
+          field("lastUpdateDateTime", "timestamp", { format: "iso" }),
+          field("description", "string", { example: "Multiple failed sign-ins from a new location." }),
+        ]),
+      }),
+      op({
+        id: "list-alerts-root",
+        method: "GET",
+        pathTemplate: "/security/alerts_v2",
+        summary: "List security alerts without the version prefix",
+        status: 200,
+        list: true,
+        envelope: {
+          type: "odata",
+          context: "https://graph.microsoft.com/v1.0/$metadata#security/alerts_v2",
+        },
+        pagination: {
+          style: "offset",
+          limitParam: "$top",
+          offsetParam: "$skip",
+          defaultLimit: 50,
+          maxLimit: 500,
+        },
+        record: object("alert", [
+          field("id", "uuid"),
+          field("title", "string", { example: "Malware detected" }),
+          field("severity", "enum", { enumValues: ["informational", "low", "medium", "high"] }),
+          field("createdDateTime", "timestamp", { format: "iso" }),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "virustotal-virustotalv3",
+    name: "VirusTotal v3",
+    pack: "VirusTotal",
+    vendor: "VirusTotal",
+    summary: "GET /files/{id} and /ip_addresses/{ip} in the v3 data/attributes envelope.",
+    docUrl: "https://docs.virustotal.com/reference/file-info",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/VirusTotal/Integrations/VirusTotalV3",
+    differences: [
+      "Set the integration base URL to the catch URL. XSOAR appends files/{id}, which replaces https://www.virustotal.com/api/v3.",
+      "Relationship links and the analysis stats object are shortened. last_analysis_stats counts are examples, not a live engine vote.",
+      "x-api-key is not required.",
+    ],
+    operations: [
+      op({
+        id: "file-info",
+        method: "GET",
+        pathTemplate: "/files/{id}",
+        summary: "Get a file report",
+        status: 200,
+        list: false,
+        envelope: { type: "object" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("report", [
+          object("data", [
+            field("id", "id"),
+            field("type", "const", { constValue: "file" }),
+            object("attributes", [
+              field("md5", "id"),
+              field("sha1", "id"),
+              field("sha256", "id"),
+              field("last_analysis_date", "timestamp", { format: "unix" }),
+              object("last_analysis_stats", [
+                field("malicious", "integer"),
+                field("suspicious", "integer"),
+                field("undetected", "integer"),
+                field("harmless", "integer"),
+              ]),
+            ]),
+          ]),
+        ]),
+      }),
+      op({
+        id: "ip-info",
+        method: "GET",
+        pathTemplate: "/ip_addresses/{ip}",
+        summary: "Get an IP address report",
+        status: 200,
+        list: false,
+        envelope: { type: "object" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("report", [
+          object("data", [
+            field("id", "ip"),
+            field("type", "const", { constValue: "ip_address" }),
+            object("attributes", [
+              field("country", "enum", { enumValues: ["US", "DE", "JP"] }),
+              field("as_owner", "string", { example: "Example ISP" }),
+              field("last_analysis_date", "timestamp", { format: "unix" }),
+            ]),
+          ]),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "jira-jirav3",
+    name: "Atlassian Jira v3",
+    pack: "Jira",
+    vendor: "Atlassian",
+    summary: "GET /rest/api/3/search/jql returns issues and nextPageToken. The older /search path is included for on-prem clients.",
+    docUrl: "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Jira/Integrations/JiraV3",
+    differences: [
+      "XSOAR calls GET /rest/api/3/search/jql and reads issues plus nextPageToken. The older GET /rest/api/3/search is also mocked.",
+      "Issue fields are a subset of the official issue schema. names and renderedFields are omitted.",
+    ],
+    operations: [
+      op({
+        id: "search-jql",
+        method: "GET",
+        pathTemplate: "/rest/api/3/search/jql",
+        summary: "Search issues",
+        status: 200,
+        list: true,
+        envelope: { type: "token-page", arrayKey: "issues", tokenKey: "nextPageToken" },
+        pagination: {
+          style: "cursor",
+          limitParam: "maxResults",
+          cursorParam: "nextPageToken",
+          defaultLimit: 50,
+          maxLimit: 100,
+        },
+        record: object("issue", [
+          field("id", "id"),
+          field("key", "id"),
+          field("self", "string", { example: "https://example.atlassian.net/rest/api/3/issue/10001" }),
+          object("fields", [
+            field("summary", "string", { example: "Investigate failed logins" }),
+            object("status", [field("name", "enum", { enumValues: ["To Do", "In Progress", "Done"] })]),
+            field("created", "timestamp", { format: "iso" }),
+            field("updated", "timestamp", { format: "iso" }),
+          ]),
+        ]),
+      }),
+      op({
+        id: "search-legacy",
+        method: "GET",
+        pathTemplate: "/rest/api/3/search",
+        summary: "Legacy issue search",
+        status: 200,
+        list: true,
+        envelope: { type: "wrapped", arrayKey: "issues" },
+        pagination: {
+          style: "offset",
+          limitParam: "maxResults",
+          offsetParam: "startAt",
+          defaultLimit: 50,
+          maxLimit: 100,
+        },
+        record: object("issue", [
+          field("id", "id"),
+          field("key", "id"),
+          object("fields", [
+            field("summary", "string", { example: "Legacy search result" }),
+            field("created", "timestamp", { format: "iso" }),
+          ]),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "servicenow-servicenowv2",
+    name: "ServiceNow v2",
+    pack: "ServiceNow",
+    vendor: "ServiceNow",
+    summary: "Table API GET /api/now/table/{table} with a result array.",
+    docUrl: "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/ServiceNow/Integrations/ServiceNowv2",
+    differences: [
+      "ServiceNow pages with sysparm_limit and sysparm_offset and returns X-Total-Count. Those headers are set. Link headers are not.",
+      "Only the incident table shape is modeled. Other table names still match {table} and return the same incident-shaped rows.",
+    ],
+    operations: [
+      op({
+        id: "table-get",
+        method: "GET",
+        pathTemplate: "/api/now/table/{table}",
+        summary: "Retrieve records from a table",
+        status: 200,
+        list: true,
+        envelope: { type: "wrapped", arrayKey: "result" },
+        pagination: {
+          style: "offset",
+          limitParam: "sysparm_limit",
+          offsetParam: "sysparm_offset",
+          defaultLimit: 20,
+          maxLimit: 500,
+        },
+        headers: { "x-total-count": "500" },
+        record: object("incident", [
+          field("sys_id", "uuid"),
+          field("number", "id"),
+          field("short_description", "string", { example: "Suspicious outbound connection" }),
+          field("state", "enum", { enumValues: ["1", "2", "3", "6", "7"] }),
+          field("priority", "enum", { enumValues: ["1", "2", "3", "4"] }),
+          field("sys_created_on", "timestamp", { format: "iso" }),
+          field("sys_updated_on", "timestamp", { format: "iso" }),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "slack-slackv3",
+    name: "Slack v3",
+    pack: "Slack",
+    vendor: "Slack",
+    summary: "conversations.history returns ok, messages, and next_cursor.",
+    docUrl: "https://docs.slack.dev/reference/methods/conversations.history",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Slack/Integrations/SlackV3",
+    differences: [
+      "Slack's method is GET conversations.history with channel and cursor. This mock also accepts the path with a leading slash.",
+      "ok is always true unless chaos errors are enabled. Slack returns ok:false with an error string for bad tokens. That error shape is not the default.",
+    ],
+    operations: [
+      op({
+        id: "conversations-history",
+        method: "GET",
+        pathTemplate: "/api/conversations.history",
+        summary: "Fetch a conversation's history",
+        status: 200,
+        list: true,
+        envelope: { type: "slack" },
+        pagination: {
+          style: "cursor",
+          limitParam: "limit",
+          cursorParam: "cursor",
+          defaultLimit: 100,
+          maxLimit: 200,
+        },
+        record: object("message", [
+          field("type", "const", { constValue: "message" }),
+          field("user", "id"),
+          field("text", "string", { example: "Investigating the alert" }),
+          field("ts", "timestamp", { format: "unix-string" }),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "proofpointtap-proofpointtap-v2",
+    name: "Proofpoint TAP v2",
+    pack: "ProofpointTAP",
+    vendor: "Proofpoint",
+    summary: "SIEM clicks and messages are blocked and permitted arrays for an interval.",
+    docUrl: "https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/ProofpointTAP/Integrations/ProofpointTAP_v2",
+    differences: [
+      "Proofpoint's SIEM API is /v2/siem/clicks and /v2/siem/messages with an interval query such as PT1H. The body is not a generic offset list.",
+      "clicksBlocked and clicksPermitted are both generated from the same click shape.",
+    ],
+    operations: [
+      op({
+        id: "siem-clicks",
+        method: "GET",
+        pathTemplate: "/v2/siem/clicks",
+        summary: "Clicks for an interval",
+        status: 200,
+        list: false,
+        envelope: { type: "object" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("clicks", [
+          field("queryEndTime", "timestamp", { format: "iso" }),
+          field("clicksPermitted", "array", {
+            item: object("click", [
+              field("id", "uuid"),
+              field("clickTime", "timestamp", { format: "iso" }),
+              field("recipient", "email"),
+              field("sender", "email"),
+              field("url", "string", { example: "https://example.com/phish" }),
+              field("threatStatus", "enum", { enumValues: ["active", "cleared", "falsePositive"] }),
+            ]),
+            minItems: 1,
+            maxItems: 2,
+          }),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "zscaler-zscaler",
+    name: "Zscaler Internet Access",
+    pack: "Zscaler",
+    vendor: "Zscaler",
+    summary: "POST /api/v1/urlLookup returns one classification object per URL.",
+    docUrl: "https://help.zscaler.com/zia/url-lookup",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Zscaler/Integrations/Zscaler",
+    differences: [
+      "The public lookup response is a JSON array of url, urlClassifications, and urlClassificationsWithSecurityAlert. The request body of URLs is not echoed back; each row uses a sample URL.",
+      "Session cookies and the obfuscated API key are not checked.",
+    ],
+    operations: [
+      op({
+        id: "url-lookup",
+        method: "POST",
+        pathTemplate: "/api/v1/urlLookup",
+        summary: "Look up URL categories",
+        status: 200,
+        list: true,
+        envelope: { type: "array" },
+        pagination: { style: "none", defaultLimit: 2, maxLimit: 20 },
+        record: object("classification", [
+          field("url", "string", { example: "example.com" }),
+          field("urlClassifications", "array", {
+            item: field("category", "enum", { enumValues: ["NEWS_AND_MEDIA", "FINANCE", "MALWARE"] }),
+            minItems: 1,
+            maxItems: 1,
+          }),
+          field("urlClassificationsWithSecurityAlert", "array", {
+            item: field("category", "enum", { enumValues: ["MALWARE"] }),
+            minItems: 0,
+            maxItems: 1,
+          }),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "azuresentinel-azuresentinel",
+    name: "Microsoft Sentinel",
+    pack: "AzureSentinel",
+    vendor: "Microsoft",
+    summary: "GET incidents returns value and nextLink. XSOAR calls this under the SecurityInsights workspace URL.",
+    docUrl: "https://learn.microsoft.com/en-us/rest/api/securityinsights/incidents/list?view=rest-securityinsights-2024-03-01",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/AzureSentinel/Integrations/AzureSentinel",
+    differences: [
+      "Point the integration server URL at the catch URL plus the workspace path ending in Microsoft.SecurityInsights. The client appends incidents and api-version=2024-03-01.",
+      "Pages use nextLink. $top is honored up to 500. Azure's documented maximum for $top is 1000.",
+      "Arm authorization is not checked.",
+    ],
+    operations: [
+      op({
+        id: "list-incidents",
+        method: "GET",
+        pathTemplate: "/incidents",
+        summary: "List Sentinel incidents",
+        status: 200,
+        list: true,
+        envelope: { type: "azure" },
+        pagination: {
+          style: "cursor",
+          limitParam: "$top",
+          cursorParam: "$skipToken",
+          defaultLimit: 50,
+          maxLimit: 500,
+        },
+        record: object("incident", [
+          field("id", "string", { example: "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.OperationalInsights/workspaces/ws/providers/Microsoft.SecurityInsights/incidents/1" }),
+          field("name", "id"),
+          field("type", "const", { constValue: "Microsoft.SecurityInsights/incidents" }),
+          object("properties", [
+            field("title", "string", { example: "Suspicious sign-in" }),
+            field("severity", "enum", { enumValues: ["Informational", "Low", "Medium", "High"] }),
+            field("status", "enum", { enumValues: ["New", "Active", "Closed"] }),
+            field("createdTimeUtc", "timestamp", { format: "iso" }),
+            field("lastModifiedTimeUtc", "timestamp", { format: "iso" }),
+          ]),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "gsuitesecurityalertcenter-gsuitesecurityalertcenter",
+    name: "G Suite Security Alert Center",
+    pack: "GSuiteSecurityAlertCenter",
+    vendor: "Google",
+    summary: "GET /v1beta1/alerts returns alerts and nextPageToken.",
+    docUrl: "https://developers.google.com/workspace/admin/alertcenter/reference/rest/v1beta1/alerts/list",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/GSuiteSecurityAlertCenter",
+    differences: [
+      "pageSize and pageToken match the Alert Center list method. An empty nextPageToken means the last page.",
+      "Alert data payloads differ by source. This mock includes the common alert fields and a short data object.",
+    ],
+    operations: [
+      op({
+        id: "list-alerts",
+        method: "GET",
+        pathTemplate: "/v1beta1/alerts",
+        summary: "List Workspace alerts",
+        status: 200,
+        list: true,
+        envelope: { type: "token-page", arrayKey: "alerts", tokenKey: "nextPageToken" },
+        pagination: {
+          style: "cursor",
+          limitParam: "pageSize",
+          cursorParam: "pageToken",
+          defaultLimit: 20,
+          maxLimit: 100,
+        },
+        record: object("alert", [
+          field("alertId", "id"),
+          field("customerId", "const", { constValue: "C01234567" }),
+          field("type", "enum", { enumValues: ["Suspicious login", "Phishing"] }),
+          field("source", "const", { constValue: "Google Operations" }),
+          field("createTime", "timestamp", { format: "iso" }),
+          field("startTime", "timestamp", { format: "iso" }),
+          field("updateTime", "timestamp", { format: "iso" }),
+          object("data", [field("email", "email")]),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "ciscoumbrellareporting-ciscoumbrellareporting",
+    name: "Cisco Umbrella Reporting",
+    pack: "CiscoUmbrellaReporting",
+    vendor: "Cisco",
+    summary: "GET /reports/v2/activity/dns returns a data array. The XSOAR client reads data.",
+    docUrl: "https://developer.cisco.com/docs/cloud-security/umbrella-api-api-reference-reports-reporting-api-activity-get-activity-dns/",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/CiscoUmbrellaReporting",
+    differences: [
+      "from, to, and limit are required by Cisco. This mock still answers if they are omitted.",
+      "A real deployment may 302 to a regional reports host. This mock returns 200 directly.",
+      "OAuth is not checked.",
+    ],
+    operations: [
+      op({
+        id: "activity-dns",
+        method: "GET",
+        pathTemplate: "/reports/v2/activity/dns",
+        summary: "List DNS activity",
+        status: 200,
+        list: true,
+        envelope: { type: "wrapped", arrayKey: "data" },
+        pagination: { style: "offset", defaultLimit: 100, maxLimit: 500 },
+        record: object("activity", [
+          field("timestamp", "timestamp", { format: "unix-ms" }),
+          field("domain", "string", { example: "example.com" }),
+          field("verdict", "enum", { enumValues: ["allowed", "blocked"] }),
+          field("categories", "array", {
+            item: object("category", [field("label", "enum", { enumValues: ["Malware", "Phishing"] })]),
+            minItems: 1,
+            maxItems: 1,
+          }),
+          field("identities", "array", {
+            item: object("identity", [field("label", "string", { example: "laptop" })]),
+            minItems: 1,
+            maxItems: 1,
+          }),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "microsoft365defender-microsoft365defender",
+    name: "Microsoft 365 Defender",
+    pack: "Microsoft365Defender",
+    vendor: "Microsoft",
+    summary: "GET /api/incidents returns a value array. The XSOAR client calls api/incidents.",
+    docUrl: "https://learn.microsoft.com/en-us/microsoft-365/security/defender/api-list-incidents",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Microsoft365Defender",
+    differences: [
+      "The incidents list is { value: [...] }. nextLink is included while pages remain.",
+      "Alerts nested on an incident are shortened.",
+    ],
+    operations: [
+      op({
+        id: "list-incidents",
+        method: "GET",
+        pathTemplate: "/api/incidents",
+        summary: "List Defender incidents",
+        status: 200,
+        list: true,
+        envelope: { type: "azure" },
+        pagination: { style: "offset", limitParam: "$top", offsetParam: "$skip", defaultLimit: 50, maxLimit: 100 },
+        record: object("incident", [
+          field("incidentId", "integer"),
+          field("incidentName", "string", { example: "Multi-stage incident" }),
+          field("severity", "enum", { enumValues: ["Low", "Medium", "High"] }),
+          field("status", "enum", { enumValues: ["Active", "Resolved", "Redirected"] }),
+          field("createdTime", "timestamp", { format: "iso" }),
+          field("lastUpdateTime", "timestamp", { format: "iso" }),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "splunkpy-splunkpy",
+    name: "SplunkPy",
+    pack: "SplunkPy",
+    vendor: "Splunk",
+    summary: "Search job export as JSON lines, which is what JSONResultsReader consumes when output_mode=json.",
+    docUrl: "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-tutorials/10.2/rest-api-tutorials/creating-searches-using-the-rest-api",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/SplunkPy",
+    differences: [
+      "Creating a job at POST /services/search/jobs returns XML by default. This mock returns JSON { sid } as if output_mode=json was set.",
+      "POST /services/search/jobs/export returns one JSON object per line with a result field. That matches the export reader the XSOAR pack uses for oneshot search.",
+      "Splunk authentication and the management port are not checked.",
+    ],
+    notes: [
+      "The pack was not in the inferred catalog because its client uses splunklib rather than a JSON sample. This preset was added from the public REST reference.",
+    ],
+    operations: [
+      op({
+        id: "create-job",
+        method: "POST",
+        pathTemplate: "/services/search/jobs",
+        summary: "Create a search job",
+        status: 201,
+        list: false,
+        envelope: { type: "object" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("job", [field("sid", "id")]),
+      }),
+      op({
+        id: "export",
+        method: "POST",
+        pathTemplate: "/services/search/jobs/export",
+        summary: "Stream search results",
+        status: 200,
+        list: true,
+        envelope: { type: "splunk-export" },
+        contentType: "application/json; charset=utf-8",
+        pagination: { style: "offset", limitParam: "count", defaultLimit: 100, maxLimit: 500 },
+        record: object("event", [
+          field("_time", "timestamp", { format: "iso" }),
+          field("host", "string", { example: "search-head" }),
+          field("source", "string", { example: "pan-parrot" }),
+          field("sourcetype", "const", { constValue: "parrot:mock" }),
+          field("_raw", "string", { example: "user=ada action=login" }),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "pan-os-panorama",
+    name: "Palo Alto Networks PAN-OS",
+    pack: "PAN-OS",
+    vendor: "Palo Alto Networks",
+    summary: "XML API for keygen, operational commands, config, and log jobs.",
+    docUrl: "https://docs.paloaltonetworks.com/ngfw/api/pan-os",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/PAN-OS/Integrations/Panorama",
+    differences: [
+      "XSOAR calls GET /api/ with type=op, type=config, and type=log. type=keygen is included so you can test the API key exchange.",
+      "Log query returns a job id. action=get with job-id returns log entries. nlogs is capped at 500.",
+      "The dummy user, password, and API key are not a real firewall credential. Commit, export, and user-id commands are not modeled.",
+    ],
+    auth: {
+      mode: "panos-key",
+      panos: { username: "lab-admin", password: "dummy-not-a-real-password", apiKey: "dummy-panos-api-key" },
+    },
+    operations: [
+      op({
+        id: "keygen",
+        method: "GET",
+        pathTemplate: "/api",
+        summary: "Generate an API key",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        queryMatch: { type: "keygen" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("response", [
+          field("status", "const", { constValue: "success", xml: { attribute: true } }),
+          object("result", [field("key", "const", { constValue: "dummy-panos-api-key" })]),
+        ]),
+      }),
+      op({
+        id: "op",
+        method: "GET",
+        pathTemplate: "/api",
+        summary: "Operational command",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        queryMatch: { type: "op" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("response", [
+          field("status", "const", { constValue: "success", xml: { attribute: true } }),
+          object("result", [
+            object("system", [
+              field("hostname", "string", { example: "lab-fw" }),
+              field("sw-version", "const", { constValue: "11.1.0" }),
+              field("model", "const", { constValue: "PA-VM" }),
+            ]),
+          ]),
+        ]),
+      }),
+      op({
+        id: "config",
+        method: "GET",
+        pathTemplate: "/api",
+        summary: "Read config",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        queryMatch: { type: "config" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("response", [
+          field("status", "const", { constValue: "success", xml: { attribute: true } }),
+          object("result", [
+            object("entry", [
+              field("name", "string", { example: "localhost.localdomain", xml: { attribute: true } }),
+            ]),
+          ]),
+        ]),
+      }),
+      op({
+        id: "log-job",
+        method: "GET",
+        pathTemplate: "/api",
+        summary: "Start a log query job",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        queryMatch: { type: "log" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("response", [
+          field("status", "const", { constValue: "success", xml: { attribute: true } }),
+          object("result", [field("job", "const", { constValue: "1" })]),
+        ]),
+      }),
+      op({
+        id: "log-get",
+        method: "GET",
+        pathTemplate: "/api",
+        summary: "Fetch logs for a job",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        queryMatch: { type: "log", action: "get" },
+        pagination: { style: "offset", limitParam: "nlogs", defaultLimit: 20, maxLimit: 500 },
+        record: object("response", [
+          field("status", "const", { constValue: "success", xml: { attribute: true } }),
+          object("result", [
+            object("job", [
+              field("id", "const", { constValue: "1" }),
+              field("status", "const", { constValue: "FIN" }),
+            ]),
+            object("log", [
+              object("logs", [
+                field("count", "const", { constValue: "20", xml: { attribute: true } }),
+                {
+                  name: "entry",
+                  kind: "array",
+                  pageItems: true,
+                  item: object("entry", [
+                    field("logid", "id", { xml: { attribute: true } }),
+                    field("receive_time", "timestamp", { format: "iso" }),
+                    field("src", "ip"),
+                    field("dst", "ip"),
+                    field("action", "enum", { enumValues: ["allow", "deny"] }),
+                    field("rule", "string", { example: "allow-lab" }),
+                  ]),
+                },
+              ]),
+            ]),
+          ]),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "palo-alto-networks-wildfire-palo-alto-networks-wildfire-v2",
+    name: "Palo Alto Networks WildFire v2",
+    pack: "Palo_Alto_Networks_WildFire",
+    vendor: "Palo Alto Networks",
+    summary: "POST /publicapi/get/verdict returns the XML verdict document.",
+    docUrl: "https://docs.paloaltonetworks.com/wildfire/u-v/wildfire-api/get-wildfire-information-through-the-wildfire-api/get-a-wildfire-verdict-wildfire-api",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Palo_Alto_Networks_WildFire/Integrations/Palo_Alto_Networks_WildFire_v2",
+    differences: [
+      "The public verdict response is XML. Verdict codes are 0 benign, 1 malware, 2 grayware, 4 phishing, 5 C2, and the negative pending codes.",
+      "XSOAR posts to /publicapi/get/verdict with an apikey form field. This mock checks the dummy key. An invalid hash is not turned into HTTP 421.",
+      "File submission and the sample download are not modeled.",
+    ],
+    auth: { mode: "api-key", apiKey: { in: "form", name: "apikey", value: "dummy-wildfire-key" } },
+    operations: [
+      op({
+        id: "verdict",
+        method: "POST",
+        pathTemplate: "/publicapi/get/verdict",
+        summary: "Get a WildFire verdict",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("wildfire", [
+          object("get-verdict-info", [
+            field("md5", "id"),
+            field("sha256", "id"),
+            field("verdict", "enum", { enumValues: ["0", "1", "2", "4", "5", "-100"] }),
+          ]),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "mimecast-mimecastv2",
+    name: "Mimecast v2",
+    pack: "Mimecast",
+    vendor: "Mimecast",
+    summary: "SIEM logs as a zip plus an mc-siem-token header.",
+    docUrl: "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastEventCollector",
+    differences: [
+      "POST /api/audit/get-siem-logs returns application/octet-stream with Content-Disposition filename ending in .zip, which is what the XSOAR event collector accepts.",
+      "The zip contains one JSON file with type MTA and a data array. The next page token is the mc-siem-token response header. Send it back as data[0].token.",
+      "Production signs the request. This mock only checks that Authorization, x-mc-date, x-mc-req-id, and x-mc-app-id are present. The signature is not verified.",
+      "A JSON body meaning there are no further logs is not the default. Stop paging when the catalog ends and the header is absent.",
+    ],
+    auth: {
+      mode: "signed-headers",
+      signedHeaders: {
+        names: ["authorization", "x-mc-date", "x-mc-req-id", "x-mc-app-id"],
+        verify: "format-only",
+      },
+    },
+    operations: [
+      op({
+        id: "siem-logs",
+        method: "POST",
+        pathTemplate: "/api/audit/get-siem-logs",
+        summary: "Download the next SIEM log batch",
+        status: 200,
+        list: true,
+        envelope: { type: "array" },
+        contentType: "application/json; charset=utf-8",
+        pagination: { style: "header", cursorParam: "token", headerName: "mc-siem-token", defaultLimit: 20, maxLimit: 500 },
+        pack: {
+          format: "zip",
+          filename: "siem.zip",
+          entryName: "mta.json",
+          entryFormat: "wrapped-json",
+          wrapperType: "MTA",
+        },
+        record: object("event", [
+          field("datetime", "timestamp", { format: "iso" }),
+          field("aCode", "id"),
+          field("Act", "enum", { enumValues: ["Acc", "Hld", "Rej"] }),
+          field("MsgId", "id"),
+          field("Sender", "email"),
+          field("Rcpt", "email"),
+        ]),
+      }),
+    ],
+  }),
+];
+
+export const checkedNotUpgraded: Array<{
+  id: string;
+  docUrl: string;
+  differences: string[];
+}> = [];
+
+export function akamaiVerificationPatch(): {
+  differences: string[];
+  docUrl: string;
+} {
+  return {
+    docUrl: "https://techdocs.akamai.com/siem-integration/reference/get-config",
+    differences: [
+      "Akamai's default limit is 10000 and the documented maximum is 600000. This mock returns at most 500 events and 2 MB per call, then an offset for the next page.",
+      "If from and offset are both present, Akamai uses time mode. This mock does the same.",
+      "The offset token in production is a long opaque string. This mock uses a shorter pp_ token that still round-trips.",
+      "Optional botData, clientData, and userRiskData objects are omitted. httpMessage.query was added because the public event schema requires it.",
+      "429 responses from Akamai use application/problem+json. Chaos errors from this mock are a small JSON object plus Retry-After on 429 and 503.",
+    ],
+  };
+}

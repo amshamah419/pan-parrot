@@ -13,56 +13,108 @@ import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/Logo";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useAuth } from "@/hooks/use-auth";
-import { Loader2, Eye, EyeOff } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 export default function Login() {
   const { login } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [code, setCode] = useState("");
+  const [step, setStep] = useState<"email" | "code">("email");
+  const [magicToken] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    if (!token) return "";
+    sessionStorage.setItem("pp_magic", token);
+    params.delete("token");
+    const search = params.toString();
+    window.history.replaceState(
+      {},
+      "",
+      window.location.pathname + (search ? `?${search}` : ""),
+    );
+    return token;
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [info, setInfo] = useState("");
+  const [devCode, setDevCode] = useState("");
 
-  const handleTestLogin = async () => {
-    setEmail("test@paloaltonetworks.com");
-    setPassword("test123");
-
-    // Trigger login after a short delay to show the form update
-    setTimeout(() => {
-      const form = document.querySelector("form") as HTMLFormElement;
-      if (form) {
-        form.requestSubmit();
-      }
-    }, 100);
+  const finish = async (response: Response) => {
+    const data = (await response.json()) as {
+      error?: string;
+      user?: { id: string; email: string; name: string; role: "user" | "admin" };
+    };
+    if (!response.ok || !data.user) {
+      throw new Error(data.error || "Sign-in failed");
+    }
+    sessionStorage.removeItem("pp_magic");
+    login(data.user);
+    navigate("/dashboard");
   };
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const requestCode = async (event: React.FormEvent) => {
+    event.preventDefault();
     setIsLoading(true);
     setError("");
-
+    setDevCode("");
     try {
-      // Call authentication API
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch("/api/auth/request", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Login failed");
-      }
-
-      const { user: userData } = await response.json();
-
-      login(userData);
-      navigate("/dashboard");
+      const data = (await response.json()) as {
+        error?: string;
+        message?: string;
+        devCode?: string;
+      };
+      if (!response.ok) throw new Error(data.error || "Could not send a code");
+      setInfo(data.message || "Check your email for a sign-in code.");
+      if (data.devCode) setDevCode(data.devCode);
+      setStep("code");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed");
+      setError(err instanceof Error ? err.message : "Could not send a code");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const submitCode = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setError("");
+    try {
+      const response = await fetch("/api/auth/verify", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, code }),
+      });
+      await finish(response);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sign-in failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const confirmLink = async () => {
+    const token = magicToken || sessionStorage.getItem("pp_magic") || "";
+    if (!token) return;
+    setIsLoading(true);
+    setError("");
+    try {
+      const response = await fetch("/api/auth/verify", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+      await finish(response);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sign-in failed");
     } finally {
       setIsLoading(false);
     }
@@ -73,114 +125,108 @@ export default function Login() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Logo className="justify-center mb-4" size="lg" />
-          <h1 className="text-2xl font-bold">Welcome to PAN Parrot</h1>
+          <h1 className="text-2xl font-bold">Sign in to PAN Parrot</h1>
           <p className="text-muted-foreground">
-            Login with your PAN credentials
+            A verified @paloaltonetworks.com email is required.
           </p>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>Sign In</CardTitle>
+            <CardTitle>{magicToken ? "Confirm sign-in" : "Email code"}</CardTitle>
             <CardDescription>
-              Access your HTTP debugging workspace
+              We email a one-time code. Opening the link does not sign you in
+              until you confirm here.
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="your.name@paloaltonetworks.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-              </div>
-
-              {error && (
-                <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
-
-              <Button type="submit" className="w-full" disabled={isLoading}>
+          <CardContent className="space-y-4">
+            {magicToken && (
+              <Button className="w-full" onClick={confirmLink} disabled={isLoading}>
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Signing in...
+                    Confirming...
                   </>
                 ) : (
-                  "Sign In"
+                  "Confirm and continue"
                 )}
               </Button>
-            </form>
+            )}
 
-            <div className="mt-6 space-y-3">
-              <div className="p-3 bg-muted/50 rounded-lg border">
-                <div className="flex items-center justify-between mb-2">
-                  <p className="text-sm font-medium">Test Credentials:</p>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleTestLogin}
-                    disabled={isLoading}
-                  >
-                    Quick Login
-                  </Button>
+            {step === "email" ? (
+              <form onSubmit={requestCode} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    autoComplete="username"
+                    placeholder="your.name@paloaltonetworks.com"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    required
+                  />
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Email:{" "}
-                  <code className="bg-background px-1 py-0.5 rounded">
-                    test@paloaltonetworks.com
-                  </code>
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Password:{" "}
-                  <code className="bg-background px-1 py-0.5 rounded">
-                    test123
-                  </code>
-                </p>
-              </div>
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending code...
+                    </>
+                  ) : (
+                    "Email me a code"
+                  )}
+                </Button>
+              </form>
+            ) : (
+              <form onSubmit={submitCode} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="code">8-digit code</Label>
+                  <Input
+                    id="code"
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    placeholder="12345678"
+                    value={code}
+                    onChange={(event) => setCode(event.target.value)}
+                    required
+                  />
+                </div>
+                {info && <p className="text-sm text-muted-foreground">{info}</p>}
+                {devCode && (
+                  <Alert>
+                    <AlertDescription>
+                      Local development code: <code>{devCode}</code>. This is
+                      never returned in production.
+                    </AlertDescription>
+                  </Alert>
+                )}
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Signing in...
+                    </>
+                  ) : (
+                    "Sign in"
+                  )}
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="w-full"
+                  onClick={() => setStep("email")}
+                >
+                  Use a different email
+                </Button>
+              </form>
+            )}
 
-              <div className="text-center">
-                <p className="text-sm text-muted-foreground">
-                  Don't have access?{" "}
-                  <Link to="/docs" className="text-primary hover:underline">
-                    Contact your admin
-                  </Link>
-                </p>
-              </div>
-            </div>
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
           </CardContent>
         </Card>
 
