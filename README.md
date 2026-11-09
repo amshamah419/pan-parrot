@@ -64,4 +64,8 @@ Addresses are accepted only when the domain is exactly `paloaltonetworks.com` af
 
 ## Deploy
 
-Netlify is the only supported host. Follow [DEPLOYMENT.md](DEPLOYMENT.md).
+Netlify is the only supported host. Follow [docs/GO_LIVE.md](docs/GO_LIVE.md). Content developers start with [docs/USER_GUIDE.md](docs/USER_GUIDE.md).
+
+```bash
+npm run smoke -- https://<your-site>
+```

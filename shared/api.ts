@@ -72,6 +72,24 @@ export interface AdminUser {
   active: boolean;
 }
 
+export interface AdminSignals {
+  ok: boolean;
+  database: "up" | "down";
+  email: "configured" | "missing";
+  siteUrl: string;
+  devCodeExposed: boolean;
+  sessionSecret: "ok" | "missing";
+  retentionDays: number;
+  maxRequestsPerEndpoint: number;
+  maxBodyBytes: number;
+  users: number;
+  inactiveUsers: number;
+  endpoints: number;
+  capturedRequests: number;
+  auditEvents: number;
+  newestAudit: string | null;
+}
+
 export interface AuthUser {
   id: string;
   email: string;
