@@ -32,6 +32,7 @@ export const MOCK_LIMITS = {
   maxStoredRecords: 200,
   maxSeenIds: 2_000,
   maxScenarioSteps: 12,
+  maxScenarioBodyBytes: 8_000,
 } as const;
 
 export const ENDPOINT_PATH_RE = /^[A-Za-z0-9_-]{4,64}$/;

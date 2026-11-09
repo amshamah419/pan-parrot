@@ -4,6 +4,7 @@ import {
   CreateEndpointRequest,
   MockResponseConfig,
 } from "@shared/api";
+import type { RecordedFixture } from "@shared/recording";
 
 async function apiRequest<T>(
   endpoint: string,
@@ -93,6 +94,18 @@ export async function configureMockResponse(
   return apiRequest<{ message: string }>(`/api/endpoints/${endpointId}/mock`, {
     method: "POST",
     body: JSON.stringify(config),
+  });
+}
+
+export async function recordUpstreamCall(input: {
+  url: string;
+  method: string;
+  headers?: Record<string, string>;
+  body?: string;
+}): Promise<RecordedFixture> {
+  return apiRequest<RecordedFixture>("/api/record", {
+    method: "POST",
+    body: JSON.stringify(input),
   });
 }
 

@@ -7,6 +7,7 @@ import { specFromXml } from "../shared/wsdl";
 import { readZip } from "./pack";
 import { POLICY } from "../shared/policy";
 import { parse as parseYaml } from "yaml";
+import { recordUpstream } from "./record";
 import { fetchPublicSpec } from "./ssrf";
 import type { AppDb } from "../db/client";
 import { getDb } from "../db/client";
@@ -66,6 +67,15 @@ const mockSchema = z.object({
   delay: z.number().optional(),
   enabled: z.boolean().optional(),
 });
+
+const recordSchema = z
+  .object({
+    url: z.string().trim().min(1).max(2000),
+    method: z.string().trim().max(10).optional(),
+    headers: z.record(z.string().max(2048)).optional(),
+    body: z.string().max(16_384).optional(),
+  })
+  .strict();
 
 const updateUserSchema = z
   .object({
@@ -239,6 +249,21 @@ export function createServer(options?: {
     await limitAuthed(c.get("db"), user.id);
     await resetEndpointRuntime(c.get("db"), user.id, c.req.param("endpointId"));
     return c.json({ ok: true });
+  });
+
+  app.post("/api/record", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    const parsed = recordSchema.safeParse(await readJson(c.req.raw, POLICY.apiJsonBytes));
+    if (!parsed.success) throw new HttpError(400, "Invalid request");
+    return c.json(
+      await recordUpstream({
+        url: parsed.data.url,
+        method: parsed.data.method,
+        headers: parsed.data.headers,
+        body: parsed.data.body,
+      }),
+    );
   });
 
   app.post("/api/specs/import", async (c) => {
