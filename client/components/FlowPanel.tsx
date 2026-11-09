@@ -3,7 +3,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { defaultBehavior, type MockBehavior } from "@shared/mock-spec";
+import { defaultBehavior, type MockBehavior, type ScenarioStep } from "@shared/mock-spec";
+import { MOCK_LIMITS } from "@shared/policy";
+import { RecordCall } from "@/components/RecordCall";
 
 export function FlowPanel({
   behavior,
@@ -15,11 +17,19 @@ export function FlowPanel({
   onReset: () => void;
 }) {
   const flow = behavior || defaultBehavior();
+  const addStep = (step: ScenarioStep) => {
+    const steps = [...flow.scenario.steps, step].slice(0, MOCK_LIMITS.maxScenarioSteps);
+    onChange({
+      ...flow,
+      scenario: { ...flow.scenario, enabled: true, steps },
+    });
+  };
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
         The preview stays a sample. These options change what the catch URL returns, and they are saved with the mock.
       </p>
+      <RecordCall stepCount={flow.scenario.steps.length} onAdd={addStep} />
       <section className="space-y-3 rounded border p-3">
         <div className="flex items-center justify-between gap-3">
           <div>

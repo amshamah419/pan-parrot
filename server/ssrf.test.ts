@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { assertPublicHttpsUrl, isBlockedAddress } from "./ssrf";
+import { assertPublicHttpsUrl, headersForRedirect, isBlockedAddress } from "./ssrf";
 import { HttpError } from "./http";
 
 describe("spec URL checks", () => {
@@ -41,5 +41,27 @@ describe("spec URL checks", () => {
   it("accepts a normal https URL", () => {
     const url = assertPublicHttpsUrl("https://example.com/openapi.yaml");
     expect(url.hostname).toBe("example.com");
+  });
+
+  it("drops credential headers when a redirect changes host", () => {
+    const headers = new Headers({
+      authorization: "Bearer super-secret-token",
+      cookie: "session=abc",
+      accept: "application/json",
+    });
+    const same = headersForRedirect(
+      new URL("https://api.example.com/a"),
+      new URL("https://api.example.com/b"),
+      headers,
+    );
+    expect(same.get("authorization")).toBe("Bearer super-secret-token");
+    const moved = headersForRedirect(
+      new URL("https://api.example.com/a"),
+      new URL("https://cdn.example.com/b"),
+      headers,
+    );
+    expect(moved.get("authorization")).toBeNull();
+    expect(moved.get("cookie")).toBeNull();
+    expect(moved.get("accept")).toBe("application/json");
   });
 });

@@ -626,8 +626,8 @@ function normalizeBehavior(behavior: MockBehavior | undefined): MockBehavior {
       repeat: behavior.scenario?.repeat === "loop" ? "loop" : "last",
       steps: steps.slice(0, MOCK_LIMITS.maxScenarioSteps).map((step, index) => ({
         name: cleanOptional(step?.name, 80) || `Call ${index + 1}`,
-        status: step?.status == null ? undefined : clampInt(step.status, 200, 599, 200),
-        body: cleanOptional(step?.body, 2_000),
+        status: step?.status == null ? undefined : clampInt(step.status, 100, 599, 200),
+        body: cleanOptional(step?.body, MOCK_LIMITS.maxScenarioBodyBytes),
       })),
     },
     fetch: {
