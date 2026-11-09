@@ -402,7 +402,11 @@ async function produceResponse(
         capped: false,
       };
     }
-    const hint = xmlHint(bodyText, headerMap);
+    const hint = {
+      ...xmlHint(bodyText, headerMap),
+      headers: headerMap,
+      body: bodyText,
+    };
     const matched = matchOperation(spec, request.method, subpath, query, hint);
     if (!matched) {
       return {

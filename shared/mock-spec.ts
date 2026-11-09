@@ -85,6 +85,14 @@ export interface MockOperation {
   record: FieldSpec;
   /** Query keys that must match before this operation is chosen. */
   queryMatch?: Record<string, string>;
+  /** Header name to exact value. A blank value means the header only has to be present. */
+  headerMatch?: Record<string, string>;
+  /** JSONPath (`$.a.b`) or XPath (`/a/b`, `/a/@attr`, `//name`). */
+  bodyMatch?: { path: string; equals?: string };
+  /** Higher values win when several operations match. */
+  priority?: number;
+  /** Used when this path matches but no stricter rule does. */
+  fallback?: boolean;
   soapAction?: string;
   requestElement?: string;
   pack?: {
@@ -334,6 +342,10 @@ function normalizeOperation(
     pagination: normalizePagination(operation.pagination),
     record: normalizeField(operation.record, 0, countField),
     queryMatch: normalizeQueryMatch(operation.queryMatch),
+    headerMatch: normalizeHeaderMatch(operation.headerMatch),
+    bodyMatch: normalizeBodyMatch(operation.bodyMatch),
+    priority: clampInt(operation.priority, -100, 1000, 0) || undefined,
+    fallback: Boolean(operation.fallback) || undefined,
     soapAction: cleanOptional(operation.soapAction, 200),
     requestElement: cleanOptional(operation.requestElement, 80),
     pack: normalizePack(operation.pack),
@@ -644,6 +656,29 @@ export function defaultBehavior(): MockBehavior {
       perPoll: 3,
     },
   };
+}
+
+function normalizeHeaderMatch(match: Record<string, string> | undefined): Record<string, string> | undefined {
+  if (!match || typeof match !== "object") return undefined;
+  const out: Record<string, string> = {};
+  for (const [key, value] of Object.entries(match).slice(0, 6)) {
+    const name = key.toLowerCase().trim();
+    if (!/^[a-z0-9-]{1,40}$/.test(name)) continue;
+    if (typeof value !== "string" || value.length > 80 || /[\r\n]/.test(value)) continue;
+    out[name] = value;
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+
+function normalizeBodyMatch(
+  match: { path?: string; equals?: string } | undefined,
+): { path: string; equals?: string } | undefined {
+  if (!match || typeof match.path !== "string") return undefined;
+  const path = match.path.trim().slice(0, 120);
+  if (!path.startsWith("$") && !path.startsWith("/")) return undefined;
+  if (/[()<>]/.test(path)) return undefined;
+  const equals = cleanOptional(match.equals, 80);
+  return equals ? { path, equals } : { path };
 }
 
 function normalizeQueryMatch(match: Record<string, string> | undefined): Record<string, string> | undefined {

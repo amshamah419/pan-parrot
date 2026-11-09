@@ -1,3 +1,4 @@
+import { bodyMatches } from "./body-match";
 import { MOCK_LIMITS } from "./policy";
 import { renderFieldXml, soapEnvelope } from "./xml";
 import type {
@@ -45,34 +46,83 @@ export function matchOperation(
   method: string,
   subpath: string,
   query: Record<string, string | undefined> = {},
-  hint: { soapAction?: string; requestElement?: string } = {},
+  hint: {
+    soapAction?: string;
+    requestElement?: string;
+    headers?: Record<string, string>;
+    body?: string;
+  } = {},
 ): { operation: MockOperation; pathParams: Record<string, string> } | null {
   const path = normalizePath(subpath);
   const verb = method.toUpperCase();
-  let best: { operation: MockOperation; pathParams: Record<string, string>; score: number } | null =
-    null;
+  const specific: Array<{ operation: MockOperation; pathParams: Record<string, string>; score: number }> = [];
+  const defaults: typeof specific = [];
   for (const operation of spec.operations) {
     if (operation.method !== verb && operation.method !== "ANY") continue;
     const matched = matchTemplate(operation.pathTemplate, path);
     if (!matched) continue;
-    if (!queryMatches(operation, query)) continue;
-    let score = operation.pathTemplate.length + Object.keys(operation.queryMatch || {}).length * 20;
-    if (hint.soapAction && operation.soapAction && operation.soapAction === hint.soapAction) score += 500;
-    if (hint.requestElement && operation.requestElement && operation.requestElement === hint.requestElement) {
-      score += 400;
-    }
-    if (operation.soapAction && hint.soapAction && operation.soapAction !== hint.soapAction) score -= 300;
-    if (!best || score > best.score) {
-      best = { operation, pathParams: matched, score };
+    const score = scoreOperation(operation, hint);
+    if (rulesMatch(operation, query, hint)) {
+      if (hasRules(operation)) specific.push({ operation, pathParams: matched, score });
+      else defaults.push({ operation, pathParams: matched, score });
     }
   }
-  return best ? { operation: best.operation, pathParams: best.pathParams } : null;
+  if (specific.length) return best(specific);
+  const fallback = defaults.filter((item) => item.operation.fallback);
+  if (fallback.length) return best(fallback);
+  return best(defaults);
 }
 
-function queryMatches(operation: MockOperation, query: Record<string, string | undefined>): boolean {
+function best(
+  items: Array<{ operation: MockOperation; pathParams: Record<string, string>; score: number }>,
+): { operation: MockOperation; pathParams: Record<string, string> } | null {
+  if (!items.length) return null;
+  items.sort((a, b) => b.score - a.score);
+  return { operation: items[0].operation, pathParams: items[0].pathParams };
+}
+
+function hasRules(operation: MockOperation): boolean {
+  return Boolean(
+    (operation.queryMatch && Object.keys(operation.queryMatch).length) ||
+      (operation.headerMatch && Object.keys(operation.headerMatch).length) ||
+      operation.bodyMatch?.path,
+  );
+}
+
+function rulesMatch(
+  operation: MockOperation,
+  query: Record<string, string | undefined>,
+  hint: { headers?: Record<string, string>; body?: string },
+): boolean {
   const expected = operation.queryMatch;
-  if (!expected) return true;
-  return Object.entries(expected).every(([key, value]) => query[key] === value);
+  if (expected && !Object.entries(expected).every(([key, value]) => query[key] === value)) return false;
+  const headers = operation.headerMatch;
+  if (headers) {
+    for (const [name, value] of Object.entries(headers)) {
+      const presented = hint.headers?.[name.toLowerCase()];
+      if (presented == null || presented === "") return false;
+      if (value && presented !== value) return false;
+    }
+  }
+  if (operation.bodyMatch?.path && !bodyMatches(hint.body || "", operation.bodyMatch)) return false;
+  return true;
+}
+
+function scoreOperation(
+  operation: MockOperation,
+  hint: { soapAction?: string; requestElement?: string },
+): number {
+  let score = (operation.priority || 0) * 10_000 + operation.pathTemplate.length;
+  score += Object.keys(operation.queryMatch || {}).length * 20;
+  score += Object.keys(operation.headerMatch || {}).length * 20;
+  if (operation.bodyMatch?.path) score += 50;
+  if (hasRules(operation)) score += 5_000;
+  if (hint.soapAction && operation.soapAction && operation.soapAction === hint.soapAction) score += 500;
+  if (hint.requestElement && operation.requestElement && operation.requestElement === hint.requestElement) {
+    score += 400;
+  }
+  if (operation.soapAction && hint.soapAction && operation.soapAction !== hint.soapAction) score -= 300;
+  return score;
 }
 
 export function generateMockResponse(input: GenerateInput): GenerateResult {
