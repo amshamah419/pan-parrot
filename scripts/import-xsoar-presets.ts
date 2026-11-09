@@ -2,7 +2,8 @@ import { readdir, readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { parse as parseYaml } from "yaml";
 import { mockFromSample } from "../shared/infer";
-import { validateMockSpec, type MockOperation, type MockSpec } from "../shared/mock-spec";
+import { validateMockSpec, type FieldSpec, type MockOperation, type MockSpec } from "../shared/mock-spec";
+import { fieldsFromOutputs, sampleFromReadme, type OutputField } from "../shared/xsoar-shape";
 
 const contentRoot = process.argv.includes("--content")
   ? process.argv[process.argv.indexOf("--content") + 1]
@@ -34,14 +35,21 @@ const curatedIds = new Set([
   "pan-os-panorama",
   "palo-alto-networks-wildfire-palo-alto-networks-wildfire-v2",
   "mimecast-mimecastv2",
+  "github-github",
+  "microsoftdefenderadvancedthreatprotection-microsoftdefenderadvancedthreatprotect",
+  "cortexxdr-cortexxdrir",
 ]);
 const stats = {
   scanned: 0,
   usable: 0,
   withPath: 0,
-  skippedNoSample: 0,
+  fromSample: 0,
+  fromReadme: 0,
+  fromYaml: 0,
+  skippedNoShape: 0,
   skippedError: 0,
 };
+const errors: string[] = [];
 
 const generated: Array<Record<string, unknown>> = [];
 
@@ -50,9 +58,12 @@ for (const dir of await integrationDirs(path.join(contentRoot, "Packs"))) {
   try {
     const preset = await presetFromDir(dir);
     if (!preset) {
-      stats.skippedNoSample += 1;
+      stats.skippedNoShape += 1;
       continue;
     }
+    if (preset.origin === "sample") stats.fromSample += 1;
+    if (preset.origin === "readme") stats.fromReadme += 1;
+    if (preset.origin === "yaml") stats.fromYaml += 1;
     if (presetHasPath(preset.spec)) stats.withPath += 1;
     stats.usable += 1;
     const file = `${preset.id}.json`;
@@ -60,10 +71,13 @@ for (const dir of await integrationDirs(path.join(contentRoot, "Packs"))) {
       await writeFile(path.join(integrationDir, file), JSON.stringify(preset));
     }
     generated.push(indexEntry(preset));
-  } catch {
+  } catch (error) {
     stats.skippedError += 1;
+    const message = error instanceof Error ? error.message : "unknown";
+    if (errors.length < 30) errors.push(`${dir}: ${message}`);
   }
 }
+if (errors.length) console.log(errors.join("\n"));
 
 const curated = await readCurated();
 const byId = new Map<string, Record<string, unknown>>();
@@ -96,15 +110,18 @@ Generated ${new Date().toISOString()} from a local checkout of [demisto/content]
 | | |
 | --- | --- |
 | Integration directories scanned | ${stats.scanned} |
-| Usable presets inferred from sample JSON | ${stats.usable} |
-| Of those, with at least one HTTP path taken from the Python client | ${stats.withPath} |
-| Skipped, no usable sample body | ${stats.skippedNoSample} |
+| Usable presets | ${stats.usable} |
+| From sample JSON | ${stats.fromSample} |
+| From a README JSON example | ${stats.fromReadme} |
+| From YAML command outputs | ${stats.fromYaml} |
+| With at least one HTTP path taken from the Python client | ${stats.withPath} |
+| Skipped, no outputs, sample, or README example | ${stats.skippedNoShape} |
 | Skipped, importer error | ${stats.skippedError} |
-| Hand-curated and not overwritten | ${curatedIds.size} (Akamai WAF SIEM) |
+| Hand-curated and not overwritten | ${curatedIds.size} |
 
-A usable preset means at least one JSON object or array was found in \`test_data/\` or an integration \`*_test/\` fixture. XSOAR command-result wrappers are unwrapped at \`Contents\` when that field is present. Paths come from string literals in the client that look like URL paths. When none are found, the operation is \`GET /\` and the preset fidelity is \`shape\` rather than \`sample\`.
+A sample preset comes from JSON in \`test_data/\` or an integration \`*_test/\` fixture. When that is missing, a README \`json\` fence is used. Otherwise command \`outputs\` context paths in the integration YAML become the field tree. Paths and methods come from HTTP calls in the Python client. When none are found, the operation is \`GET /\` and the fidelity is \`shape\`.
 
-This is structural fidelity for XSOAR content development, not a claim that every response matches the vendor's current API. Akamai WAF SIEM is the hand-checked preset. Regenerate with \`npm run presets:import -- --content ./content\`.
+This is structural fidelity for XSOAR content development, not a claim that every response matches the vendor's current API. Hand-checked presets are listed in \`VERIFICATION.md\`. Regenerate with \`npm run presets:import -- --content ./content\`.
 `;
 }
 
@@ -135,6 +152,7 @@ async function presetFromDir(dir: string): Promise<{
   curated: boolean;
   summary: string;
   operations: number;
+  origin: "sample" | "readme" | "yaml";
   spec: MockSpec;
 } | null> {
   const pack = path.basename(path.dirname(path.dirname(dir)));
@@ -142,37 +160,25 @@ async function presetFromDir(dir: string): Promise<{
   if (pack === "Akamai_SIEM" && folder === "Akamai_SIEM") return null;
   const ymlName = (await readdir(dir)).find((name) => name.endsWith(".yml") && !name.includes("_description"));
   if (!ymlName) return null;
-  const meta = readMeta(await readFile(path.join(dir, ymlName), "utf8"), folder);
+  const ymlText = await readFile(path.join(dir, ymlName), "utf8");
+  const meta = readMeta(ymlText, folder);
+  const calls = await collectCalls(dir);
   const samples = await collectSamples(dir);
-  if (samples.length === 0) return null;
-  const paths = await collectPaths(dir);
-  const operations: MockOperation[] = [];
-  for (const [index, sample] of samples.slice(0, 6).entries()) {
-    let spec: MockSpec;
-    try {
-      spec = validateMockSpec(mockFromSample(sample.text, meta.name));
-    } catch {
-      continue;
-    }
-    const operation = spec.operations[0];
-    operation.id = slug(sample.name).slice(0, 60) || `op-${index}`;
-    operation.summary = sample.name.slice(0, 160);
-    if (paths[index]) {
-      operation.pathTemplate = paths[index];
-      operation.method = "GET";
-    } else if (paths[0] && samples.length === 1) {
-      operation.pathTemplate = paths[0];
-    } else {
-      operation.pathTemplate = "/";
-    }
-    operations.push(operation);
+  const readme = samples.length ? null : await readmeSample(dir);
+  let origin: "sample" | "readme" | "yaml" = "yaml";
+  let operations = samples.length ? operationsFromSamples(samples, calls, meta.name) : [];
+  if (operations.length) origin = "sample";
+  else if (readme) {
+    operations = operationsFromSamples([{ name: "README", text: readme }], calls, meta.name);
+    if (operations.length) origin = "readme";
   }
-  if (operations.length === 0) return null;
-  const fidelity = operations.some((operation) => operation.pathTemplate !== "/")
-    ? "sample"
-    : "shape";
+  if (!operations.length) operations = operationsFromYaml(ymlText, calls) || [];
+  if (!operations?.length) return null;
+  const fidelity = origin === "yaml" || !operations.some((operation) => operation.pathTemplate !== "/")
+    ? "shape"
+    : "sample";
   const id = slug(`${pack}--${folder}`).slice(0, 80);
-  const spec = validateMockSpec({
+  const spec = forDisk(validateMockSpec({
     version: 1,
     source: {
       kind: "preset",
@@ -181,17 +187,12 @@ async function presetFromDir(dir: string): Promise<{
       fidelity,
       attribution: "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       sourceUrl: `https://github.com/demisto/content/tree/master/Packs/${pack}/Integrations/${folder}`,
-      notes: [
-        fidelity === "shape"
-          ? "No HTTP path was recovered from the client. The sample shape is served at the catch URL root."
-          : "HTTP paths were guessed from string literals in the integration client and may not match every command.",
-        "Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.",
-      ],
+      notes: notesFor(origin, fidelity),
     },
     operations,
     chaos: specChaos(),
     totalRecords: 200,
-  });
+  }));
   return {
     id,
     name: meta.name,
@@ -200,8 +201,178 @@ async function presetFromDir(dir: string): Promise<{
     curated: false,
     summary: meta.description.slice(0, 180),
     operations: operations.length,
+    origin,
     spec,
   };
+}
+
+function notesFor(origin: "sample" | "readme" | "yaml", fidelity: string): string[] {
+  if (origin === "yaml") {
+    return [
+      "Field names come from the integration YAML command outputs, not a captured vendor response.",
+      fidelity === "shape"
+        ? "No HTTP path was recovered from the client. The shape is served at the catch URL root."
+        : "HTTP paths were guessed from the Python client and may not match every command.",
+    ];
+  }
+  return [
+    origin === "readme"
+      ? "The response shape comes from a JSON example in the integration README."
+      : "Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.",
+    fidelity === "shape"
+      ? "No HTTP path was recovered from the client. The sample shape is served at the catch URL root."
+      : "HTTP paths were guessed from the integration client and may not match every command.",
+  ];
+}
+
+function operationsFromSamples(
+  samples: { name: string; text: string }[],
+  calls: Array<{ method: string; path: string }>,
+  name: string,
+): MockOperation[] {
+  const operations: MockOperation[] = [];
+  const used = new Set<string>();
+  for (const [index, sample] of samples.slice(0, 6).entries()) {
+    let spec: MockSpec;
+    try {
+      const drafted = mockFromSample(sample.text, name);
+      drafted.operations[0].record = pruneRecord(drafted.operations[0].record, { left: 60 });
+      spec = validateMockSpec(drafted);
+    } catch {
+      continue;
+    }
+    const operation = spec.operations[0];
+    operation.id = uniqueId(slug(sample.name).slice(0, 50) || `op-${index}`, used);
+    operation.summary = sample.name.slice(0, 160);
+    const call = calls[index] || (samples.length === 1 ? calls[0] : undefined);
+    if (call) {
+      operation.pathTemplate = call.path;
+      operation.method = call.method;
+    } else {
+      operation.pathTemplate = "/";
+      operation.method = "GET";
+    }
+    operation.record = pruneRecord(operation.record, { left: 60 });
+    operations.push(operation);
+  }
+  return operations;
+}
+
+function fieldsFromArguments(args: Array<{ name?: string }> | undefined): FieldSpec | null {
+  const children = (args || [])
+    .map((arg) => String(arg.name || "").replace(/[^A-Za-z0-9_.:@$-]/g, "").slice(0, 80))
+    .filter((name) => /^[A-Za-z_][A-Za-z0-9_.:@$-]{0,79}$/.test(name))
+    .slice(0, 20)
+    .map((name) => ({ name, kind: "string" as const, example: name }));
+  if (!children.length) return null;
+  return { name: "record", kind: "object", children };
+}
+
+function pruneRecord(field: FieldSpec, state: { left: number }): FieldSpec {
+  state.left -= 1;
+  if (field.kind === "object") {
+    const children: FieldSpec[] = [];
+    for (const child of field.children || []) {
+      if (state.left <= 0) break;
+      children.push(pruneRecord(child, state));
+    }
+    return { ...field, children };
+  }
+  if (field.kind === "array" && field.item && state.left > 0) {
+    return { ...field, item: pruneRecord(field.item, state) };
+  }
+  return field;
+}
+
+function operationsFromYaml(yml: string, calls: Array<{ method: string; path: string }>): MockOperation[] | null {
+  let doc: { script?: { commands?: Array<{ name?: string; description?: string; outputs?: OutputField[]; arguments?: Array<{ name?: string }> }> } };
+  try {
+    doc = parseYaml(yml) as typeof doc;
+  } catch {
+    return null;
+  }
+  const commands = doc.script?.commands || [];
+  const operations: MockOperation[] = [];
+  const used = new Set<string>();
+  for (const command of commands) {
+    if (operations.length >= 6) break;
+    const record = fieldsFromOutputs(command.outputs) || fieldsFromArguments(command.arguments);
+    if (!record) continue;
+    const call = calls[operations.length];
+    const built = operationFromRecord(
+      uniqueId(slug(String(command.name || "command")).slice(0, 50), used),
+      String(command.description || command.name || "Command").replace(/\s+/g, " ").slice(0, 160),
+      call,
+      pruneRecord(record, { left: 60 }),
+    );
+    operations.push(built);
+  }
+  return operations.length ? operations : null;
+}
+
+function operationFromRecord(
+  id: string,
+  summary: string,
+  call: { method: string; path: string } | undefined,
+  record: FieldSpec,
+): MockOperation {
+  return {
+    id,
+    method: call?.method || "GET",
+    pathTemplate: call?.path || "/",
+    summary,
+    status: 200,
+    contentType: "application/json; charset=utf-8",
+    headers: {},
+    list: false,
+    envelope: { type: "object" },
+    pagination: {
+      style: "none",
+      limitParam: "limit",
+      offsetParam: "offset",
+      pageParam: "page",
+      cursorParam: "cursor",
+      defaultLimit: 1,
+      maxLimit: 1,
+    },
+    record,
+  };
+}
+
+function uniqueId(base: string, used: Set<string>): string {
+  let id = base || "op";
+  let n = 2;
+  while (used.has(id)) {
+    id = `${base}-${n}`.slice(0, 60);
+    n += 1;
+  }
+  used.add(id);
+  return id;
+}
+
+function forDisk(spec: MockSpec): MockSpec {
+  const copy = structuredClone(spec);
+  if (
+    copy.behavior &&
+    !copy.behavior.state.enabled &&
+    !copy.behavior.scenario.enabled &&
+    !copy.behavior.fetch.enabled
+  ) {
+    delete copy.behavior;
+  }
+  const chaos = copy.chaos as unknown as Record<string, unknown>;
+  for (const key of [
+    "malformedXml",
+    "wrongNamespace",
+    "soapFault",
+    "authExpired",
+    "authDenied",
+    "authTokenFailure",
+    "authClockSkew",
+  ]) {
+    if (chaos[key] === false) delete chaos[key];
+  }
+  return copy;
 }
 
 function specChaos() {
@@ -278,6 +449,52 @@ function unwrap(value: unknown): unknown {
 function useful(value: unknown): boolean {
   if (Array.isArray(value)) return value.some((item) => item && typeof item === "object");
   return Boolean(value) && typeof value === "object";
+}
+
+async function readmeSample(dir: string): Promise<string | null> {
+  const names = ["README.md", "README.markdown"];
+  for (const name of names) {
+    try {
+      const text = await readFile(path.join(dir, name), "utf8");
+      const sample = sampleFromReadme(text);
+      if (sample) return sample;
+    } catch {
+      continue;
+    }
+  }
+  return null;
+}
+
+async function collectCalls(dir: string): Promise<Array<{ method: string; path: string }>> {
+  const files = (await readdir(dir)).filter((name) => name.endsWith(".py"));
+  const found: Array<{ method: string; path: string }> = [];
+  const seen = new Set<string>();
+  for (const file of files) {
+    const text = await readFile(path.join(dir, file), "utf8");
+    for (const match of text.matchAll(/["'](GET|POST|PUT|PATCH|DELETE)["']\s*,\s*["']([^"']+)["']/g)) {
+      const pathTemplate = cleanCallPath(match[2]);
+      if (!pathTemplate) continue;
+      const key = `${match[1]} ${pathTemplate}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      found.push({ method: match[1], path: pathTemplate });
+      if (found.length >= 6) return found;
+    }
+  }
+  if (found.length) return found;
+  return (await collectPaths(dir)).map((pathTemplate) => ({ method: "GET", path: pathTemplate }));
+}
+
+function cleanCallPath(raw: string): string | null {
+  let candidate = raw.trim();
+  if (!candidate.startsWith("/")) {
+    if (!/^[A-Za-z0-9_.${}/-]+$/.test(candidate)) return null;
+    candidate = `/${candidate}`;
+  }
+  candidate = sanitizePath(candidate.replace(/\$\{[^}]+\}/g, "{id}").replace(/\{[^}]+\}/g, "{id}"));
+  if (candidate.length > 180 || candidate.includes(" ") || candidate.includes("//")) return null;
+  if (!/^\/[A-Za-z0-9_./{}-]+$/.test(candidate)) return null;
+  return candidate.endsWith("/") && candidate.length > 1 ? candidate.slice(0, -1) : candidate;
 }
 
 async function collectPaths(dir: string): Promise<string[]> {
