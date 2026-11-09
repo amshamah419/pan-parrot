@@ -192,7 +192,7 @@ export function IntegrationPicker({
           </TabsContent>
           <TabsContent value="spec" className="space-y-3">
             <p className="text-sm text-muted-foreground">
-              OpenAPI 3, Swagger 2, a Postman v2 collection, a WSDL, or a sample XML document. URLs must be public https. A zip is read for its first text file and then mocked as a zip download.
+              OpenAPI 3, Swagger 2, a Postman v2 collection, a WSDL, a sample XML document, or an XSOAR integration YAML. An integration YAML becomes one operation per command. URLs must be public https. A zip is read for its first text file and then mocked as a zip download.
             </p>
             <Textarea
               id="spec-text"

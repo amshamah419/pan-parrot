@@ -130,6 +130,9 @@ export default function MockStudio() {
         </div>
         <div className="flex gap-2">
           <TrustBadge status={verification?.status} fidelity={spec.source.fidelity} />
+          <Button variant="outline" asChild>
+            <a href={`/api/endpoints/${endpointId}/export?format=zip`}>Export pytest</a>
+          </Button>
           <Button onClick={save}>Save</Button>
         </div>
       </div>

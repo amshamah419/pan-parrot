@@ -109,6 +109,20 @@ export async function recordUpstreamCall(input: {
   });
 }
 
+export async function listApiTokens(): Promise<
+  Array<{ id: string; name: string; prefix: string; created: string; lastUsed: string | null }>
+> {
+  return apiRequest("/api/tokens");
+}
+
+export async function createApiToken(name: string): Promise<{ id: string; name: string; prefix: string; token: string }> {
+  return apiRequest("/api/tokens", { method: "POST", body: JSON.stringify({ name }) });
+}
+
+export async function revokeApiToken(tokenId: string): Promise<{ ok: boolean }> {
+  return apiRequest(`/api/tokens/${tokenId}`, { method: "DELETE" });
+}
+
 export async function getCapturedRequests(): Promise<CapturedRequest[]> {
   return apiRequest<CapturedRequest[]>("/api/requests");
 }

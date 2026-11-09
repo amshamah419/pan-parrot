@@ -62,23 +62,20 @@ export default function Docs() {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Zap className="mr-2 h-5 w-5 text-primary" />
-                Documentation Coming Soon
+                Personal tokens and the CLI
               </CardTitle>
               <CardDescription>
-                We're working on comprehensive documentation to help you get the
-                most out of Parrot.
+                Create a token on the dashboard. It is shown once. The CLI stores it outside the repo.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <p>The documentation will include:</p>
-              <ul className="space-y-2 list-disc list-inside text-muted-foreground">
-                <li>Getting started guide</li>
-                <li>API endpoint creation and management</li>
-                <li>Request inspection and analysis</li>
-                <li>Mock response configuration</li>
-                <li>Advanced filtering and search</li>
-                <li>Integration examples</li>
-              </ul>
+            <CardContent className="space-y-3 text-sm text-muted-foreground">
+              <pre className="overflow-auto rounded bg-muted p-3 text-xs text-foreground">{`npm run parrot -- login --url https://your-site --token pp_...
+npm run parrot -- create --name "Hello" --yaml HelloWorld.yml
+npm run parrot -- export <endpoint-id> --out ./tests`}</pre>
+              <p>
+                <code>create --preset &lt;id&gt;</code> uses a catalog preset. <code>mocks</code> lists what you already have.
+                Export writes <code>test_pan_parrot.py</code> and <code>test_data.json</code> for <code>requests_mock</code>. The tests do not call the live catch URL, and dummy mock credentials are not included.
+              </p>
             </CardContent>
           </Card>
 
@@ -110,10 +107,10 @@ export default function Docs() {
               </CardHeader>
               <CardContent>
                 <p className="mb-4 text-muted-foreground">
-                  Detailed API documentation will be available here soon.
+                  Send <code>Authorization: Bearer pp_...</code> to <code>GET/POST /api/endpoints</code>, <code>POST /api/specs/import</code>, and <code>GET /api/endpoints/:id/export</code>. Creating a token uses the browser session, not the token itself. Full notes are in docs/API.md.
                 </p>
-                <Button variant="outline" disabled>
-                  Coming Soon
+                <Button variant="outline" asChild>
+                  <Link to="/dashboard">Create a token</Link>
                 </Button>
               </CardContent>
             </Card>
