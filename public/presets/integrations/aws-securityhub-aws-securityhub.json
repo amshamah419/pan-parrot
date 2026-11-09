@@ -1,1 +1,138 @@
-{"id":"aws-securityhub-aws-securityhub","name":"AWS - Security Hub","pack":"AWS-SecurityHub","fidelity":"shape","curated":false,"summary":"Amazon Web Services Security Hub Service.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-securityhub-aws-securityhub","name":"AWS - Security Hub","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-SecurityHub/Integrations/AWS_SecurityHub","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-securityhub-disable-security-hub","method":"GET","pathTemplate":"/","summary":"Disables Security Hub in your account only in the current Region. To disable Security Hub in all Regions, you must submit one request per Region where you have","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"},{"name":"raw_json","kind":"string","optional":false,"example":"raw_json"}]}},{"id":"aws-securityhub-batch-update-findings","method":"GET","pathTemplate":"/","summary":"Used by Security Hub customers to update information about their investigation into a finding. Requested by master accounts or member accounts. Master accounts","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-SecurityHub","kind":"object","optional":false,"children":[{"name":"ProcessedFindings","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false},{"name":"ProductArn","kind":"string","optional":false,"example":"ProductArn"}]},{"name":"UnprocessedFindings","kind":"object","optional":false,"children":[{"name":"FindingIdentifier","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false},{"name":"ProductArn","kind":"string","optional":false,"example":"ProductArn"}]},{"name":"ErrorCode","kind":"string","optional":false,"example":"ErrorCode"},{"name":"ErrorMessage","kind":"string","optional":false,"example":"ErrorMessage"}]}]}]}},{"id":"aws-securityhub-enable-security-hub","method":"GET","pathTemplate":"/","summary":"Enables Security Hub for your account in the current Region or the Region you specify in the request. Enabling Security Hub also enables the CIS AWS Foundations","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"},{"name":"raw_json","kind":"string","optional":false,"example":"raw_json"},{"name":"tags","kind":"string","optional":false,"example":"tags"}]}},{"id":"aws-securityhub-get-findings","method":"GET","pathTemplate":"/","summary":"Returns a list of findings that match the specified criteria.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-SecurityHub","kind":"object","optional":false,"children":[{"name":"Findings","kind":"object","optional":false,"children":[{"name":"SchemaVersion","kind":"string","optional":false,"example":"SchemaVersion"},{"name":"Id","kind":"id","optional":false},{"name":"ProductArn","kind":"string","optional":false,"example":"ProductArn"},{"name":"GeneratorId","kind":"id","optional":false},{"name":"AwsAccountId","kind":"id","optional":false},{"name":"Types","kind":"string","optional":false,"example":"Types"},{"name":"FirstObservedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"LastObservedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"CreatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"UpdatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"Severity","kind":"object","optional":false,"children":[{"name":"Product","kind":"number","optional":false},{"name":"Normalized","kind":"number","optional":false}]},{"name":"Confidence","kind":"number","optional":false},{"name":"Criticality","kind":"number","optional":false},{"name":"Title","kind":"string","optional":false,"example":"Title"},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Remediation","kind":"object","optional":false,"children":[{"name":"Recommendation","kind":"object","optional":false,"children":[{"name":"Text","kind":"string","optional":false,"example":"Text"},{"name":"Url","kind":"string","optional":false,"example":"Url"}]}]},{"name":"SourceUrl","kind":"string","optional":false,"example":"SourceUrl"},{"name":"ProductFields","kind":"string","optional":false,"example":"ProductFields"},{"name":"UserDefinedFields","kind":"string","optional":false,"example":"UserDefinedFields"},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Path","kind":"string","optional":false,"example":"Path"},{"name":"State","kind":"string","optional":false,"example":"State"},{"name":"Network","kind":"object","optional":false,"children":[{"name":"Direction","kind":"string","optional":false,"example":"Direction"},{"name":"Protocol","kind":"string","optional":false,"example":"Protocol"},{"name":"SourceIpV4","kind":"string","optional":false,"example":"SourceIpV4"},{"name":"SourceIpV6","kind":"string","optional":false,"example":"SourceIpV6"},{"name":"SourcePort","kind":"number","optional":false},{"name":"SourceDomain","kind":"string","optional":false,"example":"SourceDomain"},{"name":"SourceMac","kind":"string","optional":false,"example":"SourceMac"},{"name":"DestinationIpV4","kind":"string","optional":false,"example":"DestinationIpV4"},{"name":"DestinationIpV6","kind":"string","optional":false,"example":"DestinationIpV6"},{"name":"DestinationPort","kind":"number","optional":false},{"name":"DestinationDomain","kind":"string","optional":false,"example":"DestinationDomain"}]},{"name":"Process","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Path","kind":"string","optional":false,"example":"Path"},{"name":"Pid","kind":"number","optional":false},{"name":"ParentPid","kind":"number","optional":false},{"name":"LaunchedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"TerminatedAt","kind":"timestamp","optional":false,"format":"iso"}]},{"name":"ThreatIntelIndicators","kind":"object","optional":false,"children":[{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Category","kind":"string","optional":false,"example":"Category"},{"name":"LastObservedAt","kind":"string","optional":false,"example":"LastObservedAt"},{"name":"Source","kind":"string","optional":false,"example":"Source"},{"name":"SourceUrl","kind":"string","optional":false,"example":"SourceUrl"}]},{"name":"Resources","kind":"object","optional":false,"children":[{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Id","kind":"id","optional":false}]}]}]}]}},{"id":"aws-securityhub-get-master-account","method":"GET","pathTemplate":"/","summary":"Provides the details for the Security Hub master account to the current member account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-SecurityHub","kind":"object","optional":false,"children":[{"name":"Master","kind":"object","optional":false,"children":[{"name":"AccountId","kind":"id","optional":false},{"name":"InvitationId","kind":"id","optional":false},{"name":"InvitedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"MemberStatus","kind":"string","optional":false,"example":"MemberStatus"}]}]}]}},{"id":"aws-securityhub-list-members","method":"GET","pathTemplate":"/","summary":"Lists details about all member accounts for the current Security Hub master account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-SecurityHub","kind":"object","optional":false,"children":[{"name":"Members","kind":"object","optional":false,"children":[{"name":"AccountId","kind":"id","optional":false},{"name":"Email","kind":"string","optional":false,"example":"Email"},{"name":"MasterId","kind":"id","optional":false},{"name":"MemberStatus","kind":"string","optional":false,"example":"MemberStatus"},{"name":"InvitedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"UpdatedAt","kind":"timestamp","optional":false,"format":"iso"}]},{"name":"NextToken","kind":"string","optional":false,"example":"NextToken"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-securityhub-aws-securityhub",
+  "name": "AWS - Security Hub",
+  "pack": "AWS-SecurityHub",
+  "vendor": "Amazon Web Services",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GetFindings on POST /, selected by X-Amz-Target.",
+  "notes": [
+    "The XSOAR pack uses boto3. GetFindings is POST / with X-Amz-Target SecurityHub_2018-10-26.GetFindings and a Findings array.",
+    "Finding objects keep Id, ProductArn, Title, Severity.Label, and UpdatedAt. Resources and compliance are omitted.",
+    "SigV4 is not checked. BatchUpdateFindings is not modeled."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-SecurityHub/Integrations/AWS_SecurityHub",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-securityhub-aws-securityhub",
+      "name": "AWS - Security Hub",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_GetFindings.html",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_GetFindings.html",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "The XSOAR pack uses boto3. GetFindings is POST / with X-Amz-Target SecurityHub_2018-10-26.GetFindings and a Findings array.",
+          "Finding objects keep Id, ProductArn, Title, Severity.Label, and UpdatedAt. Resources and compliance are omitted.",
+          "SigV4 is not checked. BatchUpdateFindings is not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "MaxResults",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "NextToken",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "id": "get-findings",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Get findings",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "Findings"
+        },
+        "record": {
+          "name": "finding",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Id",
+              "kind": "id"
+            },
+            {
+              "name": "ProductArn",
+              "kind": "string",
+              "example": "arn:aws:securityhub:us-east-1::product/aws/guardduty"
+            },
+            {
+              "name": "Title",
+              "kind": "string",
+              "example": "GuardDuty finding"
+            },
+            {
+              "name": "Severity",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "Label",
+                  "kind": "enum",
+                  "enumValues": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH",
+                    "CRITICAL"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "UpdatedAt",
+              "kind": "timestamp",
+              "format": "iso"
+            }
+          ]
+        },
+        "headerMatch": {
+          "x-amz-target": "SecurityHub_2018-10-26.GetFindings"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "aws-securityhub-aws-securityhub",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

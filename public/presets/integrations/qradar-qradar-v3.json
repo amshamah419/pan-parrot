@@ -1,1 +1,248 @@
-{"id":"qradar-qradar-v3","name":"IBM QRadar v3","pack":"QRadar","fidelity":"sample","curated":false,"summary":"IBM QRadar SIEM helps security teams accurately detect and prioritize threats across the enterprise, supports API versions 10.1 and above. Provides intelligent insights that enable","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"qradar-qradar-v3","name":"IBM QRadar v3","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/QRadar/Integrations/QRadar_v3","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-ips-commands-data-json","method":"GET","pathTemplate":"/config/event_sources/log_source_management/log_source_extensions","summary":"test_data/ips_commands_data.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"source_ip","kind":"object","optional":false,"children":[{"name":"response","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"event_flow_count","kind":"integer","optional":false},{"name":"local_destination_address_ids","kind":"array","optional":false,"item":{"name":"item","kind":"integer","optional":false},"minItems":0,"maxItems":3,"pageItems":false},{"name":"first_event_flow_seen","kind":"integer","optional":false},{"name":"last_event_flow_seen","kind":"integer","optional":false},{"name":"source_ip","kind":"ip","optional":false,"example":"192.168.0.1"},{"name":"magnitude","kind":"integer","optional":false},{"name":"id","kind":"integer","optional":false},{"name":"offense_ids","kind":"array","optional":false,"item":{"name":"item","kind":"integer","optional":false},"minItems":0,"maxItems":3,"pageItems":false},{"name":"domain_id","kind":"integer","optional":false},{"name":"network","kind":"string","optional":false,"example":"Net-10-172-192.Net_172_16_0_0"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"expected","kind":"object","optional":false,"children":[{"name":"outputs_prefix","kind":"string","optional":false,"example":"QRadar.SourceIP"},{"name":"outputs_key_field","kind":"string","optional":false,"example":"ID"},{"name":"outputs","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"EventFlowCount","kind":"integer","optional":false},{"name":"LocalDestinationAddressIDs","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"FirstEventFlowSeen","kind":"timestamp","optional":false,"example":"2021-03-31T10:02:25.972000+00:00","format":"iso"},{"name":"LastEventFlowSeen","kind":"timestamp","optional":false,"example":"2021-08-14T09:59:52.596000+00:00","format":"iso"},{"name":"SourceIP","kind":"ip","optional":false,"example":"192.168.0.1"},{"name":"Magnitude","kind":"integer","optional":false},{"name":"ID","kind":"integer","optional":false},{"name":"OffenseIDs","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"DomainID","kind":"integer","optional":false},{"name":"Network","kind":"string","optional":false,"example":"Net-10-172-192.Net_172_16_0_0"}]},"minItems":0,"maxItems":1,"pageItems":false}]}]},{"name":"local_destination","kind":"object","optional":false,"children":[{"name":"response","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"event_flow_count","kind":"integer","optional":false},{"name":"source_address_ids","kind":"array","optional":false,"item":{"name":"item","kind":"integer","optional":false},"minItems":0,"maxItems":2,"pageItems":false},{"name":"first_event_flow_seen","kind":"integer","optional":false},{"name":"last_event_flow_seen","kind":"integer","optional":false},{"name":"magnitude","kind":"integer","optional":false},{"name":"id","kind":"integer","optional":false},{"name":"offense_ids","kind":"array","optional":false,"item":{"name":"item","kind":"integer","optional":false},"minItems":0,"maxItems":3,"pageItems":false},{"name":"local_destination_ip","kind":"ip","optional":false,"example":"192.168.0.1"},{"name":"domain_id","kind":"integer","optional":false},{"name":"network","kind":"string","optional":false,"example":"Net-10-172-192.Net_172_16_0_0"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"expected","kind":"object","optional":false,"children":[{"name":"outputs_prefix","kind":"string","optional":false,"example":"QRadar.LocalDestinationIP"},{"name":"outputs_key_field","kind":"string","optional":false,"example":"ID"},{"name":"outputs","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"EventFlowCount","kind":"integer","optional":false},{"name":"SourceAddressIDs","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"FirstEventFlowSeen","kind":"timestamp","optional":false,"example":"2021-03-31T10:02:25.965000+00:00","format":"iso"},{"name":"LastEventFlowSeen","kind":"timestamp","optional":false,"example":"2021-08-14T09:59:52.596000+00:00","format":"iso"},{"name":"Magnitude","kind":"integer","optional":false},{"name":"ID","kind":"integer","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "qradar-qradar-v3",
+  "name": "IBM QRadar v3",
+  "pack": "QRadar",
+  "vendor": "IBM",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /siem/offenses returns the offense array. Ariel search create and results are included.",
+  "notes": [
+    "QRadar returns a JSON array and pages with the Range header items=0-49. This mock uses limit and offset query parameters and does not read Range.",
+    "POST /ariel/searches returns { search_id, status }. GET /ariel/searches/{search_id}/results returns { events }. The cursor and the completed-search wait are not modeled.",
+    "The SEC header must be the dummy token. Version header is not checked."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/QRadar/Integrations/QRadar_v3",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "qradar-qradar-v3",
+      "name": "IBM QRadar v3",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://ibmsecuritydocs.github.io/qradar_api_21.0/21.0--siem_offenses--get.html",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://ibmsecuritydocs.github.io/qradar_api_21.0/21.0--siem_offenses--get.html",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "QRadar returns a JSON array and pages with the Range header items=0-49. This mock uses limit and offset query parameters and does not read Range.",
+          "POST /ariel/searches returns { search_id, status }. GET /ariel/searches/{search_id}/results returns { events }. The cursor and the completed-search wait are not modeled.",
+          "The SEC header must be the dummy token. Version header is not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "id": "list-offenses",
+        "method": "GET",
+        "pathTemplate": "/siem/offenses",
+        "summary": "List offenses",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "offense",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "Multiple login failures"
+            },
+            {
+              "name": "status",
+              "kind": "enum",
+              "enumValues": [
+                "OPEN",
+                "HIDDEN",
+                "CLOSED"
+              ]
+            },
+            {
+              "name": "magnitude",
+              "kind": "integer"
+            },
+            {
+              "name": "offense_type",
+              "kind": "integer"
+            },
+            {
+              "name": "start_time",
+              "kind": "timestamp",
+              "format": "unix-ms"
+            },
+            {
+              "name": "last_updated_time",
+              "kind": "timestamp",
+              "format": "unix-ms"
+            },
+            {
+              "name": "source_address_ids",
+              "kind": "array",
+              "item": {
+                "name": "id",
+                "kind": "integer"
+              },
+              "minItems": 1,
+              "maxItems": 1
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "create-search",
+        "method": "POST",
+        "pathTemplate": "/ariel/searches",
+        "summary": "Create an Ariel search",
+        "status": 201,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "search",
+          "kind": "object",
+          "children": [
+            {
+              "name": "search_id",
+              "kind": "id"
+            },
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "COMPLETED"
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "id": "search-results",
+        "method": "GET",
+        "pathTemplate": "/ariel/searches/{search_id}/results",
+        "summary": "Get Ariel search results",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "results",
+          "kind": "object",
+          "children": [
+            {
+              "name": "events",
+              "kind": "array",
+              "pageItems": true,
+              "item": {
+                "name": "event",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "qid",
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "sourceip",
+                    "kind": "ip"
+                  },
+                  {
+                    "name": "destinationip",
+                    "kind": "ip"
+                  },
+                  {
+                    "name": "username",
+                    "kind": "string",
+                    "example": "lab-user"
+                  },
+                  {
+                    "name": "starttime",
+                    "kind": "timestamp",
+                    "format": "unix-ms"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "qradar-qradar-v3",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "SEC",
+        "value": "dummy-qradar-token"
+      }
+    }
+  }
+}

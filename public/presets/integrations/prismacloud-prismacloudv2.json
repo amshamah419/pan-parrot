@@ -1,1 +1,173 @@
-{"id":"prismacloud-prismacloudv2","name":"Prisma Cloud v2","pack":"PrismaCloud","fidelity":"shape","curated":false,"summary":"Prisma Cloud secures infrastructure, workloads and applications, across the entire cloud-native technology stack.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"prismacloud-prismacloudv2","name":"Prisma Cloud v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PrismaCloud/Integrations/PrismaCloudV2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"prisma-cloud-code-issues-list","method":"POST","pathTemplate":"/login","summary":"Retrieves the code errors detected by Application Security during periodic scans. At least one filtering argument is required, excluding `search_scopes`, `searc","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaCloud","kind":"object","optional":false,"children":[{"name":"CodeIssue","kind":"object","optional":false,"children":[{"name":"modifiedOn","kind":"string","optional":false,"example":"modifiedOn"},{"name":"isPublic","kind":"string","optional":false,"example":"isPublic"},{"name":"fileType","kind":"string","optional":false,"example":"fileType"},{"name":"secretCommitRemove","kind":"string","optional":false,"example":"secretCommitRemove"},{"name":"secretCommitAdd","kind":"string","optional":false,"example":"secretCommitAdd"},{"name":"gitUser","kind":"string","optional":false,"example":"gitUser"},{"name":"codePath","kind":"string","optional":false,"example":"codePath"},{"name":"codeCategory","kind":"string","optional":false,"example":"codeCategory"},{"name":"author","kind":"string","optional":false,"example":"author"},{"name":"repositoryUuid","kind":"id","optional":false},{"name":"path","kind":"string","optional":false,"example":"path"},{"name":"repositorySource","kind":"string","optional":false,"example":"repositorySource"},{"name":"firstDetected","kind":"string","optional":false,"example":"firstDetected"},{"name":"codeIssueLine","kind":"string","optional":false,"example":"codeIssueLine"},{"name":"labels","kind":"object","optional":false,"children":[{"name":"label","kind":"string","optional":false,"example":"label"},{"name":"metadata","kind":"object","optional":false,"children":[{"name":"imageName","kind":"string","optional":false,"example":"imageName"}]}]},{"name":"policy","kind":"string","optional":false,"example":"policy"},{"name":"repository","kind":"string","optional":false,"example":"repository"},{"name":"resourceName","kind":"string","optional":false,"example":"resourceName"},{"name":"resourceScanType","kind":"string","optional":false,"example":"resourceScanType"},{"name":"resourceUuid","kind":"id","optional":false},{"name":"severity","kind":"string","optional":false,"example":"severity"},{"name":"violationId","kind":"id","optional":false},{"name":"causePackageId","kind":"id","optional":false},{"name":"causePackageName","kind":"string","optional":false,"example":"causePackageName"},{"name":"cveUuid","kind":"id","optional":false},{"name":"cvss","kind":"string","optional":false,"example":"cvss"},{"name":"fixVersion","kind":"string","optional":false,"example":"fixVersion"},{"name":"pr","kind":"string","optional":false,"example":"pr"},{"name":"resourceId","kind":"id","optional":false},{"name":"riskFactors","kind":"string","optional":false,"example":"riskFactors"},{"name":"isIndirectPackage","kind":"string","optional":false,"example":"isIndirectPackage"}]}]}]}},{"id":"prisma-cloud-alert-dismiss","method":"POST","pathTemplate":"/code/api/v2/code-issues/branch_scan","summary":"Dismiss or snooze the alerts matching the given filter. Either policy IDs or alert IDs must be provided. When no absolute time nor relative time arguments are p","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"alert_ids","kind":"string","optional":false,"example":"alert_ids"},{"name":"policy_ids","kind":"string","optional":false,"example":"policy_ids"},{"name":"snooze_value","kind":"string","optional":false,"example":"snooze_value"},{"name":"snooze_unit","kind":"string","optional":false,"example":"snooze_unit"},{"name":"dismissal_note","kind":"string","optional":false,"example":"dismissal_note"},{"name":"time_range_date_from","kind":"string","optional":false,"example":"time_range_date_from"},{"name":"time_range_date_to","kind":"string","optional":false,"example":"time_range_date_to"},{"name":"time_range_unit","kind":"string","optional":false,"example":"time_range_unit"},{"name":"time_range_value","kind":"string","optional":false,"example":"time_range_value"},{"name":"filters","kind":"string","optional":false,"example":"filters"}]}},{"id":"prisma-cloud-alert-get-details","method":"GET","pathTemplate":"/filter/alert/suggest","summary":"Gets the details of an alert based on the alert ID.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaCloud","kind":"object","optional":false,"children":[{"name":"Alert","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"reason","kind":"string","optional":false,"example":"reason"},{"name":"alertTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"firstSeen","kind":"timestamp","optional":false,"format":"iso"},{"name":"lastSeen","kind":"timestamp","optional":false,"format":"iso"},{"name":"eventOccurred","kind":"timestamp","optional":false,"format":"iso"},{"name":"alertRules","kind":"string","optional":false,"example":"alertRules"},{"name":"resource","kind":"object","optional":false,"children":[{"name":"resourceApiName","kind":"string","optional":false,"example":"resourceApiName"},{"name":"id","kind":"id","optional":false},{"name":"account","kind":"string","optional":false,"example":"account"},{"name":"accountId","kind":"id","optional":false},{"name":"resourceType","kind":"string","optional":false,"example":"resourceType"},{"name":"cloudType","kind":"string","optional":false,"example":"cloudType"},{"name":"rrn","kind":"string","optional":false,"example":"rrn"},{"name":"regionId","kind":"id","optional":false},{"name":"url","kind":"string","optional":false,"example":"url"}]},{"name":"policy","kind":"object","optional":false,"children":[{"name":"policyId","kind":"id","optional":false},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"policyType","kind":"string","optional":false,"example":"policyType"},{"name":"severity","kind":"string","optional":false,"example":"severity"},{"name":"recommendation","kind":"string","optional":false,"example":"recommendation"},{"name":"remediation","kind":"object","optional":false,"children":[{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"cliScriptTemplate","kind":"string","optional":false,"example":"cliScriptTemplate"}]},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"labels","kind":"string","optional":false,"example":"labels"},{"name":"remediable","kind":"boolean","optional":false},{"name":"systemDefault","kind":"boolean","optional":false},{"name":"deleted","kind":"boolean","optional":false}]}]}]}]}},{"id":"prisma-cloud-alert-filter-list","method":"POST","pathTemplate":"/v2/alert","summary":"List the acceptable filters and values for alerts.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaCloud","kind":"object","optional":false,"children":[{"name":"AlertFilters","kind":"object","optional":false,"children":[{"name":"filterName","kind":"string","optional":false,"example":"filterName"},{"name":"options","kind":"string","optional":false,"example":"options"},{"name":"staticFilter","kind":"string","optional":false,"example":"staticFilter"}]}]}]}},{"id":"prisma-cloud-remediation-command-list","method":"POST","pathTemplate":"/alert/dismiss","summary":"Generates and returns a list of remediation commands for the specified alerts and policies. Data returned for a successful call include fully constructed comman","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaCloud","kind":"object","optional":false,"children":[{"name":"AlertRemediation","kind":"object","optional":false,"children":[{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"scriptImpact","kind":"string","optional":false,"example":"scriptImpact"},{"name":"alertId","kind":"id","optional":false},{"name":"CLIScript","kind":"string","optional":false,"example":"CLIScript"}]}]}]}},{"id":"prisma-cloud-alert-remediate","method":"POST","pathTemplate":"/alert/reopen","summary":"Remediates the alert with the specified ID, if that alert is associated with a remediable policy. In order to check what remediation would run, use the \"prisma-","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaCloud","kind":"object","optional":false,"children":[{"name":"AlertRemediation","kind":"object","optional":false,"children":[{"name":"alertId","kind":"id","optional":false},{"name":"successful","kind":"boolean","optional":false},{"name":"failureReason","kind":"string","optional":false,"example":"failureReason"},{"name":"errorValue","kind":"string","optional":false,"example":"errorValue"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "prismacloud-prismacloudv2",
+  "name": "Prisma Cloud v2",
+  "pack": "PrismaCloud",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "POST /login returns a token. POST /v2/alert returns the alert page.",
+  "notes": [
+    "POST /login returns { token }. The real token lasts about 10 minutes. This one is a fixed dummy and is not checked on later calls.",
+    "POST /v2/alert returns { items, nextPageToken }. Alert resource objects are shortened to id, status, policy name, and time.",
+    "Access keys and code-issue routes are not modeled."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PrismaCloud/Integrations/PrismaCloudV2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "prismacloud-prismacloudv2",
+      "name": "Prisma Cloud v2",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://pan.dev/prisma-cloud/api/cspm/alerts/",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://pan.dev/prisma-cloud/api/cspm/alerts/",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "POST /login returns { token }. The real token lasts about 10 minutes. This one is a fixed dummy and is not checked on later calls.",
+          "POST /v2/alert returns { items, nextPageToken }. Alert resource objects are shortened to id, status, policy name, and time.",
+          "Access keys and code-issue routes are not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "login",
+        "method": "POST",
+        "pathTemplate": "/login",
+        "summary": "Log in",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "session",
+          "kind": "object",
+          "children": [
+            {
+              "name": "token",
+              "kind": "const",
+              "constValue": "dummy-prisma-token"
+            },
+            {
+              "name": "message",
+              "kind": "const",
+              "constValue": "login successful"
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "pageToken",
+          "defaultLimit": 50,
+          "maxLimit": 100
+        },
+        "id": "search-alerts",
+        "method": "POST",
+        "pathTemplate": "/v2/alert",
+        "summary": "Search alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "token-page",
+          "arrayKey": "items",
+          "tokenKey": "nextPageToken"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "status",
+              "kind": "enum",
+              "enumValues": [
+                "open",
+                "dismissed",
+                "resolved"
+              ]
+            },
+            {
+              "name": "reason",
+              "kind": "string",
+              "example": "RESOURCE_ANOMALY"
+            },
+            {
+              "name": "policy",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "Public storage bucket"
+                }
+              ]
+            },
+            {
+              "name": "alertTime",
+              "kind": "timestamp",
+              "format": "unix-ms"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "prismacloud-prismacloudv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}
