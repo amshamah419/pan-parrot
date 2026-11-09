@@ -14,6 +14,10 @@ export interface RuntimeState {
   seenIds: string[];
   scenarioIndex: number;
   fetchCursor?: string;
+  /** Calls counted in the current rate-limit window. */
+  rateCount?: number;
+  /** Epoch ms when the current rate-limit window opened. */
+  rateWindowStart?: number;
 }
 
 export function emptyRuntime(): RuntimeState {
@@ -281,6 +285,8 @@ function cloneState(state: RuntimeState): RuntimeState {
     seenIds: state.seenIds.slice(),
     scenarioIndex: state.scenarioIndex,
     fetchCursor: state.fetchCursor,
+    rateCount: state.rateCount,
+    rateWindowStart: state.rateWindowStart,
   };
 }
 
