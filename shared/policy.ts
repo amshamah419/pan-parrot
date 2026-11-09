@@ -12,7 +12,20 @@ export const POLICY = {
   maxMockDelayMs: 5_000,
   maxEndpointsPerUser: 20,
   apiJsonBytes: 96 * 1024,
+  specJsonBytes: 512 * 1024,
   sessionCookieName: "pp_session",
+} as const;
+
+/** Ceilings for generated mock responses on a Netlify synchronous function. */
+export const MOCK_LIMITS = {
+  maxRecordsPerResponse: 500,
+  maxResponseBytes: 2_000_000,
+  maxVirtualRecords: 20_000,
+  maxOperations: 40,
+  maxFields: 400,
+  maxFieldDepth: 8,
+  maxSpecBytes: 400_000,
+  maxFetchedSpecBytes: 1_500_000,
 } as const;
 
 export const ENDPOINT_PATH_RE = /^[A-Za-z0-9_-]{4,64}$/;

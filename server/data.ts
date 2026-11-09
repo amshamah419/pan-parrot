@@ -1,5 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { and, count, desc, eq, sql } from "drizzle-orm";
+import { generateMockResponse, matchOperation } from "../shared/generate";
+import { validateMockSpec, type MockSpec } from "../shared/mock-spec";
 import { ENDPOINT_PATH_RE, POLICY } from "../shared/policy";
 import type { AppDb } from "../db/client";
 import { capturedRequests, endpoints, sessions, users } from "../db/schema";
@@ -28,7 +30,12 @@ function randomPath(): string {
 export async function createEndpointForUser(
   db: AppDb,
   user: PublicUser,
-  input: { name?: string; customPath?: string; description?: string },
+  input: {
+    name?: string;
+    customPath?: string;
+    description?: string;
+    mockSpec?: unknown;
+  },
 ) {
   const [existingCount] = await db
     .select({ value: count() })
@@ -62,6 +69,7 @@ export async function createEndpointForUser(
       continue;
     }
     const url = `${publicSiteUrl()}/catch/${candidate}`;
+    const mockSpec = input.mockSpec ? validateMockSpec(input.mockSpec) : null;
     const [created] = await db
       .insert(endpoints)
       .values({
@@ -70,6 +78,9 @@ export async function createEndpointForUser(
         url,
         description,
         userId: user.id,
+        mockEnabled: Boolean(mockSpec),
+        mockStatusCode: mockSpec ? 200 : null,
+        mockSpec,
       })
       .returning();
     return toEndpointDto(created, 0);
@@ -180,9 +191,45 @@ export async function getRequest(db: AppDb, userId: string, requestId: string) {
   return toRequestDto(row.request, row.endpointPath);
 }
 
+export async function saveMockSpec(
+  db: AppDb,
+  userId: string,
+  endpointId: string,
+  mockSpec: unknown,
+) {
+  const spec = validateMockSpec(mockSpec);
+  const updated = await db
+    .update(endpoints)
+    .set({
+      mockSpec: spec,
+      mockEnabled: true,
+      mockStatusCode: spec.operations[0]?.status ?? 200,
+      updatedAt: new Date(),
+    })
+    .where(and(eq(endpoints.id, endpointId), eq(endpoints.userId, userId)))
+    .returning();
+  if (updated.length === 0) throw new HttpError(404, "Endpoint not found");
+  return toEndpointDto(updated[0], 0);
+}
+
+export async function getEndpointForUser(
+  db: AppDb,
+  userId: string,
+  endpointId: string,
+) {
+  const [endpoint] = await db
+    .select()
+    .from(endpoints)
+    .where(and(eq(endpoints.id, endpointId), eq(endpoints.userId, userId)))
+    .limit(1);
+  if (!endpoint) throw new HttpError(404, "Endpoint not found");
+  return toEndpointDto(endpoint, 0);
+}
+
 export async function captureOnPath(
   db: AppDb,
   path: string,
+  subpath: string,
   request: Request,
   ip: string,
 ): Promise<{ status: number; body: string; headers: Record<string, string>; json: boolean }> {
@@ -199,7 +246,7 @@ export async function captureOnPath(
   await enforceRateLimit(
     db,
     `catch-endpoint:${endpoint.id}`,
-    rateMax("RATE_CATCH_ENDPOINT_MAX", 300),
+    rateMax("RATE_CATCH_ENDPOINT_MAX", 600),
     60_000,
   );
 
@@ -207,25 +254,22 @@ export async function captureOnPath(
   const storedBody = bodyForStorage(text, request.headers.get("content-type"));
   const url = new URL(request.url);
   const query = clampQuery(Object.fromEntries(url.searchParams.entries()));
-  const mockHeaders = endpoint.mockEnabled
-    ? sanitizeMockHeaders(endpoint.mockHeaders ?? {})
-    : {};
-  const status =
-    endpoint.mockEnabled && endpoint.mockStatusCode
-      ? endpoint.mockStatusCode
-      : 200;
   const userAgent = (request.headers.get("user-agent") ?? "unknown").slice(0, 512);
+  const produced = await produceResponse(db, endpoint, request.method, subpath, query);
 
   await db.insert(capturedRequests).values({
     method: request.method.slice(0, 16),
-    path: endpoint.path,
-    status,
+    path: subpath === "/" ? endpoint.path : `${endpoint.path}${subpath}`,
+    status: produced.status,
     ip: ip.slice(0, 64),
     userAgent,
     headers: redactHeaders(request.headers),
     body: storedBody,
     query,
-    truncated: false,
+    truncated: produced.capped,
+    responsePreview: produced.body.slice(0, 2000),
+    chaosEffects: produced.chaosEffects,
+    recordCount: produced.recordCount,
     userId: endpoint.userId,
     endpointId: endpoint.id,
   });
@@ -239,35 +283,127 @@ export async function captureOnPath(
     );
   }
 
-  if (endpoint.mockEnabled && endpoint.mockDelay > 0) {
-    await new Promise((resolve) =>
-      setTimeout(resolve, Math.min(endpoint.mockDelay, POLICY.maxMockDelayMs)),
-    );
+  const delay = Math.min(
+    POLICY.maxMockDelayMs,
+    Math.max(endpoint.mockDelay || 0, produced.delayMs),
+  );
+  if (delay > 0) {
+    await new Promise((resolve) => setTimeout(resolve, delay));
+  }
+
+  return {
+    status: produced.status,
+    body: produced.body,
+    headers: sanitizeMockHeaders(produced.headers),
+    json: produced.json,
+  };
+}
+
+async function produceResponse(
+  db: AppDb,
+  endpoint: typeof endpoints.$inferSelect,
+  method: string,
+  subpath: string,
+  query: Record<string, string>,
+): Promise<{
+  status: number;
+  body: string;
+  headers: Record<string, string>;
+  json: boolean;
+  chaosEffects: string[];
+  recordCount: number | null;
+  delayMs: number;
+  capped: boolean;
+}> {
+  if (endpoint.mockEnabled && endpoint.mockSpec) {
+    let spec: MockSpec;
+    try {
+      spec = validateMockSpec(endpoint.mockSpec);
+    } catch {
+      return {
+        status: 500,
+        body: JSON.stringify({ error: "Saved mock spec is invalid" }),
+        headers: { "content-type": "application/json; charset=utf-8" },
+        json: true,
+        chaosEffects: [],
+        recordCount: null,
+        delayMs: 0,
+        capped: false,
+      };
+    }
+    const requestIndex = await nextRequestCount(db, endpoint.id);
+    const matched = matchOperation(spec, method, subpath);
+    if (!matched) {
+      return {
+        status: 404,
+        body: JSON.stringify({
+          error: `No mock operation matches ${method.toUpperCase()} ${subpath}`,
+          operations: spec.operations.map(
+            (operation) => `${operation.method} ${operation.pathTemplate}`,
+          ),
+        }),
+        headers: { "content-type": "application/json; charset=utf-8" },
+        json: true,
+        chaosEffects: [],
+        recordCount: 0,
+        delayMs: 0,
+        capped: false,
+      };
+    }
+    const generated = generateMockResponse({
+      spec,
+      operation: matched.operation,
+      pathParams: matched.pathParams,
+      query,
+      requestIndex,
+    });
+    return { ...generated, json: false };
   }
 
   if (endpoint.mockEnabled && endpoint.mockBody != null) {
     return {
-      status,
+      status: endpoint.mockStatusCode || 200,
       body: endpoint.mockBody,
-      headers: mockHeaders,
+      headers: sanitizeMockHeaders(endpoint.mockHeaders ?? {}),
       json: false,
+      chaosEffects: [],
+      recordCount: null,
+      delayMs: 0,
+      capped: false,
     };
   }
 
   return {
-    status,
+    status: 200,
     body: JSON.stringify({
       message: "Captured by PAN Parrot.",
       notice:
         "Unofficial personal tool, not a Palo Alto Networks service. Do not send secrets or customer data.",
       captured: true,
-      method: request.method,
+      method,
       endpoint: endpoint.path,
-      timestamp: new Date().toISOString(),
     }),
     headers: { "content-type": "application/json; charset=utf-8" },
     json: true,
+    chaosEffects: [],
+    recordCount: null,
+    delayMs: 0,
+    capped: false,
   };
+}
+
+async function nextRequestCount(db: AppDb, endpointId: string): Promise<number> {
+  const result = await db.execute(sql`
+    UPDATE endpoints
+    SET mock_request_count = mock_request_count + 1
+    WHERE id = ${endpointId}
+    RETURNING mock_request_count
+  `);
+  const rows = Array.isArray(result)
+    ? result
+    : ((result as { rows?: unknown[] }).rows ?? []);
+  const count = Number((rows[0] as { mock_request_count?: unknown } | undefined)?.mock_request_count);
+  return Number.isFinite(count) && count > 0 ? count : 1;
 }
 
 async function readCatchBody(request: Request): Promise<string> {
@@ -298,6 +434,7 @@ function toEndpointDto(
           enabled: true,
         }
       : undefined,
+    mockSpec: endpoint.mockSpec ?? null,
   };
 }
 
@@ -305,11 +442,14 @@ function toRequestDto(
   request: typeof capturedRequests.$inferSelect,
   endpointPath: string | null,
 ) {
-  const path = endpointPath || request.path;
+  const stored = request.path || endpointPath || "";
+  const endpoint = stored.startsWith("/catch/")
+    ? stored
+    : `/catch/${stored}`;
   return {
     id: request.id,
     method: request.method,
-    endpoint: `/catch/${path}`,
+    endpoint,
     timestamp: iso(request.createdAt),
     status: request.status,
     ip: request.ip ?? "unknown",
@@ -319,6 +459,9 @@ function toRequestDto(
     query: request.query ?? {},
     userId: request.userId,
     truncated: request.truncated,
+    responsePreview: request.responsePreview,
+    chaosEffects: request.chaosEffects ?? [],
+    recordCount: request.recordCount,
   };
 }
 

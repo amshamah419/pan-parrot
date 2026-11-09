@@ -1,0 +1,127 @@
+{
+  "id": "akamai-waf-siem",
+  "name": "Akamai WAF SIEM",
+  "pack": "Akamai_SIEM",
+  "vendor": "Akamai",
+  "fidelity": "high",
+  "curated": true,
+  "summary": "Newline-delimited WAF events plus an offset trailer, which is what the XSOAR Akamai WAF SIEM integration parses.",
+  "notes": [
+    "Set the integration Server URL to the catch URL shown in PAN Parrot. XSOAR joins that host with /siem/v1/configs/{configIds}.",
+    "Each response is one JSON object per line. The last line is { total, offset, limit }, matching the pack's test fixture. There is no trailing blank line, so the current get_events_with_offset parser can pop the trailer.",
+    "Non-empty rule* fields are URL-encoded base64, which decode_message() expects. The pack's unit-test fixture leaves those fields empty; both are accepted.",
+    "httpMessage.start is a unix-seconds string. The integration does int(start) and datetime.utcfromtimestamp.",
+    "Akamai's own API can return on the order of 20,000 events per call. This mock returns at most 500 per response (and stays under 2 MB) and hands back an offset for the next page.",
+    "Unsure: production events often include more attackData keys than the XSOAR fixture. This preset follows the fixture plus the fields events_to_ec() reads."
+  ],
+  "attribution": "Field names and encoding follow Packs/Akamai_SIEM in https://github.com/demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Akamai_SIEM/Integrations/Akamai_SIEM",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "akamai-waf-siem",
+      "name": "Akamai WAF SIEM",
+      "fidelity": "high",
+      "attribution": "Derived from demisto/content Packs/Akamai_SIEM (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Akamai_SIEM/Integrations/Akamai_SIEM",
+      "notes": [
+        "Server URL should be this endpoint's catch URL. The integration requests /siem/v1/configs/{configIds}."
+      ]
+    },
+    "totalRecords": 1000,
+    "chaos": {
+      "enabled": false,
+      "seed": "akamai",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "operations": [
+      {
+        "id": "get-events",
+        "method": "GET",
+        "pathTemplate": "/siem/v1/configs/{configIds}",
+        "summary": "Security events for one or more config IDs (semicolon-separated).",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
+        "envelope": { "type": "ndjson", "trailer": "akamai-offset" },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "event",
+          "kind": "object",
+          "children": [
+            { "name": "type", "kind": "const", "constValue": "akamai_siem" },
+            { "name": "format", "kind": "const", "constValue": "json" },
+            { "name": "version", "kind": "const", "constValue": "1.0" },
+            {
+              "name": "attackData",
+              "kind": "object",
+              "children": [
+                { "name": "configId", "kind": "string", "example": "50170" },
+                { "name": "policyId", "kind": "enum", "enumValues": ["1234", "corp-edge", "api-gateway"] },
+                { "name": "clientIP", "kind": "ip" },
+                { "name": "rules", "kind": "string", "format": "akamai-rule", "enumValues": ["XSS-ANOMALY", "SQL-INJECTION", "CMD-INJECTION"] },
+                { "name": "ruleVersions", "kind": "string", "format": "akamai-rule", "enumValues": ["1", "2"] },
+                { "name": "ruleMessages", "kind": "string", "format": "akamai-rule", "enumValues": ["Cross-site scripting", "SQL injection", "Command injection"] },
+                { "name": "ruleTags", "kind": "string", "format": "akamai-rule", "enumValues": ["OWASP", "AUTO"] },
+                { "name": "ruleData", "kind": "string", "format": "akamai-rule", "enumValues": ["matched-param"] },
+                { "name": "ruleSelectors", "kind": "string", "format": "akamai-rule", "enumValues": ["ARGS", "HEADER"] },
+                { "name": "ruleActions", "kind": "string", "format": "akamai-rule", "enumValues": ["deny", "alert"] }
+              ]
+            },
+            {
+              "name": "httpMessage",
+              "kind": "object",
+              "children": [
+                { "name": "requestId", "kind": "id" },
+                { "name": "start", "kind": "timestamp", "format": "unix-string" },
+                { "name": "protocol", "kind": "enum", "enumValues": ["HTTP/1.1", "HTTP/2"] },
+                { "name": "method", "kind": "enum", "enumValues": ["GET", "POST", "HEAD", "PUT"] },
+                { "name": "host", "kind": "enum", "enumValues": ["www.example.com", "api.example.com", "login.example.com"] },
+                { "name": "port", "kind": "enum", "enumValues": ["443", "80"] },
+                { "name": "path", "kind": "enum", "enumValues": ["/login", "/search", "/api/v1/orders"] },
+                { "name": "requestHeaders", "kind": "string", "example": "User-Agent: pan-parrot" },
+                { "name": "status", "kind": "enum", "enumValues": ["403", "200", "406"] },
+                { "name": "bytes", "kind": "enum", "enumValues": ["0", "128", "2048"] },
+                { "name": "responseHeaders", "kind": "string", "example": "Server: AkamaiGHost" }
+              ]
+            },
+            {
+              "name": "geo",
+              "kind": "object",
+              "children": [
+                { "name": "continent", "kind": "enum", "enumValues": ["NA", "EU", "AS"] },
+                { "name": "country", "kind": "enum", "enumValues": ["US", "DE", "JP"] },
+                { "name": "city", "kind": "enum", "enumValues": ["LOSANGELES", "FRANKFURT", "TOKYO"] },
+                { "name": "regionCode", "kind": "enum", "enumValues": ["CA", "HE", "13"] },
+                { "name": "asn", "kind": "enum", "enumValues": ["5650", "15169", "8075"] }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

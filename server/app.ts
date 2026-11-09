@@ -1,7 +1,11 @@
 import { Hono, type Context } from "hono";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { z } from "zod";
+import { mockFromSample } from "../shared/infer";
+import { specFromDocument } from "../shared/openapi";
 import { POLICY } from "../shared/policy";
+import { parse as parseYaml } from "yaml";
+import { fetchPublicSpec } from "./ssrf";
 import type { AppDb } from "../db/client";
 import { getDb } from "../db/client";
 import {
@@ -23,10 +27,12 @@ import {
   createEndpointForUser,
   deleteEndpointForUser,
   deleteUserAsAdmin,
+  getEndpointForUser,
   getRequest,
   listEndpoints,
   listRequests,
   listUsers,
+  saveMockSpec,
   updateUserAsAdmin,
 } from "./data";
 import { clientIp, HttpError, readJson } from "./http";
@@ -47,6 +53,7 @@ const createEndpointSchema = z.object({
   name: z.string().trim().max(80).optional(),
   customPath: z.string().trim().max(64).optional(),
   description: z.string().trim().max(500).optional(),
+  mockSpec: z.unknown().optional(),
 });
 
 const mockSchema = z.object({
@@ -186,15 +193,67 @@ export function createServer(options?: {
     const user = await requireUser(c);
     await limitAuthed(c.get("db"), user.id);
     const parsed = createEndpointSchema.safeParse(
-      await readJson(c.req.raw, POLICY.apiJsonBytes),
+      await readJson(c.req.raw, POLICY.specJsonBytes),
     );
     if (!parsed.success) throw new HttpError(400, "Invalid request");
     const endpoint = await createEndpointForUser(c.get("db"), user, {
       name: parsed.data.name,
       customPath: parsed.data.customPath || undefined,
       description: parsed.data.description,
+      mockSpec: parsed.data.mockSpec,
     });
     return c.json(endpoint);
+  });
+
+  app.get("/api/endpoints/:endpointId", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(
+      await getEndpointForUser(c.get("db"), user.id, c.req.param("endpointId")),
+    );
+  });
+
+  app.put("/api/endpoints/:endpointId/spec", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    const body = await readJson(c.req.raw, POLICY.specJsonBytes);
+    const record = body && typeof body === "object" ? (body as { mockSpec?: unknown }) : {};
+    const endpoint = await saveMockSpec(
+      c.get("db"),
+      user.id,
+      c.req.param("endpointId"),
+      record.mockSpec,
+    );
+    return c.json(endpoint);
+  });
+
+  app.post("/api/specs/import", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    const body = (await readJson(c.req.raw, POLICY.specJsonBytes)) as {
+      text?: string;
+      url?: string;
+      kind?: string;
+    };
+    const text = body.url
+      ? await fetchPublicSpec(body.url)
+      : String(body.text || "");
+    if (!text.trim()) throw new HttpError(400, "Provide a spec or sample");
+    if (text.length > POLICY.specJsonBytes) throw new HttpError(413, "Spec is too large");
+    if (body.kind === "sample") {
+      return c.json({ mockSpec: mockFromSample(text), warnings: [], unsupported: [] });
+    }
+    let document: unknown;
+    try {
+      document = parseYaml(text);
+    } catch {
+      throw new HttpError(400, "Spec is not valid JSON or YAML");
+    }
+    try {
+      return c.json(specFromDocument(document));
+    } catch (error) {
+      throw new HttpError(400, error instanceof Error ? error.message : "Could not import spec");
+    }
   });
 
   app.delete("/api/endpoints/:endpointId", async (c) => {
@@ -261,17 +320,21 @@ export function createServer(options?: {
 }
 
 function registerCatch(app: Hono<AppEnv>) {
-  app.all("/catch/:path", async (c) => {
+  app.all("/catch/*", async (c) => {
     const db = c.get("db");
     await enforceRateLimit(
       db,
       `catch-ip:${c.get("ip")}`,
-      rateMax("RATE_CATCH_IP_MAX", 120),
+      rateMax("RATE_CATCH_IP_MAX", 300),
       60_000,
     );
+    const url = new URL(c.req.url);
+    const matched = url.pathname.match(/^\/catch\/([^/]+)(\/.*)?$/);
+    if (!matched) return c.json({ error: "Not found" }, 404);
     const result = await captureOnPath(
       db,
-      c.req.param("path"),
+      matched[1],
+      matched[2] || "/",
       c.req.raw,
       c.get("ip"),
     );

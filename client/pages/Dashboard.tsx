@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -30,6 +31,7 @@ import { Logo } from "@/components/Logo";
 import { CreateEndpointDialog } from "@/components/CreateEndpointDialog";
 import { RequestReplayDialog } from "@/components/RequestReplayDialog";
 import { MockResponseDialog } from "@/components/MockResponseDialog";
+import { IntegrationPicker } from "@/components/IntegrationPicker";
 import { useAuth } from "@/hooks/use-auth";
 import {
   getUserEndpoints,
@@ -263,6 +265,7 @@ export default function Dashboard() {
                 Your HTTP debugging endpoints
               </p>
             </div>
+            <IntegrationPicker onCreated={handleEndpointCreated} />
             <CreateEndpointDialog onEndpointCreated={handleEndpointCreated} />
           </div>
 
@@ -295,6 +298,9 @@ export default function Dashboard() {
                       </Button>
                     </div>
                     <div className="flex space-x-2">
+                      <Button variant="outline" size="sm" asChild>
+                        <Link to={`/mock/${endpoint.id}`}>Shape</Link>
+                      </Button>
                       <MockResponseDialog endpoint={endpoint} />
                       <Button
                         variant="ghost"
@@ -512,8 +518,21 @@ export default function Dashboard() {
                     </TabsContent>
 
                     <TabsContent value="response">
-                      <div className="text-sm text-muted-foreground">
-                        Configure mock responses in the endpoint settings.
+                      <div className="space-y-2 text-sm">
+                        <p>
+                          Status {selectedRequest?.status}
+                          {selectedRequest?.recordCount != null
+                            ? ` · ${selectedRequest.recordCount} records`
+                            : ""}
+                        </p>
+                        {(selectedRequest?.chaosEffects || []).length > 0 && (
+                          <p>
+                            Chaos: {(selectedRequest?.chaosEffects || []).join(", ")}
+                          </p>
+                        )}
+                        <pre className="max-h-64 overflow-auto whitespace-pre-wrap break-all rounded border p-3 text-xs">
+                          {selectedRequest?.responsePreview || "No response preview"}
+                        </pre>
                       </div>
                     </TabsContent>
                   </Tabs>

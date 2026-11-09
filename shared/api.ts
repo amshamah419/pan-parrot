@@ -21,6 +21,9 @@ export interface CapturedRequest {
   query: Record<string, string>;
   userId: string;
   truncated?: boolean;
+  responsePreview?: string | null;
+  chaosEffects?: string[];
+  recordCount?: number | null;
 }
 
 export interface UserEndpoint {
@@ -39,6 +42,7 @@ export interface UserEndpoint {
     delay: number;
     enabled?: boolean;
   };
+  mockSpec?: unknown;
 }
 
 export interface CreateEndpointRequest {

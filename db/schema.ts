@@ -66,6 +66,8 @@ export const endpoints = pgTable(
     mockHeaders: jsonb("mock_headers").$type<Record<string, string>>(),
     mockBody: text("mock_body"),
     mockDelay: integer("mock_delay").notNull().default(0),
+    mockSpec: jsonb("mock_spec"),
+    mockRequestCount: integer("mock_request_count").notNull().default(0),
     userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
@@ -88,6 +90,9 @@ export const capturedRequests = pgTable(
     body: jsonb("body"),
     query: jsonb("query").$type<Record<string, string>>(),
     truncated: boolean("truncated").notNull().default(false),
+    responsePreview: text("response_preview"),
+    chaosEffects: jsonb("chaos_effects").$type<string[]>(),
+    recordCount: integer("record_count"),
     createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
       .notNull()
       .defaultNow(),

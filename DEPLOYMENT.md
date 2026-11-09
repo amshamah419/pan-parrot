@@ -93,7 +93,13 @@ AUTH_DEV_EXPOSE_CODE=true npm run dev
 
 Schema changes: edit `db/schema.ts`, run `npm run db:generate`, commit the new files under `netlify/database/migrations`, and deploy. Do not edit a migration that has already shipped. Add another one.
 
-## 8. What "good" looks like after deploy
+## 8. Mock response ceiling
+
+Generated mocks run inside the catch function. Netlify allows a synchronous function 60 seconds and a 6 MB buffered response. PAN Parrot keeps a page at or below 500 records and 2 MB, and will not delay a chaos latency longer than 5 seconds. A caller that needs thousands of unique records pages with `limit` and `offset`. The virtual catalog stops at 20,000 records unless an endless-cursor glitch is turned on; that glitch keeps issuing offsets until the rate limit answers with 429. Default catch limits are 300 requests per minute per IP and 600 per endpoint (`RATE_CATCH_IP_MAX`, `RATE_CATCH_ENDPOINT_MAX`).
+
+Preset JSON is static files under `public/presets/`, served by the CDN. It is not imported by the function.
+
+## 9. What "good" looks like after deploy
 
 - `https://<site>/api/ping` returns `{"ok":true,"database":"up"}`.
 - A non-PAN email is rejected by `POST /api/auth/request`.

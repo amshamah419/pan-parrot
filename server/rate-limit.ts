@@ -94,13 +94,13 @@ export async function limitCatch(
   await enforceRateLimit(
     db,
     `catch-ip:${ip}`,
-    rateMax("RATE_CATCH_IP_MAX", 120),
+    rateMax("RATE_CATCH_IP_MAX", 300),
     ONE_MINUTE,
   );
   await enforceRateLimit(
     db,
     `catch-endpoint:${endpointId}`,
-    rateMax("RATE_CATCH_ENDPOINT_MAX", 300),
+    rateMax("RATE_CATCH_ENDPOINT_MAX", 600),
     ONE_MINUTE,
   );
 }

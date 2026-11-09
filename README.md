@@ -44,6 +44,16 @@ npm run typecheck
 npm run build
 ```
 
+## Mocking an integration
+
+From the dashboard, choose **Mock an integration**. Search for **Akamai WAF SIEM** (or Okta, CrowdStrike, Defender, and hundreds of other packs inferred from [demisto/content](https://github.com/demisto/content)), paste a sample JSON payload, or import an OpenAPI 3, Swagger 2, or Postman collection (paste, file, or https URL).
+
+Put the catch URL into the integration's server field. Akamai WAF SIEM then calls `{catch URL}/siem/v1/configs/{configId}`. The response is newline-delimited events plus an offset trailer, which is what that pack parses. Shape and chaos are edited visually; the same screen has a JSON mode. The request log shows what the integration sent and a preview of what was returned, including which chaos effects fired.
+
+A single response is capped at 500 records and 2 MB. Larger pulls use `limit` and `offset` (or the preset's cursor). Up to 20,000 unique records are available that way. Netlify's synchronous function limit is 60 seconds and 6 MB buffered, which is why the mock stays under those caps instead of emitting one giant body. Catch traffic is rate limited (300 requests/minute per IP, 600 per endpoint by default) so a paged load test fits and an open-internet flood does not.
+
+Regenerate the XSOAR catalog with `npm run presets:import -- --content /path/to/demisto/content`. See `public/presets/COVERAGE.md` and `public/presets/ATTRIBUTION.md`.
+
 ## Auth model
 
 There are no passwords. `POST /api/auth/request` emails an 8-digit code and a confirm link. The link only loads a page; sign-in finishes with `POST /api/auth/verify`. The session cookie is `HttpOnly`, `SameSite=Lax`, `Secure` in production, and scoped to `/api` so a mock response on `/catch/*` cannot use it.

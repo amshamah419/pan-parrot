@@ -36,11 +36,36 @@ async function apiRequest<T>(
 }
 
 export async function createEndpoint(
-  data: CreateEndpointRequest,
+  data: CreateEndpointRequest & { mockSpec?: unknown },
 ): Promise<UserEndpoint> {
   return apiRequest<UserEndpoint>("/api/endpoints", {
     method: "POST",
     body: JSON.stringify(data),
+  });
+}
+
+export async function getEndpoint(endpointId: string): Promise<UserEndpoint> {
+  return apiRequest<UserEndpoint>(`/api/endpoints/${endpointId}`);
+}
+
+export async function saveMockSpec(
+  endpointId: string,
+  mockSpec: unknown,
+): Promise<UserEndpoint> {
+  return apiRequest<UserEndpoint>(`/api/endpoints/${endpointId}/spec`, {
+    method: "PUT",
+    body: JSON.stringify({ mockSpec }),
+  });
+}
+
+export async function importSpec(body: {
+  text?: string;
+  url?: string;
+  kind?: "sample" | "spec";
+}): Promise<{ mockSpec: unknown; warnings: string[]; unsupported: string[] }> {
+  return apiRequest(`/api/specs/import`, {
+    method: "POST",
+    body: JSON.stringify(body),
   });
 }
 
