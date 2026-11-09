@@ -8,10 +8,12 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrustBadge } from "@/components/TrustBadge";
 import { MockAuthPanel } from "@/components/MockAuthPanel";
-import { getEndpoint, saveMockSpec } from "@/lib/api";
+import { FlowPanel } from "@/components/FlowPanel";
+import { getEndpoint, resetRuntime, saveMockSpec } from "@/lib/api";
 import { generateMockResponse, matchOperation } from "@shared/generate";
 import {
   defaultAuth,
+  defaultBehavior,
   FIELD_KINDS,
   validateMockSpec,
   type ChaosSpec,
@@ -182,10 +184,11 @@ export default function MockStudio() {
       )}
 
       <Tabs defaultValue="preview">
-        <TabsList>
+        <TabsList className="flex h-auto flex-wrap">
           <TabsTrigger value="preview">Preview</TabsTrigger>
           <TabsTrigger value="shape">Shape</TabsTrigger>
           <TabsTrigger value="chaos">Chaos</TabsTrigger>
+          <TabsTrigger value="flow">Flow</TabsTrigger>
           <TabsTrigger value="auth">Auth</TabsTrigger>
         </TabsList>
         <TabsContent value="preview" className="space-y-3">
@@ -235,6 +238,17 @@ export default function MockStudio() {
             chaos={spec.chaos}
             totalRecords={spec.totalRecords}
             onChange={(chaos, totalRecords) => setSpec({ ...spec, chaos, totalRecords })}
+          />
+        </TabsContent>
+        <TabsContent value="flow">
+          <FlowPanel
+            behavior={spec.behavior || defaultBehavior()}
+            onChange={(behavior) => setSpec({ ...spec, behavior })}
+            onReset={() => {
+              void resetRuntime(endpointId).then(() => setSaved("Saved calls cleared.")).catch((err) => {
+                setError(err instanceof Error ? err.message : "Could not reset");
+              });
+            }}
           />
         </TabsContent>
         <TabsContent value="auth">

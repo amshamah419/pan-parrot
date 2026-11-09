@@ -154,6 +154,19 @@ export const loginChallenges = pgTable(
   (table) => [index("login_challenges_email_idx").on(table.email)],
 );
 
+export const endpointRuntime = pgTable("endpoint_runtime", {
+  endpointId: text("endpoint_id")
+    .primaryKey()
+    .references(() => endpoints.id, { onDelete: "cascade" }),
+  records: jsonb("records").$type<Array<{ id: string; body: Record<string, unknown> }>>().notNull(),
+  seenIds: jsonb("seen_ids").$type<string[]>().notNull(),
+  scenarioIndex: integer("scenario_index").notNull().default(0),
+  fetchCursor: text("fetch_cursor"),
+  updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" })
+    .notNull()
+    .defaultNow(),
+});
+
 export const rateLimits = pgTable("rate_limits", {
   key: text("key").primaryKey(),
   count: integer("count").notNull(),

@@ -34,6 +34,7 @@ import {
   listEndpoints,
   listRequests,
   listUsers,
+  resetEndpointRuntime,
   saveMockSpec,
   updateUserAsAdmin,
 } from "./data";
@@ -231,6 +232,13 @@ export function createServer(options?: {
       record.mockSpec,
     );
     return c.json(endpoint);
+  });
+
+  app.post("/api/endpoints/:endpointId/runtime/reset", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    await resetEndpointRuntime(c.get("db"), user.id, c.req.param("endpointId"));
+    return c.json({ ok: true });
   });
 
   app.post("/api/specs/import", async (c) => {

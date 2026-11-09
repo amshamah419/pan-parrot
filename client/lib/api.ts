@@ -48,6 +48,10 @@ export async function getEndpoint(endpointId: string): Promise<UserEndpoint> {
   return apiRequest<UserEndpoint>(`/api/endpoints/${endpointId}`);
 }
 
+export async function resetRuntime(endpointId: string): Promise<{ ok: boolean }> {
+  return apiRequest(`/api/endpoints/${endpointId}/runtime/reset`, { method: "POST" });
+}
+
 export async function saveMockSpec(
   endpointId: string,
   mockSpec: unknown,

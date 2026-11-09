@@ -1,11 +1,13 @@
 import { randomBytes } from "node:crypto";
 import { and, count, desc, eq, sql } from "drizzle-orm";
+import { applyBehavior } from "../shared/behavior";
 import { chaosTriggers, generateMockResponse, matchOperation } from "../shared/generate";
 import { checkMockAuth } from "../shared/mock-auth";
 import { validateMockSpec, type MockSpec } from "../shared/mock-spec";
 import { parseXml, localName, type XmlElement } from "../shared/xml";
 import { gzipBytes, zipEntries } from "./pack";
 import { openAuth, sealAuth } from "./mock-secrets";
+import { loadRuntime, resetRuntime, saveRuntime } from "./runtime-state";
 import { ENDPOINT_PATH_RE, POLICY } from "../shared/policy";
 import type { AppDb } from "../db/client";
 import { capturedRequests, endpoints, sessions, users } from "../db/schema";
@@ -193,6 +195,20 @@ export async function getRequest(db: AppDb, userId: string, requestId: string) {
     .limit(1);
   if (!row) throw new HttpError(404, "Request not found");
   return toRequestDto(row.request, row.endpointPath);
+}
+
+export async function resetEndpointRuntime(
+  db: AppDb,
+  userId: string,
+  endpointId: string,
+) {
+  const [endpoint] = await db
+    .select({ id: endpoints.id })
+    .from(endpoints)
+    .where(and(eq(endpoints.id, endpointId), eq(endpoints.userId, userId)))
+    .limit(1);
+  if (!endpoint) throw new HttpError(404, "Endpoint not found");
+  await resetRuntime(db, endpoint.id);
 }
 
 export async function saveMockSpec(
@@ -405,7 +421,7 @@ async function produceResponse(
         capped: false,
       };
     }
-    const generated = generateMockResponse({
+    let generated = generateMockResponse({
       spec,
       operation: matched.operation,
       pathParams: matched.pathParams,
@@ -415,6 +431,21 @@ async function produceResponse(
       soapAction: hint.soapAction,
       requestElement: hint.requestElement,
     });
+    if (behaviorActive(spec)) {
+      const applied = applyBehavior({
+        spec,
+        operation: matched.operation,
+        method: request.method,
+        pathParams: matched.pathParams,
+        query,
+        bodyText,
+        requestIndex,
+        generated,
+        state: await loadRuntime(db, endpoint.id),
+      });
+      generated = applied.result;
+      await saveRuntime(db, endpoint.id, applied.state);
+    }
     const packed = packBody(generated.pack);
     return {
       ...generated,
@@ -529,6 +560,14 @@ function toRequestDto(
     chaosEffects: request.chaosEffects ?? [],
     recordCount: request.recordCount,
   };
+}
+
+function behaviorActive(spec: MockSpec): boolean {
+  const behavior = spec.behavior;
+  return Boolean(
+    behavior &&
+      (behavior.state.enabled || behavior.scenario.enabled || behavior.fetch.enabled),
+  );
 }
 
 function sealSpec(spec: MockSpec): MockSpec {
