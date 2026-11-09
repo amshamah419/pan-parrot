@@ -32,6 +32,7 @@ import { CreateEndpointDialog } from "@/components/CreateEndpointDialog";
 import { RequestReplayDialog } from "@/components/RequestReplayDialog";
 import { MockResponseDialog } from "@/components/MockResponseDialog";
 import { IntegrationPicker } from "@/components/IntegrationPicker";
+import { ApiTokens } from "@/components/ApiTokens";
 import { useAuth } from "@/hooks/use-auth";
 import {
   getUserEndpoints,
@@ -252,6 +253,7 @@ export default function Dashboard() {
               <CreateEndpointDialog onEndpointCreated={handleEndpointCreated} />
             </div>
           </div>
+          <ApiTokens />
 
           {userEndpoints.length === 0 && !isLoading && (
             <Card className="mb-4">

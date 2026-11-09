@@ -167,6 +167,28 @@ export const endpointRuntime = pgTable("endpoint_runtime", {
     .defaultNow(),
 });
 
+export const apiTokens = pgTable(
+  "api_tokens",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    tokenHash: text("token_hash").notNull(),
+    prefix: text("prefix").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
+      .notNull()
+      .defaultNow(),
+    lastUsedAt: timestamp("last_used_at", { withTimezone: true, mode: "date" }),
+    revokedAt: timestamp("revoked_at", { withTimezone: true, mode: "date" }),
+  },
+  (table) => [
+    index("api_tokens_user_idx").on(table.userId),
+    index("api_tokens_hash_idx").on(table.tokenHash),
+  ],
+);
+
 export const rateLimits = pgTable("rate_limits", {
   key: text("key").primaryKey(),
   count: integer("count").notNull(),

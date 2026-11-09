@@ -4,11 +4,15 @@ import { z } from "zod";
 import { mockFromSample } from "../shared/infer";
 import { specFromDocument } from "../shared/openapi";
 import { specFromXml } from "../shared/wsdl";
-import { readZip } from "./pack";
+import { readZip, zipEntries } from "./pack";
 import { POLICY } from "../shared/policy";
 import { parse as parseYaml } from "yaml";
+import { exportFixture } from "../shared/export-fixture";
+import { validateMockSpec } from "../shared/mock-spec";
+import { isOpenApiDocument, isXsoarIntegration, mockFromIntegrationYaml } from "../shared/xsoar-yaml";
 import { recordUpstream } from "./record";
 import { fetchPublicSpec } from "./ssrf";
+import { createToken, listTokens, revokeToken, userFromApiToken } from "./tokens";
 import type { AppDb } from "../db/client";
 import { getDb } from "../db/client";
 import {
@@ -200,6 +204,28 @@ export function createServer(options?: {
     return c.json(user);
   });
 
+  app.post("/api/tokens", async (c) => {
+    const user = await requireSession(c);
+    await limitAuthed(c.get("db"), user.id);
+    const body = await readJson(c.req.raw, POLICY.apiJsonBytes);
+    const name = body && typeof body === "object" ? String((body as { name?: unknown }).name || "") : "";
+    const created = await createToken(c.get("db"), user.id, name);
+    return c.json(created);
+  });
+
+  app.get("/api/tokens", async (c) => {
+    const user = await requireSession(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await listTokens(c.get("db"), user.id));
+  });
+
+  app.delete("/api/tokens/:tokenId", async (c) => {
+    const user = await requireSession(c);
+    await limitAuthed(c.get("db"), user.id);
+    await revokeToken(c.get("db"), user.id, c.req.param("tokenId"));
+    return c.json({ ok: true });
+  });
+
   app.get("/api/endpoints", async (c) => {
     const user = await requireUser(c);
     await limitAuthed(c.get("db"), user.id);
@@ -309,6 +335,13 @@ export function createServer(options?: {
       throw new HttpError(400, "Spec is not valid JSON or YAML");
     }
     try {
+      if (!isOpenApiDocument(document) && isXsoarIntegration(document)) {
+        return c.json({
+          mockSpec: mockFromIntegrationYaml(text),
+          warnings: ["Each command became an operation. Paths are /command-name unless the description contains METHOD /path."],
+          unsupported: [],
+        });
+      }
       const imported = specFromDocument(document);
       return c.json({
         mockSpec: imported.spec,
@@ -318,6 +351,29 @@ export function createServer(options?: {
     } catch (error) {
       throw new HttpError(400, error instanceof Error ? error.message : "Could not import spec");
     }
+  });
+
+  app.get("/api/endpoints/:endpointId/export", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    const endpoint = await getEndpointForUser(c.get("db"), user.id, c.req.param("endpointId"));
+    if (!endpoint.mockSpec) throw new HttpError(400, "This endpoint has no mock");
+    const files = exportFixture(validateMockSpec(endpoint.mockSpec), endpoint.url);
+    if (c.req.query("format") === "zip") {
+      const zip = zipEntries([
+        { name: "test_pan_parrot.py", data: Buffer.from(files.pytest) },
+        { name: "test_data.json", data: Buffer.from(files.testData) },
+      ]);
+      c.header("content-type", "application/zip");
+      c.header("content-disposition", 'attachment; filename="pan-parrot-fixtures.zip"');
+      return c.body(new Uint8Array(zip));
+    }
+    return c.json({
+      files: {
+        "test_pan_parrot.py": files.pytest,
+        "test_data.json": files.testData,
+      },
+    });
   });
 
   app.delete("/api/endpoints/:endpointId", async (c) => {
@@ -426,7 +482,7 @@ async function updateAdminUser(c: Context<AppEnv>) {
   return c.json({ message: "User updated", user });
 }
 
-async function requireUser(c: Context<AppEnv>): Promise<PublicUser> {
+async function requireSession(c: Context<AppEnv>): Promise<PublicUser> {
   const user = await userFromCookie(
     c.get("db"),
     getCookie(c, POLICY.sessionCookieName),
@@ -434,6 +490,17 @@ async function requireUser(c: Context<AppEnv>): Promise<PublicUser> {
   if (!user) throw new HttpError(401, "Authentication required");
   c.set("user", user);
   return user;
+}
+
+async function requireUser(c: Context<AppEnv>): Promise<PublicUser> {
+  const header = c.req.header("authorization") || "";
+  if (header.startsWith("Bearer pp_")) {
+    const user = await userFromApiToken(c.get("db"), header.slice("Bearer ".length).trim());
+    if (!user) throw new HttpError(401, "Authentication required");
+    c.set("user", user);
+    return user;
+  }
+  return requireSession(c);
 }
 
 async function requireAdmin(c: Context<AppEnv>): Promise<PublicUser> {
@@ -450,7 +517,7 @@ function applyApiCors(
   c.header("Access-Control-Allow-Origin", origin);
   c.header("Access-Control-Allow-Credentials", "true");
   c.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
-  c.header("Access-Control-Allow-Headers", "Content-Type");
+  c.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   c.header("Vary", "Origin");
 }
 
