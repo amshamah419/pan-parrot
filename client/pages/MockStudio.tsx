@@ -11,6 +11,7 @@ import { MockAuthPanel } from "@/components/MockAuthPanel";
 import { FlowPanel } from "@/components/FlowPanel";
 import { PushPanel } from "@/components/PushPanel";
 import { getEndpoint, resetRuntime, saveMockSpec } from "@/lib/api";
+import { CollabPanel } from "@/components/CollabPanel";
 import { generateMockResponse, matchOperation } from "@shared/generate";
 import {
   defaultAuth,
@@ -29,6 +30,8 @@ export default function MockStudio() {
   const { endpointId = "" } = useParams();
   const [spec, setSpec] = useState<MockSpec | null>(null);
   const [url, setUrl] = useState("");
+  const [access, setAccess] = useState<"owner" | "edit" | "view">("owner");
+  const [published, setPublishedFlag] = useState(false);
   const [operationId, setOperationId] = useState("");
   const [advanced, setAdvanced] = useState(false);
   const [advancedText, setAdvancedText] = useState("");
@@ -40,6 +43,8 @@ export default function MockStudio() {
     getEndpoint(endpointId)
       .then((endpoint) => {
         setUrl(endpoint.url);
+        setAccess(endpoint.access || "owner");
+        setPublishedFlag(Boolean(endpoint.published));
         if (!endpoint.mockSpec) {
           setError("This endpoint has no generated mock yet.");
           return;
@@ -134,9 +139,21 @@ export default function MockStudio() {
           <Button variant="outline" asChild>
             <a href={`/api/endpoints/${endpointId}/export?format=zip`}>Export pytest</a>
           </Button>
-          <Button onClick={save}>Save</Button>
+          {access === "view" ? (
+            <p className="self-center text-sm text-muted-foreground">View only</p>
+          ) : (
+            <Button onClick={save}>Save</Button>
+          )}
         </div>
       </div>
+
+      <CollabPanel
+        endpointId={endpointId}
+        access={access}
+        published={published}
+        onPublished={setPublishedFlag}
+        onReverted={() => window.location.reload()}
+      />
 
       <section className="rounded-lg border bg-card p-4">
         <p className="text-sm font-medium">1. Paste this into the integration server URL</p>

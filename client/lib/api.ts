@@ -138,6 +138,38 @@ export async function getPushDeliveries(endpointId: string): Promise<{
   return apiRequest(`/api/endpoints/${endpointId}/push`);
 }
 
+export async function getCatalog(): Promise<Array<{ id: string; name: string; description?: string | null; ownerEmail: string }>> {
+  return apiRequest("/api/catalog");
+}
+
+export async function cloneEndpoint(endpointId: string): Promise<UserEndpoint> {
+  return apiRequest(`/api/endpoints/${endpointId}/clone`, { method: "POST" });
+}
+
+export async function shareEndpoint(endpointId: string, email: string, role: "view" | "edit"): Promise<Array<{ email: string; role: string }>> {
+  return apiRequest(`/api/endpoints/${endpointId}/shares`, { method: "POST", body: JSON.stringify({ email, role }) });
+}
+
+export async function unshareEndpoint(endpointId: string, email: string): Promise<{ ok: boolean }> {
+  return apiRequest(`/api/endpoints/${endpointId}/shares/${encodeURIComponent(email)}`, { method: "DELETE" });
+}
+
+export async function getShares(endpointId: string): Promise<Array<{ email: string; role: string }>> {
+  return apiRequest(`/api/endpoints/${endpointId}/shares`);
+}
+
+export async function setPublished(endpointId: string, published: boolean): Promise<{ ok: boolean }> {
+  return apiRequest(`/api/endpoints/${endpointId}/publish`, { method: "POST", body: JSON.stringify({ published }) });
+}
+
+export async function getVersions(endpointId: string): Promise<Array<{ id: string; summary: string; actorEmail: string; created: string }>> {
+  return apiRequest(`/api/endpoints/${endpointId}/versions`);
+}
+
+export async function revertVersion(endpointId: string, versionId: string): Promise<{ ok: boolean }> {
+  return apiRequest(`/api/endpoints/${endpointId}/versions/${versionId}/revert`, { method: "POST" });
+}
+
 export async function getCapturedRequests(): Promise<CapturedRequest[]> {
   return apiRequest<CapturedRequest[]>("/api/requests");
 }

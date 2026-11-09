@@ -38,6 +38,8 @@ import {
   getUserEndpoints,
   getCapturedRequests,
   deleteEndpoint,
+  getCatalog,
+  cloneEndpoint,
 } from "@/lib/api";
 import { UserEndpoint, CapturedRequest } from "@shared/api";
 import {
@@ -68,6 +70,7 @@ export default function Dashboard() {
     [],
   );
   const [isLoading, setIsLoading] = useState(true);
+  const [catalog, setCatalog] = useState<Array<{ id: string; name: string; description?: string | null; ownerEmail: string }>>([]);
 
   // Load data from API
   const loadData = async () => {
@@ -79,6 +82,7 @@ export default function Dashboard() {
       ]);
 
       setUserEndpoints(endpoints);
+      getCatalog().then(setCatalog).catch(() => setCatalog([]));
       setCapturedRequests(requests);
 
       // Set first request as selected if none selected
@@ -258,11 +262,18 @@ export default function Dashboard() {
           {userEndpoints.length === 0 && !isLoading && (
             <Card className="mb-4">
               <CardHeader>
-                <CardTitle>No mocks yet</CardTitle>
+                <CardTitle>Make a catch URL in under a minute</CardTitle>
                 <CardDescription>
-                  Start with Akamai WAF SIEM if you want a working integration in a couple of clicks. You can also paste a JSON response or an OpenAPI spec.
+                  Mock an integration, copy the catch URL, and paste it into the XSOAR server field. The first call shows up in the log below.
                 </CardDescription>
               </CardHeader>
+              <CardContent>
+                <ol className="list-decimal space-y-1 pl-5 text-sm text-muted-foreground">
+                  <li>Choose Mock an integration and start with Akamai WAF SIEM, or paste one JSON sample.</li>
+                  <li>Copy the catch URL from the next screen.</li>
+                  <li>Paste it into the integration. Do not send real secrets or customer data.</li>
+                </ol>
+              </CardContent>
             </Card>
           )}
 
@@ -289,6 +300,7 @@ export default function Dashboard() {
                       <Button
                         variant="ghost"
                         size="sm"
+                        aria-label={`Copy catch URL for ${endpoint.name}`}
                         onClick={() => copyToClipboard(endpoint.url)}
                       >
                         <Copy className="h-4 w-4" />
@@ -298,20 +310,55 @@ export default function Dashboard() {
                       <Button size="sm" asChild>
                         <Link to={`/mock/${endpoint.id}`}>Open</Link>
                       </Button>
-                      <MockResponseDialog endpoint={endpoint} />
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDeleteEndpoint(endpoint.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      {endpoint.access !== "view" && endpoint.access !== "edit" && (
+                        <MockResponseDialog endpoint={endpoint} />
+                      )}
+                      {endpoint.access && endpoint.access !== "owner" && (
+                        <Badge variant="outline">{endpoint.access === "edit" ? "Can edit" : "View"}</Badge>
+                      )}
+                      {endpoint.access === "owner" && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          aria-label={`Delete ${endpoint.name}`}
+                          onClick={() => handleDeleteEndpoint(endpoint.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
+          {catalog.some((item) => item.ownerEmail !== user?.email) && (
+            <div className="mt-8">
+              <h2 className="text-lg font-semibold">Shared catalog</h2>
+              <p className="mb-3 text-sm text-muted-foreground">Mocks other people published. Clone makes your own copy.</p>
+              <ul className="space-y-2">
+                {catalog.filter((item) => item.ownerEmail !== user?.email).map((item) => (
+                  <li key={item.id} className="flex flex-wrap items-center justify-between gap-2 rounded border px-3 py-2">
+                    <span>
+                      <span className="font-medium">{item.name}</span>
+                      <span className="ml-2 text-xs text-muted-foreground">{item.ownerEmail}</span>
+                    </span>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => {
+                        void cloneEndpoint(item.id).then((created) => {
+                          window.location.href = `/mock/${created.id}`;
+                        });
+                      }}
+                    >
+                      Clone
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Request Console */}
@@ -354,6 +401,7 @@ export default function Dashboard() {
                     <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Input
                       placeholder="Search requests..."
+                      aria-label="Search captured requests"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="pl-10"
@@ -383,7 +431,7 @@ export default function Dashboard() {
                     ) : filteredRequests.length === 0 ? (
                       <div className="p-4 text-center text-muted-foreground">
                         {capturedRequests.length === 0
-                          ? "No requests captured yet. Try sending a request to one of your endpoints!"
+                          ? "No calls yet. Copy a catch URL and paste it into the integration. Do not send real secrets."
                           : "No requests match your filters."}
                       </div>
                     ) : (

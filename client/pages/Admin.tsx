@@ -138,6 +138,7 @@ export default function Admin() {
           </Alert>
         )}
 
+        <AdminUsage />
         <Card>
           <CardHeader>
             <CardTitle>Accounts ({users.length})</CardTitle>
@@ -167,11 +168,24 @@ export default function Admin() {
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="ghost" size="sm" aria-label={`Actions for ${person.email}`}>
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() => {
+                            if (!confirm(`Delete captured requests and saved runtime for ${person.email}? Their mocks stay.`)) return;
+                            void fetch(`/api/admin/users/${person.id}/purge`, { method: "POST", credentials: "include" })
+                              .then((response) => {
+                                if (!response.ok) throw new Error("Could not purge");
+                              })
+                              .catch((err) => setError(err.message));
+                          }}
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Purge captured data
+                        </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() =>
                             updateUser(person.id, { active: !person.active }).catch((err) =>
@@ -219,6 +233,43 @@ export default function Admin() {
           </CardContent>
         </Card>
       </div>
+    </div>
+  );
+}
+
+function AdminUsage() {
+  const [rows, setRows] = useState<Array<{ email: string; endpoints: number; requests: number; active: boolean }>>([]);
+  const [audit, setAudit] = useState<Array<{ id: string; actorEmail: string; action: string; detail: string }>>([]);
+  useEffect(() => {
+    void fetch("/api/admin/usage", { credentials: "include" }).then((response) => response.json()).then(setRows).catch(() => setRows([]));
+    void fetch("/api/admin/audit", { credentials: "include" }).then((response) => response.json()).then(setAudit).catch(() => setAudit([]));
+  }, []);
+  return (
+    <div className="mb-6 grid gap-4 lg:grid-cols-2">
+      <Card>
+        <CardHeader>
+          <CardTitle>Usage</CardTitle>
+          <CardDescription>Mocks and captured calls per account. No external analytics.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-2 text-sm">
+          {rows.map((row) => (
+            <p key={row.email}>{row.email}: {row.endpoints} mocks, {row.requests} captured calls{row.active ? "" : " (inactive)"}</p>
+          ))}
+          {rows.length === 0 && <p className="text-muted-foreground">No accounts yet.</p>}
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Audit</CardTitle>
+          <CardDescription>Shares, saves, clones, reverts, and purges. The newest 50.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-1 text-sm">
+          {audit.map((event) => (
+            <p key={event.id}>{event.action} · {event.actorEmail} · {event.detail}</p>
+          ))}
+          {audit.length === 0 && <p className="text-muted-foreground">No changes recorded yet.</p>}
+        </CardContent>
+      </Card>
     </div>
   );
 }

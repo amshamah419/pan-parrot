@@ -68,6 +68,7 @@ export const endpoints = pgTable(
     mockDelay: integer("mock_delay").notNull().default(0),
     mockSpec: jsonb("mock_spec"),
     mockRequestCount: integer("mock_request_count").notNull().default(0),
+    published: boolean("published").notNull().default(false),
     userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
@@ -208,6 +209,53 @@ export const pushDeliveries = pgTable(
       .defaultNow(),
   },
   (table) => [index("push_deliveries_endpoint_idx").on(table.endpointId, table.createdAt)],
+);
+
+export const endpointShares = pgTable(
+  "endpoint_shares",
+  {
+    endpointId: text("endpoint_id")
+      .notNull()
+      .references(() => endpoints.id, { onDelete: "cascade" }),
+    email: text("email").notNull(),
+    role: text("role").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [index("endpoint_shares_email_idx").on(table.email)],
+);
+
+export const endpointVersions = pgTable(
+  "endpoint_versions",
+  {
+    id: text("id").primaryKey(),
+    endpointId: text("endpoint_id")
+      .notNull()
+      .references(() => endpoints.id, { onDelete: "cascade" }),
+    actorEmail: text("actor_email").notNull(),
+    summary: text("summary").notNull(),
+    mockSpec: jsonb("mock_spec").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [index("endpoint_versions_endpoint_idx").on(table.endpointId, table.createdAt)],
+);
+
+export const auditEvents = pgTable(
+  "audit_events",
+  {
+    id: text("id").primaryKey(),
+    actorEmail: text("actor_email").notNull(),
+    action: text("action").notNull(),
+    endpointId: text("endpoint_id"),
+    detail: text("detail").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [index("audit_events_created_idx").on(table.createdAt)],
 );
 
 export const rateLimits = pgTable("rate_limits", {
