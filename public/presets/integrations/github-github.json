@@ -1,1 +1,144 @@
-{"id":"github-github","name":"GitHub","pack":"GitHub","fidelity":"sample","curated":false,"summary":"Integration to GitHub API.","operations":5,"spec":{"version":1,"source":{"kind":"preset","id":"github-github","name":"GitHub","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/GitHub/Integrations/GitHub","fidelity":"sample","notes":["HTTP paths were guessed from string literals in the integration client and may not match every command.","Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture."]},"operations":[{"id":"test-data-get-branch-response-json","method":"GET","pathTemplate":"/repos/{owner_name}/{repository_name}/commits/{commit_id}/check-runs","summary":"test_data/get_branch_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"my_branch"},{"name":"commit","kind":"object","optional":false,"children":[{"name":"sha","kind":"string","optional":false,"example":"dsfsdf"},{"name":"node_id","kind":"id","optional":false,"example":"45678="},{"name":"commit","kind":"object","optional":false,"children":[{"name":"author","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"auth"},{"name":"email","kind":"string","optional":false,"example":"g12k34ppp"},{"name":"date","kind":"timestamp","optional":false,"format":"iso"}]},{"name":"committer","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"committer"},{"name":"email","kind":"string","optional":false,"example":"g12k34ppp"},{"name":"date","kind":"timestamp","optional":false,"format":"iso"}]},{"name":"message","kind":"string","optional":false,"example":"Merge branch ‘master’ into my_branch"},{"name":"tree","kind":"object","optional":false,"children":[{"name":"sha","kind":"string","optional":false,"example":"234567"},{"name":"url","kind":"string","optional":false,"example":"https://api.github.com/"}]},{"name":"url","kind":"string","optional":false,"example":"https://api.github.com/r"},{"name":"comment_count","kind":"integer","optional":false},{"name":"verification","kind":"object","optional":false,"children":[{"name":"verified","kind":"boolean","optional":false},{"name":"reason","kind":"string","optional":false,"example":"unsigned"},{"name":"signature","kind":"string","optional":true},{"name":"payload","kind":"string","optional":true}]}]},{"name":"url","kind":"string","optional":false,"example":"https://api.github.com"},{"name":"html_url","kind":"string","optional":false,"example":"https://github.com/"},{"name":"comments_url","kind":"string","optional":false,"example":"https://api.github.com/"},{"name":"author","kind":"string","optional":true},{"name":"committer","kind":"string","optional":true},{"name":"parents","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"sha","kind":"string","optional":false,"example":"dfg"},{"name":"url","kind":"string","optional":false,"example":"https://api.github.com/"},{"name":"html_url","kind":"string","optional":false,"example":"https://github.com/"}]},"minItems":0,"maxItems":2}]},{"name":"_links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://api.github.com/"},{"name":"html","kind":"string","optional":false,"example":"https://github.com/"}]},{"name":"protected","kind":"boolean","optional":false},{"name":"protection","kind":"object","optional":false,"children":[{"name":"enabled","kind":"boolean","optional":false},{"name":"required_status_checks","kind":"object","optional":false,"children":[{"name":"enforcement_level","kind":"string","optional":false,"example":"off"},{"name":"contexts","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1}]}]},{"name":"protection_url","kind":"string","optional":false,"example":"https://api.github.com/"}]}},{"id":"test-data-get-path-data-response-json","method":"GET","pathTemplate":"/repos/{owner}/{repository}/actions/workflows/{workflow}/dispatches","summary":"test_data/get_path_data_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"response","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"pack_metadata.json"},{"name":"path","kind":"string","optional":false,"example":"Packs/Cybereason/pack_metadata.json"},{"name":"sha","kind":"string","optional":false,"example":"42a290e128f0dd406d5c50a31c924df16a313c7d"},{"name":"size","kind":"integer","optional":false},{"name":"url","kind":"string","optional":false,"example":"https://api.github.com/repos/demisto/content/contents/Packs/Cybereason/pack_metadata.json?ref=master"},{"name":"html_url","kind":"string","optional":false,"example":"https://github.com/demisto/content/blob/master/Packs/Cybereason/pack_metadata.json"},{"name":"git_url","kind":"string","optional":false,"example":"https://api.github.com/repos/demisto/content/git/blobs/42a290e128f0dd406d5c50a31c924df16a313c7d"},{"name":"download_url","kind":"string","optional":false,"example":"https://raw.githubusercontent.com/demisto/content/master/Packs/Cybereason/pack_metadata.json"},{"name":"type","kind":"string","optional":false,"example":"file"},{"name":"content","kind":"string","optional":false,"example":"ewogICAgIm5hbWUiOiAiQ3liZXJlYXNvbiIsCiAgICAiZGVzY3JpcHRpb24i\nOiAiRW5kcG9pbnQgZGV0ZWN0aW9uIGFuZCByZXNwb25zZSB0byBtYW5hZ2U"},{"name":"encoding","kind":"string","optional":false,"example":"base64"},{"name":"_links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://api.github.com/repos/demisto/content/contents/Packs/Cybereason/pack_metadata.json?ref=master"},{"name":"git","kind":"string","optional":false,"example":"https://api.github.com/repos/demisto/content/git/blobs/42a290e128f0dd406d5c50a31c924df16a313c7d"},{"name":"html","kind":"string","optional":false,"example":"https://github.com/demisto/content/blob/master/Packs/Cybereason/pack_metadata.json"}]}]},{"name":"expected","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"pack_metadata.json"},{"name":"path","kind":"string","optional":false,"example":"Packs/Cybereason/pack_metadata.json"},{"name":"sha","kind":"string","optional":false,"example":"42a290e128f0dd406d5c50a31c924df16a313c7d"},{"name":"size","kind":"integer","optional":false},{"name":"url","kind":"string","optional":false,"example":"https://api.github.com/repos/demisto/content/contents/Packs/Cybereason/pack_metadata.json?ref=master"},{"name":"html_url","kind":"string","optional":false,"example":"https://github.com/demisto/content/blob/master/Packs/Cybereason/pack_metadata.json"},{"name":"git_url","kind":"string","optional":false,"example":"https://api.github.com/repos/demisto/content/git/blobs/42a290e128f0dd406d5c50a31c924df16a313c7d"},{"name":"download_url","kind":"string","optional":false,"example":"https://raw.githubusercontent.com/demisto/content/master/Packs/Cybereason/pack_metadata.json"},{"name":"type","kind":"string","optional":false,"example":"file"},{"name":"content","kind":"string","optional":false,"example":"{\n    \"name\": \"Cybereason\",\n    \"description\": \"Endpoint detection and response to manage and query malops, connections"},{"name":"encoding","kind":"string","optional":false,"example":"base64"}]}]}},{"id":"test-data-get-workflow-run-response-json","method":"GET","pathTemplate":"/repos/{owner}/{repository}/actions/runs/{workflow_id}/cancel","summary":"test_data/get_workflow_run_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"Private repo nightly build"},{"name":"node_id","kind":"id","optional":false,"example":"WFR_ababba"},{"name":"head_branch","kind":"string","optional":false,"example":"master"},{"name":"head_sha","kind":"string","optional":false,"example":"12121212"},{"name":"display_title","kind":"string","optional":false,"example":"Private repo nightly build"},{"name":"run_number","kind":"integer","optional":false},{"name":"event","kind":"string","optional":false,"example":"workflow_dispatch"},{"name":"status","kind":"string","optional":false,"example":"completed"},{"name":"conclusion","kind":"string","optional":false,"example":"success"},{"name":"workflow_id","kind":"integer","optional":false},{"name":"url","kind":"string","optional":false,"example":"https://api.github.com/repos/demisto/test/actions/runs/1212121"},{"name":"html_url","kind":"string","optional":false,"example":"https://github.com/demisto/test/actions/runs/1212121"},{"name":"created_at","kind":"timestamp","optional":false,"format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"format":"iso"}]}},{"id":"test-data-list-actions-artifacts-response-json","method":"GET","pathTemplate":"/repos/{organization}/{repository}/pulls/{pull_number}/files","summary":"test_data/list_actions_artifacts_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"total_count","kind":"integer","optional":false},{"name":"artifacts","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"build-output"},{"name":"size_in_bytes","kind":"integer","optional":false},{"name":"expired","kind":"boolean","optional":false},{"name":"created_at","kind":"timestamp","optional":false,"format":"iso"},{"name":"expires_at","kind":"timestamp","optional":false,"format":"iso"}]},"minItems":0,"maxItems":2}]}},{"id":"test-data-list-actions-caches-response-json","method":"GET","pathTemplate":"/repos/{owner}/{repository}/actions/artifacts/{artifact_id}","summary":"test_data/list_actions_caches_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"total_count","kind":"integer","optional":false},{"name":"actions_caches","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"key","kind":"string","optional":false,"example":"npm-cache-linux-abc123"},{"name":"ref","kind":"string","optional":false,"example":"refs/heads/main"},{"name":"version","kind":"string","optional":false,"example":"v1"},{"name":"size_in_bytes","kind":"integer","optional":false},{"name":"last_accessed_at","kind":"timestamp","optional":false,"format":"iso"},{"name":"created_at","kind":"timestamp","optional":false,"format":"iso"}]},"minItems":0,"maxItems":2}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200}}
+{
+  "id": "github-github",
+  "name": "GitHub",
+  "pack": "GitHub",
+  "vendor": "GitHub",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /repos/{owner}/{repo}/issues returns the issue array the XSOAR client requests.",
+  "notes": [
+    "The XSOAR client calls /repos/{owner}/{repo}/issues. This mock returns a JSON array of issues with number, title, state, and created_at.",
+    "GitHub pages with a Link header. This mock uses limit and page query parameters instead of that header.",
+    "Authorization is not required. Fine-grained permission errors are not simulated."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GitHub/Integrations/GitHub",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "github-github",
+      "name": "GitHub",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://docs.github.com/en/rest/issues/issues#list-repository-issues",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.github.com/en/rest/issues/issues#list-repository-issues",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "The XSOAR client calls /repos/{owner}/{repo}/issues. This mock returns a JSON array of issues with number, title, state, and created_at.",
+          "GitHub pages with a Link header. This mock uses limit and page query parameters instead of that header.",
+          "Authorization is not required. Fine-grained permission errors are not simulated."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "id": "list-issues",
+        "method": "GET",
+        "pathTemplate": "/repos/{owner}/{repo}/issues",
+        "summary": "List repository issues",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "issue",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "number",
+              "kind": "integer"
+            },
+            {
+              "name": "title",
+              "kind": "string",
+              "example": "Investigate failed logins"
+            },
+            {
+              "name": "state",
+              "kind": "enum",
+              "enumValues": [
+                "open",
+                "closed"
+              ]
+            },
+            {
+              "name": "html_url",
+              "kind": "string",
+              "example": "https://github.com/example/repo/issues/1"
+            },
+            {
+              "name": "created_at",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "updated_at",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "user",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "login",
+                  "kind": "string",
+                  "example": "octocat"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "github-github",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}
