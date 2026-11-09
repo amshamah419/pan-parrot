@@ -1,1 +1,128 @@
-{"id":"microsoftexchangeonpremise-ewsv2","name":"EWS v2","pack":"MicrosoftExchangeOnPremise","fidelity":"shape","curated":false,"summary":"Exchange Web Services and Office 365 (mail).","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"microsoftexchangeonpremise-ewsv2","name":"EWS v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MicrosoftExchangeOnPremise/Integrations/EWSv2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"ews-get-attachment","method":"GET","pathTemplate":"/","summary":"Retrieves the actual attachments from an item (email message). To get all attachments for a message, only specify the item-id argument.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"EWS","kind":"object","optional":false,"children":[{"name":"Items","kind":"object","optional":false,"children":[{"name":"FileAttachments","kind":"object","optional":false,"children":[{"name":"attachmentId","kind":"id","optional":false},{"name":"attachmentName","kind":"string","optional":false,"example":"attachmentName"},{"name":"attachmentSHA256","kind":"string","optional":false,"example":"attachmentSHA256"},{"name":"attachmentLastModifiedTime","kind":"timestamp","optional":false,"format":"iso"}]},{"name":"ItemAttachments","kind":"object","optional":false,"children":[{"name":"datetimeCreated","kind":"timestamp","optional":false,"format":"iso"},{"name":"datetimeReceived","kind":"timestamp","optional":false,"format":"iso"},{"name":"datetimeSent","kind":"timestamp","optional":false,"format":"iso"},{"name":"receivedBy","kind":"string","optional":false,"example":"receivedBy"},{"name":"subject","kind":"string","optional":false,"example":"subject"},{"name":"textBody","kind":"string","optional":false,"example":"textBody"},{"name":"headers","kind":"string","optional":false,"example":"headers"},{"name":"hasAttachments","kind":"boolean","optional":false},{"name":"itemId","kind":"id","optional":false},{"name":"toRecipients","kind":"string","optional":false,"example":"toRecipients"},{"name":"body","kind":"string","optional":false,"example":"body"},{"name":"attachmentSHA256","kind":"string","optional":false,"example":"attachmentSHA256"},{"name":"FileAttachments","kind":"object","optional":false,"children":[{"name":"attachmentSHA256","kind":"string","optional":false,"example":"attachmentSHA256"}]},{"name":"ItemAttachments","kind":"object","optional":false,"children":[{"name":"attachmentSHA256","kind":"string","optional":false,"example":"attachmentSHA256"}]},{"name":"isRead","kind":"string","optional":false,"example":"isRead"}]}]}]}]}},{"id":"ews-delete-attachment","method":"GET","pathTemplate":"/","summary":"Deletes the attachments of an item (email message).","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"EWS","kind":"object","optional":false,"children":[{"name":"Items","kind":"object","optional":false,"children":[{"name":"FileAttachments","kind":"object","optional":false,"children":[{"name":"attachmentId","kind":"id","optional":false},{"name":"action","kind":"string","optional":false,"example":"action"}]},{"name":"ItemAttachments","kind":"object","optional":false,"children":[{"name":"attachmentId","kind":"id","optional":false},{"name":"action","kind":"string","optional":false,"example":"action"}]}]}]}]}},{"id":"ews-get-searchable-mailboxes","method":"GET","pathTemplate":"/","summary":"Returns a list of searchable mailboxes. This command requires eDiscovery permissions to the Exchange Server. For more information, see the EWSv2 integration doc","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"EWS","kind":"object","optional":false,"children":[{"name":"Mailboxes","kind":"object","optional":false,"children":[{"name":"mailbox","kind":"string","optional":false,"example":"mailbox"},{"name":"mailboxId","kind":"id","optional":false},{"name":"displayName","kind":"string","optional":false,"example":"displayName"},{"name":"isExternal","kind":"boolean","optional":false},{"name":"externalEmailAddress","kind":"string","optional":false,"example":"externalEmailAddress"}]}]}]}},{"id":"ews-search-mailboxes","method":"GET","pathTemplate":"/","summary":"Searches over multiple mailboxes or all Exchange mailboxes. Use either the mailbox-search-scope command or the email-addresses command to search specific mailbo","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"EWS","kind":"object","optional":false,"children":[{"name":"Items","kind":"object","optional":false,"children":[{"name":"itemId","kind":"id","optional":false},{"name":"mailbox","kind":"string","optional":false,"example":"mailbox"},{"name":"subject","kind":"string","optional":false,"example":"subject"},{"name":"toRecipients","kind":"string","optional":false,"example":"toRecipients"},{"name":"sender","kind":"string","optional":false,"example":"sender"},{"name":"hasAttachments","kind":"boolean","optional":false},{"name":"datetimeSent","kind":"timestamp","optional":false,"format":"iso"},{"name":"datetimeReceived","kind":"timestamp","optional":false,"format":"iso"}]}]}]}},{"id":"ews-move-item","method":"GET","pathTemplate":"/","summary":"Move an item to different folder in the mailbox.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"EWS","kind":"object","optional":false,"children":[{"name":"Items","kind":"object","optional":false,"children":[{"name":"newItemID","kind":"id","optional":false},{"name":"messageID","kind":"id","optional":false},{"name":"itemId","kind":"id","optional":false},{"name":"action","kind":"string","optional":false,"example":"action"}]}]}]}},{"id":"ews-delete-items","method":"GET","pathTemplate":"/","summary":"Delete items from mailbox. This command requires eDiscovery permissions to the Exchange Server. For more information, see the EWSv2 integration documentation.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"EWS","kind":"object","optional":false,"children":[{"name":"Items","kind":"object","optional":false,"children":[{"name":"itemId","kind":"id","optional":false},{"name":"messageId","kind":"id","optional":false},{"name":"action","kind":"string","optional":false,"example":"action"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "microsoftexchangeonpremise-ewsv2",
+  "name": "EWS v2",
+  "pack": "MicrosoftExchangeOnPremise",
+  "vendor": "Microsoft",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "POST /EWS/Exchange.asmx returns a shortened FindItem SOAP response.",
+  "notes": [
+    "The XSOAR pack uses exchangelib, which posts SOAP to /EWS/Exchange.asmx. This mock answers that path.",
+    "The SOAP body is a shortened FindItem result with subject, from, and item id. The messages namespace, ExtendedFieldURI, and attachments are omitted.",
+    "Basic auth is checked. NTLM, which the pack can also use, is not the default for this preset."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftExchangeOnPremise/Integrations/EWSv2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "microsoftexchangeonpremise-ewsv2",
+      "name": "EWS v2",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://learn.microsoft.com/en-us/exchange/client-developer/web-service-reference/finditem-operation",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/exchange/client-developer/web-service-reference/finditem-operation",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "The XSOAR pack uses exchangelib, which posts SOAP to /EWS/Exchange.asmx. This mock answers that path.",
+          "The SOAP body is a shortened FindItem result with subject, from, and item id. The messages namespace, ExtendedFieldURI, and attachments are omitted.",
+          "Basic auth is checked. NTLM, which the pack can also use, is not the default for this preset."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "text/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "find-item",
+        "method": "POST",
+        "pathTemplate": "/EWS/Exchange.asmx",
+        "summary": "Find mailbox items",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "soap",
+          "version": "1.1"
+        },
+        "record": {
+          "name": "FindItemResponse",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Message",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "ItemId",
+                  "kind": "id"
+                },
+                {
+                  "name": "Subject",
+                  "kind": "string",
+                  "example": "Invoice attached"
+                },
+                {
+                  "name": "From",
+                  "kind": "email"
+                },
+                {
+                  "name": "DateTimeReceived",
+                  "kind": "timestamp",
+                  "format": "iso"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "microsoftexchangeonpremise-ewsv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "basic",
+      "basic": {
+        "username": "lab-admin",
+        "password": "dummy-not-a-real-password"
+      }
+    }
+  }
+}

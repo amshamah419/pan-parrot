@@ -7,9 +7,9 @@
   "curated": true,
   "summary": "POST /public_api/v1/incidents/get_incidents returns reply.incidents.",
   "notes": [
-    "The XSOAR client POSTs to /public_api/v1/incidents/get_incidents. The body is { reply: { total_count, result_count, incidents } }.",
+    "The XSOAR client POSTs to /public_api/v1/incidents/get_incidents, /alerts/get_alerts/, and /endpoints/get_endpoint/. Each body is { reply: { total_count, result_count, ... } }.",
     "The real API takes search_from and search_to inside request_data. This mock reads those names from the query string.",
-    "API key headers are not checked. Extra-data and response-action routes are not modeled."
+    "API key headers are not checked. Incident extra-data and response-action routes are not modeled."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CortexXDR/Integrations/CortexXDRIR",
@@ -28,9 +28,9 @@
         "docUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Get-Incidents",
         "checkedAt": "2026-11-09",
         "differences": [
-          "The XSOAR client POSTs to /public_api/v1/incidents/get_incidents. The body is { reply: { total_count, result_count, incidents } }.",
+          "The XSOAR client POSTs to /public_api/v1/incidents/get_incidents, /alerts/get_alerts/, and /endpoints/get_endpoint/. Each body is { reply: { total_count, result_count, ... } }.",
           "The real API takes search_from and search_to inside request_data. This mock reads those names from the query string.",
-          "API key headers are not checked. Extra-data and response-action routes are not modeled."
+          "API key headers are not checked. Incident extra-data and response-action routes are not modeled."
         ]
       }
     },
@@ -118,6 +118,164 @@
             }
           ]
         }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "search_to",
+          "offsetParam": "search_from",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "id": "get-alerts",
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/alerts/get_alerts/",
+        "summary": "Get alerts",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "reply",
+          "kind": "object",
+          "children": [
+            {
+              "name": "total_count",
+              "kind": "integer"
+            },
+            {
+              "name": "result_count",
+              "kind": "integer"
+            },
+            {
+              "name": "alerts",
+              "kind": "array",
+              "pageItems": true,
+              "item": {
+                "name": "alert",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "alert_id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "detection_timestamp",
+                    "kind": "timestamp",
+                    "format": "unix-ms"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "enum",
+                    "enumValues": [
+                      "low",
+                      "medium",
+                      "high"
+                    ]
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "Suspicious process execution"
+                  },
+                  {
+                    "name": "category",
+                    "kind": "string",
+                    "example": "Malware"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "search_to",
+          "offsetParam": "search_from",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "id": "get-endpoints",
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/endpoints/get_endpoint/",
+        "summary": "Get endpoints",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "reply",
+          "kind": "object",
+          "children": [
+            {
+              "name": "total_count",
+              "kind": "integer"
+            },
+            {
+              "name": "result_count",
+              "kind": "integer"
+            },
+            {
+              "name": "endpoints",
+              "kind": "array",
+              "pageItems": true,
+              "item": {
+                "name": "endpoint",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "endpoint_id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "endpoint_name",
+                    "kind": "string",
+                    "example": "lab-workstation"
+                  },
+                  {
+                    "name": "endpoint_status",
+                    "kind": "enum",
+                    "enumValues": [
+                      "connected",
+                      "disconnected",
+                      "lost"
+                    ]
+                  },
+                  {
+                    "name": "os_type",
+                    "kind": "enum",
+                    "enumValues": [
+                      "windows",
+                      "linux",
+                      "macos"
+                    ]
+                  },
+                  {
+                    "name": "ip",
+                    "kind": "ip"
+                  },
+                  {
+                    "name": "last_seen",
+                    "kind": "timestamp",
+                    "format": "unix-ms"
+                  }
+                ]
+              }
+            }
+          ]
+        }
       }
     ],
     "chaos": {
@@ -132,6 +290,8 @@
       "outOfOrder": false,
       "wrongTypes": false,
       "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
       "malformedJson": false,
       "wrongContentType": false,
       "randomErrors": false,

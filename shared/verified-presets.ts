@@ -1,4 +1,5 @@
 import { defaultChaos, defaultPagination, type FieldSpec, type MockAuth, type MockSpec } from "./mock-spec";
+import { moreVerifiedPresets } from "./verified-presets-more";
 
 const checkedAt = "2026-11-09";
 
@@ -127,7 +128,7 @@ const oktaEvent = object("event", [
 
 const falconId = field("resource", "id");
 
-export const verifiedPresets: VerifiedPresetFile[] = [
+const baseVerifiedPresets: VerifiedPresetFile[] = [
   preset({
     auth: { mode: "api-key", apiKey: { in: "header", name: "authorization", value: "SSWS dummy-okta-token" } },
     id: "okta-okta-v2",
@@ -735,12 +736,13 @@ export const verifiedPresets: VerifiedPresetFile[] = [
     name: "Microsoft 365 Defender",
     pack: "Microsoft365Defender",
     vendor: "Microsoft",
-    summary: "GET /api/incidents returns a value array. The XSOAR client calls api/incidents.",
+    summary: "Defender XDR incidents plus advanced hunting. The XSOAR client calls api/incidents and api/advancedhunting/run.",
     docUrl: "https://learn.microsoft.com/en-us/microsoft-365/security/defender/api-list-incidents",
-    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Microsoft365Defender",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Microsoft365Defender/Integrations/Microsoft365Defender",
     differences: [
-      "The incidents list is { value: [...] }. nextLink is included while pages remain.",
-      "Alerts nested on an incident are shortened.",
+      "Microsoft now documents this API as Microsoft Defender XDR. The incidents list is { value: [...] }. nextLink is included while pages remain.",
+      "POST /api/advancedhunting/run returns { Results: [...] }. Schema and Stats from the public response are omitted.",
+      "Alerts nested on an incident are shortened. Bearer tokens are not checked.",
     ],
     operations: [
       op({
@@ -759,6 +761,29 @@ export const verifiedPresets: VerifiedPresetFile[] = [
           field("status", "enum", { enumValues: ["Active", "Resolved", "Redirected"] }),
           field("createdTime", "timestamp", { format: "iso" }),
           field("lastUpdateTime", "timestamp", { format: "iso" }),
+        ]),
+      }),
+      op({
+        id: "advanced-hunting",
+        method: "POST",
+        pathTemplate: "/api/advancedhunting/run",
+        summary: "Run an advanced hunting query",
+        status: 200,
+        list: false,
+        envelope: { type: "object" },
+        pagination: { style: "none", defaultLimit: 20, maxLimit: 100 },
+        record: object("hunting", [
+          {
+            name: "Results",
+            kind: "array",
+            pageItems: true,
+            item: object("row", [
+              field("Timestamp", "timestamp", { format: "iso" }),
+              field("AlertId", "id"),
+              field("DeviceName", "string", { example: "lab-workstation" }),
+              field("ActionType", "string", { example: "ProcessCreated" }),
+            ]),
+          },
         ]),
       }),
     ],
@@ -1110,9 +1135,9 @@ export const verifiedPresets: VerifiedPresetFile[] = [
     docUrl: "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Get-Incidents",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/CortexXDR/Integrations/CortexXDRIR",
     differences: [
-      "The XSOAR client POSTs to /public_api/v1/incidents/get_incidents. The body is { reply: { total_count, result_count, incidents } }.",
+      "The XSOAR client POSTs to /public_api/v1/incidents/get_incidents, /alerts/get_alerts/, and /endpoints/get_endpoint/. Each body is { reply: { total_count, result_count, ... } }.",
       "The real API takes search_from and search_to inside request_data. This mock reads those names from the query string.",
-      "API key headers are not checked. Extra-data and response-action routes are not modeled.",
+      "API key headers are not checked. Incident extra-data and response-action routes are not modeled.",
     ],
     operations: [
       op({
@@ -1142,9 +1167,64 @@ export const verifiedPresets: VerifiedPresetFile[] = [
           },
         ]),
       }),
+      op({
+        id: "get-alerts",
+        method: "POST",
+        pathTemplate: "/public_api/v1/alerts/get_alerts/",
+        summary: "Get alerts",
+        status: 200,
+        list: false,
+        envelope: { type: "object" },
+        pagination: { style: "offset", limitParam: "search_to", offsetParam: "search_from", defaultLimit: 20, maxLimit: 100 },
+        record: object("reply", [
+          field("total_count", "integer"),
+          field("result_count", "integer"),
+          {
+            name: "alerts",
+            kind: "array",
+            pageItems: true,
+            item: object("alert", [
+              field("alert_id", "id"),
+              field("detection_timestamp", "timestamp", { format: "unix-ms" }),
+              field("severity", "enum", { enumValues: ["low", "medium", "high"] }),
+              field("name", "string", { example: "Suspicious process execution" }),
+              field("category", "string", { example: "Malware" }),
+            ]),
+          },
+        ]),
+      }),
+      op({
+        id: "get-endpoints",
+        method: "POST",
+        pathTemplate: "/public_api/v1/endpoints/get_endpoint/",
+        summary: "Get endpoints",
+        status: 200,
+        list: false,
+        envelope: { type: "object" },
+        pagination: { style: "offset", limitParam: "search_to", offsetParam: "search_from", defaultLimit: 20, maxLimit: 100 },
+        record: object("reply", [
+          field("total_count", "integer"),
+          field("result_count", "integer"),
+          {
+            name: "endpoints",
+            kind: "array",
+            pageItems: true,
+            item: object("endpoint", [
+              field("endpoint_id", "id"),
+              field("endpoint_name", "string", { example: "lab-workstation" }),
+              field("endpoint_status", "enum", { enumValues: ["connected", "disconnected", "lost"] }),
+              field("os_type", "enum", { enumValues: ["windows", "linux", "macos"] }),
+              field("ip", "ip"),
+              field("last_seen", "timestamp", { format: "unix-ms" }),
+            ]),
+          },
+        ]),
+      }),
     ],
   }),
 ];
+
+export const verifiedPresets: VerifiedPresetFile[] = [...baseVerifiedPresets, ...moreVerifiedPresets];
 
 export const checkedNotUpgraded: Array<{
   id: string;

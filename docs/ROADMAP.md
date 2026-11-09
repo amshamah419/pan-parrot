@@ -35,13 +35,14 @@ Status: **done**, **in progress**, **todo**.
 - Git history is not rewritten. The committed secrets were starter defaults (`your-super-secret-session-key-here`, `admin2024!`, a local Postgres password, and a Builder.io public key). Live `SESSION_SECRET` and `RESEND_API_KEY` belong only in the Netlify production environment.
 - Captured calls expire after 14 days and 200 per mock. There is no backup service. Export a mock before deleting the Netlify project if you still want it.
 - Request JSON is still capped before Zod parses it (96 KB for API bodies, 512 KB for a spec). Zod is 4.6.7 or newer so GHSA-mrhx-c7xc-m3w5 is not in the production tree. `z.record` takes a key schema and a value schema.
+- 36 presets are verified, including QRadar v3, Elasticsearch v2, Gmail, EWS v2, Strata Logging Service, GuardDuty, Security Hub, Tenable, InsightIDR, SentinelOne v2, Carbon Black Endpoint Standard v3, Prisma Cloud v2, Entra ID users, Entra ID Protection, and Qualys VMDR. Cortex XDR also mocks alerts and endpoints. Defender XDR also mocks advanced hunting. The doc-check record is source.verification with status, docUrl, checkedAt, and differences.
 - An XSOAR instance helper is shown for presets and for mocks imported from integration YAML. Server URL is the catch URL. Dummy secrets are placed in the YAML's own parameter names. Trust any certificate is on, Use system proxy is off, and Fetch incidents is off until a manual command works. The downloadable JSON uses `data: [{ name, value }]`, with type 9 credentials as `{ identifier, password, vaultInstanceId }`. Integrations that append `:port/api/` (Panorama) are called out on the port row because that client drops the `/catch` path.
 
 ## Next ideas
 
 Things a content developer would still have to work around:
 
-- Verify more than the 21 presets that were checked against a public vendor reference. The rest are a guessed shape.
+- 36 presets are checked against a public vendor reference. The rest of the catalog is still a guessed shape.
 - A diff on the version list, so revert shows what would change.
 - A way to close a catch URL (a second token or an IP allowlist). Today every catch URL is public and the rate limits are the only brake.
 - An email to the owner when a catch URL receives its first call. Resend is already the mail path.

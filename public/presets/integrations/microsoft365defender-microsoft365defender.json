@@ -5,13 +5,14 @@
   "vendor": "Microsoft",
   "fidelity": "verified",
   "curated": true,
-  "summary": "GET /api/incidents returns a value array. The XSOAR client calls api/incidents.",
+  "summary": "Defender XDR incidents plus advanced hunting. The XSOAR client calls api/incidents and api/advancedhunting/run.",
   "notes": [
-    "The incidents list is { value: [...] }. nextLink is included while pages remain.",
-    "Alerts nested on an incident are shortened."
+    "Microsoft now documents this API as Microsoft Defender XDR. The incidents list is { value: [...] }. nextLink is included while pages remain.",
+    "POST /api/advancedhunting/run returns { Results: [...] }. Schema and Stats from the public response are omitted.",
+    "Alerts nested on an incident are shortened. Bearer tokens are not checked."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
-  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Microsoft365Defender",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Microsoft365Defender/Integrations/Microsoft365Defender",
   "spec": {
     "version": 1,
     "source": {
@@ -27,8 +28,9 @@
         "docUrl": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/api-list-incidents",
         "checkedAt": "2026-11-09",
         "differences": [
-          "The incidents list is { value: [...] }. nextLink is included while pages remain.",
-          "Alerts nested on an incident are shortened."
+          "Microsoft now documents this API as Microsoft Defender XDR. The incidents list is { value: [...] }. nextLink is included while pages remain.",
+          "POST /api/advancedhunting/run returns { Results: [...] }. Schema and Stats from the public response are omitted.",
+          "Alerts nested on an incident are shortened. Bearer tokens are not checked."
         ]
       }
     },
@@ -97,6 +99,64 @@
             }
           ]
         }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "id": "advanced-hunting",
+        "method": "POST",
+        "pathTemplate": "/api/advancedhunting/run",
+        "summary": "Run an advanced hunting query",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "hunting",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Results",
+              "kind": "array",
+              "pageItems": true,
+              "item": {
+                "name": "row",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "Timestamp",
+                    "kind": "timestamp",
+                    "format": "iso"
+                  },
+                  {
+                    "name": "AlertId",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "DeviceName",
+                    "kind": "string",
+                    "example": "lab-workstation"
+                  },
+                  {
+                    "name": "ActionType",
+                    "kind": "string",
+                    "example": "ProcessCreated"
+                  }
+                ]
+              }
+            }
+          ]
+        }
       }
     ],
     "chaos": {
@@ -111,6 +171,8 @@
       "outOfOrder": false,
       "wrongTypes": false,
       "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
       "malformedJson": false,
       "wrongContentType": false,
       "randomErrors": false,

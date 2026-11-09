@@ -1,1 +1,127 @@
-{"id":"qualys-qualysv2","name":"Qualys VMDR","pack":"qualys","fidelity":"sample","curated":false,"summary":"Qualys Vulnerability Management lets you create, run, manage reports and to fetch Activity Logs, Assets and Vulnerabilities, launch and manage vulnerability and compliance scans, a","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"qualys-qualysv2","name":"Qualys VMDR","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/qualys/Integrations/Qualysv2","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-fetched-assets-json","method":"POST","pathTemplate":"/resp_type","summary":"test_data/fetched_assets.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false,"example":"143111841"},{"name":"IP","kind":"ip","optional":false,"example":"1.1.1.1"},{"name":"TRACKING_METHOD","kind":"string","optional":false,"example":"DNS"},{"name":"OS","kind":"string","optional":true,"example":"Linux 3.13"},{"name":"DNS","kind":"string","optional":false,"example":"one.one.one.one"},{"name":"DNS_DATA","kind":"object","optional":false,"children":[{"name":"HOSTNAME","kind":"string","optional":false,"example":"one"},{"name":"DOMAIN","kind":"string","optional":false,"example":"one.one.one"},{"name":"FQDN","kind":"string","optional":false,"example":"one.one.one.one"}]},{"name":"LAST_SCAN_DATETIME","kind":"timestamp","optional":false,"example":"2023-05-16T15:26:53Z","format":"iso"},{"name":"LAST_VM_SCANNED_DATE","kind":"timestamp","optional":false,"example":"2023-05-16T15:26:01Z","format":"iso"},{"name":"LAST_VM_SCANNED_DURATION","kind":"string","optional":false,"example":"2130"},{"name":"LAST_PC_SCANNED_DATE","kind":"timestamp","optional":true,"example":"2022-12-06T12:03:46Z","format":"iso"},{"name":"DETECTION","kind":"object","optional":false,"children":[{"name":"QID","kind":"id","optional":false,"example":"QIDa"},{"name":"TYPE","kind":"string","optional":false,"example":"Confirmed"},{"name":"SEVERITY","kind":"string","optional":false,"example":"2"},{"name":"PORT","kind":"string","optional":false,"example":"443"},{"name":"PROTOCOL","kind":"string","optional":false,"example":"tcp"},{"name":"SSL","kind":"string","optional":false,"example":"0"},{"name":"RESULTS","kind":"string","optional":false,"example":"X-Content-Type-Options HTTP Header missing on port 443.\n\nGET / HTTP/1.0\nHost: one.one.one.one\nUser-Agent: Mozilla/5.0 (W"},{"name":"STATUS","kind":"string","optional":false,"example":"Active"},{"name":"FIRST_FOUND_DATETIME","kind":"timestamp","optional":false,"example":"2023-05-16T15:26:53Z","format":"iso"},{"name":"LAST_FOUND_DATETIME","kind":"timestamp","optional":false,"example":"2023-05-16T15:26:01Z","format":"iso"},{"name":"TIMES_FOUND","kind":"string","optional":false,"example":"216"},{"name":"LAST_TEST_DATETIME","kind":"timestamp","optional":false,"example":"2023-05-16T15:26:01Z","format":"iso"},{"name":"LAST_UPDATE_DATETIME","kind":"timestamp","optional":false,"example":"2023-05-16T15:26:53Z","format":"iso"},{"name":"LAST_FIXED_DATETIME","kind":"timestamp","optional":false,"example":"2022-12-07T10:06:40Z","format":"iso"},{"name":"IS_IGNORED","kind":"string","optional":false,"example":"0"},{"name":"IS_DISABLED","kind":"string","optional":false,"example":"0"},{"name":"LAST_PROCESSED_DATETIME","kind":"timestamp","optional":false,"example":"2023-05-16T15:26:53Z","format":"iso"}]},{"name":"_time","kind":"timestamp","optional":false,"example":"2023-05-16T15:26:53Z","format":"iso"},{"name":"event_type","kind":"string","optional":false,"example":"host_list_detection"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "qualys-qualysv2",
+  "name": "Qualys VMDR",
+  "pack": "qualys",
+  "vendor": "Qualys",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /api/2.0/fo/asset/host/ returns a shortened host list.",
+  "notes": [
+    "The host list API returns HOST_LIST_OUTPUT XML. This mock returns a shortened host with id, IP, and DNS. Detection details and the DTD are omitted.",
+    "The pack also calls /api/5.0/fo/ and the knowledge base. Those routes are not modeled.",
+    "Basic auth is checked. The Qualys session cookie flow is not."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/qualys/Integrations/Qualysv2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "qualys-qualysv2",
+      "name": "Qualys VMDR",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://docs.qualys.com/en/vm/api/assets/index.htm",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.qualys.com/en/vm/api/assets/index.htm",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "The host list API returns HOST_LIST_OUTPUT XML. This mock returns a shortened host with id, IP, and DNS. Detection details and the DTD are omitted.",
+          "The pack also calls /api/5.0/fo/ and the knowledge base. Those routes are not modeled.",
+          "Basic auth is checked. The Qualys session cookie flow is not."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "text/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "list-hosts",
+        "method": "GET",
+        "pathTemplate": "/api/2.0/fo/asset/host/",
+        "summary": "List hosts",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "HOST_LIST_OUTPUT",
+          "kind": "object",
+          "children": [
+            {
+              "name": "HOST",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "ID",
+                  "kind": "integer"
+                },
+                {
+                  "name": "IP",
+                  "kind": "ip"
+                },
+                {
+                  "name": "DNS",
+                  "kind": "string",
+                  "example": "lab-workstation.example.com"
+                },
+                {
+                  "name": "LAST_VULN_SCAN_DATETIME",
+                  "kind": "timestamp",
+                  "format": "iso"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "qualys-qualysv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "basic",
+      "basic": {
+        "username": "lab-admin",
+        "password": "dummy-not-a-real-password"
+      }
+    }
+  }
+}
