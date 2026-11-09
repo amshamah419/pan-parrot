@@ -10,6 +10,7 @@ import { parse as parseYaml } from "yaml";
 import { exportFixture } from "../shared/export-fixture";
 import { validateMockSpec } from "../shared/mock-spec";
 import { isOpenApiDocument, isXsoarIntegration, mockFromIntegrationYaml } from "../shared/xsoar-yaml";
+import { listPushDeliveries, pushEndpointNow, pushScheduleHandler } from "./push";
 import { recordUpstream } from "./record";
 import { fetchPublicSpec } from "./ssrf";
 import { createToken, listTokens, revokeToken, userFromApiToken } from "./tokens";
@@ -268,6 +269,19 @@ export function createServer(options?: {
       record.mockSpec,
     );
     return c.json(endpoint);
+  });
+
+  app.post("/api/endpoints/:endpointId/push", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    const outcome = await pushEndpointNow(c.get("db"), user.id, c.req.param("endpointId"));
+    return c.json(outcome);
+  });
+
+  app.get("/api/endpoints/:endpointId/push", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json({ deliveries: await listPushDeliveries(c.get("db"), user.id, c.req.param("endpointId")) });
   });
 
   app.post("/api/endpoints/:endpointId/runtime/reset", async (c) => {
@@ -560,6 +574,8 @@ function applySecurityHeaders(c: {
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
+
+export { pushScheduleHandler };
 
 export async function maintenanceHandler(): Promise<Response> {
   const db = await getDb();

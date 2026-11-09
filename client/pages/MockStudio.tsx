@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrustBadge } from "@/components/TrustBadge";
 import { MockAuthPanel } from "@/components/MockAuthPanel";
 import { FlowPanel } from "@/components/FlowPanel";
+import { PushPanel } from "@/components/PushPanel";
 import { getEndpoint, resetRuntime, saveMockSpec } from "@/lib/api";
 import { generateMockResponse, matchOperation } from "@shared/generate";
 import {
@@ -212,6 +213,7 @@ export default function MockStudio() {
           <TabsTrigger value="chaos">Chaos</TabsTrigger>
           <TabsTrigger value="match">Match</TabsTrigger>
           <TabsTrigger value="flow">Flow</TabsTrigger>
+          <TabsTrigger value="push">Push</TabsTrigger>
           <TabsTrigger value="auth">Auth</TabsTrigger>
         </TabsList>
         <TabsContent value="preview" className="space-y-3">
@@ -348,6 +350,13 @@ export default function MockStudio() {
                 setError(err instanceof Error ? err.message : "Could not reset");
               });
             }}
+          />
+        </TabsContent>
+        <TabsContent value="push">
+          <PushPanel
+            endpointId={endpointId}
+            spec={spec}
+            onChange={(push) => setSpec({ ...spec, push })}
           />
         </TabsContent>
         <TabsContent value="auth">

@@ -6,7 +6,7 @@ import { checkMockAuth } from "../shared/mock-auth";
 import { validateMockSpec, type MockSpec } from "../shared/mock-spec";
 import { parseXml, localName, type XmlElement } from "../shared/xml";
 import { gzipBytes, zipEntries } from "./pack";
-import { openAuth, sealAuth } from "./mock-secrets";
+import { openAuth, sealAuth, sealSecret } from "./mock-secrets";
 import { loadRuntime, resetRuntime, saveRuntime } from "./runtime-state";
 import { ENDPOINT_PATH_RE, POLICY } from "../shared/policy";
 import type { AppDb } from "../db/client";
@@ -75,7 +75,7 @@ export async function createEndpointForUser(
       continue;
     }
     const url = `${publicSiteUrl()}/catch/${candidate}`;
-    const mockSpec = input.mockSpec ? sealSpec(validateMockSpec(input.mockSpec)) : null;
+    const mockSpec = input.mockSpec ? sealSpec(parseSpec(input.mockSpec)) : null;
     const [created] = await db
       .insert(endpoints)
       .values({
@@ -217,7 +217,17 @@ export async function saveMockSpec(
   endpointId: string,
   mockSpec: unknown,
 ) {
-  const spec = sealSpec(validateMockSpec(mockSpec));
+  const next = parseSpec(mockSpec);
+  if (next.push && !next.push.secret) {
+    const [existing] = await db
+      .select({ mockSpec: endpoints.mockSpec })
+      .from(endpoints)
+      .where(and(eq(endpoints.id, endpointId), eq(endpoints.userId, userId)))
+      .limit(1);
+    const previous = existing?.mockSpec as MockSpec | null;
+    if (previous?.push?.secret && next.push.signing !== "none") next.push.secret = previous.push.secret;
+  }
+  const spec = sealSpec(next);
   const updated = await db
     .update(endpoints)
     .set({
@@ -574,15 +584,29 @@ function behaviorActive(spec: MockSpec): boolean {
   );
 }
 
+function parseSpec(input: unknown): MockSpec {
+  try {
+    return validateMockSpec(input);
+  } catch (error) {
+    if (error instanceof HttpError) throw error;
+    throw new HttpError(400, error instanceof Error ? error.message : "Invalid mock");
+  }
+}
+
 function sealSpec(spec: MockSpec): MockSpec {
-  return { ...spec, auth: sealAuth(spec.auth) };
+  const push = spec.push?.secret ? { ...spec.push, secret: sealSecret(spec.push.secret) } : spec.push;
+  return { ...spec, auth: sealAuth(spec.auth), push };
 }
 
 function openSpec(raw: unknown): unknown {
   if (!raw || typeof raw !== "object") return raw;
-  const spec = raw as MockSpec;
-  if (!spec.auth) return spec;
-  return { ...spec, auth: openAuth(spec.auth) };
+  const spec = { ...(raw as MockSpec) };
+  if (spec.auth) spec.auth = openAuth(spec.auth);
+  if (spec.push) {
+    const hasSecret = Boolean(spec.push.secret);
+    spec.push = { ...spec.push, secret: undefined, hasSecret };
+  }
+  return spec;
 }
 
 function headersOf(request: Request): Record<string, string> {
