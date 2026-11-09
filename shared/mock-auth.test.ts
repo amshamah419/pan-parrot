@@ -98,6 +98,68 @@ describe("mock auth", () => {
       headers: { authorization: `Bearer ${token}` },
     }, now + 120_000);
     expect(expired.status).toBe(401);
+    expect(JSON.parse(expired.body).error).toBe("invalid_token");
+    expect(JSON.parse(issued.body).refresh_token).toBeUndefined();
+  });
+
+  it("refreshes a generic token and rejects a bad refresh grant", () => {
+    const now = Date.parse("2026-11-09T00:00:00Z");
+    const mock = spec({
+      mode: "oauth2",
+      oauth2: {
+        tokenPath: "/oauth/token",
+        clientId: "dummy-client",
+        clientSecret: "dummy-secret",
+        ttlSeconds: 60,
+        shape: "generic",
+        refresh: true,
+      },
+    });
+    const issued = checkMockAuth(mock, {
+      ...request,
+      method: "POST",
+      path: "/oauth/token",
+      body: "grant_type=client_credentials&client_id=dummy-client&client_secret=dummy-secret",
+    }, now);
+    const first = JSON.parse(issued.body) as { access_token: string; refresh_token: string; expires_in: number };
+    expect(first.expires_in).toBe(60);
+    expect(first.refresh_token.startsWith("ppref.")).toBe(true);
+    const refreshed = checkMockAuth(mock, {
+      ...request,
+      method: "POST",
+      path: "/oauth/token",
+      body: `grant_type=refresh_token&refresh_token=${encodeURIComponent(first.refresh_token)}`,
+    }, now + 30_000);
+    const second = JSON.parse(refreshed.body) as { access_token: string };
+    expect(refreshed.ok).toBe(true);
+    expect(second.access_token).not.toBe(first.access_token);
+    const accepted = checkMockAuth(mock, {
+      ...request,
+      headers: { authorization: `Bearer ${second.access_token}` },
+    }, now + 31_000);
+    expect(accepted.ok).toBe(true);
+    const bad = checkMockAuth(mock, {
+      ...request,
+      method: "POST",
+      path: "/oauth/token",
+      body: "grant_type=refresh_token&refresh_token=nope",
+    }, now);
+    expect(bad.status).toBe(400);
+    expect(JSON.parse(bad.body).error).toBe("invalid_grant");
+    const other = checkMockAuth(mock, {
+      ...request,
+      method: "POST",
+      path: "/oauth/token",
+      body: "grant_type=password",
+    }, now);
+    expect(JSON.parse(other.body).error).toBe("unsupported_grant_type");
+    const onCatch = checkMockAuth(mock, {
+      ...request,
+      method: "POST",
+      path: "/catch/demo/oauth/token",
+      body: "grant_type=client_credentials&client_id=dummy-client&client_secret=dummy-secret",
+    }, now);
+    expect(JSON.parse(onCatch.body).refresh_token).toBeTruthy();
   });
 
   it("checks an EdgeGrid signature and rejects a stale timestamp", () => {
