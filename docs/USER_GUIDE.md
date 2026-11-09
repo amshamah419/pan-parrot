@@ -47,4 +47,6 @@ npm run parrot -- export <endpoint-id> --out ./tests
 
 `login` writes `~/.config/pan-parrot/credentials.json` mode `0600`. The pytest export uses `requests_mock` and does not call the live catch URL. Dummy credentials are not copied into the export.
 
+**Export test_data** writes `test_data/*.json` files whose contents are the raw HTTP body, plus a README with the `util_load_json` snippet. Sequence steps that have a body are separate files. **Fixtures from captured calls** does the same from response previews of calls that already hit the catch URL. The shape diff lists fields the preset expects and the pasted JSON does not, and the reverse.
+
 More routes are in [API.md](API.md). Deploy steps are in [GO_LIVE.md](GO_LIVE.md).

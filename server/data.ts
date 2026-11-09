@@ -179,6 +179,22 @@ export async function configureMock(
     .where(eq(endpoints.id, endpoint.id));
 }
 
+export async function listEndpointCaptures(db: AppDb, endpointId: string) {
+  const rows = await db
+    .select()
+    .from(capturedRequests)
+    .where(eq(capturedRequests.endpointId, endpointId))
+    .orderBy(capturedRequests.createdAt)
+    .limit(19);
+  return rows.map((request) => ({
+    method: request.method,
+    path: request.path,
+    status: request.status,
+    responsePreview: request.responsePreview,
+    truncated: request.truncated,
+  }));
+}
+
 export async function listRequests(db: AppDb, userId: string) {
   const rows = await db
     .select({

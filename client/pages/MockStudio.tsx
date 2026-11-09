@@ -13,6 +13,7 @@ import { PushPanel } from "@/components/PushPanel";
 import { getEndpoint, resetRuntime, saveMockSpec } from "@/lib/api";
 import { CollabPanel } from "@/components/CollabPanel";
 import { InstanceGuidePanel } from "@/components/InstanceGuide";
+import { FixturePanel } from "@/components/FixturePanel";
 import { generateMockResponse, matchOperation } from "@shared/generate";
 import {
   defaultAuth,
@@ -181,6 +182,7 @@ export default function MockStudio() {
       </section>
 
       <InstanceGuidePanel spec={spec} catchUrl={url} />
+      <FixturePanel endpointId={endpointId} spec={spec} catchUrl={url} />
 
       {verification && (
         <section className="rounded-lg border p-4 text-sm">
