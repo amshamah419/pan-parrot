@@ -63,6 +63,9 @@ export interface PublicFetchInit {
   body?: string;
   accept?: string;
   maxBytes?: number;
+  timeoutMs?: number;
+  /** Pushes do not follow redirects, so a signed body cannot hop to another host. */
+  followRedirects?: boolean;
   /** throw rejects an oversized body. truncate keeps the first maxBytes. */
   oversize?: "throw" | "truncate";
 }
@@ -138,10 +141,13 @@ async function readHttps(
     redirect: "manual",
     headers,
     body: method === "GET" || method === "HEAD" ? undefined : init.body,
-    signal: AbortSignal.timeout(8000),
+    signal: AbortSignal.timeout(init.timeoutMs ?? 8000),
   });
   if (response.status >= 300 && response.status < 400) {
     await response.body?.cancel();
+    if (init.followRedirects === false) {
+      return { status: response.status, contentType: "", body: "", truncated: false };
+    }
     if (redirects >= 2) throw new HttpError(400, "Too many redirects");
     const location = response.headers.get("location");
     if (!location) throw new HttpError(400, "Redirect missing a location");

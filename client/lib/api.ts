@@ -123,6 +123,21 @@ export async function revokeApiToken(tokenId: string): Promise<{ ok: boolean }> 
   return apiRequest(`/api/tokens/${tokenId}`, { method: "DELETE" });
 }
 
+export async function pushEndpoint(endpointId: string): Promise<{
+  ok: boolean;
+  status: number | null;
+  attempts: number;
+  error?: string;
+}> {
+  return apiRequest(`/api/endpoints/${endpointId}/push`, { method: "POST" });
+}
+
+export async function getPushDeliveries(endpointId: string): Promise<{
+  deliveries: Array<{ id: string; ok: boolean; attempts: number; status: number | null; error: string | null; created: string }>;
+}> {
+  return apiRequest(`/api/endpoints/${endpointId}/push`);
+}
+
 export async function getCapturedRequests(): Promise<CapturedRequest[]> {
   return apiRequest<CapturedRequest[]>("/api/requests");
 }

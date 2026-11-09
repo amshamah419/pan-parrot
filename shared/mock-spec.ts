@@ -187,6 +187,20 @@ export interface MockSpec {
   totalRecords: number;
   auth?: MockAuth;
   behavior?: MockBehavior;
+  push?: PushSpec;
+}
+
+export interface PushSpec {
+  enabled: boolean;
+  url: string;
+  /** 0 sends only when you click Push now. 15, 60, and 1440 are scheduled. */
+  intervalMinutes: number;
+  batch: number;
+  retries: number;
+  signing: "none" | "hmac-sha256" | "bearer";
+  secret?: string;
+  /** Set on read so the studio can say a secret is saved without returning it. */
+  hasSecret?: boolean;
 }
 
 export interface ScenarioStep {
@@ -311,6 +325,7 @@ export function validateMockSpec(input: unknown): MockSpec {
     totalRecords: total,
     auth: normalizeAuth(raw.auth),
     behavior: normalizeBehavior(raw.behavior),
+    push: normalizePush(raw.push),
   };
 }
 
@@ -640,6 +655,61 @@ function normalizeBehavior(behavior: MockBehavior | undefined): MockBehavior {
       perPoll: clampInt(behavior.fetch?.perPoll, 1, 50, 3),
     },
   };
+}
+
+function normalizePush(push: PushSpec | undefined): PushSpec | undefined {
+  if (!push || typeof push !== "object") return undefined;
+  const signing = push.signing === "hmac-sha256" || push.signing === "bearer" ? push.signing : "none";
+  const interval = [15, 60, 1440].includes(Number(push.intervalMinutes)) ? Number(push.intervalMinutes) : 0;
+  const secret = cleanOptional(push.secret, 200);
+  const url = cleanOptional(push.url, 300);
+  if (url) assertPushUrl(url);
+  if (!url && !push.enabled) return undefined;
+  if (push.enabled && !url) throw new Error("Push URL is required");
+  return {
+    enabled: Boolean(push.enabled),
+    url: url || "",
+    intervalMinutes: interval,
+    batch: clampInt(push.batch, 1, 3, 1),
+    retries: clampInt(push.retries, 0, 2, 1),
+    signing,
+    secret,
+  };
+}
+
+function assertPushUrl(value: string): void {
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    throw new Error("Push URL is not valid");
+  }
+  if (url.protocol !== "https:") throw new Error("Push URL must use https");
+  if (url.username || url.password) throw new Error("Push URL must not include credentials");
+  if (url.port && url.port !== "443") throw new Error("Push URL must use port 443");
+  const host = url.hostname.replace(/^\[|\]$/g, "").toLowerCase();
+  if (
+    host === "localhost" ||
+    host.endsWith(".localhost") ||
+    host.endsWith(".local") ||
+    host.endsWith(".internal") ||
+    host === "metadata.google.internal" ||
+    isPrivateLiteral(host)
+  ) {
+    throw new Error("Push URL host is not allowed");
+  }
+}
+
+function isPrivateLiteral(host: string): boolean {
+  const parts = host.split(".").map((part) => Number(part));
+  if (parts.length !== 4 || parts.some((part) => !Number.isInteger(part) || part < 0 || part > 255)) return false;
+  const [a, b] = parts;
+  if (a === 0 || a === 10 || a === 127 || a === 255) return true;
+  if (a === 169 && b === 254) return true;
+  if (a === 172 && b >= 16 && b <= 31) return true;
+  if (a === 192 && b === 168) return true;
+  if (a === 100 && b >= 64 && b <= 127) return true;
+  return false;
 }
 
 export function defaultBehavior(): MockBehavior {

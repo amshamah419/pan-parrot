@@ -189,6 +189,27 @@ export const apiTokens = pgTable(
   ],
 );
 
+export const pushDeliveries = pgTable(
+  "push_deliveries",
+  {
+    id: text("id").primaryKey(),
+    endpointId: text("endpoint_id")
+      .notNull()
+      .references(() => endpoints.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    ok: boolean("ok").notNull(),
+    attempts: integer("attempts").notNull(),
+    status: integer("status"),
+    error: text("error"),
+    createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [index("push_deliveries_endpoint_idx").on(table.endpointId, table.createdAt)],
+);
+
 export const rateLimits = pgTable("rate_limits", {
   key: text("key").primaryKey(),
   count: integer("count").notNull(),
