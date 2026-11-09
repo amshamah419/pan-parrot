@@ -58,7 +58,7 @@ describe("generated mocks on the catch URL", () => {
       body: JSON.stringify({
         name: "Akamai WAF SIEM",
         customPath: "akamai",
-        mockSpec: { ...akamai, totalRecords: 1000, chaos: { ...akamai.chaos, seed: "load" } },
+        mockSpec: { ...akamai, auth: { mode: "none" }, totalRecords: 1000, chaos: { ...akamai.chaos, seed: "load" } },
       }),
     });
     expect(created.status).toBe(200);
@@ -89,6 +89,7 @@ describe("generated mocks on the catch URL", () => {
   it("records a deterministic flaky response on the request log", async () => {
     const flaky = validateMockSpec({
       ...akamai,
+      auth: { mode: "none" },
       chaos: {
         ...akamai.chaos,
         enabled: true,

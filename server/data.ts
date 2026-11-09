@@ -1,7 +1,11 @@
 import { randomBytes } from "node:crypto";
 import { and, count, desc, eq, sql } from "drizzle-orm";
-import { generateMockResponse, matchOperation } from "../shared/generate";
+import { chaosTriggers, generateMockResponse, matchOperation } from "../shared/generate";
+import { checkMockAuth } from "../shared/mock-auth";
 import { validateMockSpec, type MockSpec } from "../shared/mock-spec";
+import { parseXml, localName, type XmlElement } from "../shared/xml";
+import { gzipBytes, zipEntries } from "./pack";
+import { openAuth, sealAuth } from "./mock-secrets";
 import { ENDPOINT_PATH_RE, POLICY } from "../shared/policy";
 import type { AppDb } from "../db/client";
 import { capturedRequests, endpoints, sessions, users } from "../db/schema";
@@ -69,7 +73,7 @@ export async function createEndpointForUser(
       continue;
     }
     const url = `${publicSiteUrl()}/catch/${candidate}`;
-    const mockSpec = input.mockSpec ? validateMockSpec(input.mockSpec) : null;
+    const mockSpec = input.mockSpec ? sealSpec(validateMockSpec(input.mockSpec)) : null;
     const [created] = await db
       .insert(endpoints)
       .values({
@@ -197,7 +201,7 @@ export async function saveMockSpec(
   endpointId: string,
   mockSpec: unknown,
 ) {
-  const spec = validateMockSpec(mockSpec);
+  const spec = sealSpec(validateMockSpec(mockSpec));
   const updated = await db
     .update(endpoints)
     .set({
@@ -232,7 +236,13 @@ export async function captureOnPath(
   subpath: string,
   request: Request,
   ip: string,
-): Promise<{ status: number; body: string; headers: Record<string, string>; json: boolean }> {
+): Promise<{
+  status: number;
+  body: string;
+  bodyBytes?: Uint8Array;
+  headers: Record<string, string>;
+  json: boolean;
+}> {
   if (!ENDPOINT_PATH_RE.test(path)) {
     throw new HttpError(404, "Endpoint not found");
   }
@@ -253,15 +263,19 @@ export async function captureOnPath(
   const text = await readCatchBody(request);
   const storedBody = bodyForStorage(text, request.headers.get("content-type"));
   const url = new URL(request.url);
-  const query = clampQuery(Object.fromEntries(url.searchParams.entries()));
+  const mergedQuery = clampQuery(
+    mergeRequestFields(text, request.headers.get("content-type"), Object.fromEntries(url.searchParams.entries())),
+  );
+  const query = redactQuery(mergedQuery);
   const userAgent = (request.headers.get("user-agent") ?? "unknown").slice(0, 512);
   const produced = await produceResponse(
     db,
     endpoint,
-    request.method,
+    request,
     subpath,
-    query,
-    url.origin + url.pathname,
+    mergedQuery,
+    url,
+    text,
   );
 
   await db.insert(capturedRequests).values({
@@ -271,10 +285,10 @@ export async function captureOnPath(
     ip: ip.slice(0, 64),
     userAgent,
     headers: redactHeaders(request.headers),
-    body: storedBody,
+    body: redactStoredBody(storedBody),
     query,
     truncated: produced.capped,
-    responsePreview: produced.body.slice(0, 2000),
+    responsePreview: (produced.preview || produced.body).slice(0, 2000),
     chaosEffects: produced.chaosEffects,
     recordCount: produced.recordCount,
     userId: endpoint.userId,
@@ -301,6 +315,7 @@ export async function captureOnPath(
   return {
     status: produced.status,
     body: produced.body,
+    bodyBytes: produced.bodyBytes,
     headers: sanitizeMockHeaders(produced.headers),
     json: produced.json,
   };
@@ -309,13 +324,16 @@ export async function captureOnPath(
 async function produceResponse(
   db: AppDb,
   endpoint: typeof endpoints.$inferSelect,
-  method: string,
+  request: Request,
   subpath: string,
   query: Record<string, string>,
-  requestUrl?: string,
+  url: URL,
+  bodyText: string,
 ): Promise<{
   status: number;
   body: string;
+  bodyBytes?: Uint8Array;
+  preview?: string;
   headers: Record<string, string>;
   json: boolean;
   chaosEffects: string[];
@@ -326,7 +344,7 @@ async function produceResponse(
   if (endpoint.mockEnabled && endpoint.mockSpec) {
     let spec: MockSpec;
     try {
-      spec = validateMockSpec(endpoint.mockSpec);
+      spec = validateMockSpec(openSpec(endpoint.mockSpec));
     } catch {
       return {
         status: 500,
@@ -340,12 +358,41 @@ async function produceResponse(
       };
     }
     const requestIndex = await nextRequestCount(db, endpoint.id);
-    const matched = matchOperation(spec, method, subpath);
+    const headerMap = headersOf(request);
+    const chaos = chaosTriggers(spec.chaos, requestIndex) ? spec.chaos : null;
+    const auth = checkMockAuth(
+      spec,
+      {
+        method: request.method,
+        path: url.pathname,
+        query,
+        headers: headerMap,
+        body: bodyText,
+        scheme: url.protocol.replace(":", ""),
+        host: headerMap.host || url.host,
+      },
+      Date.now(),
+      chaos,
+    );
+    if (!auth.ok || auth.handled) {
+      return {
+        status: auth.status,
+        body: auth.body,
+        headers: auth.headers,
+        json: false,
+        chaosEffects: auth.chaosEffects,
+        recordCount: 0,
+        delayMs: 0,
+        capped: false,
+      };
+    }
+    const hint = xmlHint(bodyText, headerMap);
+    const matched = matchOperation(spec, request.method, subpath, query, hint);
     if (!matched) {
       return {
         status: 404,
         body: JSON.stringify({
-          error: `No mock operation matches ${method.toUpperCase()} ${subpath}`,
+          error: `No mock operation matches ${request.method.toUpperCase()} ${subpath}`,
           operations: spec.operations.map(
             (operation) => `${operation.method} ${operation.pathTemplate}`,
           ),
@@ -364,9 +411,19 @@ async function produceResponse(
       pathParams: matched.pathParams,
       query,
       requestIndex,
-      requestUrl,
+      requestUrl: url.origin + url.pathname,
+      soapAction: hint.soapAction,
+      requestElement: hint.requestElement,
     });
-    return { ...generated, json: false };
+    const packed = packBody(generated.pack);
+    return {
+      ...generated,
+      body: packed ? generated.body : generated.body,
+      bodyBytes: packed?.bytes,
+      preview: packed?.preview || generated.body,
+      headers: packed ? { ...generated.headers, ...packed.headers } : generated.headers,
+      json: false,
+    };
   }
 
   if (endpoint.mockEnabled && endpoint.mockBody != null) {
@@ -389,7 +446,7 @@ async function produceResponse(
       notice:
         "Unofficial personal tool, not a Palo Alto Networks service. Do not send secrets or customer data.",
       captured: true,
-      method,
+      method: request.method,
       endpoint: endpoint.path,
     }),
     headers: { "content-type": "application/json; charset=utf-8" },
@@ -443,7 +500,7 @@ function toEndpointDto(
           enabled: true,
         }
       : undefined,
-    mockSpec: endpoint.mockSpec ?? null,
+    mockSpec: openSpec(endpoint.mockSpec),
   };
 }
 
@@ -472,6 +529,129 @@ function toRequestDto(
     chaosEffects: request.chaosEffects ?? [],
     recordCount: request.recordCount,
   };
+}
+
+function sealSpec(spec: MockSpec): MockSpec {
+  return { ...spec, auth: sealAuth(spec.auth) };
+}
+
+function openSpec(raw: unknown): unknown {
+  if (!raw || typeof raw !== "object") return raw;
+  const spec = raw as MockSpec;
+  if (!spec.auth) return spec;
+  return { ...spec, auth: openAuth(spec.auth) };
+}
+
+function headersOf(request: Request): Record<string, string> {
+  const headers: Record<string, string> = {};
+  request.headers.forEach((value, key) => {
+    headers[key.toLowerCase()] = value.slice(0, 2048);
+  });
+  return headers;
+}
+
+function mergeRequestFields(
+  body: string,
+  contentType: string | null,
+  query: Record<string, string>,
+): Record<string, string> {
+  const merged = { ...query };
+  const type = (contentType || "").toLowerCase();
+  if (!body) return merged;
+  if (type.includes("json")) {
+    try {
+      const parsed = JSON.parse(body) as { token?: string; data?: Array<{ token?: string }> };
+      const token = parsed.token || parsed.data?.[0]?.token;
+      if (token && !merged.token) merged.token = String(token).slice(0, 200);
+    } catch {
+      return merged;
+    }
+  } else if (type.includes("application/x-www-form-urlencoded")) {
+    const params = new URLSearchParams(body);
+    for (const [key, value] of params) {
+      if (!merged[key]) merged[key] = value.slice(0, 2048);
+    }
+  }
+  return merged;
+}
+
+function xmlHint(body: string, headers: Record<string, string>): { soapAction?: string; requestElement?: string } {
+  const action = headers.soapaction?.replace(/"/g, "") || soapActionFromType(headers["content-type"]);
+  if (!body.trim().startsWith("<")) return { soapAction: action };
+  try {
+    const root = parseXml(body.slice(0, 256 * 1024));
+    const bodyElement = findLocal(root, "Body");
+    const requestElement = bodyElement?.children[0] ? localName(bodyElement.children[0].name) : localName(root.name);
+    return { soapAction: action, requestElement };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    if (message.includes("DTD") || message.includes("entity")) {
+      throw new HttpError(400, "XML DTD and entity declarations are not allowed");
+    }
+    return { soapAction: action };
+  }
+}
+
+function soapActionFromType(contentType: string | undefined): string | undefined {
+  const match = /action="?([^";]+)"?/i.exec(contentType || "");
+  return match?.[1];
+}
+
+function findLocal(element: XmlElement, name: string): XmlElement | undefined {
+  if (localName(element.name) === name) return element;
+  for (const child of element.children) {
+    const found = findLocal(child, name);
+    if (found) return found;
+  }
+  return undefined;
+}
+
+function packBody(pack: { format: "zip" | "gzip" | "octet"; filename: string; entries: { name: string; text: string }[] } | undefined) {
+  if (!pack || pack.entries.length === 0) return null;
+  const preview = pack.entries.map((entry) => `${entry.name}\n${entry.text}`).join("\n").slice(0, 2000);
+  if (pack.format === "zip") {
+    return {
+      bytes: new Uint8Array(zipEntries(pack.entries.map((entry) => ({ name: entry.name, data: Buffer.from(entry.text) })))),
+      preview,
+      headers: {},
+    };
+  }
+  const first = Buffer.from(pack.entries[0].text);
+  return {
+    bytes: new Uint8Array(pack.format === "gzip" ? gzipBytes(first) : first),
+    preview,
+    headers: {},
+  };
+}
+
+const SECRET_QUERY = /key|token|secret|password|credential/i;
+
+function redactQuery(query: Record<string, string>): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [key, value] of Object.entries(query)) {
+    out[key] = SECRET_QUERY.test(key) ? "[redacted]" : value;
+  }
+  return out;
+}
+
+function redactStoredBody(body: unknown): unknown {
+  if (Array.isArray(body)) return body.map((item) => redactStoredBody(item));
+  if (body && typeof body === "object" && "raw" in body && typeof (body as { raw?: unknown }).raw === "string") {
+    return {
+      raw: String((body as { raw: string }).raw).replace(
+        /<(key|password|apikey|apiKey)>([^<]*)<\/\1>/gi,
+        "<$1>[redacted]</$1>",
+      ),
+    };
+  }
+  if (body && typeof body === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(body as Record<string, unknown>)) {
+      out[key] = SECRET_QUERY.test(key) ? "[redacted]" : redactStoredBody(value);
+    }
+    return out;
+  }
+  return body;
 }
 
 export async function listUsers(db: AppDb) {

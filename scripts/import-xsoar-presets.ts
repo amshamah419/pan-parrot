@@ -31,6 +31,9 @@ const curatedIds = new Set([
   "ciscoumbrellareporting-ciscoumbrellareporting",
   "microsoft365defender-microsoft365defender",
   "splunkpy-splunkpy",
+  "pan-os-panorama",
+  "palo-alto-networks-wildfire-palo-alto-networks-wildfire-v2",
+  "mimecast-mimecastv2",
 ]);
 const stats = {
   scanned: 0,

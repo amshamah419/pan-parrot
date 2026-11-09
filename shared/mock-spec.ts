@@ -33,6 +33,13 @@ export interface FieldSpec {
   item?: FieldSpec;
   minItems?: number;
   maxItems?: number;
+  /** Repeat this array once per record in the current page. */
+  pageItems?: boolean;
+  xml?: {
+    attribute?: boolean;
+    namespace?: string;
+    prefix?: string;
+  };
 }
 
 export type Envelope =
@@ -45,10 +52,12 @@ export type Envelope =
   | { type: "slack" }
   | { type: "azure" }
   | { type: "splunk-export" }
-  | { type: "token-page"; arrayKey: string; tokenKey: string };
+  | { type: "token-page"; arrayKey: string; tokenKey: string }
+  | { type: "xml" }
+  | { type: "soap"; version: "1.1" | "1.2" };
 
 export interface PaginationSpec {
-  style: "none" | "offset" | "cursor" | "page" | "link";
+  style: "none" | "offset" | "cursor" | "page" | "link" | "header";
   limitParam: string;
   offsetParam: string;
   pageParam: string;
@@ -58,6 +67,8 @@ export interface PaginationSpec {
   /** When set, a time query such as Akamai `from` ignores offset. */
   timeParam?: string;
   timeOverridesOffset?: boolean;
+  /** Response header that carries the next page token when style is header. */
+  headerName?: string;
 }
 
 export interface MockOperation {
@@ -72,6 +83,17 @@ export interface MockOperation {
   envelope: Envelope;
   pagination: PaginationSpec;
   record: FieldSpec;
+  /** Query keys that must match before this operation is chosen. */
+  queryMatch?: Record<string, string>;
+  soapAction?: string;
+  requestElement?: string;
+  pack?: {
+    format: "zip" | "gzip" | "octet";
+    filename: string;
+    entryName: string;
+    entryFormat: "json" | "ndjson" | "csv" | "wrapped-json";
+    wrapperType?: string;
+  };
 }
 
 export interface ChaosSpec {
@@ -91,12 +113,53 @@ export interface ChaosSpec {
   randomErrors: boolean;
   latency: boolean;
   paginationGlitch: "none" | "repeat" | "skip" | "endless";
+  malformedXml: boolean;
+  wrongNamespace: boolean;
+  soapFault: boolean;
+  authExpired: boolean;
+  authDenied: boolean;
+  authTokenFailure: boolean;
+  authClockSkew: boolean;
+}
+
+export type AuthMode =
+  | "none"
+  | "api-key"
+  | "basic"
+  | "bearer"
+  | "oauth2"
+  | "session"
+  | "panos-key"
+  | "edgegrid"
+  | "signed-headers";
+
+export interface MockAuth {
+  mode: AuthMode;
+  apiKey?: { in: "header" | "query" | "form"; name: string; value: string };
+  basic?: { username: string; password: string };
+  bearer?: { token: string };
+  oauth2?: {
+    tokenPath: string;
+    clientId: string;
+    clientSecret: string;
+    ttlSeconds: number;
+    shape: "generic" | "microsoft" | "crowdstrike";
+  };
+  session?: { loginPath: string; username: string; password: string };
+  panos?: { username: string; password: string; apiKey: string };
+  edgegrid?: {
+    clientToken: string;
+    accessToken: string;
+    clientSecret: string;
+    verify: "signature" | "format-only";
+  };
+  signedHeaders?: { names: string[]; verify: "format-only" };
 }
 
 export interface MockSpec {
   version: 1;
   source: {
-    kind: "preset" | "openapi" | "swagger" | "postman" | "sample" | "manual";
+    kind: "preset" | "openapi" | "swagger" | "postman" | "sample" | "wsdl" | "manual";
     id?: string;
     name: string;
     attribution?: string;
@@ -114,6 +177,7 @@ export interface MockSpec {
   operations: MockOperation[];
   chaos: ChaosSpec;
   totalRecords: number;
+  auth?: MockAuth;
 }
 
 export function defaultChaos(seed = ""): ChaosSpec {
@@ -134,7 +198,18 @@ export function defaultChaos(seed = ""): ChaosSpec {
     randomErrors: false,
     latency: false,
     paginationGlitch: "none",
+    malformedXml: false,
+    wrongNamespace: false,
+    soapFault: false,
+    authExpired: false,
+    authDenied: false,
+    authTokenFailure: false,
+    authClockSkew: false,
   };
+}
+
+export function defaultAuth(): MockAuth {
+  return { mode: "none" };
 }
 
 export function defaultPagination(): PaginationSpec {
@@ -197,6 +272,7 @@ export function validateMockSpec(input: unknown): MockSpec {
     operations,
     chaos: normalizeChaos(raw.chaos),
     totalRecords: total,
+    auth: normalizeAuth(raw.auth),
   };
 }
 
@@ -227,6 +303,10 @@ function normalizeOperation(
     envelope: normalizeEnvelope(operation.envelope, operation.list),
     pagination: normalizePagination(operation.pagination),
     record: normalizeField(operation.record, 0, countField),
+    queryMatch: normalizeQueryMatch(operation.queryMatch),
+    soapAction: cleanOptional(operation.soapAction, 200),
+    requestElement: cleanOptional(operation.requestElement, 80),
+    pack: normalizePack(operation.pack),
   };
 }
 
@@ -261,6 +341,8 @@ function normalizeEnvelope(envelope: Envelope | undefined, list: boolean): Envel
       tokenKey: token(envelope.tokenKey, "nextPageToken"),
     };
   }
+  if (envelope.type === "xml") return { type: "xml" };
+  if (envelope.type === "soap") return { type: "soap", version: envelope.version === "1.2" ? "1.2" : "1.1" };
   if (envelope.type === "array" || envelope.type === "object") return envelope;
   return list ? { type: "array" } : { type: "object" };
 }
@@ -268,7 +350,7 @@ function normalizeEnvelope(envelope: Envelope | undefined, list: boolean): Envel
 function normalizePagination(pagination: PaginationSpec | undefined): PaginationSpec {
   const base = defaultPagination();
   if (!pagination) return base;
-  const style = ["none", "offset", "cursor", "page", "link"].includes(pagination.style)
+  const style = ["none", "offset", "cursor", "page", "link", "header"].includes(pagination.style)
     ? pagination.style
     : "none";
   const maxLimit = clampInt(
@@ -287,6 +369,7 @@ function normalizePagination(pagination: PaginationSpec | undefined): Pagination
     maxLimit,
     timeParam: pagination.timeParam ? token(pagination.timeParam, "from") : undefined,
     timeOverridesOffset: Boolean(pagination.timeOverridesOffset),
+    headerName: pagination.headerName ? token(pagination.headerName, "x-next-token") : undefined,
   };
 }
 
@@ -360,6 +443,16 @@ function normalizeField(
     next.item = normalizeField(field.item, depth + 1, countField);
     next.minItems = clampInt(field.minItems, 0, 5, 1);
     next.maxItems = clampInt(field.maxItems, next.minItems || 1, 5, 2);
+    next.pageItems = Boolean(field.pageItems);
+  }
+  if (field.xml && typeof field.xml === "object") {
+    const namespace = cleanOptional(field.xml.namespace, 200);
+    const prefix = field.xml.prefix && /^[A-Za-z][A-Za-z0-9]{0,12}$/.test(field.xml.prefix)
+      ? field.xml.prefix
+      : undefined;
+    if (field.xml.attribute || namespace || prefix) {
+      next.xml = { attribute: Boolean(field.xml.attribute), namespace, prefix };
+    }
   }
   return next;
 }
@@ -388,7 +481,130 @@ function normalizeChaos(chaos: ChaosSpec | undefined): ChaosSpec {
     paginationGlitch: ["repeat", "skip", "endless"].includes(chaos.paginationGlitch)
       ? chaos.paginationGlitch
       : "none",
+    malformedXml: Boolean(chaos.malformedXml),
+    wrongNamespace: Boolean(chaos.wrongNamespace),
+    soapFault: Boolean(chaos.soapFault),
+    authExpired: Boolean(chaos.authExpired),
+    authDenied: Boolean(chaos.authDenied),
+    authTokenFailure: Boolean(chaos.authTokenFailure),
+    authClockSkew: Boolean(chaos.authClockSkew),
   };
+}
+
+function normalizeAuth(auth: MockAuth | undefined): MockAuth {
+  if (!auth || auth.mode === "none") return { mode: "none" };
+  const mode = auth.mode;
+  if (mode === "api-key" && auth.apiKey) {
+    const place = auth.apiKey.in === "query" || auth.apiKey.in === "form" ? auth.apiKey.in : "header";
+    return {
+      mode,
+      apiKey: {
+        in: place,
+        name: token(auth.apiKey.name, "x-api-key"),
+        value: secretText(auth.apiKey.value),
+      },
+    };
+  }
+  if (mode === "basic" && auth.basic) {
+    return {
+      mode,
+      basic: { username: secretText(auth.basic.username), password: secretText(auth.basic.password) },
+    };
+  }
+  if (mode === "bearer" && auth.bearer) return { mode, bearer: { token: secretText(auth.bearer.token) } };
+  if (mode === "oauth2" && auth.oauth2) {
+    const shape = ["microsoft", "crowdstrike"].includes(auth.oauth2.shape) ? auth.oauth2.shape : "generic";
+    return {
+      mode,
+      oauth2: {
+        tokenPath: String(auth.oauth2.tokenPath || "/oauth/token").startsWith("/")
+          ? String(auth.oauth2.tokenPath).slice(0, 120)
+          : "/oauth/token",
+        clientId: secretText(auth.oauth2.clientId),
+        clientSecret: secretText(auth.oauth2.clientSecret),
+        ttlSeconds: clampInt(auth.oauth2.ttlSeconds, 60, 86_400, 3600),
+        shape,
+      },
+    };
+  }
+  if (mode === "session" && auth.session) {
+    return {
+      mode,
+      session: {
+        loginPath: String(auth.session.loginPath || "/login").startsWith("/")
+          ? String(auth.session.loginPath).slice(0, 120)
+          : "/login",
+        username: secretText(auth.session.username),
+        password: secretText(auth.session.password),
+      },
+    };
+  }
+  if (mode === "panos-key" && auth.panos) {
+    return {
+      mode,
+      panos: {
+        username: secretText(auth.panos.username),
+        password: secretText(auth.panos.password),
+        apiKey: secretText(auth.panos.apiKey),
+      },
+    };
+  }
+  if (mode === "edgegrid" && auth.edgegrid) {
+    return {
+      mode,
+      edgegrid: {
+        clientToken: secretText(auth.edgegrid.clientToken),
+        accessToken: secretText(auth.edgegrid.accessToken),
+        clientSecret: secretText(auth.edgegrid.clientSecret),
+        verify: auth.edgegrid.verify === "format-only" ? "format-only" : "signature",
+      },
+    };
+  }
+  if (mode === "signed-headers" && auth.signedHeaders) {
+    const names = (auth.signedHeaders.names || [])
+      .map((name) => String(name).toLowerCase())
+      .filter((name) => /^[a-z0-9-]{1,40}$/.test(name))
+      .slice(0, 8);
+    return { mode, signedHeaders: { names, verify: "format-only" } };
+  }
+  return { mode: "none" };
+}
+
+function normalizeQueryMatch(match: Record<string, string> | undefined): Record<string, string> | undefined {
+  if (!match || typeof match !== "object") return undefined;
+  const out: Record<string, string> = {};
+  for (const [key, value] of Object.entries(match).slice(0, 6)) {
+    if (!/^[A-Za-z0-9_$.-]{1,40}$/.test(key)) continue;
+    if (typeof value !== "string" || value.length > 80) continue;
+    out[key] = value;
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+
+function normalizePack(pack: MockOperation["pack"]): MockOperation["pack"] {
+  if (!pack || typeof pack !== "object") return undefined;
+  const format = pack.format === "gzip" || pack.format === "octet" ? pack.format : pack.format === "zip" ? "zip" : undefined;
+  if (!format) return undefined;
+  const entryFormat = ["json", "ndjson", "csv", "wrapped-json"].includes(pack.entryFormat)
+    ? pack.entryFormat
+    : "json";
+  const filename = String(pack.filename || "download.bin").replace(/[^A-Za-z0-9._-]/g, "").slice(0, 80) || "download.bin";
+  const entryName = String(pack.entryName || "records.json").replace(/[^A-Za-z0-9._/-]/g, "").slice(0, 80);
+  if (!entryName || entryName.includes("..") || entryName.startsWith("/")) return undefined;
+  return {
+    format,
+    filename,
+    entryName,
+    entryFormat,
+    wrapperType: cleanOptional(pack.wrapperType, 40),
+  };
+}
+
+function secretText(value: unknown): string {
+  const text = String(value ?? "").trim();
+  if (!text) throw new Error("Mock credential is empty. Use a dummy value, never a real secret.");
+  if (text.length > 200) throw new Error("Mock credential is too long");
+  return text;
 }
 
 function cleanHeaders(headers: Record<string, string> | undefined): Record<string, string> {

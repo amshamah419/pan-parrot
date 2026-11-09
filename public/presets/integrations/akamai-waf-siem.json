@@ -36,7 +36,8 @@
           "If from and offset are both present, Akamai uses time mode. This mock does the same.",
           "Production offset tokens are long opaque strings. This mock uses a shorter pp_ token that still round-trips.",
           "botData, clientData, and userRiskData are omitted. httpMessage.query is included because the public event schema requires it.",
-          "Akamai 429 bodies are application/problem+json. Chaos errors here are a small JSON object, with Retry-After on 429 and 503."
+          "Akamai 429 bodies are application/problem+json. Chaos errors here are a small JSON object, with Retry-After on 429 and 503.",
+          "Requests must be signed with EdgeGrid using the dummy client token, access token, and client secret. The signature is checked. Timestamps more than 30 seconds off are rejected."
         ]
       },
       "notes": [
@@ -44,6 +45,15 @@
       ]
     },
     "totalRecords": 1000,
+    "auth": {
+      "mode": "edgegrid",
+      "edgegrid": {
+        "clientToken": "dummy-client-token",
+        "accessToken": "dummy-access-token",
+        "clientSecret": "dummy-not-a-real-secret",
+        "verify": "signature"
+      }
+    },
     "chaos": {
       "enabled": false,
       "seed": "akamai",

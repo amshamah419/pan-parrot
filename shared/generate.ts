@@ -1,4 +1,5 @@
 import { MOCK_LIMITS } from "./policy";
+import { renderFieldXml, soapEnvelope } from "./xml";
 import type {
   ChaosSpec,
   FieldSpec,
@@ -15,6 +16,13 @@ export interface GenerateInput {
   requestIndex: number;
   /** Absolute URL of this request without the query string, used for Link / nextLink. */
   requestUrl?: string;
+  soapAction?: string;
+  requestElement?: string;
+}
+
+export interface PackedFile {
+  name: string;
+  text: string;
 }
 
 export interface GenerateResult {
@@ -25,12 +33,19 @@ export interface GenerateResult {
   chaosEffects: string[];
   delayMs: number;
   capped: boolean;
+  pack?: {
+    format: "zip" | "gzip" | "octet";
+    filename: string;
+    entries: PackedFile[];
+  };
 }
 
 export function matchOperation(
   spec: MockSpec,
   method: string,
   subpath: string,
+  query: Record<string, string | undefined> = {},
+  hint: { soapAction?: string; requestElement?: string } = {},
 ): { operation: MockOperation; pathParams: Record<string, string> } | null {
   const path = normalizePath(subpath);
   const verb = method.toUpperCase();
@@ -40,12 +55,24 @@ export function matchOperation(
     if (operation.method !== verb && operation.method !== "ANY") continue;
     const matched = matchTemplate(operation.pathTemplate, path);
     if (!matched) continue;
-    const score = operation.pathTemplate.length;
+    if (!queryMatches(operation, query)) continue;
+    let score = operation.pathTemplate.length + Object.keys(operation.queryMatch || {}).length * 20;
+    if (hint.soapAction && operation.soapAction && operation.soapAction === hint.soapAction) score += 500;
+    if (hint.requestElement && operation.requestElement && operation.requestElement === hint.requestElement) {
+      score += 400;
+    }
+    if (operation.soapAction && hint.soapAction && operation.soapAction !== hint.soapAction) score -= 300;
     if (!best || score > best.score) {
       best = { operation, pathParams: matched, score };
     }
   }
   return best ? { operation: best.operation, pathParams: best.pathParams } : null;
+}
+
+function queryMatches(operation: MockOperation, query: Record<string, string | undefined>): boolean {
+  const expected = operation.queryMatch;
+  if (!expected) return true;
+  return Object.entries(expected).every(([key, value]) => query[key] === value);
 }
 
 export function generateMockResponse(input: GenerateInput): GenerateResult {
@@ -94,14 +121,17 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
   }
 
   const records: unknown[] = [];
-  for (let index = page.start; index < page.start + page.count; index += 1) {
+  const listed = operation.list && !operation.record.pageItems && operation.envelope.type !== "xml" && operation.envelope.type !== "soap";
+  const iterations = listed ? page.count : 1;
+  for (let offset = 0; offset < iterations; offset += 1) {
     records.push(
       generateRecord(operation.record, {
-        index,
+        index: page.start + offset,
         seed: spec.chaos.seed,
         pathParams: input.pathParams,
         chaos: chaosOn ? spec.chaos : null,
         baseEpoch: page.baseEpoch,
+        page,
       }),
     );
   }
@@ -117,9 +147,12 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
   if (chaosOn && spec.chaos.mixedTimestamps) effects.push("mixed-timestamps");
   if (chaosOn && spec.chaos.wrongTypes) effects.push("wrong-types");
 
-  let body = encodeBody(operation, records, page, input.requestUrl);
+  let body = encodeBody(operation, records, page, input.requestUrl, chaosOn ? spec.chaos : null, effects);
   let contentType = operation.contentType;
-  if (chaosOn && spec.chaos.malformedJson) {
+  if (chaosOn && spec.chaos.malformedXml && isXmlOperation(operation)) {
+    body = `${body.slice(0, Math.max(1, body.length - 8))}<<<`;
+    effects.push("malformed-xml");
+  } else if (chaosOn && spec.chaos.malformedJson) {
     body = `${body.slice(0, Math.max(1, body.length - 1))}<<<`;
     effects.push("malformed-json");
   } else if (chaosOn && spec.chaos.truncatedJson) {
@@ -149,16 +182,71 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
   if (effects.length) headers["x-pan-parrot-effects"] = effects.join(",");
   const link = nextLinkHeader(operation, page, input.requestUrl, input.query);
   if (link) headers.link = link;
+  if (operation.pagination.style === "header" && page.next != null && operation.pagination.headerName) {
+    headers[operation.pagination.headerName] = encodeToken(page.next);
+  }
+  const pack = operation.pack
+    ? {
+        format: operation.pack.format,
+        filename: operation.pack.filename,
+        entries: [{ name: operation.pack.entryName, text: packEntry(operation, records, body) }],
+      }
+    : undefined;
 
   return {
-    status: operation.status,
-    headers,
+    status: effects.includes("soap-fault") ? 500 : operation.status,
+    headers: pack
+      ? {
+          ...headers,
+          "content-type":
+            pack.format === "gzip"
+              ? "application/gzip"
+              : "application/octet-stream",
+          "content-disposition": `attachment; filename="${pack.filename}"`,
+        }
+      : headers,
     body,
-    recordCount: records.length,
+    recordCount: listed ? records.length : page.count,
     chaosEffects: effects,
     delayMs: chaosOn && spec.chaos.latency ? 2000 : 0,
     capped,
+    pack,
   };
+}
+
+function packEntry(operation: MockOperation, records: unknown[], body: string): string {
+  const format = operation.pack?.entryFormat;
+  if (format === "ndjson") return records.map((record) => JSON.stringify(record)).join("\n");
+  if (format === "csv") return toCsv(records);
+  if (format === "wrapped-json") {
+    let data: unknown = records;
+    try {
+      data = JSON.parse(body);
+    } catch {
+      data = records;
+    }
+    return JSON.stringify({ type: operation.pack?.wrapperType || "MTA", data });
+  }
+  return body;
+}
+
+function toCsv(records: unknown[]): string {
+  const rows = records.filter((record): record is Record<string, unknown> => Boolean(record) && typeof record === "object");
+  const headers = [...new Set(rows.flatMap((row) => Object.keys(row)))].slice(0, 40);
+  const lines = [headers.join(",")];
+  for (const row of rows) {
+    lines.push(headers.map((header) => csvCell(row[header])).join(","));
+  }
+  return lines.join("\n");
+}
+
+function csvCell(value: unknown): string {
+  const text = value == null ? "" : String(value);
+  return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+}
+
+function isXmlOperation(operation: MockOperation): boolean {
+  return operation.envelope.type === "xml" || operation.envelope.type === "soap" || operation.contentType.includes("xml");
 }
 
 interface PagePlan {
@@ -191,7 +279,7 @@ function resolvePage(
   if (!ignoreOffset && pagination.style === "page") {
     const page = Math.max(1, Math.floor(Number(query[pagination.pageParam] || 1)));
     start = (page - 1) * requested;
-  } else if (!ignoreOffset && (pagination.style === "cursor" || pagination.style === "link")) {
+  } else if (!ignoreOffset && (pagination.style === "cursor" || pagination.style === "link" || pagination.style === "header")) {
     start = decodeToken(query[pagination.cursorParam]);
   } else if (!ignoreOffset && pagination.style === "offset") {
     start = decodeToken(query[pagination.offsetParam]);
@@ -224,11 +312,25 @@ function encodeBody(
   records: unknown[],
   page: PagePlan,
   requestUrl?: string,
+  chaos: ChaosSpec | null = null,
+  effects: string[] = [],
 ): string {
+  const envelope = operation.envelope;
+  if (envelope.type === "xml" || envelope.type === "soap") {
+    const xml = renderFieldXml(operation.record, records[0], {
+      wrongNamespace: Boolean(chaos?.wrongNamespace),
+    });
+    if (chaos?.wrongNamespace) effects.push("wrong-namespace");
+    if (chaos?.soapFault && envelope.type === "soap") {
+      effects.push("soap-fault");
+      return soapEnvelope(envelope.version, "", "Mock SOAP fault");
+    }
+    const inner = xml.replace(/^<\?xml[^>]*>/, "");
+    return envelope.type === "soap" ? soapEnvelope(envelope.version, inner) : xml;
+  }
   if (!operation.list) {
     return JSON.stringify(records[0] ?? {});
   }
-  const envelope = operation.envelope;
   if (envelope.type === "ndjson") {
     const lines = records.map((record) => JSON.stringify(record));
     if (envelope.trailer === "akamai-offset") {
@@ -341,6 +443,7 @@ interface RecordCtx {
   chaos: ChaosSpec | null;
   baseEpoch: number;
   path: string;
+  page?: PagePlan;
 }
 
 function generateRecord(field: FieldSpec, ctx: Omit<RecordCtx, "path">): unknown {
@@ -369,6 +472,15 @@ function generateField(field: FieldSpec, ctx: RecordCtx): unknown {
     case "array": {
       const item = field.item;
       if (!item) return [];
+      if (field.pageItems && ctx.page) {
+        return Array.from({ length: ctx.page.count }, (_, itemIndex) =>
+          generateField(item, {
+            ...ctx,
+            path: `${ctx.path}[${itemIndex}]`,
+            index: ctx.page!.start + itemIndex,
+          }),
+        );
+      }
       const count = clamp(field.minItems ?? 1, 0, field.maxItems ?? 2);
       return Array.from({ length: count }, (_, itemIndex) =>
         generateField(item, { ...ctx, path: `${ctx.path}[${itemIndex}]`, index: ctx.index * 10 + itemIndex }),
@@ -443,7 +555,7 @@ function formatTime(
   return iso;
 }
 
-function chaosTriggers(chaos: ChaosSpec, requestIndex: number): boolean {
+export function chaosTriggers(chaos: ChaosSpec, requestIndex: number): boolean {
   if (!chaos.enabled) return false;
   if (chaos.mode === "every-nth") return requestIndex % chaos.everyNth === 0;
   const rng = mulberry32(hashString(`${chaos.seed}:gate:${requestIndex}`));

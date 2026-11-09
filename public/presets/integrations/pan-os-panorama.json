@@ -1,1 +1,425 @@
-{"id":"pan-os-panorama","name":"Palo Alto Networks PAN-OS","pack":"PAN-OS","fidelity":"sample","curated":false,"summary":"Manage Palo Alto Networks Firewall and Panorama. Use this pack to manage Prisma Access through Panorama. For more information, see the Panorama documentation.","operations":5,"spec":{"version":1,"source":{"kind":"preset","id":"pan-os-panorama","name":"Palo Alto Networks PAN-OS","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PAN-OS/Integrations/Panorama","fidelity":"sample","notes":["HTTP paths were guessed from string literals in the integration client and may not match every command.","Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture."],"verification":{"status":"sample","docUrl":"https://docs.paloaltonetworks.com/ngfw/api/pan-os","checkedAt":"2026-11-09","differences":["PAN-OS and Panorama operational commands return XML from /api. The inferred preset is JSON from a test fixture and was not marked verified."]}},"operations":[{"id":"test-data-corr-logs-json","method":"GET","pathTemplate":"/enforce-symmetric-return/nexthop-address-list","summary":"test_data/corr_logs.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"@logid","kind":"id","optional":false,"example":"0"},{"name":"match_time","kind":"string","optional":false,"example":"2024/04/08 07:22:54"}]}},{"id":"test-data-corr-logs-time-dif-json","method":"GET","pathTemplate":"/config/predefined/profiles/wildfire-analysis","summary":"test_data/corr_logs_time_dif.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"@logid","kind":"id","optional":false,"example":"1"},{"name":"match_time","kind":"string","optional":false,"example":"2024/04/08 07:22:54"}]}},{"id":"test-data-get-certificate-info-command-json","method":"GET","pathTemplate":"/config/predefined/profiles/vulnerability","summary":"test_data/get_certificate_info_command.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"ACME Root CA"},{"name":"expiration_date","kind":"string","optional":false,"example":"May  9 16:35:16 2050 GMT"},{"name":"subject","kind":"string","optional":false,"example":"/CN=acme-root-ca.acme.com"},{"name":"device","kind":"string","optional":false,"example":"panorama.test"},{"name":"location","kind":"string","optional":false,"example":"Panorama"},{"name":"expiration_status","kind":"string","optional":false,"example":"Valid"},{"name":"cert_type","kind":"string","optional":false,"example":"Pushed"},{"name":"devices_using_certificate","kind":"array","optional":true,"item":{"name":"item","kind":"string","optional":false,"example":"111111111111111"},"minItems":0,"maxItems":1}]}},{"id":"test-data-get-security-profiles-response-json","method":"GET","pathTemplate":"/config/devices/entry/device-group/entry","summary":"test_data/get_security_profiles_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"response","kind":"object","optional":false,"children":[{"name":"@status","kind":"string","optional":false,"example":"success"},{"name":"@code","kind":"string","optional":false,"example":"19"},{"name":"result","kind":"object","optional":false,"children":[{"name":"@total-count","kind":"string","optional":false,"example":"1"},{"name":"@count","kind":"string","optional":false,"example":"1"},{"name":"profiles","kind":"object","optional":false,"children":[{"name":"spyware","kind":"object","optional":false,"children":[{"name":"entry","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":2}]},{"name":"custom-url-category","kind":"object","optional":false,"children":[{"name":"entry","kind":"object","optional":false,"children":[{"name":"@name","kind":"string","optional":false,"example":"nested"},{"name":"description","kind":"string","optional":false,"example":"nested"},{"name":"list","kind":"string","optional":false,"example":"nested"},{"name":"type","kind":"string","optional":false,"example":"nested"}]}]}]}]}]}]}},{"id":"test-data-list-edls-including-un-committed-edl-json","method":"GET","pathTemplate":"/config/predefined/profiles/spyware","summary":"test_data/list-edls-including-un-committed-edl.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"response","kind":"object","optional":false,"children":[{"name":"@status","kind":"string","optional":false,"example":"success"},{"name":"@code","kind":"string","optional":false,"example":"19"},{"name":"result","kind":"object","optional":false,"children":[{"name":"@total-count","kind":"string","optional":false,"example":"2"},{"name":"@count","kind":"string","optional":false,"example":"2"},{"name":"entry","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"@name","kind":"string","optional":false,"example":"test-1"},{"name":"@loc","kind":"string","optional":false,"example":"Lab-Devices"},{"name":"type","kind":"object","optional":false,"children":[{"name":"domain","kind":"string","optional":false,"example":"nested"}]}]},"minItems":0,"maxItems":2}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200}}
+{
+  "id": "pan-os-panorama",
+  "name": "Palo Alto Networks PAN-OS",
+  "pack": "PAN-OS",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "XML API for keygen, operational commands, config, and log jobs.",
+  "notes": [
+    "XSOAR calls GET /api/ with type=op, type=config, and type=log. type=keygen is included so you can test the API key exchange.",
+    "Log query returns a job id. action=get with job-id returns log entries. nlogs is capped at 500.",
+    "The dummy user, password, and API key are not a real firewall credential. Commit, export, and user-id commands are not modeled."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PAN-OS/Integrations/Panorama",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "pan-os-panorama",
+      "name": "Palo Alto Networks PAN-OS",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://docs.paloaltonetworks.com/ngfw/api/pan-os",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.paloaltonetworks.com/ngfw/api/pan-os",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "XSOAR calls GET /api/ with type=op, type=config, and type=log. type=keygen is included so you can test the API key exchange.",
+          "Log query returns a job id. action=get with job-id returns log entries. nlogs is capped at 500.",
+          "The dummy user, password, and API key are not a real firewall credential. Commit, export, and user-id commands are not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "keygen",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Generate an API key",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "key",
+                  "kind": "const",
+                  "constValue": "dummy-panos-api-key"
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "keygen"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "op",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Operational command",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "system",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "hostname",
+                      "kind": "string",
+                      "example": "lab-fw"
+                    },
+                    {
+                      "name": "sw-version",
+                      "kind": "const",
+                      "constValue": "11.1.0"
+                    },
+                    {
+                      "name": "model",
+                      "kind": "const",
+                      "constValue": "PA-VM"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "op"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "config",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Read config",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "entry",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "name",
+                      "kind": "string",
+                      "example": "localhost.localdomain",
+                      "xml": {
+                        "attribute": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "config"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "log-job",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Start a log query job",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "job",
+                  "kind": "const",
+                  "constValue": "1"
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "log"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "nlogs",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        },
+        "id": "log-get",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Fetch logs for a job",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "job",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "id",
+                      "kind": "const",
+                      "constValue": "1"
+                    },
+                    {
+                      "name": "status",
+                      "kind": "const",
+                      "constValue": "FIN"
+                    }
+                  ]
+                },
+                {
+                  "name": "log",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "logs",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "count",
+                          "kind": "const",
+                          "constValue": "20",
+                          "xml": {
+                            "attribute": true
+                          }
+                        },
+                        {
+                          "name": "entry",
+                          "kind": "array",
+                          "pageItems": true,
+                          "item": {
+                            "name": "entry",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "logid",
+                                "kind": "id",
+                                "xml": {
+                                  "attribute": true
+                                }
+                              },
+                              {
+                                "name": "receive_time",
+                                "kind": "timestamp",
+                                "format": "iso"
+                              },
+                              {
+                                "name": "src",
+                                "kind": "ip"
+                              },
+                              {
+                                "name": "dst",
+                                "kind": "ip"
+                              },
+                              {
+                                "name": "action",
+                                "kind": "enum",
+                                "enumValues": [
+                                  "allow",
+                                  "deny"
+                                ]
+                              },
+                              {
+                                "name": "rule",
+                                "kind": "string",
+                                "example": "allow-lab"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "log",
+          "action": "get"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "pan-os-panorama",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "panos-key",
+      "panos": {
+        "username": "lab-admin",
+        "password": "dummy-not-a-real-password",
+        "apiKey": "dummy-panos-api-key"
+      }
+    }
+  }
+}

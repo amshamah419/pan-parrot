@@ -26,6 +26,9 @@ export const MOCK_LIMITS = {
   maxFieldDepth: 8,
   maxSpecBytes: 400_000,
   maxFetchedSpecBytes: 1_500_000,
+  maxZipEntries: 20,
+  maxZipUncompressedBytes: 2_000_000,
+  maxZipRatio: 100,
 } as const;
 
 export const ENDPOINT_PATH_RE = /^[A-Za-z0-9_-]{4,64}$/;

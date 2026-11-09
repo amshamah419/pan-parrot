@@ -1,4 +1,4 @@
-import { defaultChaos, defaultPagination, type FieldSpec, type MockSpec } from "./mock-spec";
+import { defaultChaos, defaultPagination, type FieldSpec, type MockAuth, type MockSpec } from "./mock-spec";
 
 const checkedAt = "2026-11-09";
 
@@ -21,6 +21,10 @@ function op(
     list: partial.list,
     envelope: partial.envelope,
     record: partial.record,
+    queryMatch: partial.queryMatch,
+    soapAction: partial.soapAction,
+    requestElement: partial.requestElement,
+    pack: partial.pack,
   };
 }
 
@@ -58,6 +62,7 @@ function preset(input: {
   notes?: string[];
   operations: MockSpec["operations"];
   totalRecords?: number;
+  auth?: MockAuth;
 }): VerifiedPresetFile {
   return {
     id: input.id,
@@ -90,6 +95,7 @@ function preset(input: {
       operations: input.operations,
       chaos: defaultChaos(input.id),
       totalRecords: input.totalRecords ?? 500,
+      auth: input.auth ?? { mode: "none" },
     },
   };
 }
@@ -123,6 +129,7 @@ const falconId = field("resource", "id");
 
 export const verifiedPresets: VerifiedPresetFile[] = [
   preset({
+    auth: { mode: "api-key", apiKey: { in: "header", name: "authorization", value: "SSWS dummy-okta-token" } },
     id: "okta-okta-v2",
     name: "Okta v2",
     pack: "Okta",
@@ -160,6 +167,16 @@ export const verifiedPresets: VerifiedPresetFile[] = [
     ],
   }),
   preset({
+    auth: {
+      mode: "oauth2",
+      oauth2: {
+        tokenPath: "/oauth2/token",
+        clientId: "dummy-falcon-client",
+        clientSecret: "dummy-falcon-secret",
+        ttlSeconds: 1800,
+        shape: "crowdstrike",
+      },
+    },
     id: "crowdstrikefalcon-crowdstrikefalcon",
     name: "CrowdStrike Falcon",
     pack: "CrowdStrikeFalcon",
@@ -221,6 +238,16 @@ export const verifiedPresets: VerifiedPresetFile[] = [
     ],
   }),
   preset({
+    auth: {
+      mode: "oauth2",
+      oauth2: {
+        tokenPath: "/oauth2/v2.0/token",
+        clientId: "dummy-graph-client",
+        clientSecret: "dummy-graph-secret",
+        ttlSeconds: 3600,
+        shape: "microsoft",
+      },
+    },
     id: "microsoftgraphsecurity-microsoftgraphsecurity",
     name: "Microsoft Graph Security",
     pack: "MicrosoftGraphSecurity",
@@ -784,35 +811,231 @@ export const verifiedPresets: VerifiedPresetFile[] = [
       }),
     ],
   }),
+  preset({
+    id: "pan-os-panorama",
+    name: "Palo Alto Networks PAN-OS",
+    pack: "PAN-OS",
+    vendor: "Palo Alto Networks",
+    summary: "XML API for keygen, operational commands, config, and log jobs.",
+    docUrl: "https://docs.paloaltonetworks.com/ngfw/api/pan-os",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/PAN-OS/Integrations/Panorama",
+    differences: [
+      "XSOAR calls GET /api/ with type=op, type=config, and type=log. type=keygen is included so you can test the API key exchange.",
+      "Log query returns a job id. action=get with job-id returns log entries. nlogs is capped at 500.",
+      "The dummy user, password, and API key are not a real firewall credential. Commit, export, and user-id commands are not modeled.",
+    ],
+    auth: {
+      mode: "panos-key",
+      panos: { username: "lab-admin", password: "dummy-not-a-real-password", apiKey: "dummy-panos-api-key" },
+    },
+    operations: [
+      op({
+        id: "keygen",
+        method: "GET",
+        pathTemplate: "/api",
+        summary: "Generate an API key",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        queryMatch: { type: "keygen" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("response", [
+          field("status", "const", { constValue: "success", xml: { attribute: true } }),
+          object("result", [field("key", "const", { constValue: "dummy-panos-api-key" })]),
+        ]),
+      }),
+      op({
+        id: "op",
+        method: "GET",
+        pathTemplate: "/api",
+        summary: "Operational command",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        queryMatch: { type: "op" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("response", [
+          field("status", "const", { constValue: "success", xml: { attribute: true } }),
+          object("result", [
+            object("system", [
+              field("hostname", "string", { example: "lab-fw" }),
+              field("sw-version", "const", { constValue: "11.1.0" }),
+              field("model", "const", { constValue: "PA-VM" }),
+            ]),
+          ]),
+        ]),
+      }),
+      op({
+        id: "config",
+        method: "GET",
+        pathTemplate: "/api",
+        summary: "Read config",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        queryMatch: { type: "config" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("response", [
+          field("status", "const", { constValue: "success", xml: { attribute: true } }),
+          object("result", [
+            object("entry", [
+              field("name", "string", { example: "localhost.localdomain", xml: { attribute: true } }),
+            ]),
+          ]),
+        ]),
+      }),
+      op({
+        id: "log-job",
+        method: "GET",
+        pathTemplate: "/api",
+        summary: "Start a log query job",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        queryMatch: { type: "log" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("response", [
+          field("status", "const", { constValue: "success", xml: { attribute: true } }),
+          object("result", [field("job", "const", { constValue: "1" })]),
+        ]),
+      }),
+      op({
+        id: "log-get",
+        method: "GET",
+        pathTemplate: "/api",
+        summary: "Fetch logs for a job",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        queryMatch: { type: "log", action: "get" },
+        pagination: { style: "offset", limitParam: "nlogs", defaultLimit: 20, maxLimit: 500 },
+        record: object("response", [
+          field("status", "const", { constValue: "success", xml: { attribute: true } }),
+          object("result", [
+            object("job", [
+              field("id", "const", { constValue: "1" }),
+              field("status", "const", { constValue: "FIN" }),
+            ]),
+            object("log", [
+              object("logs", [
+                field("count", "const", { constValue: "20", xml: { attribute: true } }),
+                {
+                  name: "entry",
+                  kind: "array",
+                  pageItems: true,
+                  item: object("entry", [
+                    field("logid", "id", { xml: { attribute: true } }),
+                    field("receive_time", "timestamp", { format: "iso" }),
+                    field("src", "ip"),
+                    field("dst", "ip"),
+                    field("action", "enum", { enumValues: ["allow", "deny"] }),
+                    field("rule", "string", { example: "allow-lab" }),
+                  ]),
+                },
+              ]),
+            ]),
+          ]),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "palo-alto-networks-wildfire-palo-alto-networks-wildfire-v2",
+    name: "Palo Alto Networks WildFire v2",
+    pack: "Palo_Alto_Networks_WildFire",
+    vendor: "Palo Alto Networks",
+    summary: "POST /publicapi/get/verdict returns the XML verdict document.",
+    docUrl: "https://docs.paloaltonetworks.com/wildfire/u-v/wildfire-api/get-wildfire-information-through-the-wildfire-api/get-a-wildfire-verdict-wildfire-api",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Palo_Alto_Networks_WildFire/Integrations/Palo_Alto_Networks_WildFire_v2",
+    differences: [
+      "The public verdict response is XML. Verdict codes are 0 benign, 1 malware, 2 grayware, 4 phishing, 5 C2, and the negative pending codes.",
+      "XSOAR posts to /publicapi/get/verdict with an apikey form field. This mock checks the dummy key. An invalid hash is not turned into HTTP 421.",
+      "File submission and the sample download are not modeled.",
+    ],
+    auth: { mode: "api-key", apiKey: { in: "form", name: "apikey", value: "dummy-wildfire-key" } },
+    operations: [
+      op({
+        id: "verdict",
+        method: "POST",
+        pathTemplate: "/publicapi/get/verdict",
+        summary: "Get a WildFire verdict",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("wildfire", [
+          object("get-verdict-info", [
+            field("md5", "id"),
+            field("sha256", "id"),
+            field("verdict", "enum", { enumValues: ["0", "1", "2", "4", "5", "-100"] }),
+          ]),
+        ]),
+      }),
+    ],
+  }),
+  preset({
+    id: "mimecast-mimecastv2",
+    name: "Mimecast v2",
+    pack: "Mimecast",
+    vendor: "Mimecast",
+    summary: "SIEM logs as a zip plus an mc-siem-token header.",
+    docUrl: "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastEventCollector",
+    differences: [
+      "POST /api/audit/get-siem-logs returns application/octet-stream with Content-Disposition filename ending in .zip, which is what the XSOAR event collector accepts.",
+      "The zip contains one JSON file with type MTA and a data array. The next page token is the mc-siem-token response header. Send it back as data[0].token.",
+      "Production signs the request. This mock only checks that Authorization, x-mc-date, x-mc-req-id, and x-mc-app-id are present. The signature is not verified.",
+      "A JSON body meaning there are no further logs is not the default. Stop paging when the catalog ends and the header is absent.",
+    ],
+    auth: {
+      mode: "signed-headers",
+      signedHeaders: {
+        names: ["authorization", "x-mc-date", "x-mc-req-id", "x-mc-app-id"],
+        verify: "format-only",
+      },
+    },
+    operations: [
+      op({
+        id: "siem-logs",
+        method: "POST",
+        pathTemplate: "/api/audit/get-siem-logs",
+        summary: "Download the next SIEM log batch",
+        status: 200,
+        list: true,
+        envelope: { type: "array" },
+        contentType: "application/json; charset=utf-8",
+        pagination: { style: "header", cursorParam: "token", headerName: "mc-siem-token", defaultLimit: 20, maxLimit: 500 },
+        pack: {
+          format: "zip",
+          filename: "siem.zip",
+          entryName: "mta.json",
+          entryFormat: "wrapped-json",
+          wrapperType: "MTA",
+        },
+        record: object("event", [
+          field("datetime", "timestamp", { format: "iso" }),
+          field("aCode", "id"),
+          field("Act", "enum", { enumValues: ["Acc", "Hld", "Rej"] }),
+          field("MsgId", "id"),
+          field("Sender", "email"),
+          field("Rcpt", "email"),
+        ]),
+      }),
+    ],
+  }),
 ];
 
 export const checkedNotUpgraded: Array<{
   id: string;
   docUrl: string;
   differences: string[];
-}> = [
-  {
-    id: "palo-alto-networks-wildfire-palo-alto-networks-wildfire-v2",
-    docUrl: "https://docs.paloaltonetworks.com/wildfire/u-v/wildfire-api/get-wildfire-information-through-the-wildfire-api/get-a-wildfire-verdict-wildfire-api",
-    differences: [
-      "POST /publicapi/get/verdict returns XML, with verdict codes 0, 1, 2, 4, 5, and negative pending codes. This mocker emits JSON, so the preset was left as a sample.",
-    ],
-  },
-  {
-    id: "pan-os-panorama",
-    docUrl: "https://docs.paloaltonetworks.com/ngfw/api/pan-os",
-    differences: [
-      "PAN-OS and Panorama operational commands return XML from /api. The inferred preset is JSON from a test fixture and was not marked verified.",
-    ],
-  },
-  {
-    id: "mimecast-mimecastv2",
-    docUrl: "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
-    differences: [
-      "POST /api/audit/get-siem-logs returns an octet-stream log or a zip, plus an mc-siem-token header. A JSON body means there are no further logs. The XSOAR event collector only accepts the zip. The inferred JSON sample was left in place.",
-    ],
-  },
-];
+}> = [];
 
 export function akamaiVerificationPatch(): {
   differences: string[];

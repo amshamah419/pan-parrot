@@ -7,9 +7,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrustBadge } from "@/components/TrustBadge";
+import { MockAuthPanel } from "@/components/MockAuthPanel";
 import { getEndpoint, saveMockSpec } from "@/lib/api";
 import { generateMockResponse, matchOperation } from "@shared/generate";
 import {
+  defaultAuth,
   FIELD_KINDS,
   validateMockSpec,
   type ChaosSpec,
@@ -53,13 +55,19 @@ export default function MockStudio() {
     const trial: MockSpec = previewChaos
       ? spec
       : { ...spec, chaos: { ...spec.chaos, enabled: false } };
-    const matched = matchOperation(trial, operation.method, samplePath(operation));
+    const matched = matchOperation(trial, operation.method, samplePath(operation), {
+      ...(operation.queryMatch || {}),
+    });
     if (!matched) return "";
     const result = generateMockResponse({
       spec: trial,
       operation: matched.operation,
       pathParams: matched.pathParams,
-      query: { limit: "2", [operation.pagination.limitParam]: "2" },
+      query: {
+        limit: "2",
+        [operation.pagination.limitParam]: "2",
+        ...(operation.queryMatch || {}),
+      },
       requestIndex: previewChaos ? trial.chaos.everyNth : 1,
     });
     return result.body.slice(0, 4000);
@@ -98,7 +106,7 @@ export default function MockStudio() {
     );
   }
 
-  const tryUrl = `${url.replace(/\/$/, "")}${samplePath(operation)}?${operation.pagination.limitParam}=2`;
+  const tryUrl = buildTryUrl(url, operation, spec.auth);
   const verification = spec.source.verification;
   const copy = async (value: string) => {
     try {
@@ -137,8 +145,12 @@ export default function MockStudio() {
         </div>
         <p className="mt-3 text-xs text-muted-foreground">
           A page holds at most {MOCK_LIMITS.maxRecordsPerResponse} records and{" "}
-          {Math.round(MOCK_LIMITS.maxResponseBytes / 1_000_000)} MB.
+          {Math.round(MOCK_LIMITS.maxResponseBytes / 1_000_000)} MB. Zip and gzip downloads stay under that same 2 MB ceiling.
           This catalog has {spec.totalRecords.toLocaleString()} unique records.
+          {spec.auth && spec.auth.mode !== "none" && spec.auth.mode !== "panos-key" && spec.auth.mode !== "api-key"
+            ? " This mock checks dummy credentials. A plain browser visit will be rejected until the integration sends them."
+            : ""}
+          {operation.pack ? ` The response is a ${operation.pack.format} file named ${operation.pack.filename}.` : ""}
         </p>
       </section>
 
@@ -174,6 +186,7 @@ export default function MockStudio() {
           <TabsTrigger value="preview">Preview</TabsTrigger>
           <TabsTrigger value="shape">Shape</TabsTrigger>
           <TabsTrigger value="chaos">Chaos</TabsTrigger>
+          <TabsTrigger value="auth">Auth</TabsTrigger>
         </TabsList>
         <TabsContent value="preview" className="space-y-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -212,6 +225,7 @@ export default function MockStudio() {
           ) : (
             <FieldEditor
               field={operation.record}
+              xmlMode={operation.envelope.type === "xml" || operation.envelope.type === "soap" || operation.contentType.includes("xml")}
               onChange={(record) => updateOperation({ ...operation, record })}
             />
           )}
@@ -223,11 +237,38 @@ export default function MockStudio() {
             onChange={(chaos, totalRecords) => setSpec({ ...spec, chaos, totalRecords })}
           />
         </TabsContent>
+        <TabsContent value="auth">
+          <MockAuthPanel
+            auth={spec.auth || defaultAuth()}
+            onChange={(auth) => setSpec({ ...spec, auth })}
+          />
+        </TabsContent>
       </Tabs>
       {error && <p className="text-sm text-destructive">{error}</p>}
       {saved && <p className="text-sm text-green-700">{saved}</p>}
     </div>
   );
+}
+
+function buildTryUrl(url: string, operation: MockOperation, auth: MockSpec["auth"]): string {
+  const base = `${url.replace(/\/$/, "")}${samplePath(operation)}`;
+  if (auth?.mode === "panos-key" && auth.panos) {
+    const params = new URLSearchParams(operation.queryMatch || { type: "op" });
+    if (params.get("type") === "keygen") {
+      params.set("user", auth.panos.username);
+      params.set("password", auth.panos.password);
+    } else {
+      params.set("key", auth.panos.apiKey);
+    }
+    return `${url.replace(/\/$/, "")}/api?${params.toString()}`;
+  }
+  const params = new URLSearchParams();
+  if (operation.pagination.style !== "none") params.set(operation.pagination.limitParam, "2");
+  if (auth?.mode === "api-key" && auth.apiKey?.in === "query") {
+    params.set(auth.apiKey.name, auth.apiKey.value);
+  }
+  const query = params.toString();
+  return query ? `${base}?${query}` : base;
 }
 
 function samplePath(operation: MockOperation): string {
@@ -238,10 +279,12 @@ function FieldEditor({
   field,
   onChange,
   depth = 0,
+  xmlMode = false,
 }: {
   field: FieldSpec;
   onChange: (field: FieldSpec) => void;
   depth?: number;
+  xmlMode?: boolean;
 }) {
   const [open, setOpen] = useState(depth < 1);
   return (
@@ -295,7 +338,22 @@ function FieldEditor({
           placeholder="comma-separated values"
         />
       )}
-      {field.kind === "string" && (
+        {xmlMode && (
+          <label className="flex items-center gap-2 text-xs text-muted-foreground">
+            <input
+              type="checkbox"
+              checked={Boolean(field.xml?.attribute)}
+              onChange={(event) =>
+                onChange({
+                  ...field,
+                  xml: { ...field.xml, attribute: event.target.checked },
+                })
+              }
+            />
+            XML attribute
+          </label>
+        )}
+        {field.kind === "string" && (
         <Input
           value={field.example || ""}
           onChange={(event) => onChange({ ...field, example: event.target.value })}
@@ -312,6 +370,7 @@ function FieldEditor({
               <FieldEditor
                 field={child}
                 depth={depth + 1}
+                xmlMode={xmlMode}
                 onChange={(next) => {
                   const children = field.children?.slice() || [];
                   children[index] = next;
@@ -439,6 +498,13 @@ function ChaosEditor({
           ["wrongContentType", "Send text/html"],
           ["randomErrors", "429 / 500 / 503 with Retry-After"],
           ["latency", "Add about 2 seconds"],
+          ["malformedXml", "Break the XML"],
+          ["wrongNamespace", "Wrong XML namespace"],
+          ["soapFault", "SOAP fault"],
+          ["authExpired", "Expire the token"],
+          ["authDenied", "Random 401 / 403"],
+          ["authTokenFailure", "Fail the token endpoint"],
+          ["authClockSkew", "Reject clock skew"],
         ] as const
       ).map(([key, label]) => (
         <div key={key} className="flex items-center justify-between text-sm">

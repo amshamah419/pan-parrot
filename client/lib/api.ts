@@ -62,6 +62,7 @@ export async function importSpec(body: {
   text?: string;
   url?: string;
   kind?: "sample" | "spec";
+  zipBase64?: string;
 }): Promise<{ mockSpec: unknown; warnings: string[]; unsupported: string[] }> {
   return apiRequest(`/api/specs/import`, {
     method: "POST",

@@ -3,6 +3,8 @@ import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { z } from "zod";
 import { mockFromSample } from "../shared/infer";
 import { specFromDocument } from "../shared/openapi";
+import { specFromXml } from "../shared/wsdl";
+import { readZip } from "./pack";
 import { POLICY } from "../shared/policy";
 import { parse as parseYaml } from "yaml";
 import { fetchPublicSpec } from "./ssrf";
@@ -123,7 +125,11 @@ export function createServer(options?: {
     }
     await next();
     applyCatchCors(c);
+    const cookies = c.res.headers.getSetCookie?.() ?? [];
     c.res.headers.delete("set-cookie");
+    for (const cookie of cookies) {
+      if (cookie.startsWith("pp-mock=")) c.res.headers.append("set-cookie", cookie);
+    }
   });
 
   const surface = options?.surface ?? "all";
@@ -234,12 +240,32 @@ export function createServer(options?: {
       text?: string;
       url?: string;
       kind?: string;
+      zipBase64?: string;
     };
+    if (body.zipBase64) {
+      const bytes = Buffer.from(body.zipBase64, "base64");
+      const entries = readZip(bytes);
+      const sample = entries.find((entry) => /\.(json|csv|log|txt|ndjson)$/i.test(entry.name));
+      const text = sample ? sample.data.toString("utf8").slice(0, 100_000) : "";
+      const imported = text.trim().startsWith("{") || text.trim().startsWith("[")
+        ? mockFromSample(text)
+        : mockFromSample(JSON.stringify({ file: sample?.name || "payload.bin", bytes: sample?.data.length || 0 }));
+      imported.operations[0].pack = {
+        format: "zip",
+        filename: "upload.zip",
+        entryName: (sample?.name || "payload.txt").split("/").pop() || "payload.txt",
+        entryFormat: text.trim().startsWith("[") || text.trim().startsWith("{") ? "json" : "ndjson",
+      };
+      return c.json({ mockSpec: imported, warnings: [], unsupported: ["Only the first text entry was used as the shape."] });
+    }
     const text = body.url
       ? await fetchPublicSpec(body.url)
       : String(body.text || "");
     if (!text.trim()) throw new HttpError(400, "Provide a spec or sample");
     if (text.length > POLICY.specJsonBytes) throw new HttpError(413, "Spec is too large");
+    if (text.trim().startsWith("<")) {
+      return c.json({ mockSpec: specFromXml(text), warnings: [], unsupported: [] });
+    }
     if (body.kind === "sample") {
       return c.json({ mockSpec: mockFromSample(text), warnings: [], unsupported: [] });
     }
@@ -346,6 +372,7 @@ function registerCatch(app: Hono<AppEnv>) {
     for (const [key, value] of Object.entries(result.headers)) {
       c.header(key, value);
     }
+    if (result.bodyBytes) return c.body(new Uint8Array(result.bodyBytes), result.status as 200);
     return c.body(result.body, result.status as 200);
   });
 }

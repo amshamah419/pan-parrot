@@ -87,11 +87,11 @@ export function IntegrationPicker({
     }
   };
 
-  const importText = async (kind: "sample" | "spec", text: string, url?: string) => {
+  const importText = async (kind: "sample" | "spec", text: string, url?: string, zipBase64?: string) => {
     setBusy(true);
     setError("");
     try {
-      const result = await importSpec({ kind, text, url });
+      const result = await importSpec({ kind, text, url, zipBase64 });
       const mockSpec = result.mockSpec as { source?: { name?: string } } | undefined;
       if (!mockSpec) throw new Error("Import did not return a mock");
       const endpoint = await createEndpoint({
@@ -192,7 +192,7 @@ export function IntegrationPicker({
           </TabsContent>
           <TabsContent value="spec" className="space-y-3">
             <p className="text-sm text-muted-foreground">
-              OpenAPI 3, Swagger 2, or a Postman v2 collection. JSON or YAML. URLs must be public https.
+              OpenAPI 3, Swagger 2, a Postman v2 collection, a WSDL, or a sample XML document. URLs must be public https. A zip is read for its first text file and then mocked as a zip download.
             </p>
             <Textarea
               id="spec-text"
@@ -200,7 +200,7 @@ export function IntegrationPicker({
               onChange={(event) => setSpecText(event.target.value)}
               rows={6}
               className="font-mono text-xs"
-              placeholder="Paste JSON or YAML"
+              placeholder="Paste JSON, YAML, WSDL, or XML"
             />
             <Input
               value={specUrl}
@@ -217,17 +217,23 @@ export function IntegrationPicker({
               <label className="inline-flex items-center">
                 <input
                   type="file"
-                  accept=".json,.yaml,.yml,application/json,text/yaml"
+                  accept=".json,.yaml,.yml,.xml,.wsdl,.zip,application/json,text/yaml,application/zip"
                   className="text-sm"
                   onChange={async (event) => {
                     const file = event.target.files?.[0];
                     if (!file) return;
-                    if (file.size > 512 * 1024) {
-                      setError("File is larger than 512 KB");
+                    if (file.size > 380 * 1024) {
+                      setError("File is larger than 380 KB");
                       return;
                     }
-                    const text = await file.text();
-                    await importText("spec", text);
+                    const bytes = new Uint8Array(await file.arrayBuffer());
+                    if (bytes[0] === 0x50 && bytes[1] === 0x4b) {
+                      let binary = "";
+                      for (const byte of bytes) binary += String.fromCharCode(byte);
+                      await importText("spec", "", undefined, btoa(binary));
+                      return;
+                    }
+                    await importText("spec", new TextDecoder().decode(bytes));
                   }}
                 />
               </label>

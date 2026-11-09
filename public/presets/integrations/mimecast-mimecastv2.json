@@ -1,1 +1,146 @@
-{"id":"mimecast-mimecastv2","name":"Mimecast v2","pack":"Mimecast","fidelity":"sample","curated":false,"summary":"Use the Mimecast integration to manage email security, continuity, and archiving services.","operations":5,"spec":{"version":1,"source":{"kind":"preset","id":"mimecast-mimecastv2","name":"Mimecast v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastV2","fidelity":"sample","notes":["HTTP paths were guessed from string literals in the integration client and may not match every command.","Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture."],"verification":{"status":"sample","docUrl":"https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/","checkedAt":"2026-11-09","differences":["POST /api/audit/get-siem-logs returns an octet-stream log or a zip, plus an mc-siem-token header. A JSON body means there are no further logs. The XSOAR event collector only accepts the zip. The inferred JSON sample was left in place."]}},"operations":[{"id":"test-data-create-antispoofing-bypass-policy-response-json","method":"GET","pathTemplate":"/policy-management/cloud-gateway/v1/blocked-senders/policies/{policy_id}","summary":"test_data/create_antispoofing_bypass_policy_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"meta","kind":"object","optional":false,"children":[{"name":"status","kind":"integer","optional":false}]},{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"option","kind":"string","optional":false,"example":"disable_bypass"},{"name":"id","kind":"id","optional":false,"example":"eNo1jr0OgjAYAN"},{"name":"policy","kind":"object","optional":false,"children":[{"name":"description","kind":"string","optional":false,"example":"test"},{"name":"fromPart","kind":"string","optional":false,"example":"envelope_from"},{"name":"from","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"email_domain"},{"name":"emailDomain","kind":"string","optional":false,"example":"googl.com"}]},{"name":"to","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"email_domain"},{"name":"emailDomain","kind":"string","optional":false,"example":"google.com"}]},{"name":"fromType","kind":"string","optional":false,"example":"email_domain"},{"name":"fromValue","kind":"string","optional":false,"example":"googl.com"},{"name":"toType","kind":"string","optional":false,"example":"email_domain"},{"name":"toValue","kind":"string","optional":false,"example":"google.com"},{"name":"fromDate","kind":"timestamp","optional":false,"format":"iso"},{"name":"toDate","kind":"timestamp","optional":false,"format":"iso"},{"name":"override","kind":"boolean","optional":false},{"name":"bidirectional","kind":"boolean","optional":false},{"name":"conditions","kind":"object","optional":false,"children":[{"name":"spfDomains","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1}]},{"name":"enabled","kind":"boolean","optional":false},{"name":"enforced","kind":"boolean","optional":false},{"name":"createTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"lastUpdated","kind":"timestamp","optional":false,"format":"iso"}]}]},"minItems":0,"maxItems":1},{"name":"fail","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1}]}},{"id":"test-data-create-block-sender-policy-response-json","method":"GET","pathTemplate":"/policy-management/cloud-gateway/v1/blocked-senders/policies","summary":"test_data/create_block_sender_policy_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"option","kind":"string","optional":false,"example":"block_sender"},{"name":"id","kind":"id","optional":false,"example":"eNo1jrsOgjAAAP-lM0Npi4KJg_EFvoJIRd2wVCwoxRYkaPx3cXC_y90baM5qxUUCBsDhtttuFtRpbPry"},{"name":"policy","kind":"object","optional":false,"children":[{"name":"description","kind":"string","optional":false,"example":"test"},{"name":"fromPart","kind":"string","optional":false,"example":"both"},{"name":"from","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"email_domain"},{"name":"emailDomain","kind":"string","optional":false,"example":"google.com"}]},{"name":"to","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"everyone"}]},{"name":"fromType","kind":"string","optional":false,"example":"email_domain"},{"name":"fromValue","kind":"string","optional":false,"example":"google.com"},{"name":"toType","kind":"string","optional":false,"example":"everyone"},{"name":"fromEternal","kind":"boolean","optional":false},{"name":"toEternal","kind":"boolean","optional":false},{"name":"fromDate","kind":"timestamp","optional":false,"format":"iso"},{"name":"toDate","kind":"timestamp","optional":false,"format":"iso"},{"name":"override","kind":"boolean","optional":false},{"name":"bidirectional","kind":"boolean","optional":false},{"name":"conditions","kind":"object","optional":false,"children":[]},{"name":"enabled","kind":"boolean","optional":false},{"name":"enforced","kind":"boolean","optional":false},{"name":"createTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"lastUpdated","kind":"timestamp","optional":false,"format":"iso"}]}]}},{"id":"test-data-get-archive-search-logs-response-json","method":"GET","pathTemplate":"/api/policy/antispoofing-bypass/update-policy","summary":"test_data/get_archive_search_logs_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"meta","kind":"object","optional":false,"children":[{"name":"pagination","kind":"object","optional":false,"children":[{"name":"pageSize","kind":"integer","optional":false},{"name":"totalCount","kind":"integer","optional":false},{"name":"next","kind":"string","optional":false,"example":"asides"}]},{"name":"status","kind":"integer","optional":false}]},{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"logs","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"createTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"emailAddr","kind":"email","optional":false},{"name":"source","kind":"string","optional":false,"example":"archive"},{"name":"searchText","kind":"string","optional":false,"example":"aaaaasas"},{"name":"searchReason","kind":"string","optional":false},{"name":"description","kind":"string","optional":false,"example":"Message Tracking Search"}]},"minItems":0,"maxItems":1}]},"minItems":0,"maxItems":1},{"name":"fail","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1}]}},{"id":"test-data-get-message-info-response-json","method":"GET","pathTemplate":"/api/policy/address-alteration/create-policy","summary":"test_data/get_message_info_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"meta","kind":"object","optional":false,"children":[{"name":"status","kind":"integer","optional":false}]},{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"recipientInfo","kind":"object","optional":false,"children":[{"name":"messageInfo","kind":"object","optional":false,"children":[{"name":"fromHeader","kind":"email","optional":false},{"name":"fromEnvelope","kind":"email","optional":false},{"name":"to","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1},{"name":"cc","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1},{"name":"subject","kind":"string","optional":false,"example":"Demand Ken Lay Donate Proceeds from Enron Stock Sales"},{"name":"sent","kind":"timestamp","optional":false,"format":"iso"},{"name":"processed","kind":"timestamp","optional":false,"format":"iso"},{"name":"transmissionInfo","kind":"string","optional":false,"example":"test"}]},{"name":"recipientMetaInfo","kind":"object","optional":false,"children":[{"name":"receiptEvent","kind":"string","optional":false,"example":"Email Received - SPF check failed"},{"name":"spamEvent","kind":"string","optional":false,"example":"na"},{"name":"messageExpiresIn","kind":"integer","optional":false},{"name":"processingServer","kind":"string","optional":false,"example":"test"},{"name":"transmissionSize","kind":"integer","optional":false},{"name":"binaryEmailSize","kind":"integer","optional":false},{"name":"remoteIp","kind":"ip","optional":false,"example":"1.2.3.4"},{"name":"remoteHost","kind":"string","optional":false,"example":"test"},{"name":"remoteServerGreeting","kind":"string","optional":false,"example":"test"},{"name":"receiptAcknowledgement","kind":"string","optional":false,"example":"testK"},{"name":"transmissionStart","kind":"timestamp","optional":false,"format":"iso"},{"name":"transmissionEnd","kind":"timestamp","optional":false,"format":"iso"},{"name":"encryptionInfo","kind":"string","optional":false,"example":"TLS"},{"name":"components","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":3}]}]},{"name":"deliveredMessage","kind":"object","optional":false,"children":[{"name":"test@test.com","kind":"object","optional":false,"children":[{"name":"messageInfo","kind":"object","optional":false,"children":[{"name":"fromHeader","kind":"string","optional":false,"example":"nested"},{"name":"fromEnvelope","kind":"string","optional":false,"example":"nested"},{"name":"to","kind":"string","optional":false,"example":"nested"},{"name":"cc","kind":"string","optional":false,"example":"nested"},{"name":"subject","kind":"string","optional":false,"example":"nested"},{"name":"sent","kind":"string","optional":false,"example":"nested"},{"name":"processed","kind":"string","optional":false,"example":"nested"},{"name":"transmissionInfo","kind":"string","optional":false,"example":"nested"},{"name":"route","kind":"string","optional":false,"example":"nested"}]},{"name":"policyInfo","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":3},{"name":"deliveryMetaInfo","kind":"object","optional":false,"children":[{"name":"deliveryEvent","kind":"string","optional":false,"example":"nested"},{"name":"emailAddress","kind":"string","optional":false,"example":"nested"},{"name":"messageExpiresIn","kind":"string","optional":false,"example":"nested"},{"name":"processingServer","kind":"string","optional":false,"example":"nested"},{"name":"transmissionSize","kind":"string","optional":false,"example":"nested"},{"name":"remoteIp","kind":"string","optional":false,"example":"nested"},{"name":"remoteHost","kind":"string","optional":false,"example":"nested"},{"name":"remoteServerGreeting","kind":"string","optional":false,"example":"nested"},{"name":"receiptAcknowledgement","kind":"string","optional":false,"example":"nested"},{"name":"transmissionStart","kind":"string","optional":false,"example":"nested"},{"name":"transmissionEnd","kind":"string","optional":false,"example":"nested"},{"name":"encryptionInfo","kind":"string","optional":false,"example":"nested"},{"name":"components","kind":"string","optional":false,"example":"nested"}]}]}]},{"name":"retentionInfo","kind":"object","optional":false,"children":[{"name":"currentPurgeDate","kind":"timestamp","optional":false,"format":"iso"},{"name":"purgeBasedOn","kind":"string","optional":false,"example":"original"},{"name":"originalPurgeDate","kind":"timestamp","optional":false,"format":"iso"},{"name":"retentionAdjustmentDays","kind":"integer","optional":false},{"name":"litigationHoldInfo","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"fbrStamps","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"smartTags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"fbrExpireCheck","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1},{"name":"audits","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1}]},{"name":"status","kind":"string","optional":false,"example":"archived"},{"name":"spamInfo","kind":"object","optional":false,"children":[{"name":"spamScore","kind":"integer","optional":false},{"name":"detectionLevel","kind":"string","optional":false,"example":"relaxed"},{"name":"spamProcessingDetail","kind":"object","optional":false,"children":[{"name":"rbl","kind":"object","optional":false,"children":[{"name":"allow","kind":"string","optional":false,"example":"nested"},{"name":"info","kind":"string","optional":false,"example":"nested"}]},{"name":"greyEmail","kind":"boolean","optional":false},{"name":"spf","kind":"object","optional":false,"children":[{"name":"allow","kind":"string","optional":false,"example":"nested"},{"name":"info","kind":"string","optional":false,"example":"nested"}]},{"name":"dkim","kind":"object","optional":false,"children":[{"name":"allow","kind":"string","optional":false,"example":"nested"},{"name":"info","kind":"string","optional":false,"example":"nested"}]},{"name":"dmarc","kind":"object","optional":false,"children":[{"name":"allow","kind":"string","optional":false,"example":"nested"},{"name":"info","kind":"string","optional":false,"example":"nested"}]},{"name":"permittedSender","kind":"object","optional":false,"children":[{"name":"allow","kind":"string","optional":false,"example":"nested"},{"name":"info","kind":"string","optional":false,"example":"nested"}]},{"name":"managedSender","kind":"object","optional":false,"children":[{"name":"allow","kind":"string","optional":false,"example":"nested"},{"name":"info","kind":"string","optional":false,"example":"nested"}]}]}]},{"name":"id","kind":"id","optional":false,"example":"1234test"}]},"minItems":0,"maxItems":1},{"name":"fail","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1}]}},{"id":"test-data-get-search-logs-response-json","method":"GET","pathTemplate":"/api/policy/address-alteration/update-policy","summary":"test_data/get_search_logs_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"meta","kind":"object","optional":false,"children":[{"name":"pagination","kind":"object","optional":false,"children":[{"name":"pageSize","kind":"integer","optional":false},{"name":"totalCount","kind":"integer","optional":false},{"name":"next","kind":"string","optional":false,"example":"eNodjskOgSZLtvp3x9nzD75"}]},{"name":"status","kind":"integer","optional":false}]},{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"logs","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"createTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"emailAddr","kind":"email","optional":false},{"name":"source","kind":"string","optional":false,"example":"archive"},{"name":"searchText","kind":"email","optional":false},{"name":"searchPath","kind":"string","optional":false,"example":"/INBOX/"},{"name":"searchReason","kind":"string","optional":false},{"name":"isAdmin","kind":"string","optional":false,"example":"true"},{"name":"museQuery","kind":"string","optional":false,"example":"[]"},{"name":"description","kind":"string","optional":false,"example":"Archive Mailbox"}]},"minItems":0,"maxItems":1}]},"minItems":0,"maxItems":1},{"name":"fail","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200}}
+{
+  "id": "mimecast-mimecastv2",
+  "name": "Mimecast v2",
+  "pack": "Mimecast",
+  "vendor": "Mimecast",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "SIEM logs as a zip plus an mc-siem-token header.",
+  "notes": [
+    "POST /api/audit/get-siem-logs returns application/octet-stream with Content-Disposition filename ending in .zip, which is what the XSOAR event collector accepts.",
+    "The zip contains one JSON file with type MTA and a data array. The next page token is the mc-siem-token response header. Send it back as data[0].token.",
+    "Production signs the request. This mock only checks that Authorization, x-mc-date, x-mc-req-id, and x-mc-app-id are present. The signature is not verified.",
+    "A JSON body meaning there are no further logs is not the default. Stop paging when the catalog ends and the header is absent."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "mimecast-mimecastv2",
+      "name": "Mimecast v2",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
+        "checkedAt": "2026-11-09",
+        "differences": [
+          "POST /api/audit/get-siem-logs returns application/octet-stream with Content-Disposition filename ending in .zip, which is what the XSOAR event collector accepts.",
+          "The zip contains one JSON file with type MTA and a data array. The next page token is the mc-siem-token response header. Send it back as data[0].token.",
+          "Production signs the request. This mock only checks that Authorization, x-mc-date, x-mc-req-id, and x-mc-app-id are present. The signature is not verified.",
+          "A JSON body meaning there are no further logs is not the default. Stop paging when the catalog ends and the header is absent."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "header",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "token",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "headerName": "mc-siem-token"
+        },
+        "id": "siem-logs",
+        "method": "POST",
+        "pathTemplate": "/api/audit/get-siem-logs",
+        "summary": "Download the next SIEM log batch",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "event",
+          "kind": "object",
+          "children": [
+            {
+              "name": "datetime",
+              "kind": "timestamp",
+              "format": "iso"
+            },
+            {
+              "name": "aCode",
+              "kind": "id"
+            },
+            {
+              "name": "Act",
+              "kind": "enum",
+              "enumValues": [
+                "Acc",
+                "Hld",
+                "Rej"
+              ]
+            },
+            {
+              "name": "MsgId",
+              "kind": "id"
+            },
+            {
+              "name": "Sender",
+              "kind": "email"
+            },
+            {
+              "name": "Rcpt",
+              "kind": "email"
+            }
+          ]
+        },
+        "pack": {
+          "format": "zip",
+          "filename": "siem.zip",
+          "entryName": "mta.json",
+          "entryFormat": "wrapped-json",
+          "wrapperType": "MTA"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "mimecast-mimecastv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false
+    },
+    "totalRecords": 500,
+    "auth": {
+      "mode": "signed-headers",
+      "signedHeaders": {
+        "names": [
+          "authorization",
+          "x-mc-date",
+          "x-mc-req-id",
+          "x-mc-app-id"
+        ],
+        "verify": "format-only"
+      }
+    }
+  }
+}

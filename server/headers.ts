@@ -48,7 +48,10 @@ export function redactHeaders(headers: Headers): Record<string, string> {
     const name = key.toLowerCase();
     const clipped =
       value.length > 2048 ? `${value.slice(0, 2048)}…[truncated]` : value;
-    out[name] = SENSITIVE_REQUEST_HEADERS.has(name) ? "[redacted]" : clipped;
+    const sensitive =
+      SENSITIVE_REQUEST_HEADERS.has(name) ||
+      /api-key|token|secret|password|authorization|signature/.test(name);
+    out[name] = sensitive ? "[redacted]" : clipped;
     count += 1;
   });
   return out;
