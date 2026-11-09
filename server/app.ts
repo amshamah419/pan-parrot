@@ -453,6 +453,28 @@ export function createServer(options?: {
   return app;
 }
 
+function chunkedText(body: string, dripMs: number): ReadableStream<Uint8Array> {
+  const lines = body.split("\n");
+  const encoder = new TextEncoder();
+  let index = 0;
+  let pauses = 0;
+  return new ReadableStream({
+    async pull(controller) {
+      if (index >= lines.length) {
+        controller.close();
+        return;
+      }
+      const suffix = index < lines.length - 1 ? "\n" : "";
+      controller.enqueue(encoder.encode(lines[index] + suffix));
+      index += 1;
+      if (dripMs > 0 && pauses < 8 && index < lines.length) {
+        pauses += 1;
+        await new Promise((resolve) => setTimeout(resolve, dripMs));
+      }
+    },
+  });
+}
+
 function registerCatch(app: Hono<AppEnv>) {
   app.all("/catch/*", async (c) => {
     const db = c.get("db");
@@ -475,6 +497,7 @@ function registerCatch(app: Hono<AppEnv>) {
     for (const [key, value] of Object.entries(result.headers)) {
       c.header(key, value);
     }
+    if (result.stream) return c.body(chunkedText(result.body, result.dripMs || 0), result.status as 200);
     if (result.bodyBytes) return c.body(new Uint8Array(result.bodyBytes), result.status as 200);
     return c.body(result.body, result.status as 200);
   });

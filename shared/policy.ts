@@ -16,10 +16,16 @@ export const POLICY = {
   sessionCookieName: "pp_session",
 } as const;
 
-/** Ceilings for generated mock responses on a Netlify synchronous function. */
+/**
+ * Ceilings for generated mock responses on a Netlify synchronous function.
+ * Netlify allows 6 MB buffered and 20 MB streamed, and the function stops at 60 seconds.
+ * Normal pages stay at 2 MB. Opt-in streams and downloads stop at 6 MB so the body
+ * still fits if the platform buffers it.
+ */
 export const MOCK_LIMITS = {
   maxRecordsPerResponse: 500,
   maxResponseBytes: 2_000_000,
+  maxDownloadBytes: 6_000_000,
   maxVirtualRecords: 20_000,
   maxOperations: 40,
   maxFields: 400,

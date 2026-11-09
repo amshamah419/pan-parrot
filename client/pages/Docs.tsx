@@ -77,7 +77,10 @@ npm run parrot -- export <endpoint-id> --out ./tests`}</pre>
                 Export writes <code>test_pan_parrot.py</code> and <code>test_data.json</code> for <code>requests_mock</code>. The tests do not call the live catch URL, and dummy mock credentials are not included.
               </p>
               <p>
-                A mock can require AWS SigV4, HTTP Digest, an HS256 JWT, a SOAP UsernameToken, or an NTLM handshake. Use dummy secrets only. Mutual TLS is not supported: a Netlify function cannot ask the client for a certificate.
+                A mock can require AWS SigV4, HTTP Digest, an HS256 JWT, a SOAP UsernameToken, or an NTLM handshake. Use dummy secrets only. Mutual TLS is not supported: a Netlify function cannot ask the client for a certificate. A normal page stays at 2 MB. Streamed NDJSON and file downloads stop at 6 MB. Netlify allows 6 MB buffered and 20 MB streamed, and the function stops after 60 seconds.
+              </p>
+              <p>
+                A normal page stays at 2 MB and 500 records. Streamed NDJSON and CSV, zip, or gzip downloads can grow to 6 MB. Netlify allows 6 MB buffered and 20 MB streamed, and the function stops after 60 seconds, so a mock does not try to fill 20 MB. One byte Range is supported on a file download.
               </p>
             </CardContent>
           </Card>

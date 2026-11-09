@@ -33,6 +33,8 @@ export interface GenerateResult {
   recordCount: number;
   chaosEffects: string[];
   delayMs: number;
+  dripMs: number;
+  stream: boolean;
   capped: boolean;
   pack?: {
     format: "zip" | "gzip" | "octet";
@@ -155,6 +157,8 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
       }),
       recordCount: 0,
       chaosEffects: effects,
+      dripMs: 0,
+      stream: false,
       delayMs: spec.chaos.latency ? 1500 : 0,
       capped: false,
     };
@@ -213,12 +217,28 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
     contentType = "text/html; charset=utf-8";
     effects.push("wrong-content-type");
   }
+  const downloadBytes = operation.stream ? 0 : operation.downloadBytes || 0;
+  if (downloadBytes > 0 && !isXmlOperation(operation)) {
+    body = expandToBytes(downloadBody(operation, records, body), downloadBytes);
+    contentType = operation.pack ? contentType : "text/csv; charset=utf-8";
+    effects.push("download");
+  }
+  if (operation.stream && !isXmlOperation(operation)) {
+    body = streamBody(operation, records, body);
+    contentType = "application/x-ndjson; charset=utf-8";
+    effects.push("stream");
+  }
+  if (chaosOn && spec.chaos.partial) {
+    body = body.slice(0, Math.max(1, Math.floor(byteLength(body) * 0.4)));
+    effects.push("partial");
+  }
 
   let capped = page.capped;
-  if (byteLength(body) > MOCK_LIMITS.maxResponseBytes) {
+  const sizeCap = downloadBytes > 0 || operation.stream ? MOCK_LIMITS.maxDownloadBytes : MOCK_LIMITS.maxResponseBytes;
+  if (byteLength(body) > sizeCap) {
     capped = true;
     effects.push("size-cap");
-    body = trimToBytes(operation, records, page);
+    body = downloadBytes > 0 || operation.stream ? body.slice(0, sizeCap) : trimToBytes(operation, records, page);
   }
 
   const headers: Record<string, string> = {
@@ -229,6 +249,8 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
     "x-pan-parrot-records": String(records.length),
   };
   if (capped) headers["x-pan-parrot-page-cap"] = String(MOCK_LIMITS.maxRecordsPerResponse);
+  if (operation.stream) headers["x-pan-parrot-stream"] = "chunked";
+  if (downloadBytes > 0 && !operation.stream) headers["accept-ranges"] = "bytes";
   if (effects.length) headers["x-pan-parrot-effects"] = effects.join(",");
   const link = nextLinkHeader(operation, page, input.requestUrl, input.query);
   if (link) headers.link = link;
@@ -258,10 +280,30 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
     body,
     recordCount: listed ? records.length : page.count,
     chaosEffects: effects,
-    delayMs: chaosOn && spec.chaos.latency ? 2000 : 0,
+    delayMs: chaosOn && spec.chaos.latency ? 2000 : chaosOn && spec.chaos.slowDrip && !operation.stream ? 1500 : 0,
+    dripMs: chaosOn && spec.chaos.slowDrip && operation.stream ? 200 : 0,
+    stream: Boolean(operation.stream) && !isXmlOperation(operation),
     capped,
     pack,
   };
+}
+
+function downloadBody(operation: MockOperation, records: unknown[], body: string): string {
+  if (operation.pack?.entryFormat === "csv" || !operation.pack) return toCsv(records.length ? records : [{}]);
+  return body;
+}
+
+function streamBody(operation: MockOperation, records: unknown[], body: string): string {
+  if (operation.envelope.type === "ndjson" || operation.envelope.type === "splunk-export") return body;
+  return records.map((record) => JSON.stringify(record)).join("\n");
+}
+
+export function expandToBytes(text: string, target: number): string {
+  const goal = Math.min(Math.max(target, 1), MOCK_LIMITS.maxDownloadBytes);
+  const unit = text || "x";
+  let out = "";
+  while (out.length < goal) out += unit;
+  return out.slice(0, goal);
 }
 
 function packEntry(operation: MockOperation, records: unknown[], body: string): string {
@@ -621,6 +663,8 @@ function onlyErrors(chaos: ChaosSpec): boolean {
     !chaos.outOfOrder &&
     !chaos.wrongTypes &&
     !chaos.truncatedJson &&
+    !chaos.slowDrip &&
+    !chaos.partial &&
     !chaos.malformedJson &&
     !chaos.wrongContentType &&
     chaos.paginationGlitch === "none"

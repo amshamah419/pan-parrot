@@ -35,6 +35,8 @@ function generated(body = "[]"): GenerateResult {
     recordCount: 0,
     chaosEffects: [],
     delayMs: 0,
+    dripMs: 0,
+    stream: false,
     capped: false,
   };
 }
