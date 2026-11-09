@@ -151,7 +151,9 @@ export default function MockStudio() {
         </div>
         <p className="mt-3 text-xs text-muted-foreground">
           A page holds at most {MOCK_LIMITS.maxRecordsPerResponse} records and{" "}
-          {Math.round(MOCK_LIMITS.maxResponseBytes / 1_000_000)} MB. Zip and gzip downloads stay under that same 2 MB ceiling.
+          {Math.round(MOCK_LIMITS.maxResponseBytes / 1_000_000)} MB. Streamed NDJSON and file downloads can grow to{" "}
+          {Math.round(MOCK_LIMITS.maxDownloadBytes / 1_000_000)} MB, which is Netlify's buffered response limit.
+          Netlify can stream 20 MB, and the function stops at 60 seconds, so this mock stops at 6 MB.
           This catalog has {spec.totalRecords.toLocaleString()} unique records.
           {spec.auth && spec.auth.mode !== "none" && spec.auth.mode !== "panos-key" && spec.auth.mode !== "api-key"
             ? " This mock checks dummy credentials. A plain browser visit will be rejected until the integration sends them."
@@ -217,9 +219,35 @@ export default function MockStudio() {
           <TabsTrigger value="auth">Auth</TabsTrigger>
         </TabsList>
         <TabsContent value="preview" className="space-y-3">
-          <div className="flex items-center justify-end gap-2 text-sm">
-            <span>Show chaos</span>
-            <Switch checked={previewChaos} onCheckedChange={setPreviewChaos} />
+          <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
+            <div className="flex flex-wrap items-center gap-4">
+              <label className="flex items-center gap-2">
+                <span>Stream NDJSON</span>
+                <Switch
+                  checked={Boolean(operation.stream)}
+                  onCheckedChange={(stream) => updateOperation({ ...operation, stream })}
+                />
+              </label>
+              <Label className="text-xs">
+                Download bytes, 0 for a normal page
+                <Input
+                  type="number"
+                  min={0}
+                  max={MOCK_LIMITS.maxDownloadBytes}
+                  value={operation.downloadBytes || 0}
+                  onChange={(event) =>
+                    updateOperation({
+                      ...operation,
+                      downloadBytes: Math.min(MOCK_LIMITS.maxDownloadBytes, Math.max(0, Number(event.target.value) || 0)),
+                    })
+                  }
+                />
+              </Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <span>Show chaos</span>
+              <Switch checked={previewChaos} onCheckedChange={setPreviewChaos} />
+            </div>
           </div>
           <pre className="max-h-[32rem] overflow-auto rounded border bg-muted/40 p-3 text-xs whitespace-pre-wrap break-all">
             {preview}
@@ -639,6 +667,8 @@ function ChaosEditor({
           ["outOfOrder", "Reverse the page"],
           ["wrongTypes", "Null out some fields"],
           ["truncatedJson", "Cut the body short"],
+          ["slowDrip", "Slow drip"],
+          ["partial", "Partial response"],
           ["malformedJson", "Break the JSON"],
           ["wrongContentType", "Send text/html"],
           ["randomErrors", "429 / 500 / 503 with Retry-After"],

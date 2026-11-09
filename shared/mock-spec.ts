@@ -95,6 +95,10 @@ export interface MockOperation {
   fallback?: boolean;
   soapAction?: string;
   requestElement?: string;
+  /** Send list rows as chunked NDJSON instead of one buffered body. */
+  stream?: boolean;
+  /** When set, the catch URL repeats the sample until this many bytes, up to the download cap. */
+  downloadBytes?: number;
   pack?: {
     format: "zip" | "gzip" | "octet";
     filename: string;
@@ -116,6 +120,10 @@ export interface ChaosSpec {
   outOfOrder: boolean;
   wrongTypes: boolean;
   truncatedJson: boolean;
+  /** Pause between streamed lines, or once before a buffered body. */
+  slowDrip: boolean;
+  /** End the body early, as a truncated download or stream. */
+  partial: boolean;
   malformedJson: boolean;
   wrongContentType: boolean;
   randomErrors: boolean;
@@ -254,6 +262,8 @@ export function defaultChaos(seed = ""): ChaosSpec {
     outOfOrder: false,
     wrongTypes: false,
     truncatedJson: false,
+    slowDrip: false,
+    partial: false,
     malformedJson: false,
     wrongContentType: false,
     randomErrors: false,
@@ -373,6 +383,8 @@ function normalizeOperation(
     fallback: Boolean(operation.fallback) || undefined,
     soapAction: cleanOptional(operation.soapAction, 200),
     requestElement: cleanOptional(operation.requestElement, 80),
+    stream: Boolean(operation.stream) || undefined,
+    downloadBytes: clampInt(operation.downloadBytes, 0, MOCK_LIMITS.maxDownloadBytes, 0) || undefined,
     pack: normalizePack(operation.pack),
   };
 }
@@ -541,6 +553,8 @@ function normalizeChaos(chaos: ChaosSpec | undefined): ChaosSpec {
     outOfOrder: Boolean(chaos.outOfOrder),
     wrongTypes: Boolean(chaos.wrongTypes),
     truncatedJson: Boolean(chaos.truncatedJson),
+    slowDrip: Boolean(chaos.slowDrip),
+    partial: Boolean(chaos.partial),
     malformedJson: Boolean(chaos.malformedJson),
     wrongContentType: Boolean(chaos.wrongContentType),
     randomErrors: Boolean(chaos.randomErrors),

@@ -6,6 +6,7 @@ import { checkMockAuth } from "../shared/mock-auth";
 import { validateMockSpec, type MockSpec } from "../shared/mock-spec";
 import { parseXml, localName, type XmlElement } from "../shared/xml";
 import { gzipBytes, zipEntries } from "./pack";
+import { singleByteRange } from "../shared/range";
 import { openAuth, sealAuth, sealSecret } from "./mock-secrets";
 import { loadRuntime, resetRuntime, saveRuntime } from "./runtime-state";
 import { ENDPOINT_PATH_RE, POLICY } from "../shared/policy";
@@ -268,6 +269,8 @@ export async function captureOnPath(
   bodyBytes?: Uint8Array;
   headers: Record<string, string>;
   json: boolean;
+  stream?: boolean;
+  dripMs?: number;
 }> {
   if (!ENDPOINT_PATH_RE.test(path)) {
     throw new HttpError(404, "Endpoint not found");
@@ -344,6 +347,31 @@ export async function captureOnPath(
     bodyBytes: produced.bodyBytes,
     headers: sanitizeMockHeaders(produced.headers),
     json: produced.json,
+    stream: produced.stream,
+    dripMs: produced.dripMs,
+  };
+}
+
+function applyRange(
+  bytes: Uint8Array,
+  header: string | null,
+  enabled: boolean,
+  streaming: boolean,
+): { status: number; bytes: Uint8Array; headers: Record<string, string> } | null {
+  if (!enabled || streaming || !header) return null;
+  const range = singleByteRange(bytes.byteLength, header);
+  if (range === "invalid") {
+    return {
+      status: 416,
+      bytes: new Uint8Array(),
+      headers: { "content-range": `bytes */${bytes.byteLength}` },
+    };
+  }
+  if (!range) return null;
+  return {
+    status: 206,
+    bytes: bytes.slice(range.start, range.end + 1),
+    headers: { "content-range": `bytes ${range.start}-${range.end}/${bytes.byteLength}` },
   };
 }
 
@@ -366,6 +394,8 @@ async function produceResponse(
   recordCount: number | null;
   delayMs: number;
   capped: boolean;
+  stream?: boolean;
+  dripMs?: number;
 }> {
   if (endpoint.mockEnabled && endpoint.mockSpec) {
     let spec: MockSpec;
@@ -461,13 +491,25 @@ async function produceResponse(
       await saveRuntime(db, endpoint.id, applied.state);
     }
     const packed = packBody(generated.pack);
+    const ranged = applyRange(
+      packed?.bytes ?? new TextEncoder().encode(generated.body),
+      request.headers.get("range"),
+      Boolean(packed) || Boolean(matched.operation.downloadBytes),
+      Boolean(generated.stream),
+    );
     return {
       ...generated,
-      body: packed ? generated.body : generated.body,
-      bodyBytes: packed?.bytes,
-      preview: packed?.preview || generated.body,
-      headers: packed ? { ...generated.headers, ...packed.headers } : generated.headers,
+      status: ranged?.status ?? generated.status,
+      body: ranged ? new TextDecoder().decode(ranged.bytes) : generated.body,
+      bodyBytes: packed || ranged ? (ranged?.bytes ?? packed?.bytes) : undefined,
+      preview: (packed?.preview || generated.body).slice(0, 2000),
+      headers: {
+        ...(packed ? { ...generated.headers, ...packed.headers } : generated.headers),
+        ...(ranged?.headers ?? {}),
+      },
       json: false,
+      stream: generated.stream && !packed && !ranged,
+      dripMs: generated.dripMs,
     };
   }
 
