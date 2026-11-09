@@ -178,6 +178,35 @@ export interface MockSpec {
   chaos: ChaosSpec;
   totalRecords: number;
   auth?: MockAuth;
+  behavior?: MockBehavior;
+}
+
+export interface ScenarioStep {
+  name?: string;
+  status?: number;
+  /** Replaces the generated body when set. Keep it short. */
+  body?: string;
+}
+
+export interface MockBehavior {
+  state: {
+    enabled: boolean;
+    idField: string;
+  };
+  scenario: {
+    enabled: boolean;
+    repeat: "last" | "loop";
+    steps: ScenarioStep[];
+  };
+  fetch: {
+    enabled: boolean;
+    sinceParam: string;
+    firstFetchParam: string;
+    timeField: string;
+    windowSeconds: number;
+    dedup: boolean;
+    perPoll: number;
+  };
 }
 
 export function defaultChaos(seed = ""): ChaosSpec {
@@ -273,6 +302,7 @@ export function validateMockSpec(input: unknown): MockSpec {
     chaos: normalizeChaos(raw.chaos),
     totalRecords: total,
     auth: normalizeAuth(raw.auth),
+    behavior: normalizeBehavior(raw.behavior),
   };
 }
 
@@ -568,6 +598,52 @@ function normalizeAuth(auth: MockAuth | undefined): MockAuth {
     return { mode, signedHeaders: { names, verify: "format-only" } };
   }
   return { mode: "none" };
+}
+
+function normalizeBehavior(behavior: MockBehavior | undefined): MockBehavior {
+  const base = defaultBehavior();
+  if (!behavior) return base;
+  const steps = Array.isArray(behavior.scenario?.steps) ? behavior.scenario.steps : [];
+  return {
+    state: {
+      enabled: Boolean(behavior.state?.enabled),
+      idField: token(behavior.state?.idField, "id"),
+    },
+    scenario: {
+      enabled: Boolean(behavior.scenario?.enabled),
+      repeat: behavior.scenario?.repeat === "loop" ? "loop" : "last",
+      steps: steps.slice(0, MOCK_LIMITS.maxScenarioSteps).map((step, index) => ({
+        name: cleanOptional(step?.name, 80) || `Call ${index + 1}`,
+        status: step?.status == null ? undefined : clampInt(step.status, 200, 599, 200),
+        body: cleanOptional(step?.body, 2_000),
+      })),
+    },
+    fetch: {
+      enabled: Boolean(behavior.fetch?.enabled),
+      sinceParam: token(behavior.fetch?.sinceParam, "since"),
+      firstFetchParam: token(behavior.fetch?.firstFetchParam, "first_fetch"),
+      timeField: token(behavior.fetch?.timeField, "created"),
+      windowSeconds: clampInt(behavior.fetch?.windowSeconds, 1, 86_400, 300),
+      dedup: behavior.fetch?.dedup !== false,
+      perPoll: clampInt(behavior.fetch?.perPoll, 1, 50, 3),
+    },
+  };
+}
+
+export function defaultBehavior(): MockBehavior {
+  return {
+    state: { enabled: false, idField: "id" },
+    scenario: { enabled: false, repeat: "last", steps: [] },
+    fetch: {
+      enabled: false,
+      sinceParam: "since",
+      firstFetchParam: "first_fetch",
+      timeField: "created",
+      windowSeconds: 300,
+      dedup: true,
+      perPoll: 3,
+    },
+  };
 }
 
 function normalizeQueryMatch(match: Record<string, string> | undefined): Record<string, string> | undefined {
