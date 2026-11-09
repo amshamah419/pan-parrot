@@ -81,7 +81,7 @@ const createEndpointSchema = z.object({
 
 const mockSchema = z.object({
   statusCode: z.number().int().optional(),
-  headers: z.record(z.string()).optional(),
+  headers: z.record(z.string(), z.string()).optional(),
   body: z.string().optional(),
   delay: z.number().optional(),
   enabled: z.boolean().optional(),
@@ -91,7 +91,7 @@ const recordSchema = z
   .object({
     url: z.string().trim().min(1).max(2000),
     method: z.string().trim().max(10).optional(),
-    headers: z.record(z.string().max(2048)).optional(),
+    headers: z.record(z.string(), z.string().max(2048)).optional(),
     body: z.string().max(16_384).optional(),
   })
   .strict();
