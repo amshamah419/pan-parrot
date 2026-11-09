@@ -12,6 +12,11 @@ const MODES: Array<{ id: AuthMode; label: string }> = [
   { id: "panos-key", label: "PAN-OS keygen" },
   { id: "edgegrid", label: "Akamai EdgeGrid" },
   { id: "signed-headers", label: "Signed headers (format only)" },
+  { id: "sigv4", label: "AWS SigV4" },
+  { id: "digest", label: "HTTP Digest" },
+  { id: "jwt", label: "JWT bearer (HS256)" },
+  { id: "wsse", label: "WS-Security UsernameToken" },
+  { id: "ntlm", label: "NTLM handshake" },
 ];
 
 export function MockAuthPanel({
@@ -24,7 +29,7 @@ export function MockAuthPanel({
   return (
     <div className="space-y-4">
       <div className="rounded border border-amber-300 bg-amber-50 p-3 text-sm text-amber-950">
-        These are dummy credentials for the mock. Never paste a real API key, password, or customer token.
+        These are dummy credentials for the mock. Never paste a real API key, password, or customer token. Mutual TLS is not supported: Netlify functions cannot ask a client for a certificate.
       </div>
       <Label>
         What the integration must send
@@ -107,6 +112,41 @@ export function MockAuthPanel({
           <Input value={auth.signedHeaders.names.join(", ")} onChange={(event) => onChange({ ...auth, signedHeaders: { verify: "format-only", names: event.target.value.split(",").map((item) => item.trim()).filter(Boolean) } })} />
         </Label>
       )}
+      {auth.mode === "sigv4" && auth.sigv4 && (
+        <div className="grid gap-2 sm:grid-cols-2">
+          <Label className="text-xs">Access key id<Input value={auth.sigv4.accessKeyId} onChange={(event) => onChange({ ...auth, sigv4: { ...auth.sigv4!, accessKeyId: event.target.value } })} /></Label>
+          <Label className="text-xs">Dummy secret key<Input value={auth.sigv4.secretAccessKey} onChange={(event) => onChange({ ...auth, sigv4: { ...auth.sigv4!, secretAccessKey: event.target.value } })} /></Label>
+          <Label className="text-xs">Region<Input value={auth.sigv4.region} onChange={(event) => onChange({ ...auth, sigv4: { ...auth.sigv4!, region: event.target.value } })} /></Label>
+          <Label className="text-xs">Service<Input value={auth.sigv4.service} onChange={(event) => onChange({ ...auth, sigv4: { ...auth.sigv4!, service: event.target.value } })} /></Label>
+        </div>
+      )}
+      {auth.mode === "digest" && auth.digest && (
+        <div className="grid gap-2 sm:grid-cols-3">
+          <Label className="text-xs">Realm<Input value={auth.digest.realm} onChange={(event) => onChange({ ...auth, digest: { ...auth.digest!, realm: event.target.value } })} /></Label>
+          <Label className="text-xs">Username<Input value={auth.digest.username} onChange={(event) => onChange({ ...auth, digest: { ...auth.digest!, username: event.target.value } })} /></Label>
+          <Label className="text-xs">Password<Input value={auth.digest.password} onChange={(event) => onChange({ ...auth, digest: { ...auth.digest!, password: event.target.value } })} /></Label>
+        </div>
+      )}
+      {auth.mode === "jwt" && auth.jwt && (
+        <div className="grid gap-2 sm:grid-cols-2">
+          <Label className="text-xs">HMAC secret<Input value={auth.jwt.hmacSecret} onChange={(event) => onChange({ ...auth, jwt: { ...auth.jwt!, hmacSecret: event.target.value } })} /></Label>
+          <Label className="text-xs">Issuer<Input value={auth.jwt.issuer} onChange={(event) => onChange({ ...auth, jwt: { ...auth.jwt!, issuer: event.target.value } })} /></Label>
+          <Label className="text-xs">Audience<Input value={auth.jwt.audience} onChange={(event) => onChange({ ...auth, jwt: { ...auth.jwt!, audience: event.target.value } })} /></Label>
+        </div>
+      )}
+      {auth.mode === "wsse" && auth.wsse && (
+        <div className="grid gap-2 sm:grid-cols-2">
+          <Label className="text-xs">Username<Input value={auth.wsse.username} onChange={(event) => onChange({ ...auth, wsse: { ...auth.wsse!, username: event.target.value } })} /></Label>
+          <Label className="text-xs">Password<Input value={auth.wsse.password} onChange={(event) => onChange({ ...auth, wsse: { ...auth.wsse!, password: event.target.value } })} /></Label>
+        </div>
+      )}
+      {auth.mode === "ntlm" && auth.ntlm && (
+        <div className="grid gap-2 sm:grid-cols-3">
+          <Label className="text-xs">Username<Input value={auth.ntlm.username} onChange={(event) => onChange({ ...auth, ntlm: { ...auth.ntlm!, username: event.target.value } })} /></Label>
+          <Label className="text-xs">Password<Input value={auth.ntlm.password} onChange={(event) => onChange({ ...auth, ntlm: { ...auth.ntlm!, password: event.target.value } })} /></Label>
+          <Label className="text-xs">Domain<Input value={auth.ntlm.domain} onChange={(event) => onChange({ ...auth, ntlm: { ...auth.ntlm!, domain: event.target.value } })} /></Label>
+        </div>
+      )}
     </div>
   );
 }
@@ -124,6 +164,11 @@ function blankAuth(mode: AuthMode): MockAuth {
     return { mode, edgegrid: { clientToken: "dummy-client-token", accessToken: "dummy-access-token", clientSecret: "dummy-not-a-real-secret", verify: "signature" } };
   }
   if (mode === "signed-headers") return { mode, signedHeaders: { names: ["authorization"], verify: "format-only" } };
+  if (mode === "sigv4") return { mode, sigv4: { accessKeyId: "AKIA_DUMMY", secretAccessKey: "dummy-secret-key", region: "us-east-1", service: "execute-api" } };
+  if (mode === "digest") return { mode, digest: { realm: "pan-parrot", username: "lab", password: "dummy-not-a-real-password" } };
+  if (mode === "jwt") return { mode, jwt: { hmacSecret: "dummy-hmac-secret", issuer: "lab", audience: "parrot" } };
+  if (mode === "wsse") return { mode, wsse: { username: "lab", password: "dummy-not-a-real-password" } };
+  if (mode === "ntlm") return { mode, ntlm: { username: "lab", password: "dummy-not-a-real-password", domain: "CORP" } };
   return { mode: "none" };
 }
 
@@ -138,5 +183,10 @@ function describe(auth: MockAuth): string {
   if (auth.mode === "edgegrid") return auth.edgegrid?.verify === "format-only"
     ? "The Authorization header must look like EdgeGrid. The signature is not checked."
     : "The Authorization header is an EdgeGrid signature over the request, checked with the dummy client secret. The timestamp must be within 30 seconds.";
+  if (auth.mode === "sigv4") return "Authorization must be an AWS SigV4 header. The access key, region, and service must match, the signature is checked with the dummy secret, and x-amz-date must be within 15 minutes. Presigned query URLs are not checked.";
+  if (auth.mode === "digest") return "The first call gets a Digest challenge. The nonce is valid for 10 minutes and does not need a sticky connection. The response is MD5, which is what RFC 2617 clients send.";
+  if (auth.mode === "jwt") return "Authorization: Bearer must be an HS256 JWT signed with the dummy secret. exp is required. iss and aud are checked when those boxes are filled. alg none and other algorithms are rejected.";
+  if (auth.mode === "wsse") return "The SOAP body must contain a UsernameToken. PasswordText is compared directly. PasswordDigest is Base64(SHA1(nonce + created + password)) and Created must be within 5 minutes. A DTD in the body is rejected.";
+  if (auth.mode === "ntlm") return "A Type 1 message gets a Type 2 challenge. A Type 3 message must name this user and carry an NTLMv2 response for the dummy password. The challenge is derived from that password because Netlify cannot keep a connection open between the two legs.";
   return "The named headers must be present. Their signature is not checked.";
 }
