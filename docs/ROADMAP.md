@@ -35,6 +35,7 @@ Status: **done**, **in progress**, **todo**.
 - Git history is not rewritten. The committed secrets were starter defaults (`your-super-secret-session-key-here`, `admin2024!`, a local Postgres password, and a Builder.io public key). Live `SESSION_SECRET` and `RESEND_API_KEY` belong only in the Netlify production environment.
 - Captured calls expire after 14 days and 200 per mock. There is no backup service. Export a mock before deleting the Netlify project if you still want it.
 - Request JSON is still capped before Zod parses it (96 KB for API bodies, 512 KB for a spec). Zod is 4.6.7 or newer so GHSA-mrhx-c7xc-m3w5 is not in the production tree. `z.record` takes a key schema and a value schema.
+- An XSOAR instance helper is shown for presets and for mocks imported from integration YAML. Server URL is the catch URL. Dummy secrets are placed in the YAML's own parameter names. Trust any certificate is on, Use system proxy is off, and Fetch incidents is off until a manual command works. The downloadable JSON uses `data: [{ name, value }]`, with type 9 credentials as `{ identifier, password, vaultInstanceId }`. Integrations that append `:port/api/` (Panorama) are called out on the port row because that client drops the `/catch` path.
 
 ## Next ideas
 
