@@ -34,6 +34,9 @@ export interface UserEndpoint {
   description?: string | null;
   userId: string;
   created: string;
+  published?: boolean;
+  access?: "owner" | "edit" | "view";
+  ownerEmail?: string;
   requests?: number;
   mockResponse?: {
     statusCode: number;

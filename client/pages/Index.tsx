@@ -104,11 +104,15 @@ export default function Index() {
               <br />
               HTTP Debugging Made Fun
             </h1>
-            <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
+            <p className="mb-6 text-lg text-muted-foreground sm:text-xl">
               A personal webhook catcher for people with a verified
-              @paloaltonetworks.com email. Create endpoints, inspect
-              requests, and mock responses. Not a Palo Alto Networks service.
+              @paloaltonetworks.com email. Not a Palo Alto Networks service.
             </p>
+            <ol className="mx-auto mb-8 max-w-xl space-y-2 text-left text-sm text-muted-foreground">
+              <li>1. Sign in, then mock an integration or paste one JSON sample.</li>
+              <li>2. Copy the catch URL.</li>
+              <li>3. Paste it into the XSOAR server field. The first call shows up in the log.</li>
+            </ol>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button size="lg" asChild className="text-base">
                 <Link to="/login">

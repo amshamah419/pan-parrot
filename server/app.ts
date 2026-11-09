@@ -10,6 +10,19 @@ import { parse as parseYaml } from "yaml";
 import { exportFixture } from "../shared/export-fixture";
 import { validateMockSpec } from "../shared/mock-spec";
 import { isOpenApiDocument, isXsoarIntegration, mockFromIntegrationYaml } from "../shared/xsoar-yaml";
+import {
+  adminUsage,
+  listAdminAudit,
+  listCatalog,
+  listEndpointAudit,
+  listShares,
+  listVersions,
+  purgeUserData,
+  revertToVersion,
+  setPublished,
+  shareEndpoint,
+  unshareEndpoint,
+} from "./collab";
 import { listPushDeliveries, pushEndpointNow, pushScheduleHandler } from "./push";
 import { recordUpstream } from "./record";
 import { fetchPublicSpec } from "./ssrf";
@@ -37,6 +50,7 @@ import {
   deleteUserAsAdmin,
   getEndpointForUser,
   getRequest,
+  cloneEndpointForUser,
   listEndpoints,
   listRequests,
   listUsers,
@@ -230,7 +244,7 @@ export function createServer(options?: {
   app.get("/api/endpoints", async (c) => {
     const user = await requireUser(c);
     await limitAuthed(c.get("db"), user.id);
-    return c.json(await listEndpoints(c.get("db"), user.id));
+    return c.json(await listEndpoints(c.get("db"), user));
   });
 
   app.post("/api/endpoints", async (c) => {
@@ -247,6 +261,65 @@ export function createServer(options?: {
       mockSpec: parsed.data.mockSpec,
     });
     return c.json(endpoint);
+  });
+
+  app.get("/api/catalog", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await listCatalog(c.get("db")));
+  });
+
+  app.get("/api/endpoints/:endpointId/shares", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await listShares(c.get("db"), user, c.req.param("endpointId")));
+  });
+
+  app.post("/api/endpoints/:endpointId/shares", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    const body = (await readJson(c.req.raw, POLICY.apiJsonBytes)) as { email?: string; role?: string };
+    return c.json(await shareEndpoint(c.get("db"), user, c.req.param("endpointId"), String(body.email || ""), String(body.role || "")));
+  });
+
+  app.delete("/api/endpoints/:endpointId/shares/:email", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    await unshareEndpoint(c.get("db"), user, c.req.param("endpointId"), decodeURIComponent(c.req.param("email")));
+    return c.json({ ok: true });
+  });
+
+  app.post("/api/endpoints/:endpointId/publish", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    const body = (await readJson(c.req.raw, POLICY.apiJsonBytes)) as { published?: boolean };
+    await setPublished(c.get("db"), user, c.req.param("endpointId"), Boolean(body.published));
+    return c.json({ ok: true });
+  });
+
+  app.post("/api/endpoints/:endpointId/clone", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await cloneEndpointForUser(c.get("db"), user, c.req.param("endpointId")));
+  });
+
+  app.get("/api/endpoints/:endpointId/versions", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await listVersions(c.get("db"), user, c.req.param("endpointId")));
+  });
+
+  app.post("/api/endpoints/:endpointId/versions/:versionId/revert", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    await revertToVersion(c.get("db"), user, c.req.param("endpointId"), c.req.param("versionId"));
+    return c.json({ ok: true });
+  });
+
+  app.get("/api/endpoints/:endpointId/audit", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await listEndpointAudit(c.get("db"), user, c.req.param("endpointId")));
   });
 
   app.get("/api/endpoints/:endpointId", async (c) => {
@@ -429,6 +502,25 @@ export function createServer(options?: {
     return c.json(
       await getRequest(c.get("db"), user.id, c.req.param("requestId")),
     );
+  });
+
+  app.get("/api/admin/usage", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await adminUsage(c.get("db")));
+  });
+
+  app.get("/api/admin/audit", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await listAdminAudit(c.get("db")));
+  });
+
+  app.post("/api/admin/users/:userId/purge", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    await purgeUserData(c.get("db"), user, c.req.param("userId"));
+    return c.json({ ok: true });
   });
 
   app.get("/api/admin/users", async (c) => {

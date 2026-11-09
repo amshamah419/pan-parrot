@@ -23,6 +23,7 @@ import { HttpError } from "./http";
 import { trimEndpoint } from "./maintenance";
 import { enforceRateLimit } from "./rate-limit";
 import type { PublicUser } from "./auth";
+import { canRead, endpointAccess, requireAccess, snapshotSpec, writeAudit, type Access } from "./collab";
 
 function iso(value: Date | string | null | undefined): string | undefined {
   if (!value) return undefined;
@@ -90,23 +91,31 @@ export async function createEndpointForUser(
         mockSpec,
       })
       .returning();
-    return toEndpointDto(created, 0);
+    return toEndpointDto(created, 0, { access: "owner", ownerEmail: user.email });
   }
   throw new HttpError(409, "Could not allocate a path");
 }
 
-export async function listEndpoints(db: AppDb, userId: string) {
+export async function listEndpoints(db: AppDb, user: PublicUser) {
+  const [me] = await db.select().from(users).where(eq(users.id, user.id)).limit(1);
   const rows = await db
     .select({
       endpoint: endpoints,
       requests: sql<number>`cast(count(${capturedRequests.id}) as int)`,
+      ownerEmail: users.email,
     })
     .from(endpoints)
     .leftJoin(capturedRequests, eq(capturedRequests.endpointId, endpoints.id))
-    .where(eq(endpoints.userId, userId))
-    .groupBy(endpoints.id)
+    .innerJoin(users, eq(users.id, endpoints.userId))
+    .groupBy(endpoints.id, users.email)
     .orderBy(desc(endpoints.createdAt));
-  return rows.map((row) => toEndpointDto(row.endpoint, Number(row.requests ?? 0)));
+  const visible = [];
+  for (const row of rows) {
+    const access = await endpointAccess(db, { ...user, email: me?.email || user.email }, row.endpoint.id);
+    if (!access) continue;
+    visible.push(toEndpointDto(row.endpoint, Number(row.requests ?? 0), { access, ownerEmail: row.ownerEmail }));
+  }
+  return visible;
 }
 
 export async function deleteEndpointForUser(
@@ -218,18 +227,19 @@ export async function saveMockSpec(
   endpointId: string,
   mockSpec: unknown,
 ) {
+  const [person] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  const actor = { id: userId, email: person?.email || "", name: person?.name || "", role: "user" as const };
+  await requireAccess(db, actor, endpointId, true);
+  const [existing] = await db.select().from(endpoints).where(eq(endpoints.id, endpointId)).limit(1);
+  if (!existing) throw new HttpError(404, "Endpoint not found");
   const next = parseSpec(mockSpec);
   if (next.push && !next.push.secret) {
-    const [existing] = await db
-      .select({ mockSpec: endpoints.mockSpec })
-      .from(endpoints)
-      .where(and(eq(endpoints.id, endpointId), eq(endpoints.userId, userId)))
-      .limit(1);
-    const previous = existing?.mockSpec as MockSpec | null;
+    const previous = existing.mockSpec as MockSpec | null;
     if (previous?.push?.secret && next.push.signing !== "none") next.push.secret = previous.push.secret;
   }
+  if (existing.mockSpec) await snapshotSpec(db, endpointId, actor.email, "Saved", existing.mockSpec);
   const spec = sealSpec(next);
-  const updated = await db
+  const [updated] = await db
     .update(endpoints)
     .set({
       mockSpec: spec,
@@ -237,10 +247,11 @@ export async function saveMockSpec(
       mockStatusCode: spec.operations[0]?.status ?? 200,
       updatedAt: new Date(),
     })
-    .where(and(eq(endpoints.id, endpointId), eq(endpoints.userId, userId)))
+    .where(eq(endpoints.id, endpointId))
     .returning();
-  if (updated.length === 0) throw new HttpError(404, "Endpoint not found");
-  return toEndpointDto(updated[0], 0);
+  await writeAudit(db, actor.email, "save", endpointId, updated.name);
+  const access = await endpointAccess(db, actor, endpointId);
+  return toEndpointDto(updated, 0, { access: access || "edit" });
 }
 
 export async function getEndpointForUser(
@@ -248,13 +259,28 @@ export async function getEndpointForUser(
   userId: string,
   endpointId: string,
 ) {
-  const [endpoint] = await db
-    .select()
-    .from(endpoints)
-    .where(and(eq(endpoints.id, endpointId), eq(endpoints.userId, userId)))
-    .limit(1);
+  const [person] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  const actor = { id: userId, email: person?.email || "", name: person?.name || "", role: "user" as const };
+  const access = await canRead(db, actor, endpointId);
+  if (!access) throw new HttpError(404, "Endpoint not found");
+  const [endpoint] = await db.select().from(endpoints).where(eq(endpoints.id, endpointId)).limit(1);
   if (!endpoint) throw new HttpError(404, "Endpoint not found");
-  return toEndpointDto(endpoint, 0);
+  const [owner] = await db.select().from(users).where(eq(users.id, endpoint.userId)).limit(1);
+  return toEndpointDto(endpoint, 0, { access, ownerEmail: owner?.email });
+}
+
+export async function cloneEndpointForUser(db: AppDb, user: PublicUser, endpointId: string) {
+  const access = await canRead(db, user, endpointId);
+  if (!access) throw new HttpError(404, "Endpoint not found");
+  const [endpoint] = await db.select().from(endpoints).where(eq(endpoints.id, endpointId)).limit(1);
+  if (!endpoint) throw new HttpError(404, "Endpoint not found");
+  const created = await createEndpointForUser(db, user, {
+    name: `Copy of ${endpoint.name}`.slice(0, 80),
+    description: endpoint.description || undefined,
+    mockSpec: endpoint.mockSpec ? openSpec(endpoint.mockSpec) : undefined,
+  });
+  await writeAudit(db, user.email, "clone", endpoint.id, created.id);
+  return { ...created, access: "owner" as const, ownerEmail: user.email };
 }
 
 export async function captureOnPath(
@@ -568,6 +594,7 @@ async function readCatchBody(request: Request): Promise<string> {
 function toEndpointDto(
   endpoint: typeof endpoints.$inferSelect,
   requests: number,
+  extra: { access?: Access; ownerEmail?: string } = {},
 ) {
   return {
     id: endpoint.id,
@@ -577,6 +604,9 @@ function toEndpointDto(
     description: endpoint.description,
     userId: endpoint.userId,
     created: iso(endpoint.createdAt),
+    published: endpoint.published,
+    access: extra.access,
+    ownerEmail: extra.ownerEmail,
     requests,
     mockResponse: endpoint.mockEnabled
       ? {
