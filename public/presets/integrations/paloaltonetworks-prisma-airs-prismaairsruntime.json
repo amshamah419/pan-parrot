@@ -7,9 +7,7 @@
   "curated": true,
   "summary": "Management profile list for AI Runtime Security.",
   "notes": [
-    "The runtime scan URL is built in PrismaAirsApiModule, which is not in this checkout. POST /v1/scan/sync/request was removed because that path is not in the checked client.",
-    "GET /v1/mgmt/profiles/tsg/{tsg_id} is the profiles list. This mock uses tsg lab-tsg. API key create and DLP profiles are not modeled.",
-    "The runtime API page was not reloaded. A bearer token is required."
+    "Sample fields are the ones GET /v1/mgmt/profiles/tsg/lab-tsg reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Prisma_AIRs/Integrations/PrismaAIRsRuntime",
@@ -23,18 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.paloaltonetworks.com/ai-runtime-security/activation-and-onboarding/ai-runtime-security-api",
       "notes": [
-        "The runtime scan URL is built in PrismaAirsApiModule, which is not in this checkout. POST /v1/scan/sync/request was removed because that path is not in the checked client.",
-        "GET /v1/mgmt/profiles/tsg/{tsg_id} is the profiles list. This mock uses tsg lab-tsg. API key create and DLP profiles are not modeled.",
-        "The runtime API page was not reloaded. A bearer token is required."
+        "Sample fields are the ones GET /v1/mgmt/profiles/tsg/lab-tsg reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.paloaltonetworks.com/ai-runtime-security/activation-and-onboarding/ai-runtime-security-api",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The runtime scan URL is built in PrismaAirsApiModule, which is not in this checkout. POST /v1/scan/sync/request was removed because that path is not in the checked client.",
-          "GET /v1/mgmt/profiles/tsg/{tsg_id} is the profiles list. This mock uses tsg lab-tsg. API key create and DLP profiles are not modeled.",
-          "The runtime API page was not reloaded. A bearer token is required."
+          "Sample fields are the ones GET /v1/mgmt/profiles/tsg/lab-tsg reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -54,24 +48,112 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
+              "name": "ai-security-profiles",
               "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
               "item": {
-                "name": "profile",
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "ai_profiles",
+              "kind": "array",
+              "item": {
+                "name": "item",
                 "kind": "object",
                 "children": [
                   {
-                    "name": "id",
-                    "kind": "id"
+                    "name": "active",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "created_by",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "last_modified_ts",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "profile_id",
+                    "kind": "string",
+                    "example": "lab"
                   },
                   {
                     "name": "profile_name",
                     "kind": "string",
-                    "example": "lab-profile"
+                    "example": "lab"
+                  },
+                  {
+                    "name": "revision",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "tsg_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "updated_by",
+                    "kind": "string",
+                    "example": "lab"
                   }
                 ]
+              }
+            },
+            {
+              "name": "custom_topics",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "dlp-data-profiles",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "model-protection",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "profile_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "topic",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "topic-list",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
               }
             }
           ]

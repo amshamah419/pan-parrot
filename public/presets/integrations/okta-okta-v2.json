@@ -7,9 +7,7 @@
   "curated": true,
   "summary": "Okta System Log. GET /api/v1/logs returns a JSON array and pages with a Link header.",
   "notes": [
-    "Official limit is 0–1000 and defaults to 100. This mock still caps a page at 500 records and 2 MB.",
-    "Polling requests (no until, sortOrder ASCENDING) always include rel=next even when the page is empty. Set pagination glitch to endless to simulate that.",
-    "since and after are mutually exclusive in the real API. This mock accepts both and uses after as the page token."
+    "Sample fields are the ones GET /api/v1/logs reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Okta/Integrations/Okta_v2",
@@ -22,15 +20,15 @@
       "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.okta.com/docs/api/openapi/okta-management/management/tags/systemlog/other/listlogevents",
-      "notes": [],
+      "notes": [
+        "Sample fields are the ones GET /api/v1/logs reads in the matched command. Lists the command iterates are arrays."
+      ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developer.okta.com/docs/api/openapi/okta-management/management/tags/systemlog/other/listlogevents",
-        "checkedAt": "2026-11-09",
+        "checkedAt": "2026-11-10",
         "differences": [
-          "Official limit is 0–1000 and defaults to 100. This mock still caps a page at 500 records and 2 MB.",
-          "Polling requests (no until, sortOrder ASCENDING) always include rel=next even when the page is empty. Set pagination glitch to endless to simulate that.",
-          "since and after are mutually exclusive in the real API. This mock accepts both and uses after as the page token."
+          "Sample fields are the ones GET /api/v1/logs reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -60,67 +58,27 @@
           "type": "array"
         },
         "record": {
-          "name": "event",
+          "name": "body",
           "kind": "object",
           "children": [
-            {
-              "name": "uuid",
-              "kind": "uuid"
-            },
-            {
-              "name": "published",
-              "kind": "timestamp",
-              "format": "iso"
-            },
-            {
-              "name": "eventType",
-              "kind": "enum",
-              "enumValues": [
-                "user.session.start",
-                "user.authentication.sso",
-                "user.account.update"
-              ]
-            },
-            {
-              "name": "version",
-              "kind": "const",
-              "constValue": "0"
-            },
-            {
-              "name": "severity",
-              "kind": "enum",
-              "enumValues": [
-                "INFO",
-                "WARN",
-                "ERROR"
-              ]
-            },
-            {
-              "name": "displayMessage",
-              "kind": "string",
-              "example": "User login to Okta"
-            },
             {
               "name": "actor",
               "kind": "object",
               "children": [
                 {
-                  "name": "id",
-                  "kind": "id"
-                },
-                {
-                  "name": "type",
-                  "kind": "const",
-                  "constValue": "User"
-                },
-                {
                   "name": "alternateId",
-                  "kind": "email"
+                  "kind": "string",
+                  "example": "lab"
                 },
                 {
                   "name": "displayName",
                   "kind": "string",
-                  "example": "Ada Lovelace"
+                  "example": "lab"
+                },
+                {
+                  "name": "type",
+                  "kind": "string",
+                  "example": "lab"
                 }
               ]
             },
@@ -129,35 +87,92 @@
               "kind": "object",
               "children": [
                 {
+                  "name": "device",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
                   "name": "ipAddress",
-                  "kind": "ip"
+                  "kind": "string",
+                  "example": "lab"
                 },
                 {
                   "name": "userAgent",
-                  "kind": "string",
-                  "example": "Mozilla/5.0"
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "browser",
+                      "kind": "string",
+                      "example": "lab"
+                    },
+                    {
+                      "name": "os",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
                 }
               ]
+            },
+            {
+              "name": "displayMessage",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "next",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "outcome",
               "kind": "object",
               "children": [
                 {
-                  "name": "result",
-                  "kind": "enum",
-                  "enumValues": [
-                    "SUCCESS",
-                    "FAILURE"
-                  ]
-                },
-                {
                   "name": "reason",
                   "kind": "string",
-                  "example": "INVALID_CREDENTIALS",
-                  "optional": true
+                  "example": "lab"
+                },
+                {
+                  "name": "result",
+                  "kind": "string",
+                  "example": "lab"
                 }
               ]
+            },
+            {
+              "name": "published",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "request",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "ipChain",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "severity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "target",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }

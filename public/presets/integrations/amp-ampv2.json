@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /events.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /events. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /events reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AMP/Integrations/AMPv2",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://developer.cisco.com/docs/secure-endpoint/v1-api-reference-events/",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /events. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /events reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developer.cisco.com/docs/secure-endpoint/v1-api-reference-events/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /events. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /events reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,60 +59,24 @@
           "kind": "object",
           "children": [
             {
-              "name": "Allow",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "connector_guid",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": []
+              }
+            },
+            {
+              "name": "metadata",
               "kind": "object",
               "children": [
                 {
-                  "name": "active",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "ancestry",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "application",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "available",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "bp_data",
-                  "kind": "string",
-                  "example": "lab"
+                  "name": "results",
+                  "kind": "object",
+                  "children": []
                 }
               ]
-            },
-            {
-              "name": "end_date",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "errors",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "event_type",
-              "kind": "string",
-              "example": "lab"
             }
           ]
         }

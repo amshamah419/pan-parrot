@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Cherwell/Integrations/Cherwell",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/V1/getonestepactions/association/{busobjectid}. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/V1/getonestepactions/association/{busobjectid} reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Cherwell/Integrations/Cherwell",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/V1/getonestepactions/association/{busobjectid}. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/V1/getonestepactions/association/{busobjectid} reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,34 +55,61 @@
           "kind": "object",
           "children": [
             {
-              "name": "Attachments",
+              "name": "Message",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "BusinessObjectId",
+              "name": "childFolders",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "childItems",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "errorMessage",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Content",
+              "name": "error_description",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "CreatedDateTime",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "FileID",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "FileName",
-              "kind": "string",
-              "example": "lab"
+              "name": "root",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "childFolders",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "childItems",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
             }
           ]
         }
@@ -113,6 +140,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Cherwell/Integrations/Cherwell",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/V1/getonestepactions/association/{busobjectid}. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/V1/getonestepactions/association/{busobjectid} reads in the matched command. Lists the command iterates are arrays."
   ]
 }

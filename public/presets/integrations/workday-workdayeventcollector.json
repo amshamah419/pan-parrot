@@ -17,15 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Workday/Integrations/WorkdayEventCollector",
       "fidelity": "verified",
       "notes": [
-        "Removed credential or fetch-state fields that the response command does not read."
+        "Sample fields are the ones GET /activityLogging reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Workday/Integrations/WorkdayEventCollector",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /activityLogging. Fields are keys the client reads or test_data contains.",
-          "Removed credential or fetch-state fields that the response command does not read."
+          "Sample fields are the ones GET /activityLogging reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -57,44 +56,21 @@
           "children": [
             {
               "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "activityAction",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "deviceType",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "ipAddress",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "requestTime",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "sessionId",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
               "name": "previous_event_ids",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "requestTime",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }
@@ -125,6 +101,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Workday/Integrations/WorkdayEventCollector",
   "notes": [
-    "Removed credential or fetch-state fields that the response command does not read."
+    "Sample fields are the ones GET /activityLogging reads in the matched command. Lists the command iterates are arrays."
   ]
 }

@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/LogRhythmRest/Integrations/LogRhythmRest",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /lr-drilldown-cache-api/drilldown/{alarm-id}. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /lr-drilldown-cache-api/drilldown/{alarm-id} reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/LogRhythmRest/Integrations/LogRhythmRest",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /lr-drilldown-cache-api/drilldown/{alarm-id}. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /lr-drilldown-cache-api/drilldown/{alarm-id} reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,32 +55,6 @@
           "kind": "object",
           "children": [
             {
-              "name": "hits",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "hits",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "AIEMsgXml",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "AlarmID",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "DDSummaries",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "Data",
               "kind": "object",
               "children": [
@@ -89,18 +63,42 @@
                   "kind": "object",
                   "children": [
                     {
-                      "name": "RuleBlocks",
+                      "name": "AIEMsgXml",
                       "kind": "string",
                       "example": "lab"
+                    },
+                    {
+                      "name": "AlarmID",
+                      "kind": "string",
+                      "example": "lab"
+                    },
+                    {
+                      "name": "RuleBlocks",
+                      "kind": "array",
+                      "item": {
+                        "name": "item",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "DDSummaries",
+                            "kind": "array",
+                            "item": {
+                              "name": "item",
+                              "kind": "string",
+                              "example": "lab"
+                            }
+                          },
+                          {
+                            "name": "DrillDownLogs",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      }
                     }
                   ]
                 }
               ]
-            },
-            {
-              "name": "DrillDownLogs",
-              "kind": "string",
-              "example": "lab"
             }
           ]
         }
@@ -131,6 +129,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/LogRhythmRest/Integrations/LogRhythmRest",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /lr-drilldown-cache-api/drilldown/{alarm-id}. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /lr-drilldown-cache-api/drilldown/{alarm-id} reads in the matched command. Lists the command iterates are arrays."
   ]
 }

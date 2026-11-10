@@ -7,9 +7,7 @@
   "curated": true,
   "summary": "Attack-surface issues for a project.",
   "notes": [
-    "The client base is hardcoded to https://api.securitytrails.com/v1/asi. Fetch calls /rules/{project}/recent/issues and reads data plus meta.snapshot.",
-    "The earlier mock used snapshot latest and an issues array. Activity history is not modeled.",
-    "The SecurityTrails overview was not reloaded. The API key header is the dummy key."
+    "Sample fields are the ones GET /v1/asi/rules/lab-project/recent/issues reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/RecordedFutureASI/Integrations/RecordedFutureASI",
@@ -23,18 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.securitytrails.com/docs/overview",
       "notes": [
-        "The client base is hardcoded to https://api.securitytrails.com/v1/asi. Fetch calls /rules/{project}/recent/issues and reads data plus meta.snapshot.",
-        "The earlier mock used snapshot latest and an issues array. Activity history is not modeled.",
-        "The SecurityTrails overview was not reloaded. The API key header is the dummy key."
+        "Sample fields are the ones GET /v1/asi/rules/lab-project/recent/issues reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.securitytrails.com/docs/overview",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client base is hardcoded to https://api.securitytrails.com/v1/asi. Fetch calls /rules/{project}/recent/issues and reads data plus meta.snapshot.",
-          "The earlier mock used snapshot latest and an issues array. Activity history is not modeled.",
-          "The SecurityTrails overview was not reloaded. The API key header is the dummy key."
+          "Sample fields are the ones GET /v1/asi/rules/lab-project/recent/issues reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -54,94 +48,56 @@
           "kind": "object",
           "children": [
             {
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "added_rules",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "snapshot",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
               "name": "meta",
               "kind": "object",
               "children": [
                 {
+                  "name": "counts",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "hosts",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "total",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
                   "name": "snapshot",
-                  "kind": "const",
-                  "constValue": "recent"
+                  "kind": "string",
+                  "example": "lab"
                 }
               ]
-            },
-            {
-              "name": "data",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "rule",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "Open admin port"
-                  },
-                  {
-                    "name": "description",
-                    "kind": "string",
-                    "example": "An admin port is exposed"
-                  },
-                  {
-                    "name": "classification",
-                    "kind": "enum",
-                    "enumValues": [
-                      "informational",
-                      "moderate",
-                      "high"
-                    ]
-                  },
-                  {
-                    "name": "example_entities",
-                    "kind": "object",
-                    "children": [
-                      {
-                        "name": "domains",
-                        "kind": "array",
-                        "minItems": 1,
-                        "maxItems": 1,
-                        "item": {
-                          "name": "domain",
-                          "kind": "const",
-                          "constValue": "lab.example"
-                        }
-                      },
-                      {
-                        "name": "ips",
-                        "kind": "array",
-                        "minItems": 1,
-                        "maxItems": 1,
-                        "item": {
-                          "name": "ip",
-                          "kind": "const",
-                          "constValue": "203.0.113.10"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "name": "rule_metadata",
-                    "kind": "object",
-                    "children": [
-                      {
-                        "name": "entity_counts",
-                        "kind": "object",
-                        "children": [
-                          {
-                            "name": "domains",
-                            "kind": "integer"
-                          },
-                          {
-                            "name": "ips",
-                            "kind": "integer"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
             }
           ]
         },

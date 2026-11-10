@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /iot/pub/v1/alert/list.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /iot/pub/v1/alert/list, GET /iot/pub/v1/device. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /iot/pub/v1/alert/list, GET /iot/pub/v1/device reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_DeviceSecurity/Integrations/PaloAltoNetworks_DeviceSecurity",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /iot/pub/v1/alert/list, GET /iot/pub/v1/device. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /iot/pub/v1/alert/list, GET /iot/pub/v1/device reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /iot/pub/v1/alert/list, GET /iot/pub/v1/device. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /iot/pub/v1/alert/list, GET /iot/pub/v1/device reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,11 +59,6 @@
           "kind": "object",
           "children": [
             {
-              "name": "boundary_ids",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "date",
               "kind": "string",
               "example": "lab"
@@ -74,17 +69,62 @@
               "example": "lab"
             },
             {
-              "name": "detected_date",
+              "name": "items",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "detected_date",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "deviceid",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "ip",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "vulnerability_name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "zb_ticketid",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "name",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "deviceid",
+              "name": "offset",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "devices",
+              "name": "total",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "zb_ticketid",
               "kind": "string",
               "example": "lab"
             }
@@ -115,38 +155,7 @@
         "record": {
           "name": "body",
           "kind": "object",
-          "children": [
-            {
-              "name": "boundary_ids",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "date",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "description",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "detected_date",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "deviceid",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "devices",
-              "kind": "string",
-              "example": "lab"
-            }
-          ]
+          "children": []
         }
       }
     ],

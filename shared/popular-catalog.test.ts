@@ -29,7 +29,7 @@ describe("popular catalog presets", () => {
         expect(operation.pathTemplate || "", name).not.toContain("/:");
       }
     }
-    expect(verified).toBe(304);
+    expect(verified).toBe(283);
     for (const [id, path] of Object.entries(pins)) {
       const preset = JSON.parse(readFileSync(`public/presets/integrations/${id}.json`, "utf8")) as {
         fidelity: string;

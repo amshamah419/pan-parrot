@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /alerts/queries/alerts/v2.",
   "notes": [
-    "Removed credential or fetch-state fields that the response command does not read."
+    "Sample fields are the ones GET /alerts/queries/alerts/v2, POST /alerts/entities/alerts/v2 reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeFalcon/Integrations/CrowdStrikeFalcon",
@@ -21,15 +21,14 @@
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.crowdstrike.com/api-reference/collections/alerts/",
       "notes": [
-        "Removed credential or fetch-state fields that the response command does not read."
+        "Sample fields are the ones GET /alerts/queries/alerts/v2, POST /alerts/entities/alerts/v2 reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developer.crowdstrike.com/api-reference/collections/alerts/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /alerts/queries/alerts/v2, POST /alerts/entities/alerts/v2. Fields are keys the client reads or test_data contains.",
-          "Removed credential or fetch-state fields that the response command does not read."
+          "Sample fields are the ones GET /alerts/queries/alerts/v2, POST /alerts/entities/alerts/v2 reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -60,29 +59,35 @@
           "kind": "object",
           "children": [
             {
-              "name": "@rawstring",
+              "name": "meta",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "pagination",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "total",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "offset",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Content-Disposition",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "Content-Type",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "CreatedAt",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "DeletedAt",
-              "kind": "string",
-              "example": "lab"
+              "name": "resources",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }
@@ -113,29 +118,35 @@
           "kind": "object",
           "children": [
             {
-              "name": "@rawstring",
+              "name": "meta",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "pagination",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "total",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "offset",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Content-Disposition",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "Content-Type",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "CreatedAt",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "DeletedAt",
-              "kind": "string",
-              "example": "lab"
+              "name": "resources",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }

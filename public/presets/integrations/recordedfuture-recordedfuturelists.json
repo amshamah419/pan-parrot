@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /v2/lists/search.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /v2/lists/search. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /v2/lists/search reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/RecordedFuture/Integrations/RecordedFutureLists",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /v2/lists/search. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /v2/lists/search reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /v2/lists/search. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /v2/lists/search reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,28 +59,16 @@
           "kind": "object",
           "children": [
             {
-              "name": "result",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "message",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
               "name": "result_actions",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
-              "name": "server_url",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "version",
+              "name": "return_error",
               "kind": "string",
               "example": "lab"
             }

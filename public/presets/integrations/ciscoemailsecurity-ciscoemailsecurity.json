@@ -7,9 +7,7 @@
   "curated": true,
   "summary": "SMA message tracking. The client calls /sma/api/v2.0/message-tracking/messages.",
   "notes": [
-    "Message tracking returns { meta, data }. This mock returns data.messages. The SMA guide was not reloaded; the path is the public client.",
-    "Login at /sma/api/v2.0/login is not modeled. A bearer token is required on the tracking call.",
-    "DLP, AMP, and quarantine details are not modeled."
+    "Sample fields are the ones GET /sma/api/v2.0/message-tracking/messages reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoEmailSecurity/Integrations/CiscoEmailSecurity",
@@ -23,18 +21,14 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://www.cisco.com/c/en/us/td/docs/security/security_management/sma/sma14-2/api/b_SMA_API_14_2.html",
       "notes": [
-        "Message tracking returns { meta, data }. This mock returns data.messages. The SMA guide was not reloaded; the path is the public client.",
-        "Login at /sma/api/v2.0/login is not modeled. A bearer token is required on the tracking call.",
-        "DLP, AMP, and quarantine details are not modeled."
+        "Sample fields are the ones GET /sma/api/v2.0/message-tracking/messages reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://www.cisco.com/c/en/us/td/docs/security/security_management/sma/sma14-2/api/b_SMA_API_14_2.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Message tracking returns { meta, data }. This mock returns data.messages. The SMA guide was not reloaded; the path is the public client.",
-          "Login at /sma/api/v2.0/login is not modeled. A bearer token is required on the tracking call.",
-          "DLP, AMP, and quarantine details are not modeled."
+          "Sample fields are the ones GET /sma/api/v2.0/message-tracking/messages reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -47,41 +41,66 @@
         "status": 200,
         "list": true,
         "envelope": {
-          "type": "wrapped",
-          "arrayKey": "messages"
+          "type": "object"
         },
         "record": {
-          "name": "message",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "mid",
-              "kind": "id"
-            },
-            {
-              "name": "sender",
-              "kind": "email"
-            },
-            {
-              "name": "recipient",
-              "kind": "email"
-            },
-            {
-              "name": "subject",
-              "kind": "string",
-              "example": "Quarterly report"
-            },
-            {
-              "name": "timestamp",
-              "kind": "timestamp"
-            },
-            {
-              "name": "direction",
-              "kind": "enum",
-              "enumValues": [
-                "incoming",
-                "outgoing"
-              ]
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "attributes",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "icid",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "mid",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "sender",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "senderIp",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "serialNumber",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "subject",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "timestamp",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
             }
           ]
         },

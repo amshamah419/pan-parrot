@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Exabeam/Integrations/Exabeam",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /uba/api/asset/{asset_id}/securityAlerts. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /uba/api/asset/{asset_id}/securityAlerts reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Exabeam/Integrations/Exabeam",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /uba/api/asset/{asset_id}/securityAlerts. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /uba/api/asset/{asset_id}/securityAlerts reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,34 +55,30 @@
           "kind": "object",
           "children": [
             {
-              "name": "value",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "Content-Disposition",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "accountNames",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "accounts",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "addedCount",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "aggregatedEvents",
-              "kind": "string",
-              "example": "lab"
+              "name": "events",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "fields",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "rawlog_time",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "time",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
             }
           ]
         }
@@ -113,6 +109,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Exabeam/Integrations/Exabeam",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /uba/api/asset/{asset_id}/securityAlerts. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /uba/api/asset/{asset_id}/securityAlerts reads in the matched command. Lists the command iterates are arrays."
   ]
 }

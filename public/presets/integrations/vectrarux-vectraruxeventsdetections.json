@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VectraRUX/Integrations/VectraRUXEventsDetections",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/v3.5/events/detections. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/v3.5/events/detections reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/VectraRUX/Integrations/VectraRUXEventsDetections",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/v3.5/events/detections. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/v3.5/events/detections reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,65 +55,844 @@
           "kind": "object",
           "children": [
             {
-              "name": "columns",
+              "name": "category",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "results",
+              "name": "created_by",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "date_created",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "date_modified",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "detail",
               "kind": "object",
               "children": [
                 {
-                  "name": "account_id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "assigned_by",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "assigned_date",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "assigned_to",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "c_score",
-                  "kind": "integer"
-                }
-              ]
-            },
-            {
-              "name": "Content-Disposition",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "ENTITY_ENDPOINT_v34",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "_meta",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "message",
+                  "name": "first_timestamp",
                   "kind": "string",
                   "example": "lab"
                 }
               ]
             },
             {
-              "name": "account_id",
+              "name": "detection_href",
               "kind": "string",
               "example": "lab"
+            },
+            {
+              "name": "detection_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "detection_type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "dst_account",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "url",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "dst_host",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "url",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "entity_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "event_timestamp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "events",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "assignment",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "assigned_by",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "username",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "assigned_to",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "username",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "date_assigned",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "date_resolved",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "outcome",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "resolved_by",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "category",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "certainty",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "change_type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "d_type_vname",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "data_source",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "sensor_id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "sensor_name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "type",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "detail",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "access_key_id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "account_id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "account_name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "assumed_role",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "aws_region",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "dst_account",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "id",
+                            "kind": "integer",
+                            "example": 1
+                          },
+                          {
+                            "name": "importance",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "name",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "urgency_score",
+                            "kind": "integer",
+                            "example": 1
+                          },
+                          {
+                            "name": "url",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "dst_domain",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "domain",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "dst_host",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "id",
+                            "kind": "integer",
+                            "example": 1
+                          },
+                          {
+                            "name": "importance",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "name",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "urgency_score",
+                            "kind": "integer",
+                            "example": 1
+                          },
+                          {
+                            "name": "url",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "error_code",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "error_message",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "event_id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "event_name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "identity_type",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "last_timestamp",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "request_parameters",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "response_elements",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "role_sequence",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "src_account",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "id",
+                            "kind": "integer",
+                            "example": 1
+                          },
+                          {
+                            "name": "importance",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "name",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "urgency_score",
+                            "kind": "integer",
+                            "example": 1
+                          },
+                          {
+                            "name": "url",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "src_external_host",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "src_host",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "id",
+                            "kind": "integer",
+                            "example": 1
+                          },
+                          {
+                            "name": "importance",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "name",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "urgency_score",
+                            "kind": "integer",
+                            "example": 1
+                          },
+                          {
+                            "name": "url",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "user_agent",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "detection_href",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "detection_id",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "detection_type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "dst_account",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "importance",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "urgency_score",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "url",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "dst_domain",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "domain",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "dst_host",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "importance",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "urgency_score",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "url",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "entity_id",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "entity_name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "entity_uid",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "event_timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "filters",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "filtered_by_ai",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "filtered_by_rule",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "filtered_by_user",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "is_custom_model",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "triaged",
+                        "kind": "boolean",
+                        "example": false
+                      }
+                    ]
+                  },
+                  {
+                    "name": "id",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "is_prioritized",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "mitre",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "reason",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "src_account",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "importance",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "urgency_score",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "url",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "src_external_host",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "src_host",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "importance",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "urgency_score",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "url",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "status",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "summary",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "accounts",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "dns",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "domains",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "external_targets",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "hosts",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "ips",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "ports",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "protocols",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "threat",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "triaged",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "unresolved_priority",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "url",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "from",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "investigation_status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "next_checkpoint",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "note",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "notes",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "remaining_count",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "selected_statuses",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "selected_types",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "src_account",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "src_host",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "urgency_score",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "unresolved_priority",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "urgency_score",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "url",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "was_fetched",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }
@@ -144,6 +923,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VectraRUX/Integrations/VectraRUXEventsDetections",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/v3.5/events/detections. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/v3.5/events/detections reads in the matched command. Lists the command iterates are arrays."
   ]
 }

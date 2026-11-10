@@ -12,6 +12,11 @@ suffix replaces the base path. That is the Proofpoint-style quirk: which
 urljoin is in scope changes the path.
 
 The report status for a preset is match, mismatch, or unparseable.
+
+A top-level response key is in scope only when the matched call's own function
+chain reads it, or when that command's test data contains it. Keys read only by
+other commands are out of scope. A key the command iterates, or that test data
+stores as a list, has to be an array.
 """
 
 from __future__ import annotations
@@ -58,6 +63,10 @@ STATE_OR_SECRET_ROOTS = {
     "last_fetch_pid",
     "last_audit_time",
     "last_event_time",
+    "access_token",
+    "refresh_token",
+    "id_token",
+    "token_expiration",
 }
 READ_IGNORE = re.compile(
     r"arg|param|config|header|setting|secret|credential|proxy|token|demisto|kwargs|options",
@@ -77,6 +86,7 @@ class Val:
     alts: list["Val"] | None = None
     boto3: bool = False
     chain: tuple[str, ...] | None = None
+    response: bool = False
 
     def copy(self) -> "Val":
         copied = Val(
@@ -91,6 +101,7 @@ class Val:
         )
         copied.boto3 = self.boto3
         copied.chain = self.chain
+        copied.response = self.response
         return copied
 
 
@@ -105,6 +116,10 @@ class HttpCall:
     keys: set[str] = field(default_factory=set)
     nav: set[str] = field(default_factory=set)
     local_keys: set[str] = field(default_factory=set)
+    chain_keys: set[str] = field(default_factory=set)
+    chain_lists: set[str] = field(default_factory=set)
+    response_keys: set[str] = field(default_factory=set)
+    stack: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -114,6 +129,8 @@ class Func:
     qual: str
     cls: str
     reads: set[str] = field(default_factory=set)
+    lists: set[str] = field(default_factory=set)
+    response_reads: set[str] = field(default_factory=set)
     calls: list[tuple[str, ast.Call]] = field(default_factory=list)
 
 
@@ -130,6 +147,8 @@ class Mod:
     stack: list[str] = field(default_factory=list)
     yml_defaults: dict[str, str] = field(default_factory=dict)
     enum_routes: list[str] = field(default_factory=list)
+    response_calls: set[int] = field(default_factory=set)
+    chain_cache: dict[tuple[str, ...], tuple[set[str], set[str], set[str]]] = field(default_factory=dict)
 
 
 def main() -> int:
@@ -277,15 +296,16 @@ def check_preset(preset: dict, content: Path) -> dict:
     if not modules:
         return result(preset, "unparseable", ["unparseable: no Python client parsed"])
     calls = [call for mod in modules for call in module_calls(mod)]
-    test_paths, test_types = load_test_data(folder)
+    test_paths, _test_types = load_test_data(folder)
     if not calls and not test_paths:
         return result(preset, "unparseable", ["unparseable: no HTTP calls and no test_data"])
     findings: list[str] = []
     if not calls:
         findings.append("unparseable: client built requests without a readable method and path")
         return result(preset, "unparseable", findings)
+    fixtures = [command_fixtures(item) for item in fixture_folders(folder, modules)]
     for operation in preset["spec"]["operations"]:
-        findings.extend(check_operation(operation, calls, test_paths, test_types))
+        findings.extend(check_operation(operation, calls, fixtures))
     status = "mismatch" if findings else "match"
     return result(preset, status, findings, len(calls))
 
@@ -508,6 +528,8 @@ def module_calls(mod: Mod) -> list[HttpCall]:
         call.keys = scope
         call.nav = set(all_reads)
         call.local_keys = set(binder.reads) if binder else set()
+        quals = scope_stack(call.stack) or ((call.func,) if call.func else tuple())
+        call.chain_keys, call.chain_lists, call.response_keys = chain_for(mod, quals)
     return calls
 
 
@@ -521,9 +543,87 @@ def decode_calls(blob: str) -> list[HttpCall]:
             params_dynamic=row["dynamic"],
             func=row["func"],
             boto3=row.get("boto3", False),
+            stack=list(row.get("stack") or [row["func"]]),
         )
         for row in rows
     ]
+
+
+def scope_stack(stack: list[str]) -> tuple[str, ...]:
+    """Drop the dispatcher. main() walks every branch, so its reads are the whole module."""
+    kept = [qual for qual in stack if qual.split(".")[-1] not in {"main", "test_module"}]
+    if kept:
+        return tuple(kept)
+    return tuple(stack[-1:]) if stack else tuple()
+
+
+def unique_callees(mod: Mod, func: Func) -> list[Func]:
+    found: list[Func] = []
+    seen: set[str] = set()
+    for name, _call in func.calls:
+        targets = resolve_funcs(mod, name, func.cls)
+        if len(targets) != 1:
+            continue
+        target = targets[0]
+        if target.qual in seen or target.qual == func.qual or target.name in {"main", "test_module"}:
+            continue
+        seen.add(target.qual)
+        found.append(target)
+    return found
+
+
+def is_http_helper(func: Func) -> bool:
+    """Shared request wrappers. Their token handling is not the command's response body."""
+    name = func.name.lower()
+    if name in {
+        "http_request",
+        "_http_request",
+        "generic_http_request",
+        "_apicall",
+        "sendrequestinsession",
+        "request",
+        "get_token",
+        "getnewtoken",
+        "_get_token",
+        "get_access_token",
+    }:
+        return True
+    return name.endswith("_api_call") or name.endswith("api_call")
+
+
+def chain_for(mod: Mod, quals: tuple[str, ...]) -> tuple[set[str], set[str], set[str]]:
+    """Reads for one call site: the command on its stack, then the parsers that command calls.
+
+    A shared HTTP helper is not part of the body. Two commands that both call ``http_request``
+    keep separate response keys. When the helper itself is the only reader, its reads stay.
+    """
+    cached = mod.chain_cache.get(quals)
+    if cached is not None:
+        return cached
+    frames = [mod.funcs[qual] for qual in quals if qual in mod.funcs]
+    focused = [item for item in frames if not is_http_helper(item)] or frames
+    reads: set[str] = set()
+    lists: set[str] = set()
+    response: set[str] = set()
+    seen: set[str] = set()
+    frontier = focused
+    for _ in range(4):
+        nxt: list[Func] = []
+        for item in frontier:
+            if item.qual in seen:
+                continue
+            seen.add(item.qual)
+            reads |= item.reads
+            lists |= item.lists
+            response |= item.response_reads
+            for callee in unique_callees(mod, item):
+                if is_http_helper(callee):
+                    continue
+                nxt.append(callee)
+        frontier = nxt
+    result = (reads, lists, response)
+    mod.chain_cache[quals] = result
+    return result
 
 
 def callers_of(mod: Mod, func: Func) -> list[Func]:
@@ -546,12 +646,43 @@ def resolve_funcs(mod: Mod, name: str, cls: str) -> list[Func]:
     return list(mod.by_short.get(name, []))
 
 
-def run_func(mod: Mod, func: Func, bound: dict[str, Val], depth: int) -> None:
+def resolve_call_targets(mod: Mod, call: ast.Call, func: Func) -> list[Func]:
+    """Prefer ``client.method`` over a module command that reuses the method's name."""
+    name = call_name(call)
+    if not name:
+        return []
+    if isinstance(call.func, ast.Attribute) and isinstance(call.func.value, ast.Name):
+        owner = call.func.value.id
+        if owner in {"self", "cls"} and func.cls:
+            found = mod.funcs.get(f"{func.cls}.{name}")
+            if found:
+                return [found]
+        if owner in {"client", "self"}:
+            methods = [item for item in mod.by_short.get(name, []) if item.cls]
+            if len(methods) == 1:
+                return methods
+    return resolve_funcs(mod, name, func.cls)
+
+
+def run_func(mod: Mod, func: Func, bound: dict[str, Val], depth: int) -> bool:
+    if func.qual in mod.stack:
+        return False
+    mod.stack.append(func.qual)
     env = dict(mod.env)
     env.update(bound)
     apply_signature(func.node, env)
     env.update(bound)
-    walk_body(func.node.body, env, mod, func, depth)  # type: ignore[attr-defined]
+    previous = env.get("__returns_response__")
+    env["__returns_response__"] = Val()
+    try:
+        walk_body(func.node.body, env, mod, func, depth)  # type: ignore[attr-defined]
+        return bool(env["__returns_response__"].response)
+    finally:
+        if previous is None:
+            env.pop("__returns_response__", None)
+        else:
+            env["__returns_response__"] = previous
+        mod.stack.pop()
 
 
 def apply_signature(node: ast.AST, env: dict[str, Val]) -> None:
@@ -596,18 +727,32 @@ def walk_stmt(stmt: ast.stmt, env: dict[str, Val], mod: Mod, func: Func, depth: 
         return
     if isinstance(stmt, ast.Return):
         if stmt.value:
-            visit_calls(stmt.value, env, mod, func, depth)
+            value = visit_calls(stmt.value, env, mod, func, depth)
+            if value.response:
+                env["__returns_response__"] = Val(response=True)
             note_request_object(stmt.value, env, mod, func)
         return
     if isinstance(stmt, ast.If):
+        visit_calls(stmt.test, env, mod, func, depth)
         walk_body(stmt.body, env, mod, func, depth)
         walk_body(stmt.orelse, env, mod, func, depth)
         return
     if isinstance(stmt, (ast.For, ast.AsyncFor)):
         iter_val = eval_expr(stmt.iter, env, mod, func.cls)
-        remember_reads(stmt.iter, env, func, depth)
+        remember_reads(stmt.iter, env, mod, func, depth)
+        paths = [path for path in read_paths(stmt.iter, env) if path]
+        if not paths and isinstance(stmt.iter, ast.Name) and stmt.iter.id in env and env[stmt.iter.id].path:
+            paths = [env[stmt.iter.id].path]
+        if depth:
+            for path in paths:
+                func.lists.add(path)
         if isinstance(stmt.target, ast.Name):
-            env[stmt.target.id] = iter_val
+            bound = iter_val.copy()
+            if iter_val.response or response_expression(stmt.iter, env, mod):
+                bound.response = True
+                if len(paths) == 1:
+                    bound.path = paths[0]
+            env[stmt.target.id] = bound
         elif isinstance(stmt.target, ast.Tuple) and iter_val.dyn_keys:
             mark_dyn_items(env)
         if iter_items_loop(stmt):
@@ -674,18 +819,133 @@ def note_call(node: ast.expr, func: Func) -> None:
             func.calls.append((name, node))
 
 
-def remember_reads(node: ast.expr, env: dict[str, Val], func: Func, depth: bool) -> None:
-    if depth:
-        for path in read_paths(node, env):
+def remember_reads(node: ast.expr, env: dict[str, Val], mod: Mod, func: Func, depth: bool) -> None:
+    if not depth:
+        return
+    paths = [path for path in read_paths(node, env) if path]
+    for path in paths:
+        func.reads.add(path)
+    if response_expression(node, env, mod):
+        if paths:
+            func.response_reads.update(paths)
+        for path in indexed_lists(node, env):
+            func.lists.add(path)
+            func.response_reads.add(path)
+    for path in default_list_paths(node, env):
+        func.lists.add(path)
+
+
+def default_list_paths(node: ast.expr, env: dict[str, Val]) -> list[str]:
+    """response.get('value', []) is a list even when the code never indexes it."""
+    found: list[str] = []
+    for current in ast.walk(node):
+        if not isinstance(current, ast.Call) or not isinstance(current.func, ast.Attribute):
+            continue
+        if current.func.attr != "get" or len(current.args) < 2 or not isinstance(current.args[1], ast.List):
+            continue
+        found.extend(path for path in read_paths(current, env) if path)
+    return found
+
+
+def key_sequences(node: ast.expr, env: dict[str, Val]) -> list[list[str]]:
+    """Alternative key paths passed to dict_safe_get, including both sides of a conditional."""
+    if isinstance(node, ast.List):
+        keys = [elt.value for elt in node.elts if isinstance(elt, ast.Constant) and isinstance(elt.value, str)]
+        return [keys] if keys else []
+    if isinstance(node, ast.Constant) and isinstance(node.value, str) and node.value:
+        return [node.value.split(".")]
+    if isinstance(node, ast.IfExp):
+        return key_sequences(node.body, env) + key_sequences(node.orelse, env)
+    if isinstance(node, ast.Name) and node.id in env:
+        value = env[node.id]
+        options = value.alts or [value]
+        found = []
+        for option in options:
+            keys = [item.text for item in (option.seq or []) if item.text]
+            if keys:
+                found.append(keys)
+        return found
+    return []
+
+
+def note_safe_get(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> None:
+    """dict_safe_get(response, ['clicksBlocked']) is a read, same as response.get."""
+    name = call_name(call)
+    demisto_get = (
+        isinstance(call.func, ast.Attribute)
+        and call.func.attr == "get"
+        and isinstance(call.func.value, ast.Name)
+        and call.func.value.id == "demisto"
+    )
+    if name != "dict_safe_get" and not demisto_get:
+        return
+    if len(call.args) < 2:
+        return
+    owner = call.args[0]
+    if not (response_expression(owner, env, mod) or tracked(owner, env)):
+        return
+    prefix = ""
+    if isinstance(owner, ast.Name) and owner.id in env and env[owner.id].path:
+        prefix = env[owner.id].path
+    responded = response_expression(owner, env, mod)
+    for keys in key_sequences(call.args[1], env):
+        path = prefix
+        for key in keys:
+            path = dot(path, key) if path else key
+        if not path:
+            continue
+        func.reads.add(path)
+        if responded:
+            func.response_reads.add(path)
+
+
+def note_extend_lists(call: ast.Call, env: dict[str, Val], func: Func) -> None:
+    """outputs.extend(dict_safe_get(response, ['clicksBlocked'])) means that key is a list."""
+    if call_name(call) != "extend" or not call.args or not isinstance(call.args[0], ast.Call):
+        return
+    inner = call.args[0]
+    if call_name(inner) == "dict_safe_get" and len(inner.args) >= 2:
+        prefix = ""
+        owner = inner.args[0]
+        if isinstance(owner, ast.Name) and owner.id in env and env[owner.id].path:
+            prefix = env[owner.id].path
+        for keys in key_sequences(inner.args[1], env):
+            path = prefix
+            for key in keys:
+                path = dot(path, key) if path else key
             if path:
-                func.reads.add(path)
+                func.lists.add(path)
+        return
+    if isinstance(inner.func, ast.Attribute) and inner.func.attr == "get":
+        for path in read_paths(inner, env):
+            if path:
+                func.lists.add(path)
+
+
+def response_expression(node: ast.expr, env: dict[str, Val], mod: Mod) -> bool:
+    if isinstance(node, ast.BoolOp):
+        return any(response_expression(value, env, mod) for value in node.values)
+    if isinstance(node, ast.IfExp):
+        return response_expression(node.body, env, mod) or response_expression(node.orelse, env, mod)
+    if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr in {"get", "json", "pop"}:
+        return response_expression(node.func.value, env, mod) or id(node) in mod.response_calls
+    if isinstance(node, ast.Subscript):
+        return response_expression(node.value, env, mod)
+    if isinstance(node, ast.Attribute) and node.attr == "json":
+        return response_expression(node.value, env, mod)
+    if isinstance(node, ast.Name):
+        value = env.get(node.id)
+        return bool(value and value.response)
+    if isinstance(node, ast.Call):
+        return id(node) in mod.response_calls
+    return False
 
 
 def visit_calls(node: ast.expr, env: dict[str, Val], mod: Mod, func: Func, depth: bool) -> Val:
     for child in ast.walk(node):
         if isinstance(child, ast.Call) and child is not node:
             handle_call(child, env, mod, func, depth)
-    remember_reads(node, env, func, depth)
+    remember_reads(node, env, mod, func, depth)
     if isinstance(node, ast.Call):
         return handle_call(node, env, mod, func, depth)
     return eval_expr(node, env, mod, func.cls)
@@ -695,7 +955,9 @@ def handle_call(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func, depth
     name = call_name(call)
     if name:
         func.calls.append((name, call))
-    remember_reads(call, env, func, depth)
+    remember_reads(call, env, mod, func, depth)
+    note_safe_get(call, env, mod, func)
+    note_extend_lists(call, env, func)
     if isinstance(call.func, ast.Attribute):
         owner = eval_expr(call.func.value, env, mod, func.cls)
         if owner.text.startswith("boto3:"):
@@ -720,25 +982,34 @@ def handle_call(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func, depth
         remember_base(call, env, mod, func)
     if is_sink(call, mod, func) and not local_wrapper(call, mod, func):
         emit_sink(call, env, mod, func)
-        return Val(dynamic=True, path="")
+        value = Val(dynamic=True, path="", response=True)
+        mod.response_calls.add(id(call))
+        return value
+    returned = False
+    receiver_response = (
+        isinstance(call.func, ast.Attribute)
+        and isinstance(call.func.value, ast.Call)
+        and id(call.func.value) in mod.response_calls
+    )
     if depth > 0 and len(mod.stack) < 12:
         if name and name in mod.class_attrs:
             init = mod.funcs.get(f"{name}.__init__")
             if init and init.qual != func.qual and init.qual not in mod.stack:
-                mod.stack.append(init.qual)
                 run_func(mod, init, bind_args(init, call, env, mod, name), depth - 1)
-                mod.stack.pop()
         if name and name not in {"urljoin", "assign_params", "format"}:
-            for target in resolve_funcs(mod, name, func.cls)[:4]:
+            for target in resolve_call_targets(mod, call, func)[:4]:
                 if target.qual == func.qual or target.qual in mod.stack:
                     continue
-                mod.stack.append(target.qual)
-                run_func(mod, target, bind_args(target, call, env, mod, func.cls), depth - 1)
-                mod.stack.pop()
+                returned = run_func(mod, target, bind_args(target, call, env, mod, func.cls), depth - 1) or returned
     value = eval_call_value(call, env, mod, func.cls)
+    if (returned or receiver_response) and not value.response:
+        value = value.copy()
+        value.response = True
     chain = discovery_chain(call)
     if chain:
         value.chain = chain
+    if value.response:
+        mod.response_calls.add(id(call))
     return value
 
 
@@ -838,6 +1109,13 @@ def emit_sink(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> None
 
 
 def store_call(mod: Mod, row: dict) -> None:
+    row = dict(row)
+    qual = str(row.get("func") or "")
+    if not row.get("stack"):
+        stack = list(mod.stack)
+        if qual and (not stack or stack[-1] != qual):
+            stack.append(qual)
+        row["stack"] = stack
     current = mod.env.get("__calls__")
     rows = []
     if current and current.items and "__list__" in current.items and current.items["__list__"].text:
@@ -1154,17 +1432,43 @@ def eval_expr(node: ast.expr | None, env: dict[str, Val] | None, mod: Mod | None
         owner = eval_expr(node.value, env, mod, cls)
         key = literal_str(node.slice)
         if owner.items is not None and key and key in owner.items:
-            return owner.items[key].copy()
+            found = owner.items[key].copy()
+            if owner.response:
+                found.response = True
+            return found
+        if owner.response:
+            return Val(dynamic=True, response=True, path=dot(owner.path, key) if key else owner.path, text=key)
         if key and owner.path:
             return Val(path=dot(owner.path, key), text=key)
+        return Val(dynamic=True)
+    if isinstance(node, ast.List):
+        seq = [Val(text=elt.value) for elt in node.elts if isinstance(elt, ast.Constant) and isinstance(elt.value, str)]
+        return Val(seq=seq)
+    if isinstance(node, ast.BoolOp):
+        values = [eval_expr(value, env, mod, cls) for value in node.values]
+        chosen = next((value for value in values if value.response), None)
+        if chosen is not None:
+            return chosen.copy()
         return Val(dynamic=True)
     if isinstance(node, ast.IfExp):
         body = eval_expr(node.body, env, mod, cls)
         orelse = eval_expr(node.orelse, env, mod, cls)
         # full_url if full_url else urljoin(base, suffix): an empty full_url keeps the suffix.
         if concrete_path(orelse) and not concrete_path(body):
-            return orelse
-        return body if body.text or body.path or body.alts else orelse
+            chosen = orelse
+        else:
+            chosen = body if body.text or body.path or body.alts else orelse
+        if not chosen.response and (body.response or orelse.response):
+            chosen = chosen.copy()
+            chosen.response = True
+            if not chosen.path and not chosen.text:
+                chosen.path = body.path if body.response else orelse.path
+        if body.seq or orelse.seq:
+            chosen = chosen.copy()
+            chosen.alts = [item for item in (body, orelse) if item.seq]
+            if not chosen.seq and chosen.alts:
+                chosen.seq = list(chosen.alts[0].seq or [])
+        return chosen
     return Val(dynamic=True)
 
 
@@ -1210,8 +1514,9 @@ def eval_call_value(node: ast.Call, env: dict[str, Val], mod: Mod | None, cls: s
             default = mod.yml_defaults[key]
             return Val(text=default, path=path_of(default) if default.startswith("http") else "")
         if key:
-            return Val(dynamic=True, hole="{" + key + "}", text="{" + key + "}")
-        return Val(dynamic=True)
+            path = dot(owner.path, key) if owner.response else ""
+            return Val(dynamic=True, hole="{" + key + "}", text="{" + key + "}", response=owner.response, path=path)
+        return Val(dynamic=True, response=owner.response)
     if isinstance(func, ast.Attribute) and func.attr == "json" and node.args == []:
         return eval_expr(func.value, env, mod, cls)
     return Val(dynamic=True)
@@ -1763,11 +2068,42 @@ def prefix_of(node: ast.expr, env: dict[str, Val], fallback: str) -> str:
         key = literal_str(node.slice)
         if key:
             return dot(prefix_of(node.value, env, ""), key)
+        # response["value"][0] still names the list the index came from.
+        return prefix_of(node.value, env, fallback)
     if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == "get" and node.args:
         key = literal_str(node.args[0])
         if key:
             return dot(prefix_of(node.func.value, env, ""), key)
     return fallback
+
+
+def indexed_lists(node: ast.expr, env: dict[str, Val]) -> list[str]:
+    found: list[str] = []
+
+    def walk(current: ast.expr) -> None:
+        if isinstance(current, ast.Subscript):
+            if not literal_str(current.slice):
+                path = prefix_of(current.value, env, "")
+                if path:
+                    found.append(path)
+            walk(current.value)
+            return
+        if isinstance(current, ast.Call) and isinstance(current.func, ast.Attribute) and current.func.attr in {"get", "json", "pop"}:
+            walk(current.func.value)
+            return
+        if isinstance(current, ast.Attribute) and current.attr == "json":
+            walk(current.value)
+            return
+        if isinstance(current, ast.BoolOp):
+            for value in current.values:
+                walk(value)
+            return
+        for child in ast.iter_child_nodes(current):
+            if isinstance(child, ast.expr):
+                walk(child)
+
+    walk(node)
+    return found
 
 
 def load_test_data(folder: Path) -> tuple[set[str], dict[str, set[str]]]:
@@ -1822,7 +2158,225 @@ def json_type(value: object) -> str:
     return "string"
 
 
-def check_operation(operation: dict, calls: list[HttpCall], test_paths: set[str], test_types: dict[str, str]) -> list[str]:
+_FIXTURE_CACHE: dict[str, dict[str, tuple[set[str], dict[str, set[str]]]]] = {}
+_JSON_CACHE: dict[str, tuple[set[str], dict[str, set[str]]]] = {}
+_GENERIC_FIXTURES = {
+    "data",
+    "items",
+    "value",
+    "values",
+    "result",
+    "results",
+    "response",
+    "output",
+    "outputs",
+    "content",
+    "contents",
+    "body",
+    "raw",
+    "mock",
+    "expected",
+    "input",
+    "inputs",
+}
+
+
+def fixture_folders(folder: Path, modules: list[Mod]) -> list[Path]:
+    found = [folder]
+    seen = {folder.resolve()}
+    for mod in modules:
+        parent = mod.path.parent
+        resolved = parent.resolve()
+        if resolved in seen:
+            continue
+        seen.add(resolved)
+        found.append(parent)
+    return found
+
+
+def unwrap_fixture(data: object) -> object:
+    if isinstance(data, dict) and "Contents" in data and any(key in data for key in ("Type", "HumanReadable", "EntryContext")):
+        return data["Contents"]
+    return data
+
+
+def walked_json(path: Path) -> tuple[set[str], dict[str, set[str]]]:
+    key = str(path)
+    cached = _JSON_CACHE.get(key)
+    if cached is not None:
+        return cached
+    paths: set[str] = set()
+    types: dict[str, set[str]] = {}
+    try:
+        if path.stat().st_size > 250_000:
+            result = (paths, types)
+            _JSON_CACHE[key] = result
+            return result
+        data = unwrap_fixture(json.loads(path.read_text(encoding="utf-8", errors="replace")))
+    except (OSError, json.JSONDecodeError):
+        result = (paths, types)
+        _JSON_CACHE[key] = result
+        return result
+    walk_json(data, "", paths, types, 0)
+    result = (paths, types)
+    _JSON_CACHE[key] = result
+    return result
+
+
+def usable_fixture(path: Path) -> bool:
+    stem = path.stem.lower()
+    if stem.startswith("expected") or "input" in stem:
+        return False
+    return True
+
+
+def name_tokens(text: str) -> set[str]:
+    tokens: set[str] = set()
+    for part in re.split(r"[^A-Za-z0-9]+", text):
+        for piece in re.findall(r"[A-Z]?[a-z0-9]+|[A-Z]+(?![a-z])", part):
+            token = piece.lower()
+            if len(token) >= 5:
+                tokens.add(token)
+    return tokens
+
+
+def referenced_names(node: ast.AST) -> set[str]:
+    names: set[str] = set()
+    for child in ast.walk(node):
+        if isinstance(child, ast.Name):
+            names.add(child.id)
+        elif isinstance(child, ast.Attribute):
+            names.add(child.attr)
+    return names
+
+
+def json_literals(node: ast.AST, folder: Path, by_stem: dict[str, Path]) -> list[Path]:
+    found: list[Path] = []
+    for child in ast.walk(node):
+        if not isinstance(child, ast.Constant) or not isinstance(child.value, str):
+            continue
+        text = child.value.replace("\\", "/")
+        if not text.endswith(".json"):
+            continue
+        base = text.split("/")[-1]
+        stem = base[:-5]
+        path = by_stem.get(stem)
+        if path is None:
+            candidate = folder / "test_data" / base
+            if candidate.is_file() and usable_fixture(candidate):
+                path = candidate
+        if path is not None and path not in found:
+            found.append(path)
+    return found
+
+
+def command_fixtures(folder: Path) -> dict[str, tuple[set[str], dict[str, set[str]]]]:
+    """Map a command or client method name to the test_data JSON that command loads."""
+    if not folder.exists():
+        return {}
+    key = str(folder.resolve())
+    cached = _FIXTURE_CACHE.get(key)
+    if cached is not None:
+        return cached
+    files_for: dict[str, list[Path]] = {}
+
+    def add(name: str, path: Path) -> None:
+        if not name or name.startswith("test_") or len(name) < 4:
+            return
+        bucket = files_for.setdefault(name, [])
+        if path not in bucket:
+            bucket.append(path)
+
+    json_files = [path for path in sorted(folder.glob("test_data/**/*.json")) if usable_fixture(path)]
+    by_stem = {path.stem: path for path in json_files}
+    for stem, path in by_stem.items():
+        if len(stem) >= 5 and stem.lower() not in _GENERIC_FIXTURES:
+            add(stem, path)
+            if not stem.endswith("_command"):
+                add(f"{stem}_command", path)
+    tests = sorted(folder.glob("*_test.py")) + sorted(folder.glob("test_*.py")) + sorted(folder.glob("*_test/**/*.py"))
+    seen_tests: set[Path] = set()
+    for test_path in tests:
+        if test_path in seen_tests:
+            continue
+        seen_tests.add(test_path)
+        try:
+            if test_path.stat().st_size > 1_500_000:
+                continue
+            tree = ast.parse(test_path.read_text(encoding="utf-8", errors="replace"))
+        except (OSError, SyntaxError):
+            continue
+        for node in ast.walk(tree):
+            if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or not node.name.startswith("test_"):
+                continue
+            referenced = referenced_names(node)
+            literals = json_literals(node, folder, by_stem)
+            commands = sorted(name for name in referenced if name.endswith("_command"))
+            if len(commands) == 1:
+                for path in literals:
+                    add(commands[0], path)
+            elif commands:
+                for name in commands:
+                    tokens = name_tokens(name)
+                    for path in literals:
+                        if tokens & name_tokens(path.stem):
+                            add(name, path)
+            else:
+                stripped = node.name[5:]
+                tokens = name_tokens(stripped)
+                for path in literals:
+                    if path.stem in {stripped, stripped.removesuffix("_command")} or tokens & name_tokens(path.stem):
+                        add(stripped, path)
+                for name in referenced:
+                    if name.startswith("test"):
+                        continue
+                    tokens = name_tokens(name)
+                    for path in literals:
+                        if tokens & name_tokens(path.stem):
+                            add(name, path)
+    index: dict[str, tuple[set[str], dict[str, set[str]]]] = {}
+    for name, paths in files_for.items():
+        merged: set[str] = set()
+        kinds: dict[str, set[str]] = {}
+        for path in paths:
+            got_paths, got_types = walked_json(path)
+            merged |= got_paths
+            for item, values in got_types.items():
+                kinds.setdefault(item, set()).update(values)
+        index[name] = (merged, kinds)
+    _FIXTURE_CACHE[key] = index
+    return index
+
+
+def fixture_scope(
+    calls: list[HttpCall],
+    fixtures: list[dict[str, tuple[set[str], dict[str, set[str]]]]],
+) -> tuple[set[str], dict[str, set[str]]]:
+    paths: set[str] = set()
+    types: dict[str, set[str]] = {}
+    seen: set[str] = set()
+    for call in calls:
+        quals = scope_stack(call.stack) or ((call.func,) if call.func else tuple())
+        for qual in quals:
+            name = qual.split(".")[-1]
+            if name in seen:
+                continue
+            seen.add(name)
+            for index in fixtures:
+                got = index.get(name)
+                if not got:
+                    continue
+                paths |= got[0]
+                for key, values in got[1].items():
+                    types.setdefault(key, set()).update(values)
+    return paths, types
+
+
+def check_operation(
+    operation: dict,
+    calls: list[HttpCall],
+    fixtures: list[dict[str, tuple[set[str], dict[str, set[str]]]]],
+) -> list[str]:
     method = str(operation.get("method", "")).upper()
     preset_path = norm_path(str(operation.get("pathTemplate", "/")))
     matched = [call for call in calls if call.method == method and any(paths_match(preset_path, path) for path in call.paths)]
@@ -1841,6 +2395,7 @@ def check_operation(operation: dict, calls: list[HttpCall], test_paths: set[str]
             f"paging: {label} says {style} {paging_names(operation)} but the client sends {client_params or 'no paging params'}."
         )
     if operation.get("envelope", {}).get("type") not in SKIP_FIELD_ENVELOPES and not all(call.boto3 for call in matched):
+        test_paths, test_types = fixture_scope(matched, fixtures)
         findings.extend(field_findings(label, operation, matched, test_paths, test_types))
     return findings
 
@@ -2039,33 +2594,32 @@ def field_findings(
     operation: dict,
     calls: list[HttpCall],
     test_paths: set[str],
-    test_types: dict[str, str],
+    test_types: dict[str, set[str]],
 ) -> list[str]:
     preset_paths = preset_field_paths(operation)
     if not preset_paths:
         return []
-    client_paths: set[str] = set()
-    nav_paths: set[str] = set()
+    chain: set[str] = set()
+    chain_lists: set[str] = set()
     for call in calls:
-        client_paths |= call.keys
-        nav_paths |= call.nav
-    allowed = set(client_paths) | set(test_paths)
+        chain |= call.chain_keys
+        chain_lists |= call.chain_lists
+    scope = set(chain) | set(test_paths)
     findings = []
     preset_roots = children(preset_paths, ())
-    allowed_roots = children(allowed, ())
-    if preset_roots and allowed_roots and not (preset_roots & allowed_roots):
+    scope_roots = children(scope, ())
+    extra = sorted(preset_roots - scope_roots)
+    if extra:
         findings.append(
-            f"field: {label} root keys {sorted(preset_roots)} are not read by the client or present in test_data {sorted(list(allowed_roots)[:8])}."
+            f"field: {label} root keys {extra[:8]} are not read by this call or present in test_data."
         )
-    local: set[str] = set()
-    for call in calls:
-        local |= call.local_keys
-    local_roots = {name.lower() for name in children(local, ())}
+    local_roots = {name.lower() for name in children(chain, ())}
     junk = sorted(name for name in preset_roots if name.lower() in STATE_OR_SECRET_ROOTS and name.lower() not in local_roots)
     if junk:
         findings.append(
             f"field: {label} includes {junk}, which are credentials or fetch state rather than this call's response."
         )
+    nav_paths = {path for path in chain if "." in path and path.split(".")[-1].lower() in NAV_KEYS}
     for path in nav_paths:
         last = path.split(".")[-1].lower()
         if "." not in path or last not in NAV_KEYS:
@@ -2079,12 +2633,16 @@ def field_findings(
         break
     for path, kind in preset_kinds(operation).items():
         seen = test_types.get(path) or set()
+        listed = "list" in seen or path in chain_lists
+        if listed and kind != "list":
+            findings.append(f"type: {label} {path} is a {kind} but the command reads a list.")
+            continue
+        if kind == "list" and path in chain_lists:
+            continue
         if not seen:
             continue
         if kind == "list" and "list" not in seen:
             findings.append(f"type: {label} {path} is a list but test_data has {sorted(seen)}.")
-        elif kind == "string" and seen == {"list"}:
-            findings.append(f"type: {label} {path} is a string but test_data has a list.")
         elif kind == "bool" and "bool" not in seen and seen != {"string"}:
             findings.append(f"type: {label} {path} is a boolean but test_data has {sorted(seen)}.")
     return findings[:4]
@@ -2266,7 +2824,8 @@ def self_test() -> int:
                 "        full = urljoin(urljoin(self.base_url, self.api_version), url_suffix)",
                 "        return requests.request(method, full, params=params)",
                 "    def clicks(self, clicks_type):",
-                "        return self.http_request('GET', f'/siem/clicks/{clicks_type}', params={'interval': 'PT1H'})",
+                "        response = self.http_request('GET', f'/siem/clicks/{clicks_type}', params={'interval': 'PT1H'})",
+                "        return response.get('clicksBlocked')",
             ]
         ),
     )
@@ -2321,7 +2880,8 @@ def self_test() -> int:
                 "class Client:",
                 "    def fetch(self):",
                 "        full = urljoin(urljoin(self.base_url, self.api_version), '/siem/clicks/blocked')",
-                "        return requests.request('GET', full)",
+                "        response = requests.request('GET', full)",
+                "        return response.get('clicksBlocked')",
             ]
         ),
     )
@@ -2429,6 +2989,207 @@ def self_test() -> int:
     prefix = dict(listed, pathTemplate="/services/data/v39.0/sobjects/Case")
     prefix_row = check_preset(lab_preset("Prefix", prefix), content)
     assert prefix_row["status"] == "match", prefix_row
+
+    write(
+        "Dispatch",
+        "\n".join(
+            [
+                "import requests",
+                "class Client:",
+                "    def http_request(self, method, url_suffix):",
+                "        return requests.request(method, 'https://example.test' + url_suffix)",
+                "    def events(self):",
+                "        response = self.http_request('GET', '/events')",
+                "        rows = response.get('entries') or []",
+                "        for item in rows:",
+                "            item.get('event_id')",
+                "        return rows",
+                "    def users(self):",
+                "        response = self.http_request('GET', '/users')",
+                "        return response.get('login')",
+                "def main():",
+                "    client = Client()",
+                "    client.events()",
+                "    client.users()",
+            ]
+        ),
+    )
+    events = {
+        "method": "GET",
+        "pathTemplate": "/events",
+        "envelope": {"type": "object"},
+        "pagination": {"style": "none", "limitParam": "limit", "offsetParam": "offset", "pageParam": "page", "cursorParam": "cursor"},
+        "record": {
+            "name": "body",
+            "kind": "object",
+            "children": [
+                {
+                    "name": "entries",
+                    "kind": "array",
+                    "item": {"name": "item", "kind": "object", "children": [{"name": "event_id", "kind": "string", "example": "lab"}]},
+                }
+            ],
+        },
+    }
+    events_row = check_preset(lab_preset("Dispatch", events), content)
+    assert events_row["status"] == "match", events_row
+    leaked = {
+        "method": "GET",
+        "pathTemplate": "/events",
+        "envelope": {"type": "object"},
+        "pagination": {"style": "none", "limitParam": "limit", "offsetParam": "offset", "pageParam": "page", "cursorParam": "cursor"},
+        "record": {
+            "name": "body",
+            "kind": "object",
+            "children": [
+                {"name": "entries", "kind": "array", "item": {"name": "item", "kind": "object", "children": []}},
+                {"name": "login", "kind": "string", "example": "lab"},
+            ],
+        },
+    }
+    leaked_row = check_preset(lab_preset("Dispatch", leaked), content)
+    assert leaked_row["status"] == "mismatch" and any(item.startswith("field:") for item in leaked_row["findings"]), leaked_row
+    scalar = dict(events)
+    scalar["record"] = {
+        "name": "body",
+        "kind": "object",
+        "children": [{"name": "entries", "kind": "string", "example": "lab"}],
+    }
+    scalar_row = check_preset(lab_preset("Dispatch", scalar), content)
+    assert scalar_row["status"] == "mismatch" and any(item.startswith("type:") for item in scalar_row["findings"]), scalar_row
+    folder = content / "Packs" / "Dispatch" / "Integrations" / "Lab"
+    (folder / "test_data").mkdir()
+    (folder / "test_data" / "users.json").write_text('{"login": "ada", "role": "admin"}')
+    (folder / "Lab_test.py").write_text(
+        "\n".join(
+            [
+                "def test_users():",
+                "    raw = open('test_data/users.json').read()",
+                "    return users()",
+            ]
+        )
+    )
+    # The events command does not load users.json, so role stays out of scope.
+    role = dict(leaked)
+    role["record"] = {
+        "name": "body",
+        "kind": "object",
+        "children": [
+            {"name": "entries", "kind": "array", "item": {"name": "item", "kind": "object", "children": []}},
+            {"name": "role", "kind": "string", "example": "lab"},
+        ],
+    }
+    role_row = check_preset(lab_preset("Dispatch", role), content)
+    assert role_row["status"] == "mismatch" and any("role" in item for item in role_row["findings"]), role_row
+
+    write(
+        "Search",
+        "\n".join(
+            [
+                "import requests",
+                "class Client:",
+                "    def http_request(self, method, url_suffix):",
+                "        return requests.request(method, 'https://example.test' + url_suffix)",
+                "    def search(self):",
+                "        response = self.http_request('POST', '/search/query')",
+                "        if response['value'][0]['hitsContainers'][0]['total'] > 0:",
+                "            for hit in response['value'][0]['hitsContainers'][0]['hits']:",
+                "                hit['resource']['name']",
+            ]
+        ),
+    )
+    search = {
+        "method": "POST",
+        "pathTemplate": "/search/query",
+        "envelope": {"type": "object"},
+        "pagination": {"style": "none", "limitParam": "limit", "offsetParam": "offset", "pageParam": "page", "cursorParam": "cursor"},
+        "record": {
+            "name": "body",
+            "kind": "object",
+            "children": [
+                {
+                    "name": "value",
+                    "kind": "array",
+                    "item": {
+                        "name": "item",
+                        "kind": "object",
+                        "children": [
+                            {
+                                "name": "hitsContainers",
+                                "kind": "array",
+                                "item": {
+                                    "name": "item",
+                                    "kind": "object",
+                                    "children": [
+                                        {"name": "total", "kind": "integer", "example": 1},
+                                        {
+                                            "name": "hits",
+                                            "kind": "array",
+                                            "item": {
+                                                "name": "item",
+                                                "kind": "object",
+                                                "children": [
+                                                    {
+                                                        "name": "resource",
+                                                        "kind": "object",
+                                                        "children": [{"name": "name", "kind": "string", "example": "lab"}],
+                                                    }
+                                                ],
+                                            },
+                                        },
+                                    ],
+                                },
+                            }
+                        ],
+                    },
+                }
+            ],
+        },
+    }
+    search_row = check_preset(lab_preset("Search", search), content)
+    assert search_row["status"] == "match", search_row
+    flat = dict(search)
+    flat["record"] = {
+        "name": "body",
+        "kind": "object",
+        "children": [{"name": "hits", "kind": "array", "item": {"name": "item", "kind": "object", "children": []}}],
+    }
+    flat_row = check_preset(lab_preset("Search", flat), content)
+    assert flat_row["status"] == "mismatch", flat_row
+
+    write(
+        "Safe",
+        "\n".join(
+            [
+                "import requests",
+                "class Client:",
+                "    def http_request(self, method, url_suffix):",
+                "        return requests.request(method, 'https://example.test' + url_suffix)",
+                "    def get_clicks(self, clicks_type):",
+                "        return self.http_request('GET', '/siem/clicks/' + clicks_type)",
+                "def get_clicks_command(client, clicks_type):",
+                "    raw = client.get_clicks(clicks_type)",
+                "    clicks_path = ['clicksBlocked'] if clicks_type == 'blocked' else ['clicksPermitted']",
+                "    return dict_safe_get(raw, clicks_path)",
+            ]
+        ),
+    )
+    safe = {
+        "method": "GET",
+        "pathTemplate": "/siem/clicks/blocked",
+        "envelope": {"type": "object"},
+        "pagination": {"style": "none", "limitParam": "limit", "offsetParam": "offset", "pageParam": "page", "cursorParam": "cursor"},
+        "record": {
+            "name": "body",
+            "kind": "object",
+            "children": [
+                {"name": "clicksBlocked", "kind": "string", "example": "lab"},
+                {"name": "clicksPermitted", "kind": "string", "example": "lab"},
+            ],
+        },
+    }
+    safe_row = check_preset(lab_preset("Safe", safe), content)
+    assert safe_row["status"] == "match", safe_row
     print("self-test ok")
     return 0
 

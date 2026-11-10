@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /admin/directory/v1/users.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /admin/directory/v1/users. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /admin/directory/v1/users reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GSuiteAdmin/Integrations/GSuiteAdmin",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /admin/directory/v1/users. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /admin/directory/v1/users reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /admin/directory/v1/users. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /admin/directory/v1/users reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,32 +59,239 @@
           "kind": "object",
           "children": [
             {
-              "name": "ALIAS_ADD_SUCCESS",
+              "name": "USER_CREATE",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "CHROMEOS_DEVICES_LIST",
+              "name": "address_type",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "CHROMEOS_DEVICE_ACTION",
+              "name": "addresses",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "country",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "extendedAddress",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "postalCode",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "primary",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "streetAddress",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "type",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "country",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "CHROMEOS_DEVICE_ACTION_SUCCESS",
+              "name": "creationTime",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "CHROME_BROWSER_LIST",
+              "name": "customerId",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "CUSTOM_USER_SCHEMA",
+              "name": "emails",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "etag",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "extended_address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "first_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "gender",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "type",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "hashFunction",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ipWhitelisted",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "isAdmin",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "isDelegatedAdmin",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "isMailboxSetup",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "is_address_primary",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "is_ip_white_listed",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "kind",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "familyName",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "givenName",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "notes",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "value",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "orgUnitPath",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "phones",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "primary",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "value",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "postal_code",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "primaryEmail",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "primary_email",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "street_address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "suspended",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "type",
               "kind": "string",
               "example": "lab"
             }

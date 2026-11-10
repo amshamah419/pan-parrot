@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /api/v2/cmdb/system/vdom.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/v2/cmdb/system/vdom, GET /api/v2/select. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/v2/cmdb/system/vdom, GET /api/v2/select reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FortiGate/Integrations/FortiGate",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.fortinet.com/document/fortigate/7.4.0/administration-guide/954635/rest-api-administrator",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/v2/cmdb/system/vdom, GET /api/v2/select. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/v2/cmdb/system/vdom, GET /api/v2/select reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.fortinet.com/document/fortigate/7.4.0/administration-guide/954635/rest-api-administrator",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/v2/cmdb/system/vdom, GET /api/v2/select. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/v2/cmdb/system/vdom, GET /api/v2/select reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,31 +59,16 @@
           "kind": "object",
           "children": [
             {
-              "name": "Action",
-              "kind": "string",
-              "example": "lab"
+              "name": "results",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
-              "name": "AllowRouting",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "AppServiceType",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "AssociatedInterface",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "CacheTTL",
-              "kind": "integer"
-            },
-            {
-              "name": "Category",
+              "name": "vdom",
               "kind": "string",
               "example": "lab"
             }
@@ -116,31 +101,197 @@
           "kind": "object",
           "children": [
             {
-              "name": "Action",
+              "name": "action",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "AllowRouting",
+              "name": "av-profile",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "AppServiceType",
+              "name": "comments",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "AssociatedInterface",
+              "name": "dnsfilter-profile",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "CacheTTL",
-              "kind": "integer"
+              "name": "dstaddr",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             },
             {
-              "name": "Category",
+              "name": "logtraffic",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "member",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "nat",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "policyid",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "profile-protocol-options",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "profile-type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "results",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "created",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "end-ip",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "expires",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "ip_address",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "source",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "start-ip",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "subnet",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "service",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "srcaddr",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "ssl-ssh-profile",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "tcp-portrange",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "udp-portrange",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "uuid",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "vdom",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "webfilter-profile",
               "kind": "string",
               "example": "lab"
             }

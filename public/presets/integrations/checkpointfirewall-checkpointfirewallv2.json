@@ -7,9 +7,7 @@
   "curated": true,
   "summary": "Web API login and show-hosts.",
   "notes": [
-    "The client posts login and show-hosts on a base URL that already includes /web_api. This mock answers /web_api/login and /web_api/show-hosts.",
-    "Login returns sid. show-hosts returns objects with uid, name, and ipv4-address. Other show commands are not modeled.",
-    "The management API index was not reloaded. X-chkp-sid is not checked after login."
+    "Sample fields are the ones POST /web_api/login, POST /web_api/show-hosts reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckpointFirewall/Integrations/CheckPointFirewallV2",
@@ -23,18 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://sc1.checkpoint.com/documents/latest/APIs/index.html",
       "notes": [
-        "The client posts login and show-hosts on a base URL that already includes /web_api. This mock answers /web_api/login and /web_api/show-hosts.",
-        "Login returns sid. show-hosts returns objects with uid, name, and ipv4-address. Other show commands are not modeled.",
-        "The management API index was not reloaded. X-chkp-sid is not checked after login."
+        "Sample fields are the ones POST /web_api/login, POST /web_api/show-hosts reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://sc1.checkpoint.com/documents/latest/APIs/index.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client posts login and show-hosts on a base URL that already includes /web_api. This mock answers /web_api/login and /web_api/show-hosts.",
-          "Login returns sid. show-hosts returns objects with uid, name, and ipv4-address. Other show commands are not modeled.",
-          "The management API index was not reloaded. X-chkp-sid is not checked after login."
+          "Sample fields are the ones POST /web_api/login, POST /web_api/show-hosts reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,12 +49,8 @@
           "children": [
             {
               "name": "sid",
-              "kind": "const",
-              "constValue": "dummy-sid"
-            },
-            {
-              "name": "uid",
-              "kind": "id"
+              "kind": "string",
+              "example": "lab"
             }
           ]
         },
@@ -93,32 +83,38 @@
             {
               "name": "objects",
               "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
               "item": {
-                "name": "host",
+                "name": "item",
                 "kind": "object",
                 "children": [
                   {
-                    "name": "uid",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "lab-host"
-                  },
-                  {
-                    "name": "ipv4-address",
-                    "kind": "ip"
-                  },
-                  {
-                    "name": "type",
-                    "kind": "const",
-                    "constValue": "host"
+                    "name": "domain",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "domain-type",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "uid",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
                   }
                 ]
               }
+            },
+            {
+              "name": "total",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         },

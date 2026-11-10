@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /api/v1/alerts.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/v1/alerts, POST /api/v1/detections/search. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/v1/alerts, POST /api/v1/detections/search reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ExtraHop/Integrations/ExtraHop_v2",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.extrahop.com/current/rest-detections/",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/v1/alerts, POST /api/v1/detections/search. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/v1/alerts, POST /api/v1/detections/search reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.extrahop.com/current/rest-detections/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/v1/alerts, POST /api/v1/detections/search. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/v1/alerts, POST /api/v1/detections/search reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,45 +59,118 @@
           "kind": "object",
           "children": [
             {
-              "name": "ExtraHop",
+              "name": "apply_all",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "author",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "cc",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "disabled",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "field_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "field_name2",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "field_op",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "interval_length",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "mod_time",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "notify_snmp",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "operand",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "operator",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "param",
               "kind": "object",
-              "children": [
-                {
-                  "name": "Record",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
+              "children": []
             },
             {
-              "name": "_source",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "already_fetched",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "analysis",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "analysis_level",
-              "kind": "integer"
-            },
-            {
-              "name": "annotations",
+              "name": "param2",
               "kind": "object",
-              "children": [
-                {
-                  "name": "protocols",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
+              "children": []
+            },
+            {
+              "name": "refire_interval",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "severity",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "stat_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "units",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }
@@ -128,45 +201,71 @@
           "kind": "object",
           "children": [
             {
-              "name": "ExtraHop",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "Record",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
+              "name": "categories",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
-              "name": "_source",
+              "name": "description",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "already_fetched",
+              "name": "filter",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "id",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "offset",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "analysis",
+              "name": "participants",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": []
+              }
+            },
+            {
+              "name": "resolution",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "analysis_level",
-              "kind": "integer"
+              "name": "risk_score",
+              "kind": "integer",
+              "example": 1
             },
             {
-              "name": "annotations",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "protocols",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
+              "name": "start_time",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "version",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

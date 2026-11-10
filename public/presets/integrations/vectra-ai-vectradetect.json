@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraDetect",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/v2.5/search/detections. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/v2.5/search/detections reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraDetect",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/v2.5/search/detections. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/v2.5/search/detections reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,31 +55,38 @@
           "kind": "object",
           "children": [
             {
-              "name": "results",
+              "name": "Accounts",
               "kind": "object",
               "children": [
                 {
-                  "name": "_doc_modified_ts",
+                  "name": "id",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "last_created_events",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "last_timestamp",
                   "kind": "string",
                   "example": "lab"
                 },
                 {
-                  "name": "account_id",
-                  "kind": "integer"
-                },
-                {
-                  "name": "active_traffic",
-                  "kind": "boolean"
-                },
-                {
-                  "name": "assigned_by",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "assigned_date",
-                  "kind": "string",
-                  "example": "lab"
+                  "name": "multiple_incidents_checkpoint",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "36",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
                 }
               ]
             },
@@ -87,6 +94,58 @@
               "name": "Category",
               "kind": "string",
               "example": "lab"
+            },
+            {
+              "name": "Contents",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "dbotIncidentReopen",
+                  "kind": "boolean",
+                  "example": false
+                }
+              ]
+            },
+            {
+              "name": "ContentsFormat",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Detections",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "id",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "last_created_events",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "last_timestamp",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "multiple_incidents_checkpoint",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "14",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                }
+              ]
             },
             {
               "name": "DocModifiedTimestamp",
@@ -99,12 +158,2686 @@
               "example": "lab"
             },
             {
+              "name": "Hosts",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "id",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "last_created_events",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "last_timestamp",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "multiple_incidents_checkpoint",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "472",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "name": "ID",
               "kind": "string",
               "example": "lab"
             },
             {
               "name": "LastDetectionTimestamp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "LastTimestamp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Note",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "Severity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Type",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "URL",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_doc_modified_ts",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_vectra_specific",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "UI_URL",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "entity_type",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "account_type",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "accounts_fetch_query",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assigned_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assigned_to",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assignment",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "account_id",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "assigned_by",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "id",
+                      "kind": "integer",
+                      "example": 1
+                    },
+                    {
+                      "name": "username",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                },
+                {
+                  "name": "assigned_to",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "id",
+                      "kind": "integer",
+                      "example": 1
+                    },
+                    {
+                      "name": "username",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                },
+                {
+                  "name": "date_assigned",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "date_resolved",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "events",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "actor",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "assignment_id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "context",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "entity_c_score",
+                            "kind": "integer",
+                            "example": 1
+                          },
+                          {
+                            "name": "entity_t_score",
+                            "kind": "integer",
+                            "example": 1
+                          },
+                          {
+                            "name": "to",
+                            "kind": "integer",
+                            "example": 1
+                          }
+                        ]
+                      },
+                      {
+                        "name": "datetime",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "event_type",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "host_id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "id",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "outcome",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "title",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                },
+                {
+                  "name": "resolved_by",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "username",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                },
+                {
+                  "name": "triaged_detections",
+                  "kind": "object",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "assignment_details",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "account_id",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "assigned_by",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "username",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "assigned_to",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "username",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "date_assigned",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "date_resolved",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "events",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "actor",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "assignment_id",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "context",
+                          "kind": "object",
+                          "children": [
+                            {
+                              "name": "entity_c_score",
+                              "kind": "integer",
+                              "example": 1
+                            },
+                            {
+                              "name": "entity_t_score",
+                              "kind": "integer",
+                              "example": 1
+                            },
+                            {
+                              "name": "to",
+                              "kind": "integer",
+                              "example": 1
+                            }
+                          ]
+                        },
+                        {
+                          "name": "datetime",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "event_type",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "host_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "outcome",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "title",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "resolved_by",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "username",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "triaged_detections",
+                    "kind": "object",
+                    "children": []
+                  }
+                ]
+              }
+            },
+            {
+              "name": "associated_accounts",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "calculated_severity",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "campaign_summaries",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "certainty",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "common_extract",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "AssignedDate",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Assignee",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "CertaintyScore",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "ID",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "State",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Tags",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "ThreatScore",
+                  "kind": "integer",
+                  "example": 1
+                }
+              ]
+            },
+            {
+              "name": "count",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "create_multiple_incidents_by_timestamp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created_by",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created_timestamp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "custom_detection",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "date_created",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "date_modified",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "detection",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "detection_category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "detection_details",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "_doc_modified_ts",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "assigned_date",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "assigned_to",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "campaign_summaries",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "category",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "certainty",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "created_timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "custom_detection",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "description",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "detection",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "detection_category",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "detection_type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "filtered_by_ai",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "filtered_by_rule",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "filtered_by_user",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "first_timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "grouped_details",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "application",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "browser",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "city",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "client_application",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "country",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "device_name",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "last_timestamp",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "mfa_status",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "os",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "previous_countries",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        },
+                        {
+                          "name": "previous_device_names",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        },
+                        {
+                          "name": "previous_os_browsers",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        },
+                        {
+                          "name": "reasons",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        },
+                        {
+                          "name": "src_ip",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "state",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "groups",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "id",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "is_custom_model",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "is_marked_custom",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "is_targeting_key_asset",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "is_triaged",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "last_timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "note",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "note_modified_by",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "note_modified_timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "sensor",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "sensor_name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "src_account",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "certainty",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "privilege_category",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "privilege_level",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "threat",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "url",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "src_host",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "src_ip",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "src_linked_account",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "certainty",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "privilege_category",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "privilege_level",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "threat",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "url",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "state",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "summary",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "client_applications",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "countries",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "description",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "mfa_status",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "oss",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "reasons",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "src_ips",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "tags",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "targets_key_asset",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "threat",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "triage_rule_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "url",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "detection_extract",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "AssignedDate",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Assignee",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Category",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "CertaintyScore",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "Description",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "FirstTimestamp",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "ID",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "IsTargetingKeyAsset",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "LastTimestamp",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "SensorLUID",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "SensorName",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Severity",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "SourceAccountID",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "SourceIP",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "State",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Tags",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "ThreatScore",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "Type",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "URL",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "detection_set",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "detection_summaries",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "assigned_date",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "assigned_to",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "certainty",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "detection_category",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "detection_id",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "detection_type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "detection_url",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "is_targeting_key_asset",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "is_triaged",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "state",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "summary",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "actor_accounts",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "description",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "roles",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "tags",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "threat",
+                    "kind": "integer",
+                    "example": 1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "detection_type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "detections_fetch_query",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "display_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "dst_ips",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "dst_ports",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "fetch_entity_types",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "fetch_escalated_accounts_and_hosts",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "filtered_by_ai",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "filtered_by_rule",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "filtered_by_user",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "first_fetch",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "first_timestamp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "grouped_details",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "application",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "browser",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "city",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "client_application",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "country",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "device_name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "last_timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "mfa_status",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "os",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "previous_countries",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "previous_device_names",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "previous_os_browsers",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "browser",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "os",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "reasons",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "src_ip",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "state",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "groups",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "cognito_managed",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "description",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "id",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "importance",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "last_modified",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "last_modified_by",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "members",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "id",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "is_key_asset",
+                          "kind": "boolean",
+                          "example": false
+                        },
+                        {
+                          "name": "name",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "uid",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "url",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "rules",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "description",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "id",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "triage_category",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "type",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "has_active_traffic",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "hosts_fetch_query",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "ip",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "is_custom_model",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "is_key_asset",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "is_marked_custom",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "is_targeting_key_asset",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "is_triaged",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "last_created_events",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "last_detection_timestamp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_modified",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_timestamp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "look_back",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "max_fetch",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "multiple_incidents_checkpoint",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "next",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "note",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "note_modified_by",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "note_modified_timestamp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "notes",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "created_by",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "date_created",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "date_modified",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "id",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "modified_by",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "note",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "occurred",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "past_assignments",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "account_id",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "assigned_by",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "username",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "assigned_to",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "username",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "date_assigned",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "date_resolved",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "events",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "actor",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "assignment_id",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "context",
+                          "kind": "object",
+                          "children": [
+                            {
+                              "name": "entity_c_score",
+                              "kind": "integer",
+                              "example": 1
+                            },
+                            {
+                              "name": "entity_t_score",
+                              "kind": "integer",
+                              "example": 1
+                            },
+                            {
+                              "name": "to",
+                              "kind": "integer",
+                              "example": 1
+                            }
+                          ]
+                        },
+                        {
+                          "name": "datetime",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "event_type",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "host_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "id",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "outcome",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "title",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "resolved_by",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "username",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "triaged_detections",
+                    "kind": "object",
+                    "children": []
+                  }
+                ]
+              }
+            },
+            {
+              "name": "previous",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "privilege_category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "privilege_level",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "probable_home",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "probable_owner",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "rawJSON",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "refetch_closed_incidents",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "refetch_ids",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "resolved_by",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "results",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "assigned_date",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "assigned_to",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "c_score",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "category",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "certainty",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "cognito_managed",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "created_timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "custom_detection",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "description",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "detection",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "detection_category",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "detection_type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "detection_url",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "filtered_by_ai",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "filtered_by_rule",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "filtered_by_user",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "first_timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "grouped_details",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "account_detection",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "account_uid",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "accounts",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        },
+                        {
+                          "name": "bytes_received",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "bytes_sent",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "date_couch",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "date_first_bucket",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "date_publish",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "date_s3",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "detection_guid",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "distilled_context",
+                          "kind": "object",
+                          "children": []
+                        },
+                        {
+                          "name": "dst_ips",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        },
+                        {
+                          "name": "dst_ports",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        },
+                        {
+                          "name": "dst_subnets",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        },
+                        {
+                          "name": "external_target",
+                          "kind": "object",
+                          "children": [
+                            {
+                              "name": "ip",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "name",
+                              "kind": "string",
+                              "example": "lab"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "first_timestamp",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "grouping_field",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "host_detection",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "is_account_detail",
+                          "kind": "boolean",
+                          "example": false
+                        },
+                        {
+                          "name": "is_host_detail",
+                          "kind": "boolean",
+                          "example": false
+                        },
+                        {
+                          "name": "is_smallsweep",
+                          "kind": "boolean",
+                          "example": false
+                        },
+                        {
+                          "name": "ja3_hashes",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        },
+                        {
+                          "name": "ja3s_hashes",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        },
+                        {
+                          "name": "last_timestamp",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "num_attempts",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "num_sessions",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "num_successes",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "protocol",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "sequence_id",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "sessions",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        },
+                        {
+                          "name": "src_ip",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "target_domains",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "groups",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "id",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "importance",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "is_custom_model",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "is_marked_custom",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "is_targeting_key_asset",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "last_modified",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "last_modified_by",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "last_timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "members",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "id",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "is_key_asset",
+                          "kind": "boolean",
+                          "example": false
+                        },
+                        {
+                          "name": "name",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "uid",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "url",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "note",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "note_modified_by",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "note_modified_timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "notes",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "rules",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "description",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "id",
+                          "kind": "integer",
+                          "example": 1
+                        },
+                        {
+                          "name": "triage_category",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "sensor",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "sensor_name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "src_account",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "src_host",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "certainty",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "groups",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "ip",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "is_key_asset",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "threat",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "url",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "src_ip",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "state",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "summary",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "bytes_received",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "bytes_sent",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "description",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "dst_ips",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "dst_ports",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "num_attempts",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "num_sessions",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "num_successes",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "protocols",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "t_score",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "tags",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "targets_key_asset",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "threat",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "triage_rule_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "url",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "sensor",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sensor_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sensors",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "severity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "src_account",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "certainty",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "id",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "privilege_category",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "privilege_level",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "threat",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "url",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "src_host",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "src_ip",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "src_linked_account",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "certainty",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "id",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "privilege_category",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "privilege_level",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "threat",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "url",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "state",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "subaccounts",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "summary",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "client_applications",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "countries",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "description",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "mfa_status",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "oss",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "reasons",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "src_ips",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "tags",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "targets_key_asset",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "threat",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "triage_rule_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "url",
               "kind": "string",
               "example": "lab"
             }
@@ -137,6 +2870,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraDetect",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/v2.5/search/detections. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/v2.5/search/detections reads in the matched command. Lists the command iterates are arrays."
   ]
 }

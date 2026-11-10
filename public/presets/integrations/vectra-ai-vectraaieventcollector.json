@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraAIEventCollector",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/v2.2/search/{expr}. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/v2.2/search/{expr} reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraAIEventCollector",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/v2.2/search/{expr}. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/v2.2/search/{expr} reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,74 +55,22 @@
           "kind": "object",
           "children": [
             {
-              "name": "results",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "assigned_date",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "assigned_to",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "c_score",
-                  "kind": "integer"
-                },
-                {
-                  "name": "category",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "certainty",
-                  "kind": "integer"
-                }
-              ]
-            },
-            {
               "name": "audits",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "dvchost",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "headend_addr",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "message",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "result",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "role",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
-              "name": "fetch_limit",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "first_fetch",
-              "kind": "string",
-              "example": "lab"
+              "name": "results",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }
@@ -153,6 +101,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraAIEventCollector",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/v2.2/search/{expr}. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/v2.2/search/{expr} reads in the matched command. Lists the command iterates are arrays."
   ]
 }

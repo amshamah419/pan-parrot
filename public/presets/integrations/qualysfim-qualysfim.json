@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /fim/v3/incidents/search.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /fim/v3/incidents/search, POST /fim/v2/incidents/{incident_id}/events/search. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /fim/v3/incidents/search, POST /fim/v2/incidents/{incident_id}/events/search reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/QualysFIM/Integrations/QualysFIM",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.qualys.com/en/fim/api/index.htm",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /fim/v3/incidents/search, POST /fim/v2/incidents/{incident_id}/events/search. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /fim/v3/incidents/search, POST /fim/v2/incidents/{incident_id}/events/search reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.qualys.com/en/fim/api/index.htm",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /fim/v3/incidents/search, POST /fim/v2/incidents/{incident_id}/events/search. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /fim/v3/incidents/search, POST /fim/v2/incidents/{incident_id}/events/search reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,59 +59,138 @@
           "kind": "object",
           "children": [
             {
-              "name": "action",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "actor",
+              "name": "asset",
               "kind": "object",
               "children": [
                 {
-                  "name": "imagePath",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "process",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "processID",
-                  "kind": "integer"
-                },
-                {
-                  "name": "userID",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "userName",
+                  "name": "agentId",
                   "kind": "string",
                   "example": "lab"
                 }
               ]
             },
             {
-              "name": "agentVersion",
+              "name": "createdBy",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "date",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "user",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "name",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "asset",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "agentId",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                },
+                {
+                  "name": "createdBy",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "date",
+                      "kind": "integer",
+                      "example": 1
+                    },
+                    {
+                      "name": "user",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "name",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "profiles",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "userInfo",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "date",
+                      "kind": "string",
+                      "example": "lab"
+                    },
+                    {
+                      "name": "user",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "name",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "id",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "approvalDate",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "approvalStatus",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "approvalType",
-              "kind": "string",
-              "example": "lab"
+              "name": "profiles",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -142,59 +221,106 @@
           "kind": "object",
           "children": [
             {
-              "name": "action",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "actor",
+              "name": "asset",
               "kind": "object",
               "children": [
                 {
-                  "name": "imagePath",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "process",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "processID",
-                  "kind": "integer"
-                },
-                {
-                  "name": "userID",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "userName",
+                  "name": "agentId",
                   "kind": "string",
                   "example": "lab"
                 }
               ]
             },
             {
-              "name": "agentVersion",
-              "kind": "string",
-              "example": "lab"
+              "name": "createdBy",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "date",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "user",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "name",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                }
+              ]
             },
             {
-              "name": "approvalDate",
-              "kind": "string",
-              "example": "lab"
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "asset",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "agentId",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                },
+                {
+                  "name": "createdBy",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "date",
+                      "kind": "string",
+                      "example": "lab"
+                    },
+                    {
+                      "name": "user",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "name",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "profiles",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                }
+              ]
             },
             {
-              "name": "approvalStatus",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "approvalType",
-              "kind": "string",
-              "example": "lab"
+              "name": "profiles",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             }
           ]
         }

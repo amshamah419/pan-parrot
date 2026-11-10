@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /pub/v4.0/alert/list.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /pub/v4.0/alert/list, GET /pub/v4.0/device/list. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /pub/v4.0/alert/list, GET /pub/v4.0/device/list reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_IoT/Integrations/PaloAltoNetworks_IoT",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /pub/v4.0/alert/list, GET /pub/v4.0/device/list. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /pub/v4.0/alert/list, GET /pub/v4.0/device/list reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /pub/v4.0/alert/list, GET /pub/v4.0/device/list. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /pub/v4.0/alert/list, GET /pub/v4.0/device/list reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,16 +59,6 @@
           "kind": "object",
           "children": [
             {
-              "name": "access_key_id",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "api_timeout",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "date",
               "kind": "string",
               "example": "lab"
@@ -80,11 +70,15 @@
             },
             {
               "name": "detected_date",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
-              "name": "deviceid",
+              "name": "items",
               "kind": "string",
               "example": "lab"
             }
@@ -117,32 +111,7 @@
           "kind": "object",
           "children": [
             {
-              "name": "access_key_id",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "api_timeout",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "date",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "description",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "detected_date",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "deviceid",
+              "name": "devices",
               "kind": "string",
               "example": "lab"
             }

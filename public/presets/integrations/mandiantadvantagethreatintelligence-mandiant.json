@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MandiantAdvantageThreatIntelligence/Integrations/Mandiant",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /v4/vulnerability/{cve_id}. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /v4/vulnerability/{cve_id} reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/MandiantAdvantageThreatIntelligence/Integrations/Mandiant",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /v4/vulnerability/{cve_id}. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /v4/vulnerability/{cve_id} reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,32 +55,45 @@
           "kind": "object",
           "children": [
             {
-              "name": "value",
+              "name": "associated_reports",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "exploitation_vectors",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "id",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "actors",
+              "name": "published_date",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "aliases",
+              "name": "report_id",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "associated_actors",
+              "name": "title",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "associated_hashes",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "associated_malware",
+              "name": "vector_string",
               "kind": "string",
               "example": "lab"
             }
@@ -113,6 +126,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MandiantAdvantageThreatIntelligence/Integrations/Mandiant",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /v4/vulnerability/{cve_id}. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /v4/vulnerability/{cve_id} reads in the matched command. Lists the command iterates are arrays."
   ]
 }

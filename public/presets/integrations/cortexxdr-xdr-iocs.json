@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /public_api/v1/indicators/tim_insert_jsons.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /public_api/v1/indicators/tim_insert_jsons, POST /public_api/v1/indicators/{path}. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /public_api/v1/indicators/tim_insert_jsons, POST /public_api/v1/indicators/{path} reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CortexXDR/Integrations/XDR_iocs",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Insert-or-Update-Indicators",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /public_api/v1/indicators/tim_insert_jsons, POST /public_api/v1/indicators/{path}. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /public_api/v1/indicators/tim_insert_jsons, POST /public_api/v1/indicators/{path} reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Insert-or-Update-Indicators",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /public_api/v1/indicators/tim_insert_jsons, POST /public_api/v1/indicators/{path}. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /public_api/v1/indicators/tim_insert_jsons, POST /public_api/v1/indicators/{path} reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,34 +59,46 @@
           "kind": "object",
           "children": [
             {
-              "name": "IOC_TYPE",
-              "kind": "string",
-              "example": "lab"
+              "name": "iocs",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
-              "name": "REPUTATION",
-              "kind": "string",
-              "example": "lab"
+              "name": "reply",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "success",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "validation_errors",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  }
+                ]
+              }
             },
             {
-              "name": "RULE_COMMENT",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "RULE_EXPIRATION_TIME",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "RULE_INDICATOR",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "RULE_MODIFY_TIME",
-              "kind": "string",
-              "example": "lab"
+              "name": "searchAfter",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }
@@ -117,34 +129,46 @@
           "kind": "object",
           "children": [
             {
-              "name": "IOC_TYPE",
-              "kind": "string",
-              "example": "lab"
+              "name": "iocs",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
-              "name": "REPUTATION",
-              "kind": "string",
-              "example": "lab"
+              "name": "reply",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "success",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "validation_errors",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  }
+                ]
+              }
             },
             {
-              "name": "RULE_COMMENT",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "RULE_EXPIRATION_TIME",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "RULE_INDICATOR",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "RULE_MODIFY_TIME",
-              "kind": "string",
-              "example": "lab"
+              "name": "searchAfter",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }

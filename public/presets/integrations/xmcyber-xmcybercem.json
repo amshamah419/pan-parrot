@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/XMCyber/Integrations/XMCyberCEM",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/scenarios/v2/scenarios/riskScore. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/scenarios/v2/scenarios/riskScore reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/XMCyber/Integrations/XMCyberCEM",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/scenarios/v2/scenarios/riskScore. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/scenarios/v2/scenarios/riskScore reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,58 +55,165 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
+              "name": "CHOKE_POINTS",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "COMPROMISING_EXPOSURES",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CRITICAL_ASSETS",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ChokePoints",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "severityScore",
+                    "kind": "integer",
+                    "example": 1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "CompromisingExposures",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "chokePoints",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "complexity",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "criticalAssets",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "criticalAssetsAtRisk",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "entities",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "totalAssets",
+                    "kind": "integer",
+                    "example": 1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "CriticalAssets",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "severityScore",
+                    "kind": "integer",
+                    "example": 1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "GET_CHOKE_POINTS_BY_SEVERITY_ENDPOINT",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "GET_COMPROMISING_EXPOSURES_ENDPOINT",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "GET_CRITICAL_ASSETS_BY_SEVERITY_ENDPOINT",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "GET_SECURITY_SCORE_ENDPOINT",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "SECURITY_SCORE",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "SecurityScore",
               "kind": "object",
               "children": [
                 {
-                  "name": "affectedCriticalAssetsCount",
+                  "name": "grade",
                   "kind": "string",
                   "example": "lab"
                 },
                 {
-                  "name": "avgGraphData",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
-                    "kind": "string",
-                    "example": "lab"
-                  }
+                  "name": "score",
+                  "kind": "integer",
+                  "example": 1
                 },
                 {
-                  "name": "chokePointScore",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "chokePoints",
-                  "kind": "integer"
-                },
-                {
-                  "name": "complexity",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "stats",
-                  "kind": "string",
-                  "example": "lab"
+                  "name": "trend",
+                  "kind": "integer",
+                  "example": 1
                 }
               ]
-            },
-            {
-              "name": "accessToken",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "account_type",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "affectedUniqueEntities",
-              "kind": "string",
-              "example": "lab"
             },
             {
               "name": "chokePointScore",
@@ -114,7 +221,566 @@
               "example": "lab"
             },
             {
-              "name": "chokePointScoreLevel",
+              "name": "chokePoints",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "complexity",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "level",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "criticalAssets",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "dashboard_data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "dashboard_timestamp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "affectedCriticalAssetsCount",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "count",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "percentOfTotal",
+                        "kind": "integer",
+                        "example": 1
+                      }
+                    ]
+                  },
+                  {
+                    "name": "avgGraphData",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "date",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "grade",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "score",
+                          "kind": "integer",
+                          "example": 1
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "chokePointScore",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "severity",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "severityScore",
+                        "kind": "integer",
+                        "example": 1
+                      }
+                    ]
+                  },
+                  {
+                    "name": "chokePoints",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "complexity",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "level",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "value",
+                        "kind": "integer",
+                        "example": 1
+                      }
+                    ]
+                  },
+                  {
+                    "name": "compromisedScenariosNames",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "cpInboundTechniques",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "cpOutboundTechniques",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "cpScenarioNames",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "criticalAssets",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "crossEnvironment",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "cveId",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "description",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "displayName",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "entities",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "entityId",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "exposureType",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "inboundTechniques",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "isImplicit",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "isWatched",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "labels",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "lastCompromised",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "machine",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "mitre",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "link",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "name",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "mitreTactic",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "operationalTeams",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "outboundTechniques",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "recommended",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "reportEntitiesCount",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "riskScore",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "severity",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "severityScore",
+                        "kind": "integer",
+                        "example": 1
+                      }
+                    ]
+                  },
+                  {
+                    "name": "scenarios",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "grade",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "graphData",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "fromDate",
+                                "kind": "string",
+                                "example": "lab"
+                              },
+                              {
+                                "name": "grade",
+                                "kind": "string",
+                                "example": "lab"
+                              },
+                              {
+                                "name": "score",
+                                "kind": "integer",
+                                "example": 1
+                              },
+                              {
+                                "name": "toDate",
+                                "kind": "string",
+                                "example": "lab"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "name": "id",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "name",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "score",
+                          "kind": "integer",
+                          "example": 1
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "level",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "source_entity",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "isAsset",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "subType",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "subTypeDisplayName",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "stats",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "grade",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "score",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "trend",
+                        "kind": "integer",
+                        "example": 1
+                      }
+                    ]
+                  },
+                  {
+                    "name": "technique",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "techniqueType",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "typeDisplayName",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "xmLabels",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "name": "displayName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "entities",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "extraData",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "totalAssets",
+                  "kind": "integer",
+                  "example": 1
+                }
+              ]
+            },
+            {
+              "name": "paging",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "page",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "pageSize",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "total",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "totalPages",
+                  "kind": "integer",
+                  "example": 1
+                }
+              ]
+            },
+            {
+              "name": "resolution",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "riskScore",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "severity",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "level",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "source_entity",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "timeId",
               "kind": "string",
               "example": "lab"
             }
@@ -147,6 +813,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/XMCyber/Integrations/XMCyberCEM",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/scenarios/v2/scenarios/riskScore. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/scenarios/v2/scenarios/riskScore reads in the matched command. Lists the command iterates are arrays."
   ]
 }

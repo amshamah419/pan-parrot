@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecICDM/Integrations/SymantecICDM",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /v1/threat-intel/protection/network/{network}. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /v1/threat-intel/protection/network/{network} reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecICDM/Integrations/SymantecICDM",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /v1/threat-intel/protection/network/{network}. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /v1/threat-intel/protection/network/{network} reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,48 +55,34 @@
           "kind": "object",
           "children": [
             {
-              "name": "actors",
+              "name": "network",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "state",
               "kind": "array",
               "item": {
                 "name": "item",
-                "kind": "string",
-                "example": "lab"
-              }
-            },
-            {
-              "name": "categories",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "categorization",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "categories",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "firstDefsetVersion",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "technology",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "threatName",
                     "kind": "string",
                     "example": "lab"
                   }
-                }
-              ]
-            },
-            {
-              "name": "created",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "cve",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "firstSeen",
-              "kind": "string",
-              "example": "lab"
+                ]
+              }
             }
           ]
         }
@@ -127,6 +113,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecICDM/Integrations/SymantecICDM",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /v1/threat-intel/protection/network/{network}. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /v1/threat-intel/protection/network/{network} reads in the matched command. Lists the command iterates are arrays."
   ]
 }

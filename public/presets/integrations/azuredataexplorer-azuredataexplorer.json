@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureDataExplorer/Integrations/AzureDataExplorer",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /v1/rest/query. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /v1/rest/query reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureDataExplorer/Integrations/AzureDataExplorer",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /v1/rest/query. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /v1/rest/query reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,25 +55,62 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
-              "kind": "string",
-              "example": "lab"
+              "name": "Tables",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "Columns",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "ColumnName",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "ColumnType",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "DataType",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "Rows",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "TableName",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             },
             {
-              "name": "error",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "code",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "message",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }
@@ -104,6 +141,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureDataExplorer/Integrations/AzureDataExplorer",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /v1/rest/query. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /v1/rest/query reads in the matched command. Lists the command iterates are arrays."
   ]
 }

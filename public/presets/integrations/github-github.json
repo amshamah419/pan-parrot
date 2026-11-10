@@ -5,11 +5,9 @@
   "vendor": "GitHub",
   "fidelity": "verified",
   "curated": true,
-  "summary": "GET /repos/{owner}/{repo}/issues returns the issue array the XSOAR client requests.",
+  "summary": "GET /repos/{owner}/{repo}/issues",
   "notes": [
-    "The XSOAR client calls /repos/{owner}/{repo}/issues. This mock returns a JSON array of issues with number, title, state, and created_at.",
-    "GitHub pages with a Link header. This mock uses limit and page query parameters instead of that header.",
-    "Authorization is not required. Fine-grained permission errors are not simulated."
+    "Sample fields are the ones GET /repos/{owner}/{repo}/issues reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GitHub/Integrations/GitHub",
@@ -22,15 +20,15 @@
       "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs.github.com/en/rest/issues/issues#list-repository-issues",
-      "notes": [],
+      "notes": [
+        "Sample fields are the ones GET /repos/{owner}/{repo}/issues reads in the matched command. Lists the command iterates are arrays."
+      ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.github.com/en/rest/issues/issues#list-repository-issues",
-        "checkedAt": "2026-11-09",
+        "checkedAt": "2026-11-10",
         "differences": [
-          "The XSOAR client calls /repos/{owner}/{repo}/issues. This mock returns a JSON array of issues with number, title, state, and created_at.",
-          "GitHub pages with a Link header. This mock uses limit and page query parameters instead of that header.",
-          "Authorization is not required. Fine-grained permission errors are not simulated."
+          "Sample fields are the ones GET /repos/{owner}/{repo}/issues reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -57,53 +55,104 @@
           "type": "array"
         },
         "record": {
-          "name": "issue",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "id",
-              "kind": "integer"
-            },
-            {
-              "name": "number",
-              "kind": "integer"
-            },
-            {
-              "name": "title",
-              "kind": "string",
-              "example": "Investigate failed logins"
-            },
-            {
-              "name": "state",
-              "kind": "enum",
-              "enumValues": [
-                "open",
-                "closed"
-              ]
-            },
-            {
-              "name": "html_url",
-              "kind": "string",
-              "example": "https://github.com/example/repo/issues/1"
-            },
-            {
-              "name": "created_at",
-              "kind": "timestamp",
-              "format": "iso"
-            },
-            {
-              "name": "updated_at",
-              "kind": "timestamp",
-              "format": "iso"
-            },
-            {
-              "name": "user",
+              "name": "author",
               "kind": "object",
               "children": [
                 {
-                  "name": "login",
+                  "name": "date",
                   "kind": "string",
-                  "example": "octocat"
+                  "example": "lab"
+                },
+                {
+                  "name": "email",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "committer",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "date",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "email",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "message",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "parents",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "sha",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "tree",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "sha",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "verification",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "payload",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "reason",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "signature",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "verified",
+                  "kind": "string",
+                  "example": "lab"
                 }
               ]
             }

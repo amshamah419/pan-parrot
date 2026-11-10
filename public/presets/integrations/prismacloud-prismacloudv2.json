@@ -5,11 +5,9 @@
   "vendor": "Palo Alto Networks",
   "fidelity": "verified",
   "curated": true,
-  "summary": "POST /login returns a token. POST /v2/alert returns the alert page.",
+  "summary": "POST /login",
   "notes": [
-    "POST /login returns { token }. The real token lasts about 10 minutes. This one is a fixed dummy and is not checked on later calls.",
-    "POST /v2/alert returns { items, nextPageToken }. Alert resource objects are shortened to id, status, policy name, and time.",
-    "Access keys and code-issue routes are not modeled."
+    "Sample fields are the ones POST /login, POST /v2/alert reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PrismaCloud/Integrations/PrismaCloudV2",
@@ -22,15 +20,15 @@
       "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://pan.dev/prisma-cloud/api/cspm/alerts/",
-      "notes": [],
+      "notes": [
+        "Sample fields are the ones POST /login, POST /v2/alert reads in the matched command. Lists the command iterates are arrays."
+      ],
       "verification": {
         "status": "verified",
         "docUrl": "https://pan.dev/prisma-cloud/api/cspm/alerts/",
-        "checkedAt": "2026-11-09",
+        "checkedAt": "2026-11-10",
         "differences": [
-          "POST /login returns { token }. The real token lasts about 10 minutes. This one is a fixed dummy and is not checked on later calls.",
-          "POST /v2/alert returns { items, nextPageToken }. Alert resource objects are shortened to id, status, policy name, and time.",
-          "Access keys and code-issue routes are not modeled."
+          "Sample fields are the ones POST /login, POST /v2/alert reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -57,18 +55,13 @@
           "type": "object"
         },
         "record": {
-          "name": "session",
+          "name": "body",
           "kind": "object",
           "children": [
             {
               "name": "token",
-              "kind": "const",
-              "constValue": "dummy-prisma-token"
-            },
-            {
-              "name": "message",
-              "kind": "const",
-              "constValue": "login successful"
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }
@@ -92,31 +85,57 @@
         "status": 200,
         "list": true,
         "envelope": {
-          "type": "token-page",
-          "arrayKey": "items",
-          "tokenKey": "nextPageToken"
+          "type": "object"
         },
         "record": {
-          "name": "alert",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "status",
-              "kind": "enum",
-              "enumValues": [
-                "open",
-                "dismissed",
-                "resolved"
-              ]
-            },
-            {
-              "name": "reason",
+              "name": "alertTime",
               "kind": "string",
-              "example": "RESOURCE_ANOMALY"
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "items",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "alertTime",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "policy",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "name": "nextPageToken",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "policy",
@@ -125,14 +144,19 @@
                 {
                   "name": "name",
                   "kind": "string",
-                  "example": "Public storage bucket"
+                  "example": "lab"
+                },
+                {
+                  "name": "severity",
+                  "kind": "string",
+                  "example": "lab"
                 }
               ]
             },
             {
-              "name": "alertTime",
-              "kind": "timestamp",
-              "format": "unix-ms"
+              "name": "totalRows",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /api/v1/products/{product}/advisories.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/v1/products/{product}/advisories, GET /api/v1/products. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/v1/products/{product}/advisories, GET /api/v1/products reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_SecurityAdvisories/Integrations/PaloAltoNetworksSecurityAdvisories",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://security.paloaltonetworks.com/",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/v1/products/{product}/advisories, GET /api/v1/products. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/v1/products/{product}/advisories, GET /api/v1/products reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://security.paloaltonetworks.com/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/v1/products/{product}/advisories, GET /api/v1/products. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/v1/products/{product}/advisories, GET /api/v1/products reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,54 +59,108 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "containers",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "cveMetadata",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "dataType",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "dataVersion",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "value",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "baseScore",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "baseSeverity",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "containers",
               "kind": "object",
               "children": [
                 {
                   "name": "cna",
-                  "kind": "string",
-                  "example": "lab"
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "datePublic",
+                      "kind": "string",
+                      "example": "lab"
+                    },
+                    {
+                      "name": "descriptions",
+                      "kind": "array",
+                      "item": {
+                        "name": "item",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "value",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "name": "impacts",
+                      "kind": "array",
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    },
+                    {
+                      "name": "metrics",
+                      "kind": "array",
+                      "item": {
+                        "name": "item",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "cvssV4_0",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "baseScore",
+                                "kind": "string",
+                                "example": "lab"
+                              },
+                              {
+                                "name": "baseSeverity",
+                                "kind": "string",
+                                "example": "lab"
+                              },
+                              {
+                                "name": "vectorString",
+                                "kind": "string",
+                                "example": "lab"
+                              },
+                              {
+                                "name": "version",
+                                "kind": "string",
+                                "example": "lab"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "format",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "name": "problemTypes",
+                      "kind": "string",
+                      "example": "lab"
+                    },
+                    {
+                      "name": "references",
+                      "kind": "string",
+                      "example": "lab"
+                    },
+                    {
+                      "name": "title",
+                      "kind": "string",
+                      "example": "lab"
+                    },
+                    {
+                      "name": "x_affectedList",
+                      "kind": "array",
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    }
+                  ]
                 }
               ]
             },
@@ -120,6 +174,99 @@
                   "example": "lab"
                 }
               ]
+            },
+            {
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": []
+              }
+            },
+            {
+              "name": "dataType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "datePublic",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "descriptions",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "value",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "impacts",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "metrics",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "cvssV4_0",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "baseScore",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "baseSeverity",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "vectorString",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "format",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "title",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "x_affectedList",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }
@@ -148,71 +295,7 @@
         "record": {
           "name": "body",
           "kind": "object",
-          "children": [
-            {
-              "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "containers",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "cveMetadata",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "dataType",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "dataVersion",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "value",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "baseScore",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "baseSeverity",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "containers",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "cna",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "cveMetadata",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "cveId",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            }
-          ]
+          "children": []
         }
       }
     ],

@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PhishLabs/Integrations/PhishLabsIOC_EIR",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /idapi/v1/incidents/EIR. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /idapi/v1/incidents/EIR reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/PhishLabs/Integrations/PhishLabsIOC_EIR",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /idapi/v1/incidents/EIR. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /idapi/v1/incidents/EIR reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -56,33 +56,175 @@
           "children": [
             {
               "name": "attachments",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
-              "name": "caseType",
-              "kind": "string",
-              "example": "lab"
+              "name": "incidents",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "closed",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "created",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "description",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "details",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "attachments",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      },
+                      {
+                        "name": "caseType",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "classification",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "emailBody",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "emailReportedBy",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "fileName",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "furtherReviewReason",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "malicious",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "maliciousDomain",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "md5",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "mimeType",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "sender",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "severity",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "sha256",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "subClassification",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "submissionMethod",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "url",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "urls",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "duration",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "modified",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "status",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "title",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             },
             {
-              "name": "classification",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "closed",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "created",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "dbotscore",
-              "kind": "string",
-              "example": "lab"
+              "name": "urls",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }
@@ -113,6 +255,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PhishLabs/Integrations/PhishLabsIOC_EIR",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /idapi/v1/incidents/EIR. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /idapi/v1/incidents/EIR reads in the matched command. Lists the command iterates are arrays."
   ]
 }

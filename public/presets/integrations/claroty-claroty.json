@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /ranger/alerts/{rid}.",
   "notes": [
-    "Removed credential or fetch-state fields that the response command does not read."
+    "Sample fields are the ones GET /ranger/alerts/{rid}, POST /ranger/ranger_api/resolve_alerts reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Claroty/Integrations/Claroty",
@@ -21,15 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Claroty/Integrations/Claroty",
       "notes": [
-        "Removed credential or fetch-state fields that the response command does not read."
+        "Sample fields are the ones GET /ranger/alerts/{rid}, POST /ranger/ranger_api/resolve_alerts reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Claroty/Integrations/Claroty",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /ranger/alerts/{rid}, POST /ranger/ranger_api/resolve_alerts. Fields are keys the client reads or test_data contains.",
-          "Removed credential or fetch-state fields that the response command does not read."
+          "Sample fields are the ones GET /ranger/alerts/{rid}, POST /ranger/ranger_api/resolve_alerts reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -60,29 +59,130 @@
           "kind": "object",
           "children": [
             {
-              "name": "CVE",
+              "name": "asset",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "asset_type__",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "criticality__",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "asset_type__",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "CVE-ID",
+              "name": "category__",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "criticality__",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Description",
+              "name": "filters",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Modified",
+              "name": "objects",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "asset_type__",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "category__",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "criticality__",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "severity__",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "type__",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "password_expired",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Published",
-              "kind": "string",
-              "example": "lab"
+              "name": "severity__",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "type__",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }
@@ -113,27 +213,12 @@
           "kind": "object",
           "children": [
             {
-              "name": "CVE",
+              "name": "password_expired",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "CVE-ID",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "Description",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "Modified",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "Published",
+              "name": "success",
               "kind": "string",
               "example": "lab"
             }

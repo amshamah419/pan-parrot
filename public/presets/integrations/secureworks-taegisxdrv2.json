@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /graphql.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /graphql. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /graphql reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SecureWorks/Integrations/TaegisXDRv2",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.ctpx.secureworks.com/apis/graphql/",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /graphql. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /graphql reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.ctpx.secureworks.com/apis/graphql/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /graphql. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /graphql reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,66 +59,211 @@
           "kind": "object",
           "children": [
             {
-              "name": "alerts",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "list",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "client_id",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "client_secret",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "commandline",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "created_at",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "addCommentToInvestigation",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "addEvidenceToInvestigation",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "alertsServiceSearch",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "alertsServiceUpdateResolutionInfo",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "archiveInvestigation",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "addCommentToInvestigation",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "addEvidenceToInvestigation",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "alerts",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "list",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "alertsServiceSearch",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "alerts",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "list",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "alertsServiceUpdateResolutionInfo",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "archiveInvestigation",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "assetEndpointInfo",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "comment",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "commentsV2",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "comments",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "createInvestigationV2",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "createShareLink",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "eventsServiceEventPage",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "eventsServiceRetrieveEventsById",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "eventsServiceSearch",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "executePlaybookInstance",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "investigationAlerts",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "alerts",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "investigationV2",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "investigationsSearch",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "investigations",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "isolateAsset",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "playbookExecution",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "searchAssetsV2",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "assets",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "tdrUsersSearch",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "results",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "tdrusersByIDs",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "unArchiveInvestigation",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "updateInvestigationComment",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "updateInvestigationV2",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "errors",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "message",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             }
           ]
         }

@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /zones/{zone_id}/firewall/rules.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /zones/{zone_id}/firewall/rules, GET /zones. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /zones/{zone_id}/firewall/rules, GET /zones reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CloudflareWAF/Integrations/CloudflareWAF",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developers.cloudflare.com/api/resources/firewall/subresources/rules/methods/list/",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /zones/{zone_id}/firewall/rules, GET /zones. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /zones/{zone_id}/firewall/rules, GET /zones reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developers.cloudflare.com/api/resources/firewall/subresources/rules/methods/list/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /zones/{zone_id}/firewall/rules, GET /zones. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /zones/{zone_id}/firewall/rules, GET /zones reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,45 +59,65 @@
           "kind": "object",
           "children": [
             {
-              "name": "action",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "description",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "filter",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "expression",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "id",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "global_api_key",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "id",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "kind",
-              "kind": "string",
-              "example": "lab"
+              "name": "result",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "action",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "description",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "filter",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "expression",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "paused",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "priority",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "products",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "ref",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -126,49 +146,7 @@
         "record": {
           "name": "body",
           "kind": "object",
-          "children": [
-            {
-              "name": "action",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "description",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "filter",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "expression",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "id",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "global_api_key",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "id",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "kind",
-              "kind": "string",
-              "example": "lab"
-            }
-          ]
+          "children": []
         }
       }
     ],

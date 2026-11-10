@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /alerts.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /alerts. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /alerts reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftCloudAppSecurity/Integrations/MicrosoftCloudAppSecurity",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/defender-cloud-apps/api-alerts",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /alerts. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /alerts reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://learn.microsoft.com/en-us/defender-cloud-apps/api-alerts",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /alerts. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /alerts reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -64,27 +64,65 @@
               "example": "lab"
             },
             {
-              "name": "alertsNotFound",
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "entities",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "description",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "appName",
+              "name": "entities",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "is_open",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "client_id",
+              "name": "resolveTime",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "closed_benign",
+              "name": "severityValue",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "closed_false_positive",
+              "name": "statusValue",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "timestamp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "title",
               "kind": "string",
               "example": "lab"
             }

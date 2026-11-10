@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /events/{message_id}.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /events/{message_id}. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /events/{message_id} reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeETP/Integrations/FireEyeETP",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeETP/Integrations/FireEyeETP",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /events/{message_id}. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /events/{message_id} reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeETP/Integrations/FireEyeETP",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /events/{message_id}. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /events/{message_id} reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,60 +59,28 @@
           "kind": "object",
           "children": [
             {
-              "name": "Delivered_msg",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "Logs",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "display_msg",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             },
             {
-              "name": "acceptedDateTime",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "alert",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "attack-time",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "explanation",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "malware_md5",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "name",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "occurred",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "alert_date",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "alert_id",
-              "kind": "string",
-              "example": "lab"
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }

@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /v1/assets.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /v1/assets, GET /v1/risk-findings. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /v1/assets, GET /v1/risk-findings reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/DSPM/Integrations/DSPM",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://pan.dev/prisma-cloud/api/dspm/",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /v1/assets, GET /v1/risk-findings. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /v1/assets, GET /v1/risk-findings reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://pan.dev/prisma-cloud/api/dspm/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /v1/assets, GET /v1/risk-findings. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /v1/assets, GET /v1/risk-findings reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -60,28 +60,12 @@
           "children": [
             {
               "name": "assets",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "dspmApiKey",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "dspmBaseUrl",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "fields",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "files",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }
@@ -110,33 +94,7 @@
         "record": {
           "name": "body",
           "kind": "object",
-          "children": [
-            {
-              "name": "assets",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "dspmApiKey",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "dspmBaseUrl",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "fields",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "files",
-              "kind": "string",
-              "example": "lab"
-            }
-          ]
+          "children": []
         }
       }
     ],

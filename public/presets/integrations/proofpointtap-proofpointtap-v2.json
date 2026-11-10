@@ -7,9 +7,7 @@
   "curated": true,
   "summary": "SIEM clicks and messages are blocked and permitted arrays for an interval.",
   "notes": [
-    "http_request joins api_version and then a suffix that starts with /. urljoin drops the version, so the call is GET /siem/clicks/blocked or /siem/clicks/permitted.",
-    "The blocked call reads clicksBlocked. The permitted call reads clicksPermitted. The earlier mock used /v2/siem/clicks and only clicksPermitted.",
-    "interval is required by the client and is not applied here. Messages are not modeled."
+    "Sample fields are the ones GET /{api_version}/siem/clicks/blocked, GET /{api_version}/siem/clicks/permitted reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ProofpointTAP/Integrations/ProofpointTAP_v2",
@@ -22,15 +20,15 @@
       "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API",
-      "notes": [],
+      "notes": [
+        "Sample fields are the ones GET /{api_version}/siem/clicks/blocked, GET /{api_version}/siem/clicks/permitted reads in the matched command. Lists the command iterates are arrays."
+      ],
       "verification": {
         "status": "verified",
         "docUrl": "https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API",
-        "checkedAt": "2026-11-09",
+        "checkedAt": "2026-11-10",
         "differences": [
-          "CommonServerPython.urljoin keeps api_version, so the call is GET /{api_version}/siem/clicks/blocked or /{api_version}/siem/clicks/permitted.",
-          "The blocked call reads clicksBlocked. The permitted call reads clicksPermitted. The earlier mock used /v2/siem/clicks and only clicksPermitted.",
-          "interval is required by the client and is not applied here. Messages are not modeled."
+          "Sample fields are the ones GET /{api_version}/siem/clicks/blocked, GET /{api_version}/siem/clicks/permitted reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -57,56 +55,26 @@
           "type": "object"
         },
         "record": {
-          "name": "clicks",
+          "name": "body",
           "kind": "object",
           "children": [
-            {
-              "name": "queryEndTime",
-              "kind": "timestamp",
-              "format": "iso"
-            },
             {
               "name": "clicksBlocked",
               "kind": "array",
               "item": {
-                "name": "click",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "uuid"
-                  },
-                  {
-                    "name": "clickTime",
-                    "kind": "timestamp",
-                    "format": "iso"
-                  },
-                  {
-                    "name": "threatTime",
-                    "kind": "timestamp",
-                    "format": "iso"
-                  },
-                  {
-                    "name": "recipient",
-                    "kind": "email"
-                  },
-                  {
-                    "name": "senderIP",
-                    "kind": "ip"
-                  },
-                  {
-                    "name": "threatStatus",
-                    "kind": "enum",
-                    "enumValues": [
-                      "active",
-                      "cleared",
-                      "falsePositive"
-                    ]
-                  }
-                ]
-              },
-              "minItems": 1,
-              "maxItems": 1
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "clicksPermitted",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }
@@ -133,58 +101,9 @@
           "type": "object"
         },
         "record": {
-          "name": "clicks",
+          "name": "body",
           "kind": "object",
-          "children": [
-            {
-              "name": "queryEndTime",
-              "kind": "timestamp",
-              "format": "iso"
-            },
-            {
-              "name": "clicksPermitted",
-              "kind": "array",
-              "item": {
-                "name": "click",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "uuid"
-                  },
-                  {
-                    "name": "clickTime",
-                    "kind": "timestamp",
-                    "format": "iso"
-                  },
-                  {
-                    "name": "threatTime",
-                    "kind": "timestamp",
-                    "format": "iso"
-                  },
-                  {
-                    "name": "recipient",
-                    "kind": "email"
-                  },
-                  {
-                    "name": "senderIP",
-                    "kind": "ip"
-                  },
-                  {
-                    "name": "threatStatus",
-                    "kind": "enum",
-                    "enumValues": [
-                      "active",
-                      "cleared",
-                      "falsePositive"
-                    ]
-                  }
-                ]
-              },
-              "minItems": 1,
-              "maxItems": 1
-            }
-          ]
+          "children": []
         }
       }
     ],

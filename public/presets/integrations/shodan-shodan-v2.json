@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "The checker matched GET /shodan/host/{ip}.",
   "notes": [
-    "The checker matched GET /shodan/host/{ip}. {API_URL} is the instance URL, not a path segment."
+    "Sample fields are the ones GET /shodan/host/{ip} reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Shodan/Integrations/Shodan_v2",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://developer.shodan.io/api",
       "notes": [
-        "The checker matched GET /shodan/host/{ip}. {API_URL} is the instance URL, not a path segment."
+        "Sample fields are the ones GET /shodan/host/{ip} reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developer.shodan.io/api",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The checker matched GET /shodan/host/{ip}. {API_URL} is the instance URL, not a path segment."
+          "Sample fields are the ones GET /shodan/host/{ip} reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -44,37 +44,197 @@
           "type": "object"
         },
         "record": {
-          "name": "host",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "ip_str",
-              "kind": "ip"
+              "name": "asn",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "ports",
+              "name": "country_name",
               "kind": "string",
-              "example": "22,80,443"
+              "example": "lab"
+            },
+            {
+              "name": "hostnames",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "isp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_update",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "latitude",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "longitude",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "matches",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "asn",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "data",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "domains",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "hash",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "hostnames",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "ip_str",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "isp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "location",
+                    "kind": "object",
+                    "children": []
+                  },
+                  {
+                    "name": "ntlm",
+                    "kind": "object",
+                    "children": []
+                  },
+                  {
+                    "name": "org",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "os",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "port",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "ssl",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "cert",
+                        "kind": "object",
+                        "children": []
+                      },
+                      {
+                        "name": "versions",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "transport",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             },
             {
               "name": "org",
               "kind": "string",
-              "example": "Example Hosting"
+              "example": "lab"
             },
             {
-              "name": "asn",
-              "kind": "const",
-              "constValue": "AS64500"
-            },
-            {
-              "name": "country_name",
-              "kind": "const",
-              "constValue": "United States"
-            },
-            {
-              "name": "hostnames",
+              "name": "os",
               "kind": "string",
-              "example": "scan.example.com"
+              "example": "lab"
+            },
+            {
+              "name": "ports",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "tags",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "total",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "vulns",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         },

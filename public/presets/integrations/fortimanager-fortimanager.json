@@ -7,9 +7,7 @@
   "curated": true,
   "summary": "JSON-RPC device list.",
   "notes": [
-    "The client POSTs jsonrpc. Device reads use /dvmdb/adom/{adom}/device inside the request. This mock returns one device for every POST /jsonrpc.",
-    "Groups and other methods share that route. The request method name is not branched.",
-    "The FortiManager API portal was not reloaded. A bearer token is required."
+    "Sample fields are the ones POST /jsonrpc reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FortiManager/Integrations/FortiManager",
@@ -23,18 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://fndn.fortinet.net/index.php?/fortiapi/5-fortimanager/",
       "notes": [
-        "The client POSTs jsonrpc. Device reads use /dvmdb/adom/{adom}/device inside the request. This mock returns one device for every POST /jsonrpc.",
-        "Groups and other methods share that route. The request method name is not branched.",
-        "The FortiManager API portal was not reloaded. A bearer token is required."
+        "Sample fields are the ones POST /jsonrpc reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://fndn.fortinet.net/index.php?/fortiapi/5-fortimanager/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client POSTs jsonrpc. Device reads use /dvmdb/adom/{adom}/device inside the request. This mock returns one device for every POST /jsonrpc.",
-          "Groups and other methods share that route. The request method name is not branched.",
-          "The FortiManager API portal was not reloaded. A bearer token is required."
+          "Sample fields are the ones POST /jsonrpc reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -54,16 +48,15 @@
           "kind": "object",
           "children": [
             {
-              "name": "id",
-              "kind": "integer"
+              "name": "policyid",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "result",
               "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
               "item": {
-                "name": "result",
+                "name": "item",
                 "kind": "object",
                 "children": [
                   {
@@ -72,40 +65,35 @@
                     "children": [
                       {
                         "name": "code",
-                        "kind": "const",
-                        "constValue": 0
-                      },
-                      {
-                        "name": "message",
-                        "kind": "const",
-                        "constValue": "OK"
+                        "kind": "string",
+                        "example": "lab"
                       }
                     ]
-                  },
+                  }
+                ]
+              }
+            },
+            {
+              "name": "session",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "task",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "vdom",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
                   {
-                    "name": "data",
-                    "kind": "array",
-                    "minItems": 1,
-                    "maxItems": 1,
-                    "item": {
-                      "name": "device",
-                      "kind": "object",
-                      "children": [
-                        {
-                          "name": "name",
-                          "kind": "string",
-                          "example": "lab-fw"
-                        },
-                        {
-                          "name": "ip",
-                          "kind": "ip"
-                        },
-                        {
-                          "name": "sn",
-                          "kind": "id"
-                        }
-                      ]
-                    }
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
                   }
                 ]
               }

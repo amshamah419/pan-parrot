@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /v1/workspaces/{workspace_id}/query.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /v1/workspaces/{workspace_id}/query. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /v1/workspaces/{workspace_id}/query reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureLogAnalytics/Integrations/AzureLogAnalytics",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/rest/api/loganalytics/dataaccess/query/execute",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /v1/workspaces/{workspace_id}/query. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /v1/workspaces/{workspace_id}/query reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://learn.microsoft.com/en-us/rest/api/loganalytics/dataaccess/query/execute",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /v1/workspaces/{workspace_id}/query. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /v1/workspaces/{workspace_id}/query reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -60,63 +60,59 @@
           "children": [
             {
               "name": "columns",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "name",
               "kind": "string",
               "example": "lab"
             },
             {
               "name": "rows",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
               "name": "tables",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "value",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "authorizationSource",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "displayName",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "location",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "managedByTenants",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "columns",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "name",
                     "kind": "string",
                     "example": "lab"
+                  },
+                  {
+                    "name": "rows",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
                   }
-                }
-              ]
-            },
-            {
-              "name": "createDate",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "description",
-              "kind": "string",
-              "example": "lab"
+                ]
+              }
             }
           ]
         }

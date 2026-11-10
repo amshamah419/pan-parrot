@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "The checker matched GET /api/v1/logs.",
   "notes": [
-    "The checker matched GET /api/v1/logs. The collector reads the system log at that path."
+    "Sample fields are the ones GET /api/v1/logs reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Okta/Integrations/OktaEventCollector",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.okta.com/docs/reference/api/system-log/",
       "notes": [
-        "The checker matched GET /api/v1/logs. The collector reads the system log at that path."
+        "Sample fields are the ones GET /api/v1/logs reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developer.okta.com/docs/reference/api/system-log/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The checker matched GET /api/v1/logs. The collector reads the system log at that path."
+          "Sample fields are the ones GET /api/v1/logs reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -44,22 +44,18 @@
           "type": "array"
         },
         "record": {
-          "name": "event",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "uuid",
-              "kind": "id"
-            },
-            {
-              "name": "eventType",
-              "kind": "string",
-              "example": "user.session.start"
-            },
-            {
               "name": "published",
-              "kind": "timestamp",
-              "format": "iso"
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "uuid",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         },

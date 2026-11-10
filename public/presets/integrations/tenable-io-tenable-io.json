@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /vulns/export.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /vulns/export, POST /assets/export. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /vulns/export, POST /assets/export reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Tenable_io/Integrations/Tenable_io",
@@ -21,14 +21,14 @@
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.tenable.com/reference/workbenches-assets",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /vulns/export, POST /assets/export. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /vulns/export, POST /assets/export reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developer.tenable.com/reference/workbenches-assets",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /vulns/export, POST /assets/export. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /vulns/export, POST /assets/export reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,62 +59,36 @@
           "kind": "object",
           "children": [
             {
-              "name": "Status",
+              "name": "chunks_available",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "error",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "asset",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "fqdn",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "hostname",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "ipv4",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "network_id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "operating_system",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
-                    "kind": "string",
-                    "example": "lab"
-                  }
-                }
-              ]
-            },
-            {
-              "name": "assets",
+              "name": "export_uuid",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "assets_404_retry_count",
+              "name": "indexed",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "assets_available_chunks",
+              "name": "received",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "assets_export_uuid",
+              "name": "status",
               "kind": "string",
               "example": "lab"
             }
@@ -147,62 +121,26 @@
           "kind": "object",
           "children": [
             {
-              "name": "Status",
+              "name": "chunks_available",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "error",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "asset",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "fqdn",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "hostname",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "ipv4",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "network_id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "operating_system",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
-                    "kind": "string",
-                    "example": "lab"
-                  }
-                }
-              ]
-            },
-            {
-              "name": "assets",
+              "name": "export_uuid",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "assets_404_retry_count",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "assets_available_chunks",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "assets_export_uuid",
+              "name": "status",
               "kind": "string",
               "example": "lab"
             }
