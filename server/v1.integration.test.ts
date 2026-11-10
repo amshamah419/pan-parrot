@@ -150,6 +150,58 @@ class Client:
     expect(guide.params.find((row: { name: string }) => row.name === "url").value).toBe(mock.url);
   });
 
+  it("turns on a fetch window without replacing the routes", async () => {
+    const issued = await mint(["mocks:read", "mocks:write"], "fetch-window");
+    const created = await app.request("/api/v1/mocks", {
+      method: "POST",
+      headers: { authorization: `Bearer ${issued.token}`, "content-type": "application/json" },
+      body: JSON.stringify({
+        yaml: YAML.replace("HelloWorld", "FetchWorld").replace("hello-world", "fetch-world"),
+        integrationId: "FetchWorld",
+        version: "1",
+      }),
+    });
+    expect(created.status).toBe(201);
+    const mock = await created.json();
+    const turned = await app.request(`/api/v1/mocks/${mock.id}`, {
+      method: "PUT",
+      headers: { authorization: `Bearer ${issued.token}`, "content-type": "application/json" },
+      body: JSON.stringify({
+        fetch: { enabled: true, windowSeconds: 60, perPoll: 2, sinceParam: "since" },
+        reset: true,
+      }),
+    });
+    expect(turned.status).toBe(200);
+    const settings = await turned.json();
+    expect(settings.fetch).toMatchObject({ enabled: true, windowSeconds: 60, perPoll: 2, dedup: true });
+    expect(settings.reset).toBe(true);
+    expect(settings.url).toBe(mock.url);
+
+    const read = await app.request(`/api/v1/mocks/${mock.id}`, {
+      headers: { authorization: `Bearer ${issued.token}` },
+    });
+    const spec = await read.json();
+    expect(spec.spec.operations.some((operation: { pathTemplate: string }) => operation.pathTemplate === "/hello")).toBe(true);
+    expect(spec.spec.behavior.fetch.enabled).toBe(true);
+
+    const path = new URL(mock.url).pathname;
+    const since = "2024-01-01T00:00:00Z";
+    const first = await app.request(`${path}/hello?since=${encodeURIComponent(since)}`);
+    expect(first.status).toBe(200);
+    expect(first.headers.get("x-pan-parrot-effects")).toContain("fetch-new");
+    expect(await first.json()).toHaveLength(2);
+    const replay = await app.request(`${path}/hello?since=${encodeURIComponent(since)}`);
+    expect(replay.headers.get("x-pan-parrot-effects")).toContain("fetch-empty");
+    expect(await replay.json()).toEqual([]);
+
+    const rejected = await app.request(`/api/v1/mocks/${mock.id}`, {
+      method: "PUT",
+      headers: { authorization: `Bearer ${issued.token}`, "content-type": "application/json" },
+      body: JSON.stringify({ fetch: { enabled: true, extra: true } }),
+    });
+    expect(rejected.status).toBe(400);
+  });
+
   it("returns query and body on captured logs and leaves headers off", async () => {
     const issued = await mint(["mocks:read", "mocks:write"], "assert-logs");
     const created = await app.request("/api/v1/mocks", {

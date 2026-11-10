@@ -19,6 +19,7 @@ Status: **done**, **in progress**, **todo**.
 | 11 | Agent catalog search | done | `panparrot presets --q` calls `GET /api/v1/presets` and prints fidelity plus command coverage (`vendor`, `approximate`, `missing`, `total`) when the preset has been scored. The same fields are on the JSON response. |
 | 12 | Mock from a local integration | done | `panparrot mock from-integration <integration.yml>` reads the YAML, the Python file beside it, and `test_data` when present. Routes come from the client. The command returns the catch URL and the instance parameters. The Python is parsed for paths only. It is not executed and is not stored. |
 | 13 | Request assertions | done | `panparrot assert --mock <id> --file expectations.json` checks captured calls after a test run. Each row is method, path, optional query, status, body text, min, and max. The path matches after the catch prefix. `max: 0` means the call must not have happened. A miss exits 1. Logs returned to the CLI include query and a short body, not request headers. |
+| 14 | Fetch windows from the CLI | done | `panparrot mock fetch --mock <id>` turns on the existing fetch simulation. Each poll of `since` or `first_fetch` returns the next time window, and the same value returns an empty page when dedup is on. `--window`, `--per-poll`, `--since`, `--first-fetch`, `--time-field`, and `--no-dedup` change those settings. `--reset` clears the saved cursor and seen ids. `--off` turns it off. The command updates the mock in place and does not replace its routes. |
 
 ## Defaults chosen without waiting
 
@@ -49,6 +50,8 @@ Status: **done**, **in progress**, **todo**.
 - The request log searches method, status, path, headers, and body, copies a call as cURL or Python, replays it through the same public-https checks as Push, and diffs two calls side by side. `?` lists the shortcuts. Color theme follows the system until a Light or Dark choice is saved in the browser.
 
 ## Done through this PR
+
+`panparrot mock fetch --mock <id>` turns on fetch-incident windows for a mock that already exists. `PUT /api/v1/mocks/{id}` accepts `{fetch}` by itself and leaves the routes in place. Defaults stay 300 seconds and 3 records per poll, `since` and `first_fetch`, dedup on. `--reset` clears the saved cursor and seen ids. `--off` disables it. A second poll with the same `since` is an empty page.
 
 `panparrot assert` checks the calls captured on a mock after a test run. A file is a list, or `{"calls":[...]}`, of `{method, path, query, status, bodyIncludes, min, max}`. One call can be `--method GET --path /hello --query since=2020-01-01T00:00:00Z`. The path matches the request after the catch id. `GET /api/v1/mocks/{id}/logs?limit=200` returns query and a 500-character body. It does not return request headers. A failed check exits 1.
 

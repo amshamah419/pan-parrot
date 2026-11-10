@@ -252,6 +252,65 @@ def test_dry_run_builds_the_demisto_sdk_payload(monkeypatch, capsys, tmp_path):
     assert not any(item[1].endswith("/settings/integration") for item in xsiam)
 
 
+def test_mock_fetch_sends_the_window(tmp_path, monkeypatch, capsys):
+    config = tmp_path / "credentials.json"
+    config.write_text(json.dumps({"url": "https://panparrot.example", "token": "pp_abc"}))
+    os.chmod(config, 0o600)
+    monkeypatch.setenv("PANPARROT_CONFIG", str(config))
+    seen = {}
+
+    class Response:
+        status = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return json.dumps({
+                "id": "m1",
+                "url": "https://panparrot.example/catch/abc",
+                "fetch": {
+                    "enabled": True,
+                    "sinceParam": "since",
+                    "firstFetchParam": "first_fetch",
+                    "timeField": "created",
+                    "windowSeconds": 60,
+                    "perPoll": 2,
+                    "dedup": False,
+                },
+                "reset": True,
+            }).encode()
+
+    def urlopen(request, timeout=0):
+        seen["url"] = request.full_url
+        seen["method"] = request.get_method()
+        seen["body"] = json.loads(request.data.decode())
+        return Response()
+
+    monkeypatch.setattr("panparrot.cli.urllib.request.urlopen", urlopen)
+    code = main([
+        "--json", "mock", "fetch", "--mock", "m1",
+        "--window", "60", "--per-poll", "2", "--no-dedup", "--reset",
+    ])
+    assert code == 0
+    assert seen["method"] == "PUT"
+    assert seen["url"] == "https://panparrot.example/api/v1/mocks/m1"
+    assert seen["body"] == {
+        "fetch": {"enabled": True, "windowSeconds": 60, "perPoll": 2, "dedup": False},
+        "reset": True,
+    }
+    body = json.loads(capsys.readouterr().out)
+    assert body["fetch"]["windowSeconds"] == 60
+    assert "Fetch is on." in body["text"]
+    assert "Saved calls were cleared." in body["text"]
+
+    bad = main(["mock", "fetch", "--mock", "m1", "--window", "0"])
+    assert bad == 1
+
+
 def test_payload_matches_the_sdk_credential_shape():
     metadata = {
         "name": "HelloWorld",
