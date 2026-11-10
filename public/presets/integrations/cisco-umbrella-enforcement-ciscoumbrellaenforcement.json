@@ -28,9 +28,36 @@
         "docUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-reference-enforcement-domains/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /events reads in the matched command. Lists the command iterates are arrays."
+          "Sample fields are the ones POST /events reads in the matched command. Lists the command iterates are arrays.",
+          "Command coverage is 0 from vendor docs, 1 approximate, and 2 missing, out of 3. The Umbrella Enforcement domains URL stored on this preset returned 404."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "umbrella-domain-event-add",
+          "calls": [
+            "POST /events"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "post-events-0"
+          ]
+        },
+        {
+          "command": "umbrella-domains-list",
+          "calls": [
+            "GET /meta.next"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "umbrella-domain-delete",
+          "calls": [
+            "DELETE /domains/{id}"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {

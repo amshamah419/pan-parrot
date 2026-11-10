@@ -95,6 +95,28 @@ describe("AWS command coverage", () => {
     expect(prisma).toEqual({ vendor: 0, approximate: 4, missing: 81 });
     const virustotal = sums(covered.filter((preset) => preset.id.startsWith("virustotal-")));
     expect(virustotal).toEqual({ vendor: 0, approximate: 4, missing: 43 });
+    const cisco = sums(
+      covered.filter((preset) =>
+        [
+          "amp-ampv2",
+          "ciscofirepower-ciscofirepower",
+          "cisco-ise-cisco-ise",
+          "cisco-umbrella-cisco-umbrella-investigate",
+          "cisco-umbrella-enforcement-ciscoumbrellaenforcement",
+          "ciscoumbrellareporting-ciscoumbrellareporting",
+          "ciscoasa-ciscoasa",
+          "ciscostealthwatch-ciscostealthwatch",
+          "ciscosma-ciscosma",
+          "ciscoemailsecurity-ciscoemailsecurity",
+        ].includes(preset.id),
+      ),
+    );
+    expect(cisco).toEqual({ vendor: 0, approximate: 22, missing: 179 });
+    const amp = JSON.parse(readFileSync("public/presets/integrations/amp-ampv2.json", "utf8")) as {
+      spec: Parameters<typeof validateMockSpec>[0];
+    };
+    const events = validateMockSpec(amp.spec).source.commandDocs?.find((row) => row.command === "cisco-amp-event-list");
+    expect(events).toMatchObject({ status: "approximate", calls: ["GET /events"] });
 
     const iam = JSON.parse(readFileSync("public/presets/integrations/aws-iam-aws-iam.json", "utf8")) as {
       spec: Parameters<typeof validateMockSpec>[0];
