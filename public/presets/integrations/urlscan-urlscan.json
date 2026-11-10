@@ -1,1 +1,144 @@
-{"id":"urlscan-urlscan","name":"urlscan.io","pack":"UrlScan","fidelity":"sample","curated":false,"summary":"Use urlscan.io integration to perform scans on suspected URLs and see their reputation.","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"urlscan-urlscan","name":"urlscan.io","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/UrlScan/Integrations/UrlScan","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-capitalne-json","method":"POST","pathTemplate":"/scan","summary":"test_data/capitalne.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"requests","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"request","kind":"object","optional":false,"children":[{"name":"requestId","kind":"id","optional":false,"example":"72681F21205D1F1483083AAC32DBA719"},{"name":"loaderId","kind":"id","optional":false,"example":"72681F21205D1F1483083AAC32DBA719"},{"name":"documentURL","kind":"string","optional":false,"example":"http://capitalne.com/"},{"name":"request","kind":"object","optional":false,"children":[{"name":"url","kind":"string","optional":false,"example":"nested"},{"name":"method","kind":"string","optional":false,"example":"nested"},{"name":"headers","kind":"string","optional":false,"example":"nested"},{"name":"mixedContentType","kind":"string","optional":false,"example":"nested"},{"name":"initialPriority","kind":"string","optional":false,"example":"nested"},{"name":"referrerPolicy","kind":"string","optional":false,"example":"nested"}]},{"name":"timestamp","kind":"number","optional":false},{"name":"wallTime","kind":"number","optional":false},{"name":"initiator","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"nested"}]},{"name":"type","kind":"string","optional":false,"example":"Document"},{"name":"frameId","kind":"id","optional":false,"example":"DD6EADE429B73140FAE4117A7D1AC2A4"},{"name":"hasUserGesture","kind":"boolean","optional":false}]},{"name":"response","kind":"object","optional":false,"children":[{"name":"encodedDataLength","kind":"integer","optional":false},{"name":"dataLength","kind":"integer","optional":false},{"name":"failed","kind":"object","optional":false,"children":[{"name":"requestId","kind":"string","optional":false,"example":"nested"},{"name":"timestamp","kind":"string","optional":false,"example":"nested"},{"name":"type","kind":"string","optional":false,"example":"nested"},{"name":"errorText","kind":"string","optional":false,"example":"nested"},{"name":"canceled","kind":"string","optional":false,"example":"nested"}]}]}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"cookies","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"console","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"links","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"href","kind":"string","optional":false,"example":"http://capitalne.com/home"},{"name":"text","kind":"string","optional":false,"example":"home"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"timing","kind":"object","optional":false,"children":[{"name":"beginNavigation","kind":"timestamp","optional":false,"example":"2020-07-23T15:21:15.008Z","format":"iso"},{"name":"frameStartedLoading","kind":"timestamp","optional":false,"example":"2020-07-23T15:21:31.534Z","format":"iso"},{"name":"frameNavigated","kind":"timestamp","optional":false,"example":"2020-07-23T15:21:31.534Z","format":"iso"},{"name":"loadEventFired","kind":"timestamp","optional":false,"example":"2020-07-23T15:21:31.534Z","format":"iso"},{"name":"frameStoppedLoading","kind":"timestamp","optional":false,"example":"2020-07-23T15:21:31.535Z","format":"iso"},{"name":"domContentEventFired","kind":"timestamp","optional":false,"example":"2020-07-23T15:21:31.535Z","format":"iso"}]},{"name":"globals","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"stats","kind":"object","optional":false,"children":[{"name":"resourceStats","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"protocolStats","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"tlsStats","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"serverStats","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"domainStats","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"count","kind":"integer","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "urlscan-urlscan",
+  "name": "urlscan.io",
+  "pack": "urlscan",
+  "vendor": "urlscan",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Search results. results[].page and task.",
+  "notes": [
+    "GET /api/v1/search returns { results }. Each hit keeps task.uuid and page.url, page.ip, and page.server.",
+    "POST /api/v1/scan and the result poll are not modeled.",
+    "API-Key is required for search on the live service."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/urlscan/Integrations/UrlScan",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "urlscan-urlscan",
+      "name": "urlscan.io",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://urlscan.io/docs/api/",
+      "notes": [
+        "GET /api/v1/search returns { results }. Each hit keeps task.uuid and page.url, page.ip, and page.server.",
+        "POST /api/v1/scan and the result poll are not modeled.",
+        "API-Key is required for search on the live service."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://urlscan.io/docs/api/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /api/v1/search returns { results }. Each hit keeps task.uuid and page.url, page.ip, and page.server.",
+          "POST /api/v1/scan and the result poll are not modeled.",
+          "API-Key is required for search on the live service."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "search",
+        "method": "GET",
+        "pathTemplate": "/api/v1/search",
+        "summary": "Search scans",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "results"
+        },
+        "record": {
+          "name": "result",
+          "kind": "object",
+          "children": [
+            {
+              "name": "task",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "uuid",
+                  "kind": "uuid"
+                },
+                {
+                  "name": "time",
+                  "kind": "timestamp"
+                }
+              ]
+            },
+            {
+              "name": "page",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "url",
+                  "kind": "string",
+                  "example": "https://example.com/"
+                },
+                {
+                  "name": "ip",
+                  "kind": "ip"
+                },
+                {
+                  "name": "server",
+                  "kind": "string",
+                  "example": "nginx"
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "size",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "urlscan-urlscan",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "API-Key",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

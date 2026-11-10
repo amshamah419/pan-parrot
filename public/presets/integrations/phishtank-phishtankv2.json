@@ -1,1 +1,127 @@
-{"id":"phishtank-phishtankv2","name":"PhishTank v2","pack":"PhishTank","fidelity":"shape","curated":false,"summary":"PhishTank is a free community site where anyone can submit, verify, track, and share phishing data.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"phishtank-phishtankv2","name":"PhishTank v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PhishTank/Integrations/PhishTankV2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"url","method":"GET","pathTemplate":"/","summary":"Checks the reputation of the supplied URLs.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"URL","kind":"object","optional":false,"children":[{"name":"Data","kind":"string","optional":false,"example":"Data"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Score","kind":"number","optional":false},{"name":"Reliability","kind":"string","optional":false,"example":"Reliability"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "phishtank-phishtankv2",
+  "name": "PhishTank v2",
+  "pack": "PhishTank",
+  "vendor": "PhishTank",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "URL check. results.in_database and results.valid.",
+  "notes": [
+    "POST /checkurl/ with format=json returns { results: { url, in_database, verified, valid } }.",
+    "The hourly database download is not modeled.",
+    "An application key is not required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PhishTank/Integrations/PhishTankV2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "phishtank-phishtankv2",
+      "name": "PhishTank v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://phishtank.org/api_info.php",
+      "notes": [
+        "POST /checkurl/ with format=json returns { results: { url, in_database, verified, valid } }.",
+        "The hourly database download is not modeled.",
+        "An application key is not required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://phishtank.org/api_info.php",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "POST /checkurl/ with format=json returns { results: { url, in_database, verified, valid } }.",
+          "The hourly database download is not modeled.",
+          "An application key is not required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "check-url",
+        "method": "POST",
+        "pathTemplate": "/checkurl",
+        "summary": "Check a URL",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "results",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "url",
+                  "kind": "string",
+                  "example": "https://example.com/login"
+                },
+                {
+                  "name": "in_database",
+                  "kind": "boolean"
+                },
+                {
+                  "name": "verified",
+                  "kind": "boolean"
+                },
+                {
+                  "name": "valid",
+                  "kind": "boolean"
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "phishtank-phishtankv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

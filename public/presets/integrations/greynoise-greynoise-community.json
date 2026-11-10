@@ -1,1 +1,140 @@
-{"id":"greynoise-greynoise-community","name":"GreyNoise Community","pack":"GreyNoise","fidelity":"shape","curated":false,"summary":"GreyNoise is a cybersecurity platform that collects and analyzes Internet-wide scan and attack traffic. With this integration, users can contextualize existing alerts, filter false","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"greynoise-greynoise-community","name":"GreyNoise Community","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/GreyNoise/Integrations/GreyNoise_Community","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"ip","method":"GET","pathTemplate":"/","summary":"Gathers information on the IP from the GreyNoise Community API.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"Reliability","kind":"string","optional":false,"example":"Reliability"},{"name":"Score","kind":"number","optional":false},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"}]},{"name":"IP","kind":"object","optional":false,"children":[{"name":"ASN","kind":"string","optional":false,"example":"ASN"},{"name":"Address","kind":"string","optional":false,"example":"Address"},{"name":"address","kind":"string","optional":false,"example":"address"},{"name":"Geo","kind":"object","optional":false,"children":[{"name":"Country","kind":"string","optional":false,"example":"Country"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]},{"name":"Hostname","kind":"string","optional":false,"example":"Hostname"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"GreyNoise","kind":"object","optional":false,"children":[{"name":"IP","kind":"object","optional":false,"children":[{"name":"actor","kind":"string","optional":false,"example":"actor"},{"name":"address","kind":"string","optional":false,"example":"address"},{"name":"bot","kind":"boolean","optional":false},{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"classification","kind":"string","optional":false,"example":"classification"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"explanation","kind":"string","optional":false,"example":"explanation"},{"name":"first_seen","kind":"timestamp","optional":false,"format":"iso"},{"name":"found","kind":"boolean","optional":false},{"name":"ip","kind":"string","optional":false,"example":"ip"},{"name":"last_seen","kind":"timestamp","optional":false,"format":"iso"},{"name":"last_seen_timestamp","kind":"string","optional":false,"example":"last_seen_timestamp"},{"name":"last_updated","kind":"timestamp","optional":false,"format":"iso"},{"name":"metadata","kind":"object","optional":false,"children":[{"name":"asn","kind":"string","optional":false,"example":"asn"},{"name":"carrier","kind":"string","optional":false,"example":"carrier"},{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"datacenter","kind":"string","optional":false,"example":"datacenter"},{"name":"destination_countries","kind":"string","optional":false,"example":"destination_countries"},{"name":"destination_county_codes","kind":"string","optional":false,"example":"destination_county_codes"},{"name":"domain","kind":"string","optional":false,"example":"domain"},{"name":"latitude","kind":"number","optional":false},{"name":"longitude","kind":"number","optional":false},{"name":"mobile","kind":"boolean","optional":false},{"name":"organization","kind":"string","optional":false,"example":"organization"},{"name":"os","kind":"string","optional":false,"example":"os"},{"name":"rdns","kind":"string","optional":false,"example":"rdns"},{"name":"rdns_parent","kind":"string","optional":false,"example":"rdns_parent"},{"name":"rdns_validated","kind":"boolean","optional":false},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"sensor_count","kind":"number","optional":false},{"name":"sensor_hits","kind":"number","optional":false},{"name":"single_destination","kind":"boolean","optional":false},{"name":"source_city","kind":"string","optional":false,"example":"source_city"},{"name":"source_country","kind":"string","optional":false,"example":"source_country"},{"name":"source_country_code","kind":"string","optional":false,"example":"source_country_code"}]},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"raw_data","kind":"object","optional":false,"children":[{"name":"source","kind":"object","optional":false,"children":[{"name":"bytes","kind":"number","optional":false}]}]}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "greynoise-greynoise-community",
+  "name": "GreyNoise Community",
+  "pack": "GreyNoise",
+  "vendor": "GreyNoise",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Community IP lookup. noise, riot, and classification.",
+  "notes": [
+    "GET /v3/community/{ip} returns ip, noise, riot, classification, name, and link.",
+    "The community API has a low daily quota. This mock does not enforce that quota.",
+    "The key header is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GreyNoise/Integrations/GreyNoise_Community",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "greynoise-greynoise-community",
+      "name": "GreyNoise Community",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://docs.greynoise.io/reference/get_v3-community-ip",
+      "notes": [
+        "GET /v3/community/{ip} returns ip, noise, riot, classification, name, and link.",
+        "The community API has a low daily quota. This mock does not enforce that quota.",
+        "The key header is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.greynoise.io/reference/get_v3-community-ip",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /v3/community/{ip} returns ip, noise, riot, classification, name, and link.",
+          "The community API has a low daily quota. This mock does not enforce that quota.",
+          "The key header is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "community-ip",
+        "method": "GET",
+        "pathTemplate": "/v3/community/{ip}",
+        "summary": "Community IP",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "community",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ip",
+              "kind": "ip"
+            },
+            {
+              "name": "noise",
+              "kind": "boolean"
+            },
+            {
+              "name": "riot",
+              "kind": "boolean"
+            },
+            {
+              "name": "classification",
+              "kind": "enum",
+              "enumValues": [
+                "benign",
+                "malicious",
+                "unknown"
+              ]
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "unknown"
+            },
+            {
+              "name": "link",
+              "kind": "string",
+              "example": "https://viz.greynoise.io/ip/203.0.113.5"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "greynoise-greynoise-community",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "key",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

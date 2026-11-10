@@ -1,1 +1,127 @@
-{"id":"duoadminapi-duoadminapi","name":"DUO Admin","pack":"DuoAdminApi","fidelity":"shape","curated":false,"summary":"DUO for admins. Must have access to the admin api in order to use this.","operations":4,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"duoadminapi-duoadminapi","name":"DUO Admin","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/DuoAdminApi/Integrations/DuoAdminApi","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-get-all-bypass-codes-json","method":"GET","pathTemplate":"/","summary":"test_data/get_all_bypass_codes.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"admin_email","kind":"email","optional":false},{"name":"bypass_code_id","kind":"id","optional":false,"example":"1"},{"name":"created","kind":"integer","optional":false},{"name":"expiration","kind":"string","optional":true},{"name":"reuse_count","kind":"string","optional":true},{"name":"user","kind":"object","optional":false,"children":[{"name":"alias1","kind":"string","optional":false,"example":"test.1"},{"name":"alias2","kind":"string","optional":false,"example":"test.2"},{"name":"alias3","kind":"string","optional":false},{"name":"alias4","kind":"string","optional":true},{"name":"aliases","kind":"object","optional":false,"children":[{"name":"alias1","kind":"string","optional":false,"example":"test.1"},{"name":"alias2","kind":"string","optional":false,"example":"test.2"},{"name":"alias3","kind":"string","optional":false}]},{"name":"created","kind":"integer","optional":false},{"name":"email","kind":"email","optional":false},{"name":"firstname","kind":"string","optional":true},{"name":"is_enrolled","kind":"boolean","optional":false},{"name":"last_directory_sync","kind":"string","optional":true},{"name":"last_login","kind":"integer","optional":false},{"name":"lastname","kind":"string","optional":true},{"name":"notes","kind":"string","optional":false},{"name":"realname","kind":"string","optional":false,"example":"DO NOT CHANGE - Used for testing"},{"name":"status","kind":"string","optional":false,"example":"active"},{"name":"user_id","kind":"id","optional":false,"example":"1"},{"name":"username","kind":"email","optional":false}]}]}},{"id":"test-data-get-all-devices-json","method":"GET","pathTemplate":"/","summary":"test_data/get_all_devices.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"activated","kind":"boolean","optional":false},{"name":"capabilities","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"auto"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"extension","kind":"string","optional":false},{"name":"last_seen","kind":"timestamp","optional":false,"example":"2020-02-25T09:13:50","format":"iso"},{"name":"model","kind":"string","optional":false,"example":"Oneplus"},{"name":"name","kind":"string","optional":false},{"name":"number","kind":"string","optional":false,"example":"+972111111111"},{"name":"phone_id","kind":"id","optional":false,"example":"1"},{"name":"platform","kind":"string","optional":false,"example":"Google Android"},{"name":"postdelay","kind":"string","optional":false,"example":"0"},{"name":"predelay","kind":"string","optional":false,"example":"0"},{"name":"sms_passcodes_sent","kind":"boolean","optional":false},{"name":"type","kind":"string","optional":false,"example":"Mobile"},{"name":"users","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"alias1","kind":"string","optional":true},{"name":"alias2","kind":"string","optional":true},{"name":"alias3","kind":"string","optional":true},{"name":"alias4","kind":"string","optional":true},{"name":"aliases","kind":"object","optional":false,"children":[]},{"name":"created","kind":"integer","optional":false},{"name":"email","kind":"email","optional":false},{"name":"firstname","kind":"string","optional":true},{"name":"is_enrolled","kind":"boolean","optional":false},{"name":"last_directory_sync","kind":"string","optional":true},{"name":"last_login","kind":"integer","optional":false},{"name":"lastname","kind":"string","optional":true},{"name":"notes","kind":"string","optional":false},{"name":"realname","kind":"string","optional":false},{"name":"status","kind":"string","optional":false,"example":"locked out"},{"name":"user_id","kind":"id","optional":false,"example":"1"},{"name":"username","kind":"string","optional":false,"example":"test1"}]},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-get-authentication-logs-by-user-json","method":"GET","pathTemplate":"/","summary":"test_data/get_authentication_logs_by_user.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"authlogs","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"access_device","kind":"object","optional":false,"children":[{"name":"epkey","kind":"string","optional":true},{"name":"hostname","kind":"string","optional":true},{"name":"ip","kind":"ip","optional":false,"example":"1.1.1.1"},{"name":"location","kind":"object","optional":false,"children":[{"name":"city","kind":"string","optional":true},{"name":"country","kind":"string","optional":true},{"name":"state","kind":"string","optional":true}]}]},{"name":"alias","kind":"string","optional":false},{"name":"application","kind":"object","optional":false,"children":[{"name":"key","kind":"string","optional":false,"example":"1"},{"name":"name","kind":"string","optional":false,"example":"Auth API"}]},{"name":"auth_device","kind":"object","optional":false,"children":[{"name":"ip","kind":"ip","optional":false,"example":"1.1.1.1"},{"name":"key","kind":"string","optional":false,"example":"1"},{"name":"location","kind":"object","optional":false,"children":[{"name":"city","kind":"string","optional":false,"example":"test_city"},{"name":"country","kind":"string","optional":true},{"name":"state","kind":"string","optional":true}]},{"name":"name","kind":"string","optional":false,"example":"+972 11-111-1111"}]},{"name":"email","kind":"email","optional":false},{"name":"event_type","kind":"string","optional":false,"example":"authentication"},{"name":"factor","kind":"string","optional":false,"example":"duo_push"},{"name":"isotimestamp","kind":"timestamp","optional":false,"example":"2022-08-28T13:34:16.080820+00:00","format":"iso"},{"name":"ood_software","kind":"string","optional":true},{"name":"reason","kind":"string","optional":false,"example":"no_response"},{"name":"result","kind":"string","optional":false,"example":"denied"},{"name":"timestamp","kind":"integer","optional":false},{"name":"txid","kind":"id","optional":false,"example":"12a99a23-ae87-48fa-87ea-b64d7fbf5b7e"},{"name":"user","kind":"object","optional":false,"children":[{"name":"groups","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"key","kind":"string","optional":false,"example":"1"},{"name":"name","kind":"email","optional":false}]},{"name":"eventtype","kind":"string","optional":false,"example":"authentication"},{"name":"host","kind":"string","optional":false,"example":"test_host"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"metadata","kind":"object","optional":false,"children":[{"name":"next_offset","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"1"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"total_objects","kind":"integer","optional":false}]}]}},{"id":"test-data-get-users-json","method":"GET","pathTemplate":"/","summary":"test_data/get_users.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"alias1","kind":"string","optional":false,"example":"test.1"},{"name":"alias2","kind":"string","optional":false,"example":"active-user"},{"name":"alias3","kind":"string","optional":false},{"name":"alias4","kind":"string","optional":true},{"name":"aliases","kind":"object","optional":false,"children":[{"name":"alias1","kind":"string","optional":false,"example":"test.1"},{"name":"alias2","kind":"string","optional":false,"example":"test.2"},{"name":"alias3","kind":"string","optional":false}]},{"name":"created","kind":"integer","optional":false},{"name":"desktoptokens","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"email","kind":"email","optional":false},{"name":"firstname","kind":"string","optional":true},{"name":"groups","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"is_enrolled","kind":"boolean","optional":false},{"name":"last_directory_sync","kind":"string","optional":true},{"name":"last_login","kind":"integer","optional":false},{"name":"lastname","kind":"string","optional":true},{"name":"notes","kind":"string","optional":false},{"name":"phones","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"activated","kind":"boolean","optional":false},{"name":"capabilities","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"auto"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"extension","kind":"string","optional":false},{"name":"last_seen","kind":"timestamp","optional":false,"example":"2020-02-25T09:13:50","format":"iso"},{"name":"model","kind":"string","optional":false,"example":"Oneplus ONEPLUS A5010"},{"name":"name","kind":"string","optional":false},{"name":"number","kind":"string","optional":false,"example":"+97211111111"},{"name":"phone_id","kind":"id","optional":false,"example":"1"},{"name":"platform","kind":"string","optional":false,"example":"Google Android"},{"name":"postdelay","kind":"string","optional":false,"example":"0"},{"name":"predelay","kind":"string","optional":false,"example":"0"},{"name":"sms_passcodes_sent","kind":"boolean","optional":false},{"name":"type","kind":"string","optional":false,"example":"Mobile"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"realname","kind":"string","optional":false,"example":"test"},{"name":"status","kind":"string","optional":false,"example":"active"},{"name":"tokens","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"u2ftokens","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"user_id","kind":"id","optional":false,"example":"1"},{"name":"username","kind":"string","optional":false,"example":"test1"},{"name":"webauthncredentials","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "duoadminapi-duoadminapi",
+  "name": "Duo Admin",
+  "pack": "DUOAdminApi",
+  "vendor": "Duo",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "User list. stat and response[].",
+  "notes": [
+    "GET /admin/v1/users returns { stat, response }. Users keep user_id, username, and status.",
+    "Duo signs every request. This mock does not check the HMAC signature.",
+    "Phones, tokens, and logs are not modeled."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/DUOAdminApi/Integrations/DuoAdminApi",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "duoadminapi-duoadminapi",
+      "name": "Duo Admin",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://duo.com/docs/adminapi#retrieve-users",
+      "notes": [
+        "GET /admin/v1/users returns { stat, response }. Users keep user_id, username, and status.",
+        "Duo signs every request. This mock does not check the HMAC signature.",
+        "Phones, tokens, and logs are not modeled."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://duo.com/docs/adminapi#retrieve-users",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /admin/v1/users returns { stat, response }. Users keep user_id, username, and status.",
+          "Duo signs every request. This mock does not check the HMAC signature.",
+          "Phones, tokens, and logs are not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-users",
+        "method": "GET",
+        "pathTemplate": "/admin/v1/users",
+        "summary": "List users",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "response"
+        },
+        "record": {
+          "name": "user",
+          "kind": "object",
+          "children": [
+            {
+              "name": "user_id",
+              "kind": "id"
+            },
+            {
+              "name": "username",
+              "kind": "string",
+              "example": "jsmith"
+            },
+            {
+              "name": "status",
+              "kind": "enum",
+              "enumValues": [
+                "active",
+                "bypass",
+                "disabled"
+              ]
+            },
+            {
+              "name": "email",
+              "kind": "email"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "duoadminapi-duoadminapi",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

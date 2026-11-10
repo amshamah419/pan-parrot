@@ -1,1 +1,127 @@
-{"id":"feedurlhaus-feedurlhaus","name":"URLhaus Feed","pack":"FeedURLhaus","fidelity":"shape","curated":false,"summary":"Fetch url indicators for URLHaus.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"feedurlhaus-feedurlhaus","name":"URLhaus Feed","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/FeedURLhaus/Integrations/FeedURLhaus","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"urlhaus-get-indicators","method":"GET","pathTemplate":"/","summary":"Retrieves a limited number of indicators.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"limit","kind":"string","optional":false,"example":"limit"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "feedurlhaus-feedurlhaus",
+  "name": "URLhaus Feed",
+  "pack": "FeedURLhaus",
+  "vendor": "abuse.ch",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Recent malicious URLs. urls[] from the URLhaus recent endpoint.",
+  "notes": [
+    "GET /v1/urls/recent returns { query_status, urls }. Each URL keeps url, url_status, threat, and date_added.",
+    "The CSV feed download is not modeled.",
+    "Auth-Key is not required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FeedURLhaus",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "feedurlhaus-feedurlhaus",
+      "name": "URLhaus Feed",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://urlhaus-api.abuse.ch/#urls-recent",
+      "notes": [
+        "GET /v1/urls/recent returns { query_status, urls }. Each URL keeps url, url_status, threat, and date_added.",
+        "The CSV feed download is not modeled.",
+        "Auth-Key is not required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://urlhaus-api.abuse.ch/#urls-recent",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /v1/urls/recent returns { query_status, urls }. Each URL keeps url, url_status, threat, and date_added.",
+          "The CSV feed download is not modeled.",
+          "Auth-Key is not required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "recent",
+        "method": "GET",
+        "pathTemplate": "/v1/urls/recent",
+        "summary": "Recent URLs",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "urls"
+        },
+        "record": {
+          "name": "url",
+          "kind": "object",
+          "children": [
+            {
+              "name": "url",
+              "kind": "string",
+              "example": "https://bad.example/payload"
+            },
+            {
+              "name": "url_status",
+              "kind": "enum",
+              "enumValues": [
+                "online",
+                "offline"
+              ]
+            },
+            {
+              "name": "threat",
+              "kind": "const",
+              "constValue": "malware_download"
+            },
+            {
+              "name": "date_added",
+              "kind": "timestamp"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "feedurlhaus-feedurlhaus",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

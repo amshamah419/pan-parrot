@@ -1,1 +1,139 @@
-{"id":"recordedfuture-recordedfuture","name":"Recorded Future v2","pack":"RecordedFuture","fidelity":"sample","curated":false,"summary":"Unique threat intel technology that automatically serves up relevant insights in real time.","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"recordedfuture-recordedfuture","name":"Recorded Future v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/RecordedFuture/Integrations/RecordedFuture","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"cassettes-alert-rules-response-json","method":"GET","pathTemplate":"/v2/collective-insights/detections","summary":"cassettes/alert_rules_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"biQXYk"},{"name":"title","kind":"string","optional":false,"example":"Global Vulnerability Risk, Vendors and Products Mentioned with Vulnerabilities"}]},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"counts","kind":"object","optional":false,"children":[{"name":"returned","kind":"integer","optional":false},{"name":"total","kind":"integer","optional":false}]}]}},{"id":"cassettes-alerts-response-json","method":"GET","pathTemplate":"/v2/detection_rules/search","summary":"cassettes/alerts_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"review","kind":"object","optional":false,"children":[{"name":"assignee","kind":"string","optional":true},{"name":"status","kind":"string","optional":false,"example":"no-action"},{"name":"noteDate","kind":"string","optional":true},{"name":"noteAuthor","kind":"string","optional":true},{"name":"note","kind":"string","optional":true}]},{"name":"url","kind":"string","optional":false,"example":"https://app.recordedfuture.com/live/sc/notification/?id=jy5xRA"},{"name":"rule","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"Global Vulnerability Risk, Vendors and Products Mentioned with Vulnerabilities"},{"name":"id","kind":"id","optional":false,"example":"biQXYk"},{"name":"url","kind":"string","optional":false,"example":"https://app.recordedfuture.com/live/sc/ViewIdkobra_view_report_item_alert_editor?view_opts=%7B%22reportId%22%3A%22biQXYk"}]},{"name":"triggered","kind":"timestamp","optional":false,"example":"2021-09-11T04:04:49.808Z","format":"iso"},{"name":"id","kind":"id","optional":false,"example":"jy5xRA"},{"name":"title","kind":"string","optional":false,"example":"Global Vulnerability Risk, Vendors and Products Mentioned with Vulnerabili..."},{"name":"type","kind":"string","optional":false,"example":"ENTITY"}]},"minItems":0,"maxItems":3,"pageItems":false}]},{"name":"counts","kind":"object","optional":false,"children":[{"name":"returned","kind":"integer","optional":false},{"name":"total","kind":"integer","optional":false}]}]}},{"id":"cassettes-enrich-entity-no-related-json","method":"GET","pathTemplate":"/v2/alert/fetch_incidents","summary":"cassettes/enrich_entity_no_related.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"location","kind":"object","optional":false,"children":[{"name":"organization","kind":"string","optional":false,"example":"AS-26496-GO-DADDY-COM-LLC"},{"name":"cidr","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"ip:184.168.221.96/22"},{"name":"name","kind":"string","optional":false,"example":"184.168.221.96/22"},{"name":"type","kind":"string","optional":false,"example":"IpAddress"}]},{"name":"location","kind":"object","optional":false,"children":[{"name":"continent","kind":"string","optional":false,"example":"North America"},{"name":"country","kind":"string","optional":false,"example":"United States"},{"name":"city","kind":"string","optional":false,"example":"None"}]},{"name":"asn","kind":"string","optional":false,"example":"AS26496"}]},{"name":"risk","kind":"object","optional":false,"children":[{"name":"criticalityLabel","kind":"string","optional":false,"example":"Unusual"},{"name":"riskString","kind":"string","optional":false,"example":"8/54"},{"name":"rules","kind":"integer","optional":false},{"name":"criticality","kind":"integer","optional":false},{"name":"riskSummary","kind":"string","optional":false,"example":"8 of 54 Risk Rules currently observed."},{"name":"score","kind":"integer","optional":false},{"name":"evidenceDetails","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"mitigationString","kind":"string","optional":false},{"name":"evidenceString","kind":"email","optional":false},{"name":"rule","kind":"string","optional":false,"example":"Historically Linked to Intrusion Method"},{"name":"criticality","kind":"integer","optional":false},{"name":"timestamp","kind":"timestamp","optional":false,"example":"2019-05-25T00:08:25.000Z","format":"iso"},{"name":"criticalityLabel","kind":"string","optional":false,"example":"Unusual"}]},"minItems":0,"maxItems":3,"pageItems":false}]},{"name":"intelCard","kind":"string","optional":false,"example":"https://app.recordedfuture.com/live/sc/entity/ip%3A184.168.221.96"},{"name":"entity","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"ip:184.168.221.96"},{"name":"name","kind":"ip","optional":false,"example":"184.168.221.96"},{"name":"type","kind":"string","optional":false,"example":"IpAddress"}]},{"name":"metrics","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"defangedSightings"},{"name":"value","kind":"integer","optional":false}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"timestamps","kind":"object","optional":false,"children":[{"name":"lastSeen","kind":"timestamp","optional":false,"example":"2019-09-02T08:57:59.455Z","format":"iso"},{"name":"firstSeen","kind":"timestamp","optional":false,"example":"2013-03-20T05:24:17.816Z","format":"iso"}]},{"name":"threatLists","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}]}},{"id":"cassettes-enrich-entity-related-json","method":"GET","pathTemplate":"/v2/lookup/intelligence","summary":"cassettes/enrich_entity_related.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"location","kind":"object","optional":false,"children":[{"name":"organization","kind":"string","optional":false,"example":"AS-26496-GO-DADDY-COM-LLC"},{"name":"cidr","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"ip:184.168.221.96/22"},{"name":"name","kind":"string","optional":false,"example":"184.168.221.96/22"},{"name":"type","kind":"string","optional":false,"example":"IpAddress"}]},{"name":"location","kind":"object","optional":false,"children":[{"name":"continent","kind":"string","optional":false,"example":"North America"},{"name":"country","kind":"string","optional":false,"example":"United States"},{"name":"city","kind":"string","optional":false,"example":"None"}]},{"name":"asn","kind":"string","optional":false,"example":"AS26496"}]},{"name":"risk","kind":"object","optional":false,"children":[{"name":"criticalityLabel","kind":"string","optional":false,"example":"Unusual"},{"name":"riskString","kind":"string","optional":false,"example":"8/54"},{"name":"rules","kind":"integer","optional":false},{"name":"criticality","kind":"integer","optional":false},{"name":"riskSummary","kind":"string","optional":false,"example":"8 of 54 Risk Rules currently observed."},{"name":"score","kind":"integer","optional":false},{"name":"evidenceDetails","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"mitigationString","kind":"string","optional":false},{"name":"evidenceString","kind":"email","optional":false},{"name":"rule","kind":"string","optional":false,"example":"Historically Linked to Intrusion Method"},{"name":"criticality","kind":"integer","optional":false},{"name":"timestamp","kind":"timestamp","optional":false,"example":"2019-05-25T00:08:25.000Z","format":"iso"},{"name":"criticalityLabel","kind":"string","optional":false,"example":"Unusual"}]},"minItems":0,"maxItems":3,"pageItems":false}]},{"name":"intelCard","kind":"string","optional":false,"example":"https://app.recordedfuture.com/live/sc/entity/ip%3A184.168.221.96"},{"name":"entity","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"ip:184.168.221.96"},{"name":"name","kind":"ip","optional":false,"example":"184.168.221.96"},{"name":"type","kind":"string","optional":false,"example":"IpAddress"}]},{"name":"metrics","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"defangedSightings"},{"name":"value","kind":"integer","optional":false}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"relatedEntities","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"entities","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"count","kind":"string","optional":false,"example":"nested"},{"name":"entity","kind":"string","optional":false,"example":"nested"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"type","kind":"string","optional":false,"example":"RelatedMalwareCategory"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"timestamps","kind":"object","optional":false,"children":[{"name":"lastSeen","kind":"timestamp","optional":false,"example":"2019-09-02T08:57:59.455Z","format":"iso"},{"name":"firstSeen","kind":"timestamp","optional":false,"example":"2013-03-20T05:24:17.816Z","format":"iso"}]},{"name":"threatLists","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}]}},{"id":"cassettes-entity-raw-response-no-related-json","method":"GET","pathTemplate":"/v2/lookup/reputation","summary":"cassettes/entity_raw_response_no_related.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"location","kind":"object","optional":false,"children":[{"name":"organization","kind":"string","optional":false,"example":"AS-26496-GO-DADDY-COM-LLC"},{"name":"cidr","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"ip:184.168.221.96/22"},{"name":"name","kind":"string","optional":false,"example":"184.168.221.96/22"},{"name":"type","kind":"string","optional":false,"example":"IpAddress"}]},{"name":"location","kind":"object","optional":false,"children":[{"name":"continent","kind":"string","optional":false,"example":"North America"},{"name":"country","kind":"string","optional":false,"example":"United States"},{"name":"city","kind":"string","optional":false,"example":"None"}]},{"name":"asn","kind":"string","optional":false,"example":"AS26496"}]},{"name":"risk","kind":"object","optional":false,"children":[{"name":"criticalityLabel","kind":"string","optional":false,"example":"Unusual"},{"name":"riskString","kind":"string","optional":false,"example":"8/54"},{"name":"rules","kind":"integer","optional":false},{"name":"criticality","kind":"integer","optional":false},{"name":"riskSummary","kind":"string","optional":false,"example":"8 of 54 Risk Rules currently observed."},{"name":"score","kind":"integer","optional":false},{"name":"evidenceDetails","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"mitigationString","kind":"string","optional":false},{"name":"evidenceString","kind":"email","optional":false},{"name":"rule","kind":"string","optional":false,"example":"Historically Linked to Intrusion Method"},{"name":"criticality","kind":"integer","optional":false},{"name":"timestamp","kind":"timestamp","optional":false,"example":"2019-05-25T00:08:25.000Z","format":"iso"},{"name":"criticalityLabel","kind":"string","optional":false,"example":"Unusual"}]},"minItems":0,"maxItems":3,"pageItems":false}]},{"name":"intelCard","kind":"string","optional":false,"example":"https://app.recordedfuture.com/live/sc/entity/ip%3A184.168.221.96"},{"name":"entity","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"ip:184.168.221.96"},{"name":"name","kind":"ip","optional":false,"example":"184.168.221.96"},{"name":"type","kind":"string","optional":false,"example":"IpAddress"}]},{"name":"metrics","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"defangedSightings"},{"name":"value","kind":"integer","optional":false}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"timestamps","kind":"object","optional":false,"children":[{"name":"lastSeen","kind":"timestamp","optional":false,"example":"2019-09-02T08:57:59.455Z","format":"iso"},{"name":"firstSeen","kind":"timestamp","optional":false,"example":"2013-03-20T05:24:17.816Z","format":"iso"}]},{"name":"threatLists","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}]}},{"id":"cassettes-entity-raw-response-related-json","method":"GET","pathTemplate":"/v2/alert/set_status","summary":"cassettes/entity_raw_response_related.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"location","kind":"object","optional":false,"children":[{"name":"organization","kind":"string","optional":false,"example":"AS-26496-GO-DADDY-COM-LLC"},{"name":"cidr","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"ip:184.168.221.96/22"},{"name":"name","kind":"string","optional":false,"example":"184.168.221.96/22"},{"name":"type","kind":"string","optional":false,"example":"IpAddress"}]},{"name":"location","kind":"object","optional":false,"children":[{"name":"continent","kind":"string","optional":false,"example":"North America"},{"name":"country","kind":"string","optional":false,"example":"United States"},{"name":"city","kind":"string","optional":false,"example":"None"}]},{"name":"asn","kind":"string","optional":false,"example":"AS26496"}]},{"name":"risk","kind":"object","optional":false,"children":[{"name":"criticalityLabel","kind":"string","optional":false,"example":"Unusual"},{"name":"riskString","kind":"string","optional":false,"example":"8/54"},{"name":"rules","kind":"integer","optional":false},{"name":"criticality","kind":"integer","optional":false},{"name":"riskSummary","kind":"string","optional":false,"example":"8 of 54 Risk Rules currently observed."},{"name":"score","kind":"integer","optional":false},{"name":"evidenceDetails","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"mitigationString","kind":"string","optional":false},{"name":"evidenceString","kind":"email","optional":false},{"name":"rule","kind":"string","optional":false,"example":"Historically Linked to Intrusion Method"},{"name":"criticality","kind":"integer","optional":false},{"name":"timestamp","kind":"timestamp","optional":false,"example":"2019-05-25T00:08:25.000Z","format":"iso"},{"name":"criticalityLabel","kind":"string","optional":false,"example":"Unusual"}]},"minItems":0,"maxItems":3,"pageItems":false}]},{"name":"intelCard","kind":"string","optional":false,"example":"https://app.recordedfuture.com/live/sc/entity/ip%3A184.168.221.96"},{"name":"entity","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"ip:184.168.221.96"},{"name":"name","kind":"ip","optional":false,"example":"184.168.221.96"},{"name":"type","kind":"string","optional":false,"example":"IpAddress"}]},{"name":"metrics","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"defangedSightings"},{"name":"value","kind":"integer","optional":false}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"relatedEntities","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"entities","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"count","kind":"string","optional":false,"example":"nested"},{"name":"entity","kind":"string","optional":false,"example":"nested"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"type","kind":"string","optional":false,"example":"RelatedMalwareCategory"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"timestamps","kind":"object","optional":false,"children":[{"name":"lastSeen","kind":"timestamp","optional":false,"example":"2019-09-02T08:57:59.455Z","format":"iso"},{"name":"firstSeen","kind":"timestamp","optional":false,"example":"2013-03-20T05:24:17.816Z","format":"iso"}]},{"name":"threatLists","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "recordedfuture-recordedfuture",
+  "name": "Recorded Future v2",
+  "pack": "RecordedFuture",
+  "vendor": "Recorded Future",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "IP risk lookup. data.risk.score and criticalityLabel.",
+  "notes": [
+    "The client calls /v2/lookup/reputation. The public v2 IP risk body is { data: { risk } }. This mock returns that object.",
+    "Evidence details and related entities are omitted.",
+    "X-RFToken is required. The API portal was not reloaded in this pass; the path is the public client."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/RecordedFuture/Integrations/RecordedFuture",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "recordedfuture-recordedfuture",
+      "name": "Recorded Future v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://api.recordedfuture.com/v2/",
+      "notes": [
+        "The client calls /v2/lookup/reputation. The public v2 IP risk body is { data: { risk } }. This mock returns that object.",
+        "Evidence details and related entities are omitted.",
+        "X-RFToken is required. The API portal was not reloaded in this pass; the path is the public client."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://api.recordedfuture.com/v2/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client calls /v2/lookup/reputation. The public v2 IP risk body is { data: { risk } }. This mock returns that object.",
+          "Evidence details and related entities are omitted.",
+          "X-RFToken is required. The API portal was not reloaded in this pass; the path is the public client."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "ip-risk",
+        "method": "GET",
+        "pathTemplate": "/v2/ip/{ip}",
+        "summary": "IP risk",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "entity",
+                  "kind": "ip"
+                },
+                {
+                  "name": "risk",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "score",
+                      "kind": "integer"
+                    },
+                    {
+                      "name": "criticalityLabel",
+                      "kind": "enum",
+                      "enumValues": [
+                        "None",
+                        "Unusual",
+                        "Suspicious",
+                        "Malicious"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "recordedfuture-recordedfuture",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "X-RFToken",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

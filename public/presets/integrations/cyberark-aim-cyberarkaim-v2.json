@@ -1,1 +1,129 @@
-{"id":"cyberark-aim-cyberarkaim-v2","name":"CyberArk AIM v2","pack":"cyberark_AIM","fidelity":"shape","curated":false,"summary":"The CyberArk Application Identity Manager (AIM) provides a secure safe in which to store your account credentials. Use this integration to retrieve the account credentials in Cyber","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"cyberark-aim-cyberarkaim-v2","name":"CyberArk AIM v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/cyberark_AIM/Integrations/CyberArkAIM_v2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"cyberark-aim-list-credentials","method":"GET","pathTemplate":"/AIMWebService/api/Accounts","summary":"Lists all available credentials according to the list of credential names configured.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CyberArkAIM","kind":"object","optional":false,"children":[{"name":"AccountType","kind":"string","optional":false,"example":"AccountType"},{"name":"Address","kind":"string","optional":false,"example":"Address"},{"name":"CPMStatus","kind":"string","optional":false,"example":"CPMStatus"},{"name":"Domain","kind":"string","optional":false,"example":"Domain"},{"name":"Name","kind":"string","optional":false,"example":"Name"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "cyberark-aim-cyberarkaim-v2",
+  "name": "CyberArk AIM v2",
+  "pack": "CyberArk_AIM",
+  "vendor": "CyberArk",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Central Credential Provider account fetch.",
+  "notes": [
+    "GET /AIMWebService/api/Accounts returns Content, UserName, Address, Safe, and Folder.",
+    "AppID, Safe, and Object query parameters are not checked.",
+    "The response is a single account, not a page."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CyberArk_AIM/Integrations/CyberArkAIM_v2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "cyberark-aim-cyberarkaim-v2",
+      "name": "CyberArk AIM v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://docs.cyberark.com/credential-providers/latest/en/content/ccp/calling-the-web-service-using-rest.htm",
+      "notes": [
+        "GET /AIMWebService/api/Accounts returns Content, UserName, Address, Safe, and Folder.",
+        "AppID, Safe, and Object query parameters are not checked.",
+        "The response is a single account, not a page."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.cyberark.com/credential-providers/latest/en/content/ccp/calling-the-web-service-using-rest.htm",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /AIMWebService/api/Accounts returns Content, UserName, Address, Safe, and Folder.",
+          "AppID, Safe, and Object query parameters are not checked.",
+          "The response is a single account, not a page."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-account",
+        "method": "GET",
+        "pathTemplate": "/AIMWebService/api/Accounts",
+        "summary": "Get an account password",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "account",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Content",
+              "kind": "const",
+              "constValue": "dummy-not-a-real-password"
+            },
+            {
+              "name": "UserName",
+              "kind": "const",
+              "constValue": "lab"
+            },
+            {
+              "name": "Address",
+              "kind": "const",
+              "constValue": "lab-host"
+            },
+            {
+              "name": "Safe",
+              "kind": "const",
+              "constValue": "Lab"
+            },
+            {
+              "name": "Folder",
+              "kind": "const",
+              "constValue": "Root"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "cyberark-aim-cyberarkaim-v2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

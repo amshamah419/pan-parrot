@@ -1,1 +1,135 @@
-{"id":"threatq-threatq-v2","name":"ThreatQ v2","pack":"ThreatQ","fidelity":"shape","curated":false,"summary":"A threat intelligence platform that collects and interprets intelligence data from open sources and manages indicator scoring, types, and attributes.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"threatq-threatq-v2","name":"ThreatQ v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/ThreatQ/Integrations/ThreatQ_v2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"threatq-search-by-name","method":"POST","pathTemplate":"/token","summary":"Searches for objects by name in the ThreatQ repository.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ThreatQ","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Value","kind":"string","optional":false,"example":"Value"}]},{"name":"Event","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Title","kind":"string","optional":false,"example":"Title"}]},{"name":"Adversary","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"}]}]}]}},{"id":"ip","method":"GET","pathTemplate":"/","summary":"Checks the reputation of an IP address in ThreatQ.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Score","kind":"number","optional":false}]},{"name":"IP","kind":"object","optional":false,"children":[{"name":"Address","kind":"string","optional":false,"example":"Address"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"ThreatQ","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Source","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"}]},{"name":"Attribute","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Name","kind":"string","optional":false,"example":"Name"}]},{"name":"CreatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"UpdatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"TQScore","kind":"number","optional":false},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}]}},{"id":"url","method":"GET","pathTemplate":"/","summary":"Checks the reputation of a URL in ThreatQ.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Score","kind":"number","optional":false}]},{"name":"URL","kind":"object","optional":false,"children":[{"name":"Data","kind":"string","optional":false,"example":"Data"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"ThreatQ","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Source","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"}]},{"name":"Attribute","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Name","kind":"string","optional":false,"example":"Name"}]},{"name":"CreatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"UpdatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"TQScore","kind":"number","optional":false},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}]}},{"id":"file","method":"GET","pathTemplate":"/","summary":"Checks the reputation of a file in ThreatQ.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Score","kind":"number","optional":false}]},{"name":"File","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"MD5","kind":"string","optional":false,"example":"MD5"},{"name":"SHA1","kind":"string","optional":false,"example":"SHA1"},{"name":"SHA256","kind":"string","optional":false,"example":"SHA256"},{"name":"SHA512","kind":"string","optional":false,"example":"SHA512"},{"name":"Path","kind":"string","optional":false,"example":"Path"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"ThreatQ","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Source","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"}]},{"name":"Attribute","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Name","kind":"string","optional":false,"example":"Name"}]},{"name":"CreatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"UpdatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"TQScore","kind":"number","optional":false},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}]}},{"id":"email","method":"GET","pathTemplate":"/","summary":"Checks the reputation of an email in ThreatQ.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Score","kind":"number","optional":false}]},{"name":"Account","kind":"object","optional":false,"children":[{"name":"Email","kind":"object","optional":false,"children":[{"name":"Address","kind":"string","optional":false,"example":"Address"}]},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"ThreatQ","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Source","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"}]},{"name":"Attribute","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Name","kind":"string","optional":false,"example":"Name"}]},{"name":"CreatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"UpdatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"TQScore","kind":"number","optional":false},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}]}},{"id":"domain","method":"GET","pathTemplate":"/","summary":"Checks the reputation of a domain in ThreatQ.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Score","kind":"number","optional":false}]},{"name":"Domain","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"ThreatQ","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Source","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"}]},{"name":"Attribute","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Name","kind":"string","optional":false,"example":"Name"}]},{"name":"CreatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"UpdatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"TQScore","kind":"number","optional":false},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "threatq-threatq-v2",
+  "name": "ThreatQ v2",
+  "pack": "ThreatQ",
+  "vendor": "ThreatQuotient",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Indicator search. data[] from /api/indicators.",
+  "notes": [
+    "ThreatQ API docs require a customer login. GET /api/indicators is the public client path and returns { data }.",
+    "Each indicator keeps id, value, type, and status.",
+    "POST /api/token is not modeled. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ThreatQ/Integrations/ThreatQ_v2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "threatq-threatq-v2",
+      "name": "ThreatQ v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ThreatQ/Integrations/ThreatQ_v2",
+      "notes": [
+        "ThreatQ API docs require a customer login. GET /api/indicators is the public client path and returns { data }.",
+        "Each indicator keeps id, value, type, and status.",
+        "POST /api/token is not modeled. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/ThreatQ/Integrations/ThreatQ_v2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "ThreatQ API docs require a customer login. GET /api/indicators is the public client path and returns { data }.",
+          "Each indicator keeps id, value, type, and status.",
+          "POST /api/token is not modeled. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-indicators",
+        "method": "GET",
+        "pathTemplate": "/api/indicators",
+        "summary": "List indicators",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "data"
+        },
+        "record": {
+          "name": "indicator",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "value",
+              "kind": "ip"
+            },
+            {
+              "name": "type",
+              "kind": "enum",
+              "enumValues": [
+                "IP Address",
+                "FQDN",
+                "URL",
+                "MD5"
+              ]
+            },
+            {
+              "name": "status",
+              "kind": "enum",
+              "enumValues": [
+                "Active",
+                "Expired",
+                "Review"
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "threatq-threatq-v2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

@@ -64,7 +64,7 @@ await writeFile(indexPath, `${JSON.stringify(index)}\n`);
 const lines = [
   "# Preset verification",
   "",
-  "Checked against public vendor API references. Rows through 2026-11-09 use the vendor page. The 2026-11-10 fetch-incidents batch says in the notes when that page was login-gated or not reloaded, and then the shape is the integration test fixture plus the public client in demisto/content. The other catalog entries stay inferred and are not marked verified.",
+  "Checked against public vendor API references. The 2026-11-10 batches cover fetch-incidents, threat-intel reputation, and ITSM or IAM. Notes say when a vendor page was login-gated or not reloaded. Those shapes use the integration test fixture plus the public client in demisto/content. The other catalog entries stay inferred and are not marked verified.",
   "",
   "| Preset | Status | Doc | Notes |",
   "| --- | --- | --- | --- |",

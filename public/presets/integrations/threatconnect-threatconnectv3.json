@@ -1,1 +1,134 @@
-{"id":"threatconnect-threatconnectv3","name":"ThreatConnect v3","pack":"ThreatConnect","fidelity":"sample","curated":false,"summary":"ThreatConnect's integration is a intelligence-driven security operations solution with intelligence, automation, analytics, and workflows.","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"threatconnect-threatconnectv3","name":"ThreatConnect v3","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/ThreatConnect/Integrations/ThreatConnectV3","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-assets-json","method":"GET","pathTemplate":"/api/v3/groups/{document_id}/download","summary":"test_data/assets.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"Phone"},{"name":"victimId","kind":"integer","optional":false},{"name":"phone","kind":"string","optional":true,"example":"111111"},{"name":"webLink","kind":"string","optional":false,"example":"link?victim=672"},{"name":"address","kind":"string","optional":true,"example":"buug"},{"name":"accountName","kind":"string","optional":true,"example":"def"},{"name":"socialNetwork","kind":"string","optional":true,"example":"bj"},{"name":"networkType","kind":"string","optional":true,"example":"tpb"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "threatconnect-threatconnectv3",
+  "name": "ThreatConnect v3",
+  "pack": "ThreatConnect",
+  "vendor": "ThreatConnect",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Indicator list. data[] from /api/v3/indicators.",
+  "notes": [
+    "GET /api/v3/indicators returns { data }. Each indicator keeps id, summary, and type.",
+    "HMAC request signing is not checked. A bearer token stands in for it.",
+    "Owners, groups, and victims are not modeled."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ThreatConnect/Integrations/ThreatConnectv3",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "threatconnect-threatconnectv3",
+      "name": "ThreatConnect v3",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://docs.threatconnect.com/en/latest/rest_api/v3/indicators/indicators.html",
+      "notes": [
+        "GET /api/v3/indicators returns { data }. Each indicator keeps id, summary, and type.",
+        "HMAC request signing is not checked. A bearer token stands in for it.",
+        "Owners, groups, and victims are not modeled."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.threatconnect.com/en/latest/rest_api/v3/indicators/indicators.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /api/v3/indicators returns { data }. Each indicator keeps id, summary, and type.",
+          "HMAC request signing is not checked. A bearer token stands in for it.",
+          "Owners, groups, and victims are not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-indicators",
+        "method": "GET",
+        "pathTemplate": "/api/v3/indicators",
+        "summary": "List indicators",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "data"
+        },
+        "record": {
+          "name": "indicator",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "summary",
+              "kind": "ip"
+            },
+            {
+              "name": "type",
+              "kind": "enum",
+              "enumValues": [
+                "Address",
+                "Host",
+                "URL",
+                "File"
+              ]
+            },
+            {
+              "name": "rating",
+              "kind": "integer"
+            },
+            {
+              "name": "confidence",
+              "kind": "integer"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "threatconnect-threatconnectv3",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}
