@@ -54,6 +54,8 @@ A single response is capped at 500 records and 2 MB. Larger pulls use `limit` an
 
 Regenerate the XSOAR catalog with `npm run presets:import -- --content /path/to/demisto/content`. See `public/presets/COVERAGE.md` and `public/presets/ATTRIBUTION.md`.
 
+Total coverage: 952 of 3300 commands from vendor docs, 412 approximate, 1936 missing. That is the sum across 129 integrations whose presets record command coverage. Presets without command coverage are not in this total. The same line is on the admin Health page.
+
 ## Auth model
 
 There are no passwords. `POST /api/auth/request` emails an 8-digit code and a confirm link. The link only loads a page; sign-in finishes with `POST /api/auth/verify`. The session cookie is `HttpOnly`, `SameSite=Lax`, `Secure` in production, and scoped to `/api` so a mock response on `/catch/*` cannot use it.

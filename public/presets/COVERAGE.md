@@ -1,5 +1,7 @@
 # Preset coverage
 
+Total coverage: 952 of 3300 commands from vendor docs, 412 approximate, 1936 missing. That is the sum across 129 integrations whose presets record command coverage. Presets without command coverage are not in this total.
+
 Generated 2026-11-09T20:40:01.252Z from a local checkout of [demisto/content](https://github.com/demisto/content) (MIT).
 
 | | |
