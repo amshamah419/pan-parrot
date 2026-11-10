@@ -64,7 +64,7 @@ await writeFile(indexPath, `${JSON.stringify(index)}\n`);
 const lines = [
   "# Preset verification",
   "",
-  "Checked against public vendor API references. The 2026-11-10 batches cover fetch-incidents, threat-intel reputation, ITSM and IAM, and EDR or cloud response actions. Notes say when a vendor page was login-gated or not reloaded. Those shapes use the public client in demisto/content and, when one exists, the integration test fixture. The other catalog entries stay inferred and are not marked verified.",
+  "Checked against public vendor API references. The 2026-11-10 batches cover fetch-incidents, threat-intel reputation, ITSM and IAM, and EDR or cloud response actions. EC2 DescribeInstances and IAM ListUsers return query-protocol XML (Action=, namespace, RequestId, and NextToken or Marker). Notes say when a vendor page was login-gated or not reloaded. Those shapes use the public client in demisto/content and, when one exists, the integration test fixture. The other catalog entries stay inferred and are not marked verified.",
   "",
   "| Preset | Status | Doc | Notes |",
   "| --- | --- | --- | --- |",

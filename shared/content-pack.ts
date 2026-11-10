@@ -157,6 +157,8 @@ function unwrapResponse(operation: MockOperation, value: unknown): unknown {
   if ((envelope.type === "wrapped" || envelope.type === "token-page") && Array.isArray(record[envelope.arrayKey])) {
     return record[envelope.arrayKey][0];
   }
+  if (envelope.type === "falcon" && Array.isArray(record.resources)) return record.resources[0];
+  if (envelope.type === "slack" && Array.isArray(record.messages)) return record.messages[0];
   return value;
 }
 

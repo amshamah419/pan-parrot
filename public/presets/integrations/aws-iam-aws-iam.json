@@ -5,11 +5,11 @@
   "vendor": "Amazon Web Services",
   "fidelity": "verified",
   "curated": true,
-  "summary": "ListUsers. UserName, UserId, and Arn.",
+  "summary": "ListUsers as IAM query-protocol XML.",
   "notes": [
-    "IAM's query protocol is XML. This mock is POST / with X-Amz-Target IAM.ListUsers and returns JSON { Users }.",
-    "Access keys and policies are omitted.",
-    "SigV4 is not checked."
+    "boto3 ListUsers is the IAM query protocol. POST / matches Action=ListUsers from the form body or the query string and returns ListUsersResponse XML in the namespace https://iam.amazonaws.com/doc/2010-05-08/.",
+    "ListUsersResult/Users/member includes Path, UserName, UserId, Arn, and CreateDate. IsTruncated and Marker page with MaxItems. ResponseMetadata/RequestId is present.",
+    "Access keys and policies are omitted. The Marker is pp_ plus a base36 index. Version is not checked. SigV4 is not checked."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-IAM/Integrations/AWS-IAM",
@@ -23,18 +23,18 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUsers.html",
       "notes": [
-        "IAM's query protocol is XML. This mock is POST / with X-Amz-Target IAM.ListUsers and returns JSON { Users }.",
-        "Access keys and policies are omitted.",
-        "SigV4 is not checked."
+        "boto3 ListUsers is the IAM query protocol. POST / matches Action=ListUsers from the form body or the query string and returns ListUsersResponse XML in the namespace https://iam.amazonaws.com/doc/2010-05-08/.",
+        "ListUsersResult/Users/member includes Path, UserName, UserId, Arn, and CreateDate. IsTruncated and Marker page with MaxItems. ResponseMetadata/RequestId is present.",
+        "Access keys and policies are omitted. The Marker is pp_ plus a base36 index. Version is not checked. SigV4 is not checked."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUsers.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "IAM's query protocol is XML. This mock is POST / with X-Amz-Target IAM.ListUsers and returns JSON { Users }.",
-          "Access keys and policies are omitted.",
-          "SigV4 is not checked."
+          "boto3 ListUsers is the IAM query protocol. POST / matches Action=ListUsers from the form body or the query string and returns ListUsersResponse XML in the namespace https://iam.amazonaws.com/doc/2010-05-08/.",
+          "ListUsersResult/Users/member includes Path, UserName, UserId, Arn, and CreateDate. IsTruncated and Marker page with MaxItems. ResponseMetadata/RequestId is present.",
+          "Access keys and policies are omitted. The Marker is pp_ plus a base36 index. Version is not checked. SigV4 is not checked."
         ]
       }
     },
@@ -47,24 +47,38 @@
         "status": 200,
         "list": true,
         "envelope": {
-          "type": "wrapped",
-          "arrayKey": "Users"
+          "type": "aws-query",
+          "protocol": "query",
+          "action": "ListUsers",
+          "namespace": "https://iam.amazonaws.com/doc/2010-05-08/",
+          "listElement": "Users",
+          "itemElement": "member",
+          "paging": "marker"
         },
-        "headerMatch": {
-          "x-amz-target": "IAM.ListUsers"
+        "queryMatch": {
+          "Action": "ListUsers"
         },
         "record": {
           "name": "user",
           "kind": "object",
           "children": [
             {
-              "name": "UserName",
-              "kind": "string",
-              "example": "jsmith"
-            },
-            {
               "name": "UserId",
               "kind": "id"
+            },
+            {
+              "name": "Path",
+              "kind": "const",
+              "constValue": "/"
+            },
+            {
+              "name": "UserName",
+              "kind": "enum",
+              "enumValues": [
+                "jsmith",
+                "ada",
+                "bob"
+              ]
             },
             {
               "name": "Arn",
@@ -78,7 +92,7 @@
           ]
         },
         "headers": {},
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "text/xml; charset=utf-8",
         "pagination": {
           "style": "cursor",
           "limitParam": "MaxItems",
@@ -86,7 +100,7 @@
           "pageParam": "page",
           "cursorParam": "Marker",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
         }
       }
     ],

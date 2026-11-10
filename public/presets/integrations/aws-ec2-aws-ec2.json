@@ -5,11 +5,11 @@
   "vendor": "Amazon Web Services",
   "fidelity": "verified",
   "curated": true,
-  "summary": "DescribeInstances. Reservations and Instances.",
+  "summary": "DescribeInstances as EC2 query-protocol XML.",
   "notes": [
-    "boto3 uses the EC2 query protocol, which is XML. This mock is POST / with X-Amz-Target AmazonEC2.DescribeInstances and returns JSON { Reservations: [{ Instances }] }.",
-    "Network interfaces, tags, and block devices are omitted.",
-    "SigV4 is not checked."
+    "boto3 DescribeInstances is the EC2 query protocol. POST / matches Action=DescribeInstances from the form body or the query string and returns DescribeInstancesResponse XML in the namespace http://ec2.amazonaws.com/doc/2016-11-15/.",
+    "reservationSet/item/instancesSet/item includes instanceId, imageId, instanceType, instanceState, launchTime, and placement. requestId is a sibling. MaxResults pages the catalog. The next page token is nextToken and is sent back as NextToken.",
+    "Network interfaces, tags, and block devices are omitted. The token is pp_ plus a base36 index, which boto3 sends back unchanged. Version is not checked. SigV4 is not checked."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-EC2/Integrations/AWS-EC2",
@@ -23,18 +23,18 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html",
       "notes": [
-        "boto3 uses the EC2 query protocol, which is XML. This mock is POST / with X-Amz-Target AmazonEC2.DescribeInstances and returns JSON { Reservations: [{ Instances }] }.",
-        "Network interfaces, tags, and block devices are omitted.",
-        "SigV4 is not checked."
+        "boto3 DescribeInstances is the EC2 query protocol. POST / matches Action=DescribeInstances from the form body or the query string and returns DescribeInstancesResponse XML in the namespace http://ec2.amazonaws.com/doc/2016-11-15/.",
+        "reservationSet/item/instancesSet/item includes instanceId, imageId, instanceType, instanceState, launchTime, and placement. requestId is a sibling. MaxResults pages the catalog. The next page token is nextToken and is sent back as NextToken.",
+        "Network interfaces, tags, and block devices are omitted. The token is pp_ plus a base36 index, which boto3 sends back unchanged. Version is not checked. SigV4 is not checked."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "boto3 uses the EC2 query protocol, which is XML. This mock is POST / with X-Amz-Target AmazonEC2.DescribeInstances and returns JSON { Reservations: [{ Instances }] }.",
-          "Network interfaces, tags, and block devices are omitted.",
-          "SigV4 is not checked."
+          "boto3 DescribeInstances is the EC2 query protocol. POST / matches Action=DescribeInstances from the form body or the query string and returns DescribeInstancesResponse XML in the namespace http://ec2.amazonaws.com/doc/2016-11-15/.",
+          "reservationSet/item/instancesSet/item includes instanceId, imageId, instanceType, instanceState, launchTime, and placement. requestId is a sibling. MaxResults pages the catalog. The next page token is nextToken and is sent back as NextToken.",
+          "Network interfaces, tags, and block devices are omitted. The token is pp_ plus a base36 index, which boto3 sends back unchanged. Version is not checked. SigV4 is not checked."
         ]
       }
     },
@@ -47,22 +47,32 @@
         "status": 200,
         "list": true,
         "envelope": {
-          "type": "wrapped",
-          "arrayKey": "Reservations"
+          "type": "aws-query",
+          "protocol": "ec2",
+          "action": "DescribeInstances",
+          "namespace": "http://ec2.amazonaws.com/doc/2016-11-15/",
+          "listElement": "reservationSet",
+          "itemElement": "item",
+          "paging": "nextToken"
         },
-        "headerMatch": {
-          "x-amz-target": "AmazonEC2.DescribeInstances"
+        "queryMatch": {
+          "Action": "DescribeInstances"
         },
         "record": {
           "name": "reservation",
           "kind": "object",
           "children": [
             {
-              "name": "ReservationId",
+              "name": "reservationId",
               "kind": "id"
             },
             {
-              "name": "Instances",
+              "name": "ownerId",
+              "kind": "const",
+              "constValue": "123456789012"
+            },
+            {
+              "name": "instancesSet",
               "kind": "array",
               "minItems": 1,
               "maxItems": 1,
@@ -71,18 +81,49 @@
                 "kind": "object",
                 "children": [
                   {
-                    "name": "InstanceId",
+                    "name": "instanceId",
                     "kind": "id"
                   },
                   {
-                    "name": "InstanceType",
+                    "name": "imageId",
+                    "kind": "const",
+                    "constValue": "ami-0abcdef1234567890"
+                  },
+                  {
+                    "name": "instanceState",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "code",
+                        "kind": "const",
+                        "constValue": 16
+                      },
+                      {
+                        "name": "name",
+                        "kind": "const",
+                        "constValue": "running"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "instanceType",
                     "kind": "const",
                     "constValue": "t3.micro"
                   },
                   {
-                    "name": "State",
-                    "kind": "const",
-                    "constValue": "running"
+                    "name": "launchTime",
+                    "kind": "timestamp"
+                  },
+                  {
+                    "name": "placement",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "availabilityZone",
+                        "kind": "const",
+                        "constValue": "us-east-1a"
+                      }
+                    ]
                   }
                 ]
               }
@@ -90,15 +131,15 @@
           ]
         },
         "headers": {},
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "text/xml; charset=utf-8",
         "pagination": {
-          "style": "none",
-          "limitParam": "limit",
+          "style": "cursor",
+          "limitParam": "MaxResults",
           "offsetParam": "offset",
           "pageParam": "page",
-          "cursorParam": "cursor",
+          "cursorParam": "NextToken",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
         }
       }
     ],
