@@ -4,6 +4,7 @@ import { drizzle } from "drizzle-orm/pglite";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import * as schema from "../db/schema";
 import type { AppDb } from "../db/client";
+import { SIGN_IN_MESSAGE } from "./auth";
 import { createServer } from "./app";
 import { bootstrapAdminEmails } from "./config";
 import { applySqlMigrations } from "./test/migrate";
@@ -167,13 +168,19 @@ describe("admin health, people, and invites", () => {
       headers: { "content-type": "application/json", "x-forwarded-for": "203.0.113.50" },
       body: JSON.stringify({ email: "stranger.invite@paloaltonetworks.com" }),
     });
-    expect(stranger.status).toBe(403);
+    expect(stranger.status).toBe(200);
+    const strangerBody = await stranger.json();
+    expect(strangerBody.message).toBe(SIGN_IN_MESSAGE);
+    expect(strangerBody.devCode).toBeUndefined();
     const founder = await app.request("/api/auth/request", {
       method: "POST",
       headers: { "content-type": "application/json", "x-forwarded-for": "203.0.113.51" },
       body: JSON.stringify({ email: "ashamah@paloaltonetworks.com" }),
     });
     expect(founder.status).toBe(200);
+    const founderBody = await founder.json();
+    expect(founderBody.message).toBe(strangerBody.message);
+    expect(founderBody.devCode).toMatch(/^\d{8}$/);
 
     const link = new URL(payload.devLinks[0].url);
     const accepted = await app.request("/api/auth/invite", {

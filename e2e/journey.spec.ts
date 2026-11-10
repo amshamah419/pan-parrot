@@ -62,7 +62,9 @@ async function signIn(page: Page, email: string) {
   await page.goto("/login");
   await page.getByLabel("Email").fill(email);
   await page.getByRole("button", { name: "Email me a code" }).click();
-  const code = (await page.locator("code").first().innerText()).trim();
+  const codeEl = page.locator("#dev-code");
+  await expect(codeEl).toHaveText(/^\d{8}$/);
+  const code = (await codeEl.innerText()).trim();
   await page.getByLabel("8-digit code").fill(code);
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Mocks" })).toBeVisible();
@@ -81,15 +83,16 @@ function eventIds(body: string): string[] {
     .map((line) => JSON.parse(line).httpMessage.requestId as string);
 }
 
-test("home, login, and the catalog dialog fit a phone", async ({ page }) => {
+test("a stranger only sees the sign-in page", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /Mock the APIs your content pack calls/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Read the docs" })).toBeVisible();
-  await noSideScroll(page);
-  await page.goto("/login");
   await expect(page.getByRole("heading", { name: "Sign in to PAN Parrot" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Read the docs" })).toHaveCount(0);
+  await expect(page.getByText("Integration catalog")).toHaveCount(0);
   await noSideScroll(page);
+  const missing = await page.goto("/docs");
+  expect(missing?.status()).toBe(404);
+  await expect(page.getByText("Not found")).toBeVisible();
 });
 
 test("a new content developer can mock, load-test, and share", async ({ page, browser }) => {
@@ -97,8 +100,6 @@ test("a new content developer can mock, load-test, and share", async ({ page, br
   const email = `ux.${stamp}@paloaltonetworks.com`;
   const friend = `ux.friend.${stamp}@paloaltonetworks.com`;
 
-  await page.goto("/");
-  await page.getByRole("link", { name: "Sign in" }).first().click();
   await signIn(page, email);
 
   await expect(page.getByText("Make a catch URL in under a minute")).toBeVisible();
@@ -242,6 +243,28 @@ test("an admin can read health and send an invite", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await noSideScroll(page);
   await page.screenshot({ path: "test-results/admin-invites-mobile.png", fullPage: true });
+});
+
+test("an invite link signs in through the public page", async ({ page, browser }) => {
+  await signIn(page, "ashamah@paloaltonetworks.com");
+  const invitee = `e2e.gate.${Date.now().toString(36)}@paloaltonetworks.com`;
+  const sent = await page.request.post("/api/admin/invites", { data: { emails: [invitee] } });
+  expect(sent.ok()).toBeTruthy();
+  const payload = await sent.json();
+  const link = new URL(payload.devLinks[0].url);
+  const guest = await browser.newContext();
+  const guestPage = await guest.newPage();
+  await guestPage.goto("/login?invite=not-a-real-invite");
+  await expect(guestPage.getByRole("heading", { name: "Sign in to PAN Parrot" })).toBeVisible();
+  await expect(guestPage.getByText("Integration catalog")).toHaveCount(0);
+  await guestPage.getByRole("button", { name: "Confirm and continue" }).click();
+  await expect(guestPage.getByRole("alert")).toHaveText("Invalid or expired code");
+  await expect(guestPage.getByRole("heading", { name: "Mocks" })).toHaveCount(0);
+  await guestPage.goto(`${link.pathname}${link.search}`);
+  await expect(guestPage.getByText("Integration catalog")).toHaveCount(0);
+  await guestPage.getByRole("button", { name: "Confirm and continue" }).click();
+  await expect(guestPage.getByRole("heading", { name: "Mocks" })).toBeVisible();
+  await guest.close();
 });
 
 test("dark mode follows the system and the request log can be searched", async ({ page }) => {

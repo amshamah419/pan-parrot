@@ -8,6 +8,7 @@ import {
 } from "../db/schema";
 import { maxRequestsPerEndpoint, maxRequestsPerUser, retentionDays } from "./config";
 import { trimHealth } from "./health";
+import { trimStrikes } from "./strikes";
 
 export async function trimEndpoint(
   db: AppDb,
@@ -94,6 +95,7 @@ export async function runMaintenance(db: AppDb): Promise<{
 
   const now = new Date();
   await trimHealth(db);
+  await trimStrikes(db);
   await db.delete(sessions).where(lt(sessions.expiresAt, now));
   await db.delete(loginChallenges).where(lt(loginChallenges.expiresAt, now));
   const rateCutoff = new Date(now.getTime() - 24 * 60 * 60 * 1000);

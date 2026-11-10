@@ -10,6 +10,7 @@ const SENSITIVE_REQUEST_HEADERS = new Set([
   "x-csrf-token",
   "x-forwarded-authorization",
   "x-amz-security-token",
+  "x-pan-parrot-lock",
 ]);
 
 const BLOCKED_MOCK_HEADERS = new Set([

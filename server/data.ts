@@ -1,4 +1,4 @@
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import { and, count, desc, eq, isNull, sql } from "drizzle-orm";
 import { applyBehavior, emptyRuntime } from "../shared/behavior";
 import { chaosTriggers, generateMockResponse, matchOperation } from "../shared/generate";
@@ -10,7 +10,10 @@ import { gzipBytes, zipEntries } from "./pack";
 import { singleByteRange } from "../shared/range";
 import { openAuth, sealAuth, sealSecret } from "./mock-secrets";
 import { loadRuntime, resetRuntime, saveRuntime } from "./runtime-state";
+import { CATCH_ID_BYTES } from "../shared/surface";
+import { ipInCidrs, validCidrList } from "../shared/cidr";
 import { ENDPOINT_PATH_RE, POLICY } from "../shared/policy";
+import { newMocksLocked } from "./site-settings";
 import type { AppDb } from "../db/client";
 import { apiTokens, capturedRequests, endpoints, sessions, users } from "../db/schema";
 import { isFoundingAdmin, maxBodyBytes, maxStoredBodyChars, publicSiteUrl, rateMax } from "./config";
@@ -33,8 +36,12 @@ function iso(value: Date | string | null | undefined): string | undefined {
   return date.toISOString();
 }
 
-function randomPath(): string {
-  return randomBytes(9).toString("base64url");
+export function randomPath(): string {
+  return randomBytes(CATCH_ID_BYTES).toString("base64url");
+}
+
+function hashLock(token: string): string {
+  return createHash("sha256").update(token).digest("hex");
 }
 
 export async function createEndpointForUser(
@@ -80,6 +87,7 @@ export async function createEndpointForUser(
     }
     const url = `${publicSiteUrl()}/catch/${candidate}`;
     const mockSpec = input.mockSpec ? sealSpec(parseSpec(input.mockSpec)) : null;
+    const lock = (await newMocksLocked(db)) ? randomBytes(32).toString("base64url") : "";
     const [created] = await db
       .insert(endpoints)
       .values({
@@ -91,9 +99,13 @@ export async function createEndpointForUser(
         mockEnabled: Boolean(mockSpec),
         mockStatusCode: mockSpec ? 200 : null,
         mockSpec,
+        lockTokenHash: lock ? hashLock(lock) : null,
       })
       .returning();
-    return toEndpointDto(created, 0, { access: "owner", ownerEmail: user.email });
+    return {
+      ...toEndpointDto(created, 0, { access: "owner", ownerEmail: user.email }),
+      ...(lock ? { lockToken: lock } : {}),
+    };
   }
   throw new HttpError(409, "Could not allocate a path");
 }
@@ -318,20 +330,32 @@ export async function captureOnPath(
 }> {
   const started = Date.now();
   if (!ENDPOINT_PATH_RE.test(path)) {
-    throw new HttpError(404, "Endpoint not found");
+    throw new HttpError(404, "Not found");
   }
   const [endpoint] = await db
     .select()
     .from(endpoints)
     .where(eq(endpoints.path, path))
     .limit(1);
-  if (!endpoint) throw new HttpError(404, "Endpoint not found");
+  if (!endpoint) throw new HttpError(404, "Not found");
+  const presented = lockTokenFrom(request);
+  if (endpoint.lockTokenHash || endpoint.lockCidrs) {
+    const tokenOk = !endpoint.lockTokenHash || (presented !== "" && hashLock(presented) === endpoint.lockTokenHash);
+    const ipOk = !endpoint.lockCidrs || ipInCidrs(ip, endpoint.lockCidrs);
+    if (!tokenOk || !ipOk) throw new HttpError(404, "Not found");
+  }
   const [owner] = await db.select().from(users).where(eq(users.id, endpoint.userId)).limit(1);
   if (!owner?.active || endpoint.disabled) {
     await noteCatch(db, 403, Date.now() - started);
     throw new HttpError(403, endpoint.disabled ? "This mock is disabled" : "This mock is unavailable");
   }
 
+  await enforceRateLimit(
+    db,
+    `catch-ip:${ip}`,
+    rateMax("RATE_CATCH_IP_MAX", 300),
+    60_000,
+  );
   await enforceRateLimit(
     db,
     `catch-endpoint:${endpoint.id}`,
@@ -352,6 +376,7 @@ export async function captureOnPath(
   const mergedQuery = clampQuery(
     mergeRequestFields(text, request.headers.get("content-type"), urlQuery),
   );
+  delete mergedQuery.lock;
   const query = redactQuery(mergedQuery);
   const userAgent = (request.headers.get("user-agent") ?? "unknown").slice(0, 512);
   const produced = await produceResponse(
@@ -658,6 +683,46 @@ async function readCatchBody(request: Request): Promise<string> {
   return readLimitedText(request, maxBodyBytes());
 }
 
+function lockTokenFrom(request: Request): string {
+  const header = request.headers.get("x-pan-parrot-lock")?.trim() || "";
+  if (header) return header.slice(0, 200);
+  const query = new URL(request.url).searchParams.get("lock")?.trim() || "";
+  return query.slice(0, 200);
+}
+
+export async function setEndpointLock(
+  db: AppDb,
+  user: PublicUser,
+  endpointId: string,
+  input: { enabled: boolean; cidrs?: string },
+) {
+  const access = await endpointAccess(db, user, endpointId);
+  if (access !== "owner" && access !== "edit") {
+    throw new HttpError(access ? 403 : 404, access ? "Only the owner can lock this mock" : "Not found");
+  }
+  const [endpoint] = await db.select().from(endpoints).where(eq(endpoints.id, endpointId)).limit(1);
+  if (!endpoint) throw new HttpError(404, "Not found");
+  if (!input.enabled) {
+    await db
+      .update(endpoints)
+      .set({ lockTokenHash: null, lockCidrs: null, updatedAt: new Date() })
+      .where(eq(endpoints.id, endpoint.id));
+    return { locked: false };
+  }
+  const cidrs = input.cidrs?.trim() || "";
+  if (cidrs && !validCidrList(cidrs)) throw new HttpError(400, "Enter IPv4 addresses or CIDR blocks");
+  const token = randomBytes(32).toString("base64url");
+  await db
+    .update(endpoints)
+    .set({
+      lockTokenHash: hashLock(token),
+      lockCidrs: cidrs || null,
+      updatedAt: new Date(),
+    })
+    .where(eq(endpoints.id, endpoint.id));
+  return { locked: true, lockToken: token };
+}
+
 function toEndpointDto(
   endpoint: typeof endpoints.$inferSelect,
   requests: number,
@@ -672,6 +737,7 @@ function toEndpointDto(
     userId: endpoint.userId,
     created: iso(endpoint.createdAt),
     published: endpoint.published,
+    locked: Boolean(endpoint.lockTokenHash || endpoint.lockCidrs),
     access: extra.access,
     ownerEmail: extra.ownerEmail,
     requests,

@@ -7,6 +7,9 @@ import { specFromXml } from "../shared/wsdl";
 import { looksLikeGraphql, mockFromGraphql } from "../shared/graphql-mock";
 import { readZip, zipEntries } from "./pack";
 import { POLICY } from "../shared/policy";
+import { isAdminSurface, isBadCrawler, isScannerPath } from "../shared/surface";
+import { ipInCidrs } from "../shared/cidr";
+import { GATE_COOKIE, gateCookieMaxAge, signGate } from "../shared/gate-cookie";
 import { parse as parseYaml } from "yaml";
 import { capturedPackFiles, contentPackFiles } from "../shared/content-pack";
 import { exportFixture } from "../shared/export-fixture";
@@ -45,8 +48,8 @@ import {
 } from "./auth";
 import {
   cookieIsSecure,
+  env,
   isAllowedOrigin,
-  rateMax,
 } from "./config";
 import {
   captureOnPath,
@@ -68,8 +71,10 @@ import {
   listUsers,
   resetEndpointRuntime,
   saveMockSpec,
+  setEndpointLock,
   updateUserAsAdmin,
 } from "./data";
+import { newMocksLocked, setNewMocksLocked } from "./site-settings";
 import { clientIp, HttpError, readJson } from "./http";
 import { runMaintenance } from "./maintenance";
 import { adminSignals, readHealth } from "./ops";
@@ -161,8 +166,17 @@ export function createServer(options?: {
   app.use("*", async (c, next) => {
     c.set("db", options?.db ?? (await getDb()));
     c.set("ip", clientIp(c.req.raw.headers));
+    const path = new URL(c.req.url).pathname;
+    if (isScannerPath(path) || (isBadCrawler(c.req.header("user-agent")) && !path.startsWith("/catch/"))) {
+      return quietNotFound(c);
+    }
+    if (isAdminSurface(path) && !adminIpAllowed(c.get("ip"))) {
+      return quietNotFound(c);
+    }
     await next();
     applySecurityHeaders(c);
+    c.res.headers.delete("x-powered-by");
+    c.res.headers.delete("server");
   });
 
   app.use("/api/*", async (c, next) => {
@@ -221,7 +235,8 @@ export function createServer(options?: {
   app.post("/api/auth/request", async (c) => {
     const body = await readJson(c.req.raw, POLICY.apiJsonBytes);
     const email = isRecord(body) ? body.email : undefined;
-    const result = await requestSignIn(c.get("db"), email, c.get("ip"));
+    const captchaToken = isRecord(body) && typeof body.captchaToken === "string" ? body.captchaToken : "";
+    const result = await requestSignIn(c.get("db"), email, c.get("ip"), captchaToken);
     return c.json(result);
   });
 
@@ -239,6 +254,7 @@ export function createServer(options?: {
       result.cookieValue,
       sessionCookieOptions(secureCookie()),
     );
+    await setGateCookie(c);
     return c.json({ user: result.user });
   });
 
@@ -252,6 +268,7 @@ export function createServer(options?: {
       result.cookieValue,
       sessionCookieOptions(secureCookie()),
     );
+    await setGateCookie(c);
     return c.json({ user: result.user });
   });
 
@@ -260,6 +277,12 @@ export function createServer(options?: {
     await destroySession(c.get("db"), token);
     deleteCookie(c, POLICY.sessionCookieName, {
       path: "/api",
+      secure: cookieIsSecure(),
+      httpOnly: true,
+      sameSite: "Lax",
+    });
+    deleteCookie(c, GATE_COOKIE, {
+      path: "/",
       secure: cookieIsSecure(),
       httpOnly: true,
       sameSite: "Lax",
@@ -569,6 +592,15 @@ export function createServer(options?: {
     return c.json({ message: "Endpoint deleted" });
   });
 
+  app.post("/api/endpoints/:endpointId/lock", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    const body = await readJson(c.req.raw, POLICY.apiJsonBytes);
+    if (!isRecord(body) || typeof body.enabled !== "boolean") throw new HttpError(400, "Invalid request");
+    const cidrs = typeof body.cidrs === "string" ? body.cidrs : undefined;
+    return c.json(await setEndpointLock(c.get("db"), user, c.req.param("endpointId"), { enabled: body.enabled, cidrs }));
+  });
+
   app.post("/api/endpoints/:endpointId/mock", async (c) => {
     const user = await requireUser(c);
     await limitAuthed(c.get("db"), user.id);
@@ -615,6 +647,22 @@ export function createServer(options?: {
       body,
       truncated: result.truncated || result.body.length > 8000,
     });
+  });
+
+  app.get("/api/admin/settings", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json({ newMocksLocked: await newMocksLocked(c.get("db")) });
+  });
+
+  app.put("/api/admin/settings", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    const body = await readJson(c.req.raw, POLICY.apiJsonBytes);
+    if (!isRecord(body) || typeof body.newMocksLocked !== "boolean") {
+      throw new HttpError(400, "Invalid request");
+    }
+    return c.json({ newMocksLocked: await setNewMocksLocked(c.get("db"), body.newMocksLocked) });
   });
 
   app.get("/api/admin/signals", async (c) => {
@@ -788,12 +836,6 @@ function chunkedText(body: string, dripMs: number): ReadableStream<Uint8Array> {
 function registerCatch(app: Hono<AppEnv>) {
   app.all("/catch/*", async (c) => {
     const db = c.get("db");
-    await enforceRateLimit(
-      db,
-      `catch-ip:${c.get("ip")}`,
-      rateMax("RATE_CATCH_IP_MAX", 300),
-      60_000,
-    );
     const url = new URL(c.req.url);
     const matched = url.pathname.match(/^\/catch\/([^/]+)(\/.*)?$/);
     if (!matched) return c.json({ error: "Not found" }, 404);
@@ -856,6 +898,31 @@ async function requireAdmin(c: Context<AppEnv>): Promise<PublicUser> {
   return user;
 }
 
+function quietNotFound(c: Context<AppEnv>) {
+  c.header("X-Robots-Tag", "noindex, nofollow, noarchive");
+  c.header("Cache-Control", "no-store");
+  return c.json({ error: "Not found" }, 404);
+}
+
+function adminIpAllowed(ip: string): boolean {
+  const raw = env("ADMIN_IP_ALLOWLIST")?.trim();
+  if (!raw) return true;
+  return ipInCidrs(ip, raw);
+}
+
+async function setGateCookie(c: Context<AppEnv>) {
+  const secret = env("SESSION_SECRET") || "";
+  if (secret.length < 32) return;
+  const exp = Math.floor(Date.now() / 1000) + gateCookieMaxAge();
+  setCookie(c, GATE_COOKIE, await signGate(exp, secret), {
+    path: "/",
+    httpOnly: true,
+    secure: cookieIsSecure(),
+    sameSite: "Lax",
+    maxAge: gateCookieMaxAge(),
+  });
+}
+
 function applyApiCors(
   c: { req: { header: (name: string) => string | undefined }; header: (name: string, value: string) => void },
   origin: string | undefined,
@@ -871,7 +938,7 @@ function applyApiCors(
 function applyCatchCors(c: { header: (name: string, value: string) => void }) {
   c.header("Access-Control-Allow-Origin", "*");
   c.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS");
-  c.header("Access-Control-Allow-Headers", "Content-Type");
+  c.header("Access-Control-Allow-Headers", "Content-Type, X-Pan-Parrot-Lock");
 }
 
 function applySecurityHeaders(c: {

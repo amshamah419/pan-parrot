@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>Sign in</title>
+    <link rel="stylesheet" href="/login.css" />
+  </head>
+  <body>
+    <main>
+      <p class="notice">Unofficial personal tool. Not a Palo Alto Networks service.</p>
+      <h1>Sign in to PAN Parrot</h1>
+      <p class="muted">A verified @paloaltonetworks.com email is required.</p>
+      <form id="email-form">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="username" required placeholder="your.name@paloaltonetworks.com" />
+        <button type="submit">Email me a code</button>
+      </form>
+      <form id="code-form" hidden>
+        <label for="code">8-digit code</label>
+        <input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" required />
+        <p id="info" class="muted"></p>
+        <p id="dev" hidden>Local development code: <code id="dev-code"></code></p>
+        <button type="button" id="sign-in-button">Sign in</button>
+      </form>
+      <div id="captcha"></div>
+      <p id="error" role="alert" hidden></p>
+    </main>
+    <script src="/login.js"></script>
+  </body>
+</html>

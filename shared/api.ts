@@ -46,6 +46,8 @@ export interface UserEndpoint {
     enabled?: boolean;
   };
   mockSpec?: unknown;
+  locked?: boolean;
+  lockToken?: string;
 }
 
 export interface CreateEndpointRequest {

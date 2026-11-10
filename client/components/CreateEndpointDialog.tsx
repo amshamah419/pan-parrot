@@ -30,6 +30,7 @@ export function CreateEndpointDialog({
   const [customPath, setCustomPath] = useState("");
   const [useCustomPath, setUseCustomPath] = useState(false);
   const [error, setError] = useState("");
+  const [lockToken, setLockToken] = useState("");
 
   const getEndpointUrl = () => {
     const path = useCustomPath && customPath ? customPath : "<assigned>";
@@ -46,6 +47,10 @@ export function CreateEndpointDialog({
 
       onEndpointCreated?.(endpoint);
       setError("");
+      if (endpoint.lockToken) {
+        setLockToken(endpoint.lockToken);
+        return;
+      }
       setOpen(false);
 
       // Reset form
@@ -137,7 +142,12 @@ export function CreateEndpointDialog({
             </div>
           </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {lockToken && (
+        <p className="text-sm">
+          Lock token, shown once: <code className="break-all">{lockToken}</code>. Send it as the header x-pan-parrot-lock or the query lock.
+        </p>
+      )}
+      {error && <p className="text-sm text-destructive">{error}</p>}
 
           <div className="flex items-center space-x-2 pt-4">
             <Button onClick={handleCreate} className="flex-1">

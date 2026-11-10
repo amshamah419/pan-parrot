@@ -6,11 +6,63 @@
   NODE_VERSION = "22"
 
 # Routing is declared on the functions (path = "/api/*" and "/catch/*").
+# Scanner paths are rejected by the CDN before the SPA fallback or a function runs.
+# Netlify Firewall rate limits are not a netlify.toml key. If the site plan includes
+# them, set them in the UI (Project → Firewall → Rate limiting), per IP:
+#   /api/auth/*  30/minute, /login 60/minute, /catch/* 300/minute.
+# The app also rate-limits those routes in the database. See docs/GO_LIVE.md.
+[[redirects]]
+  from = "/login"
+  to = "/login.html"
+  status = 200
+
+[[redirects]]
+  from = "/.env"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.git/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wp-admin/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wp-login.php"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/*.php"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # The SPA fallback must stay last so those paths are not rewritten to index.html.
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[headers]]
+  for = "/login.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://js.hcaptcha.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://hcaptcha.com; frame-src https://challenges.cloudflare.com https://hcaptcha.com https://*.hcaptcha.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+
+[[headers]]
+  for = "/login"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://js.hcaptcha.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://hcaptcha.com; frame-src https://challenges.cloudflare.com https://hcaptcha.com https://*.hcaptcha.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
 
 [[headers]]
   for = "/*"

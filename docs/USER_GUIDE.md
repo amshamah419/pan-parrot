@@ -2,7 +2,9 @@
 
 Unofficial personal tool. It is not a Palo Alto Networks product and it does not run inside corporate infrastructure. Do not send secrets, credentials, customer data, or production traffic.
 
-Sign-in is an 8-digit code emailed to a `@paloaltonetworks.com` address. There is no password.
+Sign-in is an 8-digit code emailed to a `@paloaltonetworks.com` address. There is no password. Someone who is not signed in only sees that page. The catalog, docs, and app code are not sent until the sign-in cookie is valid.
+
+A generated catch path is 128 random bits. On the mock page, **Lock this catch URL** adds a token. Callers then send `x-pan-parrot-lock` or `?lock=`. Without it, the catch URL answers `404 Not found`, the same as a path that does not exist. Admins can turn on **New mocks are locked** so every new mock starts that way. The token is shown once.
 
 ## First minute
 
@@ -45,7 +47,7 @@ Open **Admin Panel** on the dashboard. The page has five tabs.
 - **Health** shows whether the API, database, email, and catch handler are up, using the same database check as `GET /api/health`. It also shows catch-traffic latency, error rate, and 4xx/5xx counts for the last 24 hours and 7 days, rate-limit hits, sign-in attempts, failures, and lockouts, storage against the capture and mock quotas, the busiest mocks and people, recent server errors, and the app version and commit. These numbers are rows in this database. There is no paid monitoring service.
 - **People** searches accounts. You can promote or demote an admin, suspend or unsuspend someone (that signs them out and blocks their catch URLs), revoke their sessions or personal tokens, purge captured calls, or delete the account and its data.
 - **Mocks** searches every mock. Disable blocks the catch URL. Purge requests deletes captured calls and leaves the mock.
-- **Invites** sends a Resend email with a 7-day sign-in link to one or more `@paloaltonetworks.com` addresses. Non-PAN addresses are rejected the same way sign-up rejects them. An invite is pending, accepted, or expired, and can be resent or revoked. **Require an invite for new sign-ups** is off until an admin turns it on. Existing accounts, and the founding admin, can still sign in when it is on.
+- **Invites** sends a Resend email with a 7-day link to the public sign-in page for one or more `@paloaltonetworks.com` addresses. Non-PAN addresses are rejected the same way sign-up rejects them. An invite is pending, accepted, or expired, and can be resent or revoked. **Require an invite for new sign-ups** is off until an admin turns it on. When it is on, a new address that was not invited gets the same "check your email" message and no code. Existing accounts, and the founding admin, can still sign in.
 - **Audit** lists admin actions along with shares, saves, and purges.
 
 ## What you can point at a catch URL

@@ -71,6 +71,8 @@ export const endpoints = pgTable(
     mockRequestCount: integer("mock_request_count").notNull().default(0),
     published: boolean("published").notNull().default(false),
     disabled: boolean("disabled").notNull().default(false),
+    lockTokenHash: text("lock_token_hash"),
+    lockCidrs: text("lock_cidrs"),
     userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
@@ -304,6 +306,18 @@ export const invites = pgTable(
 );
 
 export const appSettings = pgTable("app_settings", {
+  key: text("key").primaryKey(),
+  value: text("value").notNull(),
+});
+
+export const authStrikes = pgTable("auth_strikes", {
+  key: text("key").primaryKey(),
+  failures: integer("failures").notNull().default(0),
+  updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull(),
+  lockedUntil: timestamp("locked_until", { withTimezone: true, mode: "date" }),
+});
+
+export const siteSettings = pgTable("site_settings", {
   key: text("key").primaryKey(),
   value: text("value").notNull(),
 });

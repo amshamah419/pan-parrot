@@ -13,6 +13,8 @@ import {
 } from "./config";
 import { sendSignInEmail } from "./email-delivery";
 import { noteHealth } from "./health";
+import { captchaConfig, verifyCaptcha } from "./captcha";
+import { clearStrike, recordStrike, strikeCount, strikeLocked } from "./strikes";
 import { HttpError } from "./http";
 import { consumeInviteToken, markEmailInvitesAccepted, maySignUp } from "./invites";
 import { enforceRateLimit, limitAuthVerify } from "./rate-limit";
@@ -39,11 +41,22 @@ function toPublicUser(user: {
   };
 }
 
+export const SIGN_IN_MESSAGE =
+  "Check your email for a sign-in code. It expires in 10 minutes.";
+
 export async function requestSignIn(
   db: AppDb,
   rawEmail: unknown,
   ip: string,
-): Promise<{ message: string; devCode?: string; devToken?: string }> {
+  captchaToken = "",
+): Promise<{
+  message: string;
+  devCode?: string;
+  devToken?: string;
+  captchaRequired?: boolean;
+  captchaProvider?: string;
+  captchaSiteKey?: string;
+}> {
   const email = normalizePanEmail(rawEmail);
   await enforceRateLimit(
     db,
@@ -51,11 +64,27 @@ export async function requestSignIn(
     rateMax("RATE_AUTH_IP_MAX", 20),
     15 * 60 * 1000,
   );
+  if (await strikeLocked(db, `ip:${ip}`)) {
+    throw new HttpError(429, "Too many requests");
+  }
+  const captcha = captchaConfig();
+  const failures = await strikeCount(db, `ip:${ip}`);
+  if (captcha && failures >= captcha.after) {
+    const ok = captchaToken ? await verifyCaptcha(captchaToken, ip) : false;
+    if (!ok) {
+      return {
+        message: SIGN_IN_MESSAGE,
+        captchaRequired: true,
+        captchaProvider: captcha.provider,
+        captchaSiteKey: captcha.siteKey,
+      };
+    }
+  }
   if (!email) {
-    throw new HttpError(
-      400,
-      "Sign-in is limited to verified @paloaltonetworks.com email addresses.",
-    );
+    return { message: SIGN_IN_MESSAGE };
+  }
+  if (await strikeLocked(db, `mail:${email}`)) {
+    return { message: SIGN_IN_MESSAGE };
   }
   await enforceRateLimit(
     db,
@@ -64,7 +93,7 @@ export async function requestSignIn(
     15 * 60 * 1000,
   );
   if (!(await maySignUp(db, email))) {
-    throw new HttpError(403, "An invite is required before this address can sign in.");
+    return { message: SIGN_IN_MESSAGE };
   }
   await noteHealth(db, "signin_attempt");
 
@@ -96,7 +125,7 @@ export async function requestSignIn(
   }
 
   return {
-    message: "Check your email for a sign-in code. It expires in 10 minutes.",
+    message: SIGN_IN_MESSAGE,
     ...(exposeDevCode() ? { devCode: code, devToken: token } : {}),
   };
 }
@@ -123,10 +152,13 @@ export async function verifySignIn(
         await db.delete(loginChallenges).where(eq(loginChallenges.id, challenge.id));
       }
       await noteHealth(db, "signin_failure");
-      throw new HttpError(401, "Invalid or expired sign-in link");
+      await recordStrike(db, `ip:${ip}`);
+      throw new HttpError(401, "Invalid or expired code");
     }
     await db.delete(loginChallenges).where(eq(loginChallenges.email, challenge.email));
     await markEmailInvitesAccepted(db, challenge.email);
+    await clearStrike(db, `ip:${ip}`);
+    await clearStrike(db, `mail:${challenge.email}`);
     const user = await upsertVerifiedUser(db, challenge.email);
     const cookieValue = await createSession(db, user.id);
     return { user: toPublicUser(user), cookieValue };
@@ -163,6 +195,8 @@ export async function verifySignIn(
     if (challenge && challenge.attempts + 1 >= POLICY.maxVerifyAttempts) {
       await noteHealth(db, "signin_lockout");
     }
+    await recordStrike(db, `ip:${ip}`);
+    if (email) await recordStrike(db, `mail:${email}`);
     if (challenge) {
       const attempts = challenge.attempts + 1;
       if (
@@ -182,6 +216,8 @@ export async function verifySignIn(
 
   await db.delete(loginChallenges).where(eq(loginChallenges.email, email));
   await markEmailInvitesAccepted(db, email);
+  await clearStrike(db, `ip:${ip}`);
+  await clearStrike(db, `mail:${email}`);
   const user = await upsertVerifiedUser(db, email);
   const cookieValue = await createSession(db, user.id);
   return { user: toPublicUser(user), cookieValue };
@@ -200,7 +236,7 @@ async function upsertVerifiedUser(db: AppDb, email: string) {
     .limit(1);
 
   if (existing && !existing.active) {
-    throw new HttpError(403, "Account disabled");
+    throw new HttpError(401, "Invalid or expired code");
   }
 
   if (!existing) {
@@ -223,7 +259,7 @@ async function upsertVerifiedUser(db: AppDb, email: string) {
         .where(eq(users.email, normalized))
         .limit(1);
       if (!raced) throw error;
-      if (!raced.active) throw new HttpError(403, "Account disabled");
+      if (!raced.active) throw new HttpError(401, "Invalid or expired code");
       return raced;
     }
   }
@@ -253,8 +289,10 @@ export async function acceptInvite(
     email = await consumeInviteToken(db, typeof token === "string" ? token : "");
   } catch (error) {
     await noteHealth(db, "signin_failure");
+    await recordStrike(db, `ip:${ip}`);
     throw error;
   }
+  await clearStrike(db, `ip:${ip}`);
   const user = await upsertVerifiedUser(db, email);
   await markEmailInvitesAccepted(db, email);
   return { user: toPublicUser(user), cookieValue: await createSession(db, user.id) };
