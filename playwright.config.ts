@@ -5,6 +5,7 @@ const baseURL = `http://127.0.0.1:${port}`;
 
 export default defineConfig({
   testDir: "e2e",
+  testIgnore: "netlify-gate.spec.ts",
   timeout: 120_000,
   expect: { timeout: 15_000 },
   fullyParallel: false,
@@ -28,6 +29,10 @@ export default defineConfig({
         "postgresql://panparrot:local-dev-only@127.0.0.1:5432/panparrot",
       SESSION_SECRET: process.env.SESSION_SECRET || "local-dev-session-secret-32chars-min",
       AUTH_DEV_EXPOSE_CODE: "true",
+      RATE_AUTH_IP_MAX: "100",
+      RATE_AUTH_VERIFY_IP_MAX: "100",
+      RATE_AUTH_EMAIL_MAX: "100",
+      RATE_AUTH_VERIFY_EMAIL_MAX: "100",
       SITE_URL: baseURL,
       ADMIN_EMAILS: process.env.ADMIN_EMAILS || "ashamah@paloaltonetworks.com",
     },

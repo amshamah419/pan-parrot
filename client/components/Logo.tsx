@@ -23,11 +23,7 @@ export function Logo({
 
   return (
     <div className={`flex items-center space-x-2 ${className}`}>
-      <img
-        src="https://cdn.builder.io/api/v1/image/assets%2F729a06a633f44e10a9a65881ed017eaa%2F7199dc370d1d4e4ca7ca839ff2e13aae?format=webp&width=800"
-        alt="PAN Parrot"
-        className={sizeClasses[size]}
-      />
+      <img src="/logo.webp" alt="PAN Parrot" className={sizeClasses[size]} />
       {showText && (
         <div className="flex flex-col leading-none">
           <span

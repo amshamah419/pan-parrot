@@ -58,4 +58,17 @@ jobs:
       - run: npm run build
       - name: Bundle Netlify functions and edge functions
         run: npx --yes netlify-cli@23.15.1 build --offline
+      - name: Gate the catalog and logo on the Netlify build
+        env:
+          NETLIFY_ORIGIN: http://127.0.0.1:8899
+        run: |
+          printf 'SESSION_SECRET=%s\n' "$SESSION_SECRET" > .env
+          npx --yes netlify-cli@23.15.1 serve --offline --port 8899 > /tmp/netlify-serve.log 2>&1 &
+          ready=0
+          for i in $(seq 1 40); do
+            if curl -sf -o /dev/null http://127.0.0.1:8899/login; then ready=1; break; fi
+            sleep 1
+          done
+          if [ "$ready" != 1 ]; then cat /tmp/netlify-serve.log; exit 1; fi
+          npx playwright test -c playwright.netlify.config.ts
       - run: npm run test:e2e
