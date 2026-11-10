@@ -371,3 +371,51 @@ def test_payload_matches_the_sdk_credential_shape():
     }
     assert body["version"] == 0
     assert body["mappingId"] == ""
+
+
+def test_version_without_login_prints_the_local_release(tmp_path, monkeypatch, capsys):
+    monkeypatch.setenv("PANPARROT_CONFIG", str(tmp_path / "missing.json"))
+    monkeypatch.delenv("PANPARROT_URL", raising=False)
+    monkeypatch.delenv("PANPARROT_TOKEN", raising=False)
+    code = main(["version"])
+    assert code == 0
+    text = capsys.readouterr().out
+    assert "panparrot 0.1.0" in text
+    assert "login" in text
+
+
+def test_version_reports_a_newer_wheel_without_printing_the_token(tmp_path, monkeypatch, capsys):
+    config = tmp_path / "credentials.json"
+    config.write_text(json.dumps({"url": "https://panparrot.example", "token": "pp_abc"}))
+    os.chmod(config, 0o600)
+    monkeypatch.setenv("PANPARROT_CONFIG", str(config))
+    seen = {}
+
+    class Response:
+        status = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return b'{"version":"0.2.0","filename":"panparrot-0.2.0-py3-none-any.whl","sha256":"abc"}'
+
+    def urlopen(request, timeout=0):
+        seen["url"] = request.full_url
+        seen["authorization"] = request.get_header("Authorization")
+        return Response()
+
+    monkeypatch.setattr("panparrot.cli.urllib.request.urlopen", urlopen)
+    code = main(["--json", "version"])
+    assert code == 0
+    assert seen["url"] == "https://panparrot.example/api/v1/cli"
+    assert seen["authorization"] == "Bearer pp_abc"
+    body = json.loads(capsys.readouterr().out)
+    assert body["version"] == "0.1.0"
+    assert body["latest"] == "0.2.0"
+    assert body["update"] is True
+    assert "pp_abc" not in body["text"]
+    assert "<token>@panparrot.example/api/v1/cli/panparrot-0.2.0-py3-none-any.whl" in body["text"]
