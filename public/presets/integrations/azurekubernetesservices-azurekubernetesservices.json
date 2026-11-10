@@ -25,9 +25,77 @@
         "docUrl": "https://learn.microsoft.com/en-us/rest/api/aks/managed-clusters/list?view=rest-aks-2024-09-01&tabs=HTTP",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file.",
+          "Command coverage is 3 from vendor docs, 0 approximate, and 6 missing, out of 9. Response bodies are the x-ms-examples in Azure/azure-rest-api-specs."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "azure-ks-auth-test",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-ks-auth-start",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-ks-auth-complete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-ks-auth-reset",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-ks-clusters-list",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/providers/Microsoft.ContainerService/managedClusters"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-subscriptions-subscription-id-providers--0"
+          ]
+        },
+        {
+          "command": "azure-ks-cluster-addon-update",
+          "calls": [
+            "GET /resourceGroups/{resource_group_name}/providers/Microsoft.ContainerService/managedClusters/{resource_name}",
+            "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.ContainerService/managedClusters/{resource_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--resourcegroups-resource-group-name-providers-microsoft-containers",
+            "get--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+            "put--subscriptions-subscription-id-resourcegroups-resource-group-name-"
+          ]
+        },
+        {
+          "command": "azure-ks-generate-login-url",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-ks-subscriptions-list",
+          "calls": [
+            "GET /subscriptions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions"
+          ]
+        },
+        {
+          "command": "azure-ks-resource-group-list",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/resourcegroups"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -67,6 +135,158 @@
           ]
         },
         "fixture": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.ContainerService/managedClusters/clustername1\",\n      \"location\": \"location1\",\n      \"name\": \"clustername1\",\n      \"tags\": {\n        \"archv2\": \"\",\n        \"tier\": \"production\"\n      },\n      \"type\": \"Microsoft.ContainerService/ManagedClusters\",\n      \"eTag\": \"nvweuib\",\n      \"properties\": {\n        \"provisioningState\": \"Succeeded\",\n        \"kubernetesVersion\": \"1.9.6\",\n        \"currentKubernetesVersion\": \"1.9.6\",\n        \"maxAgentPools\": 1,\n        \"dnsPrefix\": \"dnsprefix1\",\n        \"fqdn\": \"dnsprefix1-abcd1234.hcp.eastus.azmk8s.io\",\n        \"agentPoolProfiles\": [\n          {\n            \"name\": \"nodepool1\",\n            \"count\": 3,\n            \"vmSize\": \"Standard_DS1_v2\",\n            \"maxPods\": 110,\n            \"osType\": \"Linux\",\n            \"provisioningState\": \"Succeeded\",\n            \"orchestratorVersion\": \"1.9.6\",\n            \"currentOrchestratorVersion\": \"1.9.6\",\n            \"eTag\": \"byuefvwi\"\n          }\n        ],\n        \"linuxProfile\": {\n          \"adminUsername\": \"azureuser\",\n          \"ssh\": {\n            \"publicKeys\": [\n              {\n                \"keyData\": \"keydata\"\n              }\n            ]\n          }\n        },\n        \"servicePrincipalProfile\": {\n          \"clientId\": \"clientid\"\n        },\n        \"nodeResourceGroup\": \"MC_rg1_clustername1_location1\",\n        \"enableRBAC\": false,\n        \"diskEncryptionSetID\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des\",\n        \"networkProfile\": {\n          \"networkPlugin\": \"kubenet\",\n          \"podCidr\": \"10.244.0.0/16\",\n          \"serviceCidr\": \"10.0.0.0/16\",\n          \"dnsServiceIP\": \"10.0.0.10\"\n        }\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--resourcegroups-resource-group-name-providers-microsoft-containers",
+        "summary": "GET /resourceGroups/{resource_group_name}/providers/Microsoft.ContainerService/managedClusters/{resource_name}",
+        "method": "GET",
+        "pathTemplate": "/resourceGroups/{resource_group_name}/providers/Microsoft.ContainerService/managedClusters/{resource_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": []
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"clustername1\",\n  \"type\": \"Microsoft.ContainerService/managedClusters\",\n  \"eTag\": \"beywbwei\",\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ContainerService/managedClusters/clustername1\",\n  \"location\": \"location1\",\n  \"properties\": {\n    \"agentPoolProfiles\": [\n      {\n        \"name\": \"nodepool1\",\n        \"availabilityZones\": [\n          \"1\",\n          \"2\",\n          \"3\"\n        ],\n        \"count\": 3,\n        \"currentOrchestratorVersion\": \"1.9.6\",\n        \"eTag\": \"nvewbvoi\",\n        \"maxPods\": 110,\n        \"nodeImageVersion\": \"AKSUbuntu:1604:2020.03.11\",\n        \"orchestratorVersion\": \"1.9.6\",\n        \"osType\": \"Linux\",\n        \"provisioningState\": \"Succeeded\",\n        \"upgradeSettings\": {\n          \"maxSurge\": \"33%\"\n        },\n        \"vmSize\": \"Standard_DS1_v2\"\n      }\n    ],\n    \"azurePortalFQDN\": \"dnsprefix1-abcd1234.portal.hcp.eastus.azmk8s.io\",\n    \"currentKubernetesVersion\": \"1.9.6\",\n    \"diskEncryptionSetID\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des\",\n    \"dnsPrefix\": \"dnsprefix1\",\n    \"enableRBAC\": false,\n    \"fqdn\": \"dnsprefix1-abcd1234.hcp.eastus.azmk8s.io\",\n    \"kubernetesVersion\": \"1.9.6\",\n    \"linuxProfile\": {\n      \"adminUsername\": \"azureuser\",\n      \"ssh\": {\n        \"publicKeys\": [\n          {\n            \"keyData\": \"keydata\"\n          }\n        ]\n      }\n    },\n    \"maxAgentPools\": 1,\n    \"networkProfile\": {\n      \"dnsServiceIP\": \"10.0.0.10\",\n      \"ipFamilies\": [\n        \"IPv4\"\n      ],\n      \"loadBalancerProfile\": {\n        \"allocatedOutboundPorts\": 2000,\n        \"effectiveOutboundIPs\": [\n          {\n            \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MC_rg1/providers/Microsoft.Network/publicIPAddresses/mgdoutboundip1\"\n          },\n          {\n            \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MC_rg1/providers/Microsoft.Network/publicIPAddresses/mgdoutboundip2\"\n          }\n        ],\n        \"idleTimeoutInMinutes\": 10,\n        \"outboundIPs\": {\n          \"publicIPs\": [\n            {\n              \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/customeroutboundip1\"\n            },\n            {\n              \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/customeroutboundip2\"\n            }\n          ]\n        }\n      },\n      \"loadBalancerSku\": \"standard\",\n      \"networkPlugin\": \"kubenet\",\n      \"outboundType\": \"loadBalancer\",\n      \"podCidr\": \"10.244.0.0/16\",\n      \"podCidrs\": [\n        \"10.244.0.0/16\"\n      ],\n      \"serviceCidr\": \"10.0.0.0/16\",\n      \"serviceCidrs\": [\n        \"10.0.0.0/16\"\n      ]\n    },\n    \"nodeResourceGroup\": \"MC_rg1_clustername1_location1\",\n    \"provisioningState\": \"Succeeded\",\n    \"servicePrincipalProfile\": {\n      \"clientId\": \"clientid\"\n    },\n    \"upgradeSettings\": {\n      \"overrideSettings\": {\n        \"forceUpgrade\": true,\n        \"until\": \"2022-11-01T13:00:00Z\"\n      }\n    }\n  },\n  \"tags\": {\n    \"archv2\": \"\",\n    \"tier\": \"production\"\n  }\n}\n"
+      },
+      {
+        "id": "get--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.ContainerService/managedClusters/{resource_name}",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.ContainerService/managedClusters/{resource_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": []
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"clustername1\",\n  \"type\": \"Microsoft.ContainerService/managedClusters\",\n  \"eTag\": \"beywbwei\",\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ContainerService/managedClusters/clustername1\",\n  \"location\": \"location1\",\n  \"properties\": {\n    \"agentPoolProfiles\": [\n      {\n        \"name\": \"nodepool1\",\n        \"availabilityZones\": [\n          \"1\",\n          \"2\",\n          \"3\"\n        ],\n        \"count\": 3,\n        \"currentOrchestratorVersion\": \"1.9.6\",\n        \"eTag\": \"nvewbvoi\",\n        \"maxPods\": 110,\n        \"nodeImageVersion\": \"AKSUbuntu:1604:2020.03.11\",\n        \"orchestratorVersion\": \"1.9.6\",\n        \"osType\": \"Linux\",\n        \"provisioningState\": \"Succeeded\",\n        \"upgradeSettings\": {\n          \"maxSurge\": \"33%\"\n        },\n        \"vmSize\": \"Standard_DS1_v2\"\n      }\n    ],\n    \"azurePortalFQDN\": \"dnsprefix1-abcd1234.portal.hcp.eastus.azmk8s.io\",\n    \"currentKubernetesVersion\": \"1.9.6\",\n    \"diskEncryptionSetID\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des\",\n    \"dnsPrefix\": \"dnsprefix1\",\n    \"enableRBAC\": false,\n    \"fqdn\": \"dnsprefix1-abcd1234.hcp.eastus.azmk8s.io\",\n    \"kubernetesVersion\": \"1.9.6\",\n    \"linuxProfile\": {\n      \"adminUsername\": \"azureuser\",\n      \"ssh\": {\n        \"publicKeys\": [\n          {\n            \"keyData\": \"keydata\"\n          }\n        ]\n      }\n    },\n    \"maxAgentPools\": 1,\n    \"networkProfile\": {\n      \"dnsServiceIP\": \"10.0.0.10\",\n      \"ipFamilies\": [\n        \"IPv4\"\n      ],\n      \"loadBalancerProfile\": {\n        \"allocatedOutboundPorts\": 2000,\n        \"effectiveOutboundIPs\": [\n          {\n            \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MC_rg1/providers/Microsoft.Network/publicIPAddresses/mgdoutboundip1\"\n          },\n          {\n            \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MC_rg1/providers/Microsoft.Network/publicIPAddresses/mgdoutboundip2\"\n          }\n        ],\n        \"idleTimeoutInMinutes\": 10,\n        \"outboundIPs\": {\n          \"publicIPs\": [\n            {\n              \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/customeroutboundip1\"\n            },\n            {\n              \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/customeroutboundip2\"\n            }\n          ]\n        }\n      },\n      \"loadBalancerSku\": \"standard\",\n      \"networkPlugin\": \"kubenet\",\n      \"outboundType\": \"loadBalancer\",\n      \"podCidr\": \"10.244.0.0/16\",\n      \"podCidrs\": [\n        \"10.244.0.0/16\"\n      ],\n      \"serviceCidr\": \"10.0.0.0/16\",\n      \"serviceCidrs\": [\n        \"10.0.0.0/16\"\n      ]\n    },\n    \"nodeResourceGroup\": \"MC_rg1_clustername1_location1\",\n    \"provisioningState\": \"Succeeded\",\n    \"servicePrincipalProfile\": {\n      \"clientId\": \"clientid\"\n    },\n    \"upgradeSettings\": {\n      \"overrideSettings\": {\n        \"forceUpgrade\": true,\n        \"until\": \"2022-11-01T13:00:00Z\"\n      }\n    }\n  },\n  \"tags\": {\n    \"archv2\": \"\",\n    \"tier\": \"production\"\n  }\n}\n"
+      },
+      {
+        "id": "put--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+        "summary": "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.ContainerService/managedClusters/{resource_name}",
+        "method": "PUT",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.ContainerService/managedClusters/{resource_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": []
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"clustername1\",\n  \"type\": \"Microsoft.ContainerService/managedClusters\",\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ContainerService/managedClusters/clustername1\",\n  \"location\": \"location1\",\n  \"properties\": {\n    \"agentPoolProfiles\": [\n      {\n        \"name\": \"nodepool1\",\n        \"type\": \"VirtualMachineScaleSets\",\n        \"count\": 3,\n        \"currentOrchestratorVersion\": \"1.9.6\",\n        \"enableNodePublicIP\": false,\n        \"maxPods\": 110,\n        \"mode\": \"System\",\n        \"nodeImageVersion\": \"AKSUbuntu:1604:2020.03.11\",\n        \"orchestratorVersion\": \"1.9.6\",\n        \"osType\": \"Linux\",\n        \"provisioningState\": \"Succeeded\",\n        \"vmSize\": \"Standard_DS2_v2\"\n      }\n    ],\n    \"autoScalerProfile\": {\n      \"scale-down-delay-after-add\": \"15m\",\n      \"scan-interval\": \"20s\"\n    },\n    \"currentKubernetesVersion\": \"1.9.6\",\n    \"diskEncryptionSetID\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des\",\n    \"dnsPrefix\": \"dnsprefix1\",\n    \"enableRBAC\": true,\n    \"fqdn\": \"dnsprefix1-abcd1234.hcp.eastus.azmk8s.io\",\n    \"kubernetesVersion\": \"1.9.6\",\n    \"linuxProfile\": {\n      \"adminUsername\": \"azureuser\",\n      \"ssh\": {\n        \"publicKeys\": [\n          {\n            \"keyData\": \"keydata\"\n          }\n        ]\n      }\n    },\n    \"maxAgentPools\": 1,\n    \"networkProfile\": {\n      \"dnsServiceIP\": \"10.0.0.10\",\n      \"loadBalancerSku\": \"basic\",\n      \"networkPlugin\": \"kubenet\",\n      \"outboundType\": \"userAssignedNATGateway\",\n      \"podCidr\": \"10.244.0.0/16\",\n      \"serviceCidr\": \"10.0.0.0/16\"\n    },\n    \"nodeResourceGroup\": \"MC_rg1_clustername1_location1\",\n    \"provisioningState\": \"Succeeded\",\n    \"servicePrincipalProfile\": {\n      \"clientId\": \"clientid\"\n    },\n    \"windowsProfile\": {\n      \"adminUsername\": \"azureuser\"\n    }\n  },\n  \"tags\": {\n    \"archv2\": \"\",\n    \"tier\": \"production\"\n  }\n}\n"
+      },
+      {
+        "id": "get--subscriptions",
+        "summary": "GET /subscriptions",
+        "method": "GET",
+        "pathTemplate": "/subscriptions",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": []
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"nextLink\": \"http://nextlink\",\n  \"value\": [\n    {\n      \"authorizationSource\": \"RoleBased\",\n      \"displayName\": \"Example Subscription\",\n      \"id\": \"/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05\",\n      \"managedByTenants\": [\n        {\n          \"tenantId\": \"8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7\"\n        }\n      ],\n      \"state\": \"Enabled\",\n      \"subscriptionId\": \"291bba3f-e0a5-47bc-a099-3bdcb2a50a05\",\n      \"subscriptionPolicies\": {\n        \"locationPlacementId\": \"Internal_2014-09-01\",\n        \"quotaId\": \"Internal_2014-09-01\",\n        \"spendingLimit\": \"Off\"\n      },\n      \"tags\": {\n        \"tagKey1\": \"tagValue1\",\n        \"tagKey2\": \"tagValue2\"\n      },\n      \"tenantId\": \"31c75423-32d6-4322-88b7-c478bdde4858\"\n    },\n    {\n      \"authorizationSource\": \"RoleBased\",\n      \"displayName\": \"Example Subscription2\",\n      \"id\": \"/subscriptions/72ac930a-f34e-42d8-b06d-dc2a9e12ed71\",\n      \"managedByTenants\": [\n        {\n          \"tenantId\": \"8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7\"\n        },\n        {\n          \"tenantId\": \"f7fb6af2-321d-47c8-9c0f-b0239eaad39a\"\n        }\n      ],\n      \"state\": \"Enabled\",\n      \"subscriptionId\": \"72ac930a-f34e-42d8-b06d-dc2a9e12ed71\",\n      \"subscriptionPolicies\": {\n        \"locationPlacementId\": \"Internal_2014-09-01\",\n        \"quotaId\": \"Internal_2014-09-01\",\n        \"spendingLimit\": \"Off\"\n      },\n      \"tags\": {\n        \"tagKey1\": \"tagValue1\",\n        \"tagKey2\": \"tagValue2\"\n      },\n      \"tenantId\": \"2a0ff0de-96b2-4859-bb7c-a430d07a3e0c\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

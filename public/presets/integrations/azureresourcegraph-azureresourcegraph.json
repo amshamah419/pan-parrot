@@ -2,9 +2,9 @@
   "id": "azureresourcegraph-azureresourcegraph",
   "name": "Azure Resource Graph",
   "pack": "AzureResourceGraph",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /providers/Microsoft.ResourceGraph/operations.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /providers/Microsoft.ResourceGraph/operations.",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -15,18 +15,46 @@
       "name": "Azure Resource Graph",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureResourceGraph/Integrations/AzureResourceGraph",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "notes": [
         "Sample fields are the ones GET /providers/Microsoft.ResourceGraph/operations reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureResourceGraph/Integrations/AzureResourceGraph",
+        "status": "vendor",
+        "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/ResourceGraph/stable/2024-04-01/examples/OperationsList.json",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /providers/Microsoft.ResourceGraph/operations reads in the matched command. Lists the command iterates are arrays."
+          "Sample fields are the ones GET /providers/Microsoft.ResourceGraph/operations reads in the matched command. Lists the command iterates are arrays.",
+          "Command coverage is 2 from vendor docs, 0 approximate, and 1 missing, out of 3. Response bodies are the x-ms-examples in Azure/azure-rest-api-specs."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "azure-rg-auth-reset",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-rg-list-operations",
+          "calls": [
+            "GET /providers/Microsoft.ResourceGraph/operations"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-providers-microsoft-resourcegraph-operat-0"
+          ]
+        },
+        {
+          "command": "azure-rg-query",
+          "calls": [
+            "POST /providers/Microsoft.ResourceGraph/resources"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--providers-microsoft-resourcegraph-resources"
+          ]
+        }
+      ]
     },
     "operations": [
       {
@@ -35,7 +63,7 @@
         "pathTemplate": "/providers/Microsoft.ResourceGraph/operations",
         "summary": "GET /providers/Microsoft.ResourceGraph/operations",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "headers": {},
         "list": false,
         "envelope": {
@@ -74,7 +102,56 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"Microsoft.ResourceGraph/operations/read\",\n      \"display\": {\n        \"description\": \"Gets the list of supported operations\",\n        \"operation\": \"Get Operations\",\n        \"provider\": \"Microsoft Resource Graph\",\n        \"resource\": \"Operation\"\n      }\n    },\n    {\n      \"name\": \"Microsoft.ResourceGraph/resources/read\",\n      \"display\": {\n        \"description\": \"Submits a query on resources within specified subscriptions, the specified management groups, or against all access granted in the tenant.\",\n        \"operation\": \"Query resources\",\n        \"provider\": \"Microsoft Resource Graph\",\n        \"resource\": \"Resources\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "post--providers-microsoft-resourcegraph-resources",
+        "summary": "POST /providers/Microsoft.ResourceGraph/resources",
+        "method": "POST",
+        "pathTemplate": "/providers/Microsoft.ResourceGraph/resources",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "display",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": []
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"count\": 3,\n  \"data\": [\n    {\n      \"location\": \"centralus\"\n    },\n    {\n      \"location\": \"eastus\"\n    },\n    {\n      \"location\": \"westus\"\n    }\n  ],\n  \"facets\": [],\n  \"resultTruncated\": \"false\",\n  \"totalRecords\": 3\n}\n"
       }
     ],
     "chaos": {

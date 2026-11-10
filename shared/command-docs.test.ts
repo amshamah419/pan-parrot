@@ -117,6 +117,41 @@ describe("AWS command coverage", () => {
     };
     const events = validateMockSpec(amp.spec).source.commandDocs?.find((row) => row.command === "cisco-amp-event-list");
     expect(events).toMatchObject({ status: "approximate", calls: ["GET /events"] });
+    const azure = sums(
+      covered.filter((preset) =>
+        [
+          "azure-azure",
+          "azurecompute-azurecompute-v2",
+          "azuredataexplorer-azuredataexplorer",
+          "azurefirewall-azurefirewall",
+          "azurekeyvault-azurekeyvault",
+          "azurekubernetesservices-azurekubernetesservices",
+          "azureloganalytics-azureloganalytics",
+          "azurenetworksecuritygroups-azurenetworksecuritygroups",
+          "azureresourcegraph-azureresourcegraph",
+          "azureriskyusers-azureriskyusers",
+          "azuresecuritycenter-azuresecuritycenter-v2",
+          "azuresecuritycenter-microsoftdefenderforcloudeventcollector",
+          "azuresqlmanagement-azuresqlmanagement",
+          "azurestorage-azurestorage",
+          "azurestoragequeue-azurestoragequeue",
+          "azurestoragetable-azurestoragetable",
+          "azurewaf-azurewaf",
+        ].includes(preset.id),
+      ),
+    );
+    expect(azure).toEqual({ vendor: 169, approximate: 21, missing: 225 });
+    const logs = JSON.parse(readFileSync("public/presets/integrations/azureloganalytics-azureloganalytics.json", "utf8")) as {
+      spec: Parameters<typeof validateMockSpec>[0];
+    };
+    const query = validateMockSpec(logs.spec).source.commandDocs?.find(
+      (row) => row.command === "azure-log-analytics-execute-query",
+    );
+    expect(query).toMatchObject({ status: "vendor", calls: ["POST /v1/workspaces/{workspace_id}/query"] });
+    const queryOp = validateMockSpec(logs.spec).operations.find(
+      (item) => item.method === "POST" && item.pathTemplate === "/v1/workspaces/{workspace_id}/query",
+    );
+    expect(queryOp?.fixture).toContain("PrimaryResult");
 
     const iam = JSON.parse(readFileSync("public/presets/integrations/aws-iam-aws-iam.json", "utf8")) as {
       spec: Parameters<typeof validateMockSpec>[0];

@@ -24,9 +24,77 @@
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureStorageQueue/Integrations/AzureStorageQueue",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /{queue_name}/messages. Fields are keys the client reads or test_data contains."
+          "Rebuilt from the XSOAR client. The checker matched GET /{queue_name}/messages. Fields are keys the client reads or test_data contains.",
+          "Command coverage is 0 from vendor docs, 3 approximate, and 7 missing, out of 10. Response bodies are the x-ms-examples in Azure/azure-rest-api-specs."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "azure-storage-queue-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-storage-queue-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-storage-queue-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-storage-queue-message-create",
+          "calls": [
+            "POST /{queue_name}/messages"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-storage-queue-message-get",
+          "calls": [
+            "GET /{queue_name}/messages"
+          ],
+          "status": "approximate"
+        },
+        {
+          "command": "azure-storage-queue-message-peek",
+          "calls": [
+            "GET /{queue_name}/messages"
+          ],
+          "status": "approximate"
+        },
+        {
+          "command": "azure-storage-queue-message-dequeue",
+          "calls": [
+            "GET /{queue_name}/messages",
+            "DELETE /{queue_name}/messages/{message_id}"
+          ],
+          "status": "approximate"
+        },
+        {
+          "command": "azure-storage-queue-message-update",
+          "calls": [
+            "PUT /{queue_name}/messages/{message_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-storage-queue-message-delete",
+          "calls": [
+            "DELETE /{queue_name}/messages/{message_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-storage-queue-message-clear",
+          "calls": [
+            "DELETE /{queue_name}/messages"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {

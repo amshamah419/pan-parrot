@@ -25,9 +25,171 @@
         "docUrl": "https://learn.microsoft.com/en-us/rest/api/keyvault/keyvault/vaults/list-by-subscription?tabs=HTTP",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file.",
+          "Command coverage is 14 from vendor docs, 0 approximate, and 3 missing, out of 17. Response bodies are the x-ms-examples in Azure/azure-rest-api-specs."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "azure-key-vault-create-update",
+          "calls": [
+            "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "put--subscriptions-subscription-id-resourcegroups-resource-group-name-"
+          ]
+        },
+        {
+          "command": "azure-key-vault-delete",
+          "calls": [
+            "DELETE /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-key-vault-get",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions-subscription-id-resourcegroups-resource-group-name-"
+          ]
+        },
+        {
+          "command": "azure-key-vault-list",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/providers/Microsoft.KeyVault/vaults"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-subscriptions-subscription-id-providers--0"
+          ]
+        },
+        {
+          "command": "azure-key-vault-access-policy-update",
+          "calls": [
+            "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}/accessPolicies/{operation_kind}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "put--subscriptions-subscription-id-resourcegroups-resource-g-2"
+          ]
+        },
+        {
+          "command": "azure-key-vault-key-get",
+          "calls": [
+            "GET /keys/{key_name}/{key_version}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--keys-key-name-key-version"
+          ]
+        },
+        {
+          "command": "azure-key-vault-key-list",
+          "calls": [
+            "GET /keys"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--keys"
+          ]
+        },
+        {
+          "command": "azure-key-vault-key-delete",
+          "calls": [
+            "DELETE /keys/{key_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "delete--keys-key-name"
+          ]
+        },
+        {
+          "command": "azure-key-vault-secret-get",
+          "calls": [
+            "GET /secrets/{secret_name}/{secret_version}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--secrets-secret-name-secret-version"
+          ]
+        },
+        {
+          "command": "azure-key-vault-secret-list",
+          "calls": [
+            "GET /secrets"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--secrets"
+          ]
+        },
+        {
+          "command": "azure-key-vault-secret-delete",
+          "calls": [
+            "DELETE /secrets/{secret_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "delete--secrets-secret-name"
+          ]
+        },
+        {
+          "command": "azure-key-vault-certificate-get",
+          "calls": [
+            "GET /certificates/{certificate_name}/{certificate_version}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--certificates-certificate-name-certificate-version"
+          ]
+        },
+        {
+          "command": "azure-key-vault-certificate-list",
+          "calls": [
+            "GET /certificates"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--certificates"
+          ]
+        },
+        {
+          "command": "azure-key-vault-certificate-policy-get",
+          "calls": [
+            "GET /certificates/{certificate_name}/policy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--certificates-certificate-name-certificate-version"
+          ]
+        },
+        {
+          "command": "azure-key-vault-subscriptions-list",
+          "calls": [
+            "GET /subscriptions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions"
+          ]
+        },
+        {
+          "command": "azure-key-vault-resource-group-list",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/resourcegroups"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-key-vault-auth-reset",
+          "calls": [],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -63,6 +225,414 @@
           ]
         },
         "fixture": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-group/providers/Microsoft.KeyVault/vaults/sample-vault\",\n      \"name\": \"sample-vault\",\n      \"type\": \"Microsoft.KeyVault/vaults\",\n      \"location\": \"westus\",\n      \"tags\": {},\n      \"systemData\": {\n        \"createdBy\": \"keyVaultUser1\",\n        \"createdByType\": \"User\",\n        \"createdAt\": \"2020-01-01T12:00:00.0000000Z\",\n        \"lastModifiedBy\": \"keyVaultUser2\",\n        \"lastModifiedByType\": \"User\",\n        \"lastModifiedAt\": \"2020-01-01T12:00:00.0000000Z\"\n      },\n      \"properties\": {\n        \"sku\": {\n          \"family\": \"A\",\n          \"name\": \"premium\"\n        },\n        \"tenantId\": \"00000000-0000-0000-0000-000000000000\",\n        \"accessPolicies\": [\n          {\n            \"tenantId\": \"00000000-0000-0000-0000-000000000000\",\n            \"objectId\": \"00000000-0000-0000-0000-000000000000\",\n            \"permissions\": {\n              \"keys\": [\n                \"encrypt\",\n                \"decrypt\",\n                \"wrapKey\",\n                \"unwrapKey\",\n                \"sign\",\n                \"verify\",\n                \"get\",\n                \"list\",\n                \"create\",\n                \"update\",\n                \"import\",\n                \"delete\",\n                \"backup\",\n                \"restore\",\n                \"recover\",\n                \"purge\"\n              ],\n              \"secrets\": [\n                \"get\",\n                \"list\",\n                \"set\",\n                \"delete\",\n                \"backup\",\n                \"restore\",\n                \"recover\",\n                \"purge\"\n              ],\n              \"certificates\": [\n                \"get\",\n                \"list\",\n                \"delete\",\n                \"create\",\n                \"import\",\n                \"update\",\n                \"managecontacts\",\n                \"getissuers\",\n                \"listissuers\",\n                \"setissuers\",\n                \"deleteissuers\",\n                \"manageissuers\",\n                \"recover\",\n                \"purge\"\n              ]\n            }\n          }\n        ],\n        \"enabledForDeployment\": true,\n        \"enabledForDiskEncryption\": true,\n        \"enabledForTemplateDeployment\": true,\n        \"enableSoftDelete\": true,\n        \"hsmPoolResourceId\": \"00000000-0000-0000-0000-000000000000\",\n        \"vaultUri\": \"https://sample-vault.vault.azure.net/\",\n        \"provisioningState\": \"Succeeded\"\n      }\n    }\n  ],\n  \"nextLink\": \"https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resources?api-version=22024-11-01&$skiptoken=dmF1bHQtcGVza3ktanVyeS03MzA3Ng==\"\n}\n"
+      },
+      {
+        "id": "put--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+        "summary": "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}",
+        "method": "PUT",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"sample-vault\",\n  \"type\": \"Microsoft.KeyVault/vaults\",\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-resource-group/providers/Microsoft.KeyVault/vaults/sample-vault\",\n  \"location\": \"westus\",\n  \"properties\": {\n    \"enabledForDeployment\": true,\n    \"enabledForDiskEncryption\": true,\n    \"enabledForTemplateDeployment\": true,\n    \"hsmPoolResourceId\": \"00000000-0000-0000-0000-000000000000\",\n    \"networkAcls\": {\n      \"bypass\": \"AzureServices\",\n      \"defaultAction\": \"Deny\",\n      \"ipRules\": [\n        {\n          \"value\": \"124.56.78.91/32\"\n        },\n        {\n          \"value\": \"'10.91.4.0/24'\"\n        }\n      ],\n      \"virtualNetworkRules\": [\n        {\n          \"id\": \"/subscriptions/subid/resourcegroups/rg1/providers/microsoft.network/virtualnetworks/test-vnet/subnets/subnet1\"\n        }\n      ]\n    },\n    \"sku\": {\n      \"name\": \"standard\",\n      \"family\": \"A\"\n    },\n    \"tenantId\": \"00000000-0000-0000-0000-000000000000\",\n    \"vaultUri\": \"https://sample-vault.vault.azure.net\"\n  },\n  \"systemData\": {\n    \"createdAt\": \"2020-01-01T12:00:00.0000000Z\",\n    \"createdBy\": \"keyVaultUser1\",\n    \"createdByType\": \"User\",\n    \"lastModifiedAt\": \"2020-01-01T12:00:00.0000000Z\",\n    \"lastModifiedBy\": \"keyVaultUser2\",\n    \"lastModifiedByType\": \"User\"\n  },\n  \"tags\": {}\n}\n"
+      },
+      {
+        "id": "get--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"sample-vault\",\n  \"type\": \"Microsoft.KeyVault/vaults\",\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-resource-group/providers/Microsoft.KeyVault/vaults/sample-vault\",\n  \"location\": \"westus\",\n  \"properties\": {\n    \"accessPolicies\": [\n      {\n        \"objectId\": \"00000000-0000-0000-0000-000000000000\",\n        \"permissions\": {\n          \"certificates\": [\n            \"get\",\n            \"list\",\n            \"delete\",\n            \"create\",\n            \"import\",\n            \"update\",\n            \"managecontacts\",\n            \"getissuers\",\n            \"listissuers\",\n            \"setissuers\",\n            \"deleteissuers\",\n            \"manageissuers\",\n            \"recover\",\n            \"purge\"\n          ],\n          \"keys\": [\n            \"encrypt\",\n            \"decrypt\",\n            \"wrapKey\",\n            \"unwrapKey\",\n            \"sign\",\n            \"verify\",\n            \"get\",\n            \"list\",\n            \"create\",\n            \"update\",\n            \"import\",\n            \"delete\",\n            \"backup\",\n            \"restore\",\n            \"recover\",\n            \"purge\"\n          ],\n          \"secrets\": [\n            \"get\",\n            \"list\",\n            \"set\",\n            \"delete\",\n            \"backup\",\n            \"restore\",\n            \"recover\",\n            \"purge\"\n          ]\n        },\n        \"tenantId\": \"00000000-0000-0000-0000-000000000000\"\n      }\n    ],\n    \"enabledForDeployment\": true,\n    \"enabledForDiskEncryption\": true,\n    \"enabledForTemplateDeployment\": true,\n    \"hsmPoolResourceId\": \"00000000-0000-0000-0000-000000000000\",\n    \"provisioningState\": \"Succeeded\",\n    \"publicNetworkAccess\": \"Enabled\",\n    \"sku\": {\n      \"name\": \"standard\",\n      \"family\": \"A\"\n    },\n    \"tenantId\": \"00000000-0000-0000-0000-000000000000\",\n    \"vaultUri\": \"https://sample-vault.vault.azure.net\"\n  },\n  \"systemData\": {\n    \"createdAt\": \"2020-01-01T12:00:00.0000000Z\",\n    \"createdBy\": \"keyVaultUser1\",\n    \"createdByType\": \"User\",\n    \"lastModifiedAt\": \"2020-01-01T12:00:00.0000000Z\",\n    \"lastModifiedBy\": \"keyVaultUser2\",\n    \"lastModifiedByType\": \"User\"\n  },\n  \"tags\": {}\n}\n"
+      },
+      {
+        "id": "put--subscriptions-subscription-id-resourcegroups-resource-g-2",
+        "summary": "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}/accessPolicies/{operation_kind}",
+        "method": "PUT",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}/accessPolicies/{operation_kind}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"type\": \"Microsoft.KeyVault/vaults/accessPolicies\",\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-group/providers/Microsoft.KeyVault/vaults/sample-vault/accessPolicies/\",\n  \"properties\": {\n    \"accessPolicies\": [\n      {\n        \"objectId\": \"00000000-0000-0000-0000-000000000000\",\n        \"permissions\": {\n          \"certificates\": [\n            \"get\"\n          ],\n          \"keys\": [\n            \"encrypt\"\n          ],\n          \"secrets\": [\n            \"get\"\n          ]\n        },\n        \"tenantId\": \"00000000-0000-0000-0000-000000000000\"\n      }\n    ]\n  }\n}\n"
+      },
+      {
+        "id": "get--keys-key-name-key-version",
+        "summary": "GET /keys/{key_name}/{key_version}",
+        "method": "GET",
+        "pathTemplate": "/keys/{key_name}/{key_version}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"key\": {\n    \"kid\": \"https://myvault.vault.azure.net/keys/CreateSoftKeyTest/78deebed173b48e48f55abf87ed4cf71\",\n    \"kty\": \"RSA\",\n    \"key_ops\": [\n      \"encrypt\",\n      \"decrypt\",\n      \"sign\",\n      \"verify\",\n      \"wrapKey\",\n      \"unwrapKey\"\n    ],\n    \"n\": \"2HJAE5fU3Cw2Rt9hEuq-F6XjINKGa-zskfISVqopqUy60GOs2eyhxbWbJBeUXNor_gf-tXtNeuqeBgitLeVa640UDvnEjYTKWjCniTxZRaU7ewY8BfTSk-7KxoDdLsPSpX_MX4rwlAx-_1UGk5t4sQgTbm9T6Fm2oqFd37dsz5-Gj27UP2GTAShfJPFD7MqU_zIgOI0pfqsbNL5xTQVM29K6rX4jSPtylZV3uWJtkoQIQnrIHhk1d0SC0KwlBV3V7R_LVYjiXLyIXsFzSNYgQ68ZjAwt8iL7I8Osa-ehQLM13DVvLASaf7Jnu3sC3CWl3Gyirgded6cfMmswJzY87w\",\n    \"e\": \"AQAB\"\n  },\n  \"attributes\": {\n    \"enabled\": true,\n    \"created\": 1493942451,\n    \"updated\": 1493942451,\n    \"recoveryLevel\": \"Recoverable+Purgeable\"\n  },\n  \"tags\": {\n    \"purpose\": \"unit test\",\n    \"test name \": \"CreateGetDeleteKeyTest\"\n  }\n}\n"
+      },
+      {
+        "id": "get--keys",
+        "summary": "GET /keys",
+        "method": "GET",
+        "pathTemplate": "/keys",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"kid\": \"https://myvault.vault.azure.net/keys/sdktestkey\",\n      \"attributes\": {\n        \"enabled\": true,\n        \"created\": 1493937656,\n        \"updated\": 1493937656,\n        \"recoveryLevel\": \"Recoverable+Purgeable\"\n      }\n    }\n  ],\n  \"nextLink\": \"https://myvault.vault.azure.net:443/keys?api-version=7.2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5NiFNREF3TURJM0lXdGxlUzlWVUVSQlZFVkxSVmxCVkZSU1NVSlZWRVZUVkVWVFZDRXdNREF3TWpnaE1qQXhOeTB3TlMwd05GUXdNVG94TVRveE5pNDNNekE0TnpReVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\n}\n"
+      },
+      {
+        "id": "delete--keys-key-name",
+        "summary": "DELETE /keys/{key_name}",
+        "method": "DELETE",
+        "pathTemplate": "/keys/{key_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"recoveryId\": \"https://myvault.vault.azure.net/deletedkeys/CreateSoftKeyTest\",\n  \"deletedDate\": 1493942452,\n  \"scheduledPurgeDate\": 1501718452,\n  \"key\": {\n    \"kid\": \"https://myvault.vault.azure.net/keys/CreateSoftKeyTest/78deebed173b48e48f55abf87ed4cf71\",\n    \"kty\": \"RSA\",\n    \"key_ops\": [\n      \"encrypt\",\n      \"decrypt\",\n      \"sign\",\n      \"verify\",\n      \"wrapKey\",\n      \"unwrapKey\"\n    ],\n    \"n\": \"2HJAE5fU3Cw2Rt9hEuq-F6XjINKGa-zskfISVqopqUy60GOs2eyhxbWbJBeUXNor_gf-tXtNeuqeBgitLeVa640UDvnEjYTKWjCniTxZRaU7ewY8BfTSk-7KxoDdLsPSpX_MX4rwlAx-_1UGk5t4sQgTbm9T6Fm2oqFd37dsz5-Gj27UP2GTAShfJPFD7MqU_zIgOI0pfqsbNL5xTQVM29K6rX4jSPtylZV3uWJtkoQIQnrIHhk1d0SC0KwlBV3V7R_LVYjiXLyIXsFzSNYgQ68ZjAwt8iL7I8Osa-ehQLM13DVvLASaf7Jnu3sC3CWl3Gyirgded6cfMmswJzY87w\",\n    \"e\": \"AQAB\"\n  },\n  \"attributes\": {\n    \"enabled\": true,\n    \"created\": 1493942451,\n    \"updated\": 1493942451,\n    \"recoveryLevel\": \"Recoverable+Purgeable\"\n  },\n  \"tags\": {\n    \"purpose\": \"unit test\",\n    \"test name \": \"CreateGetDeleteKeyTest\"\n  }\n}\n"
+      },
+      {
+        "id": "get--secrets-secret-name-secret-version",
+        "summary": "GET /secrets/{secret_name}/{secret_version}",
+        "method": "GET",
+        "pathTemplate": "/secrets/{secret_name}/{secret_version}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": \"mysecretvalue\",\n  \"id\": \"https://myvault.vault.azure.net/secrets/mysecretname/4387e9f3d6e14c459867679a90fd0f79\",\n  \"attributes\": {\n    \"enabled\": true,\n    \"created\": 1493938410,\n    \"updated\": 1493938410,\n    \"recoveryLevel\": \"Recoverable+Purgeable\"\n  }\n}\n"
+      },
+      {
+        "id": "get--secrets",
+        "summary": "GET /secrets",
+        "method": "GET",
+        "pathTemplate": "/secrets",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"contentType\": \"plainText\",\n      \"id\": \"https://myvault.vault.azure.net/secrets/listsecrettest0\",\n      \"attributes\": {\n        \"enabled\": true,\n        \"created\": 1482189047,\n        \"updated\": 1482189047\n      }\n    }\n  ],\n  \"nextLink\": \"https://myvault.vault.azure.net:443/secrets?api-version=7.2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeUlYTmxZM0psZEM5TVNWTlVVMFZEVWtWVVZFVlRWREVoTURBd01ESTRJVEl3TVRZdE1USXRNVGxVTWpNNk1UQTZORFV1T0RneE9ERXhNRm9oIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1\"\n}\n"
+      },
+      {
+        "id": "delete--secrets-secret-name",
+        "summary": "DELETE /secrets/{secret_name}",
+        "method": "DELETE",
+        "pathTemplate": "/secrets/{secret_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"recoveryId\": \"https://myvault.vault.azure.net/deletedsecrets/GetDeletedSecretTest\",\n  \"deletedDate\": 1493938433,\n  \"scheduledPurgeDate\": 1501714433,\n  \"id\": \"https://myvault.vault.azure.net/secrets/GetDeletedSecretTest/b595353d9c39413d80626575b3b5d865\",\n  \"attributes\": {\n    \"enabled\": true,\n    \"created\": 1493938433,\n    \"updated\": 1493938433,\n    \"recoveryLevel\": \"Recoverable+Purgeable\"\n  }\n}\n"
+      },
+      {
+        "id": "get--certificates-certificate-name-certificate-version",
+        "summary": "GET /certificates/{certificate_name}/{certificate_version}",
+        "method": "GET",
+        "pathTemplate": "/certificates/{certificate_name}/{certificate_version}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"id\": \"https://myvault.vault.azure.net/certificates/selfSignedCert01/f60f2a4f8ae442cfb41ca2090bd4b769\",\n  \"kid\": \"https://myvault.vault.azure.net/keys/selfSignedCert01/f60f2a4f8ae442cfb41ca2090bd4b769\",\n  \"sid\": \"https://myvault.vault.azure.net/secrets/selfSignedCert01/f60f2a4f8ae442cfb41ca2090bd4b769\",\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\n  \"attributes\": {\n    \"enabled\": true,\n    \"nbf\": 1430344421,\n    \"exp\": 2208988799,\n    \"created\": 1493938289,\n    \"updated\": 1493938291,\n    \"recoveryLevel\": \"Recoverable+Purgeable\"\n  },\n  \"policy\": {\n    \"id\": \"https://myvault.vault.azure.net/certificates/selfSignedCert01/policy\",\n    \"key_props\": {\n      \"exportable\": true,\n      \"kty\": \"RSA\",\n      \"key_size\": 2048,\n      \"reuse_key\": false\n    },\n    \"secret_props\": {\n      \"contentType\": \"application/x-pkcs12\"\n    },\n    \"x509_props\": {\n      \"subject\": \"CN=KeyVaultTest\",\n      \"ekus\": [],\n      \"key_usage\": [],\n      \"validity_months\": 297\n    },\n    \"lifetime_actions\": [\n      {\n        \"trigger\": {\n          \"lifetime_percentage\": 80\n        },\n        \"action\": {\n          \"action_type\": \"EmailContacts\"\n        }\n      }\n    ],\n    \"issuer\": {\n      \"name\": \"Unknown\"\n    },\n    \"attributes\": {\n      \"enabled\": true,\n      \"created\": 1493938289,\n      \"updated\": 1493938291\n    }\n  }\n}\n"
+      },
+      {
+        "id": "get--certificates",
+        "summary": "GET /certificates",
+        "method": "GET",
+        "pathTemplate": "/certificates",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"id\": \"https://myvault.vault.azure.net/certificates/listCert01\",\n      \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\n      \"attributes\": {\n        \"enabled\": true,\n        \"nbf\": 1430344421,\n        \"exp\": 2208988799,\n        \"created\": 1482188987,\n        \"updated\": 1482188987\n      }\n    },\n    {\n      \"id\": \"https://myvault.vault.azure.net/certificates/listCert02\",\n      \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\n      \"attributes\": {\n        \"enabled\": true,\n        \"nbf\": 1430344421,\n        \"exp\": 2208988799,\n        \"created\": 1482188988,\n        \"updated\": 1482188988\n      }\n    }\n  ],\n  \"nextLink\": null\n}\n"
+      },
+      {
+        "id": "get--subscriptions",
+        "summary": "GET /subscriptions",
+        "method": "GET",
+        "pathTemplate": "/subscriptions",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"nextLink\": \"http://nextlink\",\n  \"value\": [\n    {\n      \"authorizationSource\": \"RoleBased\",\n      \"displayName\": \"Example Subscription\",\n      \"id\": \"/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05\",\n      \"managedByTenants\": [\n        {\n          \"tenantId\": \"8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7\"\n        }\n      ],\n      \"state\": \"Enabled\",\n      \"subscriptionId\": \"291bba3f-e0a5-47bc-a099-3bdcb2a50a05\",\n      \"subscriptionPolicies\": {\n        \"locationPlacementId\": \"Internal_2014-09-01\",\n        \"quotaId\": \"Internal_2014-09-01\",\n        \"spendingLimit\": \"Off\"\n      },\n      \"tags\": {\n        \"tagKey1\": \"tagValue1\",\n        \"tagKey2\": \"tagValue2\"\n      },\n      \"tenantId\": \"31c75423-32d6-4322-88b7-c478bdde4858\"\n    },\n    {\n      \"authorizationSource\": \"RoleBased\",\n      \"displayName\": \"Example Subscription2\",\n      \"id\": \"/subscriptions/72ac930a-f34e-42d8-b06d-dc2a9e12ed71\",\n      \"managedByTenants\": [\n        {\n          \"tenantId\": \"8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7\"\n        },\n        {\n          \"tenantId\": \"f7fb6af2-321d-47c8-9c0f-b0239eaad39a\"\n        }\n      ],\n      \"state\": \"Enabled\",\n      \"subscriptionId\": \"72ac930a-f34e-42d8-b06d-dc2a9e12ed71\",\n      \"subscriptionPolicies\": {\n        \"locationPlacementId\": \"Internal_2014-09-01\",\n        \"quotaId\": \"Internal_2014-09-01\",\n        \"spendingLimit\": \"Off\"\n      },\n      \"tags\": {\n        \"tagKey1\": \"tagValue1\",\n        \"tagKey2\": \"tagValue2\"\n      },\n      \"tenantId\": \"2a0ff0de-96b2-4859-bb7c-a430d07a3e0c\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

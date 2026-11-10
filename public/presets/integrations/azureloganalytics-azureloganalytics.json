@@ -3,9 +3,9 @@
   "name": "Azure Log Analytics",
   "pack": "AzureLogAnalytics",
   "vendor": "Microsoft",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: POST /v1/workspaces/{workspace_id}/query.",
+  "summary": "From vendor docs. Rebuilt from the client: POST /v1/workspaces/{workspace_id}/query.",
   "notes": [
     "Sample fields are the ones POST /v1/workspaces/{workspace_id}/query reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,20 +17,125 @@
       "kind": "preset",
       "id": "azureloganalytics-azureloganalytics",
       "name": "Azure Log Analytics",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/rest/api/loganalytics/dataaccess/query/execute",
       "notes": [
         "Sample fields are the ones POST /v1/workspaces/{workspace_id}/query reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://learn.microsoft.com/en-us/rest/api/loganalytics/dataaccess/query/execute",
+        "status": "vendor",
+        "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/OperationalInsights/stable/2026-03-01/examples/WorkspacesListByResourceGroup.json",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /v1/workspaces/{workspace_id}/query reads in the matched command. Lists the command iterates are arrays."
+          "Sample fields are the ones POST /v1/workspaces/{workspace_id}/query reads in the matched command. Lists the command iterates are arrays.",
+          "Command coverage is 3 from vendor docs, 0 approximate, and 11 missing, out of 14. Response bodies are the x-ms-examples in Azure/azure-rest-api-specs."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "azure-log-analytics-execute-query",
+          "calls": [
+            "POST /v1/workspaces/{workspace_id}/query"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post-v1-workspaces-workspace-id-query-0"
+          ]
+        },
+        {
+          "command": "azure-log-analytics-test",
+          "calls": [
+            "POST /v1/workspaces/{workspace_id}/query"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post-v1-workspaces-workspace-id-query-0"
+          ]
+        },
+        {
+          "command": "azure-log-analytics-list-saved-searches",
+          "calls": [
+            "GET /savedSearches"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-log-analytics-get-saved-search-by-id",
+          "calls": [
+            "GET /savedSearches/{saved_search_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-log-analytics-create-or-update-saved-search",
+          "calls": [
+            "PUT /savedSearches/{saved_search_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-log-analytics-delete-saved-search",
+          "calls": [
+            "DELETE /savedSearches/{saved_search_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-log-analytics-generate-login-url",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-log-analytics-subscriptions-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-log-analytics-workspace-list",
+          "calls": [
+            "GET /{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscription-id-resourcegroups-resource-group-name-providers-micr"
+          ]
+        },
+        {
+          "command": "azure-log-analytics-resource-group-list",
+          "calls": [
+            "GET /{subscription_id}/resourcegroups"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-log-analytics-auth-reset",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-log-analytics-run-search-job",
+          "calls": [
+            "PUT /tables/{table_name}",
+            "GET /tables/{table_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-log-analytics-get-search-job",
+          "calls": [
+            "GET /tables/{table_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-log-analytics-delete-search-job",
+          "calls": [
+            "DELETE /tables/{table_name}"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -39,7 +144,7 @@
         "pathTemplate": "/v1/workspaces/{workspace_id}/query",
         "summary": "POST /v1/workspaces/{workspace_id}/query",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "headers": {},
         "list": false,
         "envelope": {
@@ -115,7 +220,93 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"tables\": [\n    {\n      \"name\": \"PrimaryResult\",\n      \"columns\": [\n        {\n          \"name\": \"Type\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"TenantId\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"count_\",\n          \"type\": \"long\"\n        }\n      ],\n      \"rows\": [\n        [\n          \"Usage\",\n          \"63613592-b6f7-4c3d-a390-22ba13102111\",\n          \"1\"\n        ],\n        [\n          \"Usage\",\n          \"d436f322-a9f4-4aad-9a7d-271fbf66001c\",\n          \"1\"\n        ],\n        [\n          \"BillingFact\",\n          \"63613592-b6f7-4c3d-a390-22ba13102111\",\n          \"1\"\n        ],\n        [\n          \"BillingFact\",\n          \"d436f322-a9f4-4aad-9a7d-271fbf66001c\",\n          \"1\"\n        ],\n        [\n          \"Operation\",\n          \"63613592-b6f7-4c3d-a390-22ba13102111\",\n          \"7\"\n        ],\n        [\n          \"Operation\",\n          \"d436f322-a9f4-4aad-9a7d-271fbf66001c\",\n          \"5\"\n        ]\n      ]\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--subscription-id-resourcegroups-resource-group-name-providers-micr",
+        "summary": "GET /{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces",
+        "method": "GET",
+        "pathTemplate": "/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "columns",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "rows",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "tables",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "columns",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "rows",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"AzTest2170\",\n      \"type\": \"Microsoft.OperationalInsights/workspaces\",\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000005/resourcegroups/oiautorest6685/providers/microsoft.operationalinsights/workspaces/aztest2170\",\n      \"location\": \"australiasoutheast\",\n      \"properties\": {\n        \"customerId\": \"bc089d7b-485c-4aff-a71e-c00f362d8d2f\",\n        \"provisioningState\": \"Succeeded\",\n        \"publicNetworkAccessForIngestion\": \"Enabled\",\n        \"publicNetworkAccessForQuery\": \"Enabled\",\n        \"retentionInDays\": 30,\n        \"sku\": {\n          \"name\": \"PerGB2018\"\n        }\n      },\n      \"tags\": {\n        \"tag1\": \"val1\"\n      }\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {
