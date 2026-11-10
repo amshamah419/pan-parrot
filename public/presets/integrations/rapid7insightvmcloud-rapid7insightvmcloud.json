@@ -1,1 +1,193 @@
-{"id":"rapid7insightvmcloud-rapid7insightvmcloud","name":"Rapid7 InsightVM Cloud","pack":"Rapid7InsightVMCloud","fidelity":"shape","curated":false,"summary":"InsightVM is a vulnerability management tool that can scan your network, eliminate vulnerabilities, and track and communicate its progress.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"rapid7insightvmcloud-rapid7insightvmcloud","name":"Rapid7 InsightVM Cloud","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Rapid7InsightVMCloud/Integrations/Rapid7InsightVMCloud","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"insightvm-cloud-get-asset","method":"GET","pathTemplate":"/v4/integration/assets/{asset_id}","summary":"Returns the assessment and details of an asset (specified by ID). Only assets that the caller has access to can be returned.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"asset_id","kind":"string","optional":false,"example":"asset_id"}]}},{"id":"insightvm-cloud-get-scan","method":"GET","pathTemplate":"/v4/integration/vulnerabilities","summary":"Retrieves the scan with the specified identifier.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"scan_id","kind":"string","optional":false,"example":"scan_id"}]}},{"id":"insightvm-cloud-get-scan-engines","method":"GET","pathTemplate":"/v4/integration/scan/{scan_id}","summary":"Retrieves a page of scan engines.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"page","kind":"string","optional":false,"example":"page"},{"name":"size","kind":"string","optional":false,"example":"size"}]}},{"id":"insightvm-cloud-search-assets","method":"GET","pathTemplate":"/v4/integration/scan/{id}/stop","summary":"Returns the inventory, assessment, and summary details for a page of assets.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"hostname","kind":"string","optional":false,"example":"hostname"},{"name":"page","kind":"string","optional":false,"example":"page"},{"name":"size","kind":"string","optional":false,"example":"size"}]}},{"id":"insightvm-cloud-last-sites","method":"GET","pathTemplate":"/v4/integration/scan/engine","summary":"Returns the details for sites.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"page","kind":"string","optional":false,"example":"page"},{"name":"size","kind":"string","optional":false,"example":"size"}]}},{"id":"insightvm-cloud-search-vulnerabilities","method":"GET","pathTemplate":"/v4/integration/assets","summary":"Returns all vulnerabilities that can be accessed.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"page","kind":"string","optional":false,"example":"page"},{"name":"size","kind":"string","optional":false,"example":"size"},{"name":"query","kind":"string","optional":false,"example":"query"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "rapid7insightvmcloud-rapid7insightvmcloud",
+  "name": "Rapid7 InsightVM Cloud",
+  "pack": "Rapid7InsightVMCloud",
+  "vendor": "Rapid7",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Cloud asset search and the vulnerability catalog.",
+  "notes": [
+    "The client GETs /v4/integration/assets and /v4/integration/vulnerabilities. This mock returns a data array for each.",
+    "The search query is not applied. Asset detail by id is not a separate route.",
+    "The cloud API page was not reloaded. X-Api-Key is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Rapid7InsightVMCloud/Integrations/Rapid7InsightVMCloud",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "rapid7insightvmcloud-rapid7insightvmcloud",
+      "name": "Rapid7 InsightVM Cloud",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://help.rapid7.com/insightvm/en-us/api/index.html",
+      "notes": [
+        "The client GETs /v4/integration/assets and /v4/integration/vulnerabilities. This mock returns a data array for each.",
+        "The search query is not applied. Asset detail by id is not a separate route.",
+        "The cloud API page was not reloaded. X-Api-Key is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.rapid7.com/insightvm/en-us/api/index.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client GETs /v4/integration/assets and /v4/integration/vulnerabilities. This mock returns a data array for each.",
+          "The search query is not applied. Asset detail by id is not a separate route.",
+          "The cloud API page was not reloaded. X-Api-Key is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "assets",
+        "method": "GET",
+        "pathTemplate": "/v4/integration/assets",
+        "summary": "Search assets",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "asset",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "host_name",
+                    "kind": "string",
+                    "example": "lab-host"
+                  },
+                  {
+                    "name": "ip",
+                    "kind": "ip"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "vulns",
+        "method": "GET",
+        "pathTemplate": "/v4/integration/vulnerabilities",
+        "summary": "Search vulnerabilities",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "vuln",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "title",
+                    "kind": "string",
+                    "example": "Lab CVE"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "enum",
+                    "enumValues": [
+                      "low",
+                      "medium",
+                      "high",
+                      "critical"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "rapid7insightvmcloud-rapid7insightvmcloud",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "X-Api-Key",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

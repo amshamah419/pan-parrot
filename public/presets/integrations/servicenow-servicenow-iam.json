@@ -1,1 +1,133 @@
-{"id":"servicenow-servicenow-iam","name":"ServiceNow IAM","pack":"ServiceNow","fidelity":"shape","curated":false,"summary":"Integrate with ServiceNow's services to execute CRUD operations for employee lifecycle processes.","operations":4,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"servicenow-servicenow-iam","name":"ServiceNow IAM","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/ServiceNow/Integrations/ServiceNow_IAM","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"iam-create-user","method":"GET","pathTemplate":"/table/sys_user/{user_id}","summary":"Creates a user in ServiceNow.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"brand","kind":"string","optional":false,"example":"brand"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"},{"name":"id","kind":"id","optional":false},{"name":"instanceName","kind":"string","optional":false,"example":"instanceName"},{"name":"success","kind":"boolean","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"}]}]}]}},{"id":"iam-update-user","method":"GET","pathTemplate":"/api/now","summary":"Updates an existing user with the data passed in the user-profile argument.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"brand","kind":"string","optional":false,"example":"brand"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"},{"name":"id","kind":"id","optional":false},{"name":"instanceName","kind":"string","optional":false,"example":"instanceName"},{"name":"success","kind":"boolean","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"}]}]}]}},{"id":"iam-get-user","method":"GET","pathTemplate":"/","summary":"Retrieves a single user resource.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"brand","kind":"string","optional":false,"example":"brand"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"},{"name":"id","kind":"id","optional":false},{"name":"instanceName","kind":"string","optional":false,"example":"instanceName"},{"name":"success","kind":"boolean","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"}]}]}]}},{"id":"iam-disable-user","method":"GET","pathTemplate":"/","summary":"Disable an active user.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"brand","kind":"string","optional":false,"example":"brand"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"},{"name":"id","kind":"id","optional":false},{"name":"instanceName","kind":"string","optional":false,"example":"instanceName"},{"name":"success","kind":"boolean","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "servicenow-servicenow-iam",
+  "name": "ServiceNow IAM",
+  "pack": "ServiceNow",
+  "vendor": "ServiceNow",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "List sys_user records.",
+  "notes": [
+    "The client GETs table/sys_user on an /api/now base. This mock is GET /api/now/table/sys_user.",
+    "Create, update, and the dictionary call are not modeled. The query is ignored.",
+    "The Table API page was not reloaded. Basic auth is the lab user."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ServiceNow/Integrations/ServiceNow_IAM",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "servicenow-servicenow-iam",
+      "name": "ServiceNow IAM",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
+      "notes": [
+        "The client GETs table/sys_user on an /api/now base. This mock is GET /api/now/table/sys_user.",
+        "Create, update, and the dictionary call are not modeled. The query is ignored.",
+        "The Table API page was not reloaded. Basic auth is the lab user."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client GETs table/sys_user on an /api/now base. This mock is GET /api/now/table/sys_user.",
+          "Create, update, and the dictionary call are not modeled. The query is ignored.",
+          "The Table API page was not reloaded. Basic auth is the lab user."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "users",
+        "method": "GET",
+        "pathTemplate": "/api/now/table/sys_user",
+        "summary": "List users",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "result",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "user",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "sys_id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "user_name",
+                    "kind": "string",
+                    "example": "ada"
+                  },
+                  {
+                    "name": "email",
+                    "kind": "email"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "servicenow-servicenow-iam",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "basic",
+      "basic": {
+        "username": "lab-admin",
+        "password": "dummy-not-a-real-password"
+      }
+    }
+  }
+}

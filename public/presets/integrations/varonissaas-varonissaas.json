@@ -1,1 +1,132 @@
-{"id":"varonissaas-varonissaas","name":"Varonis SaaS","pack":"VaronisSaaS","fidelity":"sample","curated":false,"summary":"Streamline alerts and related forensic information from Varonis SaaS.","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"varonissaas-varonissaas","name":"Varonis SaaS","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/VaronisSaaS/Integrations/VaronisSaaS","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-demisto-alerted-events-args-json","method":"POST","pathTemplate":"/app/dataquery/api/search/v2/search","summary":"test_data/demisto_alerted_events_args.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"alert_id","kind":"id","optional":false,"example":"6769D061-A714-4C95-A8AE-121E5379BF3C"}]}},{"id":"test-data-demisto-auth-configuration-response-json","method":"POST","pathTemplate":"/api/alert/alert/SetStatusToAlerts","summary":"test_data/demisto_auth_configuration_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"authProvider","kind":"integer","optional":false},{"name":"oidcClientID","kind":"id","optional":false},{"name":"authEndpoint","kind":"string","optional":false,"example":"https://test.com/DatAdvantage/api/authentication/win"},{"name":"signinAsEndpoint","kind":"string","optional":false,"example":"https://test.com/DatAdvantage/api/authentication/signinas"},{"name":"externalAuthorizer","kind":"string","optional":false},{"name":"limitedAuthEndpoint","kind":"string","optional":false,"example":"https://test.com/DatAdvantage/api/authentication/limited"},{"name":"oidcRedirectEndpoint","kind":"string","optional":false,"example":"https://test.com/DatAdvantage/api/authentication/win/request"},{"name":"silentOidcRedirectEndpoint","kind":"string","optional":false,"example":"https://test.com/DatAdvantage/api/authentication/win/request/silent"}]}},{"id":"test-data-demisto-search-alerts-args-json","method":"POST","pathTemplate":"/api/alert/alert/AddNoteToAlerts","summary":"test_data/demisto_search_alerts_args.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"threat_model_name","kind":"string","optional":false,"example":"DNS, DNS - Copy(2)"},{"name":"alert_status","kind":"string","optional":false,"example":"new|closed"},{"name":"end_time","kind":"timestamp","optional":false,"example":"2022-02-16T13:59:00+02:00","format":"iso"},{"name":"start_time","kind":"timestamp","optional":false,"example":"2022-02-16T13:00:00+02:00","format":"iso"},{"name":"alert_severity","kind":"string","optional":false,"example":"High"},{"name":"device_name","kind":"string","optional":false,"example":"ilhrzrodc01"},{"name":"last_days","kind":"string","optional":false,"example":"2"}]}},{"id":"test-data-fetch-incidents-create-search-response-j","method":"GET","pathTemplate":"/","summary":"test_data/fetch_incidents_create_search_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"location","kind":"string","optional":false,"example":"v2/rows/af6a26a1d70e4be182adc148b831f476/"},{"name":"dataType","kind":"string","optional":false,"example":"rows"}]}},{"id":"test-data-fetch-incidents-execute-search-response-","method":"GET","pathTemplate":"/","summary":"test_data/fetch_incidents_execute_search_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"columns","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Alert.Rule.Name"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"rows","kind":"array","optional":false,"item":{"name":"item","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Deletion: Multiple directory service objects"},"minItems":0,"maxItems":3,"pageItems":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"hasResults","kind":"boolean","optional":false},{"name":"rowsCount","kind":"integer","optional":false},{"name":"cappedNumber","kind":"integer","optional":false},{"name":"progress","kind":"integer","optional":false},{"name":"finished","kind":"boolean","optional":false},{"name":"entityTagHeaderValue","kind":"object","optional":false,"children":[{"name":"tag","kind":"string","optional":false,"example":"\"3\""},{"name":"isWeak","kind":"boolean","optional":false}]},{"name":"versionId","kind":"integer","optional":false}]}},{"id":"test-data-fetch-incidents-output-json","method":"GET","pathTemplate":"/","summary":"test_data/fetch_incidents_output.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Alert.Rule.Name","kind":"string","optional":false,"example":"Deletion: Multiple directory service objects"},{"name":"Alert.Rule.Severity.Name","kind":"string","optional":false,"example":"Medium"},{"name":"Alert.TimeUTC","kind":"timestamp","optional":false,"example":"2023-12-11T03:50:00","format":"iso"},{"name":"Alert.Rule.Category.Name","kind":"string","optional":false,"example":"Denial of Service"},{"name":"Alert.User.Name","kind":"string","optional":false,"example":"varadm (intaf6fb.com)"},{"name":"Alert.Status.Name","kind":"string","optional":false,"example":"Under Investigation"},{"name":"Alert.ID","kind":"id","optional":false,"example":"A5F4B69A-F5C0-494F-B5B4-185185BC3FBE"},{"name":"Alert.Rule.ID","kind":"id","optional":false,"example":"140"},{"name":"Alert.Rule.Severity.ID","kind":"id","optional":false,"example":"1"},{"name":"Alert.Location.CountryName","kind":"string","optional":false},{"name":"Alert.Location.SubdivisionName","kind":"string","optional":false},{"name":"Alert.Status.ID","kind":"id","optional":false,"example":"2"},{"name":"Alert.EventsCount","kind":"string","optional":false,"example":"14"},{"name":"Alert.Initial.Event.TimeUTC","kind":"timestamp","optional":false,"example":"2023-12-11T03:41:00","format":"iso"},{"name":"Alert.User.SamAccountName","kind":"string","optional":false,"example":"varadm"},{"name":"Alert.User.AccountType.Name","kind":"string","optional":false,"example":"Admin,Executive"},{"name":"Alert.Device.HostName","kind":"string","optional":false,"example":"intaf6fbdh"},{"name":"Alert.Device.IsMaliciousExternalIP","kind":"string","optional":false},{"name":"Alert.Device.ExternalIPThreatTypesName","kind":"string","optional":false},{"name":"Alert.Data.IsFlagged","kind":"string","optional":false,"example":"0"},{"name":"Alert.Data.IsSensitive","kind":"string","optional":false,"example":"0"},{"name":"Alert.Filer.Platform.Name","kind":"string","optional":false,"example":"Active Directory"},{"name":"Alert.Asset.Path","kind":"string","optional":false,"example":"intaf6fb.com(AD-intaf6fb.com)"},{"name":"Alert.Filer.Name","kind":"string","optional":false,"example":"AD-intaf6fb.com"},{"name":"Alert.CloseReason.Name","kind":"string","optional":false,"example":"True positive"},{"name":"Alert.Location.BlacklistedLocation","kind":"string","optional":false},{"name":"Alert.Location.AbnormalLocation","kind":"string","optional":false},{"name":"Alert.User.SidID","kind":"id","optional":false,"example":"971"},{"name":"Alert.IngestTime","kind":"timestamp","optional":false,"example":"2023-12-11T03:52:00","format":"iso"},{"name":"Alert.Time","kind":"timestamp","optional":false,"example":"2023-12-11T03:50:00","format":"iso"},{"name":"Url","kind":"string","optional":false,"example":"https://test.com/analytics/entity/Alert/A5F4B69A-F5C0-494F-B5B4-185185BC3FBE"},{"name":"Category","kind":"string","optional":false,"example":"Denial of Service"},{"name":"ID","kind":"id","optional":false,"example":"A5F4B69A-F5C0-494F-B5B4-185185BC3FBE"},{"name":"Name","kind":"string","optional":false,"example":"Deletion: Multiple directory service objects"},{"name":"Status","kind":"string","optional":false,"example":"Under Investigation"},{"name":"IPThreatTypes","kind":"string","optional":false},{"name":"CloseReason","kind":"string","optional":false,"example":"True positive"},{"name":"NumOfAlertedEvents","kind":"string","optional":false,"example":"14"},{"name":"ContainsFlaggedData","kind":"string","optional":false,"example":"0"},{"name":"ContainMaliciousExternalIP","kind":"string","optional":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "varonissaas-varonissaas",
+  "name": "Varonis SaaS",
+  "pack": "VaronisSaaS",
+  "vendor": "Varonis",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Search alerts in the SaaS data query API.",
+  "notes": [
+    "Varonis SaaS docs were not loaded. The client searches /app/dataquery/api/search/v2/search and mints a token at /api/authentication/api_keys/token.",
+    "This mock returns one alert row from the search. The token route is not modeled. The query is ignored.",
+    "A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VaronisSaaS/Integrations/VaronisSaaS",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "varonissaas-varonissaas",
+      "name": "Varonis SaaS",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VaronisSaaS",
+      "notes": [
+        "Varonis SaaS docs were not loaded. The client searches /app/dataquery/api/search/v2/search and mints a token at /api/authentication/api_keys/token.",
+        "This mock returns one alert row from the search. The token route is not modeled. The query is ignored.",
+        "A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/VaronisSaaS",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Varonis SaaS docs were not loaded. The client searches /app/dataquery/api/search/v2/search and mints a token at /api/authentication/api_keys/token.",
+          "This mock returns one alert row from the search. The token route is not modeled. The query is ignored.",
+          "A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "search",
+        "method": "POST",
+        "pathTemplate": "/app/dataquery/api/search/v2/search",
+        "summary": "Search alerts",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "alert",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "enum",
+                    "enumValues": [
+                      "low",
+                      "medium",
+                      "high"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "varonissaas-varonissaas",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

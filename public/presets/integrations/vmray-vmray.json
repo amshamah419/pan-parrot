@@ -1,1 +1,172 @@
-{"id":"vmray-vmray","name":"VMRay","pack":"VMRay","fidelity":"sample","curated":false,"summary":"Malware analysis sandboxing.","operations":1,"origin":"readme","spec":{"version":1,"source":{"kind":"preset","id":"vmray-vmray","name":"VMRay","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/VMRay/Integrations/VMRay","fidelity":"sample","notes":["The response shape comes from a JSON example in the integration README.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"readme","method":"GET","pathTemplate":"/POST","summary":"README","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"VMRay.Sample","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"SHA1","kind":"string","optional":false,"example":"69df095557346b3c136db4378afd5ee7a4839dcc"},{"name":"Created","kind":"timestamp","optional":false,"example":"2019-05-27T07:48:11","format":"iso"},{"name":"SampleID","kind":"integer","optional":false},{"name":"SampleURL","kind":"string","optional":false,"example":"https://cloud.vmray.com/user/sample/view?id=3902285"},{"name":"FileName","kind":"string","optional":false,"example":"KeePass-2.41-Setup.exe"},{"name":"FileSize","kind":"integer","optional":false},{"name":"SSDeep","kind":"string","optional":false,"example":"98304:rk/6KPcsSO9iShSf0UTsj+te5NrYWM+40n3vGJyc:rkCK0UhSfHsKw5z4OvGJL"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"VMRay.Submission","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"SampleID","kind":"integer","optional":false},{"name":"SubmissionID","kind":"integer","optional":false},{"name":"SubmissionURL","kind":"string","optional":false,"example":"https://cloud.vmray.com/user/sample/view?id=3902285"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"VMRay.Job","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"Created","kind":"timestamp","optional":false,"example":"2019-05-27T07:48:11","format":"iso"},{"name":"JobRuleSampleType","kind":"string","optional":false,"example":"Windows PE (x86)"},{"name":"VMID","kind":"integer","optional":false},{"name":"SampleID","kind":"integer","optional":false},{"name":"JobID","kind":"integer","optional":false},{"name":"VMName","kind":"string","optional":false,"example":"win10_64_th2"}]},"minItems":0,"maxItems":1,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "vmray-vmray",
+  "name": "VMRay",
+  "pack": "VMRay",
+  "vendor": "VMRay",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Submit a sample and read it back.",
+  "notes": [
+    "The client base ends in /rest/. sample/submit creates a sample. GET sample/{id} reads it. This mock uses those suffixes.",
+    "Jobs, IOCs, and the PDF report are not modeled. The sample id in the path is lab-sample.",
+    "The Analyzer API page was not reloaded. Authorization is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VMRay/Integrations/VMRay",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "vmray-vmray",
+      "name": "VMRay",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://www.vmray.com/cyber-security-blog/vmray-analyzer-api/",
+      "notes": [
+        "The client base ends in /rest/. sample/submit creates a sample. GET sample/{id} reads it. This mock uses those suffixes.",
+        "Jobs, IOCs, and the PDF report are not modeled. The sample id in the path is lab-sample.",
+        "The Analyzer API page was not reloaded. Authorization is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.vmray.com/cyber-security-blog/vmray-analyzer-api/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client base ends in /rest/. sample/submit creates a sample. GET sample/{id} reads it. This mock uses those suffixes.",
+          "Jobs, IOCs, and the PDF report are not modeled. The sample id in the path is lab-sample.",
+          "The Analyzer API page was not reloaded. Authorization is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "submit",
+        "method": "POST",
+        "pathTemplate": "/rest/sample/submit",
+        "summary": "Submit a sample",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "sample_id",
+                  "kind": "id"
+                },
+                {
+                  "name": "sample_webif_url",
+                  "kind": "string",
+                  "example": "https://lab.vmray.example/sample"
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "sample",
+        "method": "GET",
+        "pathTemplate": "/rest/sample/lab-sample",
+        "summary": "Get a sample",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "sample_id",
+                  "kind": "const",
+                  "constValue": "lab-sample"
+                },
+                {
+                  "name": "sample_severity",
+                  "kind": "enum",
+                  "enumValues": [
+                    "not_suspicious",
+                    "suspicious",
+                    "malicious"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "vmray-vmray",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "Authorization",
+        "value": "api_key dummy-vmray-key"
+      }
+    }
+  }
+}

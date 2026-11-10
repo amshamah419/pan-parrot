@@ -1,1 +1,133 @@
-{"id":"ciscospark-ciscospark","name":"Cisco Webex Teams","pack":"CiscoSpark","fidelity":"shape","curated":false,"summary":"Send messages, create rooms and more, via the Cisco Spark API.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"ciscospark-ciscospark","name":"Cisco Webex Teams","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CiscoSpark/Integrations/CiscoSpark","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"cisco-spark-list-people","method":"GET","pathTemplate":"/","summary":"List people.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CiscoSpark","kind":"object","optional":false,"children":[{"name":"People","kind":"string","optional":false,"example":"People"}]}]}},{"id":"cisco-spark-create-person","method":"GET","pathTemplate":"/","summary":"Create a new user account for a given organization. Only an admin can create a new user account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"emails","kind":"string","optional":false,"example":"emails"},{"name":"displayName","kind":"string","optional":false,"example":"displayName"},{"name":"firstName","kind":"string","optional":false,"example":"firstName"},{"name":"lastName","kind":"string","optional":false,"example":"lastName"},{"name":"avatar","kind":"string","optional":false,"example":"avatar"},{"name":"orgId","kind":"string","optional":false,"example":"orgId"},{"name":"roles","kind":"string","optional":false,"example":"roles"},{"name":"licenses","kind":"string","optional":false,"example":"licenses"}]}},{"id":"cisco-spark-get-person-details","method":"GET","pathTemplate":"/","summary":"Shows details for a person, by ID.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"personId","kind":"string","optional":false,"example":"personId"}]}},{"id":"cisco-spark-update-person","method":"GET","pathTemplate":"/","summary":"Update details for a person, by ID. Only an admin can update a person details.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"emails","kind":"string","optional":false,"example":"emails"},{"name":"displayName","kind":"string","optional":false,"example":"displayName"},{"name":"firstName","kind":"string","optional":false,"example":"firstName"},{"name":"lastName","kind":"string","optional":false,"example":"lastName"},{"name":"avatar","kind":"string","optional":false,"example":"avatar"},{"name":"orgId","kind":"string","optional":false,"example":"orgId"},{"name":"roles","kind":"string","optional":false,"example":"roles"},{"name":"licenses","kind":"string","optional":false,"example":"licenses"},{"name":"personId","kind":"string","optional":false,"example":"personId"}]}},{"id":"cisco-spark-delete-person","method":"GET","pathTemplate":"/","summary":"Remove a person from the system. Only an admin can remove a person.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"personId","kind":"string","optional":false,"example":"personId"}]}},{"id":"cisco-spark-list-rooms","method":"GET","pathTemplate":"/","summary":"List rooms.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CiscoSpark","kind":"object","optional":false,"children":[{"name":"Rooms","kind":"string","optional":false,"example":"Rooms"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "ciscospark-ciscospark",
+  "name": "Cisco Webex Teams",
+  "pack": "CiscoSpark",
+  "vendor": "Cisco",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "List Webex rooms.",
+  "notes": [
+    "CiscoSpark.js maps cisco-spark-list-rooms to GET rooms. This mock is GET /v1/rooms and returns { items }.",
+    "Memberships, messages, and webhooks are not modeled.",
+    "The list-rooms page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoSpark/Integrations/CiscoSpark",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "ciscospark-ciscospark",
+      "name": "Cisco Webex Teams",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developer.webex.com/docs/api/v1/rooms/list-rooms",
+      "notes": [
+        "CiscoSpark.js maps cisco-spark-list-rooms to GET rooms. This mock is GET /v1/rooms and returns { items }.",
+        "Memberships, messages, and webhooks are not modeled.",
+        "The list-rooms page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.webex.com/docs/api/v1/rooms/list-rooms",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "CiscoSpark.js maps cisco-spark-list-rooms to GET rooms. This mock is GET /v1/rooms and returns { items }.",
+          "Memberships, messages, and webhooks are not modeled.",
+          "The list-rooms page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "rooms",
+        "method": "GET",
+        "pathTemplate": "/v1/rooms",
+        "summary": "List rooms",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "items",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "room",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "title",
+                    "kind": "string",
+                    "example": "Lab room"
+                  },
+                  {
+                    "name": "type",
+                    "kind": "const",
+                    "constValue": "group"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "ciscospark-ciscospark",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

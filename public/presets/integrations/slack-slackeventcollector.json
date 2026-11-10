@@ -1,1 +1,133 @@
-{"id":"slack-slackeventcollector","name":"Slack Event Collector","pack":"Slack","fidelity":"shape","curated":false,"summary":"Slack logs event collector integration for XSIAM.","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"slack-slackeventcollector","name":"Slack Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Slack/Integrations/SlackEventCollector","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-mock-event-json","method":"GET","pathTemplate":"/","summary":"test_data/mock_event.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"0123a45b-6c7d-8900-e12f-3456789gh0i1"},{"name":"date_create","kind":"integer","optional":false},{"name":"action","kind":"string","optional":false,"example":"user_login"},{"name":"actor","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"user","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"W123AB456"},{"name":"name","kind":"string","optional":false,"example":"Charlie Parker"},{"name":"email","kind":"email","optional":false}]}]},{"name":"entity","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"user","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"W123AB456"},{"name":"name","kind":"string","optional":false,"example":"Charlie Parker"},{"name":"email","kind":"email","optional":false}]}]},{"name":"context","kind":"object","optional":false,"children":[{"name":"location","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"enterprise"},{"name":"id","kind":"id","optional":false,"example":"E1701NCCA"},{"name":"name","kind":"string","optional":false,"example":"Birdland"},{"name":"domain","kind":"string","optional":false,"example":"birdland"}]},{"name":"ua","kind":"string","optional":false,"example":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.3"},{"name":"session_id","kind":"id","optional":false,"example":"847288190092"},{"name":"ip_address","kind":"ip","optional":false,"example":"1.23.45.678"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "slack-slackeventcollector",
+  "name": "Slack Event Collector",
+  "pack": "Slack",
+  "vendor": "Slack",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Audit log entries.",
+  "notes": [
+    "The collector GETs logs on the Audit Logs API. This mock is GET /audit/v1/logs and returns { entries }.",
+    "The cursor is ignored. Message events from the Events API are not modeled. Chat methods stay on Slack v3.",
+    "The audit-logs page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Slack/Integrations/SlackEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "slack-slackeventcollector",
+      "name": "Slack Event Collector",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://api.slack.com/admins/audit-logs",
+      "notes": [
+        "The collector GETs logs on the Audit Logs API. This mock is GET /audit/v1/logs and returns { entries }.",
+        "The cursor is ignored. Message events from the Events API are not modeled. Chat methods stay on Slack v3.",
+        "The audit-logs page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://api.slack.com/admins/audit-logs",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The collector GETs logs on the Audit Logs API. This mock is GET /audit/v1/logs and returns { entries }.",
+          "The cursor is ignored. Message events from the Events API are not modeled. Chat methods stay on Slack v3.",
+          "The audit-logs page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "logs",
+        "method": "GET",
+        "pathTemplate": "/audit/v1/logs",
+        "summary": "List audit logs",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "entries",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "entry",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "action",
+                    "kind": "string",
+                    "example": "user_login"
+                  },
+                  {
+                    "name": "date_create",
+                    "kind": "timestamp",
+                    "format": "unix"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "slack-slackeventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

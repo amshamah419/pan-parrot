@@ -1,1 +1,133 @@
-{"id":"servicenow-servicenow-cmdb","name":"ServiceNow CMDB","pack":"ServiceNow","fidelity":"shape","curated":false,"summary":"ServiceNow CMDB is a service‑centric foundation that proactively analyzes service‑impacting changes, identifies issues, and eliminates outages.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"servicenow-servicenow-cmdb","name":"ServiceNow CMDB","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/ServiceNow/Integrations/ServiceNow_CMDB","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"servicenow-cmdb-records-list","method":"GET","pathTemplate":"/api/now/cmdb/instance","summary":"Query records for a CMDB class.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ServiceNowCMDB","kind":"object","optional":false,"children":[{"name":"Class","kind":"string","optional":false,"example":"Class"},{"name":"Records","kind":"string","optional":false,"example":"Records"}]}]}},{"id":"servicenow-cmdb-record-get-by-id","method":"GET","pathTemplate":"/","summary":"Query attributes and relationship information for a specific record.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ServiceNowCMDB","kind":"object","optional":false,"children":[{"name":"Record","kind":"object","optional":false,"children":[{"name":"SysID","kind":"id","optional":false},{"name":"Class","kind":"string","optional":false,"example":"Class"},{"name":"Attributes","kind":"string","optional":false,"example":"Attributes"},{"name":"OutboundRelations","kind":"string","optional":false,"example":"OutboundRelations"},{"name":"InboundRelations","kind":"string","optional":false,"example":"InboundRelations"}]}]}]}},{"id":"servicenow-cmdb-record-create","method":"GET","pathTemplate":"/","summary":"Create a record with associated relations and attributes.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ServiceNowCMDB","kind":"object","optional":false,"children":[{"name":"Record","kind":"object","optional":false,"children":[{"name":"SysID","kind":"id","optional":false},{"name":"Class","kind":"string","optional":false,"example":"Class"},{"name":"Attributes","kind":"string","optional":false,"example":"Attributes"},{"name":"OutboundRelations","kind":"string","optional":false,"example":"OutboundRelations"},{"name":"InboundRelations","kind":"string","optional":false,"example":"InboundRelations"}]}]}]}},{"id":"servicenow-cmdb-record-update","method":"GET","pathTemplate":"/","summary":"Update a record with the given attributes.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ServiceNowCMDB","kind":"object","optional":false,"children":[{"name":"Record","kind":"object","optional":false,"children":[{"name":"SysID","kind":"id","optional":false},{"name":"Class","kind":"string","optional":false,"example":"Class"},{"name":"Attributes","kind":"string","optional":false,"example":"Attributes"},{"name":"OutboundRelations","kind":"string","optional":false,"example":"OutboundRelations"},{"name":"InboundRelations","kind":"string","optional":false,"example":"InboundRelations"}]}]}]}},{"id":"servicenow-cmdb-record-add-relations","method":"GET","pathTemplate":"/","summary":"Add a new relation to an existing record.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ServiceNowCMDB","kind":"object","optional":false,"children":[{"name":"Record","kind":"object","optional":false,"children":[{"name":"SysID","kind":"id","optional":false},{"name":"Class","kind":"string","optional":false,"example":"Class"},{"name":"Attributes","kind":"string","optional":false,"example":"Attributes"},{"name":"OutboundRelations","kind":"string","optional":false,"example":"OutboundRelations"},{"name":"InboundRelations","kind":"string","optional":false,"example":"InboundRelations"}]}]}]}},{"id":"servicenow-cmdb-record-delete-relations","method":"GET","pathTemplate":"/","summary":"Delete a relation of an existing record.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ServiceNowCMDB","kind":"object","optional":false,"children":[{"name":"Record","kind":"object","optional":false,"children":[{"name":"SysID","kind":"id","optional":false},{"name":"Class","kind":"string","optional":false,"example":"Class"},{"name":"Attributes","kind":"string","optional":false,"example":"Attributes"},{"name":"OutboundRelations","kind":"string","optional":false,"example":"OutboundRelations"},{"name":"InboundRelations","kind":"string","optional":false,"example":"InboundRelations"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "servicenow-servicenow-cmdb",
+  "name": "ServiceNow CMDB",
+  "pack": "ServiceNow",
+  "vendor": "ServiceNow",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "List Linux server CIs.",
+  "notes": [
+    "The client GETs /api/now/cmdb/instance/{class}. This mock answers cmdb_ci_linux_server with { result }.",
+    "Create, patch, and relations are not modeled. Other classes do not match.",
+    "The CMDB Instance API page was not reloaded. Basic auth is the lab user. Incident tables stay on ServiceNow v2."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ServiceNow/Integrations/ServiceNow_CMDB",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "servicenow-servicenow-cmdb",
+      "name": "ServiceNow CMDB",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_CMDBInstanceAPI.html",
+      "notes": [
+        "The client GETs /api/now/cmdb/instance/{class}. This mock answers cmdb_ci_linux_server with { result }.",
+        "Create, patch, and relations are not modeled. Other classes do not match.",
+        "The CMDB Instance API page was not reloaded. Basic auth is the lab user. Incident tables stay on ServiceNow v2."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_CMDBInstanceAPI.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client GETs /api/now/cmdb/instance/{class}. This mock answers cmdb_ci_linux_server with { result }.",
+          "Create, patch, and relations are not modeled. Other classes do not match.",
+          "The CMDB Instance API page was not reloaded. Basic auth is the lab user. Incident tables stay on ServiceNow v2."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "cis",
+        "method": "GET",
+        "pathTemplate": "/api/now/cmdb/instance/cmdb_ci_linux_server",
+        "summary": "List Linux servers",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "result",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "ci",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "sys_id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab-linux"
+                  },
+                  {
+                    "name": "ip_address",
+                    "kind": "ip"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "servicenow-servicenow-cmdb",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "basic",
+      "basic": {
+        "username": "lab-admin",
+        "password": "dummy-not-a-real-password"
+      }
+    }
+  }
+}

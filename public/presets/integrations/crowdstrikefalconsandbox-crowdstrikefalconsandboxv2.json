@@ -1,1 +1,175 @@
-{"id":"crowdstrikefalconsandbox-crowdstrikefalconsandboxv2","name":"CrowdStrike Falcon Sandbox v2 (Hybrid-Analysis)","pack":"CrowdStrikeFalconSandbox","fidelity":"sample","curated":false,"summary":"Fully automated malware analysis using Hybrid Analysis API.","operations":2,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"crowdstrikefalconsandbox-crowdstrikefalconsandboxv2","name":"CrowdStrike Falcon Sandbox v2 (Hybrid-Analysis)","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CrowdStrikeFalconSandbox/Integrations/CrowdStrikeFalconSandboxV2","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-scan-response-json","method":"GET","pathTemplate":"/report/{key}/report/{filetype}","summary":"test_data/scan_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"job_id","kind":"string","optional":true},{"name":"environment_id","kind":"string","optional":true},{"name":"environment_description","kind":"string","optional":false,"example":"Static Analysis"},{"name":"size","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"PE32 executable (console) Intel 80386, for MS Windows"},{"name":"type_short","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"peexe"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"target_url","kind":"string","optional":true},{"name":"state","kind":"string","optional":false,"example":"SUCCESS"},{"name":"error_type","kind":"string","optional":true},{"name":"error_origin","kind":"string","optional":true},{"name":"submit_name","kind":"string","optional":false,"example":"file"},{"name":"md5","kind":"string","optional":false,"example":"filehash"},{"name":"sha1","kind":"string","optional":false,"example":"filehash"},{"name":"sha256","kind":"string","optional":false,"example":"filehash"},{"name":"sha512","kind":"string","optional":false,"example":"filehash"},{"name":"ssdeep","kind":"string","optional":true},{"name":"imphash","kind":"string","optional":true},{"name":"av_detect","kind":"integer","optional":false},{"name":"vx_family","kind":"string","optional":false,"example":"Memery.A virus"},{"name":"url_analysis","kind":"boolean","optional":false},{"name":"analysis_start_time","kind":"timestamp","optional":false,"example":"2021-11-30T18:34:21+00:00","format":"iso"},{"name":"threat_score","kind":"string","optional":true},{"name":"interesting","kind":"boolean","optional":false},{"name":"threat_level","kind":"integer","optional":false},{"name":"verdict","kind":"string","optional":false,"example":"malicious"},{"name":"certificates","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"domains","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"classification_tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"compromised_hosts","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"hosts","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"total_network_connections","kind":"integer","optional":false},{"name":"total_processes","kind":"integer","optional":false},{"name":"total_signatures","kind":"integer","optional":false},{"name":"extracted_files","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"file_metadata","kind":"string","optional":true},{"name":"processes","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"mitre_attcks","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"submissions","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"submission_id","kind":"id","optional":false,"example":"id1"},{"name":"filename","kind":"string","optional":false,"example":"file"},{"name":"url","kind":"string","optional":true},{"name":"created_at","kind":"timestamp","optional":false,"example":"2021-12-01T15:44:08+00:00","format":"iso"}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"network_mode","kind":"string","optional":false,"example":"default"}]}},{"id":"test-data-submission-response-json","method":"GET","pathTemplate":"/overview/{sha256hash}/summary","summary":"test_data/submission_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"submission_type","kind":"string","optional":false,"example":"page_url"},{"name":"job_id","kind":"id","optional":false,"example":"12345"},{"name":"submission_id","kind":"id","optional":false,"example":"submissionId"},{"name":"environment_id","kind":"integer","optional":false},{"name":"sha256","kind":"string","optional":false,"example":"filehash"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "crowdstrikefalconsandbox-crowdstrikefalconsandboxv2",
+  "name": "CrowdStrike Falcon Sandbox v2 (Hybrid-Analysis)",
+  "pack": "CrowdStrikeFalconSandbox",
+  "vendor": "CrowdStrike",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Hybrid Analysis environments and a report summary.",
+  "notes": [
+    "The client GETs /system/environments and /report/{id}/summary. This mock returns one environment and one summary.",
+    "File submit, screenshots, and search terms are not modeled. The report id in the path is lab-report.",
+    "The Hybrid Analysis v2 page was not reloaded. The api-key header is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeFalconSandbox/Integrations/CrowdStrikeFalconSandboxV2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "crowdstrikefalconsandbox-crowdstrikefalconsandboxv2",
+      "name": "CrowdStrike Falcon Sandbox v2 (Hybrid-Analysis)",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://www.hybrid-analysis.com/docs/api/v2",
+      "notes": [
+        "The client GETs /system/environments and /report/{id}/summary. This mock returns one environment and one summary.",
+        "File submit, screenshots, and search terms are not modeled. The report id in the path is lab-report.",
+        "The Hybrid Analysis v2 page was not reloaded. The api-key header is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.hybrid-analysis.com/docs/api/v2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client GETs /system/environments and /report/{id}/summary. This mock returns one environment and one summary.",
+          "File submit, screenshots, and search terms are not modeled. The report id in the path is lab-report.",
+          "The Hybrid Analysis v2 page was not reloaded. The api-key header is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "environments",
+        "method": "GET",
+        "pathTemplate": "/system/environments",
+        "summary": "List environments",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "environments",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "environment",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "Windows 10"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "summary",
+        "method": "GET",
+        "pathTemplate": "/report/lab-report/summary",
+        "summary": "Get a report summary",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "sha256",
+              "kind": "id"
+            },
+            {
+              "name": "verdict",
+              "kind": "enum",
+              "enumValues": [
+                "no specific threat",
+                "suspicious",
+                "malicious"
+              ]
+            },
+            {
+              "name": "threat_score",
+              "kind": "integer"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "crowdstrikefalconsandbox-crowdstrikefalconsandboxv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "api-key",
+        "value": "dummy-hybrid-key"
+      }
+    }
+  }
+}

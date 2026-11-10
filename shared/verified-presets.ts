@@ -4,6 +4,7 @@ import { fetchVerifiedPresets } from "./verified-presets-fetch";
 import { intelVerifiedPresets } from "./verified-presets-intel";
 import { awsQueryVerifiedPresets } from "./verified-presets-aws";
 import { panSiemVerifiedPresets } from "./verified-presets-pan";
+import { usageVerifiedPresets } from "./verified-presets-usage";
 import { responseVerifiedPresets } from "./verified-presets-response";
 import { moreVerifiedPresets } from "./verified-presets-more";
 
@@ -1396,6 +1397,7 @@ export const verifiedPresets: VerifiedPresetFile[] = [
   ...responseVerifiedPresets,
   ...awsQueryVerifiedPresets,
   ...panSiemVerifiedPresets,
+  ...usageVerifiedPresets,
 ];
 
 export const checkedNotUpgraded: Array<{

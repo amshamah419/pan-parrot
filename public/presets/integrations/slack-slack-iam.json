@@ -1,1 +1,137 @@
-{"id":"slack-slack-iam","name":"Slack IAM","pack":"Slack","fidelity":"shape","curated":false,"summary":"Integrate with Slack's services to execute CRUD operations for employee lifecycle processes.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"slack-slack-iam","name":"Slack IAM","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Slack/Integrations/Slack_IAM","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"iam-create-user","method":"GET","pathTemplate":"/Users/{filter_value}","summary":"Creates a user.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"brand","kind":"string","optional":false,"example":"brand"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"},{"name":"id","kind":"id","optional":false},{"name":"instanceName","kind":"string","optional":false,"example":"instanceName"},{"name":"success","kind":"boolean","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"}]}]}]}},{"id":"iam-update-user","method":"GET","pathTemplate":"/Groups/{group_id}","summary":"Updates an existing user with the data passed in the user-profile argument.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"brand","kind":"string","optional":false,"example":"brand"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"},{"name":"id","kind":"id","optional":false},{"name":"instanceName","kind":"string","optional":false,"example":"instanceName"},{"name":"success","kind":"boolean","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"}]}]}]}},{"id":"iam-get-user","method":"GET","pathTemplate":"/Users/{user_id}","summary":"Retrieves a single user resource.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"brand","kind":"string","optional":false,"example":"brand"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"},{"name":"id","kind":"id","optional":false},{"name":"instanceName","kind":"string","optional":false,"example":"instanceName"},{"name":"success","kind":"boolean","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"}]}]}]}},{"id":"iam-disable-user","method":"GET","pathTemplate":"/Schemas/Users","summary":"Disable an active user.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"brand","kind":"string","optional":false,"example":"brand"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"},{"name":"id","kind":"id","optional":false},{"name":"instanceName","kind":"string","optional":false,"example":"instanceName"},{"name":"success","kind":"boolean","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"}]}]}]}},{"id":"iam-create-group","method":"GET","pathTemplate":"/Groups","summary":"Creates an empty group.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CreateGroup","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"displayName","kind":"string","optional":false,"example":"displayName"},{"name":"success","kind":"boolean","optional":false},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"}]}]}},{"id":"iam-get-group","method":"GET","pathTemplate":"/Users","summary":"Retrieves the group information including members.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"GetGroup","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"displayName","kind":"string","optional":false,"example":"displayName"},{"name":"members","kind":"object","optional":false,"children":[{"name":"display","kind":"string","optional":false,"example":"display"},{"name":"value","kind":"string","optional":false,"example":"value"}]},{"name":"success","kind":"boolean","optional":false},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "slack-slack-iam",
+  "name": "Slack IAM",
+  "pack": "Slack",
+  "vendor": "Slack",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "SCIM users.",
+  "notes": [
+    "The client base is https://api.slack.com/scim/v1/ and GETs /Users. This mock returns Resources and totalResults.",
+    "Create, replace, and the Schemas call are not modeled.",
+    "The SCIM page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Slack/Integrations/Slack_IAM",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "slack-slack-iam",
+      "name": "Slack IAM",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://api.slack.com/admins/scim",
+      "notes": [
+        "The client base is https://api.slack.com/scim/v1/ and GETs /Users. This mock returns Resources and totalResults.",
+        "Create, replace, and the Schemas call are not modeled.",
+        "The SCIM page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://api.slack.com/admins/scim",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client base is https://api.slack.com/scim/v1/ and GETs /Users. This mock returns Resources and totalResults.",
+          "Create, replace, and the Schemas call are not modeled.",
+          "The SCIM page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "users",
+        "method": "GET",
+        "pathTemplate": "/scim/v1/Users",
+        "summary": "List SCIM users",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "totalResults",
+              "kind": "integer"
+            },
+            {
+              "name": "Resources",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "user",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "userName",
+                    "kind": "string",
+                    "example": "ada"
+                  },
+                  {
+                    "name": "active",
+                    "kind": "const",
+                    "constValue": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "slack-slack-iam",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

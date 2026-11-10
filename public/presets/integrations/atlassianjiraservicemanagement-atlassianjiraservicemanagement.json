@@ -1,1 +1,128 @@
-{"id":"atlassianjiraservicemanagement-atlassianjiraservicemanagement","name":"Atlassian Jira Service Management","pack":"AtlassianJiraServiceManagement","fidelity":"sample","curated":false,"summary":"Use this integration to manage Jira objects and attach files to Jira objects from Cortex XSOAR.","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"atlassianjiraservicemanagement-atlassianjiraservicemanagement","name":"Atlassian Jira Service Management","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AtlassianJiraServiceManagement/Integrations/AtlassianJiraServiceManagement","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-command-test-data-json","method":"GET","pathTemplate":"/objectconnectedtickets/{object_id}/tickets","summary":"test_data/command_test_data.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"object_schema_list","kind":"object","optional":false,"children":[{"name":"response","kind":"object","optional":false,"children":[{"name":"objectschemas","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"created","kind":"timestamp","optional":false,"example":"2024-05-23T11:54:15.000Z","format":"iso"},{"name":"id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"Test 1"},{"name":"objectCount","kind":"integer","optional":false},{"name":"objectSchemaKey","kind":"string","optional":false,"example":"T1"},{"name":"objectTypeCount","kind":"integer","optional":false},{"name":"status","kind":"string","optional":false,"example":"Ok"},{"name":"updated","kind":"timestamp","optional":false,"example":"2024-05-23T11:54:15.000Z","format":"iso"}]},"minItems":0,"maxItems":3,"pageItems":false}]}]},{"name":"object_type_list","kind":"object","optional":false,"children":[{"name":"response","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"Engineer"},{"name":"type","kind":"integer","optional":false},{"name":"description","kind":"string","optional":false,"example":"An engineering employee."},{"name":"icon","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"Users"},{"name":"url16","kind":"string","optional":false,"example":"https://jira-dc-qa.paloaltonetworks.com/rest/insight/1.0/objecttype/2/icon.png?size=16"},{"name":"url48","kind":"string","optional":false,"example":"https://jira-dc-qa.paloaltonetworks.com/rest/insight/1.0/objecttype/2/icon.png?size=48"}]},{"name":"position","kind":"integer","optional":false},{"name":"created","kind":"timestamp","optional":false,"example":"2024-05-26T11:32:56.000Z","format":"iso"},{"name":"updated","kind":"timestamp","optional":false,"example":"2024-05-26T11:32:56.000Z","format":"iso"},{"name":"objectCount","kind":"integer","optional":false},{"name":"parentObjectTypeId","kind":"integer","optional":false},{"name":"objectSchemaId","kind":"integer","optional":false},{"name":"inherited","kind":"boolean","optional":false},{"name":"abstractObjectType","kind":"boolean","optional":false},{"name":"parentObjectTypeInherited","kind":"boolean","optional":false}]},"minItems":0,"maxItems":3,"pageItems":false}]},{"name":"object_type_attributes","kind":"object","optional":false,"children":[{"name":"response","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"Key"},{"name":"label","kind":"boolean","optional":false},{"name":"type","kind":"integer","optional":false},{"name":"defaultType","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"Text"}]},{"name":"editable","kind":"boolean","optional":false},{"name":"system","kind":"boolean","optional":false},{"name":"sortable","kind":"boolean","optional":false},{"name":"summable","kind":"boolean","optional":false},{"name":"indexed","kind":"boolean","optional":false},{"name":"minimumCardinality","kind":"integer","optional":false},{"name":"maximumCardinality","kind":"integer","optional":false},{"name":"removable","kind":"boolean","optional":false},{"name":"objectAttributeExists","kind":"boolean","optional":false},{"name":"hidden","kind":"boolean","optional":false},{"name":"includeChildObjectTypes","kind":"boolean","optional":false},{"name":"uniqueAttribute","kind":"boolean","optional":false},{"name":"options","kind":"string","optional":false},{"name":"position","kind":"integer","optional":false}]},"minItems":0,"maxItems":3,"pageItems":false}]},{"name":"object_create","kind":"object","optional":false,"children":[{"name":"response","kind":"object","optional":false,"children":[]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "atlassianjiraservicemanagement-atlassianjiraservicemanagement",
+  "name": "Atlassian Jira Service Management",
+  "pack": "AtlassianJiraServiceManagement",
+  "vendor": "Atlassian",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Assets object schemas.",
+  "notes": [
+    "The client base is /rest/assets/1.0/ and GETs /objectschema/list. This mock returns one schema.",
+    "Object types, attributes, and single objects are not modeled.",
+    "The Assets objectschema page was not reloaded. A bearer token is required. Jira issue search stays on the Jira v3 preset."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AtlassianJiraServiceManagement/Integrations/AtlassianJiraServiceManagement",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "atlassianjiraservicemanagement-atlassianjiraservicemanagement",
+      "name": "Atlassian Jira Service Management",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developer.atlassian.com/cloud/assets/rest/api-group-objectschema/",
+      "notes": [
+        "The client base is /rest/assets/1.0/ and GETs /objectschema/list. This mock returns one schema.",
+        "Object types, attributes, and single objects are not modeled.",
+        "The Assets objectschema page was not reloaded. A bearer token is required. Jira issue search stays on the Jira v3 preset."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.atlassian.com/cloud/assets/rest/api-group-objectschema/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client base is /rest/assets/1.0/ and GETs /objectschema/list. This mock returns one schema.",
+          "Object types, attributes, and single objects are not modeled.",
+          "The Assets objectschema page was not reloaded. A bearer token is required. Jira issue search stays on the Jira v3 preset."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "schemas",
+        "method": "GET",
+        "pathTemplate": "/rest/assets/1.0/objectschema/list",
+        "summary": "List object schemas",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "objectschemas",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "schema",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "Lab assets"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "atlassianjiraservicemanagement-atlassianjiraservicemanagement",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}
