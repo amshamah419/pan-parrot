@@ -59,7 +59,7 @@ describe("AWS command coverage", () => {
     );
     expect(okta).toEqual({ vendor: 61, approximate: 26, missing: 8 });
     const servicenow = sums(covered.filter((preset) => preset.id.startsWith("servicenow-")));
-    expect(servicenow).toEqual({ vendor: 42, approximate: 2, missing: 10 });
+    expect(servicenow).toEqual({ vendor: 44, approximate: 0, missing: 10 });
     const jira = sums(covered.filter((preset) => preset.id.startsWith("jira-")));
     expect(jira).toEqual({ vendor: 31, approximate: 5, missing: 14 });
     const assets = sums(
@@ -69,7 +69,7 @@ describe("AWS command coverage", () => {
     const gsuite = sums(covered.filter((preset) => preset.id.startsWith("gsuite")));
     expect(gsuite).toEqual({ vendor: 1, approximate: 2, missing: 31 });
     const splunk = sums(covered.filter((preset) => preset.id.startsWith("splunkpy-")));
-    expect(splunk).toEqual({ vendor: 0, approximate: 6, missing: 52 });
+    expect(splunk).toEqual({ vendor: 2, approximate: 6, missing: 50 });
     const qradar = sums(covered.filter((preset) => preset.id === "qradar-qradar-v3"));
     expect(qradar).toEqual({ vendor: 0, approximate: 3, missing: 68 });
     const proofpoint = sums(covered.filter((preset) => preset.id.startsWith("proofpoint")));

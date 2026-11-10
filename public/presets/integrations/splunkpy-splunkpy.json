@@ -3,9 +3,9 @@
   "name": "SplunkPy",
   "pack": "SplunkPy",
   "vendor": "Splunk",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: POST /services/search/jobs.",
+  "summary": "Search results are the Splunk REST example with non-breaking spaces replaced by spaces. From vendor docs (formatting fixed).",
   "notes": [
     "Sample fields are the ones POST /services/search/jobs reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,25 +17,31 @@
       "kind": "preset",
       "id": "splunkpy-splunkpy",
       "name": "SplunkPy",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
-      "sourceUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-tutorials/10.2/rest-api-tutorials/creating-searches-using-the-rest-api",
+      "sourceUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-user-manual/10.2/rest-api-user-manual/basic-concepts-about-the-splunk-platform-rest-api",
       "notes": [
         "Sample fields are the ones POST /services/search/jobs reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-tutorials/10.2/rest-api-tutorials/creating-searches-using-the-rest-api",
+        "status": "vendor",
+        "docUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-user-manual/10.2/rest-api-user-manual/basic-concepts-about-the-splunk-platform-rest-api",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /services/search/jobs reads in the matched command. Lists the command iterates are arrays."
+          "Search results are the Splunk REST example with non-breaking spaces replaced by spaces. From vendor docs (formatting fixed)."
         ]
       },
       "commandDocs": [
         {
           "command": "splunk-results",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /services/search/jobs/{sid}/results"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-services-search-jobs-sid-results-0"
+          ],
+          "docUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-user-manual/10.2/rest-api-user-manual/basic-concepts-about-the-splunk-platform-rest-api"
         },
         {
           "command": "splunk-search",
@@ -43,7 +49,11 @@
             "POST /services/search/jobs",
             "GET /services/search/jobs/{sid}/results"
           ],
-          "status": "approximate"
+          "status": "approximate",
+          "operationIds": [
+            "post-services-search-jobs-0",
+            "get-services-search-jobs-sid-results-0"
+          ]
         },
         {
           "command": "splunk-submit-event",
@@ -155,7 +165,11 @@
             "POST /services/search/jobs",
             "GET /services/search/jobs/{sid}/results"
           ],
-          "status": "approximate"
+          "status": "approximate",
+          "operationIds": [
+            "post-services-search-jobs-0",
+            "get-services-search-jobs-sid-results-0"
+          ]
         },
         {
           "command": "splunk-get-username-by-xsoar-user",
@@ -167,7 +181,8 @@
           "calls": [],
           "status": "missing"
         }
-      ]
+      ],
+      "formattingFixed": true
     },
     "operations": [
       {
@@ -211,6 +226,40 @@
             }
           ]
         }
+      },
+      {
+        "id": "get-services-search-jobs-sid-results-0",
+        "method": "GET",
+        "pathTemplate": "/services/search/jobs/{sid}/results",
+        "summary": "Search job results",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ok",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"init_offset\": 0,\n  \"messages\": [\n    {\n      \"text\": \"base lispy: [ AND index::_internal source::*metrics.log ]\",\n      \"type\": \"DEBUG\"\n    },\n    {\n      \"text\": \"search context: user=\\\"admin\\\", app=\\\"search\\\", bs-pathname=\\\"/Applications/splunk-ace/etc\\\"\",\n      \"type\": \"DEBUG\"\n    },\n    {\n      \"text\": \"Your timerange was substituted based on your search string\",\n      \"type\": \"INFO\"\n    }\n  ],\n  \"preview\": false,\n  \"results\": [\n    {\n      \"group\": \"tpool\",\n      \"host\": \"splunks-ombra.sv.splunk.com\",\n      \"name\": \"indexertpool\",\n      \"source\": \"/Applications/splunk-ace/var/log/splunk/metrics.log\",\n      \"sourcetype\": \"splunkd\"\n    },\n    {\n      \"group\": \"tpool\",\n      \"host\": \"splunks-ombra.sv.splunk.com\",\n      \"name\": \"bundlereplthreadpool\",\n      \"source\": \"/Applications/splunk-ace/var/log/splunk/metrics.log\",\n      \"sourcetype\": \"splunkd\"\n    },\n    {\n      \"group\": \"tpool\",\n      \"host\": \"splunks-ombra.sv.splunk.com\",\n      \"name\": \"batchreadertpool\",\n      \"source\": \"/Applications/splunk-ace/var/log/splunk/metrics.log\",\n      \"sourcetype\": \"splunkd\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

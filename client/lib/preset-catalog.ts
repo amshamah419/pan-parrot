@@ -7,6 +7,7 @@ export interface PresetCatalogEntry {
   summary?: string;
   operations?: number;
   verification?: { status?: string; docUrl?: string };
+  formattingFixed?: boolean;
   commandCoverage?: { total: number; vendor: number; approximate: number; missing: number };
 }
 

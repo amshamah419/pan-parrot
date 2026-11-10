@@ -148,6 +148,11 @@ const DOC_LABEL: Record<CommandDoc["status"], string> = {
   missing: "Missing",
 };
 
+function docLabel(status: CommandDoc["status"], formattingFixed?: boolean): string {
+  if (status === "vendor" && formattingFixed) return "From vendor docs (formatting fixed)";
+  return DOC_LABEL[status];
+}
+
 export function CommandDocsPanel({ spec }: { spec: MockSpec }) {
   const rows = spec.source.commandDocs;
   if (!rows?.length) return null;
@@ -180,10 +185,10 @@ export function CommandDocsPanel({ spec }: { spec: MockSpec }) {
                 <td className="py-2 text-xs">
                   {row.status === "vendor" && row.docUrl ? (
                     <a className="underline" href={row.docUrl} target="_blank" rel="noreferrer">
-                      {DOC_LABEL[row.status]}
+                      {docLabel(row.status, spec.source.formattingFixed)}
                     </a>
                   ) : (
-                    DOC_LABEL[row.status]
+                    docLabel(row.status, spec.source.formattingFixed)
                   )}
                 </td>
               </tr>
