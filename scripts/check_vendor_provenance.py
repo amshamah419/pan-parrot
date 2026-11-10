@@ -49,7 +49,8 @@ def emails(value) -> list[str]:
     import re
 
     found = re.findall(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", json.dumps(value))
-    return found
+    # Graph examples use OData annotations such as calendar@odata.associationLink.
+    return [address for address in found if not address.rsplit("@", 1)[-1].lower().startswith("odata.")]
 
 
 def load_json(path: Path):
@@ -154,6 +155,8 @@ def self_test() -> int:
     scrubs = [{"find": "a@contoso.com", "replace": "user@example.invalid"}]
     assert scrub(excerpt, scrubs) == {"user": "user@example.invalid", "note": "ok"}
     assert scrub([excerpt], scrubs)[0]["user"] == "user@example.invalid"
+    assert emails({"calendar@odata.associationLink": "ok"}) == []
+    assert emails({"mail": "a@contoso.com"}) == ["a@contoso.com"]
     return 0
 
 

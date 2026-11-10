@@ -29,9 +29,105 @@
         "docUrl": "https://learn.microsoft.com/en-us/graph/api/chat-list-messages?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
+          "6 of 11 commands from vendor docs, 0 approximate, 5 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "msgraph-teams-list-chats",
+          "calls": [
+            "GET /users/{user_id}/chats"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-id-chats"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/chat-list?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-teams-create-chat",
+          "calls": [
+            "POST /chats"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-teams-get-chat",
+          "calls": [
+            "GET /users/{user_id}/chats/{chat_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-id-chats-chat-id"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/chat-get?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-teams-update-chat",
+          "calls": [
+            "PATCH /chats/{chat_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-teams-list-members",
+          "calls": [
+            "GET /users/{user_id}/chats/{chat_id}/members"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-id-chats-chat-id-members"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/chat-list-members?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-teams-add-member",
+          "calls": [
+            "POST /chats/{chat_id}/members"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--chats-chat-id-members"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/chat-post-members?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-teams-list-messages",
+          "calls": [
+            "GET /chats/{chat_id}/messages"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-chats-chat-id-messages-0"
+          ]
+        },
+        {
+          "command": "msgraph-teams-send-message",
+          "calls": [
+            "POST /chats/{chat_id}/messages"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--chats-chat-id-messages"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/chat-post-messages?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-teams-test",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-teams-generate-login-url",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-teams-auth-reset",
+          "calls": [],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -93,6 +189,151 @@
           ]
         },
         "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#chats('19%3A2da4c29f6d7041eca70b638b43d45437%40thread.v2')/messages\",\n  \"@odata.count\": 3,\n  \"@odata.nextLink\": \"https://graph.microsoft.com/v1.0/chats/19:2da4c29f6d7041eca70b638b43d45437@thread.v2/messages?$top=2&$skiptoken=M2UyZDAwMDAwMDMxMzkzYTMyNjQ2MTM0NjMzMjM5NjYzNjY0MzczMDM0MzE2NTYzNjEzNzMwNjIzNjMzMzg2MjM0MzM2NDM0MzUzNDMzMzc0MDc0Njg3MjY1NjE2NDJlNzYzMjAxZThmYjY4M2Y3ODAxMDAwMDg4NjA5ODdhNzgwMTAwMDB8MTYxNjk2NDUwOTgzMg%3d%3d\",\n  \"value\": [\n    {\n      \"id\": \"1616964509832\",\n      \"replyToId\": null,\n      \"etag\": \"1616964509832\",\n      \"messageType\": \"message\",\n      \"createdDateTime\": \"2021-03-28T20:48:29.832Z\",\n      \"lastModifiedDateTime\": \"2021-03-28T20:48:29.832Z\",\n      \"lastEditedDateTime\": null,\n      \"deletedDateTime\": null,\n      \"subject\": null,\n      \"summary\": null,\n      \"chatId\": \"19:2da4c29f6d7041eca70b638b43d45437@thread.v2\",\n      \"importance\": \"normal\",\n      \"locale\": \"en-us\",\n      \"webUrl\": null,\n      \"channelIdentity\": null,\n      \"policyViolation\": null,\n      \"eventDetail\": null,\n      \"from\": {\n        \"application\": null,\n        \"device\": null,\n        \"user\": {\n          \"id\": \"8ea0e38b-efb3-4757-924a-5f94061cf8c2\",\n          \"displayName\": \"Robin Kline\",\n          \"userIdentityType\": \"aadUser\"\n        }\n      },\n      \"body\": {\n        \"contentType\": \"text\",\n        \"content\": \"Hello world\"\n      },\n      \"attachments\": [],\n      \"mentions\": [],\n      \"reactions\": [],\n      \"messageHistory\": []\n    },\n    {\n      \"id\": \"1615971548136\",\n      \"replyToId\": null,\n      \"etag\": \"1615971548136\",\n      \"messageType\": \"message\",\n      \"createdDateTime\": \"2021-03-17T08:59:08.136Z\",\n      \"lastModifiedDateTime\": \"2021-03-17T08:59:08.136Z\",\n      \"lastEditedDateTime\": null,\n      \"deletedDateTime\": null,\n      \"subject\": null,\n      \"summary\": null,\n      \"chatId\": \"19:2da4c29f6d7041eca70b638b43d45437@thread.v2\",\n      \"importance\": \"normal\",\n      \"locale\": \"en-us\",\n      \"webUrl\": null,\n      \"channelIdentity\": null,\n      \"policyViolation\": null,\n      \"eventDetail\": null,\n      \"from\": {\n        \"application\": null,\n        \"device\": null,\n        \"user\": {\n          \"id\": \"8ea0e38b-efb3-4757-924a-5f94061cf8c2\",\n          \"displayName\": \"Robin Kline\",\n          \"userIdentityType\": \"aadUser\"\n        }\n      },\n      \"body\": {\n        \"contentType\": \"html\",\n        \"content\": \"<div><div><div><span><img height=\\\"63\\\" src=\\\"https://graph.microsoft.com/v1.0/chats/19:2da4c29f6d7041eca70b638b43d45437@thread.v2/messages/1615971548136/hostedContents/aWQ9eF8wLXd1cy1kOS1lNTRmNjM1NWYxYmJkNGQ3ZTNmNGJhZmU4NTI5MTBmNix0eXBlPTEsdXJsPWh0dHBzOi8vdXMtYXBpLmFzbS5za3lwZS5jb20vdjEvb2JqZWN0cy8wLXd1cy1kOS1lNTRmNjM1NWYxYmJkNGQ3ZTNmNGJhZmU4NTI5MTBmNi92aWV3cy9pbWdv/$value\\\" width=\\\"67\\\" style=\\\"vertical-align:bottom; width:67px; height:63px\\\"></span></div></div></div>\"\n      },\n      \"attachments\": [],\n      \"mentions\": [],\n      \"reactions\": [],\n      \"messageHistory\": []\n    },\n    {\n      \"id\": \"1615943825123\",\n      \"replyToId\": null,\n      \"etag\": \"1615943825123\",\n      \"messageType\": \"unknownFutureValue\",\n      \"createdDateTime\": \"2021-03-1706:47:05.123Z\",\n      \"lastModifiedDateTime\": \"2021-03-1706:47:05.123Z\",\n      \"lastEditedDateTime\": null,\n      \"deletedDateTime\": null,\n      \"subject\": null,\n      \"summary\": null,\n      \"chatId\": \"19:2da4c29f6d7041eca70b638b43d45437@thread.v2\",\n      \"importance\": \"normal\",\n      \"locale\": \"en-us\",\n      \"webUrl\": null,\n      \"channelIdentity\": null,\n      \"policyViolation\": null,\n      \"from\": null,\n      \"body\": {\n        \"contentType\": \"html\",\n        \"content\": \"<systemEventMessage/>\"\n      },\n      \"attachments\": [],\n      \"mentions\": [],\n      \"reactions\": [],\n      \"messageHistory\": [],\n      \"eventDetail\": {\n        \"@odata.type\": \"#microsoft.graph.chatRenamedEventMessageDetail\",\n        \"chatId\": \"19:2da4c29f6d7041eca70b638b43d45437@thread.v2\",\n        \"chatDisplayName\": \"Graph Members\",\n        \"initiator\": {\n          \"application\": null,\n          \"device\": null,\n          \"user\": {\n            \"id\": \"1fb8890f-423e-4154-8fbf-db6809bc8756\",\n            \"displayName\": null,\n            \"userIdentityType\": \"aadUser\"\n          }\n        }\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-user-id-chats",
+        "summary": "GET /users/{user_id}/chats",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/chats",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#chats\",\n  \"@odata.count\": 3,\n  \"value\": [\n    {\n      \"id\": \"19:meeting_MjdhNjM4YzUtYzExZi00OTFkLTkzZTAtNTVlNmZmMDhkNGU2@thread.v2\",\n      \"topic\": \"Meeting chat sample\",\n      \"createdDateTime\": \"2020-12-08T23:53:05.801Z\",\n      \"lastUpdatedDateTime\": \"2020-12-08T23:58:32.511Z\",\n      \"chatType\": \"meeting\",\n      \"viewpoint\": {\n        \"isHidden\": false,\n        \"lastMessageReadDateTime\": \"2021-06-03T08:05:49.521Z\"\n      },\n      \"webUrl\": \"https://teams.microsoft.com/l/chat/19%3Ameeting_MjdhNjM4YzUtYzExZi00OTFkLTkzZTAtNTVlNmZmMDhkNGU2@thread.v2/0?tenantId=b33cbe9f-8ebe-4f2a-912b-7e2a427f477f\",\n      \"isHiddenForAllMembers\": false\n    },\n    {\n      \"id\": \"19:561082c0f3f847a58069deb8eb300807@thread.v2\",\n      \"topic\": \"Group chat sample\",\n      \"createdDateTime\": \"2020-12-03T19:41:07.054Z\",\n      \"lastUpdatedDateTime\": \"2020-12-08T23:53:11.012Z\",\n      \"chatType\": \"group\",\n      \"viewpoint\": {\n        \"isHidden\": false,\n        \"lastMessageReadDateTime\": \"2021-05-27T22:13:01.577Z\"\n      },\n      \"webUrl\": \"https://teams.microsoft.com/l/chat/19%3A561082c0f3f847a58069deb8eb300807@thread.v2/0?tenantId=b33cbe9f-8ebe-4f2a-912b-7e2a427f477f\",\n      \"isHiddenForAllMembers\": false\n    },\n    {\n      \"id\": \"19:user2@example.invalid\",\n      \"topic\": null,\n      \"createdDateTime\": \"2020-12-04T23:10:28.51Z\",\n      \"lastUpdatedDateTime\": \"2020-12-04T23:10:36.925Z\",\n      \"chatType\": \"oneOnOne\",\n      \"viewpoint\": {\n        \"isHidden\": false,\n        \"lastMessageReadDateTime\": \"0001-01-01T00:00:00Z\"\n      },\n      \"webUrl\": \"https://teams.microsoft.com/l/chat/user@example.invalid/0?tenantId=b33cbe9f-8ebe-4f2a-912b-7e2a427f477f\",\n      \"isHiddenForAllMembers\": false\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-user-id-chats-chat-id",
+        "summary": "GET /users/{user_id}/chats/{chat_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/chats/{chat_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#chats/$entity\",\n  \"id\": \"19:b8577894a63548969c5c92bb9c80c5e1@thread.v2\",\n  \"topic\": \"test group 1\",\n  \"createdDateTime\": \"2021-04-06T19:49:52.431Z\",\n  \"lastUpdatedDateTime\": \"2021-04-06T19:54:04.306Z\",\n  \"chatType\": \"group\",\n  \"webUrl\": \"https://teams.microsoft.com/l/chat/19%3Ab8577894a63548969c5c92bb9c80c5e1@thread.v2/0?tenantId=b33cbe9f-8ebe-4f2a-912b-7e2a427f477f\",\n  \"tenantId\": \"b33cbe9f-8ebe-4f2a-912b-7e2a427f477f\",\n  \"onlineMeetingInfo\": null,\n  \"viewpoint\": {\n    \"isHidden\": true,\n    \"lastMessageReadDateTime\": \"2021-05-06T23:55:07.191Z\"\n  },\n  \"isHiddenForAllMembers\": false\n}\n"
+      },
+      {
+        "id": "get--users-user-id-chats-chat-id-members",
+        "summary": "GET /users/{user_id}/chats/{chat_id}/members",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/chats/{chat_id}/members",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#users('48d31887-5fad-4d73-a9f5-3c356e68a038')/chats('19%3A09ddc990-3821-4ceb-8019-24d39998f93e_48d31887-5fad-4d73-a9f5-3c356e68a038%40unq.gbl.spaces')/members\",\n  \"@odata.count\": 1,\n  \"value\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.aadUserConversationMember\",\n      \"id\": \"MCMjMCMjZGNkMjE5ZGQtYmM2OC00YjliLWJmMGItNGEzM2E3OTZiZTM1IyMxOTowOWRkYzk5MC0zODIxLTRjZWItODAxOS0yNGQzOTk5OGY5M2VfNDhkMzE4ODctNWZhZC00ZDczLWE5ZjUtM2MzNTZlNjhhMDM4QHVucS5nYmwuc3BhY2VzIyM0OGQzMTg4Ny01ZmFkLTRkNzMtYTlmNS0zYzM1NmU2OGEwMzg=\",\n      \"roles\": [\n        \"owner\"\n      ],\n      \"displayName\": \"Megan Bowen\",\n      \"visibleHistoryStartDateTime\": \"2021-11-25T01:56:31.313Z\",\n      \"userId\": \"48d31887-5fad-4d73-a9f5-3c356e68a038\",\n      \"email\": \"user@example.invalid\",\n      \"tenantId\": \"dcd219dd-bc68-4b9b-bf0b-4a33a796be35\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "post--chats-chat-id-members",
+        "summary": "POST /chats/{chat_id}/members",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/chats/{chat_id}/members",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.type\": \"#microsoft.graph.aadUserConversationMember\",\n  \"user@odata.bind\": \"https://graph.microsoft.com/v1.0/users/8b081ef6-4792-4def-b2c9-c363a1bf41d5\",\n  \"roles\": [\n    \"owner\"\n  ]\n}\n"
+      },
+      {
+        "id": "post--chats-chat-id-messages",
+        "summary": "POST /chats/{chat_id}/messages",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/chats/{chat_id}/messages",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#chats('19%3A2da4c29f6d7041eca70b638b43d45437%40thread.v2')/messages/$entity\",\n  \"id\": \"1616991463150\",\n  \"replyToId\": null,\n  \"etag\": \"1616991463150\",\n  \"messageType\": \"message\",\n  \"createdDateTime\": \"2021-03-29T04:17:43.15Z\",\n  \"lastModifiedDateTime\": \"2021-03-29T04:17:43.15Z\",\n  \"lastEditedDateTime\": null,\n  \"deletedDateTime\": null,\n  \"subject\": null,\n  \"summary\": null,\n  \"chatId\": \"19:2da4c29f6d7041eca70b638b43d45437@thread.v2\",\n  \"importance\": \"normal\",\n  \"locale\": \"en-us\",\n  \"webUrl\": null,\n  \"channelIdentity\": null,\n  \"policyViolation\": null,\n  \"eventDetail\": null,\n  \"from\": {\n    \"application\": null,\n    \"device\": null,\n    \"conversation\": null,\n    \"user\": {\n      \"id\": \"8ea0e38b-efb3-4757-924a-5f94061cf8c2\",\n      \"displayName\": \"Robin Kline\",\n      \"userIdentityType\": \"aadUser\"\n    }\n  },\n  \"body\": {\n    \"contentType\": \"text\",\n    \"content\": \"Hello World\"\n  },\n  \"attachments\": [],\n  \"mentions\": [],\n  \"reactions\": [],\n  \"messageHistory\": []\n}\n"
       }
     ],
     "chaos": {

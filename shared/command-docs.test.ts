@@ -15,19 +15,23 @@ describe("AWS command coverage", () => {
     };
     const covered = index.presets.filter((preset) => preset.commandCoverage);
     expect(covered.length).toBeGreaterThan(0);
-    let vendor = 0;
-    let approximate = 0;
-    let missing = 0;
-    for (const preset of covered) {
-      const row = preset.commandCoverage!;
-      expect(row.vendor + row.approximate + row.missing).toBe(row.total);
-      vendor += row.vendor;
-      approximate += row.approximate;
-      missing += row.missing;
-    }
-    expect(vendor).toBe(419);
-    expect(approximate).toBe(34);
-    expect(missing).toBe(219);
+    const sums = (rows: typeof covered) => {
+      let vendor = 0;
+      let approximate = 0;
+      let missing = 0;
+      for (const preset of rows) {
+        const row = preset.commandCoverage!;
+        expect(row.vendor + row.approximate + row.missing).toBe(row.total);
+        vendor += row.vendor;
+        approximate += row.approximate;
+        missing += row.missing;
+      }
+      return { vendor, approximate, missing };
+    };
+    const aws = sums(covered.filter((preset) => !preset.id.startsWith("microsoftgraph")));
+    expect(aws).toEqual({ vendor: 419, approximate: 34, missing: 219 });
+    const graph = sums(covered.filter((preset) => preset.id.startsWith("microsoftgraph")));
+    expect(graph).toEqual({ vendor: 91, approximate: 5, missing: 194 });
 
     const iam = JSON.parse(readFileSync("public/presets/integrations/aws-iam-aws-iam.json", "utf8")) as {
       spec: Parameters<typeof validateMockSpec>[0];
@@ -38,5 +42,16 @@ describe("AWS command coverage", () => {
     const operation = spec.operations.find((item) => item.awsAction === "ListUsers");
     expect(operation?.fixture).toContain("ListUsersResponse");
     expect(operation?.queryMatch).toEqual({ Action: "ListUsers" });
+  });
+
+  it("counts Microsoft Graph commands from the published response examples", () => {
+    const groups = JSON.parse(
+      readFileSync("public/presets/integrations/microsoftgraphgroups-microsoftgraphgroups.json", "utf8"),
+    ) as { spec: Parameters<typeof validateMockSpec>[0] };
+    const spec = validateMockSpec(groups.spec);
+    const list = spec.source.commandDocs?.find((row) => row.command === "msgraph-groups-list-groups");
+    expect(list).toMatchObject({ status: "vendor" });
+    const operation = spec.operations.find((item) => item.method === "GET" && item.pathTemplate === "/groups");
+    expect(operation?.fixture).toContain("Golf Assist");
   });
 });

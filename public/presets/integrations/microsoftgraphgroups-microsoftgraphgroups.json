@@ -29,9 +29,85 @@
         "docUrl": "https://learn.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
+          "4 of 9 commands from vendor docs, 0 approximate, 5 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "msgraph-groups-list-groups",
+          "calls": [
+            "GET /groups"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-groups-0"
+          ]
+        },
+        {
+          "command": "msgraph-groups-get-group",
+          "calls": [
+            "GET /groups/{group_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--groups-group-id"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/group-get?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-groups-create-group",
+          "calls": [
+            "POST /groups"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--groups"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/group-post-groups?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-groups-delete-group",
+          "calls": [
+            "DELETE /groups/{group_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-groups-list-members",
+          "calls": [
+            "GET /groups/{group_id}/members"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--groups-group-id-members"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/group-list-members?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-groups-add-member",
+          "calls": [
+            "POST /groups/{group_id}/members/$ref"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-groups-remove-member",
+          "calls": [
+            "DELETE /groups/{group_id}/members/{user_id}/$ref"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-groups-generate-login-url",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-groups-auth-reset",
+          "calls": [],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -76,6 +152,93 @@
           ]
         },
         "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#groups\",\n  \"value\": [\n    {\n      \"id\": \"45b7d2e7-b882-4a80-ba97-10b7a63b8fa4\",\n      \"deletedDateTime\": null,\n      \"classification\": null,\n      \"createdDateTime\": \"2018-12-22T02:21:05Z\",\n      \"description\": \"Self help community for golf\",\n      \"displayName\": \"Golf Assist\",\n      \"expirationDateTime\": null,\n      \"groupTypes\": [\n        \"Unified\"\n      ],\n      \"isAssignableToRole\": null,\n      \"mail\": \"user@example.invalid\",\n      \"mailEnabled\": true,\n      \"mailNickname\": \"golfassist\",\n      \"membershipRule\": null,\n      \"membershipRuleProcessingState\": null,\n      \"onPremisesLastSyncDateTime\": null,\n      \"onPremisesSecurityIdentifier\": null,\n      \"onPremisesSyncEnabled\": null,\n      \"preferredDataLocation\": \"CAN\",\n      \"preferredLanguage\": null,\n      \"proxyAddresses\": [\n        \"smtp:user@example.invalid\",\n        \"SMTP:user@example.invalid\"\n      ],\n      \"renewedDateTime\": \"2018-12-22T02:21:05Z\",\n      \"resourceBehaviorOptions\": [],\n      \"resourceProvisioningOptions\": [],\n      \"securityEnabled\": false,\n      \"theme\": null,\n      \"visibility\": \"Public\",\n      \"onPremisesProvisioningErrors\": []\n    },\n    {\n      \"id\": \"d7797254-3084-44d0-99c9-a3b5ab149538\",\n      \"deletedDateTime\": null,\n      \"classification\": null,\n      \"createdDateTime\": \"2018-11-19T20:29:40Z\",\n      \"description\": \"Talk about golf\",\n      \"displayName\": \"Golf Discussion\",\n      \"expirationDateTime\": null,\n      \"groupTypes\": [],\n      \"isAssignableToRole\": null,\n      \"mail\": \"user2@example.invalid\",\n      \"mailEnabled\": true,\n      \"mailNickname\": \"golftalk\",\n      \"membershipRule\": null,\n      \"membershipRuleProcessingState\": null,\n      \"onPremisesLastSyncDateTime\": null,\n      \"onPremisesSecurityIdentifier\": null,\n      \"onPremisesSyncEnabled\": null,\n      \"preferredDataLocation\": \"CAN\",\n      \"preferredLanguage\": null,\n      \"proxyAddresses\": [\n        \"smtp:user2@example.invalid\",\n        \"SMTP:user2@example.invalid\"\n      ],\n      \"renewedDateTime\": \"2018-11-19T20:29:40Z\",\n      \"resourceBehaviorOptions\": [],\n      \"resourceProvisioningOptions\": [],\n      \"securityEnabled\": false,\n      \"serviceProvisioningErrors\": [],\n      \"theme\": null,\n      \"visibility\": null,\n      \"onPremisesProvisioningErrors\": []\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--groups-group-id",
+        "summary": "GET /groups/{group_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/groups/{group_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#groups/$entity\",\n  \"id\": \"02bd9fd6-8f93-4758-87c3-1fb73740a315\",\n  \"deletedDateTime\": null,\n  \"classification\": null,\n  \"createdDateTime\": \"2017-07-31T18:56:16Z\",\n  \"description\": \"Welcome to the HR Taskforce team.\",\n  \"displayName\": \"HR Taskforce\",\n  \"expirationDateTime\": null,\n  \"groupTypes\": [\n    \"Unified\"\n  ],\n  \"isAssignableToRole\": null,\n  \"mail\": \"user@example.invalid\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"HRTaskforce\",\n  \"membershipRule\": null,\n  \"membershipRuleProcessingState\": null,\n  \"onPremisesDomainName\": null,\n  \"onPremisesLastSyncDateTime\": null,\n  \"onPremisesNetBiosName\": null,\n  \"onPremisesSamAccountName\": null,\n  \"onPremisesSecurityIdentifier\": null,\n  \"onPremisesSyncEnabled\": null,\n  \"preferredDataLocation\": null,\n  \"preferredLanguage\": null,\n  \"proxyAddresses\": [\n    \"SMTP:user@example.invalid\",\n    \"SPO:SPO_896cf652-b200-4b74-8111-c013f64406cf@SPO_dcd219dd-bc68-4b9b-bf0b-4a33a796be35\"\n  ],\n  \"renewedDateTime\": \"2020-01-24T19:01:14Z\",\n  \"resourceBehaviorOptions\": [],\n  \"resourceProvisioningOptions\": [\n    \"Team\"\n  ],\n  \"securityEnabled\": false,\n  \"securityIdentifier\": \"S-1-12-1-45981654-1196986259-3072312199-363020343\",\n  \"serviceProvisioningErrors\": [],\n  \"theme\": null,\n  \"visibility\": \"Private\",\n  \"onPremisesProvisioningErrors\": []\n}\n"
+      },
+      {
+        "id": "post--groups",
+        "summary": "POST /groups",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/groups",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"b320ee12-b1cd-4cca-b648-a437be61c5cd\",\n  \"deletedDateTime\": null,\n  \"classification\": null,\n  \"createdDateTime\": \"2018-12-22T00:51:37Z\",\n  \"description\": \"Self help community for library\",\n  \"displayName\": \"Library Assist\",\n  \"groupTypes\": [\n    \"Unified\"\n  ],\n  \"mail\": \"user@example.invalid\",\n  \"mailEnabled\": true,\n  \"mailNickname\": \"library\",\n  \"onPremisesLastSyncDateTime\": null,\n  \"onPremisesSecurityIdentifier\": null,\n  \"onPremisesSyncEnabled\": null,\n  \"preferredDataLocation\": \"CAN\",\n  \"proxyAddresses\": [\n    \"SMTP:user@example.invalid\"\n  ],\n  \"renewedDateTime\": \"2018-12-22T00:51:37Z\",\n  \"resourceBehaviorOptions\": [],\n  \"resourceProvisioningOptions\": [],\n  \"securityEnabled\": false,\n  \"visibility\": \"Public\",\n  \"onPremisesProvisioningErrors\": []\n}\n"
+      },
+      {
+        "id": "get--groups-group-id-members",
+        "summary": "GET /groups/{group_id}/members",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/groups/{group_id}/members",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#directoryObjects\",\n  \"value\": [\n    {\n      \"id\": \"11111111-2222-3333-4444-555555555555\",\n      \"mail\": \"user@example.invalid\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {
