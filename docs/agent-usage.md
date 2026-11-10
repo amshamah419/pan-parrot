@@ -2,27 +2,60 @@
 
 A coding agent can create the mock, read the instance fields, and configure XSIAM without opening the studio. XSIAM credentials never go to PAN Parrot. XSIAM has to be able to reach the catch URL on panparrot.com.
 
-## Copy-paste prompt
+## End-to-end recipe
+
+Follow this block in order. Do not add steps. Do not send `DEMISTO_BASE_URL`, `DEMISTO_API_KEY`, or `XSIAM_AUTH_ID` to PAN Parrot.
 
 ```
-You are configuring a PAN Parrot mock for the integration in this directory.
+You are testing the XSOAR integration in this directory against PAN Parrot. Do these steps in order. Stop at the first failure and show the command and its output. Do not invent a token, a tenant URL, or an API path. Do not write secrets into the repo.
 
-1. Ask the user for a PAN Parrot personal API token (scopes mocks:read and mocks:write, shown once on the dashboard). Do not invent one.
-2. panparrot --json login --url https://<panparrot-site> --token pp_...
-3. panparrot --json presets --q <integration name>
-   Use the preset id when one matches. commandCoverage says how many commands return a vendor example.
-4. panparrot --json mock from-integration <Integration>.yml
-   This reads the YAML, the Python file beside it, and a sibling test_data directory. The routes come from the Python client. The result includes the catch URL and instance params. Repeat it to update the same integration id and version.
-5. panparrot --json mock fetch --mock <id>
-   Turns on since and first_fetch windows. Each poll returns the next window. Pass --reset before a repeated test. --off turns it off. Leave the XSOAR Fetch incidents checkbox off until a manual command shows up in the log.
-6. panparrot --json instance-config --mock <id>
-   Put baseUrl in the integration URL parameter. Use the returned param names and values. They come from the integration YAML.
-7. The user exports DEMISTO_BASE_URL, DEMISTO_API_KEY, and XSIAM_AUTH_ID in the shell. Do not send those values to PAN Parrot, and do not write them into the repo.
-8. panparrot --json xsiam configure-instance --mock <id> --integration <integration id> --instance-name <n> --dry-run
-9. Show the payload. After the user agrees, run the same command without --dry-run.
-   XSIAM must be able to reach the catch URL.
-10. After the integration calls the catch URL, panparrot --json assert --mock <id> --file expectations.json
-   A failed assertion exits 1. expectations.json is a list of {method, path, query, status, bodyIncludes, min, max}.
+1. Ask the user for the PAN Parrot site URL and a personal API token. The token starts with pp_ and needs scopes mocks:read and mocks:write. Do not invent one.
+
+2. Run:
+   panparrot --json login --url <the URL they gave> --token <the token they gave>
+   Stop if ok is not true.
+
+3. Find the integration YAML in this directory, the file that contains commonfields.id. Run:
+   panparrot --json mock from-integration <that file>
+   Keep mock.id, mock.url, and routes from the JSON. Each route has command, method, and path. Stop if ok is not true.
+
+4. Run, with that mock id:
+   panparrot --json mock fetch --mock <mock.id> --reset
+   panparrot --json mock state --mock <mock.id> --reset
+   Stop if either ok is not true. Fetch answers since and first_fetch polls with one time window each. State stores a POST and serves that copy on GET, PUT, and DELETE. Leave the XSOAR Fetch incidents checkbox off.
+
+5. Check that DEMISTO_BASE_URL, DEMISTO_API_KEY, and XSIAM_AUTH_ID are already exported. If one is missing, stop and ask the user to export it. Do not print the API key. Do not pass those values to panparrot.
+
+6. Read commonfields.id from the YAML. That is the integration id. Run:
+   panparrot --json xsiam configure-instance --mock <mock.id> --integration <integration id> --instance-name panparrot-lab --dry-run
+   Show the user the payload. Wait until they say yes. Then run the same command without --dry-run. Stop if ok is not true. The tenant must be able to reach mock.url.
+
+7. Run the integration commands on the tenant. Set ROOT to DEMISTO_BASE_URL with any trailing slash removed. If ROOT does not end with /xsoar, append /xsoar. Send the API key only to that host.
+
+   curl -sS -w '\nHTTP_STATUS:%{http_code}\n' -X POST "$ROOT/incident" \
+     -H "Authorization: $DEMISTO_API_KEY" \
+     -H "x-xdr-auth-id: $XSIAM_AUTH_ID" \
+     -H "Accept: application/json" \
+     -H "Content-Type: application/json" \
+     --data '{"type":"Unclassified","name":"panparrot-lab","createInvestigation":true}'
+
+   Stop unless the status line is HTTP_STATUS:200. Keep the incident id. If the JSON is a list, use the first id. If the status is 404, stop and show the body. Do not try another path.
+
+   For each command under script.commands, run:
+   curl -sS -w '\nHTTP_STATUS:%{http_code}\n' -X POST "$ROOT/entry/execute/sync" \
+     -H "Authorization: $DEMISTO_API_KEY" \
+     -H "x-xdr-auth-id: $XSIAM_AUTH_ID" \
+     -H "Accept: application/json" \
+     -H "Content-Type: application/json" \
+     --data '{"investigationId":"<incident id>","data":"!<command name>"}'
+
+   Append each required argument as a space and name=value inside data. Use the argument defaultvalue from the YAML when it has one, otherwise the string test. If the route path contains {id} and an earlier command in this run returned an id, pass that id in the argument that fills the path. Stop unless the status line is HTTP_STATUS:200. If any entry has Type 4, stop and show that entry. If the status is 404, stop and show the body. Do not try another path.
+
+8. Write expectations.json in this directory. Do not commit it. One object per route from step 3:
+   {"method":"<route.method>","path":"<route.path>","min":1}
+   If the path contains {id}, replace {id} with the id used in step 7. Then run:
+   panparrot --json assert --mock <mock.id> --file expectations.json
+   If ok is false, show the assertions array and stop. Do not change the mock or the integration to hide a miss.
 ```
 
 ## Token
@@ -44,6 +77,7 @@ panparrot --json login --url https://<site> --token pp_...
 panparrot --json presets --q github
 panparrot --json mock from-integration Integrations/HelloWorld/HelloWorld.yml
 panparrot --json mock fetch --mock <id> --window 300 --per-poll 3 --reset
+panparrot --json mock state --mock <id> --reset
 panparrot --json assert --mock <id> --method GET --path /hello --query since=2020-01-01T00:00:00Z
 panparrot --json mocks list
 panparrot --json mocks create --from-yml Integrations/HelloWorld/HelloWorld.yml --test-data Integrations/HelloWorld/test_data
@@ -70,7 +104,7 @@ Every command accepts `--json` and prints one object on stdout. `login` stores t
 | GET | `/api/v1/mocks/{id}/logs` | mocks:read |
 | GET | `/api/v1/mocks/{id}/instance-config` | mocks:read |
 
-`POST /api/v1/mocks` takes one of `preset`, `openapi`, `yaml` (plus optional `testData` and `clientSource`), or `mockSpec`. `clientSource` is the integration Python, used only to read HTTP paths. It is not executed and is not stored. `integrationId` and `version` upsert that pair. Bodies are limited to the spec size cap (512 KB). `instance-config` returns `baseUrl` and the YAML parameter names, types, and values, including the catch URL, `insecure`, and `proxy`.
+`PUT /api/v1/mocks/{id}` accepts `{fetch}` or `{state}` by itself and leaves the routes in place. `reset: true` on that body clears the saved cursor and records. `POST /api/v1/mocks` takes one of `preset`, `openapi`, `yaml` (plus optional `testData` and `clientSource`), or `mockSpec`. `clientSource` is the integration Python, used only to read HTTP paths. It is not executed and is not stored. `integrationId` and `version` upsert that pair. Bodies are limited to the spec size cap (512 KB). `instance-config` returns `baseUrl` and the YAML parameter names, types, and values, including the catch URL, `insecure`, and `proxy`.
 
 ## XSIAM
 
