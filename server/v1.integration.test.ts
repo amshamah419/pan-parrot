@@ -202,6 +202,102 @@ class Client:
     expect(rejected.status).toBe(400);
   });
 
+  it("keeps a created record for get and delete without replacing routes", async () => {
+    const issued = await mint(["mocks:read", "mocks:write"], "saved-records");
+    const created = await app.request("/api/v1/mocks", {
+      method: "POST",
+      headers: { authorization: `Bearer ${issued.token}`, "content-type": "application/json" },
+      body: JSON.stringify({
+        yaml: `
+name: StateWorld
+display: State World
+commonfields:
+  id: StateWorld
+configuration:
+  - display: Server URL
+    name: url
+    type: 0
+    required: true
+script:
+  commands:
+    - name: state-create
+      description: POST /items
+      outputs:
+        - contextPath: Item.Name
+          type: String
+    - name: state-get
+      description: GET /items/{id}
+      outputs:
+        - contextPath: Item.Name
+          type: String
+    - name: state-delete
+      description: DELETE /items/{id}
+      outputs:
+        - contextPath: Item.Name
+          type: String
+`,
+        integrationId: "StateWorld",
+        version: "1",
+      }),
+    });
+    expect(created.status).toBe(201);
+    const mock = await created.json();
+    const headers = { authorization: `Bearer ${issued.token}`, "content-type": "application/json" };
+    const fetchOn = await app.request(`/api/v1/mocks/${mock.id}`, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({ fetch: { enabled: true, windowSeconds: 60, perPoll: 1 } }),
+    });
+    expect(fetchOn.status).toBe(200);
+    const turned = await app.request(`/api/v1/mocks/${mock.id}`, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({ state: { enabled: true, idField: "id" }, reset: true }),
+    });
+    expect(turned.status).toBe(200);
+    expect(await turned.json()).toMatchObject({ state: { enabled: true, idField: "id" }, reset: true, url: mock.url });
+
+    const read = await app.request(`/api/v1/mocks/${mock.id}`, { headers: { authorization: `Bearer ${issued.token}` } });
+    const spec = await read.json();
+    expect(spec.spec.behavior.fetch.enabled).toBe(true);
+    expect(spec.spec.behavior.state.enabled).toBe(true);
+    expect(spec.spec.operations.map((operation: { method: string; pathTemplate: string }) => `${operation.method} ${operation.pathTemplate}`)).toEqual([
+      "POST /items",
+      "GET /items/{id}",
+      "DELETE /items/{id}",
+    ]);
+
+    const path = new URL(mock.url).pathname;
+    const posted = await app.request(`${path}/items`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ name: "lab" }),
+    });
+    expect(posted.status).toBe(201);
+    expect(posted.headers.get("x-pan-parrot-effects")).toContain("state-created");
+    const item = await posted.json();
+    expect(item.id).toBeTruthy();
+    expect(item.name).toBe("lab");
+
+    const got = await app.request(`${path}/items/${item.id}`);
+    expect(got.headers.get("x-pan-parrot-effects")).toContain("state-read");
+    expect(await got.json()).toMatchObject({ id: item.id, name: "lab" });
+
+    const removed = await app.request(`${path}/items/${item.id}`, { method: "DELETE" });
+    expect(removed.status).toBe(200);
+    expect(removed.headers.get("x-pan-parrot-effects")).toContain("state-deleted");
+    const missing = await app.request(`${path}/items/${item.id}`);
+    expect(missing.status).toBe(404);
+    expect(missing.headers.get("x-pan-parrot-effects")).toContain("state-missing");
+
+    const rejected = await app.request(`/api/v1/mocks/${mock.id}`, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({ state: { enabled: true, extra: true } }),
+    });
+    expect(rejected.status).toBe(400);
+  });
+
   it("returns query and body on captured logs and leaves headers off", async () => {
     const issued = await mint(["mocks:read", "mocks:write"], "assert-logs");
     const created = await app.request("/api/v1/mocks", {

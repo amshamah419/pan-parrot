@@ -87,6 +87,7 @@ export default function Docs() {
 panparrot --json presets --q github
 panparrot --json mock from-integration HelloWorld.yml
 panparrot --json mock fetch --mock <id> --reset
+panparrot --json mock state --mock <id> --reset
 panparrot --json assert --mock <id> --method GET --path /hello
 panparrot --json mocks create --from-yml HelloWorld.yml --test-data ./test_data
 panparrot --json instance-config --mock <id>

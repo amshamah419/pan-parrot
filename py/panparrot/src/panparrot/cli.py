@@ -62,6 +62,8 @@ def dispatch(args: list[str]) -> dict:
         return from_integration(args[2:])
     if args[0] == "mock" and len(args) > 1 and args[1] == "fetch":
         return mock_fetch(args[2:])
+    if args[0] == "mock" and len(args) > 1 and args[1] == "state":
+        return mock_state(args[2:])
     if args[0] == "mocks":
         return mocks(args[1:])
     if args[0] == "assert":
@@ -154,6 +156,33 @@ def mock_fetch(args: list[str]) -> dict:
     if saved.get("reset"):
         text += "\nSaved calls were cleared."
     return {"id": saved.get("id"), "url": saved.get("url"), "fetch": fetch, "reset": bool(saved.get("reset")), "text": text}
+
+
+def mock_state(args: list[str]) -> dict:
+    mock_id = flag(args, "--mock")
+    body: dict = {"state": state_patch(args)}
+    if "--reset" in args:
+        body["reset"] = True
+    saved = api("PUT", "/api/v1/mocks/" + quote(mock_id), body)
+    state = saved.get("state") or {}
+    if state.get("enabled"):
+        text = (
+            "Saved records are on.\n"
+            f"POST stores a record. GET, PUT, and DELETE use the {state.get('idField')} field."
+        )
+    else:
+        text = "Saved records are off."
+    if saved.get("reset"):
+        text += "\nSaved calls were cleared."
+    return {"id": saved.get("id"), "url": saved.get("url"), "state": state, "reset": bool(saved.get("reset")), "text": text}
+
+
+def state_patch(args: list[str]) -> dict:
+    patch: dict = {"enabled": "--off" not in args}
+    field = optional(args, "--id-field")
+    if field is not None:
+        patch["idField"] = fetch_name("--id-field", field)
+    return patch
 
 
 def fetch_patch(args: list[str]) -> dict:
@@ -364,6 +393,7 @@ HELP = """panparrot [--json] <command>
   presets [--q text]
   mock from-integration <integration.yml> [--python file] [--test-data dir]
   mock fetch --mock <id> [--since name] [--first-fetch name] [--time-field name] [--window seconds] [--per-poll n] [--no-dedup] [--reset] [--off]
+  mock state --mock <id> [--id-field name] [--reset] [--off]
   mocks list
   mocks create --from-yml Integration.yml [--python file] [--test-data dir]
   mocks create --from-yml Integration.yml [--test-data dir]
