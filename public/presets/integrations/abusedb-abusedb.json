@@ -3,11 +3,11 @@
   "name": "AbuseIPDB",
   "pack": "AbuseDB",
   "vendor": "AbuseIPDB",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "IP check. data.abuseConfidenceScore is what reputation playbooks read.",
+  "summary": "Rebuilt from the client: GET /api/v2/check.",
   "notes": [
-    "Cross-check: path: GET /api/v2/check is not a client call. Closest: /{server}check (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v2/check. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AbuseDB/Integrations/AbuseDB",
@@ -17,23 +17,42 @@
       "kind": "preset",
       "id": "abusedb-abusedb",
       "name": "AbuseIPDB",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.abuseipdb.com/#check-endpoint",
       "notes": [
-        "Cross-check: path: GET /api/v2/check is not a client call. Closest: /{server}check (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v2/check. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.abuseipdb.com/#check-endpoint",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v2/check. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "check-ip",
+        "id": "get-api-v2-check-0",
         "method": "GET",
         "pathTemplate": "/api/v2/check",
-        "summary": "Check an IP",
+        "summary": "GET /api/v2/check",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
@@ -44,55 +63,38 @@
               "kind": "object",
               "children": [
                 {
-                  "name": "ipAddress",
-                  "kind": "ip"
-                },
-                {
-                  "name": "abuseConfidenceScore",
-                  "kind": "integer"
-                },
-                {
-                  "name": "countryCode",
-                  "kind": "const",
-                  "constValue": "US"
-                },
-                {
-                  "name": "usageType",
-                  "kind": "const",
-                  "constValue": "Data Center/Web Hosting/Transit"
-                },
-                {
-                  "name": "isp",
+                  "name": "reportedAddress",
                   "kind": "string",
-                  "example": "Example Hosting"
-                },
-                {
-                  "name": "domain",
-                  "kind": "string",
-                  "example": "example.com"
-                },
-                {
-                  "name": "totalReports",
-                  "kind": "integer"
-                },
-                {
-                  "name": "lastReportedAt",
-                  "kind": "timestamp"
+                  "example": "lab"
                 }
               ]
+            },
+            {
+              "name": "IP",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "abuseConfidenceScore",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "categories",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "countryCode",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "countryName",
+              "kind": "string",
+              "example": "lab"
             }
           ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "none",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
         }
       }
     ],

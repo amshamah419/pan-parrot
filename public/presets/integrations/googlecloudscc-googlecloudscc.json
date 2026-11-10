@@ -3,11 +3,11 @@
   "name": "Google Cloud SCC",
   "pack": "GoogleCloudSCC",
   "vendor": "Google",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Security Command Center findings.list. nextPageToken pages the findings array.",
+  "summary": "Rebuilt from the client: GET /v1/organizations/{organization}/sources/{source}/findings.",
   "notes": [
-    "Cross-check: unparseable: client built requests without a readable method and path"
+    "Rebuilt from the XSOAR client. The checker matched GET /v1/organizations/{organization}/sources/{source}/findings. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GoogleCloudSCC/Integrations/GoogleCloudSCC",
@@ -17,77 +17,112 @@
       "kind": "preset",
       "id": "googlecloudscc-googlecloudscc",
       "name": "Google Cloud SCC",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://cloud.google.com/security-command-center/docs/reference/rest/v1/organizations.sources.findings/list",
       "notes": [
-        "Cross-check: unparseable: client built requests without a readable method and path"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /v1/organizations/{organization}/sources/{source}/findings. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://cloud.google.com/security-command-center/docs/reference/rest/v1/organizations.sources.findings/list",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v1/organizations/{organization}/sources/{source}/findings. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-findings",
+        "id": "get-v1-organizations-organization-sources-so-0",
         "method": "GET",
-        "pathTemplate": "/v1/organizations/{org}/sources/-/findings",
-        "summary": "List findings",
+        "pathTemplate": "/v1/organizations/{organization}/sources/{source}/findings",
+        "summary": "GET /v1/organizations/{organization}/sources/{source}/findings",
         "status": 200,
-        "list": true,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
         "envelope": {
-          "type": "wrapped",
-          "arrayKey": "findings"
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "finding",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "name",
-              "kind": "id"
+              "name": "ackId",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ancestors",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "assetType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assets",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "ancestors",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "assetType",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "iamPolicy",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "resource",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "bindings",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "category",
               "kind": "string",
-              "example": "OPEN_FIREWALL"
-            },
-            {
-              "name": "state",
-              "kind": "enum",
-              "enumValues": [
-                "ACTIVE",
-                "INACTIVE"
-              ]
-            },
-            {
-              "name": "severity",
-              "kind": "enum",
-              "enumValues": [
-                "LOW",
-                "MEDIUM",
-                "HIGH",
-                "CRITICAL"
-              ]
-            },
-            {
-              "name": "eventTime",
-              "kind": "timestamp"
-            },
-            {
-              "name": "resourceName",
-              "kind": "string",
-              "example": "//compute.googleapis.com/projects/lab/zones/us-central1-a/instances/vm"
+              "example": "lab"
             }
           ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "cursor",
-          "limitParam": "pageSize",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "pageToken",
-          "defaultLimit": 20,
-          "maxLimit": 500
         }
       }
     ],

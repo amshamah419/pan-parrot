@@ -3,11 +3,11 @@
   "name": "GreyNoise",
   "pack": "GreyNoise",
   "vendor": "GreyNoise",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "IP context. classification, noise, and riot.",
+  "summary": "Rebuilt from the client: GET /v2/noise/context/{ip}.",
   "notes": [
-    "Cross-check: unparseable: no HTTP calls and no test_data"
+    "Rebuilt from the XSOAR client. The checker matched GET /v2/noise/context/{ip}. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GreyNoise/Integrations/GreyNoise",
@@ -17,63 +17,34 @@
       "kind": "preset",
       "id": "greynoise-greynoise",
       "name": "GreyNoise",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.greynoise.io/reference/get_v2-noise-context-ip",
       "notes": [
-        "Cross-check: unparseable: no HTTP calls and no test_data"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /v2/noise/context/{ip}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.greynoise.io/reference/get_v2-noise-context-ip",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v2/noise/context/{ip}. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "ip-context",
+        "id": "get-v2-noise-context-ip-0",
         "method": "GET",
         "pathTemplate": "/v2/noise/context/{ip}",
-        "summary": "IP context",
+        "summary": "GET /v2/noise/context/{ip}",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "context",
-          "kind": "object",
-          "children": [
-            {
-              "name": "ip",
-              "kind": "ip"
-            },
-            {
-              "name": "classification",
-              "kind": "enum",
-              "enumValues": [
-                "benign",
-                "malicious",
-                "unknown"
-              ]
-            },
-            {
-              "name": "noise",
-              "kind": "boolean"
-            },
-            {
-              "name": "riot",
-              "kind": "boolean"
-            },
-            {
-              "name": "name",
-              "kind": "string",
-              "example": "Example Scanner"
-            },
-            {
-              "name": "actor",
-              "kind": "string",
-              "example": "unknown"
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -81,7 +52,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "IP",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "activity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "actor",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "asn",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

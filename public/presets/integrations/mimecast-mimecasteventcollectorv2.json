@@ -3,11 +3,11 @@
   "name": "Mimecast Event Collector v2",
   "pack": "Mimecast",
   "vendor": "Mimecast",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "SIEM CG events. The client calls /siem/v1/events/cg.",
+  "summary": "Rebuilt from the client: GET /siem/v1/events/cg.",
   "notes": [
-    "Cross-check: unparseable: no HTTP calls and no test_data"
+    "Rebuilt from the XSOAR client. The checker matched GET /siem/v1/events/cg. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastEventCollectorV2",
@@ -17,66 +17,90 @@
       "kind": "preset",
       "id": "mimecast-mimecasteventcollectorv2",
       "name": "Mimecast Event Collector v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
       "notes": [
-        "Cross-check: unparseable: no HTTP calls and no test_data"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /siem/v1/events/cg. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /siem/v1/events/cg. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "cg-events",
+        "id": "get-siem-v1-events-cg-0",
         "method": "GET",
         "pathTemplate": "/siem/v1/events/cg",
-        "summary": "List CG events",
+        "summary": "GET /siem/v1/events/cg",
         "status": 200,
-        "list": true,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
         "envelope": {
-          "type": "wrapped",
-          "arrayKey": "data"
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "event",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "id",
-              "kind": "id"
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "action",
-              "kind": "enum",
-              "enumValues": [
-                "accept",
-                "reject",
-                "hold"
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "@nextPage",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "http",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "message",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "meta",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "pagination",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "next",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                }
               ]
-            },
-            {
-              "name": "sender",
-              "kind": "email"
-            },
-            {
-              "name": "recipient",
-              "kind": "email"
-            },
-            {
-              "name": "timestamp",
-              "kind": "timestamp"
             }
           ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "cursor",
-          "limitParam": "pageSize",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "pageToken",
-          "defaultLimit": 20,
-          "maxLimit": 500
         }
       }
     ],

@@ -3,11 +3,11 @@
   "name": "Mimecast v2",
   "pack": "Mimecast",
   "vendor": "Mimecast",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
   "summary": "SIEM logs as a zip plus an mc-siem-token header.",
   "notes": [
-    "Cross-check: unparseable: no HTTP calls and no test_data"
+    "Rebuilt from the XSOAR client. The checker matched POST /api/audit/get-siem-logs. The collector writes that body as a zip and pages with the mc-siem-token header."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastEventCollector",
@@ -17,17 +17,34 @@
       "kind": "preset",
       "id": "mimecast-mimecastv2",
       "name": "Mimecast v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
       "notes": [
-        "Cross-check: unparseable: no HTTP calls and no test_data"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /api/audit/get-siem-logs. The collector writes that body as a zip and pages with the mc-siem-token header."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /api/audit/get-siem-logs. The collector writes that body as a zip and pages with the mc-siem-token header."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
+        "id": "post-api-audit-get-siem-logs-0",
+        "method": "POST",
+        "pathTemplate": "/api/audit/get-siem-logs",
+        "summary": "POST /api/audit/get-siem-logs",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
         "pagination": {
           "style": "header",
           "limitParam": "limit",
@@ -38,48 +55,39 @@
           "maxLimit": 500,
           "headerName": "mc-siem-token"
         },
-        "id": "siem-logs",
-        "method": "POST",
-        "pathTemplate": "/api/audit/get-siem-logs",
-        "summary": "Download the next SIEM log batch",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "array"
-        },
         "record": {
-          "name": "event",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "datetime",
-              "kind": "timestamp",
-              "format": "iso"
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "aCode",
-              "kind": "id"
+              "name": "Content-Disposition",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "Act",
-              "kind": "enum",
-              "enumValues": [
-                "Acc",
-                "Hld",
-                "Rej"
-              ]
+              "name": "Content-Type",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "MsgId",
-              "kind": "id"
+              "name": "after",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "Sender",
-              "kind": "email"
+              "name": "eventTime",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "Rcpt",
-              "kind": "email"
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         },

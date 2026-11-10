@@ -170,15 +170,15 @@ def client_folder(preset: dict) -> Path | None:
 
 def ranked_calls(calls: list[cc.HttpCall], previous: list[str]) -> list[cc.HttpCall]:
     scored: list[tuple[int, str, cc.HttpCall]] = []
-    seen: set[str] = set()
+    seen: set[tuple[str, str]] = set()
     for call in calls:
         path = best_path(call)
-        if not path or path in seen:
+        if not path or (call.method, path) in seen:
             continue
         score = score_path(path, call.method, previous)
         if score < 0:
             continue
-        seen.add(path)
+        seen.add((call.method, path))
         scored.append((score, path, call))
     aligned = [item for item in scored if item[0] >= 8]
     pool = aligned or scored
@@ -190,6 +190,12 @@ def best_path(call: cc.HttpCall) -> str:
     usable = [path for path in call.paths if acceptable_path(path)]
     if not usable:
         return ""
+    # Keep the ARM or workspace path when the call also recorded the bare suffix.
+    usable = [
+        path
+        for path in usable
+        if not any(other != path and other.endswith(path) and "/providers/" in other for other in usable)
+    ] or usable
     usable.sort(key=lambda path: (path.count("{"), -len(cc.segments(path)), len(path)))
     return usable[0]
 
@@ -204,6 +210,8 @@ def acceptable_path(path: str) -> bool:
     if SKIP_PATH.search(path):
         return False
     if re.search(r"logout|/auth(?:/|$)|whoami|activity_log|/private$|/image$|seconds-between|online-valid", path, re.I):
+        return False
+    if path.endswith("/{path}"):
         return False
     parts = cc.segments(path)
     if parts and parts[0].startswith("{") and re.search(r"url|base|server|host", parts[0], re.I):
@@ -267,6 +275,7 @@ def build_operation(
             )
         else:
             children.append(leaf(root, root, test_types))
+    attach_nav(children, siblings)
     if not children:
         children.append({"name": "id", "kind": "id"})
     page = pagination_for(params if not dynamic else set())
@@ -289,13 +298,44 @@ def build_operation(
 def choose_roots(keys: set[str], test_paths: set[str]) -> list[str]:
     def usable(names: set[str]) -> list[str]:
         named = [name for name in sorted(names) if NAME_RE.match(name)]
-        preferred = [name for name in named if name.lower() not in JUNK]
+        preferred = [
+            name
+            for name in named
+            if name.lower() not in JUNK
+            and not re.search(r"cred|password|secret|proxy|refresh_token|auth_code", name, re.I)
+            and not (re.fullmatch(r"[A-Z0-9_]{4,}", name) and any(other[:1].islower() for other in named))
+        ]
+        preferred.sort(key=lambda name: (0 if name in {"tables", "columns", "rows", "value", "data", "hits", "results", "findings", "reply"} else 1, name))
         return preferred or named
 
     client_roots = usable(cc.children(set(keys), ()))
     if client_roots:
         return client_roots[:6]
     return usable(cc.children(set(test_paths), ()))[:6]
+
+
+def attach_nav(children: list[dict], siblings: list[cc.HttpCall]) -> None:
+    """Keep pagination tokens the nesting check requires once their parent is a root."""
+    by_name = {child.get("name"): child for child in children}
+    nav: set[str] = set()
+    for call in siblings:
+        nav |= call.nav
+    for path in sorted(nav):
+        parts = [part for part in path.split(".") if part]
+        if len(parts) < 2 or parts[0] not in by_name:
+            continue
+        node = by_name[parts[0]]
+        for part in parts[1:]:
+            if node.get("kind") != "object":
+                node["kind"] = "object"
+                node.pop("example", None)
+                node["children"] = []
+            kids = node.setdefault("children", [])
+            found = next((kid for kid in kids if kid.get("name") == part), None)
+            if found is None:
+                found = {"name": part, "kind": "string", "example": "lab"}
+                kids.append(found)
+            node = found
 
 
 def nested_names(root: str, keys: set[str], test_paths: set[str]) -> list[str]:
@@ -418,17 +458,33 @@ def write_outputs(rebuilt: dict[str, dict], downgrades: dict[str, str]) -> None:
     patch_verification(rebuilt)
 
 
-def write_overlay(rebuilt: dict[str, dict]) -> None:
-    body = {
-        preset_id: {
-            "summary": preset["summary"],
-            "differences": preset["spec"]["source"]["verification"]["differences"],
-            "docUrl": preset["spec"]["source"]["verification"]["docUrl"],
-            "operations": preset["spec"]["operations"],
-            "sourceUrl": preset["sourceUrl"],
-        }
-        for preset_id, preset in sorted(rebuilt.items())
+def overlay_entry(preset: dict) -> dict:
+    return {
+        "summary": preset["summary"],
+        "differences": preset["spec"]["source"]["verification"]["differences"],
+        "docUrl": preset["spec"]["source"]["verification"]["docUrl"],
+        "operations": preset["spec"]["operations"],
+        "sourceUrl": preset["sourceUrl"],
     }
+
+
+def load_overlay_body() -> dict:
+    path = ROOT / "shared/reverified-overlays.ts"
+    if not path.exists():
+        return {}
+    text = path.read_text()
+    start = text.find("= {")
+    end = text.rfind("};")
+    if start < 0 or end < 0:
+        return {}
+    return json.loads(text[start + 2 : end + 1])
+
+
+def write_overlay(rebuilt: dict[str, dict]) -> None:
+    body = load_overlay_body()
+    for preset_id, preset in rebuilt.items():
+        body[preset_id] = overlay_entry(preset)
+    body = dict(sorted(body.items()))
     text = (
         "import type { MockOperation } from \"./mock-spec\";\n\n"
         "export interface ReverifiedOverlay {\n"
