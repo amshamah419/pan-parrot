@@ -148,24 +148,30 @@ export function registerV1(app: Hono<AppEnv>) {
     const user = c.get("apiToken")!.user;
     const id = c.req.param("id");
     await getEndpointForUser(c.get("db"), user.id, id);
+    const requested = Number(c.req.query("limit") || 50);
+    const limit = Number.isFinite(requested) ? Math.min(200, Math.max(1, Math.floor(requested))) : 50;
     const rows = await c.get("db")
       .select({
         id: capturedRequests.id,
         method: capturedRequests.method,
         path: capturedRequests.path,
         status: capturedRequests.status,
+        query: capturedRequests.query,
+        body: capturedRequests.body,
         createdAt: capturedRequests.createdAt,
       })
       .from(capturedRequests)
       .where(and(eq(capturedRequests.endpointId, id), eq(capturedRequests.userId, user.id)))
       .orderBy(desc(capturedRequests.createdAt))
-      .limit(50);
+      .limit(limit);
     return c.json({
       logs: rows.map((row) => ({
         id: row.id,
         method: row.method,
         path: row.path,
         status: row.status,
+        query: row.query ?? {},
+        body: bodyExcerpt(row.body),
         created: row.createdAt.toISOString(),
       })),
     });
@@ -314,6 +320,13 @@ function parseDocument(text: string): unknown {
   } catch {
     throw new HttpError(400, "Spec is not valid JSON or YAML");
   }
+}
+
+function bodyExcerpt(body: unknown): string | undefined {
+  if (body == null) return undefined;
+  const text = typeof body === "string" ? body : JSON.stringify(body);
+  if (!text) return undefined;
+  return text.length > 500 ? text.slice(0, 500) : text;
 }
 
 function clientSourceOf(body: Record<string, unknown>): string | undefined {

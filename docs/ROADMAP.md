@@ -18,6 +18,7 @@ Status: **done**, **in progress**, **todo**.
 | 10 | Ops readiness | done | `docs/GO_LIVE.md` is the Netlify, Netlify Database, Resend, env var, secret-rotation, and smoke-test checklist. `GET /api/health` checks the database. `/admin` Health shows email, the session secret, catch latency and errors, sign-in, storage, and the app version. `npm run smoke` runs against the deployed site. `docs/USER_GUIDE.md` includes the admin page. Playwright runs the studio journey and the admin page in CI. Production deploy, Resend, and the first sign-in are still Andrew's steps below. A database backup product is not planned. |
 | 11 | Agent catalog search | done | `panparrot presets --q` calls `GET /api/v1/presets` and prints fidelity plus command coverage (`vendor`, `approximate`, `missing`, `total`) when the preset has been scored. The same fields are on the JSON response. |
 | 12 | Mock from a local integration | done | `panparrot mock from-integration <integration.yml>` reads the YAML, the Python file beside it, and `test_data` when present. Routes come from the client. The command returns the catch URL and the instance parameters. The Python is parsed for paths only. It is not executed and is not stored. |
+| 13 | Request assertions | done | `panparrot assert --mock <id> --file expectations.json` checks captured calls after a test run. Each row is method, path, optional query, status, body text, min, and max. The path matches after the catch prefix. `max: 0` means the call must not have happened. A miss exits 1. Logs returned to the CLI include query and a short body, not request headers. |
 
 ## Defaults chosen without waiting
 
@@ -48,6 +49,8 @@ Status: **done**, **in progress**, **todo**.
 - The request log searches method, status, path, headers, and body, copies a call as cURL or Python, replays it through the same public-https checks as Push, and diffs two calls side by side. `?` lists the shortcuts. Color theme follows the system until a Light or Dark choice is saved in the browser.
 
 ## Done through this PR
+
+`panparrot assert` checks the calls captured on a mock after a test run. A file is a list, or `{"calls":[...]}`, of `{method, path, query, status, bodyIncludes, min, max}`. One call can be `--method GET --path /hello --query since=2020-01-01T00:00:00Z`. The path matches the request after the catch id. `GET /api/v1/mocks/{id}/logs?limit=200` returns query and a 500-character body. It does not return request headers. A failed check exits 1.
 
 `panparrot mock from-integration <integration.yml>` builds a mock from a local XSOAR integration. It sends the YAML, the Python file next to it (or `--python`), and a sibling `test_data` directory. `POST /api/v1/mocks` accepts `clientSource` and uses it only to choose each command's method and path. The response lists those routes. The command then reads instance config and prints the catch URL and parameter values. Fetch-incident windows and stateful create/get/delete were already on the Flow tab.
 

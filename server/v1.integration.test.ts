@@ -150,6 +150,37 @@ class Client:
     expect(guide.params.find((row: { name: string }) => row.name === "url").value).toBe(mock.url);
   });
 
+  it("returns query and body on captured logs and leaves headers off", async () => {
+    const issued = await mint(["mocks:read", "mocks:write"], "assert-logs");
+    const created = await app.request("/api/v1/mocks", {
+      method: "POST",
+      headers: { authorization: `Bearer ${issued.token}`, "content-type": "application/json" },
+      body: JSON.stringify({ preset: "github-github", name: "Assert logs" }),
+    });
+    expect(created.status).toBe(201);
+    const mock = await created.json();
+    const [owner] = await db.select().from(schema.users).limit(1);
+    await db.insert(schema.capturedRequests).values({
+      method: "GET",
+      path: "catchpath/hello",
+      status: 200,
+      headers: { authorization: "Bearer secret" },
+      query: { since: "2020-01-01T00:00:00Z" },
+      body: { title: "lab" },
+      userId: owner.id,
+      endpointId: mock.id,
+    });
+    const logs = await app.request(`/api/v1/mocks/${mock.id}/logs?limit=200`, {
+      headers: { authorization: `Bearer ${issued.token}` },
+    });
+    expect(logs.status).toBe(200);
+    const row = (await logs.json()).logs[0];
+    expect(row.query.since).toBe("2020-01-01T00:00:00Z");
+    expect(row.body).toContain("lab");
+    expect(row.headers).toBeUndefined();
+    expect(JSON.stringify(row)).not.toContain("Bearer secret");
+  });
+
   it("upserts a YAML mock, returns instance config, and dies when revoked or the user is disabled", async () => {
     const issued = await mint(["mocks:read", "mocks:write"], "writer");
     const first = await app.request("/api/v1/mocks", {
