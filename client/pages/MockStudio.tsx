@@ -13,6 +13,7 @@ import { PushPanel } from "@/components/PushPanel";
 import { getEndpoint, resetRuntime, saveMockSpec } from "@/lib/api";
 import { sampleRequest } from "@/lib/sample-call";
 import { CollabPanel } from "@/components/CollabPanel";
+import { CommandCoveragePanel } from "@/components/CommandCoverage";
 import { InstanceGuidePanel } from "@/components/InstanceGuide";
 import { FixturePanel } from "@/components/FixturePanel";
 import { generateMockResponse, matchOperation } from "@shared/generate";
@@ -274,6 +275,7 @@ export default function MockStudio() {
         </p>
       </section>
 
+      <CommandCoveragePanel spec={spec} catchUrl={url} onChange={setSpec} />
       <InstanceGuidePanel spec={spec} catchUrl={url} />
       <FixturePanel endpointId={endpointId} spec={spec} catchUrl={url} />
 

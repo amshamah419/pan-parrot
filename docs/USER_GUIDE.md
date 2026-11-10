@@ -14,6 +14,18 @@ The studio also shows a "try" URL with the path the integration will append, suc
 
 If the mock came from a preset or an integration YAML, the same screen lists the XSOAR instance fields: the server parameter (the catch URL), the dummy credential in that integration's own parameter name, Trust any certificate, Use system proxy, and fetch. Copy one field or download the instance JSON. The JSON is the `{ brand, data: [{ name, value }] }` object XSOAR imports. Leave Fetch incidents off until a manual command shows up in the log.
 
+## Integrations in progress
+
+Use **Mock an integration → In progress** while a pack is still being written.
+
+1. Paste the integration `.yml`, or enter a demisto/content path such as `Packs/HelloWorld/Integrations/HelloWorld`. The path is read from the public `demisto/content` repository. It is not a general URL.
+2. Optionally add `test_data/*.json` files, or paste the Python client. A file whose name matches the command (`hello-world.json`, `hello_world.json`) becomes that command's response. A `mock_response` or XSOAR `Contents` wrapper is unwrapped first. Files larger than 8 KB still set the field shape, and the mock generates values instead of returning the raw file.
+3. Commands without test data use the YAML `outputs` context paths. Commands with neither outputs nor arguments are listed and do not get an operation.
+4. The path is the HTTP call in that command's Python function when it can be found, including one hop from `client.method()` to the client method. Otherwise a `METHOD /path` in the command description is used. Otherwise the path is `/command-name`. On the mock page, **Command coverage** lets you type a different method and path. That mapping is what the catch URL matches.
+5. The same section has **Download instance JSON**. That download was already on the mock page for presets and YAML imports. It is the `{ brand, data: [{ name, value }] }` object XSOAR imports, with the catch URL in the server field and dummy credentials. Save the mock before you rely on a later edit.
+
+The coverage line counts how many commands have a mock, how many use test_data, and how many are guessed. A command with no shape stays in the table as "no mock".
+
 ## What you can point at a catch URL
 
 - A verified preset follows a public vendor reference. The badge says so. Most catalog presets are a **guessed shape** built from the integration's sample, README, or YAML. Treat a guessed shape as a starting point and edit it.

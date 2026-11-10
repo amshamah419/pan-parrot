@@ -120,6 +120,8 @@ export interface MockOperation {
   requestElement?: string;
   /** Send list rows as chunked NDJSON instead of one buffered body. */
   stream?: boolean;
+  /** Exact JSON body from an integration test_data file. Returned when chaos is off. */
+  fixture?: string;
   /** When set, the catch URL repeats the sample until this many bytes, up to the download cap. */
   downloadBytes?: number;
   pack?: {
@@ -237,6 +239,15 @@ export interface XsoarIntegration {
   params: XsoarParam[];
 }
 
+/** One row in the integration-in-progress coverage table. */
+export interface CommandCoverage {
+  command: string;
+  operationId?: string;
+  response: "test_data" | "sample-shape" | "outputs" | "arguments" | "none";
+  pathFrom: "client" | "description" | "mapped" | "command-name" | "none";
+  fixture?: string;
+}
+
 export interface MockSpec {
   version: 1;
   source: {
@@ -256,6 +267,8 @@ export interface MockSpec {
     };
     /** Parameter names taken from an XSOAR integration YAML configuration list. */
     xsoar?: XsoarIntegration;
+    /** Commands from an integration YAML, including ones that did not become an operation. */
+    coverage?: CommandCoverage[];
   };
   operations: MockOperation[];
   chaos: ChaosSpec;
@@ -412,6 +425,7 @@ export function validateMockSpec(input: unknown): MockSpec {
       unsupported: cleanList(raw.source.unsupported, 20, 300),
       verification: normalizeVerification(raw.source.verification),
       xsoar: normalizeXsoar(raw.source.xsoar),
+      coverage: normalizeCoverage(raw.source.coverage),
     },
     operations,
     chaos: normalizeChaos(raw.chaos),
@@ -460,6 +474,7 @@ function normalizeOperation(
     soapAction: cleanOptional(operation.soapAction, 200),
     requestElement: cleanOptional(operation.requestElement, 80),
     stream: Boolean(operation.stream) || undefined,
+    fixture: normalizeFixture(operation.fixture),
     downloadBytes: clampInt(operation.downloadBytes, 0, MOCK_LIMITS.maxDownloadBytes, 0) || undefined,
     pack: normalizePack(operation.pack),
   };
@@ -563,6 +578,45 @@ function normalizeRateLimit(value: RateQuota | undefined): RateQuota {
     windowSeconds: clampInt(value.windowSeconds, 1, 3600, base.windowSeconds),
     retryAfterSeconds: clampInt(value.retryAfterSeconds, 0, 3600, base.retryAfterSeconds),
   };
+}
+
+function normalizeFixture(value: unknown): string | undefined {
+  if (typeof value !== "string") return undefined;
+  const trimmed = value.trim();
+  if (!trimmed || trimmed.length > MOCK_LIMITS.maxScenarioBodyBytes) return undefined;
+  if (trimmed.includes("\0")) return undefined;
+  if (!trimmed.startsWith("{") && !trimmed.startsWith("[")) return undefined;
+  try {
+    JSON.parse(trimmed);
+  } catch {
+    return undefined;
+  }
+  return trimmed;
+}
+
+function normalizeCoverage(value: CommandCoverage[] | undefined): CommandCoverage[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const rows: CommandCoverage[] = [];
+  for (const row of value) {
+    if (!row || typeof row !== "object") continue;
+    const command = String(row.command || "").trim().slice(0, 80);
+    if (!command) continue;
+    const response = ["test_data", "sample-shape", "outputs", "arguments", "none"].includes(row.response)
+      ? row.response
+      : "none";
+    const pathFrom = ["client", "description", "mapped", "command-name", "none"].includes(row.pathFrom)
+      ? row.pathFrom
+      : "none";
+    rows.push({
+      command,
+      operationId: cleanOptional(row.operationId, 80),
+      response,
+      pathFrom,
+      fixture: cleanOptional(row.fixture, 120),
+    });
+    if (rows.length >= MOCK_LIMITS.maxOperations) break;
+  }
+  return rows.length ? rows : undefined;
 }
 
 function normalizeXsoar(value: unknown): XsoarIntegration | undefined {

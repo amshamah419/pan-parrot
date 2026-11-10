@@ -11,7 +11,9 @@ import { parse as parseYaml } from "yaml";
 import { capturedPackFiles, contentPackFiles } from "../shared/content-pack";
 import { exportFixture } from "../shared/export-fixture";
 import { validateMockSpec } from "../shared/mock-spec";
-import { isOpenApiDocument, isXsoarIntegration, mockFromIntegrationYaml } from "../shared/xsoar-yaml";
+import { buildIntegrationMock, type CommandMapping, type TestDataFile } from "../shared/xsoar-workflow";
+import { isOpenApiDocument, isXsoarIntegration } from "../shared/xsoar-yaml";
+import { loadContentIntegration } from "./xsoar-content";
 import {
   adminUsage,
   listAdminAudit,
@@ -394,6 +396,10 @@ export function createServer(options?: {
       url?: string;
       kind?: string;
       zipBase64?: string;
+      testData?: TestDataFile[];
+      clientSource?: string;
+      contentPath?: string;
+      mappings?: CommandMapping[];
     };
     if (body.zipBase64) {
       const bytes = Buffer.from(body.zipBase64, "base64");
@@ -411,9 +417,18 @@ export function createServer(options?: {
       };
       return c.json({ mockSpec: imported, warnings: [], unsupported: ["Only the first text entry was used as the shape."] });
     }
+    let contentYaml = "";
+    let contentClient = "";
+    let contentTests: TestDataFile[] = [];
+    if (body.contentPath) {
+      const bundle = await loadContentIntegration(String(body.contentPath));
+      contentYaml = bundle.yaml;
+      contentClient = bundle.clientSource;
+      contentTests = bundle.testData;
+    }
     const text = body.url
       ? await fetchPublicSpec(body.url)
-      : String(body.text || "");
+      : String(body.text || contentYaml || "");
     if (!text.trim()) throw new HttpError(400, "Provide a spec or sample");
     if (text.length > POLICY.specJsonBytes) throw new HttpError(413, "Spec is too large");
     if (looksLikeGraphql(text)) {
@@ -441,9 +456,16 @@ export function createServer(options?: {
     }
     try {
       if (!isOpenApiDocument(document) && isXsoarIntegration(document)) {
+        const uploaded = Array.isArray(body.testData) ? body.testData.slice(0, 20) : [];
+        const built = buildIntegrationMock({
+          yaml: text,
+          testData: [...uploaded, ...contentTests].slice(0, 20),
+          clientSource: [String(body.clientSource || ""), contentClient].filter(Boolean).join("\n\n"),
+          mappings: Array.isArray(body.mappings) ? body.mappings.slice(0, 40) : [],
+        });
         return c.json({
-          mockSpec: mockFromIntegrationYaml(text),
-          warnings: ["Each command became an operation. Paths are /command-name unless the description contains METHOD /path."],
+          mockSpec: built.spec,
+          warnings: built.warnings,
           unsupported: [],
         });
       }
