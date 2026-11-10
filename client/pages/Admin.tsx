@@ -210,7 +210,7 @@ export default function Admin() {
               <CardHeader>
                 <CardTitle>Accounts ({users.length})</CardTitle>
                 <CardDescription>
-                  Suspending someone signs them out and blocks their catch URLs. ashamah@paloaltonetworks.com stays an admin.
+                  Suspending someone signs them out and blocks their catch URLs. The founding admin cannot be demoted.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">

@@ -225,7 +225,7 @@ test("an admin can read health and send an invite", async ({ page }) => {
   await page.getByRole("tab", { name: "People" }).click();
   await page.getByLabel("Search people").fill("ashamah");
   await page.getByRole("button", { name: "Search" }).click();
-  await expect(page.getByText("ashamah@paloaltonetworks.com")).toBeVisible();
+  await expect(page.getByText("ashamah@paloaltonetworks.com", { exact: true })).toBeVisible();
   await expect(page.getByText("Always admin")).toBeVisible();
   await page.screenshot({ path: "test-results/admin-people.png", fullPage: true });
   await page.getByRole("tab", { name: "Invites" }).click();
