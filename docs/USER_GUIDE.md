@@ -46,13 +46,14 @@ The coverage line counts how many commands have a mock, how many use test_data, 
 
 `ashamah@paloaltonetworks.com` is always an admin. Other admins are the addresses in `ADMIN_EMAILS`, plus anyone an admin promotes on the People tab. That promotion is stored in the database. The founding address cannot be demoted, suspended, or deleted.
 
-Open **Admin Panel** on the dashboard. The page has five tabs.
+Open **Admin Panel** on the dashboard. The page has six tabs.
 
-- **Health** shows whether the API, database, email, and catch handler are up, using the same database check as `GET /api/health`. It also shows catch-traffic latency, error rate, and 4xx/5xx counts for the last 24 hours and 7 days, rate-limit hits, sign-in attempts, failures, and lockouts, storage against the capture and mock quotas, the busiest mocks and people, recent server errors, and the app version and commit. These numbers are rows in this database. There is no paid monitoring service.
+- **Health** shows whether the API, database, email, and catch handler are up, using the same database check as `GET /api/health`. It also shows catch-traffic latency, error rate, and 4xx/5xx counts for the last 24 hours and 7 days, rate-limit hits, sign-in attempts, failures, and lockouts, storage against the capture and mock quotas, the busiest mocks and people, recent server errors, the app version and commit, and the catalog command-coverage total. These numbers are rows in this database, except the catalog total, which is read from the preset index. There is no paid monitoring service.
 - **People** searches accounts. You can promote or demote an admin, suspend or unsuspend someone (that signs them out and blocks their catch URLs), revoke their sessions or personal tokens, purge captured calls, or delete the account and its data.
 - **Mocks** searches every mock. Disable blocks the catch URL. Purge requests deletes captured calls and leaves the mock.
 - **Invites** sends a Resend email with a 7-day link to the public sign-in page for one or more `@paloaltonetworks.com` addresses. Non-PAN addresses are rejected the same way sign-up rejects them. An invite is pending, accepted, or expired, and can be resent or revoked. **Require an invite for new sign-ups** is off until an admin turns it on. When it is on, a new address that was not invited gets the same "check your email" message and no code. Existing accounts, and the founding admin, can still sign in.
 - **Audit** lists admin actions along with shares, saves, and purges.
+- **Tokens** lists personal API tokens and lets an admin revoke one. The token secret is not shown again.
 
 ## What you can point at a catch URL
 
@@ -83,6 +84,7 @@ Create a personal token on the dashboard. It is shown once. The server stores a 
 
 ```bash
 npm run parrot -- login --url https://<site> --token pp_...
+npm run parrot -- presets --q github
 npm run parrot -- mocks
 npm run parrot -- create --name "Hello" --yaml HelloWorld.yml
 npm run parrot -- create --name "GitHub" --preset github-github
@@ -91,7 +93,7 @@ npm run parrot -- export <endpoint-id> --out ./tests
 
 `login` writes `~/.config/pan-parrot/credentials.json` mode `0600`. The pytest export uses `requests_mock` and does not call the live catch URL. Dummy credentials are not copied into the export.
 
-The `panparrot` Python package is the agent interface. `pipx install` from `py/panparrot` in this repo. Tokens are created on the dashboard with an expiry and `mocks:read` / `mocks:write` scopes. `/api/v1` answers only a live bearer token. The recipe, including `xsiam configure-instance`, is in [agent-usage.md](agent-usage.md). XSIAM credentials stay in the shell and XSIAM must be able to reach the catch URL.
+The `panparrot` Python package is the agent interface. `pipx install` from `py/panparrot` in this repo. `panparrot presets --q github` lists matching catalog presets and, when the preset has been scored, how many commands are from vendor docs, approximate, or missing. Tokens are created on the dashboard with an expiry and `mocks:read` / `mocks:write` scopes. `/api/v1` answers only a live bearer token. The recipe, including `xsiam configure-instance`, is in [agent-usage.md](agent-usage.md). XSIAM credentials stay in the shell and XSIAM must be able to reach the catch URL.
 
 **Export test_data** writes `test_data/*.json` files whose contents are the raw HTTP body, plus a README with the `util_load_json` snippet. Sequence steps that have a body are separate files. **Fixtures from captured calls** does the same from response previews of calls that already hit the catch URL. The shape diff lists fields the preset expects and the pasted JSON does not, and the reverse.
 

@@ -84,6 +84,7 @@ export default function Docs() {
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-muted-foreground">
               <pre className="overflow-auto rounded bg-muted p-3 text-xs text-foreground">{`panparrot --json login --url https://your-site --token pp_...
+panparrot --json presets --q github
 panparrot --json mocks create --from-yml HelloWorld.yml --test-data ./test_data
 panparrot --json instance-config --mock <id>
 panparrot --json xsiam configure-instance --mock <id> --integration HelloWorld --instance-name lab --dry-run`}</pre>
