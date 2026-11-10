@@ -296,6 +296,11 @@ script:
       body: JSON.stringify({ state: { enabled: true, extra: true } }),
     });
     expect(rejected.status).toBe(400);
+    const revoked = await app.request(`/api/tokens/${issued.id}`, {
+      method: "DELETE",
+      headers: { cookie, origin: "http://localhost:8080" },
+    });
+    expect(revoked.status).toBe(200);
   });
 
   it("returns query and body on captured logs and leaves headers off", async () => {
