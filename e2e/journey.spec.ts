@@ -301,6 +301,41 @@ test("dark mode follows the system and the request log can be searched", async (
   await expect(page.getByRole("heading", { name: "Keyboard shortcuts" })).toBeVisible();
 });
 
+test("the match tab shows the richer body path", async ({ page }) => {
+  await signIn(page, `match.${Date.now().toString(36)}@paloaltonetworks.com`);
+  const created = await page.request.post("/api/endpoints", {
+    data: {
+      name: "Match rows",
+      customPath: `match${Date.now().toString(36)}`,
+      mockSpec: {
+        version: 1,
+        source: { kind: "manual", name: "Match" },
+        operations: [
+          {
+            id: "rows",
+            method: "POST",
+            pathTemplate: "/rows",
+            status: 200,
+            contentType: "application/json",
+            list: false,
+            envelope: { type: "object" },
+            record: { name: "row", kind: "object", children: [] },
+          },
+        ],
+        chaos: { enabled: false },
+        totalRecords: 1,
+      },
+    },
+  });
+  expect(created.ok()).toBeTruthy();
+  const endpoint = await created.json();
+  await page.goto(`/mock/${endpoint.id}`);
+  await page.getByRole("tab", { name: "Match" }).click();
+  await expect(page.getByLabel("Body path")).toBeVisible();
+  await page.getByLabel("Body path").fill('$.items[?(@.status=="closed")].id');
+  await expect(page.getByLabel("Body path")).toHaveValue('$.items[?(@.status=="closed")].id');
+});
+
 test("the version list shows what revert would change", async ({ page }) => {
   await signIn(page, `diff.${Date.now().toString(36)}@paloaltonetworks.com`);
   const spec = (value: string) => ({

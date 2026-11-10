@@ -57,6 +57,12 @@ const spec: MockSpec = {
       headerMatch: { "x-env": "lab" },
       record: { name: "incident", kind: "object", children: [{ name: "title", kind: "const", constValue: "lab-rule" }] },
     }),
+    op({
+      id: "filtered",
+      priority: 8,
+      bodyMatch: { path: '$.items[?(@.status=="closed")].id', equals: "b" },
+      record: { name: "incident", kind: "object", children: [{ name: "title", kind: "const", constValue: "filtered-rule" }] },
+    }),
   ],
   chaos: defaultChaos(),
   totalRecords: 1,
@@ -108,5 +114,11 @@ describe("catch URL request matching", () => {
       body: JSON.stringify({ status: "open" }),
     });
     expect((await fallback.json()).title).toBe("default");
+    const filtered = await app.request("/catch/matchdemo/incidents", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ items: [{ id: "a", status: "open" }, { id: "b", status: "closed" }] }),
+    });
+    expect((await filtered.json()).title).toBe("filtered-rule");
   });
 });
