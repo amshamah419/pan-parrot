@@ -11,8 +11,8 @@ You are configuring a PAN Parrot mock for the integration in this directory.
 2. panparrot --json login --url https://<panparrot-site> --token pp_...
 3. panparrot --json presets --q <integration name>
    Use the preset id when one matches. commandCoverage says how many commands return a vendor example.
-4. panparrot --json mocks create --from-yml <Integration>.yml --test-data <test_data dir>
-   Repeat the same command to update that integration id and version. It upserts.
+4. panparrot --json mock from-integration <Integration>.yml
+   This reads the YAML, the Python file beside it, and a sibling test_data directory. The routes come from the Python client. The result includes the catch URL and instance params. Repeat it to update the same integration id and version.
 5. panparrot --json instance-config --mock <id>
    Put baseUrl in the integration URL parameter. Use the returned param names and values. They come from the integration YAML.
 6. The user exports DEMISTO_BASE_URL, DEMISTO_API_KEY, and XSIAM_AUTH_ID in the shell. Do not send those values to PAN Parrot, and do not write them into the repo.
@@ -38,6 +38,7 @@ pipx install "git+https://github.com/amshamah419/pan-parrot.git#subdirectory=py/
 ```bash
 panparrot --json login --url https://<site> --token pp_...
 panparrot --json presets --q github
+panparrot --json mock from-integration Integrations/HelloWorld/HelloWorld.yml
 panparrot --json mocks list
 panparrot --json mocks create --from-yml Integrations/HelloWorld/HelloWorld.yml --test-data Integrations/HelloWorld/test_data
 panparrot --json mocks push --from-yml Integrations/HelloWorld/HelloWorld.yml
@@ -63,7 +64,7 @@ Every command accepts `--json` and prints one object on stdout. `login` stores t
 | GET | `/api/v1/mocks/{id}/logs` | mocks:read |
 | GET | `/api/v1/mocks/{id}/instance-config` | mocks:read |
 
-`POST /api/v1/mocks` takes one of `preset`, `openapi`, `yaml` (plus optional `testData`), or `mockSpec`. `integrationId` and `version` upsert that pair. Bodies are limited to the spec size cap (512 KB). `instance-config` returns `baseUrl` and the YAML parameter names, types, and values, including the catch URL, `insecure`, and `proxy`.
+`POST /api/v1/mocks` takes one of `preset`, `openapi`, `yaml` (plus optional `testData` and `clientSource`), or `mockSpec`. `clientSource` is the integration Python, used only to read HTTP paths. It is not executed and is not stored. `integrationId` and `version` upsert that pair. Bodies are limited to the spec size cap (512 KB). `instance-config` returns `baseUrl` and the YAML parameter names, types, and values, including the catch URL, `insecure`, and `proxy`.
 
 ## XSIAM
 
