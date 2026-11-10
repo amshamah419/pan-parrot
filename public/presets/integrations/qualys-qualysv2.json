@@ -3,11 +3,11 @@
   "name": "Qualys VMDR",
   "pack": "qualys",
   "vendor": "Qualys",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /api/2.0/fo/asset/host/ returns a shortened host list.",
+  "summary": "Rebuilt from the client: GET /api/5.0/fo/asset/host/vm/detection.",
   "notes": [
-    "Cross-check: path: GET /api/2.0/fo/asset/host is not a client call. Closest: /api/2.0/fo/activity_log (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/5.0/fo/asset/host/vm/detection, GET /api/3.0/fo/scan. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/qualys/Integrations/Qualysv2",
@@ -17,60 +17,168 @@
       "kind": "preset",
       "id": "qualys-qualysv2",
       "name": "Qualys VMDR",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs.qualys.com/en/vm/api/assets/index.htm",
       "notes": [
-        "Cross-check: path: GET /api/2.0/fo/asset/host is not a client call. Closest: /api/2.0/fo/activity_log (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/5.0/fo/asset/host/vm/detection, GET /api/3.0/fo/scan. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.qualys.com/en/vm/api/assets/index.htm",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/5.0/fo/asset/host/vm/detection, GET /api/3.0/fo/scan. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
+        "id": "get-api-5-0-fo-asset-host-vm-detection-0",
+        "method": "GET",
+        "pathTemplate": "/api/5.0/fo/asset/host/vm/detection",
+        "summary": "GET /api/5.0/fo/asset/host/vm/detection",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
         "headers": {},
-        "contentType": "text/xml; charset=utf-8",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 1,
-          "maxLimit": 1
-        },
-        "id": "list-hosts",
-        "method": "GET",
-        "pathTemplate": "/api/2.0/fo/asset/host/",
-        "summary": "List hosts",
-        "status": 200,
-        "list": false,
-        "envelope": {
-          "type": "xml"
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "HOST_LIST_OUTPUT",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "HOST",
+              "name": "Address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "BUGTRAQ_LIST",
               "kind": "object",
               "children": [
                 {
-                  "name": "ID",
-                  "kind": "integer"
-                },
-                {
-                  "name": "IP",
-                  "kind": "ip"
-                },
-                {
-                  "name": "DNS",
+                  "name": "BUGTRAQ",
                   "kind": "string",
-                  "example": "lab-workstation.example.com"
-                },
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "CATEGORY",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CODE",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CORRELATION",
+              "kind": "object",
+              "children": [
                 {
-                  "name": "LAST_VULN_SCAN_DATETIME",
-                  "kind": "timestamp",
-                  "format": "iso"
+                  "name": "EXPLOITS",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "CVE_LIST",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "CVE",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-api-3-0-fo-scan-1",
+        "method": "GET",
+        "pathTemplate": "/api/3.0/fo/scan",
+        "summary": "GET /api/3.0/fo/scan",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "BUGTRAQ_LIST",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "BUGTRAQ",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "CATEGORY",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CODE",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CORRELATION",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "EXPLOITS",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "CVE_LIST",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "CVE",
+                  "kind": "string",
+                  "example": "lab"
                 }
               ]
             }

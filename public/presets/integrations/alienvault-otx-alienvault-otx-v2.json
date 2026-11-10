@@ -3,11 +3,11 @@
   "name": "AlienVault OTX v2",
   "pack": "AlienVault_OTX",
   "vendor": "AlienVault",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "IPv4 general section. pulse_info.count is the reputation signal.",
+  "summary": "Rebuilt from the client: GET /IPv4/general.",
   "notes": [
-    "Cross-check: path: GET /api/v1/indicators/IPv4/{ip}/general is not a client call. Closest: /IPv4/general (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /IPv4/general, GET /cve/general. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AlienVault_OTX/Integrations/AlienVault_OTX_v2",
@@ -17,60 +17,34 @@
       "kind": "preset",
       "id": "alienvault-otx-alienvault-otx-v2",
       "name": "AlienVault OTX v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://otx.alienvault.com/api",
       "notes": [
-        "Cross-check: path: GET /api/v1/indicators/IPv4/{ip}/general is not a client call. Closest: /IPv4/general (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /IPv4/general, GET /cve/general. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://otx.alienvault.com/api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /IPv4/general, GET /cve/general. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "ipv4-general",
+        "id": "get-ipv4-general-0",
         "method": "GET",
-        "pathTemplate": "/api/v1/indicators/IPv4/{ip}/general",
-        "summary": "IPv4 general",
+        "pathTemplate": "/IPv4/general",
+        "summary": "GET /IPv4/general",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "general",
-          "kind": "object",
-          "children": [
-            {
-              "name": "indicator",
-              "kind": "ip"
-            },
-            {
-              "name": "reputation",
-              "kind": "integer"
-            },
-            {
-              "name": "pulse_info",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "count",
-                  "kind": "integer"
-                }
-              ]
-            },
-            {
-              "name": "country_name",
-              "kind": "const",
-              "constValue": "United States"
-            },
-            {
-              "name": "asn",
-              "kind": "const",
-              "constValue": "AS64500"
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -78,7 +52,123 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "AlienVaultOTX",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alexa",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "asn",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "attack_ids",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "author",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "username",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "count",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-cve-general-1",
+        "method": "GET",
+        "pathTemplate": "/cve/general",
+        "summary": "GET /cve/general",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "AlienVaultOTX",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alexa",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "asn",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "attack_ids",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "author",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "username",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "count",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

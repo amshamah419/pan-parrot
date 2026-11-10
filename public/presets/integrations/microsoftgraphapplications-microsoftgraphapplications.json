@@ -3,11 +3,11 @@
   "name": "Entra ID Applications",
   "pack": "MicrosoftGraphApplications",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Application list. value and @odata.nextLink.",
+  "summary": "Rebuilt from the client: GET /v1.0/servicePrincipals.",
   "notes": [
-    "Cross-check: path: GET /v1.0/applications is not a client call. Closest: /v1.0/servicePrincipals{service_id} (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /v1.0/servicePrincipals, PATCH /beta/applications/{service_id}. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphApplications/Integrations/MicrosoftGraphApplications",
@@ -17,58 +17,96 @@
       "kind": "preset",
       "id": "microsoftgraphapplications-microsoftgraphapplications",
       "name": "Entra ID Applications",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/application-list",
       "notes": [
-        "Cross-check: path: GET /v1.0/applications is not a client call. Closest: /v1.0/servicePrincipals{service_id} (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /v1.0/servicePrincipals, PATCH /beta/applications/{service_id}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/application-list",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v1.0/servicePrincipals, PATCH /beta/applications/{service_id}. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-applications",
+        "id": "get-v1-0-serviceprincipals-0",
         "method": "GET",
-        "pathTemplate": "/v1.0/applications",
-        "summary": "List applications",
+        "pathTemplate": "/v1.0/servicePrincipals",
+        "summary": "GET /v1.0/servicePrincipals",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "odata",
-          "context": "https://graph.microsoft.com/v1.0/$metadata#applications"
-        },
-        "record": {
-          "name": "application",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "uuid"
-            },
-            {
-              "name": "appId",
-              "kind": "uuid"
-            },
-            {
-              "name": "displayName",
-              "kind": "string",
-              "example": "Lab Connector"
-            },
-            {
-              "name": "createdDateTime",
-              "kind": "timestamp"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
-          "limitParam": "$top",
-          "offsetParam": "$skip",
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "replyUrls",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "patch-beta-applications-service-id-1",
+        "method": "PATCH",
+        "pathTemplate": "/beta/applications/{service_id}",
+        "summary": "PATCH /beta/applications/{service_id}",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "replyUrls",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

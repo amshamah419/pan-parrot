@@ -3,73 +3,48 @@
   "name": "TaegisXDR v2",
   "pack": "Secureworks",
   "vendor": "Secureworks",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GraphQL investigations.",
+  "summary": "Rebuilt from the client: POST /graphql.",
   "notes": [
-    "Cross-check: no-source: Packs/Secureworks/Integrations/TaegisXDRv2 is not in the content checkout"
+    "Rebuilt from the XSOAR client. The checker matched POST /graphql. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
-  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Secureworks/Integrations/TaegisXDRv2",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SecureWorks/Integrations/TaegisXDRv2",
   "spec": {
     "version": 1,
     "source": {
       "kind": "preset",
       "id": "secureworks-taegisxdrv2",
       "name": "TaegisXDR v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.ctpx.secureworks.com/apis/graphql/",
       "notes": [
-        "Cross-check: no-source: Packs/Secureworks/Integrations/TaegisXDRv2 is not in the content checkout"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /graphql. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.ctpx.secureworks.com/apis/graphql/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /graphql. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "graphql",
+        "id": "post-graphql-0",
         "method": "POST",
         "pathTemplate": "/graphql",
-        "summary": "Query investigations",
+        "summary": "POST /graphql",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "investigations",
-                  "kind": "array",
-                  "minItems": 1,
-                  "maxItems": 1,
-                  "item": {
-                    "name": "investigation",
-                    "kind": "object",
-                    "children": [
-                      {
-                        "name": "id",
-                        "kind": "id"
-                      },
-                      {
-                        "name": "status",
-                        "kind": "const",
-                        "constValue": "OPEN"
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -77,7 +52,75 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "alerts",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "list",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "client_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "client_secret",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "commandline",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created_at",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "addCommentToInvestigation",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "addEvidenceToInvestigation",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "alertsServiceSearch",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "alertsServiceUpdateResolutionInfo",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "archiveInvestigation",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
         }
       }
     ],

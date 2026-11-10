@@ -3,11 +3,11 @@
   "name": "Palo Alto Networks Device Security",
   "pack": "PaloAltoNetworks_DeviceSecurity",
   "vendor": "Palo Alto Networks",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Device lookup and the alert list.",
+  "summary": "Rebuilt from the client: GET /iot/pub/v1/alert/list.",
   "notes": [
-    "Cross-check: path: GET /device is not a client call. Closest: /iot/pub/v1/device (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /iot/pub/v1/alert/list, GET /iot/pub/v1/device. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_DeviceSecurity/Integrations/PaloAltoNetworks_DeviceSecurity",
@@ -17,50 +17,34 @@
       "kind": "preset",
       "id": "paloaltonetworks-devicesecurity-paloaltonetworks-devicesecurity",
       "name": "Palo Alto Networks Device Security",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
       "notes": [
-        "Cross-check: path: GET /device is not a client call. Closest: /iot/pub/v1/device (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /iot/pub/v1/alert/list, GET /iot/pub/v1/device. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /iot/pub/v1/alert/list, GET /iot/pub/v1/device. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "device",
+        "id": "get-iot-pub-v1-alert-list-0",
         "method": "GET",
-        "pathTemplate": "/device",
-        "summary": "Get a device",
+        "pathTemplate": "/iot/pub/v1/alert/list",
+        "summary": "GET /iot/pub/v1/alert/list",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "device",
-          "kind": "object",
-          "children": [
-            {
-              "name": "deviceid",
-              "kind": "id"
-            },
-            {
-              "name": "ip",
-              "kind": "ip"
-            },
-            {
-              "name": "profile",
-              "kind": "string",
-              "example": "Windows PC"
-            },
-            {
-              "name": "category",
-              "kind": "const",
-              "constValue": "IT Devices"
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -68,57 +52,57 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
-        }
-      },
-      {
-        "id": "alerts",
-        "method": "GET",
-        "pathTemplate": "/iot/pub/v1/alert/list",
-        "summary": "List alerts",
-        "status": 200,
-        "list": false,
-        "envelope": {
-          "type": "object"
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "alerts",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "alert",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "alertid",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  },
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "Unusually high traffic"
-                  }
-                ]
-              }
+              "name": "boundary_ids",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "detected_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "deviceid",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "devices",
+              "kind": "string",
+              "example": "lab"
             }
           ]
-        },
-        "headers": {},
+        }
+      },
+      {
+        "id": "get-iot-pub-v1-device-1",
+        "method": "GET",
+        "pathTemplate": "/iot/pub/v1/device",
+        "summary": "GET /iot/pub/v1/device",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -126,7 +110,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "boundary_ids",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "detected_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "deviceid",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "devices",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

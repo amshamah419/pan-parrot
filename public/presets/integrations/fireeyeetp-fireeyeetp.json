@@ -3,11 +3,11 @@
   "name": "Trellix Email Security - Cloud",
   "pack": "FireEyeETP",
   "vendor": "Trellix",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Email alert list.",
+  "summary": "Rebuilt from the client: GET /events/{message_id}.",
   "notes": [
-    "Cross-check: path: GET /api/v1/alerts is not a client call. Closest: /public/alerts/{alert_id} (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /events/{message_id}. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeETP/Integrations/FireEyeETP",
@@ -17,67 +17,104 @@
       "kind": "preset",
       "id": "fireeyeetp-fireeyeetp",
       "name": "Trellix Email Security - Cloud",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeETP/Integrations/FireEyeETP",
       "notes": [
-        "Cross-check: path: GET /api/v1/alerts is not a client call. Closest: /public/alerts/{alert_id} (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /events/{message_id}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeETP/Integrations/FireEyeETP",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /events/{message_id}. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "alerts",
+        "id": "get-events-message-id-0",
         "method": "GET",
-        "pathTemplate": "/api/v1/alerts",
-        "summary": "List email alerts",
+        "pathTemplate": "/events/{message_id}",
+        "summary": "GET /events/{message_id}",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "data"
-        },
-        "record": {
-          "name": "alert",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "subject",
-              "kind": "string",
-              "example": "Invoice"
-            },
-            {
-              "name": "from",
-              "kind": "email"
-            },
-            {
-              "name": "severity",
-              "kind": "enum",
-              "enumValues": [
-                "low",
-                "medium",
-                "high"
-              ]
-            },
-            {
-              "name": "alert_time",
-              "kind": "timestamp"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Delivered_msg",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Logs",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "acceptedDateTime",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alert",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "attack-time",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "explanation",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "malware_md5",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "occurred",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "alert_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alert_id",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

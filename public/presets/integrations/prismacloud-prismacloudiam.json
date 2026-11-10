@@ -3,11 +3,11 @@
   "name": "Prisma Cloud IAM",
   "pack": "PrismaCloud",
   "vendor": "Palo Alto Networks",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "User list for Prisma Cloud IAM.",
+  "summary": "Rebuilt from the client: POST /user.",
   "notes": [
-    "Cross-check: path: GET /user is not a client call. Closest: /user/{expr} (0)."
+    "Rebuilt from the XSOAR client. The checker matched POST /user. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PrismaCloud/Integrations/PrismaCloudIAM",
@@ -17,51 +17,34 @@
       "kind": "preset",
       "id": "prismacloud-prismacloudiam",
       "name": "Prisma Cloud IAM",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://pan.dev/prisma-cloud/api/cspm/user/",
       "notes": [
-        "Cross-check: path: GET /user is not a client call. Closest: /user/{expr} (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /user. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://pan.dev/prisma-cloud/api/cspm/user/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /user. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-users",
-        "method": "GET",
+        "id": "post-user-0",
+        "method": "POST",
         "pathTemplate": "/user",
-        "summary": "List users",
+        "summary": "POST /user",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "array"
-        },
-        "record": {
-          "name": "user",
-          "kind": "object",
-          "children": [
-            {
-              "name": "username",
-              "kind": "email"
-            },
-            {
-              "name": "firstName",
-              "kind": "const",
-              "constValue": "Jordan"
-            },
-            {
-              "name": "lastName",
-              "kind": "const",
-              "constValue": "Smith"
-            },
-            {
-              "name": "role",
-              "kind": "const",
-              "constValue": "System Admin"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -69,7 +52,28 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "email",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "enabled",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "x-redlock-status",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

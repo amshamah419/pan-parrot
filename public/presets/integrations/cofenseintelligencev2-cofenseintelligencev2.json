@@ -3,11 +3,11 @@
   "name": "Cofense Intelligence v2",
   "pack": "CofenseIntelligenceV2",
   "vendor": "Cofense",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Threat search for a URL or hash.",
+  "summary": "Rebuilt from the client: POST /apiv1/threat/search.",
   "notes": [
-    "Cross-check: path: GET /threat/search is not a client call. Closest: /apiv1/t3/malware/{report_id}/{report_format} (0)."
+    "Rebuilt from the XSOAR client. The checker matched POST /apiv1/threat/search. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseIntelligenceV2/Integrations/CofenseIntelligenceV2",
@@ -17,59 +17,34 @@
       "kind": "preset",
       "id": "cofenseintelligencev2-cofenseintelligencev2",
       "name": "Cofense Intelligence v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseIntelligenceV2/Integrations/CofenseIntelligenceV2",
       "notes": [
-        "Cross-check: path: GET /threat/search is not a client call. Closest: /apiv1/t3/malware/{report_id}/{report_format} (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /apiv1/threat/search. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseIntelligenceV2/Integrations/CofenseIntelligenceV2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /apiv1/threat/search. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "search",
-        "method": "GET",
-        "pathTemplate": "/threat/search",
-        "summary": "Search threats",
+        "id": "post-apiv1-threat-search-0",
+        "method": "POST",
+        "pathTemplate": "/apiv1/threat/search",
+        "summary": "POST /apiv1/threat/search",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "data"
-        },
-        "record": {
-          "name": "threat",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "integer"
-            },
-            {
-              "name": "threat_type",
-              "kind": "enum",
-              "enumValues": [
-                "malware",
-                "phish"
-              ]
-            },
-            {
-              "name": "severity",
-              "kind": "enum",
-              "enumValues": [
-                "low",
-                "moderate",
-                "high"
-              ]
-            },
-            {
-              "name": "value",
-              "kind": "string",
-              "example": "https://bad.example/login"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -77,7 +52,74 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "blockSet",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "page",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "threats",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "data_1",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "domain_search_response",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "data",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "success",
+                  "kind": "boolean"
+                }
+              ]
+            },
+            {
+              "name": "email_search_response",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "data",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "success",
+                  "kind": "boolean"
+                }
+              ]
+            }
+          ]
         }
       }
     ],

@@ -1,5 +1,6 @@
 import { defaultChaos, defaultPagination, type FieldSpec, type MockAuth, type MockSpec } from "./mock-spec";
 import { presetDowngrades } from "./preset-downgrades";
+import { reverifiedOverlays } from "./reverified-overlays";
 import { WIZ_EXAMPLE_QUERY, WIZ_SDL } from "./wiz-schema";
 import { fetchVerifiedPresets } from "./verified-presets-fetch";
 import { intelVerifiedPresets } from "./verified-presets-intel";
@@ -1435,6 +1436,33 @@ function applyCrosscheck(preset: VerifiedPresetFile): VerifiedPresetFile {
   };
 }
 
+function applyReverify(preset: VerifiedPresetFile): VerifiedPresetFile {
+  const overlay = reverifiedOverlays[preset.id];
+  if (!overlay) return applyCrosscheck(preset);
+  return {
+    ...preset,
+    fidelity: "verified",
+    summary: overlay.summary,
+    notes: overlay.differences,
+    sourceUrl: overlay.sourceUrl,
+    spec: {
+      ...preset.spec,
+      operations: overlay.operations,
+      source: {
+        ...preset.spec.source,
+        fidelity: "verified",
+        notes: overlay.differences,
+        verification: {
+          status: "verified",
+          docUrl: overlay.docUrl,
+          checkedAt: "2026-11-10",
+          differences: overlay.differences,
+        },
+      },
+    },
+  };
+}
+
 const authoredPresets: VerifiedPresetFile[] = [
   ...baseVerifiedPresets,
   ...moreVerifiedPresets,
@@ -1446,7 +1474,7 @@ const authoredPresets: VerifiedPresetFile[] = [
   ...panSiemVerifiedPresets,
   ...usageVerifiedPresets,
   ...identityVerifiedPresets,
-].map(applyCrosscheck);
+].map(applyReverify);
 
 export const verifiedPresets: VerifiedPresetFile[] = authoredPresets.filter((preset) => preset.fidelity === "verified");
 

@@ -3,11 +3,11 @@
   "name": "VMRay",
   "pack": "VMRay",
   "vendor": "VMRay",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Submit a sample and read it back.",
+  "summary": "Rebuilt from the client: POST /sample/submit.",
   "notes": [
-    "Cross-check: path: GET /rest/sample/lab-sample is not a client call. Closest: /analysis/sample/{sample} (1)."
+    "Rebuilt from the XSOAR client. The checker matched POST /sample/submit, GET /analysis/sample/{sample}. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VMRay/Integrations/VMRay",
@@ -17,47 +17,34 @@
       "kind": "preset",
       "id": "vmray-vmray",
       "name": "VMRay",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://www.vmray.com/cyber-security-blog/vmray-analyzer-api/",
       "notes": [
-        "Cross-check: path: GET /rest/sample/lab-sample is not a client call. Closest: /analysis/sample/{sample} (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /sample/submit, GET /analysis/sample/{sample}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.vmray.com/cyber-security-blog/vmray-analyzer-api/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /sample/submit, GET /analysis/sample/{sample}. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "submit",
+        "id": "post-sample-submit-0",
         "method": "POST",
         "pathTemplate": "/sample/submit",
-        "summary": "Submit a sample",
+        "summary": "POST /sample/submit",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "sample_id",
-                  "kind": "id"
-                },
-                {
-                  "name": "sample_webif_url",
-                  "kind": "string",
-                  "example": "https://lab.vmray.example/sample"
-                }
-              ]
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -65,47 +52,57 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "JobID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "SampleID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "SampleURL",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "SubmissionID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "VMRay",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Verdict",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       },
       {
-        "id": "sample",
+        "id": "get-analysis-sample-sample-1",
         "method": "GET",
-        "pathTemplate": "/rest/sample/lab-sample",
-        "summary": "Get a sample",
+        "pathTemplate": "/analysis/sample/{sample}",
+        "summary": "GET /analysis/sample/{sample}",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "sample_id",
-                  "kind": "const",
-                  "constValue": "lab-sample"
-                },
-                {
-                  "name": "sample_severity",
-                  "kind": "enum",
-                  "enumValues": [
-                    "not_suspicious",
-                    "suspicious",
-                    "malicious"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -113,7 +110,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "JobID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "SampleID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "SampleURL",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "SubmissionID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "VMRay",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Verdict",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

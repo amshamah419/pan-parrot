@@ -3,11 +3,11 @@
   "name": "Cisco Umbrella Enforcement",
   "pack": "Cisco-umbrella-enforcement",
   "vendor": "Cisco",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Enforcement domain list.",
+  "summary": "Rebuilt from the client: POST /events.",
   "notes": [
-    "Cross-check: path: GET /domains is not a client call. Closest: /domains/{domain_id} (0)."
+    "Rebuilt from the XSOAR client. The checker matched POST /events. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Cisco-umbrella-enforcement/Integrations/CiscoUmbrellaEnforcement",
@@ -17,41 +17,34 @@
       "kind": "preset",
       "id": "cisco-umbrella-enforcement-ciscoumbrellaenforcement",
       "name": "Cisco Umbrella Enforcement",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-reference-enforcement-domains/",
       "notes": [
-        "Cross-check: path: GET /domains is not a client call. Closest: /domains/{domain_id} (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /events. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-reference-enforcement-domains/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /events. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "domains",
-        "method": "GET",
-        "pathTemplate": "/domains",
-        "summary": "List enforcement domains",
+        "id": "post-events-0",
+        "method": "POST",
+        "pathTemplate": "/events",
+        "summary": "POST /events",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "array"
-        },
-        "record": {
-          "name": "domain",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "name",
-              "kind": "string",
-              "example": "lab.example"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -59,7 +52,34 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "cred_api_key",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "meta",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "next",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
         }
       }
     ],

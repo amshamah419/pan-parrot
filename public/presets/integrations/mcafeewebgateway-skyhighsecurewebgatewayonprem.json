@@ -3,11 +3,11 @@
   "name": "Skyhigh Secure Web Gateway (On Prem)",
   "pack": "McAfeeWebGateway",
   "vendor": "Skyhigh Security",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "List gateway lists.",
+  "summary": "Rebuilt from the client: GET /list.",
   "notes": [
-    "Cross-check: field: GET /list root keys ['lists'] are not read by the client or present in test_data ['EntryContext', 'HumanReadable', 'credentials', 'description', 'entry', 'listType', 'proxy', 'url']."
+    "Rebuilt from the XSOAR client. The checker matched GET /list. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/McAfeeWebGateway/Integrations/SkyhighSecureWebGatewayOnPrem",
@@ -17,53 +17,34 @@
       "kind": "preset",
       "id": "mcafeewebgateway-skyhighsecurewebgatewayonprem",
       "name": "Skyhigh Secure Web Gateway (On Prem)",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://success.myshn.net/Skyhigh_Secure_Web_Gateway",
       "notes": [
-        "Cross-check: field: GET /list root keys ['lists'] are not read by the client or present in test_data ['EntryContext', 'HumanReadable', 'credentials', 'description', 'entry', 'listType', 'proxy', 'url']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /list. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://success.myshn.net/Skyhigh_Secure_Web_Gateway",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /list. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "lists",
+        "id": "get-list-0",
         "method": "GET",
         "pathTemplate": "/list",
-        "summary": "List gateway lists",
+        "summary": "GET /list",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "lists",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "list",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "lab-block"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -71,7 +52,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ListEntries",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "entry",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "listType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "title",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

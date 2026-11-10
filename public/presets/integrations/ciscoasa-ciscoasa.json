@@ -3,11 +3,11 @@
   "name": "Cisco ASA",
   "pack": "CiscoASA",
   "vendor": "Cisco",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Token service and global access rules.",
+  "summary": "Rebuilt from the client: GET /api/access/global/rules.",
   "notes": [
-    "Cross-check: field: POST /api/tokenservices root keys ['token'] are not read by the client or present in test_data ['Location', 'MSCHAPauthenticated', 'active', 'permit', 'remarks', 'selfLink', 'sourceAddress', 'x-auth-token']."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/access/global/rules, GET /api/access/in/{interface}/rules. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoASA/Integrations/CiscoASA",
@@ -17,39 +17,34 @@
       "kind": "preset",
       "id": "ciscoasa-ciscoasa",
       "name": "Cisco ASA",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.cisco.com/docs/cisco-asa-rest-api/",
       "notes": [
-        "Cross-check: field: POST /api/tokenservices root keys ['token'] are not read by the client or present in test_data ['Location', 'MSCHAPauthenticated', 'active', 'permit', 'remarks', 'selfLink', 'sourceAddress', 'x-auth-token']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/access/global/rules, GET /api/access/in/{interface}/rules. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.cisco.com/docs/cisco-asa-rest-api/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/access/global/rules, GET /api/access/in/{interface}/rules. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "token",
-        "method": "POST",
-        "pathTemplate": "/api/tokenservices",
-        "summary": "Create a session token",
+        "id": "get-api-access-global-rules-0",
+        "method": "GET",
+        "pathTemplate": "/api/access/global/rules",
+        "summary": "GET /api/access/global/rules",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "token",
-              "kind": "const",
-              "constValue": "dummy-asa-token"
-            }
-          ]
-        },
-        "headers": {
-          "x-auth-token": "dummy-asa-token"
-        },
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -57,58 +52,56 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ASDM_CLIAccessType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Location",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "MSCHAPauthenticated",
+              "kind": "boolean"
+            },
+            {
+              "name": "active",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "destinationAddress",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       },
       {
-        "id": "rules",
+        "id": "get-api-access-in-interface-rules-1",
         "method": "GET",
-        "pathTemplate": "/api/access/global/rules",
-        "summary": "List global access rules",
+        "pathTemplate": "/api/access/in/{interface}/rules",
+        "summary": "GET /api/access/in/{interface}/rules",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "items",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "rule",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "objectId",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "permit",
-                    "kind": "const",
-                    "constValue": true
-                  },
-                  {
-                    "name": "sourceAddress",
-                    "kind": "const",
-                    "constValue": "any"
-                  },
-                  {
-                    "name": "destinationAddress",
-                    "kind": "const",
-                    "constValue": "any"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -116,7 +109,42 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ASDM_CLIAccessType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Location",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "MSCHAPauthenticated",
+              "kind": "boolean"
+            },
+            {
+              "name": "active",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "destinationAddress",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

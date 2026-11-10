@@ -795,8 +795,8 @@ export const responseVerifiedPresets = [
     pack: "ProofpointServerProtection",
     vendor: "Proofpoint",
     summary: "Quarantine message list.",
-    docUrl: "https://github.com/demisto/content/tree/master/Packs/ProofpointServerProtection/Integrations/ProofpointProtectionServerv2",
-    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/ProofpointServerProtection/Integrations/ProofpointProtectionServerv2",
+    docUrl: "https://github.com/demisto/content/tree/master/Packs/ProofpointServerProtection/Integrations/ProofpointProtectionServerV2",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/ProofpointServerProtection/Integrations/ProofpointProtectionServerV2",
     differences: [
       "GET /quarantine/messages returns { messages }. The client path is /quarantine.",
       "The appliance guide was not reloaded. Release and delete are not modeled.",

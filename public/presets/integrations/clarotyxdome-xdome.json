@@ -3,11 +3,11 @@
   "name": "xDome",
   "pack": "ClarotyXDome",
   "vendor": "Claroty",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Device and alert relations.",
+  "summary": "Rebuilt from the client: POST /device_alert_relations.",
   "notes": [
-    "Cross-check: path: POST /api/v1/device_alert_relations is not a client call. Closest: /device_alert_relations (1)."
+    "Rebuilt from the XSOAR client. The checker matched POST /device_alert_relations. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ClarotyXDome/Integrations/XDome",
@@ -17,56 +17,34 @@
       "kind": "preset",
       "id": "clarotyxdome-xdome",
       "name": "xDome",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ClarotyXDome/Integrations/XDome",
       "notes": [
-        "Cross-check: path: POST /api/v1/device_alert_relations is not a client call. Closest: /device_alert_relations (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /device_alert_relations. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/ClarotyXDome/Integrations/XDome",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /device_alert_relations. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "relations",
+        "id": "post-device-alert-relations-0",
         "method": "POST",
-        "pathTemplate": "/api/v1/device_alert_relations",
-        "summary": "List device alert relations",
+        "pathTemplate": "/device_alert_relations",
+        "summary": "POST /device_alert_relations",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "items",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "relation",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "device_id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "alert_id",
-                    "kind": "id"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -74,7 +52,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "alert_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alert_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "device_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "device_uid",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_fetch",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "latest_ids",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

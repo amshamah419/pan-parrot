@@ -3,11 +3,11 @@
   "name": "CrowdStrike Falcon",
   "pack": "CrowdStrikeFalcon",
   "vendor": "CrowdStrike",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Falcon Alerts query plus entity fetch. Legacy Detects routes are included because XSOAR still calls them.",
+  "summary": "Rebuilt from the client: GET /alerts/queries/alerts/v2.",
   "notes": [
-    "Cross-check: path: GET /detects/queries/detects/v1 is not a client call. Closest: /policy/queries/{exclusion_type}-exclusions/v1 (2)."
+    "Rebuilt from the XSOAR client. The checker matched GET /alerts/queries/alerts/v2, POST /alerts/entities/alerts/v2. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeFalcon/Integrations/CrowdStrikeFalcon",
@@ -17,46 +17,92 @@
       "kind": "preset",
       "id": "crowdstrikefalcon-crowdstrikefalcon",
       "name": "CrowdStrike Falcon",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.crowdstrike.com/api-reference/collections/alerts/",
       "notes": [
-        "Cross-check: path: GET /detects/queries/detects/v1 is not a client call. Closest: /policy/queries/{exclusion_type}-exclusions/v1 (2)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /alerts/queries/alerts/v2, POST /alerts/entities/alerts/v2. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.crowdstrike.com/api-reference/collections/alerts/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /alerts/queries/alerts/v2, POST /alerts/entities/alerts/v2. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {
-          "x-ratelimit-limit": "6000",
-          "x-ratelimit-remaining": "5999"
-        },
+        "id": "get-alerts-queries-alerts-v2-0",
+        "method": "GET",
+        "pathTemplate": "/alerts/queries/alerts/v2",
+        "summary": "GET /alerts/queries/alerts/v2",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "offset",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 100,
-          "maxLimit": 500
-        },
-        "id": "query-alerts",
-        "method": "GET",
-        "pathTemplate": "/alerts/queries/alerts/v2",
-        "summary": "Query alert ids",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "falcon"
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "resource",
-          "kind": "id"
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "@rawstring",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Authorization",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Content-Disposition",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Content-Type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CreatedAt",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "DeletedAt",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       },
       {
-        "headers": {},
+        "id": "post-alerts-entities-alerts-v2-1",
+        "method": "POST",
+        "pathTemplate": "/alerts/entities/alerts/v2",
+        "summary": "POST /alerts/entities/alerts/v2",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -66,102 +112,41 @@
           "defaultLimit": 20,
           "maxLimit": 100
         },
-        "id": "get-alerts",
-        "method": "POST",
-        "pathTemplate": "/alerts/entities/alerts/v2",
-        "summary": "Fetch alert entities",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "falcon"
-        },
         "record": {
-          "name": "alert",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "composite_id",
-              "kind": "id"
-            },
-            {
-              "name": "created_timestamp",
-              "kind": "timestamp",
-              "format": "iso"
-            },
-            {
-              "name": "updated_timestamp",
-              "kind": "timestamp",
-              "format": "iso"
-            },
-            {
-              "name": "status",
-              "kind": "enum",
-              "enumValues": [
-                "new",
-                "in_progress",
-                "closed"
-              ]
-            },
-            {
-              "name": "severity",
-              "kind": "integer"
-            },
-            {
-              "name": "severity_name",
-              "kind": "enum",
-              "enumValues": [
-                "Low",
-                "Medium",
-                "High",
-                "Critical"
-              ]
-            },
-            {
-              "name": "product",
-              "kind": "const",
-              "constValue": "epp"
-            },
-            {
-              "name": "tactic",
+              "name": "@rawstring",
               "kind": "string",
-              "example": "Defense Evasion"
+              "example": "lab"
             },
             {
-              "name": "technique",
+              "name": "Authorization",
               "kind": "string",
-              "example": "Masquerading"
+              "example": "lab"
+            },
+            {
+              "name": "Content-Disposition",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Content-Type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CreatedAt",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "DeletedAt",
+              "kind": "string",
+              "example": "lab"
             }
           ]
-        }
-      },
-      {
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "offset",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 100,
-          "maxLimit": 500
-        },
-        "id": "query-detects",
-        "method": "GET",
-        "pathTemplate": "/detects/queries/detects/v1",
-        "summary": "Deprecated detection id query",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "falcon"
-        },
-        "record": {
-          "name": "resource",
-          "kind": "id"
         }
       }
     ],

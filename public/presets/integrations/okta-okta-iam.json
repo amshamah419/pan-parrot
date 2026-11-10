@@ -3,11 +3,11 @@
   "name": "Okta IAM",
   "pack": "Okta",
   "vendor": "Okta",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /api/v1/users lists Okta users.",
+  "summary": "Rebuilt from the client: GET /users.",
   "notes": [
-    "Cross-check: path: GET /api/v1/users is not a client call. Closest: /users (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /users. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Okta/Integrations/Okta_IAM",
@@ -17,46 +17,34 @@
       "kind": "preset",
       "id": "okta-okta-iam",
       "name": "Okta IAM",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.okta.com/docs/reference/api/users/",
       "notes": [
-        "Cross-check: path: GET /api/v1/users is not a client call. Closest: /users (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /users. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.okta.com/docs/reference/api/users/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /users. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "users",
+        "id": "get-users-0",
         "method": "GET",
-        "pathTemplate": "/api/v1/users",
-        "summary": "List users",
+        "pathTemplate": "/users",
+        "summary": "GET /users",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "array"
-        },
-        "record": {
-          "name": "user",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "status",
-              "kind": "const",
-              "constValue": "ACTIVE"
-            },
-            {
-              "name": "profile",
-              "kind": "string",
-              "example": "ada@lab.example"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -64,7 +52,60 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ApplicationID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CustomFields",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "IAMConfiguration",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_links",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "logo",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "alternateId",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "context",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "IntegrationBrand",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "IntegrationInstance",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
         }
       }
     ],

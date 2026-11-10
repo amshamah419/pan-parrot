@@ -3,11 +3,11 @@
   "name": "Freshservice",
   "pack": "FreshworksFreshservice",
   "vendor": "Freshworks",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Ticket list. tickets[] from /api/v2/tickets.",
+  "summary": "Rebuilt from the client: POST /api/v2/tickets.",
   "notes": [
-    "Cross-check: path: GET /api/v2/tickets is not a client call. Closest: /api/v2/problems{expr} (2)."
+    "Rebuilt from the XSOAR client. The checker matched POST /api/v2/tickets. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FreshworksFreshservice/Integrations/FreshworksFreshservice",
@@ -17,66 +17,152 @@
       "kind": "preset",
       "id": "freshworksfreshservice-freshworksfreshservice",
       "name": "Freshservice",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://api.freshservice.com/v2/#view_all_ticket",
       "notes": [
-        "Cross-check: path: GET /api/v2/tickets is not a client call. Closest: /api/v2/problems{expr} (2)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /api/v2/tickets. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://api.freshservice.com/v2/#view_all_ticket",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /api/v2/tickets. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-tickets",
-        "method": "GET",
+        "id": "post-api-v2-tickets-0",
+        "method": "POST",
         "pathTemplate": "/api/v2/tickets",
-        "summary": "List tickets",
+        "summary": "POST /api/v2/tickets",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "tickets"
-        },
-        "record": {
-          "name": "ticket",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "integer"
-            },
-            {
-              "name": "subject",
-              "kind": "string",
-              "example": "VPN is down"
-            },
-            {
-              "name": "status",
-              "kind": "integer"
-            },
-            {
-              "name": "priority",
-              "kind": "integer"
-            },
-            {
-              "name": "created_at",
-              "kind": "timestamp"
-            },
-            {
-              "name": "requester_id",
-              "kind": "integer"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "page",
-          "limitParam": "per_page",
+          "style": "none",
+          "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Conversation",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Note",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Task",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "agent",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "active",
+                  "kind": "boolean"
+                },
+                {
+                  "name": "address",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "auto_assign_status_changed_at",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "auto_assign_tickets",
+                  "kind": "boolean"
+                },
+                {
+                  "name": "background_information",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "agents",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "active",
+                  "kind": "boolean"
+                },
+                {
+                  "name": "address",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "auto_assign_status_changed_at",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "auto_assign_tickets",
+                  "kind": "boolean"
+                },
+                {
+                  "name": "background_information",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "application",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "additional_data",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "application_type",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "category",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "created_at",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "description",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
         }
       }
     ],

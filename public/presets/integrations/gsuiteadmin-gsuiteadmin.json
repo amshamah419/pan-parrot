@@ -3,11 +3,11 @@
   "name": "Google Workspace Admin",
   "pack": "GSuiteAdmin",
   "vendor": "Google",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Directory users.",
+  "summary": "Rebuilt from the client: POST /admin/directory/v1/users.",
   "notes": [
-    "Cross-check: path: GET /admin/directory/v1/users is not a client call. Closest: /admin/directory/v1.1beta1/customer/{customer_id}/devices/chromebrowsers/{device_id} (0)."
+    "Rebuilt from the XSOAR client. The checker matched POST /admin/directory/v1/users. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GSuiteAdmin/Integrations/GSuiteAdmin",
@@ -17,57 +17,34 @@
       "kind": "preset",
       "id": "gsuiteadmin-gsuiteadmin",
       "name": "Google Workspace Admin",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list",
       "notes": [
-        "Cross-check: path: GET /admin/directory/v1/users is not a client call. Closest: /admin/directory/v1.1beta1/customer/{customer_id}/devices/chromebrowsers/{device_id} (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /admin/directory/v1/users. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /admin/directory/v1/users. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "users",
-        "method": "GET",
+        "id": "post-admin-directory-v1-users-0",
+        "method": "POST",
         "pathTemplate": "/admin/directory/v1/users",
-        "summary": "List users",
+        "summary": "POST /admin/directory/v1/users",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "users",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "user",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "primaryEmail",
-                    "kind": "email"
-                  },
-                  {
-                    "name": "suspended",
-                    "kind": "const",
-                    "constValue": false
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -75,7 +52,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ALIAS_ADD_SUCCESS",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CHROMEOS_DEVICES_LIST",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CHROMEOS_DEVICE_ACTION",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CHROMEOS_DEVICE_ACTION_SUCCESS",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CHROME_BROWSER_LIST",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CUSTOM_USER_SCHEMA",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

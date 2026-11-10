@@ -3,11 +3,11 @@
   "name": "Azure Active Directory Identity Protection  (Deprecated)",
   "pack": "AzureActiveDirectory",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /v1.0/identityProtection/riskyUsers returns the Entra risky-user list.",
+  "summary": "Rebuilt from the client: POST /beta/riskyUsers/confirmCompromised.",
   "notes": [
-    "Cross-check: path: GET /v1.0/identityProtection/riskyUsers is not a client call. Closest: /beta/{url_suffix} (0)."
+    "Rebuilt from the XSOAR client. The checker matched POST /beta/riskyUsers/confirmCompromised, POST /beta/riskyUsers/dismiss. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureActiveDirectory/Integrations/AzureADIdentityProtection",
@@ -17,78 +17,156 @@
       "kind": "preset",
       "id": "azureactivedirectory-azureadidentityprotection",
       "name": "Azure Active Directory Identity Protection  (Deprecated)",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/riskyuser-list?view=graph-rest-1.0",
       "notes": [
-        "Cross-check: path: GET /v1.0/identityProtection/riskyUsers is not a client call. Closest: /beta/{url_suffix} (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /beta/riskyUsers/confirmCompromised, POST /beta/riskyUsers/dismiss. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/riskyuser-list?view=graph-rest-1.0",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /beta/riskyUsers/confirmCompromised, POST /beta/riskyUsers/dismiss. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
+        "id": "post-beta-riskyusers-confirmcompromised-0",
+        "method": "POST",
+        "pathTemplate": "/beta/riskyUsers/confirmCompromised",
+        "summary": "POST /beta/riskyUsers/confirmCompromised",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
-          "limitParam": "$top",
-          "offsetParam": "$skip",
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 50,
-          "maxLimit": 500
-        },
-        "id": "list-risky-users",
-        "method": "GET",
-        "pathTemplate": "/v1.0/identityProtection/riskyUsers",
-        "summary": "List risky users",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "odata",
-          "context": "https://graph.microsoft.com/v1.0/$metadata#riskyUsers"
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "riskyUser",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "id",
-              "kind": "uuid"
+              "name": "@odata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "context",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "nextLink",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
             },
             {
-              "name": "userDisplayName",
+              "name": "detectedDateTime",
               "kind": "string",
-              "example": "Ada Lovelace"
+              "example": "lab"
             },
             {
-              "name": "userPrincipalName",
-              "kind": "email"
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "riskLevel",
-              "kind": "enum",
-              "enumValues": [
-                "low",
-                "medium",
-                "high",
-                "hidden",
-                "none"
+              "name": "latest_detection_found",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "riskDetail",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "riskEventType",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "post-beta-riskyusers-dismiss-1",
+        "method": "POST",
+        "pathTemplate": "/beta/riskyUsers/dismiss",
+        "summary": "POST /beta/riskyUsers/dismiss",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "@odata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "context",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "nextLink",
+                  "kind": "string",
+                  "example": "lab"
+                }
               ]
             },
             {
-              "name": "riskState",
-              "kind": "enum",
-              "enumValues": [
-                "atRisk",
-                "confirmedCompromised",
-                "remediated",
-                "dismissed"
-              ]
+              "name": "detectedDateTime",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "riskLastUpdatedDateTime",
-              "kind": "timestamp",
-              "format": "iso"
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "latest_detection_found",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "riskDetail",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "riskEventType",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

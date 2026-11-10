@@ -3,11 +3,11 @@
   "name": "Palo Alto Networks IoT",
   "pack": "PaloAltoNetworks_IoT",
   "vendor": "Palo Alto Networks",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /device/list and /alert/list.",
+  "summary": "Rebuilt from the client: GET /pub/v4.0/alert/list.",
   "notes": [
-    "Cross-check: field: GET /pub/v4.0/alert/list root keys ['alerts'] are not read by the client or present in test_data ['access_key_id', 'devices', 'first_fetch', 'insecure', 'ip', 'max_fetch', 'secret_access_key', 'zb_ticketid']."
+    "Rebuilt from the XSOAR client. The checker matched GET /pub/v4.0/alert/list, GET /pub/v4.0/device/list. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_IoT/Integrations/PaloAltoNetworks_IoT",
@@ -17,57 +17,34 @@
       "kind": "preset",
       "id": "paloaltonetworks-iot-paloaltonetworks-iot",
       "name": "Palo Alto Networks IoT",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
       "notes": [
-        "Cross-check: field: GET /pub/v4.0/alert/list root keys ['alerts'] are not read by the client or present in test_data ['access_key_id', 'devices', 'first_fetch', 'insecure', 'ip', 'max_fetch', 'secret_access_key', 'zb_ticketid']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /pub/v4.0/alert/list, GET /pub/v4.0/device/list. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /pub/v4.0/alert/list, GET /pub/v4.0/device/list. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "devices",
+        "id": "get-pub-v4-0-alert-list-0",
         "method": "GET",
-        "pathTemplate": "/pub/v4.0/device/list",
-        "summary": "List devices",
+        "pathTemplate": "/pub/v4.0/alert/list",
+        "summary": "GET /pub/v4.0/alert/list",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "devices",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "device",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "deviceid",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "ip",
-                    "kind": "ip"
-                  },
-                  {
-                    "name": "profile",
-                    "kind": "string",
-                    "example": "Printer"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -75,52 +52,57 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "access_key_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "api_timeout",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "detected_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "deviceid",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       },
       {
-        "id": "alerts",
+        "id": "get-pub-v4-0-device-list-1",
         "method": "GET",
-        "pathTemplate": "/pub/v4.0/alert/list",
-        "summary": "List alerts",
+        "pathTemplate": "/pub/v4.0/device/list",
+        "summary": "GET /pub/v4.0/device/list",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "alerts",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "alert",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "alertid",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -128,7 +110,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "access_key_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "api_timeout",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "detected_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "deviceid",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

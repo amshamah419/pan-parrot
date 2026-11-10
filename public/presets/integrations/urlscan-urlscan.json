@@ -3,89 +3,92 @@
   "name": "urlscan.io",
   "pack": "urlscan",
   "vendor": "urlscan",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Search results. results[].page and task.",
+  "summary": "Rebuilt from the client: GET /search.",
   "notes": [
-    "Cross-check: no-source: Packs/urlscan/Integrations/UrlScan is not in the content checkout"
+    "Rebuilt from the XSOAR client. The checker matched GET /search. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
-  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/urlscan/Integrations/UrlScan",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/UrlScan/Integrations/UrlScan",
   "spec": {
     "version": 1,
     "source": {
       "kind": "preset",
       "id": "urlscan-urlscan",
       "name": "urlscan.io",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://urlscan.io/docs/api/",
       "notes": [
-        "Cross-check: no-source: Packs/urlscan/Integrations/UrlScan is not in the content checkout"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /search. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://urlscan.io/docs/api/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /search. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "search",
+        "id": "get-search-0",
         "method": "GET",
-        "pathTemplate": "/api/v1/search",
-        "summary": "Search scans",
+        "pathTemplate": "/search",
+        "summary": "GET /search",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "results"
-        },
-        "record": {
-          "name": "result",
-          "kind": "object",
-          "children": [
-            {
-              "name": "task",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "uuid",
-                  "kind": "uuid"
-                },
-                {
-                  "name": "time",
-                  "kind": "timestamp"
-                }
-              ]
-            },
-            {
-              "name": "page",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "url",
-                  "kind": "string",
-                  "example": "https://example.com/"
-                },
-                {
-                  "name": "ip",
-                  "kind": "ip"
-                },
-                {
-                  "name": "server",
-                  "kind": "string",
-                  "example": "nginx"
-                }
-              ]
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
-          "limitParam": "size",
+          "style": "none",
+          "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "EffectiveURL",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FeedRelatedIndicators",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "File",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Indicator",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

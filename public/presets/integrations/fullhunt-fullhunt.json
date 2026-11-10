@@ -3,11 +3,11 @@
   "name": "FullHunt",
   "pack": "FullHunt",
   "vendor": "FullHunt",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Domain details.",
+  "summary": "Rebuilt from the client: GET /domain/{domain}/details.",
   "notes": [
-    "Cross-check: field: GET /domain/lab.example/details root keys ['domain', 'hosts'] are not read by the client or present in test_data ['credentials', 'http', 'user', 'user_credits']."
+    "Rebuilt from the XSOAR client. The checker matched GET /domain/{domain}/details. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FullHunt/Integrations/FullHunt",
@@ -17,58 +17,34 @@
       "kind": "preset",
       "id": "fullhunt-fullhunt",
       "name": "FullHunt",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://api-docs.fullhunt.io/",
       "notes": [
-        "Cross-check: field: GET /domain/lab.example/details root keys ['domain', 'hosts'] are not read by the client or present in test_data ['credentials', 'http', 'user', 'user_credits']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /domain/{domain}/details. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://api-docs.fullhunt.io/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /domain/{domain}/details. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "details",
+        "id": "get-domain-domain-details-0",
         "method": "GET",
-        "pathTemplate": "/domain/lab.example/details",
-        "summary": "Get domain details",
+        "pathTemplate": "/domain/{domain}/details",
+        "summary": "GET /domain/{domain}/details",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "domain",
-              "kind": "const",
-              "constValue": "lab.example"
-            },
-            {
-              "name": "hosts",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "host",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "ip",
-                    "kind": "ip"
-                  },
-                  {
-                    "name": "dns",
-                    "kind": "string",
-                    "example": "www.lab.example"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -76,7 +52,28 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "http",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "user",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "user_credits",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

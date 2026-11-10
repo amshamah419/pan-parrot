@@ -3,11 +3,11 @@
   "name": "SaaS Security",
   "pack": "PrismaSaasSecurity",
   "vendor": "Palo Alto Networks",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Incident delta and the app list.",
+  "summary": "Rebuilt from the client: GET /incident/api/apps.",
   "notes": [
-    "Cross-check: field: GET /incident/api/incidents/delta root keys ['incidents', 'next_page_token'] are not read by the client or present in test_data ['action_date', 'asset_owner_id', 'limit', 'policy_id', 'resolved_by', 'resources', 'tenant', 'updated_at']."
+    "Rebuilt from the XSOAR client. The checker matched GET /incident/api/apps, GET /incident/api/incidents/{inc_id}. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PrismaSaasSecurity/Integrations/SaasSecurity",
@@ -17,71 +17,34 @@
       "kind": "preset",
       "id": "prismasaassecurity-saassecurity",
       "name": "SaaS Security",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.paloaltonetworks.com/saas-security/saas-security-admin/saas-security-api",
       "notes": [
-        "Cross-check: field: GET /incident/api/incidents/delta root keys ['incidents', 'next_page_token'] are not read by the client or present in test_data ['action_date', 'asset_owner_id', 'limit', 'policy_id', 'resolved_by', 'resources', 'tenant', 'updated_at']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /incident/api/apps, GET /incident/api/incidents/{inc_id}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.paloaltonetworks.com/saas-security/saas-security-admin/saas-security-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /incident/api/apps, GET /incident/api/incidents/{inc_id}. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "delta",
+        "id": "get-incident-api-apps-0",
         "method": "GET",
-        "pathTemplate": "/incident/api/incidents/delta",
-        "summary": "Fetch incident changes",
+        "pathTemplate": "/incident/api/apps",
+        "summary": "GET /incident/api/apps",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "next_page_token",
-              "kind": "id"
-            },
-            {
-              "name": "incidents",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "incident",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "incident_id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  },
-                  {
-                    "name": "status",
-                    "kind": "const",
-                    "constValue": "open"
-                  },
-                  {
-                    "name": "application",
-                    "kind": "string",
-                    "example": "box"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -89,49 +52,57 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "action_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "action_taker",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "app_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "app_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "app_type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "asset_cloud_uri",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       },
       {
-        "id": "apps",
+        "id": "get-incident-api-incidents-inc-id-1",
         "method": "GET",
-        "pathTemplate": "/incident/api/apps",
-        "summary": "List connected apps",
+        "pathTemplate": "/incident/api/incidents/{inc_id}",
+        "summary": "GET /incident/api/incidents/{inc_id}",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "apps",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "app",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "box"
-                  },
-                  {
-                    "name": "status",
-                    "kind": "const",
-                    "constValue": "connected"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -139,7 +110,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "action_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "action_taker",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "app_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "app_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "app_type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "asset_cloud_uri",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

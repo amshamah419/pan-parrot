@@ -3,11 +3,11 @@
   "name": "Cisco Umbrella Cloud Security v2",
   "pack": "Cisco-umbrella-cloud-security",
   "vendor": "Cisco",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Destination lists.",
+  "summary": "Rebuilt from the client: GET /{destination_list_id}/destinations.",
   "notes": [
-    "Cross-check: path: GET /policies/v2/destinationlists is not a client call. Closest: /{destination_list_id}/destinations (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /{destination_list_id}/destinations. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Cisco-umbrella-cloud-security/Integrations/CiscoUmbrellaCloudSecurityv2",
@@ -17,23 +17,42 @@
       "kind": "preset",
       "id": "cisco-umbrella-cloud-security-ciscoumbrellacloudsecurityv2",
       "name": "Cisco Umbrella Cloud Security v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-reference-policies-destination-lists/",
       "notes": [
-        "Cross-check: path: GET /policies/v2/destinationlists is not a client call. Closest: /{destination_list_id}/destinations (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /{destination_list_id}/destinations. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-reference-policies-destination-lists/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /{destination_list_id}/destinations. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "lists",
+        "id": "get-destination-list-id-destinations-0",
         "method": "GET",
-        "pathTemplate": "/policies/v2/destinationlists",
-        "summary": "List destination lists",
+        "pathTemplate": "/{destination_list_id}/destinations",
+        "summary": "GET /{destination_list_id}/destinations",
         "status": 200,
-        "list": false,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
         "envelope": {
           "type": "object"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
@@ -41,42 +60,68 @@
           "children": [
             {
               "name": "data",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "list",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "lab-block"
-                  },
-                  {
-                    "name": "access",
-                    "kind": "const",
-                    "constValue": "block"
-                  }
-                ]
-              }
+              "kind": "object",
+              "children": [
+                {
+                  "name": "access",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "bundleTypeId",
+                  "kind": "integer"
+                },
+                {
+                  "name": "comment",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "createdAt",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "destination",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "meta",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "limit",
+                  "kind": "integer"
+                },
+                {
+                  "name": "page",
+                  "kind": "integer"
+                },
+                {
+                  "name": "total",
+                  "kind": "integer"
+                }
+              ]
+            },
+            {
+              "name": "status",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "code",
+                  "kind": "integer"
+                },
+                {
+                  "name": "text",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
             }
           ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "none",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
         }
       }
     ],

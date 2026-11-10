@@ -3,11 +3,11 @@
   "name": "FortiGate",
   "pack": "FortiGate",
   "vendor": "Fortinet",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /api/v2/cmdb/firewall/address returns results.",
+  "summary": "Rebuilt from the client: GET /api/v2/cmdb/system/vdom.",
   "notes": [
-    "Cross-check: path: GET /api/v2/cmdb/firewall/address is not a client call. Closest: /api/v2/None (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v2/cmdb/system/vdom, GET /api/v2/select. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FortiGate/Integrations/FortiGate",
@@ -17,64 +17,34 @@
       "kind": "preset",
       "id": "fortigate-fortigate",
       "name": "FortiGate",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.fortinet.com/document/fortigate/7.4.0/administration-guide/954635/rest-api-administrator",
       "notes": [
-        "Cross-check: path: GET /api/v2/cmdb/firewall/address is not a client call. Closest: /api/v2/None (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v2/cmdb/system/vdom, GET /api/v2/select. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.fortinet.com/document/fortigate/7.4.0/administration-guide/954635/rest-api-administrator",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v2/cmdb/system/vdom, GET /api/v2/select. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "addresses",
+        "id": "get-api-v2-cmdb-system-vdom-0",
         "method": "GET",
-        "pathTemplate": "/api/v2/cmdb/firewall/address",
-        "summary": "List IPv4 address objects",
+        "pathTemplate": "/api/v2/cmdb/system/vdom",
+        "summary": "GET /api/v2/cmdb/system/vdom",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "http_status",
-              "kind": "const",
-              "constValue": 200
-            },
-            {
-              "name": "results",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "address",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "lab-host"
-                  },
-                  {
-                    "name": "subnet",
-                    "kind": "const",
-                    "constValue": "10.0.0.8/32"
-                  },
-                  {
-                    "name": "type",
-                    "kind": "const",
-                    "constValue": "ipmask"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -82,7 +52,99 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Action",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "AllowRouting",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "AppServiceType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "AssociatedInterface",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CacheTTL",
+              "kind": "integer"
+            },
+            {
+              "name": "Category",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-api-v2-select-1",
+        "method": "GET",
+        "pathTemplate": "/api/v2/select",
+        "summary": "GET /api/v2/select",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Action",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "AllowRouting",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "AppServiceType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "AssociatedInterface",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CacheTTL",
+              "kind": "integer"
+            },
+            {
+              "name": "Category",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

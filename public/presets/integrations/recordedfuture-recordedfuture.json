@@ -3,11 +3,11 @@
   "name": "Recorded Future v2",
   "pack": "RecordedFuture",
   "vendor": "Recorded Future",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "IP risk lookup. data.risk.score and criticalityLabel.",
+  "summary": "Rebuilt from the client: POST /v2/alert/fetch_incidents.",
   "notes": [
-    "Cross-check: path: GET /v2/ip/{ip} is not a client call. Closest: /info/whoami (0)."
+    "Rebuilt from the XSOAR client. The checker matched POST /v2/alert/fetch_incidents. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/RecordedFuture/Integrations/RecordedFuture",
@@ -17,62 +17,34 @@
       "kind": "preset",
       "id": "recordedfuture-recordedfuture",
       "name": "Recorded Future v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://api.recordedfuture.com/v2/",
       "notes": [
-        "Cross-check: path: GET /v2/ip/{ip} is not a client call. Closest: /info/whoami (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /v2/alert/fetch_incidents. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://api.recordedfuture.com/v2/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /v2/alert/fetch_incidents. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "ip-risk",
-        "method": "GET",
-        "pathTemplate": "/v2/ip/{ip}",
-        "summary": "IP risk",
+        "id": "post-v2-alert-fetch-incidents-0",
+        "method": "POST",
+        "pathTemplate": "/v2/alert/fetch_incidents",
+        "summary": "POST /v2/alert/fetch_incidents",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "entity",
-                  "kind": "ip"
-                },
-                {
-                  "name": "risk",
-                  "kind": "object",
-                  "children": [
-                    {
-                      "name": "score",
-                      "kind": "integer"
-                    },
-                    {
-                      "name": "criticalityLabel",
-                      "kind": "enum",
-                      "enumValues": [
-                        "None",
-                        "Unusual",
-                        "Suspicious",
-                        "Malicious"
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -80,7 +52,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "CommandResults",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Evidence",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "asn",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "context",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "create_indicator",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "demisto_last_run",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

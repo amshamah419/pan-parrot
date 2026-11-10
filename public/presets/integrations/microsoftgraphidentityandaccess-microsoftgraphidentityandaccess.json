@@ -3,72 +3,150 @@
   "name": "Entra ID Identity And Access",
   "pack": "MicrosoftGraphIdentityAndAccess",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Directory role assignments.",
+  "summary": "Rebuilt from the client: GET /v1.0/identityProtection/riskDetections.",
   "notes": [
-    "Cross-check: no-source: Packs/MicrosoftGraphIdentityAndAccess/Integrations/MicrosoftGraphIdentityandAccess is not in the content checkout"
+    "Rebuilt from the XSOAR client. The checker matched GET /v1.0/identityProtection/riskDetections, GET /v1.0/directoryRoles. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
-  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphIdentityAndAccess/Integrations/MicrosoftGraphIdentityandAccess",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphIdentityandAccess/Integrations/MicrosoftGraphIdentityandAccess",
   "spec": {
     "version": 1,
     "source": {
       "kind": "preset",
       "id": "microsoftgraphidentityandaccess-microsoftgraphidentityandaccess",
       "name": "Entra ID Identity And Access",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/rbacapplication-list-roleassignments",
       "notes": [
-        "Cross-check: no-source: Packs/MicrosoftGraphIdentityAndAccess/Integrations/MicrosoftGraphIdentityandAccess is not in the content checkout"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /v1.0/identityProtection/riskDetections, GET /v1.0/directoryRoles. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/rbacapplication-list-roleassignments",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v1.0/identityProtection/riskDetections, GET /v1.0/directoryRoles. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-role-assignments",
+        "id": "get-v1-0-identityprotection-riskdetections-0",
         "method": "GET",
-        "pathTemplate": "/v1.0/roleManagement/directory/roleAssignments",
-        "summary": "List role assignments",
+        "pathTemplate": "/v1.0/identityProtection/riskDetections",
+        "summary": "GET /v1.0/identityProtection/riskDetections",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "odata",
-          "context": "https://graph.microsoft.com/v1.0/$metadata#roleManagement/directory/roleAssignments"
-        },
-        "record": {
-          "name": "assignment",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "principalId",
-              "kind": "uuid"
-            },
-            {
-              "name": "roleDefinitionId",
-              "kind": "uuid"
-            },
-            {
-              "name": "directoryScopeId",
-              "kind": "const",
-              "constValue": "/"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
-          "limitParam": "$top",
-          "offsetParam": "$skip",
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "GrantControls",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "activity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "activityDateTime",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "additionalInfo",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alertDescription",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "appDisplayName",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-v1-0-directoryroles-1",
+        "method": "GET",
+        "pathTemplate": "/v1.0/directoryRoles",
+        "summary": "GET /v1.0/directoryRoles",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "GrantControls",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "activity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "activityDateTime",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "additionalInfo",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alertDescription",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "appDisplayName",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

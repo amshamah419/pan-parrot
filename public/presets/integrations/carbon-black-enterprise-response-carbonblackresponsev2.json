@@ -3,11 +3,11 @@
   "name": "VMware Carbon Black EDR v2",
   "pack": "Carbon_Black_Enterprise_Response",
   "vendor": "Carbon Black",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Sensor list from the on-prem Response API.",
+  "summary": "Rebuilt from the client: GET /api/v2/alert.",
   "notes": [
-    "Cross-check: path: GET /api/v1/sensor is not a client call. Closest: /api/v1/sensor/None (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v2/alert, POST /api/v1/alerts. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Carbon_Black_Enterprise_Response/Integrations/CarbonBlackResponseV2",
@@ -17,54 +17,34 @@
       "kind": "preset",
       "id": "carbon-black-enterprise-response-carbonblackresponsev2",
       "name": "VMware Carbon Black EDR v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.carbonblack.com/reference/enterprise-response/6.3/rest-api/",
       "notes": [
-        "Cross-check: path: GET /api/v1/sensor is not a client call. Closest: /api/v1/sensor/None (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v2/alert, POST /api/v1/alerts. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.carbonblack.com/reference/enterprise-response/6.3/rest-api/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v2/alert, POST /api/v1/alerts. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "sensors",
+        "id": "get-api-v2-alert-0",
         "method": "GET",
-        "pathTemplate": "/api/v1/sensor",
-        "summary": "List sensors",
+        "pathTemplate": "/api/v2/alert",
+        "summary": "GET /api/v2/alert",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "array"
-        },
-        "record": {
-          "name": "sensor",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "integer"
-            },
-            {
-              "name": "computer_name",
-              "kind": "string",
-              "example": "lab-host"
-            },
-            {
-              "name": "status",
-              "kind": "enum",
-              "enumValues": [
-                "Online",
-                "Offline"
-              ]
-            },
-            {
-              "name": "os_type",
-              "kind": "const",
-              "constValue": "Windows"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -72,7 +52,101 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ProcessOpen_sub-type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alert_severity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "build_version_string",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "computer_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "post-api-v1-alerts-1",
+        "method": "POST",
+        "pathTemplate": "/api/v1/alerts",
+        "summary": "POST /api/v1/alerts",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ProcessOpen_sub-type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alert_severity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "build_version_string",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "computer_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

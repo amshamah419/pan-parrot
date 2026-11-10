@@ -3,11 +3,11 @@
   "name": "Skyhigh Security",
   "pack": "SkyhighSecurity",
   "vendor": "Skyhigh Security",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Query CASB incidents.",
+  "summary": "Rebuilt from the client: POST /external/api/v1/queryIncidents.",
   "notes": [
-    "Cross-check: field: POST /external/api/v1/queryIncidents root keys ['incidents'] are not read by the client or present in test_data ['content_checksum', 'headers', 'identifier', 'last_modified_time', 'password', 'remediationResponse', 'timeModified', 'uploaded_filename']."
+    "Rebuilt from the XSOAR client. The checker matched POST /external/api/v1/queryIncidents. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SkyhighSecurity/Integrations/SkyhighSecurity",
@@ -17,62 +17,34 @@
       "kind": "preset",
       "id": "skyhighsecurity-skyhighsecurity",
       "name": "Skyhigh Security",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://success.myshn.net/Skyhigh_CASB/Skyhigh_CASB_APIs",
       "notes": [
-        "Cross-check: field: POST /external/api/v1/queryIncidents root keys ['incidents'] are not read by the client or present in test_data ['content_checksum', 'headers', 'identifier', 'last_modified_time', 'password', 'remediationResponse', 'timeModified', 'uploaded_filename']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /external/api/v1/queryIncidents. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://success.myshn.net/Skyhigh_CASB/Skyhigh_CASB_APIs",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /external/api/v1/queryIncidents. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "incidents",
+        "id": "post-external-api-v1-queryincidents-0",
         "method": "POST",
         "pathTemplate": "/external/api/v1/queryIncidents",
-        "summary": "Query incidents",
+        "summary": "POST /external/api/v1/queryIncidents",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "incidents",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "incident",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  },
-                  {
-                    "name": "status",
-                    "kind": "const",
-                    "constValue": "open"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -80,7 +52,53 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "actorId",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "body",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "incidents",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "responseInfo",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "content",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "content_checksum",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "identifier",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

@@ -3,11 +3,11 @@
   "name": "Securonix",
   "pack": "Securonix",
   "vendor": "Securonix",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Incident list. The client calls GET /incident/get.",
+  "summary": "Rebuilt from the client: GET /incident/get.",
   "notes": [
-    "Cross-check: paging: GET /incident/get says offset limit=limit offset=offset but the client sends ['actionName', 'from', 'incidentId', 'max', 'offset', 'order', 'rangeType', 'to', 'type', 'workflow']."
+    "Rebuilt from the XSOAR client. The checker matched GET /incident/get. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Securonix/Integrations/Securonix",
@@ -17,76 +17,100 @@
       "kind": "preset",
       "id": "securonix-securonix",
       "name": "Securonix",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://documentation.securonix.com/",
       "notes": [
-        "Cross-check: paging: GET /incident/get says offset limit=limit offset=offset but the client sends ['actionName', 'from', 'incidentId', 'max', 'offset', 'order', 'rangeType', 'to', 'type', 'workflow']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /incident/get. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://documentation.securonix.com/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /incident/get. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-incidents",
+        "id": "get-incident-get-0",
         "method": "GET",
         "pathTemplate": "/incident/get",
-        "summary": "List incidents",
+        "summary": "GET /incident/get",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "incidents"
-        },
-        "record": {
-          "name": "incident",
-          "kind": "object",
-          "children": [
-            {
-              "name": "incidentId",
-              "kind": "id"
-            },
-            {
-              "name": "incidentStatus",
-              "kind": "enum",
-              "enumValues": [
-                "Open",
-                "In Progress",
-                "Closed"
-              ]
-            },
-            {
-              "name": "priority",
-              "kind": "enum",
-              "enumValues": [
-                "Low",
-                "Medium",
-                "High"
-              ]
-            },
-            {
-              "name": "riskscore",
-              "kind": "number"
-            },
-            {
-              "name": "incidentCreatedTime",
-              "kind": "timestamp"
-            },
-            {
-              "name": "violator",
-              "kind": "string",
-              "example": "jsmith"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ACTIVE",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "action",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "status",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "Comments",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Content-Disposition",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "DONE",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "action",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "status",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "Eventid",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Policies",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

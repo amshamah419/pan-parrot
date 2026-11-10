@@ -3,11 +3,11 @@
   "name": "Proofpoint Threat Protection",
   "pack": "ProofpointThreatProtection",
   "vendor": "Proofpoint",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "People VAP and threat summary.",
+  "summary": "Rebuilt from the client: GET /emailProtection/modules/spam/orgBlockList.",
   "notes": [
-    "Cross-check: path: GET /v2/people/vap is not a client call. Closest: /emailProtection/modules/spam/orgSafeList (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /emailProtection/modules/spam/orgBlockList, GET /emailProtection/modules/spam/orgSafeList. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ProofpointThreatProtection/Integrations/ProofpointThreatProtection",
@@ -17,45 +17,34 @@
       "kind": "preset",
       "id": "proofpointthreatprotection-proofpointthreatprotection",
       "name": "Proofpoint Threat Protection",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/People_API",
       "notes": [
-        "Cross-check: path: GET /v2/people/vap is not a client call. Closest: /emailProtection/modules/spam/orgSafeList (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /emailProtection/modules/spam/orgBlockList, GET /emailProtection/modules/spam/orgSafeList. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/People_API",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /emailProtection/modules/spam/orgBlockList, GET /emailProtection/modules/spam/orgSafeList. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "vap",
+        "id": "get-emailprotection-modules-spam-orgblocklis-0",
         "method": "GET",
-        "pathTemplate": "/v2/people/vap",
-        "summary": "Very attacked people",
+        "pathTemplate": "/emailProtection/modules/spam/orgBlockList",
+        "summary": "GET /emailProtection/modules/spam/orgBlockList",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "users"
-        },
-        "record": {
-          "name": "user",
-          "kind": "object",
-          "children": [
-            {
-              "name": "identity",
-              "kind": "email"
-            },
-            {
-              "name": "threats",
-              "kind": "integer"
-            },
-            {
-              "name": "vip",
-              "kind": "boolean"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -63,7 +52,51 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "entries",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-emailprotection-modules-spam-orgsafelist-1",
+        "method": "GET",
+        "pathTemplate": "/emailProtection/modules/spam/orgSafeList",
+        "summary": "GET /emailProtection/modules/spam/orgSafeList",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "entries",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

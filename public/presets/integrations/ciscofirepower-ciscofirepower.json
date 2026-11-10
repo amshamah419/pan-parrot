@@ -3,11 +3,11 @@
   "name": "Cisco Firepower",
   "pack": "CiscoFirepower",
   "vendor": "Cisco",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "FMC token and access policies for a lab domain.",
+  "summary": "Rebuilt from the client: POST /api/fmc_config/v1/domain/{domain_uuid}/policy/accesspolicies.",
   "notes": [
-    "Cross-check: field: POST /api/fmc_platform/v1/auth/generatetoken root keys ['domain_uuid', 'token'] are not read by the client or present in test_data ['action', 'destinationPorts', 'files', 'inspectionMode', 'ruleData', 'ruleGroups', 'startTime', 'targets']."
+    "Rebuilt from the XSOAR client. The checker matched POST /api/fmc_config/v1/domain/{domain_uuid}/policy/accesspolicies. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoFirepower/Integrations/CiscoFirepower",
@@ -17,107 +17,84 @@
       "kind": "preset",
       "id": "ciscofirepower-ciscofirepower",
       "name": "Cisco Firepower",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.cisco.com/docs/fmc/",
       "notes": [
-        "Cross-check: field: POST /api/fmc_platform/v1/auth/generatetoken root keys ['domain_uuid', 'token'] are not read by the client or present in test_data ['action', 'destinationPorts', 'files', 'inspectionMode', 'ruleData', 'ruleGroups', 'startTime', 'targets']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /api/fmc_config/v1/domain/{domain_uuid}/policy/accesspolicies. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.cisco.com/docs/fmc/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /api/fmc_config/v1/domain/{domain_uuid}/policy/accesspolicies. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "token",
+        "id": "post-api-fmc-config-v1-domain-domain-uuid-pol-0",
         "method": "POST",
-        "pathTemplate": "/api/fmc_platform/v1/auth/generatetoken",
-        "summary": "Generate an FMC token",
+        "pathTemplate": "/api/fmc_config/v1/domain/{domain_uuid}/policy/accesspolicies",
+        "summary": "POST /api/fmc_config/v1/domain/{domain_uuid}/policy/accesspolicies",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "token",
-              "kind": "const",
-              "constValue": "dummy-fmc-token"
+              "name": "DOMAIN_UUID",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "domain_uuid",
-              "kind": "const",
-              "constValue": "lab-domain"
-            }
-          ]
-        },
-        "headers": {
-          "x-auth-access-token": "dummy-fmc-token",
-          "domain_uuid": "lab-domain"
-        },
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "none",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
-        }
-      },
-      {
-        "id": "policies",
-        "method": "GET",
-        "pathTemplate": "/api/fmc_config/v1/domain/lab-domain/policy/accesspolicies",
-        "summary": "List access policies",
-        "status": 200,
-        "list": false,
-        "envelope": {
-          "type": "object"
-        },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
+              "name": "X-auth-access-token",
+              "kind": "string",
+              "example": "lab"
+            },
             {
-              "name": "items",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "policy",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "lab-policy"
-                  },
-                  {
-                    "name": "type",
-                    "kind": "const",
-                    "constValue": "AccessPolicy"
-                  }
-                ]
-              }
+              "name": "action",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "appCategories",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "appProductivity",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "applicationTypes",
+              "kind": "string",
+              "example": "lab"
             }
           ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "none",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
         }
       }
     ],

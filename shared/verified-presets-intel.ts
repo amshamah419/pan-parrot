@@ -173,7 +173,7 @@ export const intelVerifiedPresets = [
     vendor: "abuse.ch",
     summary: "URL lookup. query_status and threat match the URLhaus API.",
     docUrl: "https://urlhaus-api.abuse.ch/",
-    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/URLhaus",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/URLHaus/Integrations/URLHaus",
     differences: [
       "POST /v1/url returns query_status, url_status, threat, host, and date_added.",
       "The payloads array and the recent-URLs feed are omitted.",
@@ -374,7 +374,7 @@ export const intelVerifiedPresets = [
     vendor: "MISP",
     summary: "Attribute restSearch. response.Attribute is the hit list.",
     docUrl: "https://www.circl.lu/doc/misp/automation/#restsearch",
-    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/MISP/Integrations/MISPv3",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/MISP/Integrations/MISPV3",
     differences: [
       "POST /attributes/restSearch returns { response: { Attribute } }. This mock returns Attribute with id, value, type, category, and timestamp.",
       "Events, tags, and the warning lists are omitted.",
@@ -409,7 +409,7 @@ export const intelVerifiedPresets = [
     vendor: "ThreatConnect",
     summary: "Indicator list. data[] from /api/v3/indicators.",
     docUrl: "https://docs.threatconnect.com/en/latest/rest_api/v3/indicators/indicators.html",
-    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/ThreatConnect/Integrations/ThreatConnectv3",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/ThreatConnect/Integrations/ThreatConnectV3",
     differences: [
       "GET /api/v3/indicators returns { data }. Each indicator keeps id, summary, and type.",
       "HMAC request signing is not checked. A bearer token stands in for it.",
@@ -443,7 +443,7 @@ export const intelVerifiedPresets = [
     vendor: "urlscan",
     summary: "Search results. results[].page and task.",
     docUrl: "https://urlscan.io/docs/api/",
-    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/urlscan/Integrations/UrlScan",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/UrlScan/Integrations/UrlScan",
     differences: [
       "GET /api/v1/search returns { results }. Each hit keeps task.uuid and page.url, page.ip, and page.server.",
       "POST /api/v1/scan and the result poll are not modeled.",
@@ -708,7 +708,7 @@ export const intelVerifiedPresets = [
     vendor: "Zendesk",
     summary: "Ticket list. tickets, next_page, and count.",
     docUrl: "https://developer.zendesk.com/api-reference/ticketing/tickets/tickets/#list-tickets",
-    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Zendesk/Integrations/ZendeskV2",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Zendesk/Integrations/Zendeskv2",
     differences: [
       "GET /api/v2/tickets returns { tickets, next_page, count }. This mock returns tickets and pages with page.",
       "next_page is a full URL in Zendesk. This mock uses the page query parameter.",
@@ -878,7 +878,7 @@ export const intelVerifiedPresets = [
     vendor: "Microsoft",
     summary: "Directory role assignments.",
     docUrl: "https://learn.microsoft.com/en-us/graph/api/rbacapplication-list-roleassignments",
-    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphIdentityAndAccess/Integrations/MicrosoftGraphIdentityandAccess",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphIdentityandAccess/Integrations/MicrosoftGraphIdentityandAccess",
     differences: [
       "GET /v1.0/roleManagement/directory/roleAssignments returns { value }. Each assignment keeps id, principalId, and roleDefinitionId.",
       "The pack may call additional identityGovernance routes. Those are not modeled.",
@@ -945,7 +945,7 @@ export const intelVerifiedPresets = [
     vendor: "CyberArk",
     summary: "Central Credential Provider account fetch.",
     docUrl: "https://docs.cyberark.com/credential-providers/latest/en/content/ccp/calling-the-web-service-using-rest.htm",
-    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/CyberArk_AIM/Integrations/CyberArkAIM_v2",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/cyberark_AIM/Integrations/CyberArkAIM_v2",
     differences: [
       "GET /AIMWebService/api/Accounts returns Content, UserName, Address, Safe, and Folder.",
       "AppID, Safe, and Object query parameters are not checked.",
@@ -1044,7 +1044,7 @@ export const intelVerifiedPresets = [
     vendor: "Duo",
     summary: "User list. stat and response[].",
     docUrl: "https://duo.com/docs/adminapi#retrieve-users",
-    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/DUOAdminApi/Integrations/DuoAdminApi",
+    sourceUrl: "https://github.com/demisto/content/tree/master/Packs/DuoAdminApi/Integrations/DuoAdminApi",
     differences: [
       "GET /admin/v1/users returns { stat, response }. Users keep user_id, username, and status.",
       "Duo signs every request. This mock does not check the HMAC signature.",
