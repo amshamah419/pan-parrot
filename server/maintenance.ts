@@ -6,7 +6,7 @@ import {
   rateLimits,
   sessions,
 } from "../db/schema";
-import { maxRequestsPerEndpoint, retentionDays } from "./config";
+import { maxRequestsPerEndpoint, maxRequestsPerUser, retentionDays } from "./config";
 
 export async function trimEndpoint(
   db: AppDb,
@@ -28,6 +28,20 @@ export async function trimEndpoint(
       AND id IN (
         SELECT id FROM captured_requests
         WHERE endpoint_id = ${endpointId}
+        ORDER BY created_at DESC
+        OFFSET ${cap}
+      )
+  `);
+}
+
+export async function trimUserCaptures(db: AppDb, userId: string): Promise<void> {
+  const cap = maxRequestsPerUser();
+  await db.execute(sql`
+    DELETE FROM captured_requests
+    WHERE user_id = ${userId}
+      AND id IN (
+        SELECT id FROM captured_requests
+        WHERE user_id = ${userId}
         ORDER BY created_at DESC
         OFFSET ${cap}
       )
@@ -58,6 +72,22 @@ export async function runMaintenance(db: AppDb): Promise<{
         FROM captured_requests
       ) ranked
       WHERE ranked.rn > ${cap}
+    )
+  `);
+  const userCap = maxRequestsPerUser();
+  await db.execute(sql`
+    DELETE FROM captured_requests
+    WHERE id IN (
+      SELECT id FROM (
+        SELECT
+          id,
+          row_number() OVER (
+            PARTITION BY user_id
+            ORDER BY created_at DESC
+          ) AS rn
+        FROM captured_requests
+      ) ranked
+      WHERE ranked.rn > ${userCap}
     )
   `);
 

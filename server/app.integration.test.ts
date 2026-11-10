@@ -305,6 +305,119 @@ describe("sign-in, sessions, and capture", () => {
     }
   });
 
+  it("folds plus-addressed sign-in into one mailbox quota", async () => {
+    process.env.RATE_AUTH_EMAIL_MAX = "2";
+    try {
+      const headers = {
+        "content-type": "application/json",
+        "x-forwarded-for": "203.0.113.88",
+      };
+      const send = (email: string) =>
+        app.request("/api/auth/request", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ email }),
+        });
+      expect((await send("quota.box+a@paloaltonetworks.com")).status).toBe(200);
+      expect((await send("quota.box+b@paloaltonetworks.com")).status).toBe(200);
+      expect((await send("quota.box@paloaltonetworks.com")).status).toBe(429);
+    } finally {
+      process.env.RATE_AUTH_EMAIL_MAX = "10000";
+    }
+  });
+
+  it("sets session cookie flags and blocks a cross-site mutation", async () => {
+    const requested = await app.request("/api/auth/request", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-forwarded-for": "203.0.113.90",
+      },
+      body: JSON.stringify({ email: "cookie.flags@paloaltonetworks.com" }),
+    });
+    const pending = await requested.json();
+    const verified = await app.request("/api/auth/verify", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email: "cookie.flags@paloaltonetworks.com", code: pending.devCode }),
+    });
+    const setCookie = verified.headers.get("set-cookie") || "";
+    expect(setCookie).toMatch(/HttpOnly/i);
+    expect(setCookie).toMatch(/SameSite=Lax/i);
+    expect(setCookie).toMatch(/Path=\/api/i);
+    expect(setCookie).toMatch(/Max-Age=/i);
+    const cookie = setCookie.split(";")[0];
+    const crossed = await app.request("/api/endpoints", {
+      method: "POST",
+      headers: {
+        cookie,
+        "content-type": "application/json",
+        "sec-fetch-site": "cross-site",
+      },
+      body: JSON.stringify({ name: "nope" }),
+    });
+    expect(crossed.status).toBe(403);
+    const anonymous = await app.request("/api/admin/users");
+    expect(anonymous.status).toBe(401);
+    const ping = await app.request("/api/ping");
+    expect(ping.headers.get("x-content-type-options")).toBe("nosniff");
+    expect(ping.headers.get("referrer-policy")).toBe("no-referrer");
+    expect(ping.headers.get("content-security-policy")).toContain("frame-ancestors 'none'");
+    expect(ping.headers.get("x-robots-tag")).toContain("noindex");
+  });
+
+  it("downloads catch HTML instead of rendering it", async () => {
+    const cookie = await signIn(app, "html.guard@paloaltonetworks.com");
+    const created = await app.request("/api/endpoints", {
+      method: "POST",
+      headers: { cookie, "content-type": "application/json" },
+      body: JSON.stringify({ name: "html", customPath: "htmlpage" }),
+    });
+    const endpoint = await created.json();
+    await app.request(`/api/endpoints/${endpoint.id}/mock`, {
+      method: "POST",
+      headers: { cookie, "content-type": "application/json" },
+      body: JSON.stringify({
+        statusCode: 200,
+        headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline" },
+        body: "<html><script>alert(1)</script><h1>Sign in</h1></html>",
+        delay: 0,
+      }),
+    });
+    const page = await app.request("/catch/htmlpage");
+    expect(page.headers.get("content-type")).toContain("text/html");
+    expect(page.headers.get("content-disposition")).toContain("attachment");
+    expect(page.headers.get("content-security-policy")).toContain("sandbox");
+    expect(page.headers.get("x-frame-options")).toBe("DENY");
+    expect(await page.text()).toContain("<script>alert(1)</script>");
+  });
+
+  it("caps captured requests per user across mocks", async () => {
+    process.env.MAX_REQUESTS_PER_USER = "2";
+    try {
+      const cookie = await signIn(app, "storage.cap@paloaltonetworks.com");
+      const created = await app.request("/api/endpoints", {
+        method: "POST",
+        headers: { cookie, "content-type": "application/json" },
+        body: JSON.stringify({ name: "store", customPath: "storecap" }),
+      });
+      expect(created.status).toBe(200);
+      for (const body of ["one", "two", "three"]) {
+        const response = await app.request("/catch/storecap", {
+          method: "POST",
+          headers: { "content-type": "text/plain" },
+          body,
+        });
+        expect(response.status).toBe(200);
+      }
+      const list = await app.request("/api/requests", { headers: { cookie } });
+      const rows = await list.json();
+      expect(rows).toHaveLength(2);
+    } finally {
+      process.env.MAX_REQUESTS_PER_USER = "1000";
+    }
+  });
+
   it("rate limits sign-in requests", async () => {
     process.env.RATE_AUTH_EMAIL_MAX = "2";
     try {

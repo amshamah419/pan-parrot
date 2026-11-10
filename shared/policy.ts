@@ -11,6 +11,8 @@ export const POLICY = {
   maxMockBodyBytes: 64 * 1024,
   maxMockDelayMs: 5_000,
   maxEndpointsPerUser: 20,
+  maxRequestsPerUser: 1000,
+  maxStoredBodyChars: 16_384,
   apiJsonBytes: 96 * 1024,
   specJsonBytes: 512 * 1024,
   sessionCookieName: "pp_session",

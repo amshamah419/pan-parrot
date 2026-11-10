@@ -8,15 +8,21 @@ describe("normalizePanEmail", () => {
     );
   });
 
-  it("trims surrounding whitespace and allows plus addressing", () => {
+  it("trims whitespace and folds plus-addressing to the mailbox", () => {
     expect(normalizePanEmail("  first.last+ops@paloaltonetworks.com  ")).toBe(
-      "first.last+ops@paloaltonetworks.com",
+      "first.last@paloaltonetworks.com",
+    );
+    expect(normalizePanEmail("first.last+a+b@paloaltonetworks.com")).toBe(
+      "first.last@paloaltonetworks.com",
     );
   });
 
   it("accepts a fullwidth domain only when NFKC folds it to the real domain", () => {
     const fullwidth = "ashamah@\uff50aloaltonetworks.com";
     expect(normalizePanEmail(fullwidth)).toBe("ashamah@paloaltonetworks.com");
+    expect(normalizePanEmail("ashamah\uff20paloaltonetworks.com")).toBe(
+      "ashamah@paloaltonetworks.com",
+    );
   });
 
   it.each([
@@ -36,6 +42,8 @@ describe("normalizePanEmail", () => {
     ["quoted local part", '"ashamah"@paloaltonetworks.com'],
     ["empty", ""],
     ["not a string", null],
+    ["punycode domain", "ashamah@xn--paloaltonetworks-0b3g.com"],
+    ["zero-width space", "ashamah@paloalto\u200bnetworks.com"],
   ])("rejects %s", (_label, value) => {
     expect(normalizePanEmail(value)).toBeNull();
   });

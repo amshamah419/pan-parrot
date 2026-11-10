@@ -2,7 +2,7 @@
 
 PAN Parrot ships on Netlify. This is the checklist for the first production site. The repo already contains the build settings, functions, and database migrations. The steps below are the ones that happen in Netlify and Resend accounts.
 
-Do not put the site on a `paloaltonetworks.com` hostname. Use a `netlify.app` name or a domain you control personally. The product is an unofficial tool.
+Do not put the site on a `paloaltonetworks.com` hostname. Use a `netlify.app` name or a domain you control personally. The product is an unofficial tool. The threat model and the controls that ship with the app are in [SECURITY.md](SECURITY.md).
 
 ## What you do
 
@@ -83,10 +83,12 @@ npx netlify env:set EMAIL_FROM "PAN Parrot <noreply@your-domain>" --context prod
 | `EMAIL_FROM` | yes | An address on the domain you verified in Resend. |
 | `REQUEST_RETENTION_DAYS` | no | Default 14. Allowed range 1–90. |
 | `MAX_REQUESTS_PER_ENDPOINT` | no | Default 200. Allowed range 1–5000. |
-| `MAX_BODY_BYTES` | no | Default 262144 (256 KB). Hard ceiling 1 MB. |
+| `MAX_BODY_BYTES` | no | Default 262144 (256 KB). Hard ceiling 1 MB. Catch request bodies larger than this are rejected. |
+| `MAX_REQUESTS_PER_USER` | no | Default 1000. Oldest captured calls across that person's mocks are deleted past this count. |
+| `MAX_STORED_BODY_CHARS` | no | Default 16384. Captured bodies are shortened to this many characters before they are stored. |
 | `EXTRA_ORIGINS` | no | Comma-separated extra browser origins if you add a custom domain before `SITE_URL` is updated. |
 
-Optional rate-limit overrides, all integers: `RATE_AUTH_IP_MAX` (20 per 15 minutes), `RATE_AUTH_EMAIL_MAX` (5 per 15 minutes), `RATE_AUTH_VERIFY_IP_MAX` (10 per 15 minutes), `RATE_AUTH_VERIFY_EMAIL_MAX` (10 per 15 minutes), `RATE_API_USER_MAX` (180 per minute), `RATE_CATCH_IP_MAX` (300 per minute), `RATE_CATCH_ENDPOINT_MAX` (600 per minute), `RATE_PING_MAX` (60 per minute).
+Optional rate-limit overrides, all integers: `RATE_AUTH_IP_MAX` (20 per 15 minutes), `RATE_AUTH_EMAIL_MAX` (5 per 15 minutes), `RATE_AUTH_VERIFY_IP_MAX` (10 per 15 minutes), `RATE_AUTH_VERIFY_EMAIL_MAX` (10 per 15 minutes), `RATE_API_USER_MAX` (180 per minute), `RATE_CATCH_IP_MAX` (300 per minute), `RATE_CATCH_ENDPOINT_MAX` (600 per minute), `RATE_CATCH_USER_MAX` (1200 per minute, across every mock that person owns), `RATE_PING_MAX` (60 per minute). Plus-addressed mail (`name+tag@paloaltonetworks.com`) counts as `name@paloaltonetworks.com` for these quotas and for the account.
 
 Do not set these on Netlify:
 

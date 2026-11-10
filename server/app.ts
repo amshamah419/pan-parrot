@@ -67,6 +67,7 @@ import { clientIp, HttpError, readJson } from "./http";
 import { runMaintenance } from "./maintenance";
 import { adminSignals, readHealth } from "./ops";
 import { enforceRateLimit, limitAuthed, limitPing } from "./rate-limit";
+import { guardCatchResponseHeaders } from "./headers";
 import { sessionCookieOptions } from "./session";
 
 export type AppEnv = {
@@ -219,6 +220,8 @@ export function createServer(options?: {
     deleteCookie(c, POLICY.sessionCookieName, {
       path: "/api",
       secure: cookieIsSecure(),
+      httpOnly: true,
+      sameSite: "Lax",
     });
     return c.json({ ok: true });
   });
@@ -643,7 +646,7 @@ function registerCatch(app: Hono<AppEnv>) {
       c.req.raw,
       c.get("ip"),
     );
-    for (const [key, value] of Object.entries(result.headers)) {
+    for (const [key, value] of Object.entries(guardCatchResponseHeaders(result.headers))) {
       c.header(key, value);
     }
     if (result.stream) return c.body(chunkedText(result.body, result.dripMs || 0), result.status as 200);

@@ -13,7 +13,7 @@ import { loadRuntime, resetRuntime, saveRuntime } from "./runtime-state";
 import { ENDPOINT_PATH_RE, POLICY } from "../shared/policy";
 import type { AppDb } from "../db/client";
 import { capturedRequests, endpoints, sessions, users } from "../db/schema";
-import { maxBodyBytes, publicSiteUrl, rateMax } from "./config";
+import { maxBodyBytes, maxStoredBodyChars, publicSiteUrl, rateMax } from "./config";
 import {
   bodyForStorage,
   clampQuery,
@@ -21,7 +21,7 @@ import {
   sanitizeMockHeaders,
 } from "./headers";
 import { HttpError } from "./http";
-import { trimEndpoint } from "./maintenance";
+import { trimEndpoint, trimUserCaptures } from "./maintenance";
 import { enforceRateLimit } from "./rate-limit";
 import type { PublicUser } from "./auth";
 import { canRead, endpointAccess, requireAccess, snapshotSpec, writeAudit, type Access } from "./collab";
@@ -331,6 +331,12 @@ export async function captureOnPath(
     rateMax("RATE_CATCH_ENDPOINT_MAX", 600),
     60_000,
   );
+  await enforceRateLimit(
+    db,
+    `catch-user:${endpoint.userId}`,
+    rateMax("RATE_CATCH_USER_MAX", 1200),
+    60_000,
+  );
 
   const text = await readCatchBody(request);
   const storedBody = bodyForStorage(text, request.headers.get("content-type"));
@@ -371,6 +377,7 @@ export async function captureOnPath(
 
   try {
     await trimEndpoint(db, endpoint.id);
+    await trimUserCaptures(db, endpoint.userId);
   } catch (error) {
     console.error(
       "retention trim failed",
