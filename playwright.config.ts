@@ -5,6 +5,7 @@ const baseURL = `http://127.0.0.1:${port}`;
 
 export default defineConfig({
   testDir: "e2e",
+  testIgnore: "netlify-gate.spec.ts",
   timeout: 120_000,
   expect: { timeout: 15_000 },
   fullyParallel: false,

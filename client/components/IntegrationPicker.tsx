@@ -15,19 +15,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrustBadge } from "@/components/TrustBadge";
 import { createEndpoint, importSpec } from "@/lib/api";
+import { clearPresetCatalogCache, loadPresetCatalog, type PresetCatalogEntry } from "@/lib/preset-catalog";
 import type { UserEndpoint } from "@shared/api";
 import { Sparkles } from "lucide-react";
-
-interface CatalogEntry {
-  id: string;
-  name: string;
-  pack: string;
-  fidelity?: string;
-  curated?: boolean;
-  summary?: string;
-  operations?: number;
-  verification?: { status?: string; docUrl?: string };
-}
 
 export function IntegrationPicker({
   onCreated,
@@ -36,8 +26,9 @@ export function IntegrationPicker({
 }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [catalog, setCatalog] = useState<CatalogEntry[]>([]);
+  const [catalog, setCatalog] = useState<PresetCatalogEntry[]>([]);
   const [catalogState, setCatalogState] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [catalogAttempt, setCatalogAttempt] = useState(0);
   const [query, setQuery] = useState("");
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [error, setError] = useState("");
@@ -51,23 +42,26 @@ export function IntegrationPicker({
   const [testData, setTestData] = useState<{ name: string; text: string }[]>([]);
 
   useEffect(() => {
-    if (!open || catalogState === "loading" || catalogState === "ready") return;
+    if (!open) return;
+    let cancelled = false;
     setCatalogState("loading");
-    fetch("/presets/index.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setCatalog(data.presets || []);
+    loadPresetCatalog()
+      .then((presets) => {
+        if (cancelled) return;
+        setCatalog(presets);
         setCatalogState("ready");
       })
       .catch(() => {
-        setCatalogState("error");
-        setError("Could not load the integration catalog");
+        if (!cancelled) setCatalogState("error");
       });
-  }, [open, catalogState]);
+    return () => {
+      cancelled = true;
+    };
+  }, [open, catalogAttempt]);
 
   const matches = useMemo(() => {
     const needle = query.trim().toLowerCase();
-    const rank = (entry: CatalogEntry) =>
+    const rank = (entry: PresetCatalogEntry) =>
       entry.verification?.status === "verified" || entry.fidelity === "verified" ? 2 : entry.curated ? 1 : 0;
     const ranked = [...catalog].sort((a, b) => rank(b) - rank(a) || a.name.localeCompare(b.name));
     return ranked
@@ -217,7 +211,22 @@ export function IntegrationPicker({
               {catalogState === "loading" && (
                 <p className="p-3 text-sm text-muted-foreground">Loading the catalog…</p>
               )}
-              {catalogState !== "loading" && matches.length === 0 && (
+              {catalogState === "error" && (
+                <div className="space-y-2 p-3">
+                  <p className="text-sm text-destructive">Could not load the integration catalog.</p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      clearPresetCatalogCache();
+                      setCatalogAttempt((attempt) => attempt + 1);
+                    }}
+                  >
+                    Retry
+                  </Button>
+                </div>
+              )}
+              {catalogState === "ready" && matches.length === 0 && (
                 <p className="p-3 text-sm text-muted-foreground">
                   No integrations match. Clear the search or turn off Verified only.
                 </p>

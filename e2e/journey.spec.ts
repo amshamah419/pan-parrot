@@ -386,3 +386,37 @@ test("XSIAM samples show Okta fields from the content schema", async ({ page }) 
   await expect(page.getByRole("heading", { name: "Correlation rules" })).toBeVisible();
   await expect(page.getByText("datamodel dataset = microsoft_365_defender_raw")).toBeVisible();
 });
+
+test("sign-in page loads the local logo", async ({ page, request }) => {
+  const logo = await request.get("/logo.webp");
+  expect(logo.status()).toBe(200);
+  expect(logo.headers()["content-type"] || "").toMatch(/^image\//);
+  await page.goto("/login");
+  const img = page.locator("img[alt='PAN Parrot']");
+  await expect(img).toBeVisible();
+  await expect(img).toHaveAttribute("src", "/logo.webp");
+});
+
+test("catalog loads without a retry storm", async ({ page }) => {
+  await signIn(page, `catalog.${Date.now().toString(36)}@paloaltonetworks.com`);
+  let hits = 0;
+  page.on("request", (req) => {
+    if (req.url().includes("/presets/index.json")) hits += 1;
+  });
+  await page.getByRole("button", { name: "Mock an integration" }).click();
+  await expect(page.getByRole("button", { name: /Abnormal Security/ }).first()).toBeVisible();
+  expect(hits).toBe(1);
+});
+
+test("catalog shows Retry instead of looping on 503", async ({ page }) => {
+  await signIn(page, `catalog-fail.${Date.now().toString(36)}@paloaltonetworks.com`);
+  let hits = 0;
+  await page.route("**/presets/index.json", (route) => {
+    hits += 1;
+    return route.fulfill({ status: 503, body: "unavailable", contentType: "text/plain" });
+  });
+  await page.getByRole("button", { name: "Mock an integration" }).click();
+  await expect(page.getByRole("button", { name: "Retry" })).toBeVisible();
+  await page.waitForTimeout(800);
+  expect(hits).toBeLessThanOrEqual(3);
+});

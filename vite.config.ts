@@ -60,7 +60,16 @@ function apiDevPlugin(): Plugin {
         }
         const secret = process.env.SESSION_SECRET || "";
         const authed = await verifyGate(cookieValue(req.headers.cookie, "pp_gate"), secret);
-        if (authed || url === "/login.js" || url === "/login.css" || url === "/login.html" || url === "/robots.txt" || url === "/favicon.ico" || url === "/404.html") {
+        if (
+          authed ||
+          url === "/login.js" ||
+          url === "/login.css" ||
+          url === "/login.html" ||
+          url === "/logo.webp" ||
+          url === "/robots.txt" ||
+          url === "/favicon.ico" ||
+          url === "/404.html"
+        ) {
           return next();
         }
         if (url === "/") {
