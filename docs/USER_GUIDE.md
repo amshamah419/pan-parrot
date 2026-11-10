@@ -14,6 +14,10 @@ A generated catch path is 128 random bits. On the mock page, **Lock this catch U
 
 The studio also shows a "try" URL with the path the integration will append, such as `/siem/v1/configs/{configId}`.
 
+## XSIAM samples
+
+The **XSIAM** link on the dashboard lists dataset samples taken from demisto/content. Each field name is a key in that pack's modeling-rule schema. A value is copied from the pack's `test_data` only when the file already has that key. If the test data has none of the keys, the sample is empty and the field is marked "not in test_data". The correlation section quotes the pack's correlation-rule YAML, including its XQL. Download sample writes that JSON. It is not a live XSIAM tenant.
+
 ## Request log
 
 The dashboard lists calls that hit your catch URLs.

@@ -1,0 +1,2467 @@
+{
+  "contentCommit": "ff4a8f7ee870499a73807b538cdbf42ee9f6c8f1",
+  "contentRepo": "https://github.com/demisto/content",
+  "note": "Field names are the modeling-rule schema. Sample values are copied from integration test_data when the key exists. Absent fields are listed and omitted.",
+  "datasets": [
+    {
+      "id": "Okta-okta_okta_raw",
+      "pack": "Okta",
+      "dataset": "okta_okta_raw",
+      "declaredInXif": true,
+      "modelingRule": "Okta 2.0 Modeling Rule",
+      "modelingRuleId": "Okta_2_0_ModelingRule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/Okta/ModelingRules/OktaModelingRules_2_11/OktaModelingRules_2_11_schema.json",
+      "xifPath": "Packs/Okta/ModelingRules/OktaModelingRules_2_11/OktaModelingRules_2_11.xif",
+      "parsingPath": "Packs/Okta/ParsingRules/Okta/Okta.xif",
+      "vendor": "okta",
+      "product": "okta",
+      "fields": [
+        {
+          "name": "client",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "actor",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "uuid",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "securityContext",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "eventType",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "outcome",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "debugContext",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "request",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "severity",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "displayMessage",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "transaction",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "legacyEventType",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "authenticationContext",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "published",
+          "type": "datetime",
+          "isArray": false
+        }
+      ],
+      "sample": {
+        "client": {
+          "device": "Unknown",
+          "geographicalContext": {
+            "city": "Boardman",
+            "country": "United States",
+            "geolocation": {
+              "lat": 1.2,
+              "lon": 3.4
+            },
+            "postalCode": "123",
+            "state": "Oregon"
+          },
+          "id": null,
+          "ipAddress": "8.8.8.8",
+          "userAgent": {
+            "browser": "UNKNOWN",
+            "os": "Unknown",
+            "rawUserAgent": "1.0"
+          },
+          "zone": "null"
+        },
+        "actor": {
+          "alternateId": "example",
+          "detailEntry": null,
+          "displayName": "dummy name",
+          "id": "123",
+          "type": "User"
+        },
+        "uuid": "123",
+        "securityContext": {
+          "asNumber": null,
+          "asOrg": null,
+          "domain": null,
+          "isProxy": null,
+          "isp": null
+        },
+        "eventType": "group.user_membership.remove",
+        "outcome": {
+          "reason": null,
+          "result": "SUCCESS"
+        },
+        "target": [
+          {
+            "alternateId": "test.com",
+            "detailEntry": null,
+            "displayName": "test this",
+            "id": "123",
+            "type": "User"
+          },
+          {
+            "alternateId": "unknown",
+            "detailEntry": null,
+            "displayName": "test1",
+            "id": "123",
+            "type": "UserGroup"
+          }
+        ],
+        "debugContext": {
+          "debugData": {
+            "requestId": "123",
+            "requestUri": "/api/v1/groups",
+            "url": "/api/v1/groups"
+          }
+        },
+        "request": {
+          "ipChain": [
+            {
+              "geographicalContext": {
+                "city": "Boardman",
+                "country": "United States",
+                "geolocation": {
+                  "lat": 1.2,
+                  "lon": 3.4
+                },
+                "postalCode": "123",
+                "state": "Oregon"
+              },
+              "ip": "8.8.8.8",
+              "source": null,
+              "version": "V4"
+            }
+          ]
+        },
+        "severity": "INFO",
+        "displayMessage": "Remove user from group membership",
+        "transaction": {
+          "detail": {},
+          "id": "123",
+          "type": "WEB"
+        },
+        "legacyEventType": "core.user_group_member.user_remove",
+        "authenticationContext": {
+          "authenticationProvider": null,
+          "authenticationStep": 0,
+          "credentialProvider": null,
+          "credentialType": null,
+          "externalSessionId": "123",
+          "interface": null,
+          "issuer": null
+        },
+        "published": "2021-12-13T01:47:08.556Z"
+      },
+      "sampleSource": "Packs/Okta/Integrations/Okta_v2/test_data/get_logs_response.json",
+      "fieldsFromTestData": [
+        "client",
+        "actor",
+        "uuid",
+        "securityContext",
+        "eventType",
+        "outcome",
+        "target",
+        "debugContext",
+        "request",
+        "severity",
+        "displayMessage",
+        "transaction",
+        "legacyEventType",
+        "authenticationContext",
+        "published"
+      ],
+      "fieldsAbsentFromTestData": []
+    },
+    {
+      "id": "Okta-okta_sso_raw",
+      "pack": "Okta",
+      "dataset": "okta_sso_raw",
+      "declaredInXif": true,
+      "modelingRule": "Okta 2.0 Modeling Rule",
+      "modelingRuleId": "Okta_2_0_ModelingRule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/Okta/ModelingRules/OktaModelingRules_2_11/OktaModelingRules_2_11_schema.json",
+      "xifPath": "Packs/Okta/ModelingRules/OktaModelingRules_2_11/OktaModelingRules_2_11.xif",
+      "parsingPath": "Packs/Okta/ParsingRules/Okta/Okta.xif",
+      "vendor": "okta",
+      "product": "sso",
+      "fields": [
+        {
+          "name": "client",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "actor",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "uuid",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "securityContext",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "eventType",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "outcome",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "debugContext",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "request",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "severity",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "displayMessage",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "transaction",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "legacyEventType",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "authenticationContext",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "published",
+          "type": "datetime",
+          "isArray": false
+        }
+      ],
+      "sample": {
+        "client": {
+          "device": "Unknown",
+          "geographicalContext": {
+            "city": "Boardman",
+            "country": "United States",
+            "geolocation": {
+              "lat": 1.2,
+              "lon": 3.4
+            },
+            "postalCode": "123",
+            "state": "Oregon"
+          },
+          "id": null,
+          "ipAddress": "8.8.8.8",
+          "userAgent": {
+            "browser": "UNKNOWN",
+            "os": "Unknown",
+            "rawUserAgent": "1.0"
+          },
+          "zone": "null"
+        },
+        "actor": {
+          "alternateId": "example",
+          "detailEntry": null,
+          "displayName": "dummy name",
+          "id": "123",
+          "type": "User"
+        },
+        "uuid": "123",
+        "securityContext": {
+          "asNumber": null,
+          "asOrg": null,
+          "domain": null,
+          "isProxy": null,
+          "isp": null
+        },
+        "eventType": "group.user_membership.remove",
+        "outcome": {
+          "reason": null,
+          "result": "SUCCESS"
+        },
+        "target": [
+          {
+            "alternateId": "test.com",
+            "detailEntry": null,
+            "displayName": "test this",
+            "id": "123",
+            "type": "User"
+          },
+          {
+            "alternateId": "unknown",
+            "detailEntry": null,
+            "displayName": "test1",
+            "id": "123",
+            "type": "UserGroup"
+          }
+        ],
+        "debugContext": {
+          "debugData": {
+            "requestId": "123",
+            "requestUri": "/api/v1/groups",
+            "url": "/api/v1/groups"
+          }
+        },
+        "request": {
+          "ipChain": [
+            {
+              "geographicalContext": {
+                "city": "Boardman",
+                "country": "United States",
+                "geolocation": {
+                  "lat": 1.2,
+                  "lon": 3.4
+                },
+                "postalCode": "123",
+                "state": "Oregon"
+              },
+              "ip": "8.8.8.8",
+              "source": null,
+              "version": "V4"
+            }
+          ]
+        },
+        "severity": "INFO",
+        "displayMessage": "Remove user from group membership",
+        "transaction": {
+          "detail": {},
+          "id": "123",
+          "type": "WEB"
+        },
+        "legacyEventType": "core.user_group_member.user_remove",
+        "authenticationContext": {
+          "authenticationProvider": null,
+          "authenticationStep": 0,
+          "credentialProvider": null,
+          "credentialType": null,
+          "externalSessionId": "123",
+          "interface": null,
+          "issuer": null
+        },
+        "published": "2021-12-13T01:47:08.556Z"
+      },
+      "sampleSource": "Packs/Okta/Integrations/Okta_v2/test_data/get_logs_response.json",
+      "fieldsFromTestData": [
+        "client",
+        "actor",
+        "uuid",
+        "securityContext",
+        "eventType",
+        "outcome",
+        "target",
+        "debugContext",
+        "request",
+        "severity",
+        "displayMessage",
+        "transaction",
+        "legacyEventType",
+        "authenticationContext",
+        "published"
+      ],
+      "fieldsAbsentFromTestData": []
+    },
+    {
+      "id": "AWS-CloudTrail-amazon_aws_raw",
+      "pack": "AWS-CloudTrail",
+      "dataset": "amazon_aws_raw",
+      "declaredInXif": true,
+      "modelingRule": "Amazon AWS CloudTrail Modeling Rule",
+      "modelingRuleId": "Amazon_AWS_CloudTrail_ModelingRule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/AWS-CloudTrail/ModelingRules/AWSCloudTrail_2_11/AWSCloudTrail_2_11_schema.json",
+      "xifPath": "Packs/AWS-CloudTrail/ModelingRules/AWSCloudTrail_2_11/AWSCloudTrail_2_11.xif",
+      "parsingPath": "Packs/AWS-CloudTrail/ParsingRules/AWSCloudTrail/AWSCloudTrail.xif",
+      "vendor": "amazon",
+      "product": "aws",
+      "fields": [
+        {
+          "name": "_log_type",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "additionalEventData",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "awsRegion",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "errorCode",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "errorMessage",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "eventCategory",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "eventID",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "eventName",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "eventSource",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "eventType",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "eventVersion",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "recipientAccountId",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "requestID",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "requestParameters",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "responseElements",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "resources",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sharedEventID",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sourceIPAddress",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "tlsDetails",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "userAgent",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "userIdentity",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "vpcEndpointAccountId",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "vpcEndpointId",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "eventTime",
+          "type": "datetime",
+          "isArray": false
+        },
+        {
+          "name": "start",
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "sample": {},
+      "sampleSource": "",
+      "fieldsFromTestData": [],
+      "fieldsAbsentFromTestData": [
+        "_log_type",
+        "additionalEventData",
+        "awsRegion",
+        "errorCode",
+        "errorMessage",
+        "eventCategory",
+        "eventID",
+        "eventName",
+        "eventSource",
+        "eventType",
+        "eventVersion",
+        "recipientAccountId",
+        "requestID",
+        "requestParameters",
+        "responseElements",
+        "resources",
+        "sharedEventID",
+        "sourceIPAddress",
+        "tlsDetails",
+        "userAgent",
+        "userIdentity",
+        "vpcEndpointAccountId",
+        "vpcEndpointId",
+        "eventTime",
+        "start"
+      ]
+    },
+    {
+      "id": "AWS-GuardDuty-aws_guardduty_raw",
+      "pack": "AWS-GuardDuty",
+      "dataset": "aws_guardduty_raw",
+      "declaredInXif": true,
+      "modelingRule": "AWSGuardDuty Modeling Rule",
+      "modelingRuleId": "AWSGuardDuty_ModelingRule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/AWS-GuardDuty/ModelingRules/AWSGuardDutyModelingRules_2_11/AWSGuardDutyModelingRules_2_11_schema.json",
+      "xifPath": "Packs/AWS-GuardDuty/ModelingRules/AWSGuardDutyModelingRules_2_11/AWSGuardDutyModelingRules_2_11.xif",
+      "parsingPath": "Packs/AWS-GuardDuty/ParsingRules/AWS-GuardDuty/AWS-GuardDuty.xif",
+      "vendor": "aws",
+      "product": "guardduty",
+      "fields": [
+        {
+          "name": "accountId",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "arn",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "region",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "resource",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "service",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "severity",
+          "type": "float",
+          "isArray": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "sample": {},
+      "sampleSource": "",
+      "fieldsFromTestData": [],
+      "fieldsAbsentFromTestData": [
+        "accountId",
+        "arn",
+        "description",
+        "id",
+        "region",
+        "resource",
+        "service",
+        "severity",
+        "title",
+        "type"
+      ]
+    },
+    {
+      "id": "MicrosoftDefenderAdvancedThreatProtection-microsoft_365_defender_raw",
+      "pack": "MicrosoftDefenderAdvancedThreatProtection",
+      "dataset": "microsoft_365_defender_raw",
+      "declaredInXif": true,
+      "modelingRule": "Microsoft 365 Defender Event Collector Modeling Rule",
+      "modelingRuleId": "microsoft_365_defender_event_collector_ModelingRule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/MicrosoftDefenderAdvancedThreatProtection/ModelingRules/Microsoft365DefenderEventCollector_2_11/Microsoft365DefenderEventCollector_2_11_schema.json",
+      "xifPath": "Packs/MicrosoftDefenderAdvancedThreatProtection/ModelingRules/Microsoft365DefenderEventCollector_2_11/Microsoft365DefenderEventCollector_2_11.xif",
+      "parsingPath": "Packs/MicrosoftDefenderAdvancedThreatProtection/ParsingRules/MicrosoftDefenderAdvancedThreatProtection/MicrosoftDefenderAdvancedThreatProtection.xif",
+      "vendor": "Microsoft 365",
+      "product": "Defender",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "incidentId",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "severity",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "detectionSource",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "threatFamilyName",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "threatName",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "alertCreationTime",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "machineId",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "computerDnsName",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "mitreTechniques",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "evidence",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "lastEventTime",
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "sample": {
+        "id": "da637029414680409372_735564929",
+        "incidentId": 14,
+        "title": "Demisto Alert",
+        "severity": "Medium",
+        "detectionSource": "CustomerTI",
+        "category": "null",
+        "threatFamilyName": null,
+        "description": "Created for documentation",
+        "alertCreationTime": "2019-09-01T13:31:08.0252869Z",
+        "machineId": "43df73d1dac43593d1275e20422f44a949f6dfc3",
+        "lastEventTime": "2019-08-05T00:53:51.1469367Z"
+      },
+      "sampleSource": "Packs/MicrosoftDefenderAdvancedThreatProtection/Integrations/MicrosoftDefenderAdvancedThreatProtection/test_data/first_response_alerts.json",
+      "fieldsFromTestData": [
+        "id",
+        "incidentId",
+        "title",
+        "severity",
+        "detectionSource",
+        "category",
+        "threatFamilyName",
+        "description",
+        "alertCreationTime",
+        "machineId",
+        "lastEventTime"
+      ],
+      "fieldsAbsentFromTestData": [
+        "threatName",
+        "computerDnsName",
+        "mitreTechniques",
+        "evidence"
+      ]
+    },
+    {
+      "id": "MicrosoftGraphSecurity-msft_graph_security_alerts_raw",
+      "pack": "MicrosoftGraphSecurity",
+      "dataset": "msft_graph_security_alerts_raw",
+      "declaredInXif": true,
+      "modelingRule": "Microsoft Graph Security Modeling Rule",
+      "modelingRuleId": "Microsoft_Graph_Security_ModelingRule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/MicrosoftGraphSecurity/ModelingRules/MicrosoftGraphSecurity_2_11/MicrosoftGraphSecurity_2_11_schema.json",
+      "xifPath": "Packs/MicrosoftGraphSecurity/ModelingRules/MicrosoftGraphSecurity_2_11/MicrosoftGraphSecurity_2_11.xif",
+      "parsingPath": "Packs/MicrosoftGraphSecurity/ParsingRules/MicrosoftGraphSecurity/MicrosoftGraphSecurity.xif",
+      "vendor": "msft",
+      "product": "Graph Security Alerts",
+      "fields": [
+        {
+          "name": "_reporting_device_name",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "severity",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "tenantId",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "detectorId",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "incidentId",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "alertWebUrl",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "providerAlertId",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "incidentWebUrl",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "determination",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "serviceSource",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "productName",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "detectionSource",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "mitreTechniques",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "evidence",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "classification",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "createdDateTime",
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "sample": {
+        "id": "pid",
+        "title": "test alert",
+        "status": "new",
+        "category": "None",
+        "severity": "medium",
+        "tenantId": "tenantId",
+        "description": "Created for test",
+        "detectorId": "did",
+        "incidentId": "2514",
+        "alertWebUrl": "https://security.microsoft.com/alerts/pid?tid=tenantId",
+        "providerAlertId": "pid",
+        "incidentWebUrl": "https://security.microsoft.com/incidents/2514?tid=tenantId",
+        "determination": null,
+        "serviceSource": "microsoftDefenderForEndpoint",
+        "detectionSource": "customTi",
+        "mitreTechniques": [],
+        "evidence": [
+          {
+            "@odata.type": "#microsoft.graph.security.processEvidence",
+            "createdDateTime": "2022-10-03T03:39:21.79Z",
+            "detectionStatus": null,
+            "imageFile": {
+              "fileName": "crond",
+              "filePath": "/usr/sbin",
+              "filePublisher": null,
+              "fileSize": null,
+              "issuer": null,
+              "sha1": "fdfe0bb4de45bf0bf213b4edd1526162066bcd7e",
+              "sha256": "7caea94896efb829044127483469607c6a36bdcdfab162f57b4ed650b9e3449e",
+              "signer": null
+            },
+            "mdeDeviceId": null,
+            "parentProcessCreationDateTime": "2022-01-23T08:48:10.07Z",
+            "parentProcessId": 1100,
+            "parentProcessImageFile": null,
+            "processCommandLine": "/usr/sbin/crond -n",
+            "processCreationDateTime": "2022-09-26T05:01:00.35Z",
+            "processId": 21399,
+            "remediationStatus": "none",
+            "remediationStatusDetails": null,
+            "roles": [],
+            "tags": [],
+            "userAccount": {
+              "accountName": "root",
+              "azureAdUserId": null,
+              "displayName": "",
+              "domainName": null,
+              "userPrincipalName": null,
+              "userSid": ""
+            },
+            "verdict": "suspicious"
+          },
+          {
+            "@odata.type": "#microsoft.graph.security.userEvidence",
+            "createdDateTime": "2022-10-03T03:39:21.79Z",
+            "remediationStatus": "none",
+            "remediationStatusDetails": null,
+            "roles": [],
+            "tags": [],
+            "userAccount": {
+              "accountName": "root",
+              "azureAdUserId": null,
+              "displayName": "",
+              "domainName": null,
+              "userPrincipalName": null,
+              "userSid": ""
+            },
+            "verdict": "unknown"
+          },
+          {
+            "@odata.type": "#microsoft.graph.security.fileEvidence",
+            "createdDateTime": "2022-10-03T03:39:21.79Z",
+            "detectionStatus": null,
+            "fileDetails": {
+              "fileName": "crond",
+              "filePath": "/usr/sbin",
+              "filePublisher": null,
+              "fileSize": null,
+              "issuer": null,
+              "sha1": "fdfe0bb4de45bf0bf213b4edd1526162066bcd7e",
+              "sha256": "7caea94896efb829044127483469607c6a36bdcdfab162f57b4ed650b9e3449e",
+              "signer": null
+            },
+            "mdeDeviceId": null,
+            "remediationStatus": "none",
+            "remediationStatusDetails": null,
+            "roles": [],
+            "tags": [],
+            "verdict": "unknown"
+          },
+          {
+            "@odata.type": "#microsoft.graph.security.ipEvidence",
+            "countryLetterCode": null,
+            "createdDateTime": "2022-10-03T03:39:21.79Z",
+            "ipAddress": "0.0.0.0",
+            "remediationStatus": "none",
+            "remediationStatusDetails": null,
+            "roles": [],
+            "tags": [],
+            "verdict": "unknown"
+          },
+          {
+            "@odata.type": "#microsoft.graph.security.deviceEvidence",
+            "azureAdDeviceId": null,
+            "createdDateTime": "2022-10-03T03:39:21.79Z",
+            "defenderAvStatus": "notSupported",
+            "deviceDnsName": "msde-agent-host-centos7.c.dmst-integrations.internal",
+            "firstSeenDateTime": "2022-01-23T09:13:42.982Z",
+            "healthStatus": "active",
+            "loggedOnUsers": [],
+            "mdeDeviceId": "mdid",
+            "onboardingStatus": "onboarded",
+            "osBuild": null,
+            "osPlatform": "CentOS",
+            "rbacGroupId": 2353,
+            "rbacGroupName": "UnassignedGroup",
+            "remediationStatus": "none",
+            "remediationStatusDetails": null,
+            "riskScore": "medium",
+            "roles": [],
+            "tags": [],
+            "verdict": "unknown"
+          },
+          {
+            "@odata.type": "#microsoft.graph.security.processEvidence",
+            "createdDateTime": "2022-10-26T03:46:39.5633333Z",
+            "detectionStatus": null,
+            "imageFile": {
+              "fileName": "crond",
+              "filePath": "/usr/sbin",
+              "filePublisher": null,
+              "fileSize": null,
+              "issuer": null,
+              "sha1": "fdfe0bb4de45bf0bf213b4edd1526162066bcd7e",
+              "sha256": "7caea94896efb829044127483469607c6a36bdcdfab162f57b4ed650b9e3449e",
+              "signer": null
+            },
+            "mdeDeviceId": null,
+            "parentProcessCreationDateTime": "2022-01-23T08:48:10.07Z",
+            "parentProcessId": 1100,
+            "parentProcessImageFile": null,
+            "processCommandLine": "/usr/sbin/crond -n",
+            "processCreationDateTime": "2022-09-26T05:01:00.35Z",
+            "processId": 21399,
+            "remediationStatus": "none",
+            "remediationStatusDetails": null,
+            "roles": [],
+            "tags": [],
+            "userAccount": {
+              "accountName": "root",
+              "azureAdUserId": null,
+              "displayName": "",
+              "domainName": null,
+              "userPrincipalName": null,
+              "userSid": ""
+            },
+            "verdict": "suspicious"
+          }
+        ],
+        "classification": null,
+        "createdDateTime": "2022-10-03T03:39:21.7562976Z"
+      },
+      "sampleSource": "Packs/MicrosoftGraphSecurity/Integrations/MicrosoftGraphSecurity/test_data/test_search_alerts_command.json",
+      "fieldsFromTestData": [
+        "id",
+        "title",
+        "status",
+        "category",
+        "severity",
+        "tenantId",
+        "description",
+        "detectorId",
+        "incidentId",
+        "alertWebUrl",
+        "providerAlertId",
+        "incidentWebUrl",
+        "determination",
+        "serviceSource",
+        "detectionSource",
+        "mitreTechniques",
+        "evidence",
+        "classification",
+        "createdDateTime"
+      ],
+      "fieldsAbsentFromTestData": [
+        "_reporting_device_name",
+        "productName"
+      ]
+    },
+    {
+      "id": "GitHub-github_github_audit_raw",
+      "pack": "GitHub",
+      "dataset": "github_github_audit_raw",
+      "declaredInXif": true,
+      "modelingRule": "GitHub Modeling Rule",
+      "modelingRuleId": "GitHub_ModelingRule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/GitHub/ModelingRules/GithubModelingRules_2_11/GithubModelingRules_2_11_schema.json",
+      "xifPath": "Packs/GitHub/ModelingRules/GithubModelingRules_2_11/GithubModelingRules_2_11.xif",
+      "parsingPath": "Packs/GitHub/ParsingRules/GitHub_ParsingRules/GitHub_ParsingRules.xif",
+      "vendor": "Github",
+      "product": "github-audit",
+      "fields": [
+        {
+          "name": "actor_location",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "org",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "repo",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "created_at",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "actor",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "action",
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "sample": {
+        "created_at": "2021-01-28T13:00:26Z",
+        "actor": {
+          "login": "tomneeman151293",
+          "id": 70005542,
+          "node_id": "MDQ6VXNlcjcwMDA1NTQy",
+          "avatar_url": "https://avatars.githubusercontent.com/u/70005542?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/tomneeman151293",
+          "html_url": "https://github.com/tomneeman151293",
+          "followers_url": "https://api.github.com/users/tomneeman151293/followers",
+          "following_url": "https://api.github.com/users/tomneeman151293/following{/other_user}",
+          "gists_url": "https://api.github.com/users/tomneeman151293/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/tomneeman151293/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/tomneeman151293/subscriptions",
+          "organizations_url": "https://api.github.com/users/tomneeman151293/orgs",
+          "repos_url": "https://api.github.com/users/tomneeman151293/repos",
+          "events_url": "https://api.github.com/users/tomneeman151293/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/tomneeman151293/received_events",
+          "type": "User",
+          "site_admin": false
+        }
+      },
+      "sampleSource": "Packs/GitHub/Integrations/GitHub/test_data/search_issue_events_response.json",
+      "fieldsFromTestData": [
+        "created_at",
+        "actor"
+      ],
+      "fieldsAbsentFromTestData": [
+        "actor_location",
+        "org",
+        "repo",
+        "action"
+      ]
+    },
+    {
+      "id": "Zscaler-zscaler_nssweblog_raw",
+      "pack": "Zscaler",
+      "dataset": "zscaler_nssweblog_raw",
+      "declaredInXif": true,
+      "modelingRule": "Zscaler Internet Access Modeling Rule",
+      "modelingRuleId": "zscaler_internet_access_modeling_rule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/Zscaler/ModelingRules/ZscalerModelingRule_2_11/ZscalerModelingRule_2_11_schema.json",
+      "xifPath": "Packs/Zscaler/ModelingRules/ZscalerModelingRule_2_11/ZscalerModelingRule_2_11.xif",
+      "parsingPath": "",
+      "vendor": "",
+      "product": "",
+      "fields": [
+        {
+          "name": "act",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "app",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cat",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cefName",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cefSeverity",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cefVersion",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cn1",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "contenttype",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cs2",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cs3",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cs4",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cs5",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cs6",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "destCountry",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "destinationServiceName",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "destinationTranslatedAddress",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "devicehostname",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "dhost",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "dpt",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "dst",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "externalId",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "fileType",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "in",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "outcome",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "out",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "proto",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "request",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "requestClientApplication",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "requestMethod",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sourceTranslatedAddress",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "spriv",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "src",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "spt",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "suser",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "ZscalerNSSWeblogURLClass",
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "sample": {},
+      "sampleSource": "",
+      "fieldsFromTestData": [],
+      "fieldsAbsentFromTestData": [
+        "act",
+        "app",
+        "cat",
+        "cefName",
+        "cefSeverity",
+        "cefVersion",
+        "cn1",
+        "contenttype",
+        "cs2",
+        "cs3",
+        "cs4",
+        "cs5",
+        "cs6",
+        "destCountry",
+        "destinationServiceName",
+        "destinationTranslatedAddress",
+        "devicehostname",
+        "dhost",
+        "dpt",
+        "dst",
+        "externalId",
+        "fileType",
+        "in",
+        "outcome",
+        "out",
+        "proto",
+        "reason",
+        "request",
+        "requestClientApplication",
+        "requestMethod",
+        "sourceTranslatedAddress",
+        "spriv",
+        "src",
+        "spt",
+        "suser",
+        "ZscalerNSSWeblogURLClass"
+      ]
+    },
+    {
+      "id": "Zscaler-zscaler_nssfwlog_raw",
+      "pack": "Zscaler",
+      "dataset": "zscaler_nssfwlog_raw",
+      "declaredInXif": true,
+      "modelingRule": "Zscaler Internet Access Modeling Rule",
+      "modelingRuleId": "zscaler_internet_access_modeling_rule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/Zscaler/ModelingRules/ZscalerModelingRule_2_11/ZscalerModelingRule_2_11_schema.json",
+      "xifPath": "Packs/Zscaler/ModelingRules/ZscalerModelingRule_2_11/ZscalerModelingRule_2_11.xif",
+      "parsingPath": "",
+      "vendor": "",
+      "product": "",
+      "fields": [
+        {
+          "name": "act",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cat",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cefName",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cefSeverity",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cefVersion",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cn1",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "cs2",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cs3",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cs5",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "cs6",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "destCountry",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "destinationTranslatedAddress",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "dpt",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "dst",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "in",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "out",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "proto",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sourceTranslatedAddress",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "spriv",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "spt",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "src",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "suser",
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "sample": {},
+      "sampleSource": "",
+      "fieldsFromTestData": [],
+      "fieldsAbsentFromTestData": [
+        "act",
+        "cat",
+        "cefName",
+        "cefSeverity",
+        "cefVersion",
+        "cn1",
+        "cs2",
+        "cs3",
+        "cs5",
+        "cs6",
+        "destCountry",
+        "destinationTranslatedAddress",
+        "dpt",
+        "dst",
+        "in",
+        "out",
+        "proto",
+        "reason",
+        "sourceTranslatedAddress",
+        "spriv",
+        "spt",
+        "src",
+        "suser"
+      ]
+    },
+    {
+      "id": "Zscaler-zscaler_cloudnss_raw",
+      "pack": "Zscaler",
+      "dataset": "zscaler_cloudnss_raw",
+      "declaredInXif": true,
+      "modelingRule": "Zscaler Internet Access Modeling Rule",
+      "modelingRuleId": "zscaler_internet_access_modeling_rule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/Zscaler/ModelingRules/ZscalerModelingRule_2_11/ZscalerModelingRule_2_11_schema.json",
+      "xifPath": "Packs/Zscaler/ModelingRules/ZscalerModelingRule_2_11/ZscalerModelingRule_2_11.xif",
+      "parsingPath": "Packs/Zscaler/ParsingRules/ZscalerZIA/ZscalerZIA.xif",
+      "vendor": "zscaler",
+      "product": "cloudnss",
+      "fields": [
+        {
+          "name": "_raw_log",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sourcetype",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "src_ipv4",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "dest_ipv4",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "src_ipv6",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "dest_ipv6",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "proto",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "url_category",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "os",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "user",
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "sample": {},
+      "sampleSource": "",
+      "fieldsFromTestData": [],
+      "fieldsAbsentFromTestData": [
+        "_raw_log",
+        "sourcetype",
+        "src_ipv4",
+        "dest_ipv4",
+        "src_ipv6",
+        "dest_ipv6",
+        "proto",
+        "url_category",
+        "os",
+        "user"
+      ]
+    },
+    {
+      "id": "Mimecast-mimecast_mimecast_raw",
+      "pack": "Mimecast",
+      "dataset": "mimecast_mimecast_raw",
+      "declaredInXif": true,
+      "modelingRule": "Mimecast Modeling Rule",
+      "modelingRuleId": "Mimecast_ModelingRule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/Mimecast/ModelingRules/MimecastModelingRules_2_11/MimecastModelingRules_2_11_schema.json",
+      "xifPath": "Packs/Mimecast/ModelingRules/MimecastModelingRules_2_11/MimecastModelingRules_2_11.xif",
+      "parsingPath": "Packs/Mimecast/ParsingRules/MimecastParsingRules/MimecastParsingRules.xif",
+      "vendor": "mimecast",
+      "product": "mimecast",
+      "fields": [
+        {
+          "name": "category",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "eventInfo",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "auditType",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "user",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "acc",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "aCode",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "Act",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "AttNames",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "datetime",
+          "type": "datetime",
+          "isArray": false
+        },
+        {
+          "name": "IP",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "MsgId",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "Sender",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "Subject",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "Virus",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "fileExt",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "fileMime",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "md5",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sha256",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "SourceIP",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "ScanResultInfo",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "Action",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "Rcpt",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "Recipient",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "xsiem_classifier",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "eventTime",
+          "type": "datetime",
+          "isArray": false
+        }
+      ],
+      "sample": {
+        "id": "eNo1jr0OgjAYAN"
+      },
+      "sampleSource": "Packs/Mimecast/Integrations/MimecastV2/test_data/create_antispoofing_bypass_policy_response.json",
+      "fieldsFromTestData": [
+        "id"
+      ],
+      "fieldsAbsentFromTestData": [
+        "category",
+        "eventInfo",
+        "auditType",
+        "user",
+        "acc",
+        "aCode",
+        "Act",
+        "AttNames",
+        "datetime",
+        "IP",
+        "MsgId",
+        "Sender",
+        "Subject",
+        "Virus",
+        "fileExt",
+        "fileMime",
+        "md5",
+        "sha256",
+        "SourceIP",
+        "ScanResultInfo",
+        "Action",
+        "Rcpt",
+        "Recipient",
+        "xsiem_classifier",
+        "eventTime"
+      ]
+    },
+    {
+      "id": "CiscoASA-cisco_asa_raw",
+      "pack": "CiscoASA",
+      "dataset": "cisco_asa_raw",
+      "declaredInXif": true,
+      "modelingRule": "Cisco ASA Modeling Rule",
+      "modelingRuleId": "cisco_asa_ModelingRule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/CiscoASA/ModelingRules/CiscoASA_2_11/CiscoASA_2_11_schema.json",
+      "xifPath": "Packs/CiscoASA/ModelingRules/CiscoASA_2_11/CiscoASA_2_11.xif",
+      "parsingPath": "Packs/CiscoASA/ParsingRules/CiscoASA/CiscoASA.xif",
+      "vendor": "cisco",
+      "product": "asa",
+      "fields": [
+        {
+          "name": "_raw_log",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "_json",
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "sample": {},
+      "sampleSource": "",
+      "fieldsFromTestData": [],
+      "fieldsAbsentFromTestData": [
+        "_raw_log",
+        "_json"
+      ]
+    },
+    {
+      "id": "ServiceNow-servicenow_servicenow_raw",
+      "pack": "ServiceNow",
+      "dataset": "servicenow_servicenow_raw",
+      "declaredInXif": true,
+      "modelingRule": "ServiceNow ServiceNow Modeling Rule",
+      "modelingRuleId": "ServiceNow_ServiceNow_ModelingRule",
+      "fromVersion": "8.15.0",
+      "schemaPath": "Packs/ServiceNow/ModelingRules/ServiceNow_2_11/ServiceNow_2_11_schema.json",
+      "xifPath": "Packs/ServiceNow/ModelingRules/ServiceNow_2_11/ServiceNow_2_11.xif",
+      "parsingPath": "",
+      "vendor": "",
+      "product": "",
+      "fields": [
+        {
+          "name": "documentkey",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "fieldname",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "oldvalue",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "newvalue",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sys_id",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "tablename",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "user",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "source_log_type",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "total_wait_time",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "transaction_processing_time",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "interaction_id",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "transaction_number",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "output_length",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "db_category",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "additional_info",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "additional_debug_info",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "remote_ip",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sys_created_by",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "system_id",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "user_agent",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "session",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "protocol",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "gzip",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "origin_scope",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "db_pool",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sql_time",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "app_scope",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "active",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "impact",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "number",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "urgency",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "approval",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "category",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "made_sla",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "priority",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "knowledge",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "opened_by",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "escalation",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "sys_domain",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "case_report",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "subcategory",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "time_worked",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "upon_reject",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "contact_type",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sys_mod_count",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "upon_approval",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "follow_the_sun",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "sys_class_name",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sys_domain_path",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "short_description",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "reassignment_count",
+          "type": "int",
+          "isArray": false
+        },
+        {
+          "name": "account",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "assigned_to",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "assignment_group",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "resolution_code",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "transaction_id",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "response_status",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "request_length",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "response_length",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "response_time",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "method",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "hostname",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "transaction_name",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sequence",
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "log_level",
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "sample": {
+        "reason": {
+          "display_value": "",
+          "value": ""
+        },
+        "sys_id": {
+          "display_value": "11ab5ccfdb784d505da401a3ca96190a",
+          "value": "11ab5ccfdb784d505da401a3ca96190a"
+        },
+        "type": {
+          "display_value": "Standard",
+          "value": "standard"
+        },
+        "sys_created_by": {
+          "display_value": "admin_test_Nov2020-01",
+          "value": "admin_test_Nov2020-01"
+        },
+        "active": {
+          "display_value": "true",
+          "value": true
+        },
+        "impact": {
+          "display_value": "3 - Low",
+          "value": 3.0
+        },
+        "number": {
+          "display_value": "CHG0031889",
+          "value": "CHG0031889"
+        },
+        "urgency": {
+          "display_value": "3 - Low",
+          "value": 3.0
+        },
+        "approval": {
+          "display_value": "Approved",
+          "value": "approved"
+        },
+        "category": {
+          "display_value": "Other",
+          "value": "Other"
+        },
+        "made_sla": {
+          "display_value": "true",
+          "value": true
+        },
+        "priority": {
+          "display_value": "4 - Low",
+          "value": 4.0
+        },
+        "knowledge": {
+          "display_value": "false",
+          "value": false
+        },
+        "opened_by": {
+          "display_value": "Content Test admin ",
+          "value": "46428af1db202c1026fca015ca961994"
+        },
+        "escalation": {
+          "display_value": "Normal",
+          "value": 0.0
+        },
+        "sys_domain": {
+          "display_value": "global",
+          "value": "global"
+        },
+        "time_worked": {
+          "display_value": "",
+          "value": ""
+        },
+        "upon_reject": {
+          "display_value": "Cancel all future Tasks",
+          "value": "cancel"
+        },
+        "contact_type": {
+          "display_value": "",
+          "value": ""
+        },
+        "sys_mod_count": {
+          "display_value": "0",
+          "value": 0.0
+        },
+        "upon_approval": {
+          "display_value": "Proceed to Next Task",
+          "value": "proceed"
+        },
+        "sys_class_name": {
+          "display_value": "Change Request",
+          "value": "change_request"
+        },
+        "sys_domain_path": {
+          "display_value": "/",
+          "value": "/"
+        },
+        "short_description": {
+          "display_value": "Add network switch to cabinet",
+          "value": "Add network switch to cabinet"
+        },
+        "reassignment_count": {
+          "display_value": "0",
+          "value": 0.0
+        },
+        "assigned_to": {
+          "display_value": "",
+          "value": ""
+        },
+        "assignment_group": {
+          "display_value": "",
+          "value": ""
+        },
+        "description": {
+          "display_value": "This standard change template describes adding a new network switch to a datacenter cabinet",
+          "value": "This standard change template describes adding a new network switch to a datacenter cabinet"
+        }
+      },
+      "sampleSource": "Packs/ServiceNow/Integrations/ServiceNowv2/test_data/create_co_from_template_result.json",
+      "fieldsFromTestData": [
+        "reason",
+        "sys_id",
+        "type",
+        "sys_created_by",
+        "active",
+        "impact",
+        "number",
+        "urgency",
+        "approval",
+        "category",
+        "made_sla",
+        "priority",
+        "knowledge",
+        "opened_by",
+        "escalation",
+        "sys_domain",
+        "time_worked",
+        "upon_reject",
+        "contact_type",
+        "sys_mod_count",
+        "upon_approval",
+        "sys_class_name",
+        "sys_domain_path",
+        "short_description",
+        "reassignment_count",
+        "assigned_to",
+        "assignment_group",
+        "description"
+      ],
+      "fieldsAbsentFromTestData": [
+        "documentkey",
+        "fieldname",
+        "oldvalue",
+        "newvalue",
+        "tablename",
+        "user",
+        "source_log_type",
+        "total_wait_time",
+        "transaction_processing_time",
+        "interaction_id",
+        "transaction_number",
+        "output_length",
+        "db_category",
+        "additional_info",
+        "additional_debug_info",
+        "remote_ip",
+        "system_id",
+        "user_agent",
+        "url",
+        "session",
+        "protocol",
+        "gzip",
+        "origin_scope",
+        "db_pool",
+        "sql_time",
+        "table",
+        "app_scope",
+        "case_report",
+        "subcategory",
+        "follow_the_sun",
+        "account",
+        "resolution_code",
+        "transaction_id",
+        "response_status",
+        "request_length",
+        "response_length",
+        "response_time",
+        "method",
+        "path",
+        "hostname",
+        "transaction_name",
+        "session_id",
+        "sequence",
+        "log_level"
+      ]
+    }
+  ],
+  "correlations": [
+    {
+      "pack": "MicrosoftDefenderAdvancedThreatProtection",
+      "name": "Microsoft Defender for Endpoint - Malware Detected",
+      "dataset": "alerts",
+      "alertName": "Malware detected by Microsoft Defender for Endpoints",
+      "severity": "SEV_040_HIGH",
+      "xqlQuery": "datamodel dataset = microsoft_365_defender_raw \r\n|filter (xdm.alert.category = \"Malware\") and xdm.target.file.sha256 != null\r\n|fields \r\n    xdm.event.id,\r\n    xdm.alert.original_alert_id,\r\n    xdm.alert.severity,\r\n    xdm.alert.subcategory,\r\n    xdm.alert.name,\r\n    xdm.alert.description,\r\n    xdm.target.host.device_id,\r\n    xdm.target.host.fqdn,\r\n    xdm.alert.mitre_techniques,\r\n    xdm.target.file.sha256,\r\n    xdm.target.file.filename,\r\n    xdm.target.file.path,\r\n    xdm.target.process.pid,\r\n    xdm.target.process.command_line,\r\n    xdm.target.process.parent_id,\r\n    xdm.target.host.ipv4_addresses,\r\n    xdm.target.registry.key,\r\n    xdm.target.registry.value_type,\r\n    xdm.target.registry.value,\r\n    xdm.source.user.username,\r\n    xdm.source.user.domain,\r\n    xdm.source.user.identifier,\r\n    xdm.target.ipv4,\r\n    xdm.event.outcome",
+      "sourcePath": "Packs/MicrosoftDefenderAdvancedThreatProtection/CorrelationRules/MicrosoftDefenderAdvancedThreatProtection_correlation-rule.yml"
+    }
+  ]
+}

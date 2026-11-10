@@ -374,3 +374,15 @@ test("the version list shows what revert would change", async ({ page }) => {
   await page.getByRole("button", { name: "Revert" }).click();
   await expect(page.getByRole("heading", { name: "Mocks" })).toHaveCount(0);
 });
+
+test("XSIAM samples show Okta fields from the content schema", async ({ page }) => {
+  await signIn(page, `xsiam.${Date.now().toString(36)}@paloaltonetworks.com`);
+  await page.getByRole("link", { name: "XSIAM" }).click();
+  await expect(page.getByRole("heading", { name: "XSIAM dataset samples" })).toBeVisible();
+  await page.getByRole("button", { name: /Okta/ }).first().click();
+  await expect(page.getByRole("heading", { name: "okta_okta_raw" })).toBeVisible();
+  await expect(page.getByText("group.user_membership.remove")).toBeVisible();
+  await expect(page.getByText("Packs/Okta/ModelingRules")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Correlation rules" })).toBeVisible();
+  await expect(page.getByText("datamodel dataset = microsoft_365_defender_raw")).toBeVisible();
+});

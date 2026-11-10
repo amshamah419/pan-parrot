@@ -241,6 +241,9 @@ export default function Dashboard() {
         <div className="container flex min-h-16 flex-wrap items-center justify-between gap-3 py-2">
           <Logo />
           <div className="flex flex-wrap items-center gap-3">
+            <Link to="/xsiam" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+              XSIAM
+            </Link>
             <Link to="/docs" className="text-sm font-medium text-muted-foreground hover:text-foreground">
               Docs
             </Link>
