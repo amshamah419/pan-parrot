@@ -40,6 +40,16 @@ describe("AWS command coverage", () => {
       ),
     );
     expect(defender).toEqual({ vendor: 38, approximate: 0, missing: 79 });
+    const falcon = sums(
+      covered.filter((preset) =>
+        [
+          "crowdstrikefalcon-crowdstrikefalcon",
+          "crowdstrikefalconx-crowdstrikefalconx",
+          "crowdstrikeintel-crowdstrikefalconintel-v2",
+        ].includes(preset.id),
+      ),
+    );
+    expect(falcon).toEqual({ vendor: 0, approximate: 14, missing: 102 });
 
     const iam = JSON.parse(readFileSync("public/presets/integrations/aws-iam-aws-iam.json", "utf8")) as {
       spec: Parameters<typeof validateMockSpec>[0];
