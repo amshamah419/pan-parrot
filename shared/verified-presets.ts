@@ -2,6 +2,7 @@ import { defaultChaos, defaultPagination, type FieldSpec, type MockAuth, type Mo
 import { WIZ_EXAMPLE_QUERY, WIZ_SDL } from "./wiz-schema";
 import { fetchVerifiedPresets } from "./verified-presets-fetch";
 import { intelVerifiedPresets } from "./verified-presets-intel";
+import { awsQueryVerifiedPresets } from "./verified-presets-aws";
 import { responseVerifiedPresets } from "./verified-presets-response";
 import { moreVerifiedPresets } from "./verified-presets-more";
 
@@ -1283,6 +1284,7 @@ export const verifiedPresets: VerifiedPresetFile[] = [
   ...fetchVerifiedPresets,
   ...intelVerifiedPresets,
   ...responseVerifiedPresets,
+  ...awsQueryVerifiedPresets,
 ];
 
 export const checkedNotUpgraded: Array<{

@@ -65,6 +65,13 @@ export interface AwsQueryEnvelope {
   protocol: "ec2" | "query";
   action: string;
   namespace: string;
+  /**
+   * list: wrapper plus item/member and a paging token.
+   * flattened: repeated listElement tags directly under the result (SQS Message).
+   * structure: one object under ActionResult (STS).
+   * empty: ActionResult with no children (SQS DeleteMessage).
+   */
+  result?: "list" | "flattened" | "structure" | "empty";
   listElement: string;
   itemElement: "item" | "member";
   paging: "nextToken" | "marker";
@@ -195,7 +202,18 @@ export interface MockAuth {
     verify: "signature" | "format-only";
   };
   signedHeaders?: { names: string[]; verify: "format-only" };
-  sigv4?: { accessKeyId: string; secretAccessKey: string; region: string; service: string };
+  sigv4?: {
+    accessKeyId: string;
+    secretAccessKey: string;
+    region: string;
+    service: string;
+    /** Temporary key returned by AssumeRole. Accepted in addition to accessKeyId when checks are on. */
+    sessionAccessKeyId?: string;
+    /** When false, the dummy key is stored and signatures are not required. Missing means check. */
+    verify?: boolean;
+    /** Accept the service name in the credential scope. Used when one catch URL answers sts and sqs. */
+    anyService?: boolean;
+  };
   digest?: { realm: string; username: string; password: string };
   jwt?: { hmacSecret: string; issuer: string; audience: string };
   wsse?: { username: string; password: string };
@@ -493,13 +511,17 @@ function normalizeAwsQuery(envelope: AwsQueryEnvelope): AwsQueryEnvelope {
   if (!/^[A-Za-z][A-Za-z0-9]{0,63}$/.test(action)) throw new Error("Invalid AWS action");
   const namespace = String(envelope.namespace || "");
   if (!/^https?:\/\/[A-Za-z0-9._/-]{1,180}$/.test(namespace)) throw new Error("Invalid AWS namespace");
-  const listElement = String(envelope.listElement || "");
-  if (!/^[A-Za-z][A-Za-z0-9]{0,63}$/.test(listElement)) throw new Error("Invalid AWS list element");
-  const itemElement = envelope.itemElement === "member" || envelope.itemElement === "item" ? envelope.itemElement : null;
-  if (!itemElement) throw new Error("AWS list items are item or member");
-  const paging = envelope.paging === "marker" || envelope.paging === "nextToken" ? envelope.paging : null;
-  if (!paging) throw new Error("AWS paging is nextToken or marker");
-  return { type: "aws-query", protocol, action, namespace, listElement, itemElement, paging };
+  const result =
+    envelope.result === "flattened" || envelope.result === "structure" || envelope.result === "empty" || envelope.result === "list"
+      ? envelope.result
+      : "list";
+  const listElement = String(envelope.listElement || (result === "empty" || result === "structure" ? "Result" : ""));
+  if ((result === "list" || result === "flattened") && !/^[A-Za-z][A-Za-z0-9]{0,63}$/.test(listElement)) {
+    throw new Error("Invalid AWS list element");
+  }
+  const itemElement = envelope.itemElement === "item" ? "item" : "member";
+  const paging = envelope.paging === "nextToken" ? "nextToken" : "marker";
+  return { type: "aws-query", protocol, action, namespace, result, listElement, itemElement, paging };
 }
 
 function normalizePagination(pagination: PaginationSpec | undefined): PaginationSpec {
@@ -776,6 +798,7 @@ function normalizeAuth(auth: MockAuth | undefined): MockAuth {
     return { mode, signedHeaders: { names, verify: "format-only" } };
   }
   if (mode === "sigv4" && auth.sigv4) {
+    const sessionAccessKeyId = cleanOptional(auth.sigv4.sessionAccessKeyId, 128);
     return {
       mode,
       sigv4: {
@@ -783,6 +806,9 @@ function normalizeAuth(auth: MockAuth | undefined): MockAuth {
         secretAccessKey: secretText(auth.sigv4.secretAccessKey),
         region: token(auth.sigv4.region, "us-east-1"),
         service: token(auth.sigv4.service, "execute-api"),
+        ...(sessionAccessKeyId ? { sessionAccessKeyId } : {}),
+        verify: auth.sigv4.verify === false ? false : true,
+        ...(auth.sigv4.anyService ? { anyService: true } : {}),
       },
     };
   }

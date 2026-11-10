@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
+import { signAwsSigV4 } from "./auth-schemes";
 import { formParams } from "./aws-query";
 import { generateMockResponse, matchOperation } from "./generate";
+import { checkMockAuth } from "./mock-auth";
+import { AWS_DUMMY, awsQueryVerifiedPresets } from "./verified-presets-aws";
 import { verifiedPresets } from "./verified-presets";
 import { localName, parseXml, type XmlElement } from "./xml";
 
@@ -164,5 +167,135 @@ describe("AWS query protocol", () => {
     }
     expect(ids.size).toBe(spec.totalRecords);
     expect(truncated).toBe("false");
+  });
+
+  it("returns STS and SQS XML and echoes the assumed role", () => {
+    const sts = awsQueryVerifiedPresets.find((preset) => preset.id === "aws-sts-aws-sts");
+    const sqs = awsQueryVerifiedPresets.find((preset) => preset.id === "aws-sqs-fetch");
+    if (!sts || !sqs) throw new Error("missing AWS query presets");
+    expect(sts.spec.auth.sigv4?.verify).toBe(false);
+    expect(sqs.spec.auth.sigv4?.verify).toBe(false);
+
+    const assume = sts.spec.operations[0];
+    const assumed = parseXml(
+      generateMockResponse({
+        spec: sts.spec,
+        operation: assume,
+        pathParams: {},
+        query: {},
+        body: "Action=AssumeRole&RoleArn=arn%3Aaws%3Aiam%3A%3A123456789012%3Arole%2Fteam%2Ffetch&RoleSessionName=fetch",
+        requestIndex: 1,
+      }).body,
+    );
+    const result = child(assumed, "AssumeRoleResult");
+    const creds = child(result, "Credentials");
+    expect(text(child(creds, "AccessKeyId"))).toBe(AWS_DUMMY.sessionAccessKeyId);
+    expect(text(child(creds, "SecretAccessKey"))).toBe(AWS_DUMMY.secretAccessKey);
+    expect(text(child(creds, "SessionToken"))).toBe(AWS_DUMMY.sessionToken);
+    expect(text(child(child(result, "AssumedRoleUser"), "Arn"))).toBe(
+      "arn:aws:sts::123456789012:assumed-role/fetch/fetch",
+    );
+    expect(assumed.namespace).toBe("https://sts.amazonaws.com/doc/2011-06-15/");
+
+    const receive = sqs.spec.operations[0];
+    const messages = parseXml(
+      generateMockResponse({
+        spec: sqs.spec,
+        operation: receive,
+        pathParams: {},
+        query: {},
+        body: "Action=ReceiveMessage&MaxNumberOfMessages=2",
+        requestIndex: 1,
+      }).body,
+    );
+    const found = children(child(messages, "ReceiveMessageResult"), "Message");
+    expect(found).toHaveLength(2);
+    expect(text(child(found[0], "MD5OfBody"))).toBe(AWS_DUMMY.messageMd5);
+    expect(text(child(found[0], "Body"))).toBe(AWS_DUMMY.messageBody);
+    expect(messages.namespace).toBe("http://queue.amazonaws.com/doc/2012-11-05/");
+    expect(child(messages, "ReceiveMessageResult")?.children.some((item) => localName(item.name) === "IsTruncated")).toBe(false);
+
+    const deleted = parseXml(
+      generateMockResponse({
+        spec: sqs.spec,
+        operation: sqs.spec.operations[1],
+        pathParams: {},
+        query: {},
+        body: "Action=DeleteMessage&ReceiptHandle=abc",
+        requestIndex: 1,
+      }).body,
+    );
+    expect(localName(deleted.name)).toBe("DeleteMessageResponse");
+    expect(child(deleted, "DeleteMessageResult")?.children).toEqual([]);
+    expect(text(child(child(deleted, "ResponseMetadata"), "RequestId"))).toMatch(/^[0-9a-f-]{36}$/);
+  });
+
+  it("rejects a bad SigV4 signature with SignatureDoesNotMatch XML and skips the check when it is off", () => {
+    const sts = awsQueryVerifiedPresets.find((preset) => preset.id === "aws-sts-aws-sts");
+    if (!sts || !sts.spec.auth.sigv4) throw new Error("missing STS preset");
+    const open = checkMockAuth(sts.spec, {
+      method: "POST",
+      path: "/catch/awsts",
+      query: { Action: "AssumeRole" },
+      urlQuery: {},
+      headers: {},
+      body: "Action=AssumeRole",
+      scheme: "http",
+      host: "127.0.0.1",
+    });
+    expect(open.ok).toBe(true);
+
+    const checked = {
+      ...sts.spec,
+      auth: { ...sts.spec.auth, sigv4: { ...sts.spec.auth.sigv4, verify: true } },
+    };
+    const missing = checkMockAuth(checked, {
+      method: "POST",
+      path: "/catch/awsts",
+      query: {},
+      urlQuery: {},
+      headers: {},
+      body: "Action=AssumeRole",
+      scheme: "http",
+      host: "127.0.0.1",
+    });
+    expect(missing.status).toBe(403);
+    expect(missing.body).toContain("<Code>MissingAuthenticationToken</Code>");
+
+    const now = Date.parse("2026-11-10T12:00:00Z");
+    const amzDate = "20261110T120000Z";
+    const body = "Action=GetCallerIdentity&Version=2011-06-15";
+    const headers = { host: "127.0.0.1:8080", "x-amz-date": amzDate };
+    const authorization = signAwsSigV4({
+      method: "POST",
+      path: "/catch/awsts",
+      query: {},
+      headers,
+      body,
+      accessKeyId: AWS_DUMMY.sessionAccessKeyId,
+      secretAccessKey: AWS_DUMMY.secretAccessKey,
+      region: "us-east-1",
+      service: "sts",
+      amzDate,
+    });
+    const request = {
+      method: "POST",
+      path: "/catch/awsts",
+      query: { Action: "GetCallerIdentity", Version: "2011-06-15" },
+      urlQuery: {},
+      headers: { ...headers, authorization },
+      body,
+      scheme: "http",
+      host: "127.0.0.1:8080",
+    };
+    expect(checkMockAuth(checked, request, now).ok).toBe(true);
+    const wrong = checkMockAuth(
+      { ...checked, auth: { ...checked.auth, sigv4: { ...checked.auth.sigv4!, secretAccessKey: "other-secret" } } },
+      request,
+      now,
+    );
+    expect(wrong.status).toBe(403);
+    expect(wrong.body).toContain("<Code>SignatureDoesNotMatch</Code>");
+    expect(wrong.headers["content-type"]).toContain("xml");
   });
 });

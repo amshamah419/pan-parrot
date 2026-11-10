@@ -1,0 +1,257 @@
+{
+  "id": "aws-sqs-fetch",
+  "name": "AWS - SQS fetch",
+  "pack": "AWS-SQS",
+  "vendor": "Amazon Web Services",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "ReceiveMessage and DeleteMessage as SQS query-protocol XML.",
+  "notes": [
+    "The SQS API reference is query XML. POST / with Action=ReceiveMessage returns repeated Message elements in http://queue.amazonaws.com/doc/2012-11-05/. Current boto3 sends JSON instead: X-Amz-Target AmazonSQS.ReceiveMessage and { Messages }.",
+    "ReceiveMessage returns MessageId, ReceiptHandle, MD5OfBody, and Body. MaxNumberOfMessages selects how many, up to 10. The next poll returns the same messages. XSOAR fetch skips receipt handles it already stored.",
+    "DeleteMessage returns an empty result and ResponseMetadata. The receipt handle is not removed. Attributes are omitted. Signature checks are off until you turn them on. The AssumeRole session key is accepted when checks are on."
+  ],
+  "attribution": "Checked against the AWS API reference and the demisto/content client (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-SQS/Integrations/AWS-SQS",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-sqs-fetch",
+      "name": "AWS - SQS fetch",
+      "fidelity": "verified",
+      "attribution": "AWS API reference plus demisto/content client (MIT).",
+      "sourceUrl": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html",
+      "notes": [
+        "The SQS API reference is query XML. POST / with Action=ReceiveMessage returns repeated Message elements in http://queue.amazonaws.com/doc/2012-11-05/. Current boto3 sends JSON instead: X-Amz-Target AmazonSQS.ReceiveMessage and { Messages }.",
+        "ReceiveMessage returns MessageId, ReceiptHandle, MD5OfBody, and Body. MaxNumberOfMessages selects how many, up to 10. The next poll returns the same messages. XSOAR fetch skips receipt handles it already stored.",
+        "DeleteMessage returns an empty result and ResponseMetadata. The receipt handle is not removed. Attributes are omitted. Signature checks are off until you turn them on. The AssumeRole session key is accepted when checks are on."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The SQS API reference is query XML. POST / with Action=ReceiveMessage returns repeated Message elements in http://queue.amazonaws.com/doc/2012-11-05/. Current boto3 sends JSON instead: X-Amz-Target AmazonSQS.ReceiveMessage and { Messages }.",
+          "ReceiveMessage returns MessageId, ReceiptHandle, MD5OfBody, and Body. MaxNumberOfMessages selects how many, up to 10. The next poll returns the same messages. XSOAR fetch skips receipt handles it already stored.",
+          "DeleteMessage returns an empty result and ResponseMetadata. The receipt handle is not removed. Attributes are omitted. Signature checks are off until you turn them on. The AssumeRole session key is accepted when checks are on."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "receive-message",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Receive messages",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "aws-query",
+          "protocol": "query",
+          "action": "ReceiveMessage",
+          "namespace": "http://queue.amazonaws.com/doc/2012-11-05/",
+          "result": "flattened",
+          "listElement": "Message",
+          "itemElement": "member",
+          "paging": "marker"
+        },
+        "queryMatch": {
+          "Action": "ReceiveMessage"
+        },
+        "record": {
+          "name": "message",
+          "kind": "object",
+          "children": [
+            {
+              "name": "MessageId",
+              "kind": "id"
+            },
+            {
+              "name": "ReceiptHandle",
+              "kind": "id"
+            },
+            {
+              "name": "MD5OfBody",
+              "kind": "const",
+              "constValue": "5f49b4c450ee70bfdaefc23415f20d7b"
+            },
+            {
+              "name": "Body",
+              "kind": "const",
+              "constValue": "{\"source\":\"pan-parrot\",\"action\":\"login\"}"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "text/xml; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "MaxNumberOfMessages",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 10
+        }
+      },
+      {
+        "id": "delete-message",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Delete a message",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "aws-query",
+          "protocol": "query",
+          "action": "DeleteMessage",
+          "namespace": "http://queue.amazonaws.com/doc/2012-11-05/",
+          "result": "empty",
+          "listElement": "Result",
+          "itemElement": "member",
+          "paging": "marker"
+        },
+        "queryMatch": {
+          "Action": "DeleteMessage"
+        },
+        "record": {
+          "name": "deleted",
+          "kind": "object",
+          "children": []
+        },
+        "headers": {},
+        "contentType": "text/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "receive-message-json",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Receive messages as aws-json",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "Messages"
+        },
+        "headerMatch": {
+          "x-amz-target": "AmazonSQS.ReceiveMessage"
+        },
+        "record": {
+          "name": "message",
+          "kind": "object",
+          "children": [
+            {
+              "name": "MessageId",
+              "kind": "id"
+            },
+            {
+              "name": "ReceiptHandle",
+              "kind": "id"
+            },
+            {
+              "name": "MD5OfBody",
+              "kind": "const",
+              "constValue": "5f49b4c450ee70bfdaefc23415f20d7b"
+            },
+            {
+              "name": "Body",
+              "kind": "const",
+              "constValue": "{\"source\":\"pan-parrot\",\"action\":\"login\"}"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/x-amz-json-1.0",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "MaxNumberOfMessages",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 10
+        }
+      },
+      {
+        "id": "delete-message-json",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Delete a message as aws-json",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "headerMatch": {
+          "x-amz-target": "AmazonSQS.DeleteMessage"
+        },
+        "record": {
+          "name": "deleted",
+          "kind": "object",
+          "children": []
+        },
+        "headers": {},
+        "contentType": "application/x-amz-json-1.0",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "aws-sqs-fetch",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 10,
+    "auth": {
+      "mode": "sigv4",
+      "sigv4": {
+        "accessKeyId": "AKIA_DUMMY",
+        "secretAccessKey": "dummy-secret-key",
+        "sessionAccessKeyId": "ASIADUMMYEXAMPLE0001",
+        "region": "us-east-1",
+        "service": "sqs",
+        "verify": false
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { awsRequestId, formParams, renderAwsQueryXml } from "./aws-query";
+import { awsRequestId, formParams, jsonControlParams, renderAwsQueryXml } from "./aws-query";
 import { bodyMatches } from "./body-match";
 import { answerGraphql, graphqlRequestName } from "./graphql-mock";
 import { MOCK_LIMITS } from "./policy";
@@ -235,6 +235,9 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
   if (chaosOn && spec.chaos.mixedTimestamps) effects.push("mixed-timestamps");
   if (chaosOn && spec.chaos.wrongTypes) effects.push("wrong-types");
 
+  if (operation.envelope.type === "aws-query" && operation.envelope.action === "AssumeRole") {
+    applyAssumeRole(records[0], params);
+  }
   const requestId = awsRequestId(spec.chaos.seed, input.requestIndex);
   let body = encodeBody(operation, records, page, input.requestUrl, chaosOn ? spec.chaos : null, effects, requestId);
   let contentType = operation.pagination.style === "akamai" ? "application/x-ndjson; charset=utf-8" : operation.contentType;
@@ -556,11 +559,25 @@ function trimToBytes(operation: MockOperation, records: unknown[], page: PagePla
   return body;
 }
 
+function applyAssumeRole(record: unknown, params: Record<string, string | undefined>): void {
+  if (!params.RoleArn && !params.RoleSessionName) return;
+  if (!record || typeof record !== "object" || Array.isArray(record)) return;
+  const user = (record as { AssumedRoleUser?: Record<string, string> }).AssumedRoleUser;
+  if (!user) return;
+  const roleArn = params.RoleArn || "arn:aws:iam::123456789012:role/pan-parrot";
+  const sessionName = (params.RoleSessionName || "pan-parrot").replace(/[^\w+=,.@-]/g, "").slice(0, 64) || "pan-parrot";
+  const pieces = roleArn.split(":");
+  const account = /^\d{12}$/.test(pieces[4] || "") ? pieces[4] : "123456789012";
+  const roleName = (roleArn.split("/").pop() || "pan-parrot").replace(/[^\w+=,.@-]/g, "").slice(0, 64) || "pan-parrot";
+  user.AssumedRoleId = `AROAEXAMPLE:${sessionName}`;
+  user.Arn = `arn:aws:sts::${account}:assumed-role/${roleName}/${sessionName}`;
+}
+
 function requestParams(
   query: Record<string, string | undefined>,
   body: string | undefined,
 ): Record<string, string | undefined> {
-  const merged: Record<string, string | undefined> = { ...formParams(body) };
+  const merged: Record<string, string | undefined> = { ...formParams(body), ...jsonControlParams(body) };
   for (const [key, value] of Object.entries(query)) {
     if (value != null && value !== "") merged[key] = value;
   }

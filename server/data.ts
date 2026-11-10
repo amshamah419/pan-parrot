@@ -335,8 +335,9 @@ export async function captureOnPath(
   const text = await readCatchBody(request);
   const storedBody = bodyForStorage(text, request.headers.get("content-type"));
   const url = new URL(request.url);
+  const urlQuery = Object.fromEntries(url.searchParams.entries());
   const mergedQuery = clampQuery(
-    mergeRequestFields(text, request.headers.get("content-type"), Object.fromEntries(url.searchParams.entries())),
+    mergeRequestFields(text, request.headers.get("content-type"), urlQuery),
   );
   const query = redactQuery(mergedQuery);
   const userAgent = (request.headers.get("user-agent") ?? "unknown").slice(0, 512);
@@ -348,6 +349,7 @@ export async function captureOnPath(
     mergedQuery,
     url,
     text,
+    urlQuery,
   );
 
   await db.insert(capturedRequests).values({
@@ -426,6 +428,7 @@ async function produceResponse(
   query: Record<string, string>,
   url: URL,
   bodyText: string,
+  urlQuery: Record<string, string> = {},
 ): Promise<{
   status: number;
   body: string;
@@ -465,6 +468,7 @@ async function produceResponse(
         method: request.method,
         path: url.pathname,
         query,
+        urlQuery,
         headers: headerMap,
         body: bodyText,
         scheme: url.protocol.replace(":", ""),

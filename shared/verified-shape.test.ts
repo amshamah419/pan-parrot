@@ -88,13 +88,16 @@ function xmlProblem(operation: MockOperation, body: string): string | null {
   collect(root, names);
   const required: string[] = [];
   if (operation.envelope.type === "aws-query") {
-    required.push(
-      `${operation.envelope.action}Response`,
-      operation.envelope.listElement,
-      operation.envelope.itemElement,
-    );
+    required.push(`${operation.envelope.action}Response`);
+    const result = operation.envelope.result ?? "list";
+    if (result === "list") {
+      required.push(operation.envelope.listElement, operation.envelope.itemElement);
+      if (operation.envelope.protocol !== "ec2") required.push("IsTruncated");
+    } else if (result === "flattened") {
+      required.push(operation.envelope.listElement);
+    }
     if (operation.envelope.protocol === "ec2") required.push("requestId");
-    else required.push(`${operation.envelope.action}Result`, "ResponseMetadata", "RequestId", "IsTruncated");
+    else required.push(`${operation.envelope.action}Result`, "ResponseMetadata", "RequestId");
     collectAwsNames(operation.record, required);
     if (root.namespace !== operation.envelope.namespace) return `namespace ${root.namespace || "missing"}`;
   } else {

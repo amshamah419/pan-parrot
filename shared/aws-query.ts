@@ -32,6 +32,10 @@ export function awsRequestId(seed: string, requestIndex: number): string {
   return `${hex}-${tail.slice(0, 4)}-4${tail.slice(4, 7)}-8${hex.slice(0, 3)}-${(hex + tail).slice(0, 12)}`;
 }
 
+export function awsQueryErrorXml(code: string, message: string, requestId: string): string {
+  return `<?xml version="1.0" encoding="UTF-8"?><ErrorResponse><Error><Type>Sender</Type><Code>${escapeXml(code)}</Code><Message>${escapeXml(message)}</Message></Error><RequestId>${escapeXml(requestId)}</RequestId></ErrorResponse>`;
+}
+
 export function renderAwsQueryXml(input: {
   envelope: AwsQueryEnvelope;
   records: unknown[];
@@ -39,25 +43,43 @@ export function renderAwsQueryXml(input: {
   requestId: string;
 }): string {
   const { envelope } = input;
-  const items = input.records.map((record) => renderNode(envelope.itemElement, record, envelope.itemElement)).join("");
-  const list = `<${envelope.listElement}>${items}</${envelope.listElement}>`;
+  const result = envelope.result ?? "list";
   const paging =
-    envelope.paging === "nextToken"
-      ? input.nextToken
-        ? `<nextToken>${escapeXml(input.nextToken)}</nextToken>`
-        : ""
-      : `<IsTruncated>${input.nextToken ? "true" : "false"}</IsTruncated>${
-          input.nextToken ? `<Marker>${escapeXml(input.nextToken)}</Marker>` : ""
-        }`;
+    result === "list"
+      ? envelope.paging === "nextToken"
+        ? input.nextToken
+          ? `<nextToken>${escapeXml(input.nextToken)}</nextToken>`
+          : ""
+        : `<IsTruncated>${input.nextToken ? "true" : "false"}</IsTruncated>${
+            input.nextToken ? `<Marker>${escapeXml(input.nextToken)}</Marker>` : ""
+          }`
+      : "";
+  const payload = renderAwsPayload(envelope, input.records, result);
   const request =
     envelope.protocol === "ec2"
       ? `<requestId>${escapeXml(input.requestId)}</requestId>`
       : `<ResponseMetadata><RequestId>${escapeXml(input.requestId)}</RequestId></ResponseMetadata>`;
   const inner =
     envelope.protocol === "ec2"
-      ? `${request}${list}${paging}`
-      : `<${envelope.action}Result>${list}${paging}</${envelope.action}Result>${request}`;
+      ? `${request}${payload}${paging}`
+      : `<${envelope.action}Result>${payload}${paging}</${envelope.action}Result>${request}`;
   return `<?xml version="1.0" encoding="UTF-8"?><${envelope.action}Response xmlns="${escapeXml(envelope.namespace)}">${inner}</${envelope.action}Response>`;
+}
+
+function renderAwsPayload(envelope: AwsQueryEnvelope, records: unknown[], result: NonNullable<AwsQueryEnvelope["result"]> | "list"): string {
+  if (result === "empty") return "";
+  if (result === "structure") {
+    const record = records[0];
+    if (!record || typeof record !== "object" || Array.isArray(record)) return "";
+    return Object.entries(record as Record<string, unknown>)
+      .map(([key, value]) => renderNode(key, value, "member"))
+      .join("");
+  }
+  if (result === "flattened") {
+    return records.map((record) => renderNode(envelope.listElement, record, "member")).join("");
+  }
+  const items = records.map((record) => renderNode(envelope.itemElement, record, envelope.itemElement)).join("");
+  return `<${envelope.listElement}>${items}</${envelope.listElement}>`;
 }
 
 function renderNode(name: string, value: unknown, itemName: string): string {
@@ -79,6 +101,24 @@ function xmlName(value: string): string {
   const cleaned = value.replace(/[^A-Za-z0-9_.:-]/g, "");
   if (!cleaned || !/^[A-Za-z_:]/.test(cleaned)) return "field";
   return cleaned;
+}
+
+const JSON_CONTROLS = ["MaxNumberOfMessages", "MaxResults", "QueueUrl", "ReceiptHandle", "RoleArn", "RoleSessionName"];
+
+/** A few modeled fields from an aws-json body. The rest of the object is not a query string. */
+export function jsonControlParams(body: string | undefined): Record<string, string> {
+  if (!body || !body.trim().startsWith("{")) return {};
+  try {
+    const parsed = JSON.parse(body) as Record<string, unknown>;
+    const out: Record<string, string> = {};
+    for (const key of JSON_CONTROLS) {
+      const value = parsed[key];
+      if (typeof value === "string" || typeof value === "number") out[key] = String(value).slice(0, 2_000);
+    }
+    return out;
+  } catch {
+    return {};
+  }
 }
 
 function decodeForm(value: string): string {

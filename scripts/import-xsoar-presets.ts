@@ -149,6 +149,8 @@ const curatedIds = new Set([
   "prismacloud-prismacloudiam",
   "microsoftcloudappsecurity-microsoftcloudappsecurity",
   "fireeyehelix-fireeyehelix",
+  "aws-sts-aws-sts",
+  "aws-sqs-fetch",
 ]);
 const stats = {
   scanned: 0,

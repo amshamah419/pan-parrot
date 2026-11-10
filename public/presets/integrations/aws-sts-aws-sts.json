@@ -1,0 +1,217 @@
+{
+  "id": "aws-sts-aws-sts",
+  "name": "AWS - STS",
+  "pack": "AWS",
+  "vendor": "Amazon Web Services",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "AssumeRole and GetCallerIdentity as STS query-protocol XML.",
+  "notes": [
+    "boto3 AssumeRole and GetCallerIdentity are the STS query protocol. POST / matches Action from the form body or the query string. The namespace is https://sts.amazonaws.com/doc/2011-06-15/.",
+    "AssumeRole returns Credentials and AssumedRoleUser. The temporary key is ASIADUMMYEXAMPLE0001, the secret matches the dummy secret, and the session token is dummy-session-token. Expiration is 2030-01-01T00:00:00Z. RoleArn and RoleSessionName are copied into the assumed-role ARN.",
+    "GetCallerIdentity returns account 123456789012 and the pan-parrot assumed role. It does not remember an earlier RoleArn. Signature checks are off until Auth, AWS SigV4, Check the signature. A bad signature is 403 SignatureDoesNotMatch XML."
+  ],
+  "attribution": "Checked against the AWS API reference and the demisto/content client (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS/Integrations/AWS",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-sts-aws-sts",
+      "name": "AWS - STS",
+      "fidelity": "verified",
+      "attribution": "AWS API reference plus demisto/content client (MIT).",
+      "sourceUrl": "https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html",
+      "notes": [
+        "boto3 AssumeRole and GetCallerIdentity are the STS query protocol. POST / matches Action from the form body or the query string. The namespace is https://sts.amazonaws.com/doc/2011-06-15/.",
+        "AssumeRole returns Credentials and AssumedRoleUser. The temporary key is ASIADUMMYEXAMPLE0001, the secret matches the dummy secret, and the session token is dummy-session-token. Expiration is 2030-01-01T00:00:00Z. RoleArn and RoleSessionName are copied into the assumed-role ARN.",
+        "GetCallerIdentity returns account 123456789012 and the pan-parrot assumed role. It does not remember an earlier RoleArn. Signature checks are off until Auth, AWS SigV4, Check the signature. A bad signature is 403 SignatureDoesNotMatch XML."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "boto3 AssumeRole and GetCallerIdentity are the STS query protocol. POST / matches Action from the form body or the query string. The namespace is https://sts.amazonaws.com/doc/2011-06-15/.",
+          "AssumeRole returns Credentials and AssumedRoleUser. The temporary key is ASIADUMMYEXAMPLE0001, the secret matches the dummy secret, and the session token is dummy-session-token. Expiration is 2030-01-01T00:00:00Z. RoleArn and RoleSessionName are copied into the assumed-role ARN.",
+          "GetCallerIdentity returns account 123456789012 and the pan-parrot assumed role. It does not remember an earlier RoleArn. Signature checks are off until Auth, AWS SigV4, Check the signature. A bad signature is 403 SignatureDoesNotMatch XML."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "assume-role",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Assume a role",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "aws-query",
+          "protocol": "query",
+          "action": "AssumeRole",
+          "namespace": "https://sts.amazonaws.com/doc/2011-06-15/",
+          "result": "structure",
+          "listElement": "Result",
+          "itemElement": "member",
+          "paging": "marker"
+        },
+        "queryMatch": {
+          "Action": "AssumeRole"
+        },
+        "record": {
+          "name": "assumed",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Credentials",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "AccessKeyId",
+                  "kind": "const",
+                  "constValue": "ASIADUMMYEXAMPLE0001"
+                },
+                {
+                  "name": "SecretAccessKey",
+                  "kind": "const",
+                  "constValue": "dummy-secret-key"
+                },
+                {
+                  "name": "SessionToken",
+                  "kind": "const",
+                  "constValue": "dummy-session-token"
+                },
+                {
+                  "name": "Expiration",
+                  "kind": "const",
+                  "constValue": "2030-01-01T00:00:00Z"
+                }
+              ]
+            },
+            {
+              "name": "AssumedRoleUser",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "AssumedRoleId",
+                  "kind": "const",
+                  "constValue": "AROAEXAMPLE:pan-parrot"
+                },
+                {
+                  "name": "Arn",
+                  "kind": "const",
+                  "constValue": "arn:aws:sts::123456789012:assumed-role/pan-parrot/pan-parrot"
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "text/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "get-caller-identity",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Get the caller identity",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "aws-query",
+          "protocol": "query",
+          "action": "GetCallerIdentity",
+          "namespace": "https://sts.amazonaws.com/doc/2011-06-15/",
+          "result": "structure",
+          "listElement": "Result",
+          "itemElement": "member",
+          "paging": "marker"
+        },
+        "queryMatch": {
+          "Action": "GetCallerIdentity"
+        },
+        "record": {
+          "name": "identity",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Account",
+              "kind": "const",
+              "constValue": "123456789012"
+            },
+            {
+              "name": "Arn",
+              "kind": "const",
+              "constValue": "arn:aws:sts::123456789012:assumed-role/pan-parrot/pan-parrot"
+            },
+            {
+              "name": "UserId",
+              "kind": "const",
+              "constValue": "AROAEXAMPLE:pan-parrot"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "text/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "aws-sts-aws-sts",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 10,
+    "auth": {
+      "mode": "sigv4",
+      "sigv4": {
+        "accessKeyId": "AKIA_DUMMY",
+        "secretAccessKey": "dummy-secret-key",
+        "sessionAccessKeyId": "ASIADUMMYEXAMPLE0001",
+        "region": "us-east-1",
+        "service": "sts",
+        "verify": false
+      }
+    }
+  }
+}
