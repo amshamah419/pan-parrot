@@ -3,13 +3,11 @@
   "name": "Skyhigh Security",
   "pack": "SkyhighSecurity",
   "vendor": "Skyhigh Security",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Query CASB incidents.",
   "notes": [
-    "The client POSTs /external/api/v1/queryIncidents on a /shnapi/rest base. This mock returns one incident.",
-    "Modify incidents, activities, and the DLP dictionary are not modeled.",
-    "The Skyhigh success center was not reloaded. A bearer token is required."
+    "Cross-check: field: POST /external/api/v1/queryIncidents root keys ['incidents'] are not read by the client or present in test_data ['content_checksum', 'headers', 'identifier', 'last_modified_time', 'password', 'remediationResponse', 'timeModified', 'uploaded_filename']."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SkyhighSecurity/Integrations/SkyhighSecurity",
@@ -19,30 +17,18 @@
       "kind": "preset",
       "id": "skyhighsecurity-skyhighsecurity",
       "name": "Skyhigh Security",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://success.myshn.net/Skyhigh_CASB/Skyhigh_CASB_APIs",
       "notes": [
-        "The client POSTs /external/api/v1/queryIncidents on a /shnapi/rest base. This mock returns one incident.",
-        "Modify incidents, activities, and the DLP dictionary are not modeled.",
-        "The Skyhigh success center was not reloaded. A bearer token is required."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://success.myshn.net/Skyhigh_CASB/Skyhigh_CASB_APIs",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The client POSTs /external/api/v1/queryIncidents on a /shnapi/rest base. This mock returns one incident.",
-          "Modify incidents, activities, and the DLP dictionary are not modeled.",
-          "The Skyhigh success center was not reloaded. A bearer token is required."
-        ]
-      }
+        "Cross-check: field: POST /external/api/v1/queryIncidents root keys ['incidents'] are not read by the client or present in test_data ['content_checksum', 'headers', 'identifier', 'last_modified_time', 'password', 'remediationResponse', 'timeModified', 'uploaded_filename']."
+      ]
     },
     "operations": [
       {
         "id": "incidents",
         "method": "POST",
-        "pathTemplate": "/shnapi/rest/external/api/v1/queryIncidents",
+        "pathTemplate": "/external/api/v1/queryIncidents",
         "summary": "Query incidents",
         "status": 200,
         "list": false,

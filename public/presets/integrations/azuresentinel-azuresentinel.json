@@ -3,13 +3,11 @@
   "name": "Microsoft Sentinel",
   "pack": "AzureSentinel",
   "vendor": "Microsoft",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "GET incidents returns value and nextLink. XSOAR calls this under the SecurityInsights workspace URL.",
   "notes": [
-    "Point the integration server URL at the catch URL plus the workspace path ending in Microsoft.SecurityInsights. The client appends incidents and api-version=2024-03-01.",
-    "Pages use nextLink. $top is honored up to 500. Azure's documented maximum for $top is 1000.",
-    "Arm authorization is not checked."
+    "Cross-check: path: GET /incidents is not a client call. Closest: /metadata/identity/oauth2/token (0)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureSentinel/Integrations/AzureSentinel",
@@ -19,20 +17,12 @@
       "kind": "preset",
       "id": "azuresentinel-azuresentinel",
       "name": "Microsoft Sentinel",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/rest/api/securityinsights/incidents/list?view=rest-securityinsights-2024-03-01",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://learn.microsoft.com/en-us/rest/api/securityinsights/incidents/list?view=rest-securityinsights-2024-03-01",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "Point the integration server URL at the catch URL plus the workspace path ending in Microsoft.SecurityInsights. The client appends incidents and api-version=2024-03-01.",
-          "Pages use nextLink. $top is honored up to 500. Azure's documented maximum for $top is 1000.",
-          "Arm authorization is not checked."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: GET /incidents is not a client call. Closest: /metadata/identity/oauth2/token (0)."
+      ]
     },
     "operations": [
       {

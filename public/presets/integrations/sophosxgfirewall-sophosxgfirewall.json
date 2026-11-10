@@ -3,13 +3,11 @@
   "name": "Sophos Firewall",
   "pack": "SophosXGFirewall",
   "vendor": "Sophos",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "ATP events. The appliance API is XML; this mock is JSON.",
   "notes": [
-    "The firewall API posts XML to /webconsole/APIController. This mock returns JSON events so a playbook can read them without an XML parser.",
-    "The 19.5 API index was not reloaded.",
-    "Basic auth is the admin user."
+    "Cross-check: field: GET /webconsole/APIController root keys ['events'] are not read by the client or present in test_data ['IsDeleted', 'Response', 'credentials', 'endpoint_tag', 'table_headers']."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SophosXGFirewall/Integrations/SophosXGFirewall",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "sophosxgfirewall-sophosxgfirewall",
       "name": "Sophos Firewall",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.sophos.com/nsg/sophos-firewall/19.5/API/",
       "notes": [
-        "The firewall API posts XML to /webconsole/APIController. This mock returns JSON events so a playbook can read them without an XML parser.",
-        "The 19.5 API index was not reloaded.",
-        "Basic auth is the admin user."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://docs.sophos.com/nsg/sophos-firewall/19.5/API/",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The firewall API posts XML to /webconsole/APIController. This mock returns JSON events so a playbook can read them without an XML parser.",
-          "The 19.5 API index was not reloaded.",
-          "Basic auth is the admin user."
-        ]
-      }
+        "Cross-check: field: GET /webconsole/APIController root keys ['events'] are not read by the client or present in test_data ['IsDeleted', 'Response', 'credentials', 'endpoint_tag', 'table_headers']."
+      ]
     },
     "operations": [
       {

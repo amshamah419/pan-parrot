@@ -263,7 +263,7 @@ export const identityVerifiedPresets = [
         field("success", "const", { constValue: true }),
         listField("result", "zone", [field("id", "id"), field("name", "string", { example: "lab.example" })]),
       ])),
-      jsonOp("rules", "GET", "/client/v4/zones/lab-zone/firewall/rules", "List firewall rules", object("body", [
+      jsonOp("rules", "GET", "/zones/lab-zone/firewall/rules", "List firewall rules", object("body", [
         field("success", "const", { constValue: true }),
         listField("result", "rule", [field("id", "id"), field("action", "enum", { enumValues: ["block", "challenge", "allow"] })]),
       ])),
@@ -520,7 +520,7 @@ export const identityVerifiedPresets = [
       "A bearer token is required.",
     ],
     auth: bearer,
-    operations: [jsonOp("incidents", "GET", "/api/xdr/v1/incidents", "List incidents", object("body", [
+    operations: [jsonOp("incidents", "GET", "/app/xdr/api/xdr/v1/incidents", "List incidents", object("body", [
       listField("incidents", "incident", [field("id", "id"), field("severity", "enum", { enumValues: ["low", "medium", "high"] }), field("title", "string", { example: "Suspicious connection" })]),
     ]))],
   }),
@@ -535,7 +535,7 @@ export const identityVerifiedPresets = [
       "The hunting notifications page was not reloaded. x-apikey is the dummy key.",
     ],
     auth: headerKey("x-apikey"),
-    operations: [jsonOp("files", "GET", "/api/v3/intelligence/hunting_notification_files", "List livehunt files", object("body", [
+    operations: [jsonOp("files", "GET", "/intelligence/hunting_notification_files", "List livehunt files", object("body", [
       listField("data", "file", [field("id", "id"), field("type", "const", { constValue: "file" })]),
     ]))],
   }),
@@ -550,7 +550,7 @@ export const identityVerifiedPresets = [
       "The retrohunt page was not reloaded. x-apikey is the dummy key.",
     ],
     auth: headerKey("x-apikey"),
-    operations: [jsonOp("jobs", "GET", "/api/v3/intelligence/retrohunt_jobs", "List finished retrohunt jobs", object("body", [
+    operations: [jsonOp("jobs", "GET", "/intelligence/retrohunt_jobs", "List finished retrohunt jobs", object("body", [
       listField("data", "job", [field("id", "id"), field("status", "const", { constValue: "finished" })]),
     ]))],
   }),
@@ -580,7 +580,7 @@ export const identityVerifiedPresets = [
       "The API docs page was not reloaded. X-API-KEY is the dummy key.",
     ],
     auth: headerKey("X-API-KEY"),
-    operations: [jsonOp("details", "GET", "/api/v1/domain/lab.example/details", "Get domain details", object("body", [
+    operations: [jsonOp("details", "GET", "/domain/lab.example/details", "Get domain details", object("body", [
       field("domain", "const", { constValue: "lab.example" }),
       listField("hosts", "host", [field("ip", "ip"), field("dns", "string", { example: "www.lab.example" })]),
     ]))],

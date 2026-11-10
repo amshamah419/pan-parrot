@@ -3,13 +3,11 @@
   "name": "CrowdStrike OpenAPI",
   "pack": "CrowdStrikeOpenAPI",
   "vendor": "CrowdStrike",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Host ids, alert ids, and a real-time-response batch session.",
   "notes": [
-    "GET /devices/queries/devices/v1 and GET /alerts/queries/alerts/v2 return { resources } of ids. POST /real-time-response/combined/batch-init-session/v1 returns one batch_id.",
-    "The Falcon documentation host did not return a page in this pass. The paths are the ones in the public client.",
-    "OAuth is not checked. Device entity details and command output polling are omitted."
+    "Cross-check: path: GET /alerts/queries/alerts/v2 is not a client call. Closest: /devices/entities/devices/v2 (1)."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeOpenAPI/Integrations/CrowdStrikeOpenAPI",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "crowdstrikeopenapi-crowdstrikeopenapi",
       "name": "CrowdStrike OpenAPI",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://falcon.crowdstrike.com/documentation/page/a2a7fc0e/real-time-response-apis",
       "notes": [
-        "GET /devices/queries/devices/v1 and GET /alerts/queries/alerts/v2 return { resources } of ids. POST /real-time-response/combined/batch-init-session/v1 returns one batch_id.",
-        "The Falcon documentation host did not return a page in this pass. The paths are the ones in the public client.",
-        "OAuth is not checked. Device entity details and command output polling are omitted."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://falcon.crowdstrike.com/documentation/page/a2a7fc0e/real-time-response-apis",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "GET /devices/queries/devices/v1 and GET /alerts/queries/alerts/v2 return { resources } of ids. POST /real-time-response/combined/batch-init-session/v1 returns one batch_id.",
-          "The Falcon documentation host did not return a page in this pass. The paths are the ones in the public client.",
-          "OAuth is not checked. Device entity details and command output polling are omitted."
-        ]
-      }
+        "Cross-check: path: GET /alerts/queries/alerts/v2 is not a client call. Closest: /devices/entities/devices/v2 (1)."
+      ]
     },
     "operations": [
       {

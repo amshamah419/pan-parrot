@@ -3,13 +3,11 @@
   "name": "SaaS Security",
   "pack": "PrismaSaasSecurity",
   "vendor": "Palo Alto Networks",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Incident delta and the app list.",
   "notes": [
-    "The client GETs /incident/api/incidents/delta and /incident/api/apps. This mock returns incidents and apps.",
-    "State changes and remediation POSTs are not modeled. The next page token is a fixed example.",
-    "The SaaS Security API page was not reloaded. OAuth at /oauth/token is not modeled. A bearer token is required."
+    "Cross-check: field: GET /incident/api/incidents/delta root keys ['incidents', 'next_page_token'] are not read by the client or present in test_data ['action_date', 'asset_owner_id', 'limit', 'policy_id', 'resolved_by', 'resources', 'tenant', 'updated_at']."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PrismaSaasSecurity/Integrations/SaasSecurity",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "prismasaassecurity-saassecurity",
       "name": "SaaS Security",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.paloaltonetworks.com/saas-security/saas-security-admin/saas-security-api",
       "notes": [
-        "The client GETs /incident/api/incidents/delta and /incident/api/apps. This mock returns incidents and apps.",
-        "State changes and remediation POSTs are not modeled. The next page token is a fixed example.",
-        "The SaaS Security API page was not reloaded. OAuth at /oauth/token is not modeled. A bearer token is required."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://docs.paloaltonetworks.com/saas-security/saas-security-admin/saas-security-api",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The client GETs /incident/api/incidents/delta and /incident/api/apps. This mock returns incidents and apps.",
-          "State changes and remediation POSTs are not modeled. The next page token is a fixed example.",
-          "The SaaS Security API page was not reloaded. OAuth at /oauth/token is not modeled. A bearer token is required."
-        ]
-      }
+        "Cross-check: field: GET /incident/api/incidents/delta root keys ['incidents', 'next_page_token'] are not read by the client or present in test_data ['action_date', 'asset_owner_id', 'limit', 'policy_id', 'resolved_by', 'resources', 'tenant', 'updated_at']."
+      ]
     },
     "operations": [
       {

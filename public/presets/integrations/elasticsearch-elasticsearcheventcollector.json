@@ -3,13 +3,11 @@
   "name": "Elasticsearch Event Collector",
   "pack": "Elasticsearch",
   "vendor": "Elastic",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "POST /lab-logs/_search returns hits.hits.",
   "notes": [
-    "The collector calls es.search on the fetch index. This mock is POST /lab-logs/_search and returns hits.total plus hits.hits._source.",
-    "The query body is not executed. Point-in-time and search_after are not modeled. Use index name lab-logs.",
-    "The search API page was not reloaded. Basic auth is the lab user."
+    "Cross-check: path: POST /lab-logs/_search is not a client call. Closest: /_security/oauth2/token (0)."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Elasticsearch/Integrations/ElasticsearchEventCollector",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "elasticsearch-elasticsearcheventcollector",
       "name": "Elasticsearch Event Collector",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
       "notes": [
-        "The collector calls es.search on the fetch index. This mock is POST /lab-logs/_search and returns hits.total plus hits.hits._source.",
-        "The query body is not executed. Point-in-time and search_after are not modeled. Use index name lab-logs.",
-        "The search API page was not reloaded. Basic auth is the lab user."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The collector calls es.search on the fetch index. This mock is POST /lab-logs/_search and returns hits.total plus hits.hits._source.",
-          "The query body is not executed. Point-in-time and search_after are not modeled. Use index name lab-logs.",
-          "The search API page was not reloaded. Basic auth is the lab user."
-        ]
-      }
+        "Cross-check: path: POST /lab-logs/_search is not a client call. Closest: /_security/oauth2/token (0)."
+      ]
     },
     "operations": [
       {

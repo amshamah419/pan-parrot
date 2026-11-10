@@ -3,13 +3,11 @@
   "name": "Check Point XDR",
   "pack": "CheckPointXDR",
   "vendor": "Check Point",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "XDR incidents.",
   "notes": [
-    "Infinity XDR pages were not loaded. The client lists /api/xdr/v1/incidents and reads /app/xdr/api/xdr/v1/incidents/{id}.",
-    "This mock lists incidents. Login at /auth/external is not modeled.",
-    "A bearer token is required."
+    "Cross-check: field: GET /app/xdr/api/xdr/v1/incidents root keys ['incidents'] are not read by the client or present in test_data ['closeReason', 'dbotMirrorId', 'details', 'display_id', 'last_fetch', 'rawJSON', 'summary', 'updated_at']."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointXDR/Integrations/CheckPointXDR",
@@ -19,30 +17,18 @@
       "kind": "preset",
       "id": "checkpointxdr-checkpointxdr",
       "name": "Check Point XDR",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointXDR/Integrations/CheckPointXDR",
       "notes": [
-        "Infinity XDR pages were not loaded. The client lists /api/xdr/v1/incidents and reads /app/xdr/api/xdr/v1/incidents/{id}.",
-        "This mock lists incidents. Login at /auth/external is not modeled.",
-        "A bearer token is required."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointXDR/Integrations/CheckPointXDR",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "Infinity XDR pages were not loaded. The client lists /api/xdr/v1/incidents and reads /app/xdr/api/xdr/v1/incidents/{id}.",
-          "This mock lists incidents. Login at /auth/external is not modeled.",
-          "A bearer token is required."
-        ]
-      }
+        "Cross-check: field: GET /app/xdr/api/xdr/v1/incidents root keys ['incidents'] are not read by the client or present in test_data ['closeReason', 'dbotMirrorId', 'details', 'display_id', 'last_fetch', 'rawJSON', 'summary', 'updated_at']."
+      ]
     },
     "operations": [
       {
         "id": "incidents",
         "method": "GET",
-        "pathTemplate": "/api/xdr/v1/incidents",
+        "pathTemplate": "/app/xdr/api/xdr/v1/incidents",
         "summary": "List incidents",
         "status": 200,
         "list": false,

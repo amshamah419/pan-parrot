@@ -3,13 +3,11 @@
   "name": "CrowdStrike Falcon",
   "pack": "CrowdStrikeFalcon",
   "vendor": "CrowdStrike",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Falcon Alerts query plus entity fetch. Legacy Detects routes are included because XSOAR still calls them.",
   "notes": [
-    "CrowdStrike's public docs mark the Detects collection deprecated and decommissioned on 2025-09-30. XSOAR's client still calls /detects/queries/detects/v1 in older tests, so those paths are mocked too.",
-    "Query endpoints return resource ids inside meta.pagination. Entity endpoints are POST and return alert objects. This mock does not check the OAuth token.",
-    "Falcon's documented query limit can be far above this mock's 500-record page cap."
+    "Cross-check: path: GET /detects/queries/detects/v1 is not a client call. Closest: /policy/queries/{exclusion_type}-exclusions/v1 (2)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeFalcon/Integrations/CrowdStrikeFalcon",
@@ -19,20 +17,12 @@
       "kind": "preset",
       "id": "crowdstrikefalcon-crowdstrikefalcon",
       "name": "CrowdStrike Falcon",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.crowdstrike.com/api-reference/collections/alerts/",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://developer.crowdstrike.com/api-reference/collections/alerts/",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "CrowdStrike's public docs mark the Detects collection deprecated and decommissioned on 2025-09-30. XSOAR's client still calls /detects/queries/detects/v1 in older tests, so those paths are mocked too.",
-          "Query endpoints return resource ids inside meta.pagination. Entity endpoints are POST and return alert objects. This mock does not check the OAuth token.",
-          "Falcon's documented query limit can be far above this mock's 500-record page cap."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: GET /detects/queries/detects/v1 is not a client call. Closest: /policy/queries/{exclusion_type}-exclusions/v1 (2)."
+      ]
     },
     "operations": [
       {

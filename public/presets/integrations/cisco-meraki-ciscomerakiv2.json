@@ -3,13 +3,11 @@
   "name": "Cisco Meraki v2",
   "pack": "cisco-meraki",
   "vendor": "Cisco",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "GET /api/v1/organizations and one org's networks.",
   "notes": [
-    "The client base is api/v1. GET organizations returns an array. GET organizations/lab-org/networks returns that org's networks.",
-    "Inventory, licenses, and devices are not modeled. Other organization ids do not match.",
-    "The Meraki get-organizations page was not reloaded. X-Cisco-Meraki-API-Key is the dummy key."
+    "Cross-check: path: GET /api/v1/organizations is not a client call. Closest: /organizations (1)."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/cisco-meraki/Integrations/CiscoMerakiv2",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "cisco-meraki-ciscomerakiv2",
       "name": "Cisco Meraki v2",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.cisco.com/meraki/api-v1/get-organizations/",
       "notes": [
-        "The client base is api/v1. GET organizations returns an array. GET organizations/lab-org/networks returns that org's networks.",
-        "Inventory, licenses, and devices are not modeled. Other organization ids do not match.",
-        "The Meraki get-organizations page was not reloaded. X-Cisco-Meraki-API-Key is the dummy key."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://developer.cisco.com/meraki/api-v1/get-organizations/",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The client base is api/v1. GET organizations returns an array. GET organizations/lab-org/networks returns that org's networks.",
-          "Inventory, licenses, and devices are not modeled. Other organization ids do not match.",
-          "The Meraki get-organizations page was not reloaded. X-Cisco-Meraki-API-Key is the dummy key."
-        ]
-      }
+        "Cross-check: path: GET /api/v1/organizations is not a client call. Closest: /organizations (1)."
+      ]
     },
     "operations": [
       {
@@ -79,7 +65,7 @@
       {
         "id": "networks",
         "method": "GET",
-        "pathTemplate": "/api/v1/organizations/lab-org/networks",
+        "pathTemplate": "/organizations/lab-org/networks",
         "summary": "List networks",
         "status": 200,
         "list": true,

@@ -3,13 +3,11 @@
   "name": "Palo Alto Networks Device Security",
   "pack": "PaloAltoNetworks_DeviceSecurity",
   "vendor": "Palo Alto Networks",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Device lookup and the alert list.",
   "notes": [
-    "The client GETs /device and /alert/list. This mock returns one device and one alert. Vulnerability update is not modeled.",
-    "OAuth at /oauth2/access_token is not modeled. A bearer token is required on the data calls.",
-    "The IoT Security API page was not reloaded. deviceid and ip query values are not echoed."
+    "Cross-check: path: GET /device is not a client call. Closest: /iot/pub/v1/device (1)."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_DeviceSecurity/Integrations/PaloAltoNetworks_DeviceSecurity",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "paloaltonetworks-devicesecurity-paloaltonetworks-devicesecurity",
       "name": "Palo Alto Networks Device Security",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
       "notes": [
-        "The client GETs /device and /alert/list. This mock returns one device and one alert. Vulnerability update is not modeled.",
-        "OAuth at /oauth2/access_token is not modeled. A bearer token is required on the data calls.",
-        "The IoT Security API page was not reloaded. deviceid and ip query values are not echoed."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The client GETs /device and /alert/list. This mock returns one device and one alert. Vulnerability update is not modeled.",
-          "OAuth at /oauth2/access_token is not modeled. A bearer token is required on the data calls.",
-          "The IoT Security API page was not reloaded. deviceid and ip query values are not echoed."
-        ]
-      }
+        "Cross-check: path: GET /device is not a client call. Closest: /iot/pub/v1/device (1)."
+      ]
     },
     "operations": [
       {
@@ -88,7 +74,7 @@
       {
         "id": "alerts",
         "method": "GET",
-        "pathTemplate": "/alert/list",
+        "pathTemplate": "/iot/pub/v1/alert/list",
         "summary": "List alerts",
         "status": 200,
         "list": false,

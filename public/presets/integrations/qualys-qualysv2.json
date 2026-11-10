@@ -3,13 +3,11 @@
   "name": "Qualys VMDR",
   "pack": "qualys",
   "vendor": "Qualys",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "GET /api/2.0/fo/asset/host/ returns a shortened host list.",
   "notes": [
-    "The host list API returns HOST_LIST_OUTPUT XML. This mock returns a shortened host with id, IP, and DNS. Detection details and the DTD are omitted.",
-    "The pack also calls /api/5.0/fo/ and the knowledge base. Those routes are not modeled.",
-    "Basic auth is checked. The Qualys session cookie flow is not."
+    "Cross-check: path: GET /api/2.0/fo/asset/host is not a client call. Closest: /api/2.0/fo/activity_log (0)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/qualys/Integrations/Qualysv2",
@@ -19,20 +17,12 @@
       "kind": "preset",
       "id": "qualys-qualysv2",
       "name": "Qualys VMDR",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs.qualys.com/en/vm/api/assets/index.htm",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://docs.qualys.com/en/vm/api/assets/index.htm",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "The host list API returns HOST_LIST_OUTPUT XML. This mock returns a shortened host with id, IP, and DNS. Detection details and the DTD are omitted.",
-          "The pack also calls /api/5.0/fo/ and the knowledge base. Those routes are not modeled.",
-          "Basic auth is checked. The Qualys session cookie flow is not."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: GET /api/2.0/fo/asset/host is not a client call. Closest: /api/2.0/fo/activity_log (0)."
+      ]
     },
     "operations": [
       {

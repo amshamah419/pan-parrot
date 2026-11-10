@@ -3,13 +3,11 @@
   "name": "Strata Logging Service XSOAR Connector",
   "pack": "CortexDataLake",
   "vendor": "Palo Alto Networks",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "POST /query/v2/jobs returns a job id. The results route returns page.result.data.",
   "notes": [
-    "The pack calls pan-cortex-data-lake create_query, which posts to /query/v2/jobs and then reads page.result.data from the job results. Those two routes are mocked.",
-    "Job state polling is skipped: the results route returns rows immediately. valuesDictionary rows are shortened traffic fields.",
-    "The regional hostname and the bearer token are not checked."
+    "Cross-check: path: POST /query/v2/jobs is not a client call. Closest: /api/xdr_gateway/external_services/scm/get_access_token (0)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CortexDataLake/Integrations/CortexDataLake",
@@ -19,20 +17,12 @@
       "kind": "preset",
       "id": "cortexdatalake-cortexdatalake",
       "name": "Strata Logging Service XSOAR Connector",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs.paloaltonetworks.com/strata-logging-service/activation-and-onboarding/strata-logging-service-query-reference",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://docs.paloaltonetworks.com/strata-logging-service/activation-and-onboarding/strata-logging-service-query-reference",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "The pack calls pan-cortex-data-lake create_query, which posts to /query/v2/jobs and then reads page.result.data from the job results. Those two routes are mocked.",
-          "Job state polling is skipped: the results route returns rows immediately. valuesDictionary rows are shortened traffic fields.",
-          "The regional hostname and the bearer token are not checked."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: POST /query/v2/jobs is not a client call. Closest: /api/xdr_gateway/external_services/scm/get_access_token (0)."
+      ]
     },
     "operations": [
       {

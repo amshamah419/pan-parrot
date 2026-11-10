@@ -3,13 +3,11 @@
   "name": "VirusTotal v3",
   "pack": "VirusTotal",
   "vendor": "VirusTotal",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "GET /files/{id} and /ip_addresses/{ip} in the v3 data/attributes envelope.",
   "notes": [
-    "Set the integration base URL to the catch URL. XSOAR appends files/{id}, which replaces https://www.virustotal.com/api/v3.",
-    "Relationship links and the analysis stats object are shortened. last_analysis_stats counts are examples, not a live engine vote.",
-    "x-api-key is not required."
+    "Cross-check: path: GET /files/{id} is not a client call. Closest: /api/v3/files/{file} (1)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VirusTotal/Integrations/VirusTotalV3",
@@ -19,20 +17,12 @@
       "kind": "preset",
       "id": "virustotal-virustotalv3",
       "name": "VirusTotal v3",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs.virustotal.com/reference/file-info",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://docs.virustotal.com/reference/file-info",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "Set the integration base URL to the catch URL. XSOAR appends files/{id}, which replaces https://www.virustotal.com/api/v3.",
-          "Relationship links and the analysis stats object are shortened. last_analysis_stats counts are examples, not a live engine vote.",
-          "x-api-key is not required."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: GET /files/{id} is not a client call. Closest: /api/v3/files/{file} (1)."
+      ]
     },
     "operations": [
       {

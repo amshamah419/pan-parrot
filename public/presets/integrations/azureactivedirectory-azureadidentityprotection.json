@@ -3,13 +3,11 @@
   "name": "Azure Active Directory Identity Protection  (Deprecated)",
   "pack": "AzureActiveDirectory",
   "vendor": "Microsoft",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "GET /v1.0/identityProtection/riskyUsers returns the Entra risky-user list.",
   "notes": [
-    "The list is { value, @odata.nextLink }. riskLevel and riskState are the documented enums.",
-    "confirmCompromised and dismiss are not modeled.",
-    "The pack name still says Azure AD. The public API is Entra ID Protection. Bearer tokens are checked."
+    "Cross-check: path: GET /v1.0/identityProtection/riskyUsers is not a client call. Closest: /beta/{url_suffix} (0)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureActiveDirectory/Integrations/AzureADIdentityProtection",
@@ -19,20 +17,12 @@
       "kind": "preset",
       "id": "azureactivedirectory-azureadidentityprotection",
       "name": "Azure Active Directory Identity Protection  (Deprecated)",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/riskyuser-list?view=graph-rest-1.0",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://learn.microsoft.com/en-us/graph/api/riskyuser-list?view=graph-rest-1.0",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "The list is { value, @odata.nextLink }. riskLevel and riskState are the documented enums.",
-          "confirmCompromised and dismiss are not modeled.",
-          "The pack name still says Azure AD. The public API is Entra ID Protection. Bearer tokens are checked."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: GET /v1.0/identityProtection/riskyUsers is not a client call. Closest: /beta/{url_suffix} (0)."
+      ]
     },
     "operations": [
       {

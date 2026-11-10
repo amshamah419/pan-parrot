@@ -3,13 +3,11 @@
   "name": "Azure Log Analytics",
   "pack": "AzureLogAnalytics",
   "vendor": "Microsoft",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Workspace query. tables[].rows is the Kusto result.",
   "notes": [
-    "POST /v1/workspaces/{workspaceId}/query returns { tables: [{ name, columns, rows }] }. This mock returns one table of generated rows.",
-    "The query string is not executed. Saved searches are not modeled.",
-    "A bearer token is required."
+    "Cross-check: path: POST /v1/workspaces/{workspaceId}/query is not a client call. Closest: /metadata/identity/oauth2/token (0)."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureLogAnalytics/Integrations/AzureLogAnalytics",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "azureloganalytics-azureloganalytics",
       "name": "Azure Log Analytics",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/rest/api/loganalytics/dataaccess/query/execute",
       "notes": [
-        "POST /v1/workspaces/{workspaceId}/query returns { tables: [{ name, columns, rows }] }. This mock returns one table of generated rows.",
-        "The query string is not executed. Saved searches are not modeled.",
-        "A bearer token is required."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://learn.microsoft.com/en-us/rest/api/loganalytics/dataaccess/query/execute",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "POST /v1/workspaces/{workspaceId}/query returns { tables: [{ name, columns, rows }] }. This mock returns one table of generated rows.",
-          "The query string is not executed. Saved searches are not modeled.",
-          "A bearer token is required."
-        ]
-      }
+        "Cross-check: path: POST /v1/workspaces/{workspaceId}/query is not a client call. Closest: /metadata/identity/oauth2/token (0)."
+      ]
     },
     "operations": [
       {

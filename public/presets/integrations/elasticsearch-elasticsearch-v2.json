@@ -3,13 +3,11 @@
   "name": "Elasticsearch v2",
   "pack": "Elasticsearch",
   "vendor": "Elastic",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "POST /{index}/_search returns the hits envelope the Elasticsearch client reads.",
   "notes": [
-    "The public search response is { took, hits: { total, hits: [ { _index, _id, _source } ] } }. This mock returns that shape.",
-    "total is a number on clusters before 7.0 and an object after. This mock uses the 7+ object. Shards, timed_out, and aggregations are omitted.",
-    "Basic auth is checked with the dummy elastic user. API keys and the Elastic Cloud host are not modeled."
+    "Cross-check: path: POST /{index}/_search is not a client call. Closest: /_security/oauth2/token (0)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Elasticsearch/Integrations/Elasticsearch_v2",
@@ -19,20 +17,12 @@
       "kind": "preset",
       "id": "elasticsearch-elasticsearch-v2",
       "name": "Elasticsearch v2",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "The public search response is { took, hits: { total, hits: [ { _index, _id, _source } ] } }. This mock returns that shape.",
-          "total is a number on clusters before 7.0 and an object after. This mock uses the 7+ object. Shards, timed_out, and aggregations are omitted.",
-          "Basic auth is checked with the dummy elastic user. API keys and the Elastic Cloud host are not modeled."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: POST /{index}/_search is not a client call. Closest: /_security/oauth2/token (0)."
+      ]
     },
     "operations": [
       {

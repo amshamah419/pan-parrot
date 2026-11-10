@@ -42,5 +42,18 @@ jobs:
       - run: npm run db:migrate:local
       - run: npm run typecheck
       - run: npm test
+      - name: Checkout demisto/content
+        uses: actions/checkout@v4
+        with:
+          repository: demisto/content
+          ref: ff4a8f7ee870499a73807b538cdbf42ee9f6c8f1
+          path: content
+          fetch-depth: 1
+          sparse-checkout: |
+            Packs/*/Integrations
+            Packs/ApiModules/Scripts
+          sparse-checkout-cone-mode: false
+      - name: Cross-check verified presets
+        run: python3 scripts/crosscheck_presets.py --content content --strict
       - run: npm run build
       - run: npm run test:e2e

@@ -3,13 +3,11 @@
   "name": "Securonix",
   "pack": "Securonix",
   "vendor": "Securonix",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Incident list. The client calls GET /incident/get.",
   "notes": [
-    "The Securonix documentation site is login-gated. GET /incident/get is the public client path. This mock returns { incidents }.",
-    "The pack also accepts an XML body. This mock is JSON.",
-    "A token from /token/generate is required on later calls. That route is not modeled."
+    "Cross-check: paging: GET /incident/get says offset limit=limit offset=offset but the client sends ['actionName', 'from', 'incidentId', 'max', 'offset', 'order', 'rangeType', 'to', 'type', 'workflow']."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Securonix/Integrations/Securonix",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "securonix-securonix",
       "name": "Securonix",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://documentation.securonix.com/",
       "notes": [
-        "The Securonix documentation site is login-gated. GET /incident/get is the public client path. This mock returns { incidents }.",
-        "The pack also accepts an XML body. This mock is JSON.",
-        "A token from /token/generate is required on later calls. That route is not modeled."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://documentation.securonix.com/",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The Securonix documentation site is login-gated. GET /incident/get is the public client path. This mock returns { incidents }.",
-          "The pack also accepts an XML body. This mock is JSON.",
-          "A token from /token/generate is required on later calls. That route is not modeled."
-        ]
-      }
+        "Cross-check: paging: GET /incident/get says offset limit=limit offset=offset but the client sends ['actionName', 'from', 'incidentId', 'max', 'offset', 'order', 'rangeType', 'to', 'type', 'workflow']."
+      ]
     },
     "operations": [
       {

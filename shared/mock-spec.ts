@@ -256,7 +256,7 @@ export interface MockSpec {
     name: string;
     attribution?: string;
     sourceUrl?: string;
-    fidelity?: "verified" | "high" | "sample" | "shape" | "generated";
+    fidelity?: "verified" | "guessed" | "high" | "sample" | "shape" | "generated";
     notes?: string[];
     unsupported?: string[];
     verification?: {

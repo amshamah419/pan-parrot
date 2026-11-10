@@ -3,13 +3,11 @@
   "name": "Entra ID Users",
   "pack": "MicrosoftGraphUser",
   "vendor": "Microsoft",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "GET /v1.0/users returns the Graph value array.",
   "notes": [
-    "The list is { value, @odata.nextLink }. $top and $skip page it. The real API also accepts $filter as OData, which this mock ignores.",
-    "User objects keep id, displayName, userPrincipalName, and accountEnabled. The XSOAR client selects a longer property list.",
-    "Set the server URL to the catch URL. The client appends v1.0/users when its base URL is the Graph host. Bearer tokens are checked."
+    "Cross-check: path: GET /v1.0/users is not a client call. Closest: /users (1)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphUser/Integrations/MicrosoftGraphUser",
@@ -19,20 +17,12 @@
       "kind": "preset",
       "id": "microsoftgraphuser-microsoftgraphuser",
       "name": "Entra ID Users",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/user-list?view=graph-rest-1.0",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list?view=graph-rest-1.0",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "The list is { value, @odata.nextLink }. $top and $skip page it. The real API also accepts $filter as OData, which this mock ignores.",
-          "User objects keep id, displayName, userPrincipalName, and accountEnabled. The XSOAR client selects a longer property list.",
-          "Set the server URL to the catch URL. The client appends v1.0/users when its base URL is the Graph host. Bearer tokens are checked."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: GET /v1.0/users is not a client call. Closest: /users (1)."
+      ]
     },
     "operations": [
       {

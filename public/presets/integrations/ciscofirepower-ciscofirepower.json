@@ -3,13 +3,11 @@
   "name": "Cisco Firepower",
   "pack": "CiscoFirepower",
   "vendor": "Cisco",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "FMC token and access policies for a lab domain.",
   "notes": [
-    "The client POSTs api/fmc_platform/v1/auth/generatetoken and then uses DOMAIN_UUID. This mock returns the token header and lists policies under domain lab-domain.",
-    "The policy body is { items }. Assignments, objects, and deploy are not modeled.",
-    "The FMC guide was not reloaded. Token creation uses basic auth."
+    "Cross-check: field: POST /api/fmc_platform/v1/auth/generatetoken root keys ['domain_uuid', 'token'] are not read by the client or present in test_data ['action', 'destinationPorts', 'files', 'inspectionMode', 'ruleData', 'ruleGroups', 'startTime', 'targets']."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoFirepower/Integrations/CiscoFirepower",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "ciscofirepower-ciscofirepower",
       "name": "Cisco Firepower",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.cisco.com/docs/fmc/",
       "notes": [
-        "The client POSTs api/fmc_platform/v1/auth/generatetoken and then uses DOMAIN_UUID. This mock returns the token header and lists policies under domain lab-domain.",
-        "The policy body is { items }. Assignments, objects, and deploy are not modeled.",
-        "The FMC guide was not reloaded. Token creation uses basic auth."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://developer.cisco.com/docs/fmc/",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The client POSTs api/fmc_platform/v1/auth/generatetoken and then uses DOMAIN_UUID. This mock returns the token header and lists policies under domain lab-domain.",
-          "The policy body is { items }. Assignments, objects, and deploy are not modeled.",
-          "The FMC guide was not reloaded. Token creation uses basic auth."
-        ]
-      }
+        "Cross-check: field: POST /api/fmc_platform/v1/auth/generatetoken root keys ['domain_uuid', 'token'] are not read by the client or present in test_data ['action', 'destinationPorts', 'files', 'inspectionMode', 'ruleData', 'ruleGroups', 'startTime', 'targets']."
+      ]
     },
     "operations": [
       {

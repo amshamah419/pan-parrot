@@ -3,13 +3,11 @@
   "name": "IBM QRadar v3",
   "pack": "QRadar",
   "vendor": "IBM",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "GET /siem/offenses returns the offense array. Ariel search create and results are included.",
   "notes": [
-    "QRadar returns a JSON array and pages with the Range header items=0-49. This mock uses limit and offset query parameters and does not read Range.",
-    "POST /ariel/searches returns { search_id, status }. GET /ariel/searches/{search_id}/results returns { events }. The cursor and the completed-search wait are not modeled.",
-    "The SEC header must be the dummy token. Version header is not checked."
+    "Cross-check: path: GET /siem/offenses is not a client call. Closest: /api/siem/{address_suffix} (1)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/QRadar/Integrations/QRadar_v3",
@@ -19,20 +17,12 @@
       "kind": "preset",
       "id": "qradar-qradar-v3",
       "name": "IBM QRadar v3",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://ibmsecuritydocs.github.io/qradar_api_21.0/21.0--siem_offenses--get.html",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://ibmsecuritydocs.github.io/qradar_api_21.0/21.0--siem_offenses--get.html",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "QRadar returns a JSON array and pages with the Range header items=0-49. This mock uses limit and offset query parameters and does not read Range.",
-          "POST /ariel/searches returns { search_id, status }. GET /ariel/searches/{search_id}/results returns { events }. The cursor and the completed-search wait are not modeled.",
-          "The SEC header must be the dummy token. Version header is not checked."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: GET /siem/offenses is not a client call. Closest: /api/siem/{address_suffix} (1)."
+      ]
     },
     "operations": [
       {
@@ -123,7 +113,7 @@
         },
         "id": "create-search",
         "method": "POST",
-        "pathTemplate": "/ariel/searches",
+        "pathTemplate": "/api/ariel/searches",
         "summary": "Create an Ariel search",
         "status": 201,
         "list": false,
@@ -160,7 +150,7 @@
         },
         "id": "search-results",
         "method": "GET",
-        "pathTemplate": "/ariel/searches/{search_id}/results",
+        "pathTemplate": "/api/ariel/searches/{search_id}/results",
         "summary": "Get Ariel search results",
         "status": 200,
         "list": false,
