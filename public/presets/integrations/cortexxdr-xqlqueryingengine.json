@@ -3,9 +3,9 @@
   "name": "Cortex XDR - XQL Query Engine",
   "pack": "CortexXDR",
   "vendor": "Palo Alto Networks",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: POST /xql/get_query_results.",
+  "summary": "From vendor docs. Rebuilt from the client: POST /xql/get_query_results.",
   "notes": [
     "Sample fields are the ones POST /xql/get_query_results, POST /xql/start_xql_query reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,20 +17,123 @@
       "kind": "preset",
       "id": "cortexxdr-xqlqueryingengine",
       "name": "Cortex XDR - XQL Query Engine",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Start-an-XQL-Query",
       "notes": [
         "Sample fields are the ones POST /xql/get_query_results, POST /xql/start_xql_query reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Start-an-XQL-Query",
+        "status": "vendor",
+        "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /xql/get_query_results, POST /xql/start_xql_query reads in the matched command. Lists the command iterates are arrays."
+          "3 of 16 commands from vendor docs, 0 approximate, 13 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "xdr-xql-generic-query",
+          "calls": [
+            "POST /xql/start_xql_query"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post-xql-start-xql-query-1"
+          ]
+        },
+        {
+          "command": "xdr-xql-get-quota",
+          "calls": [
+            "POST /xql/get_quota"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--xql-get-quota"
+          ]
+        },
+        {
+          "command": "xdr-xql-get-query-results",
+          "calls": [
+            "POST /xql/get_query_results"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post-xql-get-query-results-0"
+          ]
+        },
+        {
+          "command": "xdr-xql-file-event-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-xql-process-event-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-xql-dll-module-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-xql-network-connection-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-xql-registry-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-xql-event-log-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-xql-dns-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-xql-file-dropper-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-xql-process-instance-network-activity-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-xql-process-causality-network-activity-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-xql-library-list",
+          "calls": [
+            "POST /../xql_library/get"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-xql-library-create",
+          "calls": [
+            "POST /../xql_library/insert"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-xql-library-delete",
+          "calls": [
+            "POST /../xql_library/delete"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -39,7 +142,7 @@
         "pathTemplate": "/xql/get_query_results",
         "summary": "POST /xql/get_query_results",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "headers": {},
         "list": false,
         "envelope": {
@@ -90,7 +193,8 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"reply\": {\n    \"status\": \"PENDING\"\n  }\n}\n"
       },
       {
         "id": "post-xql-start-xql-query-1",
@@ -98,7 +202,7 @@
         "pathTemplate": "/xql/start_xql_query",
         "summary": "POST /xql/start_xql_query",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "headers": {},
         "list": false,
         "envelope": {
@@ -149,7 +253,37 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"reply\": \"ad21c1e1492d4c_667_inv\"\n}\n"
+      },
+      {
+        "id": "post--xql-get-quota",
+        "summary": "POST /xql/get_quota",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/xql/get_quota",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"license_quota\": 5,\n    \"additional_purchased_quota\": 0,\n    \"used_quota\": 0,\n    \"eval_quota\": 0,\n    \"total_daily_running_queries\": 4,\n    \"total_daily_concurrent_rejected_queries\": 8,\n    \"current_concurrent_active_queries\": {\n      \"debee6b0c41f47_911_inv\": {\n        \"xql\": \"config timeframe = 1mo | dataset=xdr_data | limit 1000000\",\n        \"duration\": 61\n      }\n    },\n    \"current_concurrent_active_queries_count\": 1,\n    \"max_daily_concurrent_active_query_count\": 4\n  }\n}\n"
       }
     ],
     "chaos": {

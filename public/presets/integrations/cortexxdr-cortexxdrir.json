@@ -3,9 +3,9 @@
   "name": "Palo Alto Networks Cortex XDR - Investigation and Response",
   "pack": "CortexXDR",
   "vendor": "Palo Alto Networks",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: POST /public_api/v1/incidents/get_incidents.",
+  "summary": "From vendor docs. Rebuilt from the client: POST /public_api/v1/incidents/get_incidents.",
   "notes": [
     "Sample fields are the ones POST /public_api/v1/incidents/get_incidents reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,20 +17,912 @@
       "kind": "preset",
       "id": "cortexxdr-cortexxdrir",
       "name": "Palo Alto Networks Cortex XDR - Investigation and Response",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Get-Incidents",
       "notes": [
         "Sample fields are the ones POST /public_api/v1/incidents/get_incidents reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Get-Incidents",
+        "status": "vendor",
+        "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /public_api/v1/incidents/get_incidents reads in the matched command. Lists the command iterates are arrays."
+          "32 of 109 commands from vendor docs, 6 approximate, 71 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "xdr-get-incidents",
+          "calls": [
+            "POST /incidents/get_incidents"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--incidents-get-incidents"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-get-incident-extra-data",
+          "calls": [
+            "POST /public_api/v1/incidents/get_incidents",
+            "POST /public_api/v1/incidents/get_multiple_incidents_extra_data",
+            "POST /public_api/v1/incidents/get_incident_extra_data"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "post-public-api-v1-incidents-get-incidents-0",
+            "post--public-api-v1-incidents-get-incident-extra-data"
+          ]
+        },
+        {
+          "command": "xdr-update-incident",
+          "calls": [
+            "POST /public_api/v1/incidents/update_incident",
+            "POST /public_api/v1/incidents/get_incident_extra_data",
+            "POST /public_api/v1/alerts/update_alerts"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "post--public-api-v1-incidents-get-incident-extra-data",
+            "post--public-api-v1-alerts-update-alerts"
+          ]
+        },
+        {
+          "command": "xdr-insert-parsed-alert",
+          "calls": [
+            "POST /alerts/insert_parsed_alerts"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-insert-cef-alerts",
+          "calls": [
+            "POST /alerts/insert_cef_alerts"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-endpoint-isolate",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-isolate-endpoint",
+          "calls": [
+            "POST /endpoints/get_endpoint",
+            "POST /endpoints/isolate"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "post--endpoints-isolate"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-endpoint-unisolate",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-unisolate-endpoint",
+          "calls": [
+            "POST /endpoints/get_endpoint",
+            "POST /endpoints/unisolate"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "post--endpoints-unisolate"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-get-endpoints",
+          "calls": [
+            "POST /endpoints/get_endpoint"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-endpoint-alias-change",
+          "calls": [
+            "POST /endpoints/update_agent_name"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-get-distribution-versions",
+          "calls": [
+            "POST /distributions/get_versions"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-create-distribution",
+          "calls": [
+            "POST /distributions/create"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-get-distribution-url",
+          "calls": [
+            "POST /distributions/get_dist_url"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-get-create-distribution-status",
+          "calls": [
+            "POST /distributions/get_status"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-get-audit-management-logs",
+          "calls": [
+            "POST /audits/management_logs"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--audits-management-logs"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-get-audit-agent-reports",
+          "calls": [
+            "POST /audits/agents_reports"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-blocklist-files",
+          "calls": [
+            "POST /hash_exceptions/blocklist"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-blacklist-files",
+          "calls": [
+            "POST /hash_exceptions/blocklist"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-allowlist-files",
+          "calls": [
+            "POST /hash_exceptions/allowlist"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-whitelist-files",
+          "calls": [
+            "POST /hash_exceptions/allowlist"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-file-quarantine",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-quarantine-files",
+          "calls": [
+            "POST /endpoints/quarantine"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--endpoints-quarantine"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-get-quarantine-status",
+          "calls": [
+            "POST /quarantine/status"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--quarantine-status"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-file-restore",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-restore-file",
+          "calls": [
+            "POST /endpoints/restore"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--endpoints-restore"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-endpoint-scan-execute",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-endpoint-scan",
+          "calls": [
+            "POST /endpoints/scan"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-endpoint-scan-abort",
+          "calls": [
+            "POST /endpoints/abort_scan"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "get-mapping-fields",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "get-remote-data",
+          "calls": [
+            "POST /public_api/v1/incidents/get_multiple_incidents_extra_data",
+            "POST /public_api/v1/incidents/get_incident_extra_data",
+            "POST /public_api/v1/incidents/get_incidents"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "post--public-api-v1-incidents-get-incident-extra-data",
+            "post-public-api-v1-incidents-get-incidents-0"
+          ]
+        },
+        {
+          "command": "get-modified-remote-data",
+          "calls": [
+            "POST /incidents/get_incidents"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--incidents-get-incidents"
+          ]
+        },
+        {
+          "command": "xdr-get-policy",
+          "calls": [
+            "POST /endpoints/get_policy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--endpoints-get-policy"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-get-scripts",
+          "calls": [
+            "POST /scripts/get_scripts"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-get-scripts"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-delete-endpoints",
+          "calls": [
+            "POST /endpoints/delete"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-get-endpoint-device-control-violations",
+          "calls": [
+            "POST /device_control/get_violations"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-file-retrieve",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-retrieve-files",
+          "calls": [
+            "POST /endpoints/file_retrieval"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-retrieve-file-details",
+          "calls": [
+            "POST /scripts/get_scripts"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-get-scripts"
+          ]
+        },
+        {
+          "command": "xdr-get-script-metadata",
+          "calls": [
+            "POST /scripts/get_script_metadata"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-get-script-metadata"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-get-script-code",
+          "calls": [
+            "POST /scripts/get_script_code"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-get-script-code"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-action-status-get",
+          "calls": [
+            "POST /actions/get_action_status"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--actions-get-action-status"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-run-script",
+          "calls": [
+            "POST /scripts/run_script"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-run-script"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-script-run",
+          "calls": [
+            "POST /scripts/get_script_execution_status",
+            "POST /scripts/get_script_execution_results",
+            "POST /scripts/run_script"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-get-script-execution-status",
+            "post--scripts-get-script-execution-results",
+            "post--scripts-run-script"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-snippet-code-script-execute",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-run-snippet-code-script",
+          "calls": [
+            "POST /scripts/run_snippet_code_script"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-run-snippet-code-script"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-get-script-execution-status",
+          "calls": [
+            "POST /scripts/get_script_execution_status"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-get-script-execution-status"
+          ]
+        },
+        {
+          "command": "xdr-get-script-execution-results",
+          "calls": [
+            "POST /scripts/get_script_execution_results"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-get-script-execution-results"
+          ]
+        },
+        {
+          "command": "xdr-get-script-execution-result-files",
+          "calls": [
+            "POST /scripts/get_script_execution_results_files"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-get-script-execution-results-files"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-script-commands-execute",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-run-script-execute-commands",
+          "calls": [
+            "POST /scripts/run_script"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-run-script"
+          ]
+        },
+        {
+          "command": "xdr-file-delete-script-execute",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-run-script-delete-file",
+          "calls": [
+            "POST /scripts/run_script"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-run-script"
+          ]
+        },
+        {
+          "command": "xdr-file-exist-script-execute",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-run-script-file-exists",
+          "calls": [
+            "POST /scripts/run_script"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--scripts-run-script"
+          ]
+        },
+        {
+          "command": "xdr-kill-process-script-execute",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-run-script-kill-process",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "endpoint",
+          "calls": [
+            "POST /endpoints/get_endpoint"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-get-endpoints-by-status",
+          "calls": [
+            "POST /endpoints/get_endpoint"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-get-cloud-original-alerts",
+          "calls": [
+            "POST /alerts/get_original_alerts"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-get-alerts",
+          "calls": [
+            "POST /alerts/get_alerts_by_filter_data"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-remove-allowlist-files",
+          "calls": [
+            "POST /hash_exceptions/allowlist/remove"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-remove-blocklist-files",
+          "calls": [
+            "POST /hash_exceptions/blocklist/remove"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-get-contributing-event",
+          "calls": [
+            "POST /public_api/v1/alerts/get_correlation_alert_data"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-replace-featured-field",
+          "calls": [
+            "POST /public_api/v1/featured_fields/replace_{field_type}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-endpoint-tag-add",
+          "calls": [
+            "POST /tags/agents/assign"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-endpoint-tag-remove",
+          "calls": [
+            "POST /tags/agents/remove"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-get-tenant-info",
+          "calls": [
+            "POST /public_api/v1/system/get_tenant_info"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--public-api-v1-system-get-tenant-info"
+          ]
+        },
+        {
+          "command": "xdr-list-users",
+          "calls": [
+            "POST /rbac/get_users"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--rbac-get-users"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-list-risky-users",
+          "calls": [
+            "POST /get_risk_score"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--get-risk-score"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-list-risky-hosts",
+          "calls": [
+            "POST /get_risk_score"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--get-risk-score"
+          ]
+        },
+        {
+          "command": "xdr-list-user-groups",
+          "calls": [
+            "POST /rbac/get_user_group"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--rbac-get-user-group"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-list-roles",
+          "calls": [
+            "POST /rbac/get_roles"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--rbac-get-roles"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-set-user-role",
+          "calls": [
+            "POST /rbac/set_user_role"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--rbac-set-user-role"
+          ],
+          "docUrl": "https://openapi.gitbook.com/o/r4DIGbR5VLvkZy3gAYsu/spec/release-xdr-legacy-cortex-xdr.json"
+        },
+        {
+          "command": "xdr-remove-user-role",
+          "calls": [
+            "POST /rbac/set_user_role"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--rbac-set-user-role"
+          ]
+        },
+        {
+          "command": "xdr-update-alert",
+          "calls": [
+            "POST /public_api/v1/alerts/update_alerts"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--public-api-v1-alerts-update-alerts"
+          ]
+        },
+        {
+          "command": "xdr-api-key-list",
+          "calls": [
+            "POST /public_api/v1/api_keys/get_api_keys"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-api-key-delete",
+          "calls": [
+            "POST /public_api/v1/api_keys/delete"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-asset-list",
+          "calls": [
+            "GET /public_api/v1/assets/{asset_id}",
+            "POST /public_api/v1/assets"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-asset-schema-get",
+          "calls": [
+            "GET /public_api/v1/assets/schema"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-asset-schema-field-options-get",
+          "calls": [
+            "GET /public_api/v1/assets/enum/{field_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-asset-group-create",
+          "calls": [
+            "POST /public_api/v1/asset-groups/create"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-asset-group-delete",
+          "calls": [
+            "POST /public_api/v1/asset-groups/delete/{group_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-asset-group-list",
+          "calls": [
+            "POST /public_api/v1/asset-groups"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-asset-group-update",
+          "calls": [
+            "POST /public_api/v1/asset-groups/update/{group_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-automation-script-create",
+          "calls": [
+            "POST /public_api/v1/scripts/insert"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-automation-script-get",
+          "calls": [
+            "POST /public_api/v1/scripts/get"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-automation-script-delete",
+          "calls": [
+            "POST /public_api/v1/scripts/delete"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-automation-playbook-create",
+          "calls": [
+            "POST /public_api/v1/playbooks/insert"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-automation-playbook-get",
+          "calls": [
+            "POST /public_api/v1/playbooks/get"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-automation-playbook-delete",
+          "calls": [
+            "POST /public_api/v1/playbooks/delete"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-case-list",
+          "calls": [
+            "POST /public_api/v1/incidents/get_multiple_incidents_extra_data",
+            "POST /public_api/v1/case/search",
+            "POST /public_api/v1/incidents/get_incidents"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "post-public-api-v1-incidents-get-incidents-0"
+          ]
+        },
+        {
+          "command": "xdr-case-update",
+          "calls": [
+            "POST /public_api/v1/case/update/{case_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-case-artifact-list",
+          "calls": [
+            "GET /public_api/v1/case/artifacts/{case_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-bioc-list",
+          "calls": [
+            "POST /public_api/v1/bioc/get"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-bioc-create",
+          "calls": [
+            "POST /public_api/v1/bioc/insert"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-bioc-update",
+          "calls": [
+            "POST /public_api/v1/bioc/insert"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-bioc-delete",
+          "calls": [
+            "POST /public_api/v1/bioc/delete"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-correlation-rule-list",
+          "calls": [
+            "POST /public_api/v1/correlations/get"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-correlation-rule-create",
+          "calls": [
+            "POST /public_api/v1/correlations/insert"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-correlation-rule-update",
+          "calls": [
+            "POST /public_api/v1/correlations/insert"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-correlation-rule-delete",
+          "calls": [
+            "POST /public_api/v1/correlations/delete"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-vulnerability-details-get",
+          "calls": [
+            "GET /public_api/v1/../uvem/v1/vulnerabilities"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-healthcheck-run",
+          "calls": [
+            "GET /public_api/v1/healthcheck"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-endpoint-triage-preset-list",
+          "calls": [
+            "POST /public_api/v1/get_triage_presets"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--public-api-v1-get-triage-presets"
+          ]
+        },
+        {
+          "command": "xdr-endpoint-triage",
+          "calls": [
+            "POST /public_api/v1/triage_endpoint"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--public-api-v1-triage-endpoint"
+          ]
+        },
+        {
+          "command": "xdr-issue-list",
+          "calls": [
+            "POST /public_api/v1/issue/search"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-issue-create",
+          "calls": [
+            "POST /public_api/v1/issue"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "xdr-issue-update",
+          "calls": [
+            "POST /public_api/v1/issue/{issue_id}"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -39,7 +931,7 @@
         "pathTemplate": "/public_api/v1/incidents/get_incidents",
         "summary": "POST /public_api/v1/incidents/get_incidents",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "headers": {},
         "list": false,
         "envelope": {
@@ -301,7 +1193,791 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"reply\": {\n    \"total_count\": 1,\n    \"result_count\": 1,\n    \"incidents\": [\n      {\n        \"incident_id\": \"<incident ID>\",\n        \"incident_name\": \"test\",\n        \"creation_time\": 1577024425126,\n        \"modification_time\": 1577024425126,\n        \"detection_time\": null,\n        \"status\": \"resolved_known_issue\",\n        \"severity\": \"medium\",\n        \"description\": \"Memory Corruption Exploit generated by XDR Agent\",\n        \"assigned_user_mail\": null,\n        \"assigned_user_pretty_name\": null,\n        \"alert_count\": 1,\n        \"low_severity_alert_count\": 0,\n        \"med_severity_alert_count\": 1,\n        \"high_severity_alert_count\": 0,\n        \"critical_severity_alert_count\": 0,\n        \"user_count\": 1,\n        \"host_count\": 1,\n        \"notes\": null,\n        \"resolve_comment\": null,\n        \"resolved_timestamp\": 1577024425126,\n        \"manual_severity\": null,\n        \"manual_description\": \"Memory Corruption Exploit generated by XDR Agent\",\n        \"xdr_url\": \"https://<link to incident>\",\n        \"starred\": false,\n        \"hosts\": [\n          \"<host ID>\"\n        ],\n        \"users\": [\n          \"test_1\",\n          \"test_2\"\n        ],\n        \"incident_sources\": [\n          \"XDR Agent\",\n          \"XDR BIOC\"\n        ],\n        \"rule_based_score\": 342,\n        \"manual_score\": null,\n        \"wildfire_hits\": 0,\n        \"alerts_grouping_status\": \"Enabled\",\n        \"mitre_tactics_ids_and_names\": [\n          \"TA0004 - Privilege Escalation\",\n          \"TA0005 - Defense Evasion\",\n          \"TA0006 - Credential Access\"\n        ],\n        \"mitre_techniques_ids_and_names\": [\n          \"T1001.001 - Data Obfuscation: Junk Data\",\n          \"T1001.002 - Data Obfuscation: Steganography\",\n          \"T1001.003 - Data Obfuscation: Protocol Impersonation\"\n        ],\n        \"alert_categories\": [\n          \"Credential Access\",\n          \"Exploit\",\n          \"Spyware Detected via Anti-Spyware profile\"\n        ],\n        \"original_tags\": [\n          \"DS:PANW/NGFW\",\n          \"EG:acme-2\",\n          \"EG:Acme group\",\n          \"DS:PANW/XDR Agent\"\n        ],\n        \"tags\": [\n          \"EG:Acme group\",\n          \"DS:PANW/NGFW\",\n          \"DS:PANW/XDR Agent\",\n          \"EG:acme-2\"\n        ],\n        \"starred_manually\": true\n      }\n    ],\n    \"restricted_incident_ids\": []\n  }\n}\n"
+      },
+      {
+        "id": "post--public-api-v1-incidents-get-incident-extra-data",
+        "summary": "POST /public_api/v1/incidents/get_incident_extra_data",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/incidents/get_incident_extra_data",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"incident\": {\n      \"incident_id\": \"<incient ID>\",\n      \"incident_name\": \"test\",\n      \"creation_time\": 1603184209710,\n      \"modification_time\": 1603184209710,\n      \"detection_time\": null,\n      \"status\": \"new\",\n      \"severity\": \"high\",\n      \"description\": \"generated by PAN NGFW\",\n      \"assigned_user_mail\": null,\n      \"assigned_user_pretty_name\": null,\n      \"alert_count\": 1,\n      \"low_severity_alert_count\": 0,\n      \"med_severity_alert_count\": 0,\n      \"high_severity_alert_count\": 1,\n      \"critical_severity_alert_count\": 0,\n      \"user_count\": 0,\n      \"host_count\": 0,\n      \"notes\": null,\n      \"resolve_comment\": null,\n      \"manual_severity\": null,\n      \"manual_description\": null,\n      \"xdr_url\": \"https://test.xdr.us.paloaltonetworks.com/incident-view/1\",\n      \"starred\": false,\n      \"hosts\": [\n        \"<host1>:<agent_id1>\",\n        \"<host2>:<agent_id2>\"\n      ],\n      \"users\": [],\n      \"incident_sources\": [\n        \"PAN NGFW\"\n      ],\n      \"rule_based_score\": 342,\n      \"manual_score\": null,\n      \"wildfire_hits\": 0,\n      \"alerts_grouping_status\": \"Enabled\",\n      \"mitre_techniques_ids_and_names\": [\n        \"TA0004 - Privilege Escalation\",\n        \"TA0005 - Defense Evasion\",\n        \"TA0006 - Credential Access\"\n      ],\n      \"mitre_tactics_ids_and_names\": [\n        \"T1001.001 - Data Obfuscation: Junk Data\",\n        \"T1001.002 - Data Obfuscation: Steganography\",\n        \"T1001.003 - Data Obfuscation: Protocol Impersonation\"\n      ],\n      \"alert_categories\": [\n        \"Collection\",\n        \"Credential Access\",\n        \"File Name\"\n      ]\n    },\n    \"alerts\": {\n      \"total_count\": 1,\n      \"data\": [\n        {\n          \"external_id\": \"<external ID>\",\n          \"severity\": \"high\",\n          \"matching_status\": \"UNMATCHABLE\",\n          \"end_match_attempt_ts\": null,\n          \"local_insert_ts\": 1603175431,\n          \"bioc_indicator\": null,\n          \"matching_service_rule_id\": null,\n          \"attempt_counter\": null,\n          \"bioc_category_enum_key\": null,\n          \"case_id\": 1,\n          \"is_whitelisted\": false,\n          \"starred\": false,\n          \"deduplicate_tokens\": \"<token value>\",\n          \"filter_rule_id\": null,\n          \"mitre_technique_id_and_name\": null,\n          \"mitre_tactic_id_and_name\": null,\n          \"agent_version\": null,\n          \"agent_device_domain\": null,\n          \"agent_fqdn\": null,\n          \"agent_os_type\": \"NO_HOST\",\n          \"agent_os_sub_type\": null,\n          \"agent_data_collection_status\": null,\n          \"mac\": null,\n          \"agent_is_vdi\": null,\n          \"agent_install_type\": \"NA\",\n          \"agent_host_boot_time\": null,\n          \"event_sub_type\": null,\n          \"module_id\": null,\n          \"association_strength\": null,\n          \"dst_association_strength\": null,\n          \"story_id\": null,\n          \"event_id\": null,\n          \"event_type\": \"Network Event\",\n          \"events_length\": 1,\n          \"event_timestamp\": null,\n          \"actor_process_instance_id\": null,\n          \"actor_process_image_path\": null,\n          \"actor_process_image_name\": null,\n          \"actor_process_command_line\": null,\n          \"actor_process_signature_status\": \"N/A\",\n          \"actor_process_signature_vendor\": null,\n          \"actor_process_image_sha256\": null,\n          \"actor_process_image_md5\": null,\n          \"actor_process_causality_id\": null,\n          \"actor_causality_id\": null,\n          \"actor_process_os_pid\": null,\n          \"actor_thread_thread_id\": null,\n          \"causality_actor_process_image_name\": null,\n          \"causality_actor_process_command_line\": null,\n          \"causality_actor_process_image_path\": null,\n          \"causality_actor_process_signature_vendor\": null,\n          \"causality_actor_process_signature_status\": \"N/A\",\n          \"causality_actor_causality_id\": null,\n          \"causality_actor_process_execution_time\": null,\n          \"causality_actor_process_image_md5\": null,\n          \"causality_actor_process_image_sha256\": null,\n          \"action_file_path\": null,\n          \"action_file_name\": null,\n          \"action_file_md5\": null,\n          \"action_file_sha256\": null,\n          \"action_file_macro_sha256\": null,\n          \"action_registry_data\": null,\n          \"action_registry_key_name\": null,\n          \"action_registry_value_name\": null,\n          \"action_registry_full_key\": null,\n          \"action_local_ip\": \"<IP address>\",\n          \"action_local_port\": \"<port>\",\n          \"action_remote_ip\": \"<IP address>\",\n          \"action_remote_port\": \"<port>\",\n          \"action_external_hostname\": \"<hostname>\",\n          \"action_country\": \"UNKNOWN\",\n          \"action_process_instance_id\": null,\n          \"action_process_causality_id\": null,\n          \"action_process_image_name\": null,\n          \"action_process_image_sha256\": null,\n          \"action_process_image_command_line\": null,\n          \"action_process_signature_status\": \"N/A\",\n          \"action_process_signature_vendor\": null,\n          \"os_actor_effective_username\": null,\n          \"os_actor_process_instance_id\": null,\n          \"os_actor_process_image_path\": null,\n          \"os_actor_process_image_name\": null,\n          \"os_actor_process_command_line\": null,\n          \"os_actor_process_signature_status\": \"N/A\",\n          \"os_actor_process_signature_vendor\": null,\n          \"os_actor_process_image_sha256\": null,\n          \"os_actor_process_causality_id\": null,\n          \"os_actor_causality_id\": null,\n          \"os_actor_process_os_pid\": null,\n          \"os_actor_thread_thread_id\": null,\n          \"fw_app_id\": null,\n          \"fw_interface_from\": null,\n          \"fw_interface_to\": null,\n          \"fw_rule\": null,\n          \"fw_rule_id\": null,\n          \"fw_device_name\": null,\n          \"fw_serial_number\": \"<serial number>\",\n          \"fw_url_domain\": null,\n          \"fw_email_subject\": \"\",\n          \"fw_email_sender\": null,\n          \"fw_email_recipient\": null,\n          \"fw_app_subcategory\": null,\n          \"fw_app_category\": null,\n          \"fw_app_technology\": null,\n          \"fw_vsys\": null,\n          \"fw_xff\": null,\n          \"fw_misc\": null,\n          \"fw_is_phishing\": \"N/A\",\n          \"dst_agent_id\": null,\n          \"dst_causality_actor_process_execution_time\": null,\n          \"dns_query_name\": null,\n          \"dst_action_external_hostname\": null,\n          \"dst_action_country\": null,\n          \"dst_action_external_port\": null,\n          \"alert_id\": \"1\",\n          \"detection_timestamp\": 1603184109000,\n          \"name\": \"sagcalun\",\n          \"category\": \"Spyware Detected via Anti-Spyware profile\",\n          \"endpoint_id\": null,\n          \"description\": \"Spyware Phone Home Detection\",\n          \"host_ip\": \"<IP address>\",\n          \"host_name\": \"<hostname>\",\n          \"source\": \"PAN NGFW\",\n          \"action\": \"DETECTED_4\",\n          \"action_pretty\": \"Detected (Raised An Alert)\",\n          \"user_name\": null,\n          \"device_product_id\": null,\n          \"device_serial_number\": null,\n          \"device_type\": null,\n          \"device_vendor_id\": null,\n          \"device_vendor_name\": null,\n          \"contains_featured_host\": \"Yes\",\n          \"contains_featured_user\": \"Yes\",\n          \"contains_featured_ip_address\": \"Yes\",\n          \"tags\": [\n            \"XDR Agent\",\n            \"EG:Windows\"\n          ],\n          \"original_tags\": \"None\"\n        }\n      ]\n    },\n    \"network_artifacts\": {\n      \"total_count\": 2,\n      \"data\": [\n        {\n          \"type\": \"DOMAIN\",\n          \"alert_count\": 1,\n          \"is_manual\": false,\n          \"network_domain\": \"<domain name>\",\n          \"network_remote_ip\": \"<IP address>\",\n          \"network_remote_port\": \"<port>\",\n          \"network_country\": \"UNKNOWN\"\n        },\n        {\n          \"type\": \"IP\",\n          \"alert_count\": 1,\n          \"is_manual\": false,\n          \"network_domain\": \"<domain name>\",\n          \"network_remote_ip\": \"<IP address>\",\n          \"network_remote_port\": \"<port>\",\n          \"network_country\": \"UNKNOWN\"\n        }\n      ]\n    },\n    \"file_artifacts\": {\n      \"total_count\": 2,\n      \"data\": [\n        {\n          \"alert_count\": 2,\n          \"file_name\": \"Test\",\n          \"File_sha256\": \"1111\",\n          \"file_signature_status\": \"SIGNATURE_UNAVAILABLE\",\n          \"file_wildfire_verdict\": \"BENIGN\",\n          \"is_malicous\": false,\n          \"is_manual\": false,\n          \"is_process\": false,\n          \"low_confidence\": true,\n          \"type\": \"HASH\"\n        },\n        {\n          \"alert_count\": 43,\n          \"file_name\": \"Test1\",\n          \"File_sha256\": \"2222\",\n          \"file_signature_status\": \"SIGNATURE_UNAVAILABLE\",\n          \"file_wildfire_verdict\": \"MALWARE\",\n          \"is_malicous\": true,\n          \"is_manual\": false,\n          \"is_process\": false,\n          \"low_confidence\": true,\n          \"type\": \"HASH\"\n        }\n      ]\n    }\n  }\n}\n"
+      },
+      {
+        "id": "post--public-api-v1-alerts-update-alerts",
+        "summary": "POST /public_api/v1/alerts/update_alerts",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/alerts/update_alerts",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"alerts_ids\": [\n      104173820,\n      574203823,\n      395720183\n    ]\n  }\n}\n"
+      },
+      {
+        "id": "post--public-api-v1-system-get-tenant-info",
+        "summary": "POST /public_api/v1/system/get_tenant_info",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/system/get_tenant_info",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"pro_per_endpoint_expiration\": 12478046378,\n    \"purchased_pro_per_endpoint\": {\n      \"agents\": 200\n    },\n    \"data_enabled_pro_per_endpoint\": 26,\n    \"prevent_expiration\": 0,\n    \"purchased_prevent\": 0,\n    \"installed_prevent\": 27,\n    \"pro_tb_expiration\": 12478046378,\n    \"purchased_pro_tb\": {\n      \"tb\": 1\n    },\n    \"installed_pro_tb\": 0,\n    \"compute_unit_expiration\": 0,\n    \"purchased_compute_unit\": 16,\n    \"host_insights_expiration\": 12478046378,\n    \"enabled_host_insights\": 26,\n    \"purchased_host_insights\": 400,\n    \"forensics_expiration\": 0,\n    \"enabled_forensics\": 12\n  }\n}\n"
+      },
+      {
+        "id": "post--public-api-v1-get-triage-presets",
+        "summary": "POST /public_api/v1/get_triage_presets",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/get_triage_presets",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"triage_presets\": [\n      {\n        \"uuid\": \"374ecf0457c944c39791e5a60d1a6d24\",\n        \"name\": \"XDR Default\",\n        \"os\": \"MACOS\",\n        \"description\": \"Default macOS Triage configuration included with the XDR Forensics add-on\",\n        \"created_by\": \"user@example.invalid\",\n        \"type\": \"Online / Offline\"\n      },\n      {\n        \"uuid\": \"ea7a5d3ff52d41629e96fbd1d5f68535\",\n        \"name\": \"XDR Default\",\n        \"os\": \"WINDOWS\",\n        \"description\": \"Default Triage configuration included with XDR Forensics add-on\",\n        \"created_by\": \"user@example.invalid\",\n        \"type\": \"Online / Offline\"\n      }\n    ]\n  }\n}\n"
+      },
+      {
+        "id": "post--public-api-v1-triage-endpoint",
+        "summary": "POST /public_api/v1/triage_endpoint",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/triage_endpoint",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"group_action_id\": 325,\n    \"successful_agent_ids\": [\n      \"5111c5eb93944e2f97674db4f36b4211\"\n    ],\n    \"unsuccessful_agent_ids\": []\n  }\n}\n"
+      },
+      {
+        "id": "post--incidents-get-incidents",
+        "summary": "POST /incidents/get_incidents",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/incidents/get_incidents",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"total_count\": 1,\n    \"result_count\": 1,\n    \"incidents\": [\n      {\n        \"incident_id\": \"<incident ID>\",\n        \"incident_name\": \"test\",\n        \"creation_time\": 1577024425126,\n        \"modification_time\": 1577024425126,\n        \"detection_time\": null,\n        \"status\": \"resolved_known_issue\",\n        \"severity\": \"medium\",\n        \"description\": \"Memory Corruption Exploit generated by XDR Agent\",\n        \"assigned_user_mail\": null,\n        \"assigned_user_pretty_name\": null,\n        \"alert_count\": 1,\n        \"low_severity_alert_count\": 0,\n        \"med_severity_alert_count\": 1,\n        \"high_severity_alert_count\": 0,\n        \"critical_severity_alert_count\": 0,\n        \"user_count\": 1,\n        \"host_count\": 1,\n        \"notes\": null,\n        \"resolve_comment\": null,\n        \"resolved_timestamp\": 1577024425126,\n        \"manual_severity\": null,\n        \"manual_description\": \"Memory Corruption Exploit generated by XDR Agent\",\n        \"xdr_url\": \"https://<link to incident>\",\n        \"starred\": false,\n        \"hosts\": [\n          \"<host ID>\"\n        ],\n        \"users\": [\n          \"test_1\",\n          \"test_2\"\n        ],\n        \"incident_sources\": [\n          \"XDR Agent\",\n          \"XDR BIOC\"\n        ],\n        \"rule_based_score\": 342,\n        \"manual_score\": null,\n        \"wildfire_hits\": 0,\n        \"alerts_grouping_status\": \"Enabled\",\n        \"mitre_tactics_ids_and_names\": [\n          \"TA0004 - Privilege Escalation\",\n          \"TA0005 - Defense Evasion\",\n          \"TA0006 - Credential Access\"\n        ],\n        \"mitre_techniques_ids_and_names\": [\n          \"T1001.001 - Data Obfuscation: Junk Data\",\n          \"T1001.002 - Data Obfuscation: Steganography\",\n          \"T1001.003 - Data Obfuscation: Protocol Impersonation\"\n        ],\n        \"alert_categories\": [\n          \"Credential Access\",\n          \"Exploit\",\n          \"Spyware Detected via Anti-Spyware profile\"\n        ],\n        \"original_tags\": [\n          \"DS:PANW/NGFW\",\n          \"EG:acme-2\",\n          \"EG:Acme group\",\n          \"DS:PANW/XDR Agent\"\n        ],\n        \"tags\": [\n          \"EG:Acme group\",\n          \"DS:PANW/NGFW\",\n          \"DS:PANW/XDR Agent\",\n          \"EG:acme-2\"\n        ],\n        \"starred_manually\": true\n      }\n    ],\n    \"restricted_incident_ids\": []\n  }\n}\n"
+      },
+      {
+        "id": "post--endpoints-isolate",
+        "summary": "POST /endpoints/isolate",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/endpoints/isolate",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"action_id\": \"<action ID>\",\n    \"status\": \"1\",\n    \"endpoints_count\": \"673\"\n  }\n}\n"
+      },
+      {
+        "id": "post--endpoints-unisolate",
+        "summary": "POST /endpoints/unisolate",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/endpoints/unisolate",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"action_id\": \"<action ID>\",\n    \"status\": \"1\",\n    \"endpoints_count\": \"673\"\n  }\n}\n"
+      },
+      {
+        "id": "post--audits-management-logs",
+        "summary": "POST /audits/management_logs",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/audits/management_logs",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"total_count\": 1,\n    \"result_count\": 1,\n    \"data\": [\n      {\n        \"AUDIT_ID\": 1,\n        \"AUDIT_OWNER_NAME\": \"User Name\",\n        \"AUDIT_OWNER_EMAIL\": \"user@example.invalid\",\n        \"AUDIT_ASSET_JSON\": \"{}\",\n        \"AUDIT_ASSET_NAMES\": \"\",\n        \"AUDIT_HOSTNAME\": \"\",\n        \"AUDIT_RESULT\": \"SUCCESS\",\n        \"AUDIT_REASON\": \"\",\n        \"AUDIT_DESCRIPTION\": \"\",\n        \"AUDIT_ENTITY\": \"AUTH\",\n        \"AUDIT_ENTITY_SUBTYPE\": \"Login\",\n        \"AUDIT_SESSION_ID\": 382303947890,\n        \"AUDIT_CASE_ID\": 473829372,\n        \"AUDIT_INSERT_TIME\": 1565074114053,\n        \"AUDIT_SEVERITY\": \"SEV_020_LOW\",\n        \"AUDIT_LINK\": \"\",\n        \"AUDIT_SOURCE_IP\": \"31.174.156.148\",\n        \"AUDIT_USER_AGENT\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36\",\n        \"AUDIT_USER_ROLES\": [\n          \"Account Admin\"\n        ],\n        \"AUDIT_ADDITIONAL_INFORMATION\": {\n          \"endpoint_names\": [\n            \"WIN-fgo6762G\"\n          ],\n          \"endpoint_count\": 1\n        }\n      }\n    ]\n  }\n}\n"
+      },
+      {
+        "id": "post--endpoints-quarantine",
+        "summary": "POST /endpoints/quarantine",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/endpoints/quarantine",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"action_id\": \"[ID value]\",\n    \"status\": \"1\",\n    \"endpoints_count\": \"673\"\n  }\n}\n"
+      },
+      {
+        "id": "post--quarantine-status",
+        "summary": "POST /quarantine/status",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/quarantine/status",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": [\n    {\n      \"endpoint_id\": \"<endpoint ID>\",\n      \"file_path\": \"C:\\\\<file path>\\\\test_x64.msi\",\n      \"file_hash\": \"<hash value>\",\n      \"status\": false\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "post--endpoints-restore",
+        "summary": "POST /endpoints/restore",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/endpoints/restore",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"action_id\": \"<action ID>\",\n    \"status\": 1,\n    \"endpoints_count\": \"673\"\n  }\n}\n"
+      },
+      {
+        "id": "post--endpoints-get-policy",
+        "summary": "POST /endpoints/get_policy",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/endpoints/get_policy",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"policy_name\": \"Windows Default\"\n  }\n}\n"
+      },
+      {
+        "id": "post--scripts-get-scripts",
+        "summary": "POST /scripts/get_scripts",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/scripts/get_scripts",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"total_count\": 129,\n    \"result_count\": 24,\n    \"scripts\": [\n      {\n        \"script_id\": \"<script ID>\",\n        \"name\": \"list_directories\",\n        \"description\": \"List all directories under path\",\n        \"modification_date\": 1585074627259,\n        \"created_by\": \"Palo Alto Networks\",\n        \"is_high_risk\": false,\n        \"windows_supported\": true,\n        \"linux_supported\": true,\n        \"macos_supported\": true,\n        \"script_uid\": \"<unique ID>\"\n      },\n      {\n        \"script_id\": \"<script ID>\",\n        \"name\": \"test 1\",\n        \"description\": \"test\",\n        \"modification_date\": 1583052236449,\n        \"created_by\": \"User 1\",\n        \"is_high_risk\": false,\n        \"windows_supported\": true,\n        \"linux_supported\": false,\n        \"macos_supported\": false,\n        \"script_uid\": \"<unique ID>\"\n      },\n      {\n        \"script_id\": \"<script ID>\",\n        \"name\": \"test 2\",\n        \"description\": \"test 2\",\n        \"modification_date\": 1582709343498,\n        \"created_by\": \"User 2\",\n        \"is_high_risk\": false,\n        \"windows_supported\": true,\n        \"linux_supported\": true,\n        \"macos_supported\": true,\n        \"script_uid\": \"<unique ID>\"\n      }\n    ]\n  }\n}\n"
+      },
+      {
+        "id": "post--scripts-get-script-metadata",
+        "summary": "POST /scripts/get_script_metadata",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/scripts/get_script_metadata",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"script_id\": \"<script ID>\",\n    \"name\": \"list_directories\",\n    \"description\": \"List all directories under path\",\n    \"modification_date\": 1585074627259,\n    \"created_by\": \"Palo Alto Networks\",\n    \"is_high_risk\": false,\n    \"windows_supported\": true,\n    \"linux_supported\": true,\n    \"macos_supported\": true,\n    \"script_uid\": \"<unique ID>\",\n    \"entry_point\": \"run\",\n    \"script_input\": [\n      {\n        \"name\": \"path\",\n        \"type\": \"string\"\n      },\n      {\n        \"friendly_name\": \"Number of levels\",\n        \"name\": \"num_levels\",\n        \"type\": \"number\"\n      }\n    ],\n    \"script_output_type\": \"dictionary\",\n    \"script_output_dictionary_definitions\": [\n      {\n        \"friendly_name\": \"Number Of Processes\",\n        \"name\": \"output_2\",\n        \"type\": \"number\"\n      },\n      {\n        \"friendly_name\": \"Name\",\n        \"name\": \"output_1\",\n        \"type\": \"string\"\n      }\n    ]\n  }\n}\n"
+      },
+      {
+        "id": "post--scripts-get-script-code",
+        "summary": "POST /scripts/get_script_code",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/scripts/get_script_code",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": \"import os\\nimport sys\\nimport traceback\\n\\n\\ndef run(path, num_levels):\\n\\tpath = os.path.expanduser(path)\\n\\tpath = os.path.expandvars(path)\\n\\treturn scan_directory_recursive(path, num_levels)\\n\\n\\ndef scan_directory_recursive(directory, level):\\n\\tif level == 0:\\n\\t\\treturn []\\n\\n\\tsubfolders = []\\n\\ttry:\\n\\t\\twith os.scandir(directory) as entries:\\n\\t\\t\\tfor f in entries:\\n\\t\\t\\t\\ttry:\\n\\t\\t\\t\\t\\tif f.is_dir():\\n\\t\\t\\t\\t\\t\\tsubfolders.append(f.path)\\n\\t\\t\\t\\texcept (OSError,PermissionError):\\n\\t\\t\\t\\t\\tsys.stderr.write(f\\\"Failed access <{f.path}>\\\\n\\\")\\n\\n\\t\\tfor folder in list(subfolders):\\n\\t\\t    subfolders.extend(scan_directory_recursive(folder, level-1))\\n\\texcept Exception:\\n\\t\\tsys.stderr.write(f\\\"Failed scanning directory: <{directory}>, error: {traceback.format_exc()}\\\")\\n\\n\\treturn subfolders\\n\"\n}\n"
+      },
+      {
+        "id": "post--actions-get-action-status",
+        "summary": "POST /actions/get_action_status",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/actions/get_action_status",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"data\": {\n      \"<agent ID>\": \"COMPLETED_SUCCESSFULLY\"\n    }\n  }\n}\n"
+      },
+      {
+        "id": "post--scripts-run-script",
+        "summary": "POST /scripts/run_script",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/scripts/run_script",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"action_id\": 22519813685366,\n    \"status\": 1,\n    \"endpoints_count\": 1\n  }\n}\n"
+      },
+      {
+        "id": "post--scripts-get-script-execution-status",
+        "summary": "POST /scripts/get_script_execution_status",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/scripts/get_script_execution_status",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"general_status\": \"PENDING\",\n    \"endpoints_pending\": 1,\n    \"endpoints_canceled\": 0,\n    \"endpoints_in_progress\": 0,\n    \"endpoints_timeout\": 0,\n    \"endpoints_failed\": 0,\n    \"endpoints_completed_successfully\": 0,\n    \"endpoints_pending_abort\": 0,\n    \"endpoints_aborted\": 0,\n    \"endpoints_expired\": 0\n  }\n}\n"
+      },
+      {
+        "id": "post--scripts-get-script-execution-results",
+        "summary": "POST /scripts/get_script_execution_results",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/scripts/get_script_execution_results",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"script_name\": \"snippet script\",\n    \"script_description\": \"\",\n    \"script_parameters\": [],\n    \"date_created\": \"2020-03-29 13:21:59\",\n    \"scope\": \"win_10and 21 other endpoints\",\n    \"error_message\": \"\",\n    \"results\": [\n      {\n        \"endpoint_name\": \"<name>\",\n        \"endpoint_ip_address\": [\n          \"<IP address>\"\n        ],\n        \"endpoint_status\": \"LOST\",\n        \"domain\": \"aaaa\",\n        \"endpoint_id\": \"<endpoint ID>\",\n        \"execution_status\": \"PENDING\",\n        \"standard_output\": null,\n        \"retrieved_files\": 0,\n        \"failed_files\": 0,\n        \"retention_date\": null\n      },\n      {\n        \"endpoint_name\": \"<name>\",\n        \"endpoint_ip_address\": [\n          \"<IP address>\"\n        ],\n        \"endpoint_status\": \"LOST\",\n        \"domain\": \"<domain name>\",\n        \"endpoint_id\": \"<endpoint ID>\",\n        \"execution_status\": \"PENDING\",\n        \"standard_output\": null,\n        \"retrieved_files\": 0,\n        \"failed_files\": 0,\n        \"retention_date\": null\n      },\n      {\n        \"endpoint_name\": \"<name>\",\n        \"endpoint_ip_address\": [\n          \"<IP address>\"\n        ],\n        \"endpoint_status\": \"DISCONNECTED\",\n        \"domain\": \"WORKGROUP\",\n        \"endpoint_id\": \"<endpoint ID>\",\n        \"execution_status\": \"PENDING\",\n        \"standard_output\": null,\n        \"retrieved_files\": 0,\n        \"failed_files\": 0,\n        \"retention_date\": null\n      }\n    ]\n  }\n}\n"
+      },
+      {
+        "id": "post--scripts-run-snippet-code-script",
+        "summary": "POST /scripts/run_snippet_code_script",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/scripts/run_snippet_code_script",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"action_id\": \"<action ID>\",\n    \"endpoints_count\": 21\n  }\n}\n"
+      },
+      {
+        "id": "post--scripts-get-script-execution-results-files",
+        "summary": "POST /scripts/get_script_execution_results_files",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/scripts/get_script_execution_results_files",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"DATA\": \"https://example-link\"\n  }\n}\n"
+      },
+      {
+        "id": "post--rbac-get-users",
+        "summary": "POST /rbac/get_users",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/rbac/get_users",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": [\n    {\n      \"user_email\": \"user@example.invalid\",\n      \"user_first_name\": \"<first name>\",\n      \"user_last_name\": \"<last name>\",\n      \"role_name\": \"Account Admin\",\n      \"last_logged_in\": 1640024700241,\n      \"user_type\": \"CSP\",\n      \"groups\": [],\n      \"scope\": []\n    },\n    {\n      \"user_email\": \"user2@example.invalid\",\n      \"user_first_name\": \"<first name>\",\n      \"user_last_name\": \"<last name>\",\n      \"role_name\": \"Account Admin\",\n      \"last_logged_in\": null,\n      \"user_type\": \"CSP\",\n      \"groups\": [],\n      \"scope\": []\n    },\n    {\n      \"user_email\": \"user3@example.invalid\",\n      \"user_first_name\": \"<first name>\",\n      \"user_last_name\": \"<last name>\",\n      \"role_name\": \"Investigator\",\n      \"last_logged_in\": null,\n      \"user_type\": \"CSP\",\n      \"groups\": [],\n      \"scope\": []\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "post--get-risk-score",
+        "summary": "POST /get_risk_score",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/get_risk_score",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"type\": \"user\",\n    \"id\": \"user2_9fa235\",\n    \"score\": 100,\n    \"norm_risk_score\": 800,\n    \"risk_level\": \"HIGH\",\n    \"reasons\": [\n      {\n        \"date created\": \"2023-01-31\",\n        \"description\": \"'Encoded VBScript executed' generated by XDR BIOC detected on host acme3 involving user user2_9fa235\",\n        \"severity\": \"SEV_050_CRITICAL\",\n        \"status\": \"STATUS_010_NEW\",\n        \"points\": 95\n      }\n    ],\n    \"email\": \"user@example.invalid\"\n  }\n}\n"
+      },
+      {
+        "id": "post--rbac-get-user-group",
+        "summary": "POST /rbac/get_user_group",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/rbac/get_user_group",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": [\n    {\n      \"group_name\": \"Group1\",\n      \"description\": null,\n      \"pretty_name\": \"Investigator\",\n      \"insert_time\": 1661170832341,\n      \"update_time\": 1661171650679,\n      \"user_email\": [\n        \"user2@example.invalid\",\n        \"user@example.invalid\",\n        \"user3@example.invalid\",\n        \"user4@example.invalid\",\n        \"user5@example.invalid\"\n      ],\n      \"source\": \"Custom\"\n    },\n    {\n      \"group_name\": \"Group2\",\n      \"description\": null,\n      \"pretty_name\": \"Instance Administrator\",\n      \"insert_time\": 1660830450590,\n      \"update_time\": 1661171631589,\n      \"user_email\": [\n        \"user2@example.invalid\",\n        \"user6@example.invalid\",\n        \"user3@example.invalid\",\n        \"user4@example.invalid\"\n      ],\n      \"source\": \"Custom\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "post--rbac-get-roles",
+        "summary": "POST /rbac/get_roles",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/rbac/get_roles",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": [\n    [\n      {\n        \"pretty_name\": \"Role1\",\n        \"permissions\": [\n          \"Reports\",\n          \"Playbooks\",\n          \"Datasets Access Control\",\n          \"Dashboards\",\n          \"Scripts\"\n        ],\n        \"insert_time\": 1658315576844,\n        \"update_time\": null,\n        \"created_by\": \"user@example.invalid\",\n        \"description\": \"\",\n        \"groups\": [\n          \"group1\",\n          \"group2\"\n        ],\n        \"users\": []\n      }\n    ],\n    [\n      {\n        \"pretty_name\": \"Role2\",\n        \"permissions\": [\n          \"Dashboards\",\n          \"Datasets Access Control\"\n        ],\n        \"insert_time\": 1661435660656,\n        \"update_time\": null,\n        \"created_by\": \"user@example.invalid\",\n        \"description\": \"\",\n        \"groups\": [],\n        \"users\": []\n      }\n    ]\n  ]\n}\n"
+      },
+      {
+        "id": "post--rbac-set-user-role",
+        "summary": "POST /rbac/set_user_role",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/rbac/set_user_role",
+        "contentType": "application/json",
+        "fixture": "{\n  \"reply\": {\n    \"update_count\": \"2\"\n  }\n}\n"
       }
     ],
     "chaos": {

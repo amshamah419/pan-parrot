@@ -390,8 +390,6 @@ def load_modules(folder: Path, content: Path) -> list[Mod]:
             continue
         modules.append(mod)
         seen.add(path.resolve())
-        if module_calls(mod):
-            continue
         for imported in api_modules(mod, content):
             if imported.resolve() in seen:
                 continue
