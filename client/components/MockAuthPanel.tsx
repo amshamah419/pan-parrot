@@ -138,6 +138,14 @@ export function MockAuthPanel({
           <Label className="text-xs">Dummy secret key<Input value={auth.sigv4.secretAccessKey} onChange={(event) => onChange({ ...auth, sigv4: { ...auth.sigv4!, secretAccessKey: event.target.value } })} /></Label>
           <Label className="text-xs">Region<Input value={auth.sigv4.region} onChange={(event) => onChange({ ...auth, sigv4: { ...auth.sigv4!, region: event.target.value } })} /></Label>
           <Label className="text-xs">Service<Input value={auth.sigv4.service} onChange={(event) => onChange({ ...auth, sigv4: { ...auth.sigv4!, service: event.target.value } })} /></Label>
+          <Label className="flex items-center gap-2 text-xs sm:col-span-2">
+            <input
+              type="checkbox"
+              checked={auth.sigv4.verify !== false}
+              onChange={(event) => onChange({ ...auth, sigv4: { ...auth.sigv4!, verify: event.target.checked } })}
+            />
+            Check the signature
+          </Label>
         </div>
       )}
       {auth.mode === "digest" && auth.digest && (
@@ -184,7 +192,7 @@ function blankAuth(mode: AuthMode): MockAuth {
     return { mode, edgegrid: { clientToken: "dummy-client-token", accessToken: "dummy-access-token", clientSecret: "dummy-not-a-real-secret", verify: "signature" } };
   }
   if (mode === "signed-headers") return { mode, signedHeaders: { names: ["authorization"], verify: "format-only" } };
-  if (mode === "sigv4") return { mode, sigv4: { accessKeyId: "AKIA_DUMMY", secretAccessKey: "dummy-secret-key", region: "us-east-1", service: "execute-api" } };
+  if (mode === "sigv4") return { mode, sigv4: { accessKeyId: "AKIA_DUMMY", secretAccessKey: "dummy-secret-key", region: "us-east-1", service: "execute-api", verify: false } };
   if (mode === "digest") return { mode, digest: { realm: "pan-parrot", username: "lab", password: "dummy-not-a-real-password" } };
   if (mode === "jwt") return { mode, jwt: { hmacSecret: "dummy-hmac-secret", issuer: "lab", audience: "parrot" } };
   if (mode === "wsse") return { mode, wsse: { username: "lab", password: "dummy-not-a-real-password" } };
@@ -208,7 +216,11 @@ function describe(auth: MockAuth): string {
   if (auth.mode === "edgegrid") return auth.edgegrid?.verify === "format-only"
     ? "The Authorization header must look like EdgeGrid. The signature is not checked."
     : "The Authorization header is an EdgeGrid signature over the request, checked with the dummy client secret. The timestamp must be within 30 seconds.";
-  if (auth.mode === "sigv4") return "Authorization must be an AWS SigV4 header. The access key, region, and service must match, the signature is checked with the dummy secret, and x-amz-date must be within 15 minutes. Presigned query URLs are not checked.";
+  if (auth.mode === "sigv4") {
+    return auth.sigv4?.verify === false
+      ? "The dummy access key and secret are stored and sealed when you save. Requests are accepted without a signature until you check the box. The AssumeRole response uses the session key ASIADUMMYEXAMPLE0001 and the same dummy secret."
+      : "Authorization must be an AWS SigV4 header signed with the dummy secret. The access key can be the long-term dummy key or ASIADUMMYEXAMPLE0001. A mismatch is 403 SignatureDoesNotMatch XML. x-amz-date must be within 15 minutes. Presigned query URLs are not checked.";
+  }
   if (auth.mode === "digest") return "The first call gets a Digest challenge. The nonce is valid for 10 minutes and does not need a sticky connection. The response is MD5, which is what RFC 2617 clients send.";
   if (auth.mode === "jwt") return "Authorization: Bearer must be an HS256 JWT signed with the dummy secret. exp is required. iss and aud are checked when those boxes are filled. alg none and other algorithms are rejected.";
   if (auth.mode === "wsse") return "The SOAP body must contain a UsernameToken. PasswordText is compared directly. PasswordDigest is Base64(SHA1(nonce + created + password)) and Created must be within 5 minutes. A DTD in the body is rejected.";

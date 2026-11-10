@@ -37,6 +37,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: python3 -m pip install --disable-pip-version-check --break-system-packages boto3
       - run: npx playwright install --with-deps chromium
       - run: npm run db:migrate:local
       - run: npm run typecheck

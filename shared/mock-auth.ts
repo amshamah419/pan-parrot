@@ -1,4 +1,5 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
+import { awsQueryErrorXml } from "./aws-query";
 import {
   awsSigV4Matches,
   digestChallenge,
@@ -14,6 +15,8 @@ export interface AuthRequest {
   method: string;
   path: string;
   query: Record<string, string>;
+  /** URL query string only, for SigV4. Form fields stay in the body. */
+  urlQuery?: Record<string, string>;
   headers: Record<string, string>;
   body: string;
   scheme: string;
@@ -99,6 +102,24 @@ export function checkMockAuth(
   }
   const ok = credentialMatches(auth, request, now);
   if (!ok) {
+    if (auth.mode === "sigv4" && auth.sigv4?.verify !== false) {
+      const presented = header(request, "authorization");
+      const signed = presented.includes("AWS4-HMAC-SHA256");
+      return {
+        handled: true,
+        ok: false,
+        status: 403,
+        body: awsQueryErrorXml(
+          signed ? "SignatureDoesNotMatch" : "MissingAuthenticationToken",
+          signed
+            ? "The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method."
+            : "Missing Authentication Token",
+          "00000000-0000-4000-8000-000000000001",
+        ),
+        headers: { "content-type": "text/xml; charset=utf-8" },
+        chaosEffects: effects,
+      };
+    }
     if (auth.mode === "oauth2" && auth.oauth2) {
       const token = header(request, "authorization").replace(/^Bearer\s+/i, "");
       return fail(401, token.startsWith("pptok.") ? "Token expired" : "invalid_token", effects, auth);
@@ -167,6 +188,7 @@ function credentialMatches(auth: MockAuth, request: AuthRequest, now: number): b
     return auth.signedHeaders.names.every((name) => header(request, name).length > 0);
   }
   if (auth.mode === "sigv4" && auth.sigv4) {
+    if (auth.sigv4.verify === false) return true;
     return awsSigV4Matches(request, auth.sigv4, now);
   }
   if (auth.mode === "jwt" && auth.jwt) {

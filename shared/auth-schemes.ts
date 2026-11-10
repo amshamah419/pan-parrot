@@ -5,6 +5,8 @@ export interface SchemeRequest {
   method: string;
   path: string;
   query: Record<string, string>;
+  /** URL query only. Form fields belong in the body and must not enter the canonical query. */
+  urlQuery?: Record<string, string>;
   headers: Record<string, string>;
   body: string;
   host: string;
@@ -32,17 +34,33 @@ export function signAwsSigV4(input: {
 
 export function awsSigV4Matches(
   request: SchemeRequest,
-  auth: { accessKeyId: string; secretAccessKey: string; region: string; service: string },
+  auth: {
+    accessKeyId: string;
+    secretAccessKey: string;
+    region: string;
+    service: string;
+    sessionAccessKeyId?: string;
+    anyService?: boolean;
+  },
   now: number,
 ): boolean {
   const authorization = header(request, "authorization");
   const parsed = parseSigV4(authorization);
   if (!parsed) return false;
-  if (parsed.accessKeyId !== auth.accessKeyId || parsed.region !== auth.region || parsed.service !== auth.service) return false;
+  const keyOk = parsed.accessKeyId === auth.accessKeyId || (auth.sessionAccessKeyId != null && parsed.accessKeyId === auth.sessionAccessKeyId);
+  if (!keyOk || parsed.region !== auth.region) return false;
+  if (!auth.anyService && parsed.service !== auth.service) return false;
   const amzDate = header(request, "x-amz-date");
   if (!awsDateFresh(amzDate, now)) return false;
   if (parsed.date !== amzDate.slice(0, 8)) return false;
-  const canonical = canonicalRequest(request.method, request.path, request.query, { ...request.headers, host: header(request, "host") || request.host }, request.body, parsed.signedHeaders);
+  const canonical = canonicalRequest(
+    request.method,
+    request.path,
+    request.urlQuery ?? request.query,
+    { ...request.headers, host: header(request, "host") || request.host },
+    request.body,
+    parsed.signedHeaders,
+  );
   const stringToSign = ["AWS4-HMAC-SHA256", amzDate, parsed.scope, sha256Hex(canonical)].join("\n");
   const signature = hmac(signingKey(auth.secretAccessKey, parsed.date, parsed.region, parsed.service), stringToSign).toString("hex");
   return safeEqual(signature, parsed.signature);
