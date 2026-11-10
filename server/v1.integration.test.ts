@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { PGlite } from "@electric-sql/pglite";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/pglite";
@@ -83,6 +84,44 @@ describe("agent API", () => {
     expect(created.status).toBe(200);
     return created.json() as Promise<{ id: string; token: string; scopes: string[]; expires: string }>;
   }
+
+  it("serves the CLI wheel to a session or a token and stays quiet otherwise", async () => {
+    const hidden = await app.request("/api/v1/cli");
+    expect(hidden.status).toBe(404);
+    expect(await hidden.text()).toBe("Not found");
+    const presets = await app.request("/api/v1/presets", { headers: { cookie } });
+    expect(presets.status).toBe(404);
+    expect(await presets.text()).toBe("Not found");
+
+    const session = await app.request("/api/v1/cli", { headers: { cookie } });
+    expect(session.status).toBe(200);
+    const meta = await session.json();
+    expect(meta.version).toMatch(/^\d+\.\d+\.\d+$/);
+    expect(meta.filename).toBe(`panparrot-${meta.version}-py3-none-any.whl`);
+
+    const issued = await mint(["mocks:read"], "cli-wheel");
+    const basic = Buffer.from(`${issued.token}:`).toString("base64");
+    const downloaded = await app.request(`/api/v1/cli/${meta.filename}`, {
+      headers: { authorization: `Basic ${basic}` },
+    });
+    expect(downloaded.status).toBe(200);
+    expect(downloaded.headers.get("cache-control")).toContain("no-store");
+    expect(downloaded.headers.get("content-disposition")).toContain(meta.filename);
+    const bytes = Buffer.from(await downloaded.arrayBuffer());
+    expect(bytes.subarray(0, 2).toString()).toBe("PK");
+    expect(createHash("sha256").update(new Uint8Array(bytes)).digest("hex")).toBe(meta.sha256);
+
+    const wrong = await app.request("/api/v1/cli/panparrot-9.9.9-py3-none-any.whl", {
+      headers: { authorization: `Bearer ${issued.token}` },
+    });
+    expect(wrong.status).toBe(404);
+    expect(await wrong.text()).toBe("Not found");
+    const revoked = await app.request(`/api/tokens/${issued.id}`, {
+      method: "DELETE",
+      headers: { cookie, origin: "http://localhost:8080" },
+    });
+    expect(revoked.status).toBe(200);
+  });
 
   it("hides /api/v1 until a real token is presented", async () => {
     const hidden = await app.request("/api/v1/openapi.json");

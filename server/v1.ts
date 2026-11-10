@@ -1,12 +1,15 @@
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { Context, Hono } from "hono";
+import { getCookie } from "hono/cookie";
 import { and, desc, eq } from "drizzle-orm";
 import { parse as parseYaml } from "yaml";
 import { capturedRequests, endpoints } from "../db/schema";
 import { mockFromGraphql, looksLikeGraphql } from "../shared/graphql-mock";
 import { specFromDocument } from "../shared/openapi";
 import { POLICY } from "../shared/policy";
+import cliRelease from "./cli-release.json";
 import { validateMockSpec, type MockSpec, type XsoarIntegration } from "../shared/mock-spec";
 import { specFromXml } from "../shared/wsdl";
 import { instanceGuide } from "../shared/xsoar-instance";
@@ -17,20 +20,49 @@ import { createEndpointForUser, getEndpointForUser, saveMockSpec, deleteEndpoint
 import { resetRuntime } from "./runtime-state";
 import { HttpError, readJson } from "./http";
 import { limitAuthed, limitToken } from "./rate-limit";
+import { userFromCookie } from "./auth";
 import { resolveApiToken, type ResolvedToken, type TokenScope } from "./tokens";
 
 const ID_RE = /^[A-Za-z0-9_.:-]{1,80}$/;
 
 export function registerV1(app: Hono<AppEnv>) {
   app.use("/api/v1/*", async (c, next) => {
+    const pathName = c.req.path;
+    const cli = pathName === "/api/v1/cli" || pathName.startsWith("/api/v1/cli/");
     const header = c.req.header("authorization") || "";
-    const token = header.startsWith("Bearer ") ? header.slice("Bearer ".length).trim() : "";
+    const token = cli ? credentialFromHeader(header) : header.startsWith("Bearer ") ? header.slice("Bearer ".length).trim() : "";
     const resolved = token ? await resolveApiToken(c.get("db"), token) : null;
-    if (!resolved) return quietText(c);
-    c.set("apiToken", resolved);
-    await limitToken(c.get("db"), resolved.id);
-    await limitAuthed(c.get("db"), resolved.user.id);
-    await next();
+    if (resolved) {
+      c.set("apiToken", resolved);
+      await limitToken(c.get("db"), resolved.id);
+      await limitAuthed(c.get("db"), resolved.user.id);
+      return next();
+    }
+    if (cli) {
+      const user = await userFromCookie(c.get("db"), getCookie(c, POLICY.sessionCookieName));
+      if (user) {
+        c.set("user", user);
+        await limitAuthed(c.get("db"), user.id);
+        return next();
+      }
+    }
+    return quietText(c);
+  });
+
+  app.get("/api/v1/cli", (c) => c.json(cliMetadata()));
+
+  app.get("/api/v1/cli/:filename", (c) => {
+    if (c.req.param("filename") !== cliRelease.filename) return quietText(c);
+    const bytes = new Uint8Array(Buffer.from(cliRelease.wheel, "base64"));
+    if (createHash("sha256").update(bytes).digest("hex") !== cliRelease.sha256) {
+      return c.text("CLI package is damaged", 500, { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" });
+    }
+    c.header("content-type", "application/octet-stream");
+    c.header("content-disposition", `attachment; filename="${cliRelease.filename}"`);
+    c.header("cache-control", "private, no-store");
+    c.header("netlify-cdn-cache-control", "no-store");
+    c.header("x-content-type-options", "nosniff");
+    return c.body(bytes, 200);
   });
 
   app.get("/api/v1/openapi.json", (c) => {
@@ -232,6 +264,27 @@ export function registerV1(app: Hono<AppEnv>) {
 function requireScope(c: Context<AppEnv>, scope: TokenScope) {
   const token = c.get("apiToken");
   if (!token?.scopes.includes(scope)) throw new HttpError(403, `Missing scope ${scope}`);
+}
+
+function credentialFromHeader(header: string): string {
+  if (header.startsWith("Bearer ")) return header.slice("Bearer ".length).trim();
+  if (!header.startsWith("Basic ")) return "";
+  const decoded = Buffer.from(header.slice("Basic ".length).trim(), "base64").toString("utf8");
+  const split = decoded.indexOf(":");
+  const user = split >= 0 ? decoded.slice(0, split) : decoded;
+  const pass = split >= 0 ? decoded.slice(split + 1) : "";
+  if (user.startsWith("pp_")) return user;
+  if (pass.startsWith("pp_")) return pass;
+  return "";
+}
+
+function cliMetadata() {
+  return {
+    version: cliRelease.version,
+    filename: cliRelease.filename,
+    sha256: cliRelease.sha256,
+    requiresPython: cliRelease.requiresPython,
+  };
 }
 
 function quietText(c: Context<AppEnv>) {
@@ -523,9 +576,11 @@ function openApiDocument() {
     info: {
       title: "PAN Parrot agent API",
       version: "1",
-      description: "Create and update mocks, read logs, and fetch the XSOAR instance configuration. Send Authorization: Bearer pp_… . A missing or rejected token is a quiet 404.",
+      description: "Create and update mocks, read logs, and fetch the XSOAR instance configuration. Send Authorization: Bearer pp_… . The CLI wheel also accepts that token as HTTP Basic, or the signed-in browser session. A missing or rejected credential is a quiet 404.",
     },
     paths: {
+      "/api/v1/cli": { get: { summary: "Installed CLI release. Any live personal token or the signed-in session.", responses: { "200": { description: "Version and wheel name", content: json } } } },
+      "/api/v1/cli/{filename}": { get: { summary: "Download the versioned CLI wheel. Not published to public PyPI.", responses: { "200": { description: "Wheel bytes" } } } },
       "/api/v1/presets": { get: { summary: "Search catalog presets", security: [{ bearer: ["mocks:read"] }], responses: { "200": { description: "Matching presets", content: json } } } },
       "/api/v1/mocks": {
         get: { summary: "List mocks", security: [{ bearer: ["mocks:read"] }], responses: { "200": { description: "Mocks", content: json } } },

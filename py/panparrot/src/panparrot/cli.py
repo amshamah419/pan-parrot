@@ -5,6 +5,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from panparrot import __version__
 from panparrot.config import load_credentials, save_credentials
 from panparrot.expect import check_expectations, load_expectations
 from panparrot.xsiam import configure_instance
@@ -56,6 +57,8 @@ def dispatch(args: list[str]) -> dict:
         return {"text": HELP}
     if args[0] == "login":
         return login(args[1:])
+    if args[0] == "version":
+        return installed_version()
     if args[0] == "presets":
         return presets(args[1:])
     if args[0] == "mock" and len(args) > 1 and args[1] == "from-integration":
@@ -73,6 +76,54 @@ def dispatch(args: list[str]) -> dict:
     if args[0] == "xsiam" and len(args) > 1 and args[1] == "configure-instance":
         return xsiam(args[2:])
     raise SystemExit("Unknown command\n" + HELP)
+
+
+def installed_version() -> dict:
+    local = __version__
+    try:
+        creds = load_credentials()
+    except SystemExit:
+        return {
+            "version": local,
+            "latest": None,
+            "update": None,
+            "text": f"panparrot {local}\nRun panparrot login to check for an update.",
+        }
+    try:
+        remote = api("GET", "/api/v1/cli")
+    except SystemExit:
+        return {
+            "version": local,
+            "latest": None,
+            "update": None,
+            "text": f"panparrot {local}\nCould not check for an update.",
+        }
+    latest = str(remote.get("version") or "")
+    filename = str(remote.get("filename") or "")
+    newer = bool(latest) and version_key(latest) > version_key(local)
+    host = str(creds.get("url") or "").split("://", 1)[-1]
+    install = f'pipx install --force "https://<token>@{host}/api/v1/cli/{filename}"' if filename else ""
+    if newer:
+        text = f"panparrot {local}\n{latest} is available.\n{install}"
+    else:
+        text = f"panparrot {local}\nThis is the current release."
+    return {
+        "version": local,
+        "latest": latest,
+        "update": newer,
+        "filename": filename or None,
+        "install": install if newer else None,
+        "text": text,
+    }
+
+
+def version_key(value: str) -> tuple:
+    parts = []
+    for part in value.split("."):
+        if not part.isdigit():
+            break
+        parts.append(int(part))
+    return tuple(parts)
 
 
 def login(args: list[str]) -> dict:
@@ -389,6 +440,7 @@ def quote(value: str) -> str:
 
 HELP = """panparrot [--json] <command>
 
+  version
   login --url https://your-site --token pp_...
   presets [--q text]
   mock from-integration <integration.yml> [--python file] [--test-data dir]
