@@ -543,6 +543,7 @@ async function produceResponse(
       requestUrl: url.origin + url.pathname,
       soapAction: hint.soapAction,
       requestElement: hint.requestElement,
+      body: bodyText,
     });
     if (behaviorActive(spec)) {
       const applied = applyBehavior({

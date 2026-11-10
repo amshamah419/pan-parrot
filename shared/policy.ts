@@ -39,6 +39,10 @@ export const MOCK_LIMITS = {
   maxSeenIds: 2_000,
   maxScenarioSteps: 12,
   maxScenarioBodyBytes: 8_000,
+  maxGraphqlSchemaChars: 100_000,
+  maxGraphqlQueryChars: 20_000,
+  maxGraphqlDepth: 8,
+  maxGraphqlFields: 400,
 } as const;
 
 export const ENDPOINT_PATH_RE = /^[A-Za-z0-9_-]{4,64}$/;

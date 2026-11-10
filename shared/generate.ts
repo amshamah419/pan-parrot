@@ -1,4 +1,5 @@
 import { bodyMatches } from "./body-match";
+import { answerGraphql, graphqlRequestName } from "./graphql-mock";
 import { MOCK_LIMITS } from "./policy";
 import { renderFieldXml, soapEnvelope } from "./xml";
 import type {
@@ -19,6 +20,8 @@ export interface GenerateInput {
   requestUrl?: string;
   soapAction?: string;
   requestElement?: string;
+  /** Raw request body. GraphQL operations read query, variables, and operationName from it. */
+  body?: string;
 }
 
 export interface PackedFile {
@@ -87,7 +90,8 @@ function hasRules(operation: MockOperation): boolean {
   return Boolean(
     (operation.queryMatch && Object.keys(operation.queryMatch).length) ||
       (operation.headerMatch && Object.keys(operation.headerMatch).length) ||
-      operation.bodyMatch?.path,
+      operation.bodyMatch?.path ||
+      operation.graphqlOperation,
   );
 }
 
@@ -107,6 +111,7 @@ function rulesMatch(
     }
   }
   if (operation.bodyMatch?.path && !bodyMatches(hint.body || "", operation.bodyMatch)) return false;
+  if (operation.graphqlOperation && graphqlRequestName(hint.body) !== operation.graphqlOperation) return false;
   return true;
 }
 
@@ -118,6 +123,7 @@ function scoreOperation(
   score += Object.keys(operation.queryMatch || {}).length * 20;
   score += Object.keys(operation.headerMatch || {}).length * 20;
   if (operation.bodyMatch?.path) score += 50;
+  if (operation.graphqlOperation) score += 80;
   if (hasRules(operation)) score += 5_000;
   if (hint.soapAction && operation.soapAction && operation.soapAction === hint.soapAction) score += 500;
   if (hint.requestElement && operation.requestElement && operation.requestElement === hint.requestElement) {
@@ -161,6 +167,32 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
       stream: false,
       delayMs: spec.chaos.latency ? 1500 : 0,
       capped: false,
+    };
+  }
+
+  if (operation.envelope.type === "graphql") {
+    const answered = answerGraphql({
+      spec,
+      operation,
+      body: input.body,
+      chaos: chaosOn && spec.chaos.graphqlErrors ? spec.chaos : null,
+    });
+    return {
+      status: answered.status,
+      headers: {
+        "content-type": "application/json; charset=utf-8",
+        "x-pan-parrot-request": String(input.requestIndex),
+        "x-pan-parrot-seed": spec.chaos.seed,
+        "x-pan-parrot-records": String(answered.recordCount),
+        ...(answered.effects.length ? { "x-pan-parrot-effects": answered.effects.join(",") } : {}),
+      },
+      body: answered.body,
+      recordCount: answered.recordCount,
+      chaosEffects: answered.effects,
+      delayMs: 0,
+      dripMs: 0,
+      stream: false,
+      capped: answered.capped,
     };
   }
 

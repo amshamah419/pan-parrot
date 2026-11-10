@@ -4,6 +4,7 @@ import { z } from "zod";
 import { mockFromSample } from "../shared/infer";
 import { specFromDocument } from "../shared/openapi";
 import { specFromXml } from "../shared/wsdl";
+import { looksLikeGraphql, mockFromGraphql } from "../shared/graphql-mock";
 import { readZip, zipEntries } from "./pack";
 import { POLICY } from "../shared/policy";
 import { parse as parseYaml } from "yaml";
@@ -415,6 +416,17 @@ export function createServer(options?: {
       : String(body.text || "");
     if (!text.trim()) throw new HttpError(400, "Provide a spec or sample");
     if (text.length > POLICY.specJsonBytes) throw new HttpError(413, "Spec is too large");
+    if (looksLikeGraphql(text)) {
+      try {
+        return c.json({
+          mockSpec: mockFromGraphql(text),
+          warnings: ["The selection set in each query decides the response shape. Connection fields page with first and after."],
+          unsupported: ["Mutations and subscriptions are accepted as documents and answered with a GraphQL error."],
+        });
+      } catch (error) {
+        throw new HttpError(400, error instanceof Error ? error.message : "Could not read the GraphQL schema");
+      }
+    }
     if (text.trim().startsWith("<")) {
       return c.json({ mockSpec: specFromXml(text), warnings: [], unsupported: [] });
     }

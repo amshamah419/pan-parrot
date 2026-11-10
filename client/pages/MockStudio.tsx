@@ -85,6 +85,7 @@ export default function MockStudio() {
         ...(operation.queryMatch || {}),
       },
       requestIndex: previewChaos ? trial.chaos.everyNth : 1,
+      body: operation.envelope.type === "graphql" ? (trial.graphql?.exampleQuery || "query { __typename }") : undefined,
     });
     return result.body.slice(0, 4000);
   }, [spec, operation, previewChaos]);
@@ -385,6 +386,51 @@ export default function MockStudio() {
           </pre>
         </TabsContent>
         <TabsContent value="shape" className="space-y-3">
+          <div className="flex items-center justify-between gap-3 rounded border px-3 py-2">
+            <div>
+              <p className="text-sm font-medium">GraphQL</p>
+              <p className="text-xs text-muted-foreground">Paste SDL or introspection JSON. Queries are answered from the selection set. first and after page a connection.</p>
+            </div>
+            <Switch
+              aria-label="GraphQL endpoint"
+              checked={operation.envelope.type === "graphql"}
+              onCheckedChange={(on) => {
+                const operations = spec.operations.map((item) =>
+                  item.id === operation.id
+                    ? { ...item, envelope: on ? ({ type: "graphql" } as const) : ({ type: "object" } as const), list: on ? false : item.list }
+                    : item,
+                );
+                setSpec({
+                  ...spec,
+                  operations,
+                  graphql: on ? spec.graphql || { schema: "", exampleQuery: "query { __typename }" } : spec.graphql,
+                });
+              }}
+            />
+          </div>
+          {operation.envelope.type === "graphql" && (
+            <div className="space-y-3">
+              <Label className="text-xs">Schema
+                <Textarea
+                  aria-label="GraphQL schema"
+                  rows={8}
+                  className="font-mono text-xs"
+                  placeholder="type Query { issues(first: Int, after: String): IssueConnection }"
+                  value={spec.graphql?.schema || ""}
+                  onChange={(event) => setSpec({ ...spec, graphql: { schema: event.target.value, exampleQuery: spec.graphql?.exampleQuery } })}
+                />
+              </Label>
+              <Label className="text-xs">Example query, shown in the preview
+                <Textarea
+                  aria-label="Example GraphQL query"
+                  rows={4}
+                  className="font-mono text-xs"
+                  value={spec.graphql?.exampleQuery || ""}
+                  onChange={(event) => setSpec({ ...spec, graphql: { schema: spec.graphql?.schema || "", exampleQuery: event.target.value } })}
+                />
+              </Label>
+            </div>
+          )}
           <div className="flex items-center justify-between">
             <Label htmlFor="advanced">Edit the raw spec</Label>
             <Switch id="advanced" checked={advanced} onCheckedChange={setAdvanced} />
@@ -432,6 +478,7 @@ export default function MockStudio() {
                   headerMatch: undefined,
                   bodyMatch: undefined,
                   queryMatch: undefined,
+                  graphqlOperation: undefined,
                 };
                 setSpec({ ...spec, operations: [...spec.operations, clone] });
                 setOperationId(id);
@@ -471,6 +518,14 @@ export default function MockStudio() {
               className="font-mono text-xs"
               value={pairsToText(operation.headerMatch)}
               onChange={(event) => updateOperation({ ...operation, headerMatch: textToPairs(event.target.value) })}
+            />
+          </Label>
+          <Label className="text-xs">GraphQL operation name
+            <Input
+              aria-label="GraphQL operation name"
+              placeholder="IssuesTable"
+              value={operation.graphqlOperation || ""}
+              onChange={(event) => updateOperation({ ...operation, graphqlOperation: event.target.value || undefined })}
             />
           </Label>
           <div className="grid gap-3 sm:grid-cols-2">
@@ -885,6 +940,7 @@ function ChaosEditor({
           ["authDenied", "Random 401 / 403"],
           ["authTokenFailure", "Fail the token endpoint"],
           ["authClockSkew", "Reject clock skew"],
+          ["graphqlErrors", "GraphQL error in the body"],
         ] as const
       ).map(([key, label]) => (
         <div key={key} className="flex items-center justify-between text-sm">

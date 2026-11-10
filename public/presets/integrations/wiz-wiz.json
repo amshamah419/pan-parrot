@@ -1,1 +1,119 @@
-{"id":"wiz-wiz","name":"Wiz","pack":"Wiz","fidelity":"shape","curated":false,"summary":"Agentless cloud security with bidirectional Issue mirroring, status sync, comment sync, and due-date sync between Wiz and Cortex XSOAR.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"wiz-wiz","name":"Wiz","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Wiz/Integrations/Wiz","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"wiz-get-issues","method":"GET","pathTemplate":"/","summary":"Get the Issues on cloud resources.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Wiz","kind":"object","optional":false,"children":[{"name":"Manager","kind":"object","optional":false,"children":[{"name":"Issues","kind":"object","optional":false,"children":[{"name":"entitySnapshot","kind":"string","optional":false,"example":"entitySnapshot"},{"name":"createdAt","kind":"string","optional":false,"example":"createdAt"},{"name":"id","kind":"id","optional":false},{"name":"control","kind":"string","optional":false,"example":"control"},{"name":"severity","kind":"string","optional":false,"example":"severity"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"note","kind":"string","optional":false,"example":"note"}]}]}]}]}},{"id":"wiz-get-resource","method":"GET","pathTemplate":"/","summary":"Get details of a resource.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Wiz","kind":"object","optional":false,"children":[{"name":"Manager","kind":"object","optional":false,"children":[{"name":"Resource","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"properties","kind":"string","optional":false,"example":"properties"},{"name":"publicExposures","kind":"string","optional":false,"example":"publicExposures"},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"userMetadata","kind":"string","optional":false,"example":"userMetadata"}]}]}]}]}},{"id":"wiz-get-resources","method":"GET","pathTemplate":"/","summary":"Get details of resources.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"search","kind":"string","optional":false,"example":"search"},{"name":"subscription_external_ids","kind":"string","optional":false,"example":"subscription_external_ids"},{"name":"provider_unique_ids","kind":"string","optional":false,"example":"provider_unique_ids"},{"name":"entity_type","kind":"string","optional":false,"example":"entity_type"},{"name":"project_ids","kind":"string","optional":false,"example":"project_ids"},{"name":"native_types","kind":"string","optional":false,"example":"native_types"},{"name":"updated_at_before","kind":"string","optional":false,"example":"updated_at_before"},{"name":"updated_at_after","kind":"string","optional":false,"example":"updated_at_after"}]}},{"id":"wiz-reject-issue","method":"GET","pathTemplate":"/","summary":"Reject a Wiz Issue.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"issue_id","kind":"string","optional":false,"example":"issue_id"},{"name":"reject_reason","kind":"string","optional":false,"example":"reject_reason"},{"name":"reject_note","kind":"string","optional":false,"example":"reject_note"}]}},{"id":"wiz-reopen-issue","method":"GET","pathTemplate":"/","summary":"Reopen a Wiz Issue.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"issue_id","kind":"string","optional":false,"example":"issue_id"},{"name":"reopen_note","kind":"string","optional":false,"example":"reopen_note"}]}},{"id":"wiz-get-issue","method":"GET","pathTemplate":"/","summary":"Get the details of a Wiz Issue Id.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"issue_id","kind":"string","optional":false,"example":"issue_id"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "wiz-wiz",
+  "name": "Wiz",
+  "pack": "Wiz",
+  "vendor": "Wiz",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GraphQL issuesV2 connection. The selection set decides the fields, and first/after walk the catalog.",
+  "notes": [
+    "The public Issues reference (win.wiz.io) did not return a page from this network. The field list was checked against Panther's published Wiz.Issues schema, which cites that URL, the IssuesTable query in demisto/content, and the Elastic Agent Wiz query that cites Wiz's March 5, 2025 sourceRules note.",
+    "This is the issuesV2 subset, not the whole Wiz graph. Cloud resource search and threat-detection evidence fragments are not in the schema.",
+    "sourceRule is still here because the current XSOAR client selects it. sourceRules is also here, from the public deprecation note.",
+    "Issue type is a string. The public excerpts do not list the type enum.",
+    "filterBy and orderBy are accepted and not applied, so a load test still walks the catalog.",
+    "first is capped at 500. The catalog size is totalRecords.",
+    "POST /oauth/token on this catch URL issues the dummy bearer. Point the integration auth URL at that path."
+  ],
+  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Wiz/Integrations/Wiz",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "wiz-wiz",
+      "name": "Wiz",
+      "fidelity": "verified",
+      "attribution": "Vendor public API reference plus demisto/content (MIT).",
+      "sourceUrl": "https://win.wiz.io/reference/issues-query",
+      "notes": [],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://win.wiz.io/reference/issues-query",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The public Issues reference (win.wiz.io) did not return a page from this network. The field list was checked against Panther's published Wiz.Issues schema, which cites that URL, the IssuesTable query in demisto/content, and the Elastic Agent Wiz query that cites Wiz's March 5, 2025 sourceRules note.",
+          "This is the issuesV2 subset, not the whole Wiz graph. Cloud resource search and threat-detection evidence fragments are not in the schema.",
+          "sourceRule is still here because the current XSOAR client selects it. sourceRules is also here, from the public deprecation note.",
+          "Issue type is a string. The public excerpts do not list the type enum.",
+          "filterBy and orderBy are accepted and not applied, so a load test still walks the catalog.",
+          "first is capped at 500. The catalog size is totalRecords.",
+          "POST /oauth/token on this catch URL issues the dummy bearer. Point the integration auth URL at that path."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        },
+        "id": "graphql",
+        "method": "POST",
+        "pathTemplate": "/graphql",
+        "summary": "issuesV2 and any other query the schema allows",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "graphql"
+        },
+        "record": {
+          "name": "data",
+          "kind": "object",
+          "children": []
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "wiz-wiz",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 1000,
+    "auth": {
+      "mode": "oauth2",
+      "oauth2": {
+        "tokenPath": "/oauth/token",
+        "clientId": "dummy-client",
+        "clientSecret": "dummy-secret",
+        "ttlSeconds": 3600,
+        "shape": "generic",
+        "refresh": true
+      }
+    },
+    "graphql": {
+      "schema": "\nscalar DateTime\nscalar JSON\n\ntype Query {\n  issuesV2(filterBy: IssueFilters, first: Int, after: String, orderBy: IssueOrder): IssueConnection!\n}\n\ninput IssueFilters {\n  status: [String!]\n  severity: [String!]\n  type: [String!]\n}\n\ninput IssueOrder {\n  field: String\n  direction: String\n}\n\ntype IssueConnection {\n  nodes: [Issue!]\n  pageInfo: PageInfo!\n  totalCount: Int\n}\n\ntype PageInfo {\n  hasNextPage: Boolean!\n  endCursor: String\n}\n\ntype Issue {\n  id: ID!\n  type: String\n  createdAt: DateTime\n  updatedAt: DateTime\n  dueAt: DateTime\n  resolvedAt: DateTime\n  statusChangedAt: DateTime\n  status: IssueStatus\n  severity: Severity\n  sourceRule: SourceRule\n  sourceRules: [SourceRule!]\n  projects: [Project!]\n  entitySnapshot: EntitySnapshot\n  serviceTickets: [ServiceTicket!]\n  notes: [IssueNote!]\n  evidenceQuery: String\n}\n\nenum IssueStatus { OPEN IN_PROGRESS REJECTED RESOLVED }\nenum Severity { INFORMATIONAL LOW MEDIUM HIGH CRITICAL }\n\nunion SourceRule = Control | CloudEventRule | CloudConfigurationRule\n\ntype Control {\n  id: ID!\n  name: String\n  description: String\n  resolutionRecommendation: String\n  risks: [String!]\n  securitySubCategories: [SecuritySubCategory!]\n}\n\ntype CloudEventRule {\n  id: ID!\n  name: String\n  description: String\n  risks: [String!]\n  sourceType: String\n  type: String\n  securitySubCategories: [SecuritySubCategory!]\n}\n\ntype CloudConfigurationRule {\n  id: ID!\n  name: String\n  description: String\n  remediationInstructions: String\n  risks: [String!]\n  serviceType: String\n  securitySubCategories: [SecuritySubCategory!]\n}\n\ntype SecuritySubCategory {\n  title: String\n  category: SecurityCategory\n}\n\ntype SecurityCategory {\n  name: String\n  framework: Framework\n}\n\ntype Framework { name: String }\n\ntype Project {\n  id: ID!\n  name: String\n  slug: String\n  businessUnit: String\n  projectOwners: [ProjectPerson!]\n  securityChampions: [ProjectPerson!]\n  riskProfile: RiskProfile\n}\n\ntype ProjectPerson { name: String }\ntype RiskProfile { businessImpact: String }\n\ntype EntitySnapshot {\n  id: ID!\n  type: String\n  nativeType: String\n  name: String\n  status: String\n  cloudPlatform: String\n  cloudProviderURL: String\n  providerId: String\n  region: String\n  resourceGroupExternalId: String\n  subscriptionExternalId: String\n  subscriptionName: String\n  subscriptionTags: JSON\n  tags: JSON\n  externalId: String\n}\n\ntype ServiceTicket {\n  externalId: String\n  name: String\n  url: String\n}\n\ntype IssueNote {\n  createdAt: DateTime\n  updatedAt: DateTime\n  text: String\n  user: IssueUser\n  serviceAccount: IssueUser\n}\n\ntype IssueUser { name: String email: String }\n",
+      "exampleQuery": "query IssuesTable($first: Int, $after: String) {\n  issues: issuesV2(first: $first, after: $after) {\n    nodes { id status severity entitySnapshot { id name region } }\n    pageInfo { hasNextPage endCursor }\n  }\n}"
+    }
+  }
+}
