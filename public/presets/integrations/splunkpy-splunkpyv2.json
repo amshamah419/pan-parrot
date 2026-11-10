@@ -1,1 +1,167 @@
-{"id":"splunkpy-splunkpyv2","name":"SplunkPy v2","pack":"SplunkPy","fidelity":"shape","curated":false,"summary":"Run queries on Splunk and fetch Splunk ES Findings and Investigations (Splunk ES 8.2+).","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"splunkpy-splunkpyv2","name":"SplunkPy v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/SplunkPy/Integrations/SplunkPyV2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"splunk-results","method":"POST","pathTemplate":"/public/v2/investigations","summary":"Returns the results of a previous Splunk search. You can use this command in conjunction with the splunk-job-create command.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"sid","kind":"string","optional":false,"example":"sid"},{"name":"limit","kind":"string","optional":false,"example":"limit"}]}},{"id":"splunk-search","method":"GET","pathTemplate":"/public/v2/investigations","summary":"Searches Splunk for events. For human readable output, the table command is supported in the query argument. For example, `query=\" * | table field1 field2 field","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Splunk","kind":"object","optional":false,"children":[{"name":"Result","kind":"string","optional":false,"example":"Result"},{"name":"JobStatus","kind":"object","optional":false,"children":[{"name":"SID","kind":"id","optional":false},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"TotalResults","kind":"string","optional":false,"example":"TotalResults"}]}]}]}},{"id":"splunk-submit-event","method":"GET","pathTemplate":"/","summary":"Creates a new event in Splunk.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"index","kind":"string","optional":false,"example":"index"},{"name":"data","kind":"string","optional":false,"example":"data"},{"name":"sourcetype","kind":"string","optional":false,"example":"sourcetype"},{"name":"host","kind":"string","optional":false,"example":"host"}]}},{"id":"splunk-finding-event-edit","method":"GET","pathTemplate":"/","summary":"Updates existing finding events in Splunk ES.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"event_ids","kind":"string","optional":false,"example":"event_ids"},{"name":"owner","kind":"string","optional":false,"example":"owner"},{"name":"note","kind":"string","optional":false,"example":"note"},{"name":"urgency","kind":"string","optional":false,"example":"urgency"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"disposition","kind":"string","optional":false,"example":"disposition"},{"name":"finding_time","kind":"string","optional":false,"example":"finding_time"}]}},{"id":"splunk-update-investigation","method":"GET","pathTemplate":"/","summary":"Updates existing investigations in Splunk ES. Supports updating fields such as owner, status, urgency, disposition, name, and description, adding a note, and ap","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"event_ids","kind":"string","optional":false,"example":"event_ids"},{"name":"owner","kind":"string","optional":false,"example":"owner"},{"name":"note","kind":"string","optional":false,"example":"note"},{"name":"disposition","kind":"string","optional":false,"example":"disposition"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"urgency","kind":"string","optional":false,"example":"urgency"},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"findings","kind":"string","optional":false,"example":"findings"},{"name":"finding_times","kind":"string","optional":false,"example":"finding_times"}]}},{"id":"splunk-job-create","method":"GET","pathTemplate":"/","summary":"Creates a new search job in Splunk.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Splunk","kind":"object","optional":false,"children":[{"name":"Job","kind":"string","optional":false,"example":"Job"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "splunkpy-splunkpyv2",
+  "name": "SplunkPy v2",
+  "pack": "SplunkPy",
+  "vendor": "Splunk",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Create a search job and read JSON results.",
+  "notes": [
+    "SplunkPy v2 uses splunklib jobs. This mock is the same REST API: POST /services/search/jobs returns { sid } as if output_mode=json.",
+    "GET /services/search/jobs/{sid}/results returns { results }. The search is not executed. Export streaming stays on the SplunkPy preset.",
+    "Basic auth is the lab user. The management port is not checked."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SplunkPy/Integrations/SplunkPyV2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "splunkpy-splunkpyv2",
+      "name": "SplunkPy v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-tutorials/10.2/rest-api-tutorials/creating-searches-using-the-rest-api",
+      "notes": [
+        "SplunkPy v2 uses splunklib jobs. This mock is the same REST API: POST /services/search/jobs returns { sid } as if output_mode=json.",
+        "GET /services/search/jobs/{sid}/results returns { results }. The search is not executed. Export streaming stays on the SplunkPy preset.",
+        "Basic auth is the lab user. The management port is not checked."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-tutorials/10.2/rest-api-tutorials/creating-searches-using-the-rest-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "SplunkPy v2 uses splunklib jobs. This mock is the same REST API: POST /services/search/jobs returns { sid } as if output_mode=json.",
+          "GET /services/search/jobs/{sid}/results returns { results }. The search is not executed. Export streaming stays on the SplunkPy preset.",
+          "Basic auth is the lab user. The management port is not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "create",
+        "method": "POST",
+        "pathTemplate": "/services/search/jobs",
+        "summary": "Create a search job",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "job",
+          "kind": "object",
+          "children": [
+            {
+              "name": "sid",
+              "kind": "id"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "results",
+        "method": "GET",
+        "pathTemplate": "/services/search/jobs/{sid}/results",
+        "summary": "Read search results",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "results",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "row",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "_time",
+                    "kind": "timestamp",
+                    "format": "iso"
+                  },
+                  {
+                    "name": "host",
+                    "kind": "string",
+                    "example": "search-head"
+                  },
+                  {
+                    "name": "_raw",
+                    "kind": "string",
+                    "example": "user=ada action=login"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "splunkpy-splunkpyv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "basic",
+      "basic": {
+        "username": "lab-admin",
+        "password": "dummy-not-a-real-password"
+      }
+    }
+  }
+}

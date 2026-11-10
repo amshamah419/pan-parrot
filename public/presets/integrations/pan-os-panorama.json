@@ -5,11 +5,11 @@
   "vendor": "Palo Alto Networks",
   "fidelity": "verified",
   "curated": true,
-  "summary": "XML API for keygen, operational commands, config, and log jobs.",
+  "summary": "XML API for keygen, op, config, commit, and job polling.",
   "notes": [
-    "XSOAR calls GET /api/ with type=op, type=config, and type=log. type=keygen is included so you can test the API key exchange.",
-    "Log query returns a job id. action=get with job-id returns log entries. nlogs is capped at 500.",
-    "The dummy user, password, and API key are not a real firewall credential. Commit, export, and user-id commands are not modeled."
+    "XSOAR calls GET /api/ with type=keygen, type=op, type=config, type=commit, and type=log. The body is the PAN-OS XML response.",
+    "type=commit returns a job id. Poll that job with type=op and job=10. A log query uses type=log, then type=log and action=get. nlogs is capped at 500.",
+    "The real show-jobs command is an XML cmd on type=op. This mock uses job= as a short poll. Export and user-id are not modeled. The dummy key is not a firewall credential."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PAN-OS/Integrations/Panorama",
@@ -28,9 +28,9 @@
         "docUrl": "https://docs.paloaltonetworks.com/ngfw/api/pan-os",
         "checkedAt": "2026-11-09",
         "differences": [
-          "XSOAR calls GET /api/ with type=op, type=config, and type=log. type=keygen is included so you can test the API key exchange.",
-          "Log query returns a job id. action=get with job-id returns log entries. nlogs is capped at 500.",
-          "The dummy user, password, and API key are not a real firewall credential. Commit, export, and user-id commands are not modeled."
+          "XSOAR calls GET /api/ with type=keygen, type=op, type=config, type=commit, and type=log. The body is the PAN-OS XML response.",
+          "type=commit returns a job id. Poll that job with type=op and job=10. A log query uses type=log, then type=log and action=get. nlogs is capped at 500.",
+          "The real show-jobs command is an XML cmd on type=op. This mock uses job= as a short poll. Export and user-id are not modeled. The dummy key is not a firewall credential."
         ]
       }
     },
@@ -208,6 +208,128 @@
         },
         "queryMatch": {
           "type": "config"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "commit",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Commit the candidate config",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "job",
+                  "kind": "const",
+                  "constValue": "10"
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "commit"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "job-poll",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Poll a commit or log job",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "job",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "id",
+                      "kind": "const",
+                      "constValue": "10"
+                    },
+                    {
+                      "name": "status",
+                      "kind": "const",
+                      "constValue": "FIN"
+                    },
+                    {
+                      "name": "progress",
+                      "kind": "const",
+                      "constValue": "100"
+                    },
+                    {
+                      "name": "result",
+                      "kind": "const",
+                      "constValue": "OK"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "op",
+          "job": "10"
         }
       },
       {
@@ -412,7 +534,8 @@
       "authExpired": false,
       "authDenied": false,
       "authTokenFailure": false,
-      "authClockSkew": false
+      "authClockSkew": false,
+      "graphqlErrors": false
     },
     "totalRecords": 500,
     "auth": {

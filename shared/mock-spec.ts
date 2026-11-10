@@ -1073,7 +1073,7 @@ function cleanHeaders(headers: Record<string, string> | undefined): Record<strin
   for (const [key, value] of Object.entries(headers)) {
     if (count >= 15) break;
     const name = key.toLowerCase().trim();
-    if (!/^[a-z0-9-]{1,40}$/.test(name)) continue;
+    if (!/^[a-z0-9_-]{1,40}$/.test(name)) continue;
     if (typeof value !== "string" || value.length > 200 || /[\r\n]/.test(value)) continue;
     out[name] = value;
     count += 1;

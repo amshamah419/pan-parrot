@@ -1,1 +1,183 @@
-{"id":"paloaltonetworks-devicesecurity-paloaltonetworks-devicesecurity","name":"Palo Alto Networks Device Security","pack":"PaloAltoNetworks_DeviceSecurity","fidelity":"shape","curated":false,"summary":"Use the Palo Alto Networks Device Security integration to fetch alerts and vulnerabilities, retrieve device details, and resolve security incidents (previously Zingbox).","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"paloaltonetworks-devicesecurity-paloaltonetworks-devicesecurity","name":"Palo Alto Networks Device Security","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_DeviceSecurity/Integrations/PaloAltoNetworks_DeviceSecurity","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"device-security-get-device","method":"GET","pathTemplate":"/root/content/Packs/ApiModules/Scripts/ContentClientApiModule","summary":"Retrieves a single device's details using its MAC address.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PaloAltoNetworksDeviceSecurity","kind":"object","optional":false,"children":[{"name":"Device","kind":"object","optional":false,"children":[{"name":"hostname","kind":"string","optional":false,"example":"hostname"},{"name":"ip_address","kind":"string","optional":false,"example":"ip_address"},{"name":"profile_type","kind":"string","optional":false,"example":"profile_type"},{"name":"profile_vertical","kind":"string","optional":false,"example":"profile_vertical"},{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"profile","kind":"string","optional":false,"example":"profile"},{"name":"last_activity","kind":"timestamp","optional":false,"format":"iso"},{"name":"long_description","kind":"string","optional":false,"example":"long_description"},{"name":"vlan","kind":"number","optional":false},{"name":"site_name","kind":"string","optional":false,"example":"site_name"},{"name":"risk_score","kind":"number","optional":false},{"name":"risk_level","kind":"string","optional":false,"example":"risk_level"},{"name":"subnet","kind":"string","optional":false,"example":"subnet"},{"name":"first_seen_date","kind":"timestamp","optional":false,"format":"iso"},{"name":"confidence_score","kind":"number","optional":false},{"name":"deviceid","kind":"id","optional":false},{"name":"location","kind":"string","optional":false,"example":"location"},{"name":"vendor","kind":"string","optional":false,"example":"vendor"},{"name":"model","kind":"string","optional":false,"example":"model"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"asset_tag","kind":"string","optional":false,"example":"asset_tag"},{"name":"os_group","kind":"string","optional":false,"example":"os_group"},{"name":"Serial_Number","kind":"string","optional":false,"example":"Serial_Number"},{"name":"DHCP","kind":"string","optional":false,"example":"DHCP"},{"name":"wire_or_wireless","kind":"string","optional":false,"example":"wire_or_wireless"},{"name":"department","kind":"string","optional":false,"example":"department"},{"name":"Switch_Port","kind":"number","optional":false},{"name":"Switch_Name","kind":"string","optional":false,"example":"Switch_Name"},{"name":"Switch_IP","kind":"string","optional":false,"example":"Switch_IP"},{"name":"Access_Point_IP","kind":"string","optional":false,"example":"Access_Point_IP"},{"name":"Access_Point_Name","kind":"string","optional":false,"example":"Access_Point_Name"},{"name":"SSID","kind":"id","optional":false},{"name":"MAC","kind":"string","optional":false,"example":"MAC"},{"name":"display_tags","kind":"string","optional":false,"example":"display_tags"},{"name":"mac_address","kind":"string","optional":false,"example":"mac_address"}]}]}]}},{"id":"device-security-get-device-by-ip","method":"GET","pathTemplate":"/insights/iot-security/assets/assets/overview/{device_id}","summary":"Returns a single device's details using its IP address.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PaloAltoNetworksDeviceSecurity","kind":"object","optional":false,"children":[{"name":"Device","kind":"object","optional":false,"children":[{"name":"hostname","kind":"string","optional":false,"example":"hostname"},{"name":"ip_address","kind":"string","optional":false,"example":"ip_address"},{"name":"profile_type","kind":"string","optional":false,"example":"profile_type"},{"name":"profile_vertical","kind":"string","optional":false,"example":"profile_vertical"},{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"profile","kind":"string","optional":false,"example":"profile"},{"name":"last_activity","kind":"timestamp","optional":false,"format":"iso"},{"name":"long_description","kind":"string","optional":false,"example":"long_description"},{"name":"vlan","kind":"number","optional":false},{"name":"site_name","kind":"string","optional":false,"example":"site_name"},{"name":"risk_score","kind":"number","optional":false},{"name":"risk_level","kind":"string","optional":false,"example":"risk_level"},{"name":"subnet","kind":"string","optional":false,"example":"subnet"},{"name":"first_seen_date","kind":"timestamp","optional":false,"format":"iso"},{"name":"confidence_score","kind":"number","optional":false},{"name":"deviceid","kind":"id","optional":false},{"name":"location","kind":"string","optional":false,"example":"location"},{"name":"vendor","kind":"string","optional":false,"example":"vendor"},{"name":"model","kind":"string","optional":false,"example":"model"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"asset_tag","kind":"string","optional":false,"example":"asset_tag"},{"name":"os_group","kind":"string","optional":false,"example":"os_group"},{"name":"Serial_Number","kind":"string","optional":false,"example":"Serial_Number"},{"name":"DHCP","kind":"string","optional":false,"example":"DHCP"},{"name":"wire_or_wireless","kind":"string","optional":false,"example":"wire_or_wireless"},{"name":"department","kind":"string","optional":false,"example":"department"},{"name":"Switch_Port","kind":"number","optional":false},{"name":"Switch_Name","kind":"string","optional":false,"example":"Switch_Name"},{"name":"Switch_IP","kind":"string","optional":false,"example":"Switch_IP"},{"name":"Access_Point_IP","kind":"string","optional":false,"example":"Access_Point_IP"},{"name":"Access_Point_Name","kind":"string","optional":false,"example":"Access_Point_Name"},{"name":"SSID","kind":"id","optional":false},{"name":"MAC","kind":"string","optional":false,"example":"MAC"},{"name":"display_tags","kind":"string","optional":false,"example":"display_tags"},{"name":"mac_address","kind":"string","optional":false,"example":"mac_address"}]}]}]}},{"id":"device-security-list-devices","method":"GET","pathTemplate":"/pub/v4.0/alert/update","summary":"Retrieves a list of devices.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PaloAltoNetworksDeviceSecurity","kind":"object","optional":false,"children":[{"name":"DeviceList","kind":"string","optional":false,"example":"DeviceList"}]}]}},{"id":"device-security-list-alerts","method":"GET","pathTemplate":"/vulnerability/update","summary":"Retrieves a list of device security alerts.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PaloAltoNetworksDeviceSecurity","kind":"object","optional":false,"children":[{"name":"Alerts","kind":"string","optional":false,"example":"Alerts"}]}]}},{"id":"device-security-list-vulns","method":"GET","pathTemplate":"/oauth2/access_token","summary":"Retrieves a list of device security vulnerabilities.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PaloAltoNetworksDeviceSecurity","kind":"object","optional":false,"children":[{"name":"Vulns","kind":"string","optional":false,"example":"Vulns"}]}]}},{"id":"device-security-resolve-alert","method":"GET","pathTemplate":"/vulnerability/list","summary":"Resolves a device security alert.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"string","optional":false,"example":"id"},{"name":"reason","kind":"string","optional":false,"example":"reason"},{"name":"reason_type","kind":"string","optional":false,"example":"reason_type"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "paloaltonetworks-devicesecurity-paloaltonetworks-devicesecurity",
+  "name": "Palo Alto Networks Device Security",
+  "pack": "PaloAltoNetworks_DeviceSecurity",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Device lookup and the alert list.",
+  "notes": [
+    "The client GETs /device and /alert/list. This mock returns one device and one alert. Vulnerability update is not modeled.",
+    "OAuth at /oauth2/access_token is not modeled. A bearer token is required on the data calls.",
+    "The IoT Security API page was not reloaded. deviceid and ip query values are not echoed."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_DeviceSecurity/Integrations/PaloAltoNetworks_DeviceSecurity",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "paloaltonetworks-devicesecurity-paloaltonetworks-devicesecurity",
+      "name": "Palo Alto Networks Device Security",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
+      "notes": [
+        "The client GETs /device and /alert/list. This mock returns one device and one alert. Vulnerability update is not modeled.",
+        "OAuth at /oauth2/access_token is not modeled. A bearer token is required on the data calls.",
+        "The IoT Security API page was not reloaded. deviceid and ip query values are not echoed."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client GETs /device and /alert/list. This mock returns one device and one alert. Vulnerability update is not modeled.",
+          "OAuth at /oauth2/access_token is not modeled. A bearer token is required on the data calls.",
+          "The IoT Security API page was not reloaded. deviceid and ip query values are not echoed."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "device",
+        "method": "GET",
+        "pathTemplate": "/device",
+        "summary": "Get a device",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "device",
+          "kind": "object",
+          "children": [
+            {
+              "name": "deviceid",
+              "kind": "id"
+            },
+            {
+              "name": "ip",
+              "kind": "ip"
+            },
+            {
+              "name": "profile",
+              "kind": "string",
+              "example": "Windows PC"
+            },
+            {
+              "name": "category",
+              "kind": "const",
+              "constValue": "IT Devices"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "alerts",
+        "method": "GET",
+        "pathTemplate": "/alert/list",
+        "summary": "List alerts",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "alerts",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "alert",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "alertid",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "enum",
+                    "enumValues": [
+                      "low",
+                      "medium",
+                      "high"
+                    ]
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "Unusually high traffic"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "paloaltonetworks-devicesecurity-paloaltonetworks-devicesecurity",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

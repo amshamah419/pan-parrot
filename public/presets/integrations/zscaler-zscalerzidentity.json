@@ -1,1 +1,159 @@
-{"id":"zscaler-zscalerzidentity","name":"Zscaler Internet Access via ZIdentity","pack":"Zscaler","fidelity":"sample","curated":false,"summary":"Zscaler Internet Access via ZIdentity OAuth 2.0. Provides URL/IP/domain classification, denylist and allowlist management, URL category management, sandbox reporting, user and grou","operations":5,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"zscaler-zscalerzidentity","name":"Zscaler Internet Access via ZIdentity","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Zscaler/Integrations/ZscalerZIdentity","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-responses-allowlist-json","method":"GET","pathTemplate":"/POST","summary":"test_data/responses/allowlist.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"whitelistUrls","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"trusted.com"},"minItems":0,"maxItems":3,"pageItems":false}]}},{"id":"test-data-responses-denylist-json","method":"PUT","pathTemplate":"/DELETE","summary":"test_data/responses/denylist.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"blacklistUrls","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"malicious.com"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"whitelistUrls","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-responses-departments-json","method":"POST","pathTemplate":"/status/activate","summary":"test_data/responses/departments.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"IT"},{"name":"idpId","kind":"integer","optional":false},{"name":"comments","kind":"string","optional":false,"example":"Information Technology"},{"name":"deleted","kind":"boolean","optional":false}]}},{"id":"test-data-responses-groups-json","method":"GET","pathTemplate":"/security/advanced","summary":"test_data/responses/groups.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"Engineering"},{"name":"idpId","kind":"integer","optional":false},{"name":"comments","kind":"string","optional":false,"example":"Engineering team"},{"name":"isSystemDefined","kind":"boolean","optional":false}]}},{"id":"test-data-responses-ip-destination-groups-json","method":"PUT","pathTemplate":"/security/advanced","summary":"test_data/responses/ip_destination_groups.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"Test Group 1"},{"name":"type","kind":"string","optional":false,"example":"DSTN_IP"},{"name":"addresses","kind":"array","optional":false,"item":{"name":"item","kind":"ip","optional":false,"example":"10.0.0.1"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"description","kind":"string","optional":false,"example":"Test IP destination group"},{"name":"countries","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"ipCategories","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"isNonEditable","kind":"boolean","optional":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "zscaler-zscalerzidentity",
+  "name": "Zscaler Internet Access via ZIdentity",
+  "pack": "Zscaler",
+  "vendor": "Zscaler",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Advanced security policy and the user list.",
+  "notes": [
+    "The client base ends in /zia/api/v1. GET /security/advanced returns blacklistUrls. GET /users returns an array.",
+    "URL categories, sandbox reports, and the activate call are not modeled. The obfuscated API key session is not checked.",
+    "The ZIA API getting-started page was not reloaded. A bearer token stands in for the ZIdentity session."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Zscaler/Integrations/ZscalerZIdentity",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "zscaler-zscalerzidentity",
+      "name": "Zscaler Internet Access via ZIdentity",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://help.zscaler.com/zia/getting-started-zia-api",
+      "notes": [
+        "The client base ends in /zia/api/v1. GET /security/advanced returns blacklistUrls. GET /users returns an array.",
+        "URL categories, sandbox reports, and the activate call are not modeled. The obfuscated API key session is not checked.",
+        "The ZIA API getting-started page was not reloaded. A bearer token stands in for the ZIdentity session."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.zscaler.com/zia/getting-started-zia-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client base ends in /zia/api/v1. GET /security/advanced returns blacklistUrls. GET /users returns an array.",
+          "URL categories, sandbox reports, and the activate call are not modeled. The obfuscated API key session is not checked.",
+          "The ZIA API getting-started page was not reloaded. A bearer token stands in for the ZIdentity session."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "advanced",
+        "method": "GET",
+        "pathTemplate": "/zia/api/v1/security/advanced",
+        "summary": "Get the advanced security policy",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "blacklistUrls",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "url",
+                "kind": "string",
+                "example": "http://example.test/blocked"
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "users",
+        "method": "GET",
+        "pathTemplate": "/zia/api/v1/users",
+        "summary": "List users",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "user",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "email",
+              "kind": "email"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "Ada Lovelace"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "zscaler-zscalerzidentity",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

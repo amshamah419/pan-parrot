@@ -1,1 +1,160 @@
-{"id":"cisco-meraki-ciscomerakiv2","name":"Cisco Meraki v2","pack":"cisco-meraki","fidelity":"sample","curated":false,"summary":"Cisco Meraki is a cloud-managed IT company that simplifies networking, security, communications, and endpoint management. Its platform offers centralized management for devices, ne","operations":4,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"cisco-meraki-ciscomerakiv2","name":"Cisco Meraki v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/cisco-meraki/Integrations/CiscoMerakiv2","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-adaptive-policy-acl-response-json","method":"GET","pathTemplate":"/organizations/{organization_id}/adaptivePolicy/groups/{adaptive_policy_group_id}","summary":"test_data/adaptive_policy_acl_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"aclId","kind":"id","optional":false,"example":"12345678"},{"name":"name","kind":"string","optional":false,"example":"Block sensitive web traffic"},{"name":"description","kind":"string","optional":false,"example":"Blocks sensitive web traffic"},{"name":"ipVersion","kind":"string","optional":false,"example":"ipv6"},{"name":"rules","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"policy","kind":"string","optional":false,"example":"deny"},{"name":"protocol","kind":"string","optional":false,"example":"tcp"},{"name":"srcPort","kind":"string","optional":false,"example":"1,33"},{"name":"dstPort","kind":"string","optional":false,"example":"22-30"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"createdAt","kind":"timestamp","optional":false,"example":"2021-05-19T17:08:25Z","format":"iso"},{"name":"updatedAt","kind":"timestamp","optional":false,"example":"2021-05-19T17:11:54Z","format":"iso"}]}},{"id":"test-data-adaptive-policy-group-response-json","method":"GET","pathTemplate":"/","summary":"test_data/adaptive_policy_group_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"groupId","kind":"id","optional":false,"example":"1234"},{"name":"name","kind":"string","optional":false,"example":"Employee Group"},{"name":"sgt","kind":"integer","optional":false},{"name":"description","kind":"string","optional":false,"example":"Group of XYZ Corp Employees"},{"name":"policyObjects","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"2345"},{"name":"name","kind":"string","optional":false,"example":"Example Policy Object"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"isDefaultGroup","kind":"boolean","optional":false},{"name":"requiredIpMappings","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"createdAt","kind":"timestamp","optional":false,"example":"2019-06-27T21:34:25.253480Z","format":"iso"},{"name":"updatedAt","kind":"timestamp","optional":false,"example":"2019-06-27T21:34:25.253480Z","format":"iso"}]}},{"id":"test-data-adaptive-policy-response-json","method":"GET","pathTemplate":"/","summary":"test_data/adaptive_policy_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"adaptivePolicyId","kind":"id","optional":false,"example":"111"},{"name":"sourceGroup","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"222"},{"name":"name","kind":"string","optional":false,"example":"IoT Devices"},{"name":"sgt","kind":"integer","optional":false}]},{"name":"destinationGroup","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"333"},{"name":"name","kind":"string","optional":false,"example":"IoT Servers"},{"name":"sgt","kind":"integer","optional":false}]},{"name":"acls","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"444"},{"name":"name","kind":"string","optional":false,"example":"Block web"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"lastEntryRule","kind":"string","optional":false,"example":"allow"},{"name":"createdAt","kind":"timestamp","optional":false,"example":"2019-06-27T21:34:25.253480Z","format":"iso"},{"name":"updatedAt","kind":"timestamp","optional":false,"example":"2019-06-27T21:34:25.253480Z","format":"iso"}]}},{"id":"test-data-adaptive-policy-settings-response-json","method":"GET","pathTemplate":"/","summary":"test_data/adaptive_policy_settings_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"enabledNetworks","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"L_11111111"},"minItems":0,"maxItems":3,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "cisco-meraki-ciscomerakiv2",
+  "name": "Cisco Meraki v2",
+  "pack": "cisco-meraki",
+  "vendor": "Cisco",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /api/v1/organizations and one org's networks.",
+  "notes": [
+    "The client base is api/v1. GET organizations returns an array. GET organizations/lab-org/networks returns that org's networks.",
+    "Inventory, licenses, and devices are not modeled. Other organization ids do not match.",
+    "The Meraki get-organizations page was not reloaded. X-Cisco-Meraki-API-Key is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/cisco-meraki/Integrations/CiscoMerakiv2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "cisco-meraki-ciscomerakiv2",
+      "name": "Cisco Meraki v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developer.cisco.com/meraki/api-v1/get-organizations/",
+      "notes": [
+        "The client base is api/v1. GET organizations returns an array. GET organizations/lab-org/networks returns that org's networks.",
+        "Inventory, licenses, and devices are not modeled. Other organization ids do not match.",
+        "The Meraki get-organizations page was not reloaded. X-Cisco-Meraki-API-Key is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.cisco.com/meraki/api-v1/get-organizations/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client base is api/v1. GET organizations returns an array. GET organizations/lab-org/networks returns that org's networks.",
+          "Inventory, licenses, and devices are not modeled. Other organization ids do not match.",
+          "The Meraki get-organizations page was not reloaded. X-Cisco-Meraki-API-Key is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "organizations",
+        "method": "GET",
+        "pathTemplate": "/api/v1/organizations",
+        "summary": "List organizations",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "organization",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab-org"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "networks",
+        "method": "GET",
+        "pathTemplate": "/api/v1/organizations/lab-org/networks",
+        "summary": "List networks",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "network",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab-network"
+            },
+            {
+              "name": "productTypes",
+              "kind": "const",
+              "constValue": "appliance"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "cisco-meraki-ciscomerakiv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "X-Cisco-Meraki-API-Key",
+        "value": "dummy-meraki-key"
+      }
+    }
+  }
+}

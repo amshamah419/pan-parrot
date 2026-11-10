@@ -1,1 +1,172 @@
-{"id":"checkpointndr-checkpointndr","name":"Check Point Network Detection and Response (Infinity NDR)","pack":"CheckPointNDR","fidelity":"sample","curated":false,"summary":"Collect network security events from Check Point Infinity NDR for your secured SaaS periodically.","operations":3,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"checkpointndr-checkpointndr","name":"Check Point Network Detection and Response (Infinity NDR)","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CheckPointNDR/Integrations/CheckPointNDR","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-checkpointndr-get-insight-event-json","method":"GET","pathTemplate":"/incidents/v1/{url_suffix}","summary":"test_data/checkpointndr-get_insight_event.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"objects","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"domain","kind":"string","optional":false,"example":"test"},{"name":"from","kind":"integer","optional":false},{"name":"to","kind":"integer","optional":false},{"name":"filter","kind":"string","optional":false,"example":"src:\"127.0.0.1\""},{"name":"targetDomain","kind":"string","optional":false,"example":"test"},{"name":"type","kind":"string","optional":false,"example":"Behavioral"},{"name":"insight","kind":"string","optional":false,"example":"Behavioral.Geo.Bulgaria"},{"name":"count","kind":"integer","optional":false},{"name":"data","kind":"object","optional":false,"children":[{"name":"discovery_date","kind":"string","optional":false,"example":"1703387402954"},{"name":"statistics","kind":"object","optional":false,"children":[{"name":"count","kind":"integer","optional":false},{"name":"top_dst","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"top_src","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"total_dst","kind":"integer","optional":false},{"name":"total_src","kind":"integer","optional":false},{"name":"top_service","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"top_file_md5","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"top_appi_name","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"total_service","kind":"integer","optional":false},{"name":"total_file_md5","kind":"integer","optional":false},{"name":"total_appi_name","kind":"integer","optional":false},{"name":"top_proxy_src_ip","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"total_bytes_sent","kind":"integer","optional":false},{"name":"top_src_user_name","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"total_proxy_src_ip","kind":"integer","optional":false},{"name":"top_protection_name","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"total_src_user_name","kind":"integer","optional":false},{"name":"top_src_machine_name","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"total_bytes_received","kind":"integer","optional":false},{"name":"total_protection_name","kind":"integer","optional":false},{"name":"total_src_machine_name","kind":"integer","optional":false}]}]},{"name":"user","kind":"string","optional":false,"example":"Analytics"},{"name":"created","kind":"integer","optional":false},{"name":"updated","kind":"integer","optional":false},{"name":"mdr","kind":"boolean","optional":false},{"name":"probability","kind":"integer","optional":false},{"name":"externalId","kind":"string","optional":true},{"name":"editable","kind":"boolean","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"count","kind":"integer","optional":false}]}},{"id":"test-data-checkpointndr-get-insights-json","method":"GET","pathTemplate":"/../Portal/SignOut","summary":"test_data/checkpointndr-get_insights.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"objects","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"domain","kind":"string","optional":false,"example":"test"},{"name":"type","kind":"string","optional":false,"example":"Behavioral"},{"name":"criteria","kind":"string","optional":false,"example":"Behavioral.Geo.Bulgaria"},{"name":"updated","kind":"integer","optional":false},{"name":"created","kind":"integer","optional":false},{"name":"data","kind":"object","optional":false,"children":[{"name":"color","kind":"integer","optional":false},{"name":"engine","kind":"string","optional":false,"example":"Geo.Incoming"},{"name":"description","kind":"string","optional":false,"example":"An anomaly detected from 127.0.0.1"}]},{"name":"actions","kind":"string","optional":true},{"name":"handled","kind":"boolean","optional":false},{"name":"assign","kind":"string","optional":true},{"name":"mdr","kind":"boolean","optional":false},{"name":"probability","kind":"integer","optional":false},{"name":"handledBy","kind":"string","optional":true},{"name":"events","kind":"array","optional":false,"item":{"name":"item","kind":"integer","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"attachments","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"editable","kind":"boolean","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"count","kind":"integer","optional":false}]}},{"id":"test-data-checkpointndr-parse-insights-output-json","method":"GET","pathTemplate":"/Login/LoginAPI","summary":"test_data/checkpointndr-parse_insights-output.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"Check Point NDR Insight"},{"name":"dbotMirrorId","kind":"id","optional":false,"example":"636750_950961"},{"name":"name","kind":"string","optional":false,"example":"Behavioral.Geo.Bulgaria"},{"name":"severity","kind":"integer","optional":false},{"name":"occurred","kind":"timestamp","optional":false,"example":"2023-12-24T03:10:02.954000Z","format":"iso"},{"name":"updated","kind":"integer","optional":false},{"name":"details","kind":"string","optional":false,"example":"An anomaly detected from 127.0.0.1"},{"name":"CustomFields","kind":"object","optional":false,"children":[{"name":"externalstarttime","kind":"timestamp","optional":false,"example":"2023-12-22T15:15:28.000000Z","format":"iso"},{"name":"externalendtime","kind":"timestamp","optional":false,"example":"2023-12-22T16:15:28.000000Z","format":"iso"},{"name":"externallink","kind":"string","optional":false,"example":"https://now.checkpoint.com/#/insights?id=636750&domain=test&startDate=1703258128000&endDate=1703261728000"},{"name":"description","kind":"string","optional":false,"example":"An anomaly detected from 127.0.0.1"},{"name":"eventdescriptions","kind":"string","optional":false},{"name":"sourceips","kind":"array","optional":false,"item":{"name":"item","kind":"ip","optional":false,"example":"127.0.0.1"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"sourceexternalips","kind":"array","optional":false,"item":{"name":"item","kind":"ip","optional":false,"example":"1.2.3.4"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"destinationips","kind":"array","optional":false,"item":{"name":"item","kind":"ip","optional":false,"example":"192.168.0.1"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"dstports","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"1434"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"filemd5","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"098f6bcd4621d373cade4e832627b4f6"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"appiName","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"TeamViewer"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"users","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"maxn"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"hostnames","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"DESKTOP1"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"sentbytes","kind":"integer","optional":false},{"name":"receivedbytes","kind":"integer","optional":false}]},{"name":"rawJSON","kind":"string","optional":false,"example":"{\"id\": 950961, \"domain\": \"test\", \"from\": 1703258128000, \"to\": 1703261728000, \"filter\": \"src:\\\"127.0.0.1\\\"\", \"targetDomai"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "checkpointndr-checkpointndr",
+  "name": "Check Point Network Detection and Response (Infinity NDR)",
+  "pack": "CheckPointNDR",
+  "vendor": "Check Point",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Login and the insights list.",
+  "notes": [
+    "Infinity NDR API pages were not loaded. The client POSTs /Login/LoginAPI and GETs /incidents/v1/insights, then reads objects.",
+    "This mock returns a token and one insight. The events lookup by id is not a separate route. The domain header is not checked.",
+    "Login uses basic-style client id and access key in the body. This mock does not check that body."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointNDR/Integrations/CheckPointNDR",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "checkpointndr-checkpointndr",
+      "name": "Check Point Network Detection and Response (Infinity NDR)",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointNDR/Integrations/CheckPointNDR",
+      "notes": [
+        "Infinity NDR API pages were not loaded. The client POSTs /Login/LoginAPI and GETs /incidents/v1/insights, then reads objects.",
+        "This mock returns a token and one insight. The events lookup by id is not a separate route. The domain header is not checked.",
+        "Login uses basic-style client id and access key in the body. This mock does not check that body."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointNDR/Integrations/CheckPointNDR",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Infinity NDR API pages were not loaded. The client POSTs /Login/LoginAPI and GETs /incidents/v1/insights, then reads objects.",
+          "This mock returns a token and one insight. The events lookup by id is not a separate route. The domain header is not checked.",
+          "Login uses basic-style client id and access key in the body. This mock does not check that body."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "login",
+        "method": "POST",
+        "pathTemplate": "/Login/LoginAPI",
+        "summary": "Log in",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "token",
+              "kind": "const",
+              "constValue": "dummy-ndr-token"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "insights",
+        "method": "GET",
+        "pathTemplate": "/incidents/v1/insights",
+        "summary": "List insights",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "ok"
+            },
+            {
+              "name": "objects",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "insight",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "updated",
+                    "kind": "timestamp",
+                    "format": "unix-ms"
+                  },
+                  {
+                    "name": "probability",
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "title",
+                    "kind": "string",
+                    "example": "Suspicious connection"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "checkpointndr-checkpointndr",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

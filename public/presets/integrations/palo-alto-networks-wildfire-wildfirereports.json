@@ -1,1 +1,140 @@
-{"id":"palo-alto-networks-wildfire-wildfirereports","name":"Palo Alto Networks WildFire Reports","pack":"Palo_Alto_Networks_WildFire","fidelity":"shape","curated":false,"summary":"Generates a Palo Alto Networks WildFire PDF report. For internal use with the TIM Sample Analysis feature.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"palo-alto-networks-wildfire-wildfirereports","name":"Palo Alto Networks WildFire Reports","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Palo_Alto_Networks_WildFire/Integrations/WildFireReports","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"internal-wildfire-get-report","method":"GET","pathTemplate":"/get/report","summary":"Retrieves results for a file hash using WildFire.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"sha256","kind":"string","optional":false,"example":"sha256"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "palo-alto-networks-wildfire-wildfirereports",
+  "name": "Palo Alto Networks WildFire Reports",
+  "pack": "Palo_Alto_Networks_WildFire",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "POST /publicapi/get/report returns XML file_info.",
+  "notes": [
+    "WildFireReports.py posts /publicapi/get/report. The client appends /publicapi when the base URL does not already end with it.",
+    "This mock returns XML file_info. PDF and MAEC reports are not modeled. Verdict and URL submit live on the WildFire v2 preset.",
+    "The report page was not reloaded. The apikey form field must be the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Palo_Alto_Networks_WildFire/Integrations/WildFireReports",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "palo-alto-networks-wildfire-wildfirereports",
+      "name": "Palo Alto Networks WildFire Reports",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.paloaltonetworks.com/wildfire/u-v/wildfire-api/get-wildfire-information-through-the-wildfire-api/get-a-wildfire-report-wildfire-api",
+      "notes": [
+        "WildFireReports.py posts /publicapi/get/report. The client appends /publicapi when the base URL does not already end with it.",
+        "This mock returns XML file_info. PDF and MAEC reports are not modeled. Verdict and URL submit live on the WildFire v2 preset.",
+        "The report page was not reloaded. The apikey form field must be the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.paloaltonetworks.com/wildfire/u-v/wildfire-api/get-wildfire-information-through-the-wildfire-api/get-a-wildfire-report-wildfire-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "WildFireReports.py posts /publicapi/get/report. The client appends /publicapi when the base URL does not already end with it.",
+          "This mock returns XML file_info. PDF and MAEC reports are not modeled. Verdict and URL submit live on the WildFire v2 preset.",
+          "The report page was not reloaded. The apikey form field must be the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "report",
+        "method": "POST",
+        "pathTemplate": "/publicapi/get/report",
+        "summary": "Get a WildFire report",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "wildfire",
+          "kind": "object",
+          "children": [
+            {
+              "name": "file_info",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "md5",
+                  "kind": "id"
+                },
+                {
+                  "name": "sha256",
+                  "kind": "id"
+                },
+                {
+                  "name": "malware",
+                  "kind": "enum",
+                  "enumValues": [
+                    "yes",
+                    "no"
+                  ]
+                },
+                {
+                  "name": "filetype",
+                  "kind": "const",
+                  "constValue": "PE"
+                },
+                {
+                  "name": "size",
+                  "kind": "integer"
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "palo-alto-networks-wildfire-wildfirereports",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "form",
+        "name": "apikey",
+        "value": "dummy-wildfire-key"
+      }
+    }
+  }
+}
