@@ -1,4 +1,5 @@
 import { defaultChaos, defaultPagination, type FieldSpec, type MockAuth, type MockSpec } from "./mock-spec";
+import { WIZ_EXAMPLE_QUERY, WIZ_SDL } from "./wiz-schema";
 import { moreVerifiedPresets } from "./verified-presets-more";
 
 const checkedAt = "2026-11-09";
@@ -64,6 +65,8 @@ function preset(input: {
   operations: MockSpec["operations"];
   totalRecords?: number;
   auth?: MockAuth;
+  checkedAt?: string;
+  graphql?: MockSpec["graphql"];
 }): VerifiedPresetFile {
   return {
     id: input.id,
@@ -89,7 +92,7 @@ function preset(input: {
         verification: {
           status: "verified",
           docUrl: input.docUrl,
-          checkedAt,
+          checkedAt: input.checkedAt || checkedAt,
           differences: input.differences,
         },
       },
@@ -97,6 +100,7 @@ function preset(input: {
       chaos: defaultChaos(input.id),
       totalRecords: input.totalRecords ?? 500,
       auth: input.auth ?? { mode: "none" },
+      graphql: input.graphql,
     },
   };
 }
@@ -1224,7 +1228,52 @@ const baseVerifiedPresets: VerifiedPresetFile[] = [
   }),
 ];
 
-export const verifiedPresets: VerifiedPresetFile[] = [...baseVerifiedPresets, ...moreVerifiedPresets];
+const wizPreset = preset({
+  id: "wiz-wiz",
+  name: "Wiz",
+  pack: "Wiz",
+  vendor: "Wiz",
+  summary: "GraphQL issuesV2 connection. The selection set decides the fields, and first/after walk the catalog.",
+  docUrl: "https://win.wiz.io/reference/issues-query",
+  sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Wiz/Integrations/Wiz",
+  checkedAt: "2026-11-10",
+  totalRecords: 1000,
+  auth: {
+    mode: "oauth2",
+    oauth2: {
+      tokenPath: "/oauth/token",
+      clientId: "dummy-client",
+      clientSecret: "dummy-secret",
+      ttlSeconds: 3600,
+      shape: "generic",
+      refresh: true,
+    },
+  },
+  graphql: { schema: WIZ_SDL, exampleQuery: WIZ_EXAMPLE_QUERY },
+  differences: [
+    "The public Issues reference (win.wiz.io) did not return a page from this network. The field list was checked against Panther's published Wiz.Issues schema, which cites that URL, the IssuesTable query in demisto/content, and the Elastic Agent Wiz query that cites Wiz's March 5, 2025 sourceRules note.",
+    "This is the issuesV2 subset, not the whole Wiz graph. Cloud resource search and threat-detection evidence fragments are not in the schema.",
+    "sourceRule is still here because the current XSOAR client selects it. sourceRules is also here, from the public deprecation note.",
+    "Issue type is a string. The public excerpts do not list the type enum.",
+    "filterBy and orderBy are accepted and not applied, so a load test still walks the catalog.",
+    "first is capped at 500. The catalog size is totalRecords.",
+    "POST /oauth/token on this catch URL issues the dummy bearer. Point the integration auth URL at that path.",
+  ],
+  operations: [
+    op({
+      id: "graphql",
+      method: "POST",
+      pathTemplate: "/graphql",
+      summary: "issuesV2 and any other query the schema allows",
+      status: 200,
+      list: false,
+      envelope: { type: "graphql" },
+      record: { name: "data", kind: "object", children: [] },
+    }),
+  ],
+});
+
+export const verifiedPresets: VerifiedPresetFile[] = [...baseVerifiedPresets, ...moreVerifiedPresets, wizPreset];
 
 export const checkedNotUpgraded: Array<{
   id: string;

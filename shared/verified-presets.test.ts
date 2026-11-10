@@ -10,7 +10,7 @@ describe("verified presets", () => {
       ids.add(preset.id);
       expect(preset.spec.source.verification?.status).toBe("verified");
       expect(preset.spec.source.verification?.docUrl).toMatch(/^https:\/\//);
-      expect(preset.spec.source.verification?.checkedAt).toBe("2026-11-09");
+      expect(preset.spec.source.verification?.checkedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(preset.spec.source.verification?.differences?.length).toBeGreaterThan(0);
       for (const operation of preset.spec.operations) {
         const result = generateMockResponse({

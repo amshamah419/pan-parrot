@@ -54,7 +54,8 @@ export type Envelope =
   | { type: "splunk-export" }
   | { type: "token-page"; arrayKey: string; tokenKey: string }
   | { type: "xml" }
-  | { type: "soap"; version: "1.1" | "1.2" };
+  | { type: "soap"; version: "1.1" | "1.2" }
+  | { type: "graphql" };
 
 export interface PaginationSpec {
   style: "none" | "offset" | "cursor" | "page" | "link" | "header" | "akamai";
@@ -89,6 +90,8 @@ export interface MockOperation {
   headerMatch?: Record<string, string>;
   /** JSONPath (`$.a.b`) or XPath (`/a/b`, `/a/@attr`, `//name`). */
   bodyMatch?: { path: string; equals?: string };
+  /** When set, the GraphQL operation name in the request must match. */
+  graphqlOperation?: string;
   /** Higher values win when several operations match. */
   priority?: number;
   /** Used when this path matches but no stricter rule does. */
@@ -136,6 +139,8 @@ export interface ChaosSpec {
   authDenied: boolean;
   authTokenFailure: boolean;
   authClockSkew: boolean;
+  /** Return `{ data: null, errors: [...] }` instead of a selection set. */
+  graphqlErrors: boolean;
 }
 
 export type AuthMode =
@@ -204,7 +209,7 @@ export interface XsoarIntegration {
 export interface MockSpec {
   version: 1;
   source: {
-    kind: "preset" | "openapi" | "swagger" | "postman" | "sample" | "wsdl" | "manual";
+    kind: "preset" | "openapi" | "swagger" | "postman" | "sample" | "wsdl" | "manual" | "graphql";
     id?: string;
     name: string;
     attribution?: string;
@@ -229,6 +234,11 @@ export interface MockSpec {
   push?: PushSpec;
   /** Deterministic 429 after N calls in a window. Off unless enabled. */
   rateLimit?: RateQuota;
+  /** SDL or introspection JSON. Queries against a graphql operation use this schema. */
+  graphql?: {
+    schema: string;
+    exampleQuery?: string;
+  };
 }
 
 export interface RateQuota {
@@ -306,6 +316,7 @@ export function defaultChaos(seed = ""): ChaosSpec {
     authDenied: false,
     authTokenFailure: false,
     authClockSkew: false,
+    graphqlErrors: false,
   };
 }
 
@@ -378,6 +389,7 @@ export function validateMockSpec(input: unknown): MockSpec {
     behavior: normalizeBehavior(raw.behavior),
     push: normalizePush(raw.push),
     rateLimit: normalizeRateLimit(raw.rateLimit),
+    graphql: normalizeGraphql(raw.graphql),
   };
 }
 
@@ -411,6 +423,7 @@ function normalizeOperation(
     queryMatch: normalizeQueryMatch(operation.queryMatch),
     headerMatch: normalizeHeaderMatch(operation.headerMatch),
     bodyMatch: normalizeBodyMatch(operation.bodyMatch),
+    graphqlOperation: cleanOptional(operation.graphqlOperation, 80),
     priority: clampInt(operation.priority, -100, 1000, 0) || undefined,
     fallback: Boolean(operation.fallback) || undefined,
     soapAction: cleanOptional(operation.soapAction, 200),
@@ -452,6 +465,7 @@ function normalizeEnvelope(envelope: Envelope | undefined, list: boolean): Envel
       tokenKey: token(envelope.tokenKey, "nextPageToken"),
     };
   }
+  if (envelope.type === "graphql") return { type: "graphql" };
   if (envelope.type === "xml") return { type: "xml" };
   if (envelope.type === "soap") return { type: "soap", version: envelope.version === "1.2" ? "1.2" : "1.1" };
   if (envelope.type === "array" || envelope.type === "object") return envelope;
@@ -641,7 +655,17 @@ function normalizeChaos(chaos: ChaosSpec | undefined): ChaosSpec {
     authDenied: Boolean(chaos.authDenied),
     authTokenFailure: Boolean(chaos.authTokenFailure),
     authClockSkew: Boolean(chaos.authClockSkew),
+    graphqlErrors: Boolean(chaos.graphqlErrors),
   };
+}
+
+function normalizeGraphql(value: MockSpec["graphql"] | undefined): MockSpec["graphql"] | undefined {
+  if (!value || typeof value.schema !== "string") return undefined;
+  const schema = value.schema.trim();
+  if (!schema) return undefined;
+  if (schema.length > MOCK_LIMITS.maxGraphqlSchemaChars) throw new Error("GraphQL schema is too large");
+  const example = typeof value.exampleQuery === "string" ? value.exampleQuery.trim().slice(0, 8_000) : "";
+  return { schema, exampleQuery: example || undefined };
 }
 
 function normalizeAuth(auth: MockAuth | undefined): MockAuth {

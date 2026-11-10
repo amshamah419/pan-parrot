@@ -1,6 +1,6 @@
 # Preset verification
 
-Checked against public vendor API references on 2026-11-09. The other catalog entries stay inferred from demisto/content samples and are not marked verified.
+Checked against public vendor API references. Most rows were checked on 2026-11-09. Wiz was checked on 2026-11-10. The other catalog entries stay inferred from demisto/content samples and are not marked verified.
 
 | Preset | Status | Doc | Notes |
 | --- | --- | --- | --- |
@@ -42,3 +42,4 @@ Checked against public vendor API references on 2026-11-09. The other catalog en
 | Zscaler Internet Access | verified | https://help.zscaler.com/zia/url-lookup | The public lookup response is a JSON array of url, urlClassifications, and urlClassificationsWithSecurityAlert. The request body of URLs is not echoed back; each row uses a sample URL. Session cookies and the obfuscated API key are not checked. |
 
 Verified: 36. Checked and left as samples because the public response is XML or a zip: 0. Catalog size: 1336.
+| Wiz | verified | https://win.wiz.io/reference/issues-query | The public Issues reference (win.wiz.io) did not return a page from this network. The field list was checked against Panther's published Wiz.Issues schema, which cites that URL, the IssuesTable query in demisto/content, and the Elastic Agent Wiz query that cites Wiz's March 5, 2025 sourceRules note. This is the issuesV2 subset, not the whole Wiz graph. Cloud resource search and threat-detection evidence fragments are not in the schema. sourceRule is still here because the current XSOAR client selects it. sourceRules is also here, from the public deprecation note. Issue type is a string. The public excerpts do not list the type enum. filterBy and orderBy are accepted and not applied, so a load test still walks the catalog. first is capped at 500. The catalog size is totalRecords. POST /oauth/token on this catch URL issues the dummy bearer. Point the integration auth URL at that path. |

@@ -53,6 +53,7 @@ const curatedIds = new Set([
   "azureactivedirectory-azureadidentityprotection",
   "aws-securityhub-aws-securityhub",
   "qualys-qualysv2",
+  "wiz-wiz",
 ]);
 const stats = {
   scanned: 0,

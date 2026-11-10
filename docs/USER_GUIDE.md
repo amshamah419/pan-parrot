@@ -23,6 +23,7 @@ If the mock came from a preset or an integration YAML, the same screen lists the
 - The **Auth** tab checks dummy credentials (API key, basic, bearer, OAuth2, AWS SigV4, Digest, HS256 JWT, WS-Security, NTLM, and a few vendor formats). OAuth2 can return `expires_in` and a `refresh_token`. Use dummy values. Mutual TLS is not available.
 - Pagination sits next to the operation. Offset/limit, page number, cursor/next token, Link header, and an Akamai offset line all walk the virtual record count. On the Chaos tab, Fetch backoff returns 429 with `Retry-After` and `X-RateLimit-*` after N calls in a window, so a fetch-incidents loop can practice backing off. Virtual records is how many unique records the catalog holds. One HTTP response still stops at 500.
 - Under the catch URL, Chaos and load test, Auth, Flow, Push, Export fixtures, and Share jump to that section.
+- A GraphQL schema pasted on the API spec tab, or toggled on the Shape tab, answers POST /graphql from the selection set. Use first and after to page a connection. The Match tab can require an operation name. The chaos switch GraphQL error in the body returns data null and an errors array.
 - The **Push** tab can POST generated events to a public `https` webhook. The signing secret is stored encrypted and is not shown again.
 
 A normal page stops at 500 records and 2 MB. Streamed NDJSON and file downloads stop at 6 MB. Ask for the next page with the preset's `limit` and offset or cursor.
