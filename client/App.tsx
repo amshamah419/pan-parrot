@@ -16,6 +16,7 @@ import Admin from "./pages/Admin";
 import Docs from "./pages/Docs";
 import NotFound from "./pages/NotFound";
 import MockStudio from "./pages/MockStudio";
+import Xsiam from "./pages/Xsiam";
 import { applyThemeChoice, readThemeChoice } from "./hooks/use-theme";
 
 applyThemeChoice(readThemeChoice());
@@ -50,6 +51,14 @@ const App = () => (
               }
             />
             <Route path="/docs" element={<Docs />} />
+            <Route
+              path="/xsiam"
+              element={
+                <ProtectedRoute>
+                  <Xsiam />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/mock/:endpointId"
               element={
