@@ -29,9 +29,227 @@
         "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-messages?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
+          "9 of 26 commands from vendor docs, 0 approximate, 17 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "msgraph-mail-list-emails",
+          "calls": [
+            "GET /users/{user_id}/{folder_path}/messages"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-get-email",
+          "calls": [
+            "GET /users/{user_id}/{folder_path}/messages/{message_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-delete-email",
+          "calls": [
+            "DELETE /users/{user_id}/{folder_path}/messages/{message_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-list-attachments",
+          "calls": [
+            "GET /users/{user_id}/{folder_path}/messages/{message_id}/attachments/"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-get-attachment",
+          "calls": [
+            "GET /users/{user_id}/{folder_path}/messages/{message_id}/attachments{attachment_id_path}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-list-folders",
+          "calls": [
+            "GET /users/{user_id}/mailFolders"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-id-mailfolders"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-mailfolders?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-mail-list-child-folders",
+          "calls": [
+            "GET /users/{user_id}/mailFolders/{parent_folder_id}/childFolders"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-id-mailfolders-parent-folder-id-childfolders"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/mailfolder-list-childfolders?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-mail-create-folder",
+          "calls": [
+            "POST /users/{user_id}/mailFolders"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--users-user-id-mailfolders"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-post-mailfolders?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-mail-update-folder",
+          "calls": [
+            "PATCH /users/{user_id}/mailFolders/{folder_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "patch--users-user-id-mailfolders-folder-id"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/mailfolder-update?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-mail-delete-folder",
+          "calls": [
+            "DELETE /users/{user_id}/mailFolders/{folder_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-move-email",
+          "calls": [
+            "POST /users/{user_id}/messages/{message_id}/move"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--users-user-id-messages-message-id-move"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/message-move?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-mail-get-email-as-eml",
+          "calls": [
+            "GET /users/{user_id}/messages/{message_id}/$value"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-create-draft",
+          "calls": [
+            "POST /{suffix}/{reply_message_id}/createReply"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "send-mail",
+          "calls": [
+            "POST /{suffix}/{reply_message_id}/createReply",
+            "POST /users/{email}/messages/{draft_id}/send",
+            "POST /users/{email}/sendMail"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-reply-to",
+          "calls": [
+            "POST /{suffix}/{reply_message_id}/createReply",
+            "POST /users/{email}/messages/{draft_id}/send",
+            "POST /users/{email_from}/messages/{message_id}/reply"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-send-draft",
+          "calls": [
+            "POST /users/{email}/messages/{draft_id}/send"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "reply-mail",
+          "calls": [
+            "POST /{suffix}/{reply_message_id}/createReply",
+            "POST /users/{email}/messages/{draft_id}/send",
+            "POST /users/{email_from}/messages/{message_id}/reply"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-update-email-status",
+          "calls": [
+            "PATCH /users/{user_id}/{folder_path}/messages/{message_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-auth-reset",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-list-rules",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-get-rule",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-delete-rule",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-mail-create-rule",
+          "calls": [
+            "POST /users/{user_id}/mailFolders/inbox/messageRules"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--users-user-id-mailfolders-inbox-messagerules"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/mailfolder-post-messagerules?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-mail-update-rule",
+          "calls": [
+            "PATCH /users/{user_id}/mailFolders/inbox/messageRules/{rule_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "patch--users-user-id-mailfolders-inbox-messagerules-rule-id"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/messagerule-update?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-mail-get-settings",
+          "calls": [
+            "GET /users/{user_id}/mailboxSettings"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-id-mailboxsettings"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-get-mailboxsettings?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-mail-get-mailtips",
+          "calls": [
+            "POST /users/{email_address}/getMailTips"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--users-email-address-getmailtips"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-getmailtips?view=graph-rest-1.0&tabs=http"
+        }
+      ]
     },
     "operations": [
       {
@@ -114,6 +332,267 @@
           ]
         },
         "fixture": "{\n  \"value\": [\n    {\n      \"receivedDateTime\": \"2018-02-13T03:53:55Z\",\n      \"sentDateTime\": \"2018-02-13T03:53:55Z\",\n      \"hasAttachments\": true,\n      \"subject\": \"MyAnalytics | Your past week\",\n      \"body\": {\n        \"contentType\": \"html\",\n        \"content\": \"<html lang=\\\"en\\\">\\r\\n<head></head>\\r\\n<body> </body>\\r\\n</html>\\r\\n\"\n      },\n      \"bodyPreview\": \"February 4-10, 2018\\r\\n\\r\\n\\r\\nHi Megan Bowen,\\r\\n\\r\\nWe've got your highlights from last week\\r\\n\\r\\n\\r\\n\\r\\nYour time\\r\\n\\r\\n\\r\\nEmail hours\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n0 hrs\\r\\n\\r\\n\\r\\n\\r\\nMeeting hours\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n12 hrs\\r\\n\\r\\n\\r\\n\\r\\n\\r\\nFocus hours\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n30 hrs\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\nGoals keep you motivated. Set them\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-user-id-mailfolders",
+        "summary": "GET /users/{user_id}/mailFolders",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/mailFolders",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#users('68ca8ec0-11f8-456b-a785-70d9936650d5')/mailFolders\",\n  \"value\": [\n    {\n      \"id\": \"AQMkADYAAAIBXQAAAA==\",\n      \"displayName\": \"Archive\",\n      \"parentFolderId\": \"AQMkADYAAAIBCAAAAA==\",\n      \"childFolderCount\": 0,\n      \"unreadItemCount\": 0,\n      \"totalItemCount\": 0,\n      \"isHidden\": false\n    },\n    {\n      \"id\": \"AQMkADYAAAIBFQAAAA==\",\n      \"displayName\": \"Conversation History\",\n      \"parentFolderId\": \"AQMkADYAAAIBCAAAAA==\",\n      \"childFolderCount\": 1,\n      \"unreadItemCount\": 0,\n      \"totalItemCount\": 0,\n      \"isHidden\": false\n    },\n    {\n      \"id\": \"AQMkADYAAAIBCgAAAA==\",\n      \"displayName\": \"Deleted Items\",\n      \"parentFolderId\": \"AQMkADYAAAIBCAAAAA==\",\n      \"childFolderCount\": 0,\n      \"unreadItemCount\": 0,\n      \"totalItemCount\": 0,\n      \"isHidden\": false\n    },\n    {\n      \"id\": \"AQMkADYAAAIBDwAAAA==\",\n      \"displayName\": \"Drafts\",\n      \"parentFolderId\": \"AQMkADYAAAIBCAAAAA==\",\n      \"childFolderCount\": 0,\n      \"unreadItemCount\": 0,\n      \"totalItemCount\": 0,\n      \"isHidden\": false\n    },\n    {\n      \"id\": \"AQMkADYAAAIBDAAAAA==\",\n      \"displayName\": \"Inbox\",\n      \"parentFolderId\": \"AQMkADYAAAIBCAAAAA==\",\n      \"childFolderCount\": 1,\n      \"unreadItemCount\": 70,\n      \"totalItemCount\": 71,\n      \"isHidden\": false\n    },\n    {\n      \"@odata.type\": \"#microsoft.graph.mailSearchFolder\",\n      \"id\": \"AAMkADYRAAAZg1yTAAA=\",\n      \"displayName\": \"Weekly digests\",\n      \"parentFolderId\": \"AQMkADYAAAIBDAAAAA==\",\n      \"childFolderCount\": 0,\n      \"unreadItemCount\": 4,\n      \"totalItemCount\": 5,\n      \"isHidden\": false,\n      \"isSupported\": true,\n      \"filterQuery\": \"contains(subject, 'weekly digest')\"\n    },\n    {\n      \"id\": \"AQMkADYAAAIBGQAAAA==\",\n      \"displayName\": \"Junk Email\",\n      \"parentFolderId\": \"AQMkADYAAAIBCAAAAA==\",\n      \"childFolderCount\": 0,\n      \"unreadItemCount\": 0,\n      \"totalItemCount\": 0,\n      \"isHidden\": false\n    },\n    {\n      \"id\": \"AQMkADYAAAIBCwAAAA==\",\n      \"displayName\": \"Outbox\",\n      \"parentFolderId\": \"AQMkADYAAAIBCAAAAA==\",\n      \"childFolderCount\": 0,\n      \"unreadItemCount\": 0,\n      \"totalItemCount\": 0,\n      \"isHidden\": false\n    },\n    {\n      \"id\": \"AQMkADYAAAIBCQAAAA==\",\n      \"displayName\": \"Sent Items\",\n      \"parentFolderId\": \"AQMkADYAAAIBCAAAAA==\",\n      \"childFolderCount\": 0,\n      \"unreadItemCount\": 0,\n      \"totalItemCount\": 0,\n      \"isHidden\": false\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-user-id-mailfolders-parent-folder-id-childfolders",
+        "summary": "GET /users/{user_id}/mailFolders/{parent_folder_id}/childFolders",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/mailFolders/{parent_folder_id}/childFolders",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": [\n    {\n      \"id\": \"id-value\",\n      \"displayName\": \"displayName-value\",\n      \"parentFolderId\": \"parentFolderId-value\",\n      \"childFolderCount\": 99,\n      \"unreadItemCount\": 99,\n      \"totalItemCount\": 99,\n      \"isHidden\": false\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "post--users-user-id-mailfolders",
+        "summary": "POST /users/{user_id}/mailFolders",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/users/{user_id}/mailFolders",
+        "contentType": "application/json",
+        "fixture": "{\n  \"displayName\": \"Clutter\",\n  \"parentFolderId\": \"AQMkADlmOGQwZmU3LWVjOWMtNDhiYgAtODcxNy1\",\n  \"childFolderCount\": 99,\n  \"unreadItemCount\": 99,\n  \"totalItemCount\": 99,\n  \"id\": \"hN2Y5OGRhNGYwODEALgAAA0DAKbvJvFhJgcT3lZpkhNQBAA1\",\n  \"isHidden\": true\n}\n"
+      },
+      {
+        "id": "patch--users-user-id-mailfolders-folder-id",
+        "summary": "PATCH /users/{user_id}/mailFolders/{folder_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "PATCH",
+        "pathTemplate": "/users/{user_id}/mailFolders/{folder_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"displayName\": \"displayName-value\",\n  \"parentFolderId\": \"parentFolderId-value\",\n  \"childFolderCount\": 99,\n  \"unreadItemCount\": 99,\n  \"totalItemCount\": 99,\n  \"id\": \"id-value\"\n}\n"
+      },
+      {
+        "id": "post--users-user-id-messages-message-id-move",
+        "summary": "POST /users/{user_id}/messages/{message_id}/move",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/users/{user_id}/messages/{message_id}/move",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#message\",\n  \"@odata.type\": \"#microsoft.graph.message\",\n  \"@odata.etag\": \"W/\\\"FwAAABYAAAC4ofQHEIqCSbQPot83AFcbAAAW/0tB\\\"\",\n  \"id\": \"AAMkADhAAAW-VPeAAA=\",\n  \"createdDateTime\": \"2018-08-12T08:43:22Z\",\n  \"lastModifiedDateTime\": \"2018-08-15T19:47:54Z\",\n  \"changeKey\": \"FwAAABYAAAC4ofQHEIqCSbQPot83AFcbAAAW/0tB\",\n  \"categories\": [],\n  \"receivedDateTime\": \"2018-08-12T08:43:22Z\",\n  \"sentDateTime\": \"2018-08-12T08:43:20Z\",\n  \"hasAttachments\": false,\n  \"internetMessageId\": \"<user@example.invalid>\",\n  \"subject\": \"Undeliverable: Meet for lunch?\",\n  \"bodyPreview\": \"Delivery has failed to these recipients or groups:\\r\\n\\r\\nuser3@example.invalid (user3@example.invalid)\\r\\nYour message couldn't be delivered. Despite repeated attempts to deliver your message, querying the Domain Name System (DNS) for the rec\",\n  \"importance\": \"normal\",\n  \"parentFolderId\": \"AAMkADhAAAAAAEKAAA=\",\n  \"conversationId\": \"AAQkADhJzfbkARFhe5kKhjihSA=\",\n  \"isDeliveryReceiptRequested\": null,\n  \"isReadReceiptRequested\": false,\n  \"isRead\": false,\n  \"isDraft\": false,\n  \"webLink\": \"https://outlook.office365.com/owa/?ItemID=AAMkADhAAAW%2FVPeAAA%3D&exvsurl=1&viewmodel=ReadMessageItem\",\n  \"inferenceClassification\": \"focused\",\n  \"body\": {\n    \"contentType\": \"html\",\n    \"content\": \"<html></html>\"\n  },\n  \"sender\": {\n    \"emailAddress\": {\n      \"name\": \"Microsoft Outlook\",\n      \"address\": \"user2@example.invalid\"\n    }\n  },\n  \"from\": {\n    \"emailAddress\": {\n      \"name\": \"Microsoft Outlook\",\n      \"address\": \"user2@example.invalid\"\n    }\n  },\n  \"toRecipients\": [\n    {\n      \"emailAddress\": {\n        \"name\": \"user3@example.invalid\",\n        \"address\": \"user3@example.invalid\"\n      }\n    },\n    {\n      \"emailAddress\": {\n        \"name\": \"user4@example.invalid\",\n        \"address\": \"user4@example.invalid\"\n      }\n    }\n  ],\n  \"ccRecipients\": [],\n  \"bccRecipients\": [],\n  \"replyTo\": [],\n  \"flag\": {\n    \"flagStatus\": \"notFlagged\"\n  }\n}\n"
+      },
+      {
+        "id": "post--users-user-id-mailfolders-inbox-messagerules",
+        "summary": "POST /users/{user_id}/mailFolders/inbox/messageRules",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/users/{user_id}/mailFolders/inbox/messageRules",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"AQAAAJ5dZqA=\",\n  \"displayName\": \"From partner\",\n  \"sequence\": 2,\n  \"isEnabled\": true,\n  \"hasError\": false,\n  \"isReadOnly\": false,\n  \"conditions\": {\n    \"senderContains\": [\n      \"ADELE\"\n    ]\n  },\n  \"actions\": {\n    \"stopProcessingRules\": true,\n    \"forwardTo\": [\n      {\n        \"emailAddress\": {\n          \"name\": \"Alex Wilbur\",\n          \"address\": \"user@example.invalid\"\n        }\n      }\n    ]\n  }\n}\n"
+      },
+      {
+        "id": "patch--users-user-id-mailfolders-inbox-messagerules-rule-id",
+        "summary": "PATCH /users/{user_id}/mailFolders/inbox/messageRules/{rule_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "PATCH",
+        "pathTemplate": "/users/{user_id}/mailFolders/inbox/messageRules/{rule_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#Me/mailFolders('inbox')/messageRules/$entity\",\n  \"id\": \"AQAAAJ5dZqA=\",\n  \"displayName\": \"Important from partner\",\n  \"sequence\": 2,\n  \"isEnabled\": true,\n  \"hasError\": false,\n  \"isReadOnly\": false,\n  \"conditions\": {\n    \"senderContains\": [\n      \"ADELE\"\n    ]\n  },\n  \"actions\": {\n    \"markImportance\": \"high\"\n  }\n}\n"
+      },
+      {
+        "id": "get--users-user-id-mailboxsettings",
+        "summary": "GET /users/{user_id}/mailboxSettings",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/mailboxSettings",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#Me/mailboxSettings\",\n  \"automaticRepliesSetting\": {\n    \"status\": \"Scheduled\",\n    \"externalAudience\": \"All\",\n    \"scheduledStartDateTime\": {\n      \"dateTime\": \"2016-03-14T07:00:00.0000000\",\n      \"timeZone\": \"UTC\"\n    },\n    \"scheduledEndDateTime\": {\n      \"dateTime\": \"2016-03-28T07:00:00.0000000\",\n      \"timeZone\": \"UTC\"\n    },\n    \"internalReplyMessage\": \"<html>\\n<body>\\n<p>I'm at our company's worldwide reunion and will respond to your message as soon as I return.<br>\\n</p></body>\\n</html>\\n\",\n    \"externalReplyMessage\": \"<html>\\n<body>\\n<p>I'm at the Contoso worldwide reunion and will respond to your message as soon as I return.<br>\\n</p></body>\\n</html>\\n\"\n  },\n  \"timeZone\": \"UTC\",\n  \"language\": {\n    \"locale\": \"en-US\",\n    \"displayName\": \"English (United States)\"\n  },\n  \"workingHours\": {\n    \"daysOfWeek\": [\n      \"monday\",\n      \"tuesday\",\n      \"wednesday\",\n      \"thursday\",\n      \"friday\"\n    ],\n    \"startTime\": \"08:00:00.0000000\",\n    \"endTime\": \"17:00:00.0000000\",\n    \"timeZone\": {\n      \"name\": \"Pacific Standard Time\"\n    }\n  },\n  \"userPurpose\": {\n    \"value\": \"user\"\n  },\n  \"dateFormat\": \"MM/dd/yyyy\",\n  \"timeFormat\": \"hh:mm tt\",\n  \"delegateMeetingMessageDeliveryOptions\": \"sendToDelegateOnly\"\n}\n"
+      },
+      {
+        "id": "post--users-email-address-getmailtips",
+        "summary": "POST /users/{email_address}/getMailTips",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/users/{email_address}/getMailTips",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#Collection(microsoft.graph.mailTips)\",\n  \"value\": [\n    {\n      \"emailAddress\": {\n        \"name\": \"\",\n        \"address\": \"user2@example.invalid\"\n      },\n      \"automaticReplies\": {\n        \"message\": \"<style type=\\\"text/css\\\" style=\\\"\\\">\\r\\n<!--\\r\\np\\r\\n\\t{margin-top:0;\\r\\n\\tmargin-bottom:0}\\r\\n-->\\r\\n</style>\\r\\n<div dir=\\\"ltr\\\">\\r\\n<div id=\\\"x_divtagdefaultwrapper\\\" style=\\\"font-size:12pt; color:#000000; background-color:#FFFFFF; font-family:Calibri,Arial,Helvetica,sans-serif\\\">\\r\\n<p>Hi, I am on vacation right now. I'll get back to you after I return.<br>\\r\\n</p>\\r\\n</div>\\r\\n</div>\",\n        \"messageLanguage\": {\n          \"locale\": \"en-US\",\n          \"displayName\": \"English (United States)\"\n        },\n        \"scheduledStartTime\": {\n          \"dateTime\": \"2018-08-07T02:00:00.0000000\",\n          \"timeZone\": \"UTC\"\n        },\n        \"scheduledEndTime\": {\n          \"dateTime\": \"2018-08-09T02:00:00.0000000\",\n          \"timeZone\": \"UTC\"\n        }\n      },\n      \"mailboxFull\": false\n    },\n    {\n      \"emailAddress\": {\n        \"name\": \"\",\n        \"address\": \"user@example.invalid\"\n      },\n      \"automaticReplies\": {\n        \"message\": \"\"\n      },\n      \"mailboxFull\": false\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

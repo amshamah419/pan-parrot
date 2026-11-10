@@ -29,10 +29,98 @@
         "docUrl": "https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file.",
-          "These operations stay approximate: PATCH /beta/applications/{service_id}."
+          "3 of 12 commands from vendor docs, 0 approximate, 9 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "msgraph-apps-auth-start",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-apps-auth-complete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-apps-auth-reset",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-apps-auth-test",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-apps-service-principal-list",
+          "calls": [
+            "GET /v1.0/servicePrincipals"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-v1-0-serviceprincipals-0"
+          ]
+        },
+        {
+          "command": "msgraph-apps-service-principal-remove",
+          "calls": [
+            "DELETE /v1.0/servicePrincipals{service_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-apps-service-principal-get",
+          "calls": [
+            "GET /v1.0/servicePrincipals{service_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--v1-0-serviceprincipals-service-id"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/serviceprincipal-get?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-apps-service-principal-update",
+          "calls": [
+            "PATCH /v1.0/servicePrincipals{service_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-apps-service-principal-password-add",
+          "calls": [
+            "POST /v1.0/servicePrincipals{service_id}/addPassword"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--v1-0-serviceprincipals-service-id-addpassword"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/serviceprincipal-addpassword?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-apps-service-principal-password-remove",
+          "calls": [
+            "POST /v1.0/servicePrincipals{service_id}/removePassword"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-apps-service-principal-unlock-configuration",
+          "calls": [
+            "PATCH /v1.0/beta/applications/{service_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-apps-service-principal-lock-configuration",
+          "calls": [
+            "PATCH /v1.0/beta/applications/{service_id}"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -99,6 +187,64 @@
           "kind": "object",
           "children": []
         }
+      },
+      {
+        "id": "get--v1-0-serviceprincipals-service-id",
+        "summary": "GET /v1.0/servicePrincipals{service_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/v1.0/servicePrincipals{service_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"accountEnabled\": true,\n  \"addIns\": [],\n  \"alternativeNames\": [\n    \"http://contoso/a7770d29-4321-41a6-b863-ca11d6639448\"\n  ],\n  \"appDisplayName\": \"My app\",\n  \"appId\": \"appId-value\",\n  \"appOwnerOrganizationId\": \"65415bb1-9267-4313-bbf5-ae259732ee12\",\n  \"appRoleAssignmentRequired\": true,\n  \"appRoles\": [],\n  \"createdByAppId\": \"748fe028-bb3d-4f2c-a015-4789781fe0f1\",\n  \"disabledByMicrosoftStatus\": null,\n  \"displayName\": \"My app instance in tenant\",\n  \"endpoints\": [],\n  \"homepage\": null,\n  \"id\": \"00af5dfb-85da-4b41-a677-0c6b86dd34f8\",\n  \"verifiedPublisher\": {\n    \"displayName\": \"publisher_contoso\",\n    \"verifiedPublisherId\": \"9999999\",\n    \"addedDateTime\": \"2021-04-24T17:49:44Z\"\n  },\n  \"info\": {\n    \"termsOfServiceUrl\": null,\n    \"supportUrl\": null,\n    \"privacyStatementUrl\": null,\n    \"marketingUrl\": null,\n    \"logoUrl\": null\n  },\n  \"keyCredentials\": [],\n  \"logoutUrl\": null,\n  \"oauth2PermissionScopes\": [],\n  \"passwordCredentials\": [],\n  \"publisherName\": null,\n  \"replyUrls\": [],\n  \"resourceSpecificApplicationPermissions\": [],\n  \"servicePrincipalNames\": [],\n  \"servicePrincipalType\": null,\n  \"signInAudience\": \"AzureADandPersonalMicrosoftAccount\",\n  \"tags\": [],\n  \"tokenEncryptionKeyId\": null\n}\n"
+      },
+      {
+        "id": "post--v1-0-serviceprincipals-service-id-addpassword",
+        "summary": "POST /v1.0/servicePrincipals{service_id}/addPassword",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/v1.0/servicePrincipals{service_id}/addPassword",
+        "contentType": "application/json",
+        "fixture": "{\n  \"customKeyIdentifier\": null,\n  \"endDateTime\": \"2021-09-09T19:50:29.3086381Z\",\n  \"keyId\": \"f0b0b335-1d71-4883-8f98-567911bfdca6\",\n  \"startDateTime\": \"2019-09-09T19:50:29.3086381Z\",\n  \"secretText\": \"[6gyXA5S20@MN+WRXAJ]I-TO7g1:h2P8\",\n  \"hint\": \"[6g\",\n  \"displayName\": \"Password friendly name\"\n}\n"
       }
     ],
     "chaos": {

@@ -3,9 +3,9 @@
   "name": "Entra ID Users",
   "pack": "MicrosoftGraphUser",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: POST /users.",
+  "summary": "From vendor docs. Rebuilt from the client: POST /users.",
   "notes": [
     "Cross-check: field: POST /users root keys ['value'] are not read by this call or present in test_data."
   ],
@@ -17,21 +17,397 @@
       "kind": "preset",
       "id": "microsoftgraphuser-microsoftgraphuser",
       "name": "Entra ID Users",
-      "fidelity": "guessed",
+      "fidelity": "vendor",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/user-list?view=graph-rest-1.0",
       "notes": [
         "Cross-check: field: POST /users root keys ['value'] are not read by this call or present in test_data."
-      ]
+      ],
+      "commandDocs": [
+        {
+          "command": "msgraph-user-terminate-session",
+          "calls": [
+            "PATCH /users/{user}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-account-disable",
+          "calls": [
+            "PATCH /users/{user}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-unblock",
+          "calls": [
+            "PATCH /users/{user}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-update",
+          "calls": [
+            "PATCH /users/{user}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-delete",
+          "calls": [
+            "DELETE /users/{user}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-create",
+          "calls": [
+            "POST /users",
+            "GET /users/{user}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--users",
+            "get--users-user"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-post-users?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-get-delta",
+          "calls": [
+            "GET /users/delta"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-delta"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-delta?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-get",
+          "calls": [
+            "GET /users/{user}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user"
+          ]
+        },
+        {
+          "command": "msgraph-user-get-groups",
+          "calls": [
+            "GET /users/{user}/memberOf"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-memberof"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-memberof?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-get-auth-methods",
+          "calls": [
+            "GET /users/{user}/authentication/methods"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-authentication-methods"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/authentication-list-methods?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-list",
+          "calls": [
+            "GET /users"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-direct-reports",
+          "calls": [
+            "GET /users/{user}/directReports"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-directreports"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-directreports?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-get-manager",
+          "calls": [
+            "GET /users/{user}/manager"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-manager"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-manager?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-assign-manager",
+          "calls": [
+            "PUT /users/{user}/manager/$ref"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-change-password",
+          "calls": [
+            "PATCH /users/{user}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-change-password-on-premise",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-test",
+          "calls": [
+            "GET /users/"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users"
+          ]
+        },
+        {
+          "command": "msgraph-user-session-revoke",
+          "calls": [
+            "POST /users/{user}/revokeSignInSessions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--users-user-revokesigninsessions"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-revokesigninsessions?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-force-reset-password",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-tap-policy-list",
+          "calls": [
+            "GET /users/{user_id}/authentication/temporaryAccessPassMethods"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-tap-policy-create",
+          "calls": [
+            "POST /users/{user_id}/authentication/temporaryAccessPassMethods"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-tap-policy-delete",
+          "calls": [
+            "DELETE /users/{user_id}/authentication/temporaryAccessPassMethods/{policy_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-generate-login-url",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-auth-reset",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-owned-devices-list",
+          "calls": [
+            "GET /users/{user_id}/ownedDevices"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-id-owneddevices"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-owneddevices?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-fido2-method-list",
+          "calls": [
+            "GET /users/{user_id}/authentication/fido2Methods/{method_id}",
+            "GET /users/{user_id}/authentication/fido2Methods"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-fido2-method-delete",
+          "calls": [
+            "DELETE /users/{user_id}/authentication/fido2Methods/{method_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-email-method-list",
+          "calls": [
+            "GET /users/{user_id}/authentication/emailMethods/{method_id}",
+            "GET /users/{user_id}/authentication/emailMethods"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-email-method-delete",
+          "calls": [
+            "DELETE /users/{user_id}/authentication/emailMethods/{method_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-authenticator-method-list",
+          "calls": [
+            "GET /users/{user_id}/authentication/microsoftAuthenticatorMethods/{method_id}",
+            "GET /users/{user_id}/authentication/microsoftAuthenticatorMethods"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-id-authentication-microsoftauthenticatormethods-method-id",
+            "get--users-user-id-authentication-microsoftauthenticatormethods"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/microsoftauthenticatorauthenticationmethod-get?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-authenticator-method-delete",
+          "calls": [
+            "DELETE /users/{user_id}/authentication/microsoftAuthenticatorMethods/{method_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-phone-method-list",
+          "calls": [
+            "GET /users/{user_id}/authentication/phoneMethods/{method_id}",
+            "GET /users/{user_id}/authentication/phoneMethods"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-id-authentication-phonemethods-method-id",
+            "get--users-user-id-authentication-phonemethods"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/phoneauthenticationmethod-get?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-phone-method-delete",
+          "calls": [
+            "DELETE /users/{user_id}/authentication/phoneMethods/{method_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-software-oath-method-list",
+          "calls": [
+            "GET /users/{user_id}/authentication/softwareOathMethods/{method_id}",
+            "GET /users/{user_id}/authentication/softwareOathMethods"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "get--users-user-id-authentication-softwareoathmethods-method-id"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/softwareoathauthenticationmethod-get?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-software-oath-method-delete",
+          "calls": [
+            "DELETE /users/{user_id}/authentication/softwareOathMethods/{method_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-windows-hello-method-list",
+          "calls": [
+            "GET /users/{user_id}/authentication/windowsHelloForBusinessMethods/{method_id}",
+            "GET /users/{user_id}/authentication/windowsHelloForBusinessMethods"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-user-id-authentication-windowshelloforbusinessmethods-method-id",
+            "get--users-user-id-authentication-windowshelloforbusinessmethods"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/windowshelloforbusinessauthenticationmethod-get?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-windows-hello-method-delete",
+          "calls": [
+            "DELETE /users/{user_id}/authentication/windowsHelloForBusinessMethods/{method_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-temp-access-pass-method-list",
+          "calls": [
+            "GET /users/{user_id}/authentication/temporaryAccessPassMethods/{method_id}",
+            "GET /users/{user_id}/authentication/temporaryAccessPassMethods"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "get--users-user-id-authentication-temporaryaccesspassmethods-method-id"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/temporaryaccesspassauthenticationmethod-get?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-temp-access-pass-method-delete",
+          "calls": [
+            "DELETE /users/{user_id}/authentication/temporaryAccessPassMethods/{policy_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-request-mfa",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-get-user-default-auth-method",
+          "calls": [
+            "GET /users/{user}/authentication/signInPreferences"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-user-create-mfa-client-secret",
+          "calls": [
+            "GET /servicePrincipals",
+            "POST /servicePrincipals/{service_principal_id}/addPassword"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--serviceprincipals",
+            "post--serviceprincipals-service-principal-id-addpassword"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-user-create-mfa-client-access-token",
+          "calls": [],
+          "status": "missing"
+        }
+      ],
+      "verification": {
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-post-users?view=graph-rest-1.0&tabs=http",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "15 of 43 commands from vendor docs, 2 approximate, 26 missing."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "post-users-0",
-        "method": "POST",
-        "pathTemplate": "/users",
+        "id": "post--users",
         "summary": "POST /users",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
         "headers": {},
         "list": false,
         "envelope": {
@@ -48,46 +424,565 @@
         },
         "record": {
           "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "@odata",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "nextLink",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "AUTHENTICATOR",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "DisplayName",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "FIDO2",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "ID",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "JobTitle",
-              "kind": "string",
-              "example": "lab"
-            }
-          ]
-        }
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/users",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#users/$entity\",\n  \"id\": \"87d349ed-44d7-43e1-9a83-5f2406dee5bd\",\n  \"businessPhones\": [],\n  \"displayName\": \"Adele Vance\",\n  \"givenName\": \"Adele\",\n  \"jobTitle\": \"Product Marketing Manager\",\n  \"mail\": \"user@example.invalid\",\n  \"mobilePhone\": \"+1 425 555 0109\",\n  \"officeLocation\": \"18/2111\",\n  \"preferredLanguage\": \"en-US\",\n  \"surname\": \"Vance\",\n  \"userPrincipalName\": \"user@example.invalid\"\n}\n"
+      },
+      {
+        "id": "get--users-user",
+        "summary": "GET /users/{user}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"businessPhones\": [\n    \"+1 425 555 0109\"\n  ],\n  \"displayName\": \"Adele Vance\",\n  \"givenName\": \"Adele\",\n  \"jobTitle\": \"Retail Manager\",\n  \"mail\": \"user@example.invalid\",\n  \"mobilePhone\": \"+1 425 555 0109\",\n  \"officeLocation\": \"18/2111\",\n  \"preferredLanguage\": \"en-US\",\n  \"surname\": \"Vance\",\n  \"userPrincipalName\": \"user@example.invalid\",\n  \"id\": \"87d349ed-44d7-43e1-9a83-5f2406dee5bd\"\n}\n"
+      },
+      {
+        "id": "get--users-delta",
+        "summary": "GET /users/delta",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/delta",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#users\",\n  \"@odata.nextLink\": \"https://graph.microsoft.com/v1.0/users/delta?$skiptoken=pqwSUjGYvb3jQpbwVAwEL7yuI3dU1LecfkkfLPtnIjsXoYQp_dpA3cNJWc\",\n  \"value\": [\n    {\n      \"businessPhones\": [\n        \"+1 425 555 0109\"\n      ],\n      \"displayName\": \"Adele Vance\",\n      \"givenName\": \"Adele\",\n      \"jobTitle\": \"Retail Manager\",\n      \"mail\": \"user@example.invalid\",\n      \"mobilePhone\": \"+1 425 555 0109\",\n      \"officeLocation\": \"18/2111\",\n      \"preferredLanguage\": \"en-US\",\n      \"surname\": \"Vance\",\n      \"userPrincipalName\": \"user@example.invalid\",\n      \"id\": \"87d349ed-44d7-43e1-9a83-5f2406dee5bd\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-user-memberof",
+        "summary": "GET /users/{user}/memberOf",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user}/memberOf",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.group\",\n      \"displayName\": \"All Users\",\n      \"mailEnabled\": false,\n      \"securityEnabled\": true\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-user-authentication-methods",
+        "summary": "GET /users/{user}/authentication/methods",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user}/authentication/methods",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.fido2AuthenticationMethod\",\n      \"id\": \"-2_GRUg2-HYz6_1YG4YRAQ2\",\n      \"displayName\": \"Red key\",\n      \"creationDateTime\": \"2020-08-10T06:44:09Z\",\n      \"aaGuid\": \"2fc0579f-8113-47ea-b116-555a8db9202a\",\n      \"model\": \"NFC key\",\n      \"attestationCertificates\": [\n        \"dbe793efdf1945e2df25d93653a1e8a3268a9075\"\n      ],\n      \"attestationLevel\": \"attested\"\n    },\n    {\n      \"@odata.type\": \"#microsoft.graph.windowsHelloForBusinessAuthenticationMethod\",\n      \"id\": \"b5e01f81-1f81-b5e0-811f-e0b5811fe0b5\",\n      \"displayName\": \"Jordan's Surface Book\",\n      \"createdDateTime\": \"2020-11-27T23:12:49Z\",\n      \"keyStrength\": \"normal\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users",
+        "summary": "GET /users",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#users\",\n  \"value\": [\n    {\n      \"businessPhones\": [],\n      \"displayName\": \"Conf Room Adams\",\n      \"givenName\": null,\n      \"jobTitle\": null,\n      \"mail\": \"user@example.invalid\",\n      \"mobilePhone\": null,\n      \"officeLocation\": null,\n      \"preferredLanguage\": null,\n      \"surname\": null,\n      \"userPrincipalName\": \"user@example.invalid\",\n      \"id\": \"6ea91a8d-e32e-41a1-b7bd-d2d185eed0e0\"\n    },\n    {\n      \"businessPhones\": [\n        \"425-555-0100\"\n      ],\n      \"displayName\": \"MOD Administrator\",\n      \"givenName\": \"MOD\",\n      \"jobTitle\": null,\n      \"mail\": null,\n      \"mobilePhone\": \"425-555-0101\",\n      \"officeLocation\": null,\n      \"preferredLanguage\": \"en-US\",\n      \"surname\": \"Administrator\",\n      \"userPrincipalName\": \"user2@example.invalid\",\n      \"id\": \"4562bcc8-c436-4f95-b7c0-4f8ce89dca5e\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-user-directreports",
+        "summary": "GET /users/{user}/directReports",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user}/directReports",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#directoryObjects\",\n  \"value\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.user\",\n      \"id\": \"6ea91a8d-e32e-41a1-b7bd-d2d185eed0e0\",\n      \"businessPhones\": [],\n      \"displayName\": \"Conf Room Adams\",\n      \"givenName\": null,\n      \"jobTitle\": null,\n      \"mail\": \"user@example.invalid\",\n      \"mobilePhone\": null,\n      \"officeLocation\": null,\n      \"preferredLanguage\": null,\n      \"surname\": null,\n      \"userPrincipalName\": \"user@example.invalid\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-user-manager",
+        "summary": "GET /users/{user}/manager",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user}/manager",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"7d54cb02-aaa3-4016-9f9c-a4b49422dd9b\",\n  \"displayName\": \"Sara Davis\",\n  \"jobTitle\": \"Finance VP\",\n  \"mail\": \"user@example.invalid\",\n  \"userPrincipalName\": \"user@example.invalid\"\n}\n"
+      },
+      {
+        "id": "post--users-user-revokesigninsessions",
+        "summary": "POST /users/{user}/revokeSignInSessions",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/users/{user}/revokeSignInSessions",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#Edm.Boolean\",\n  \"value\": true\n}\n"
+      },
+      {
+        "id": "get--users-user-id-owneddevices",
+        "summary": "GET /users/{user_id}/ownedDevices",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/ownedDevices",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": [\n    {\n      \"id\": \"id-value\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-user-id-authentication-microsoftauthenticatormethods-method-id",
+        "summary": "GET /users/{user_id}/authentication/microsoftAuthenticatorMethods/{method_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/authentication/microsoftAuthenticatorMethods/{method_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": {\n    \"@odata.type\": \"#microsoft.graph.microsoftAuthenticatorAuthenticationMethod\",\n    \"id\": \"6803c096-c096-6803-96c0-036896c00368\",\n    \"displayName\": \"Sandeep's iPhone\",\n    \"deviceTag\": \"\",\n    \"phoneAppVersion\": \"6.5.4\",\n    \"createdDateTime\": \"2020-12-03T23:16:12Z\"\n  }\n}\n"
+      },
+      {
+        "id": "get--users-user-id-authentication-microsoftauthenticatormethods",
+        "summary": "GET /users/{user_id}/authentication/microsoftAuthenticatorMethods",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/authentication/microsoftAuthenticatorMethods",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.microsoftAuthenticatorAuthenticationMethod\",\n      \"id\": \"6803c096-c096-6803-96c0-036896c00368\",\n      \"displayName\": \"Sandeep's iPhone\",\n      \"deviceTag\": \"\",\n      \"phoneAppVersion\": \"6.5.4\",\n      \"createdDateTime\": \"2020-12-03T23:16:12Z\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-user-id-authentication-phonemethods-method-id",
+        "summary": "GET /users/{user_id}/authentication/phoneMethods/{method_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/authentication/phoneMethods/{method_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"phoneNumber\": \"+1 2065555555\",\n  \"phoneType\": \"mobile\",\n  \"smsSignInState\": \"ready\",\n  \"id\": \"3179e48a-750b-4051-897c-87b9720928f7\"\n}\n"
+      },
+      {
+        "id": "get--users-user-id-authentication-phonemethods",
+        "summary": "GET /users/{user_id}/authentication/phoneMethods",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/authentication/phoneMethods",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": [\n    {\n      \"phoneNumber\": \"+1 2065555555\",\n      \"phoneType\": \"mobile\",\n      \"smsSignInState\": \"ready\",\n      \"id\": \"3179e48a-750b-4051-897c-87b9720928f7\"\n    },\n    {\n      \"phoneNumber\": \"+1 2065555556\",\n      \"phoneType\": \"alternateMobile\",\n      \"smsSignInState\": \"notSupported\",\n      \"id\": \"b6332ec1-7057-4abe-9331-3d72feddfe41\"\n    },\n    {\n      \"phoneNumber\": \"+1 2065555557\",\n      \"phoneType\": \"office\",\n      \"smsSignInState\": \"notSupported\",\n      \"id\": \"e37fc753-ff3b-4958-9484-eaa9425c82bc\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-user-id-authentication-softwareoathmethods-method-id",
+        "summary": "GET /users/{user_id}/authentication/softwareOathMethods/{method_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/authentication/softwareOathMethods/{method_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": {\n    \"@odata.type\": \"#microsoft.graph.softwareOathAuthenticationMethod\",\n    \"id\": \"b172893e-893e-b172-3e89-72b13e8972b1\",\n    \"secretKey\": null\n  }\n}\n"
+      },
+      {
+        "id": "get--users-user-id-authentication-windowshelloforbusinessmethods-method-id",
+        "summary": "GET /users/{user_id}/authentication/windowsHelloForBusinessMethods/{method_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/authentication/windowsHelloForBusinessMethods/{method_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": {\n    \"@odata.type\": \"#microsoft.graph.windowsHelloForBusinessAuthenticationMethod\",\n    \"id\": \"b5e01f81-1f81-b5e0-811f-e0b5811fe0b5\",\n    \"displayName\": \"Jordan's Surface Book\",\n    \"createdDateTime\": \"2020-11-27T23:12:49Z\",\n    \"keyStrength\": \"normal\"\n  }\n}\n"
+      },
+      {
+        "id": "get--users-user-id-authentication-windowshelloforbusinessmethods",
+        "summary": "GET /users/{user_id}/authentication/windowsHelloForBusinessMethods",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/authentication/windowsHelloForBusinessMethods",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.windowsHelloForBusinessAuthenticationMethod\",\n      \"id\": \"b5e01f81-1f81-b5e0-811f-e0b5811fe0b5\",\n      \"displayName\": \"Jordan's Surface Book\",\n      \"createdDateTime\": \"2020-11-27T23:12:49Z\",\n      \"keyStrength\": \"normal\"\n    },\n    {\n      \"@odata.type\": \"#microsoft.graph.windowsHelloForBusinessAuthenticationMethod\",\n      \"id\": \"e6dab818-e68d-433e-89d5-547357870cb2\",\n      \"displayName\": \"New Surface Duo\",\n      \"createdDateTime\": \"2020-12-25T02:20:13Z\",\n      \"keyStrength\": \"normal\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-user-id-authentication-temporaryaccesspassmethods-method-id",
+        "summary": "GET /users/{user_id}/authentication/temporaryAccessPassMethods/{method_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/users/{user_id}/authentication/temporaryAccessPassMethods/{method_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.type\": \"#microsoft.graph.temporaryAccessPassAuthenticationMethod\",\n  \"id\": \"6f1967b7-15e8-4935-ac26-d50770ed07a7\",\n  \"temporaryAccessPass\": null,\n  \"createdDateTime\": \"2022-06-02T16:21:09.5893903Z\",\n  \"startDateTime\": \"2022-06-05T00:00:00Z\",\n  \"lifetimeInMinutes\": 60,\n  \"isUsableOnce\": false,\n  \"isUsable\": false,\n  \"methodUsabilityReason\": \"NotYetValid\"\n}\n"
+      },
+      {
+        "id": "get--serviceprincipals",
+        "summary": "GET /servicePrincipals",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/servicePrincipals",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": [\n    {\n      \"accountEnabled\": true,\n      \"displayName\": \"amasf\",\n      \"servicePrincipalType\": \"Application\",\n      \"signInAudience\": \"AzureADMyOrg\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "post--serviceprincipals-service-principal-id-addpassword",
+        "summary": "POST /servicePrincipals/{service_principal_id}/addPassword",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/servicePrincipals/{service_principal_id}/addPassword",
+        "contentType": "application/json",
+        "fixture": "{\n  \"customKeyIdentifier\": null,\n  \"endDateTime\": \"2021-09-09T19:50:29.3086381Z\",\n  \"keyId\": \"f0b0b335-1d71-4883-8f98-567911bfdca6\",\n  \"startDateTime\": \"2019-09-09T19:50:29.3086381Z\",\n  \"secretText\": \"[6gyXA5S20@MN+WRXAJ]I-TO7g1:h2P8\",\n  \"hint\": \"[6g\",\n  \"displayName\": \"Password friendly name\"\n}\n"
       }
     ],
     "chaos": {

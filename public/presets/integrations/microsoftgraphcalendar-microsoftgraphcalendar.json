@@ -25,9 +25,84 @@
         "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-events?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
+          "5 of 8 commands from vendor docs, 0 approximate, 3 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "msgraph-calendar-list-calendars",
+          "calls": [
+            "GET /v1.0/users/{user}/calendars"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--v1-0-users-user-calendars"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-calendars?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-calendar-get-calendar",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-calendar-list-events",
+          "calls": [
+            "GET /v1.0/users/{calendar_url}/events"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "audited-call"
+          ]
+        },
+        {
+          "command": "msgraph-calendar-get-event",
+          "calls": [
+            "GET /v1.0/users/{user}/calendar/events/{event_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--v1-0-users-user-calendar-events-event-id"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/event-get?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-calendar-create-event",
+          "calls": [
+            "POST /v1.0/users/{user}/calendars/{calendar_id}/events",
+            "POST /v1.0/users/{user}/calendar/events"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--v1-0-users-user-calendars-calendar-id-events",
+            "post--v1-0-users-user-calendar-events"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-post-events?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-calendar-update-event",
+          "calls": [
+            "PATCH /v1.0/users/{user}/calendar/events/{event_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "patch--v1-0-users-user-calendar-events-event-id"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/event-update?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-calendar-delete-event",
+          "calls": [
+            "DELETE /v1.0/users/{user}/calendar/events/{event_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-calendar-auth-reset",
+          "calls": [],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -143,6 +218,151 @@
           ]
         },
         "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#users('cd209b0b-3f83-4c35-82d2-d88a61820480')/events(subject,body,bodyPreview,organizer,attendees,start,end,location)\",\n  \"value\": [\n    {\n      \"@odata.etag\": \"W/\\\"ZlnW4RIAV06KYYwlrfNZvQAAKGWwbw==\\\"\",\n      \"id\": \"AAMkAGIAAAoZDOFAAA=\",\n      \"subject\": \"Orientation \",\n      \"bodyPreview\": \"Dana, this is the time you selected for our orientation. Please bring the notes I sent you.\",\n      \"body\": {\n        \"contentType\": \"html\",\n        \"content\": \"<html><head></head><body><p>Dana, this is the time you selected for our orientation. Please bring the notes I sent you.</p></body></html>\"\n      },\n      \"start\": {\n        \"dateTime\": \"2017-04-21T10:00:00.0000000\",\n        \"timeZone\": \"Pacific Standard Time\"\n      },\n      \"end\": {\n        \"dateTime\": \"2017-04-21T12:00:00.0000000\",\n        \"timeZone\": \"Pacific Standard Time\"\n      },\n      \"location\": {\n        \"displayName\": \"Assembly Hall\",\n        \"locationType\": \"default\",\n        \"uniqueId\": \"Assembly Hall\",\n        \"uniqueIdType\": \"private\"\n      },\n      \"locations\": [\n        {\n          \"displayName\": \"Assembly Hall\",\n          \"locationType\": \"default\",\n          \"uniqueIdType\": \"unknown\"\n        }\n      ],\n      \"attendees\": [\n        {\n          \"type\": \"required\",\n          \"status\": {\n            \"response\": \"none\",\n            \"time\": \"0001-01-01T00:00:00Z\"\n          },\n          \"emailAddress\": {\n            \"name\": \"Samantha Booth\",\n            \"address\": \"user@example.invalid\"\n          }\n        },\n        {\n          \"type\": \"required\",\n          \"status\": {\n            \"response\": \"none\",\n            \"time\": \"0001-01-01T00:00:00Z\"\n          },\n          \"emailAddress\": {\n            \"name\": \"Dana Swope\",\n            \"address\": \"user2@example.invalid\"\n          }\n        }\n      ],\n      \"organizer\": {\n        \"emailAddress\": {\n          \"name\": \"Samantha Booth\",\n          \"address\": \"user@example.invalid\"\n        }\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--v1-0-users-user-calendars",
+        "summary": "GET /v1.0/users/{user}/calendars",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/v1.0/users/{user}/calendars",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#me/calendars\",\n  \"value\": [\n    {\n      \"@odata.id\": \"https://graph.microsoft.com/v1.0/users('ddfcd489-628b-40d7-b48b-57002df800e5@1717622f-1d94-4d0c-9d74-709fad664b77')/calendars('AAMkAGI2TGuLAAA=')\",\n      \"id\": \"AAMkAGI2TGuLAAA=\",\n      \"name\": \"Calendar\",\n      \"color\": \"auto\",\n      \"changeKey\": \"nfZyf7VcrEKLNoU37KWlkQAAA0x0+w==\",\n      \"canShare\": true,\n      \"canViewPrivateItems\": true,\n      \"hexColor\": \"\",\n      \"isSharedWithMe\": false,\n      \"canEdit\": true,\n      \"allowedOnlineMeetingProviders\": [\n        \"teamsForBusiness\"\n      ],\n      \"defaultOnlineMeetingProvider\": \"teamsForBusiness\",\n      \"isTallyingResponses\": true,\n      \"isRemovable\": false,\n      \"owner\": {\n        \"name\": \"Samantha Booth\",\n        \"address\": \"user@example.invalid\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--v1-0-users-user-calendar-events-event-id",
+        "summary": "GET /v1.0/users/{user}/calendar/events/{event_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/v1.0/users/{user}/calendar/events/{event_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#users('48d31887-5fad-4d73-a9f5-3c356e68a038')/events(subject,body,bodyPreview,organizer,attendees,start,end,location,hideAttendees)/$entity\",\n  \"@odata.etag\": \"W/\\\"IiLKjG2I7E+Xv0+ys6MD0wAEd5/kNQ==\\\"\",\n  \"id\": \"AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OABGAAAAAAAiQ8W967B7TKBjgx9rVEURBwAiIsqMbYjsT5e-T7KzowPTAAAAAAENAAAiIsqMbYjsT5e-T7KzowPTAAAa_WKzAAA=\",\n  \"subject\": \"New Product Regulations Touchpoint\",\n  \"bodyPreview\": \"New Product Regulations Strategy Online Touchpoint MeetingYou're receiving this message because you're a member of the Engineering group. If you don't want to receive any messages or events from this group, stop following it in your inbox.View g\",\n  \"hideAttendees\": false,\n  \"body\": {\n    \"contentType\": \"html\",\n    \"content\": \"<html><head><meta http-equiv=\\\"Content-Type\\\" content=\\\"text/html; charset=utf-8\\\"></head><body>New Product Regulations Strategy Online Touchpoint Meeting<div id=\\\"a59ada49-a492-4f1d-ac57-74be3a4194fc\\\" style=\\\"display:inline-block\\\"><table cellspacing=\\\"0\\\" style=\\\"table-layout:fixed; width:50px; border:0 none black\\\"><tbody><tr><td style=\\\"height:18px; padding:0; border-width:0 0 1px 0; border-style:none none solid none; border-color:#EAEAEA\\\">&nbsp;</td></tr></tbody></table><table cellspacing=\\\"0\\\" style=\\\"table-layout:fixed; width:90%; line-height:17px; border:0 none black\\\"><tbody><tr><td style=\\\"height:17px; padding:0; border:0 none black\\\">&nbsp;</td></tr><tr><td style=\\\"padding:0; border:0 none black; color:#666666; font-size:12px; font-family:'Segoe UI','Segoe WP',sans-serif\\\">You're receiving this message because you're a member of the <a href=\\\"https://outlook.office365.com/owa/user@example.invalid/groupsubscription.ashx?realm=contoso.com&amp;source=EscalatedMessage&amp;action=conversations\\\" style=\\\"color:#0072C6; text-decoration:none; font-size:12px; font-family:'Segoe UI Semibold','Segoe WP Semibold','Segoe UI','Segoe WP',sans-serif\\\">Engineering</a> group. If you don't want to receive any messages or events from this group,<a href=\\\"https://outlook.office365.com/owa/user@example.invalid/groupsubscription.ashx?realm=contoso.com&amp;source=EscalatedMessage&amp;action=unsubscribe\\\" id=\\\"BD5134C6-8D33-4ABA-A0C4-08581FDF89DB\\\" style=\\\"color:#0072C6; text-decoration:none; font-size:12px; font-family:'Segoe UI Semibold','Segoe WP Semibold','Segoe UI','Segoe WP',sans-serif\\\">stop following it in your inbox</a>.</td></tr><tr><td style=\\\"height:17px; padding:0; border:0 none black\\\">&nbsp;</td></tr><tr><td style=\\\"padding:0; border:0 none black; font-size:12px; font-family:'Segoe UI','Segoe WP',sans-serif\\\"><span style=\\\"display:inline-block\\\"><a href=\\\"https://outlook.office365.com/owa/user@example.invalid/groupsubscription.ashx?realm=contoso.com&amp;source=EscalatedMessage&amp;action=conversations\\\" style=\\\"color:#666666; text-decoration:none; font-size:12px; font-family:'Segoe UI','Segoe WP',sans-serif\\\">View group conversations</a></span><span style=\\\"color:#C8C8C8\\\">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span><span style=\\\"display:inline-block\\\"><a href=\\\"https://outlook.office365.com/owa/user@example.invalid/groupsubscription.ashx?realm=contoso.com&amp;source=EscalatedMessage&amp;action=files\\\" style=\\\"color:#666666; text-decoration:none; font-size:12px; font-family:'Segoe UI','Segoe WP',sans-serif\\\">View group files</a></span></td></tr><tr><td style=\\\"height:17px; padding:0; border:0 none black\\\">&nbsp;</td></tr></tbody></table></div></body></html>\"\n  },\n  \"start\": {\n    \"dateTime\": \"2014-11-03T17:00:00.0000000\",\n    \"timeZone\": \"UTC\"\n  },\n  \"end\": {\n    \"dateTime\": \"2014-11-03T17:30:00.0000000\",\n    \"timeZone\": \"UTC\"\n  },\n  \"location\": {\n    \"displayName\": \"Conf Room Rainier\",\n    \"locationType\": \"default\",\n    \"uniqueId\": \"Conf Room Rainier\",\n    \"uniqueIdType\": \"private\"\n  },\n  \"attendees\": [\n    {\n      \"type\": \"required\",\n      \"status\": {\n        \"response\": \"none\",\n        \"time\": \"0001-01-01T00:00:00Z\"\n      },\n      \"emailAddress\": {\n        \"name\": \"Engineering\",\n        \"address\": \"user@example.invalid\"\n      }\n    },\n    {\n      \"type\": \"required\",\n      \"status\": {\n        \"response\": \"none\",\n        \"time\": \"0001-01-01T00:00:00Z\"\n      },\n      \"emailAddress\": {\n        \"name\": \"Irvin Sayers\",\n        \"address\": \"user2@example.invalid\"\n      }\n    }\n  ],\n  \"organizer\": {\n    \"emailAddress\": {\n      \"name\": \"Engineering\",\n      \"address\": \"user@example.invalid\"\n    }\n  },\n  \"calendar@odata.associationLink\": \"https://graph.microsoft.com/v1.0/users('48d31887-5fad-4d73-a9f5-3c356e68a038')/calendars('AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OAAuAAAAAAAiQ8W967B7TKBjgx9rVEURAQAiIsqMbYjsT5e-T7KzowPTAAAAAAENAAA=')/$ref\",\n  \"calendar@odata.navigationLink\": \"https://graph.microsoft.com/v1.0/users('48d31887-5fad-4d73-a9f5-3c356e68a038')/calendars('AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OAAuAAAAAAAiQ8W967B7TKBjgx9rVEURAQAiIsqMbYjsT5e-T7KzowPTAAAAAAENAAA=')\"\n}\n"
+      },
+      {
+        "id": "post--v1-0-users-user-calendars-calendar-id-events",
+        "summary": "POST /v1.0/users/{user}/calendars/{calendar_id}/events",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/v1.0/users/{user}/calendars/{calendar_id}/events",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#users('cd209b0b-3f83-4c35-82d2-d88a61820480')/events/$entity\",\n  \"@odata.etag\": \"W/\\\"ZlnW4RIAV06KYYwlrfNZvQAALfZeRQ==\\\"\",\n  \"id\": \"AAMkAGI1AAAt9AHjAAA=\",\n  \"createdDateTime\": \"2017-04-15T03:00:50.7579581Z\",\n  \"lastModifiedDateTime\": \"2017-04-15T03:00:51.245372Z\",\n  \"changeKey\": \"ZlnW4RIAV06KYYwlrfNZvQAALfZeRQ==\",\n  \"categories\": [],\n  \"originalStartTimeZone\": \"Pacific Standard Time\",\n  \"originalEndTimeZone\": \"Pacific Standard Time\",\n  \"iCalUId\": \"040000008200E00074C5B7101A82E00800000000DA2B357D94B5D201000000000000000010000000EC4597557F0CB34EA4CC2887EA7B17C3\",\n  \"reminderMinutesBeforeStart\": 15,\n  \"isReminderOn\": true,\n  \"hasAttachments\": false,\n  \"hideAttendees\": false,\n  \"subject\": \"Let's go brunch\",\n  \"bodyPreview\": \"Does noon work for you?\",\n  \"importance\": \"normal\",\n  \"sensitivity\": \"normal\",\n  \"isAllDay\": false,\n  \"isCancelled\": false,\n  \"isDraft\": false,\n  \"isOrganizer\": true,\n  \"responseRequested\": true,\n  \"seriesMasterId\": null,\n  \"transactionId\": \"7E163156-7762-4BEB-A1C6-729EA81755A7\",\n  \"showAs\": \"busy\",\n  \"type\": \"singleInstance\",\n  \"webLink\": \"https://outlook.office365.com/owa/?itemid=AAMkAGI1AAAt9AHjAAA%3D&exvsurl=1&path=/calendar/item\",\n  \"onlineMeetingUrl\": null,\n  \"isOnlineMeeting\": false,\n  \"onlineMeetingProvider\": \"unknown\",\n  \"onlineMeeting\": null,\n  \"allowNewTimeProposals\": true,\n  \"responseStatus\": {\n    \"response\": \"organizer\",\n    \"time\": \"0001-01-01T00:00:00Z\"\n  },\n  \"body\": {\n    \"contentType\": \"html\",\n    \"content\": \"<html><head></head><body>Does late morning work for you?</body></html>\"\n  },\n  \"start\": {\n    \"dateTime\": \"2017-04-15T11:00:00.0000000\",\n    \"timeZone\": \"Pacific Standard Time\"\n  },\n  \"end\": {\n    \"dateTime\": \"2017-04-15T12:00:00.0000000\",\n    \"timeZone\": \"Pacific Standard Time\"\n  },\n  \"location\": {\n    \"displayName\": \"Harry's Bar\",\n    \"locationType\": \"default\",\n    \"uniqueId\": \"Harry's Bar\",\n    \"uniqueIdType\": \"private\"\n  },\n  \"locations\": [\n    {\n      \"displayName\": \"Harry's Bar\",\n      \"locationType\": \"default\",\n      \"uniqueIdType\": \"unknown\"\n    }\n  ],\n  \"recurrence\": null,\n  \"attendees\": [\n    {\n      \"type\": \"required\",\n      \"status\": {\n        \"response\": \"none\",\n        \"time\": \"0001-01-01T00:00:00Z\"\n      },\n      \"emailAddress\": {\n        \"name\": \"Samantha Booth\",\n        \"address\": \"user@example.invalid\"\n      }\n    }\n  ],\n  \"organizer\": {\n    \"emailAddress\": {\n      \"name\": \"Dana Swope\",\n      \"address\": \"user2@example.invalid\"\n    }\n  }\n}\n"
+      },
+      {
+        "id": "post--v1-0-users-user-calendar-events",
+        "summary": "POST /v1.0/users/{user}/calendar/events",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/v1.0/users/{user}/calendar/events",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#users('cd209b0b-3f83-4c35-82d2-d88a61820480')/events/$entity\",\n  \"@odata.etag\": \"W/\\\"ZlnW4RIAV06KYYwlrfNZvQAALfZeRQ==\\\"\",\n  \"id\": \"AAMkAGI1AAAt9AHjAAA=\",\n  \"createdDateTime\": \"2017-04-15T03:00:50.7579581Z\",\n  \"lastModifiedDateTime\": \"2017-04-15T03:00:51.245372Z\",\n  \"changeKey\": \"ZlnW4RIAV06KYYwlrfNZvQAALfZeRQ==\",\n  \"categories\": [],\n  \"originalStartTimeZone\": \"Pacific Standard Time\",\n  \"originalEndTimeZone\": \"Pacific Standard Time\",\n  \"iCalUId\": \"040000008200E00074C5B7101A82E00800000000DA2B357D94B5D201000000000000000010000000EC4597557F0CB34EA4CC2887EA7B17C3\",\n  \"reminderMinutesBeforeStart\": 15,\n  \"isReminderOn\": true,\n  \"hasAttachments\": false,\n  \"hideAttendees\": false,\n  \"subject\": \"Let's go brunch\",\n  \"bodyPreview\": \"Does noon work for you?\",\n  \"importance\": \"normal\",\n  \"sensitivity\": \"normal\",\n  \"isAllDay\": false,\n  \"isCancelled\": false,\n  \"isDraft\": false,\n  \"isOrganizer\": true,\n  \"responseRequested\": true,\n  \"seriesMasterId\": null,\n  \"transactionId\": \"7E163156-7762-4BEB-A1C6-729EA81755A7\",\n  \"showAs\": \"busy\",\n  \"type\": \"singleInstance\",\n  \"webLink\": \"https://outlook.office365.com/owa/?itemid=AAMkAGI1AAAt9AHjAAA%3D&exvsurl=1&path=/calendar/item\",\n  \"onlineMeetingUrl\": null,\n  \"isOnlineMeeting\": false,\n  \"onlineMeetingProvider\": \"unknown\",\n  \"onlineMeeting\": null,\n  \"allowNewTimeProposals\": true,\n  \"responseStatus\": {\n    \"response\": \"organizer\",\n    \"time\": \"0001-01-01T00:00:00Z\"\n  },\n  \"body\": {\n    \"contentType\": \"html\",\n    \"content\": \"<html><head></head><body>Does late morning work for you?</body></html>\"\n  },\n  \"start\": {\n    \"dateTime\": \"2017-04-15T11:00:00.0000000\",\n    \"timeZone\": \"Pacific Standard Time\"\n  },\n  \"end\": {\n    \"dateTime\": \"2017-04-15T12:00:00.0000000\",\n    \"timeZone\": \"Pacific Standard Time\"\n  },\n  \"location\": {\n    \"displayName\": \"Harry's Bar\",\n    \"locationType\": \"default\",\n    \"uniqueId\": \"Harry's Bar\",\n    \"uniqueIdType\": \"private\"\n  },\n  \"locations\": [\n    {\n      \"displayName\": \"Harry's Bar\",\n      \"locationType\": \"default\",\n      \"uniqueIdType\": \"unknown\"\n    }\n  ],\n  \"recurrence\": null,\n  \"attendees\": [\n    {\n      \"type\": \"required\",\n      \"status\": {\n        \"response\": \"none\",\n        \"time\": \"0001-01-01T00:00:00Z\"\n      },\n      \"emailAddress\": {\n        \"name\": \"Samantha Booth\",\n        \"address\": \"user@example.invalid\"\n      }\n    }\n  ],\n  \"organizer\": {\n    \"emailAddress\": {\n      \"name\": \"Dana Swope\",\n      \"address\": \"user2@example.invalid\"\n    }\n  }\n}\n"
+      },
+      {
+        "id": "patch--v1-0-users-user-calendar-events-event-id",
+        "summary": "PATCH /v1.0/users/{user}/calendar/events/{event_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "PATCH",
+        "pathTemplate": "/v1.0/users/{user}/calendar/events/{event_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"originalStartTimeZone\": \"originalStartTimeZone-value\",\n  \"originalEndTimeZone\": \"originalEndTimeZone-value\",\n  \"responseStatus\": {\n    \"response\": \"\",\n    \"time\": \"datetime-value\"\n  },\n  \"recurrence\": null,\n  \"reminderMinutesBeforeStart\": 99,\n  \"isOnlineMeeting\": true,\n  \"onlineMeetingProvider\": \"teamsForBusiness\",\n  \"isReminderOn\": true,\n  \"hideAttendees\": false,\n  \"onlineMeeting\": {\n    \"joinUrl\": \"https://teams.microsoft.com/l/meetup-join/19%3ameeting_NzIyNzhlMGEtM2YyZC00ZmY0LTlhNzUtZmZjNWFmZGNlNzE2%40thread.v2/0?context=%7b%22Tid%22%3a%2272f988bf-86f1-41af-91ab-2d7cd011db47%22%2c%22Oid%22%3a%22bc55b173-cff6-457d-b7a1-64bda7d7581a%22%7d\",\n    \"conferenceId\": \"177513992\",\n    \"tollNumber\": \"+91 22 6241 6885\"\n  }\n}\n"
       }
     ],
     "chaos": {

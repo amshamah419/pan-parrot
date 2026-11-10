@@ -25,9 +25,186 @@
         "docUrl": "https://learn.microsoft.com/en-us/graph/api/site-list?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
+          "5 of 25 commands from vendor docs, 1 approximate, 19 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "msgraph-delete-file",
+          "calls": [
+            "DELETE /v1.0/{object_type}/{object_type_id}/drive/items/{item_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-upload-new-file",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-replace-existing-file",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-create-new-folder",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-list-drives-in-site",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-list-drive-content",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-list-sharepoint-sites",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-download-file",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-files-auth-reset",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-list-site-permissions",
+          "calls": [
+            "GET /v1.0/sites/{site_id}/permissions",
+            "GET /v1.0/sites"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--v1-0-sites-site-id-permissions",
+            "get-v1-0-sites-0"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/site-list-permissions?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-create-site-permissions",
+          "calls": [
+            "POST /v1.0/sites/{site_id}/permissions",
+            "GET /v1.0/sites"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--v1-0-sites-site-id-permissions",
+            "get-v1-0-sites-0"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/site-post-permissions?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-update-site-permissions",
+          "calls": [
+            "PATCH /v1.0/sites/{site_id}/permissions/{permission_id}",
+            "GET /v1.0/sites"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "patch--v1-0-sites-site-id-permissions-permission-id",
+            "get-v1-0-sites-0"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/site-update-permission?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-delete-site-permissions",
+          "calls": [
+            "DELETE /v1.0/sites/{site_id}/permissions/{permission_id}",
+            "GET /v1.0/sites"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "get-v1-0-sites-0"
+          ]
+        },
+        {
+          "command": "msgraph-driveitem-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-driveitem-copy",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-driveitem-permissions-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-driveitem-permission-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-driveitem-metadata-get",
+          "calls": [
+            "GET /v1.0/shares/{share_url}/driveItem"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-driveitem-activities-list",
+          "calls": [
+            "GET /v1.0/sites/{site_id}/lists/{list_id}/items/{list_item_unique_id}/activities"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--v1-0-sites-site-id-lists-list-id-items-list-item-unique-id-activities"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/graph/api/itemactivity-list?view=graph-rest-1.0&tabs=http"
+        },
+        {
+          "command": "msgraph-driveitem-analytics-get",
+          "calls": [
+            "GET /v1.0/sites/{site_id}/lists/{list_id}/items/{list_item_unique_id}/analytics/{time_range}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-files-auth-test",
+          "calls": [
+            "GET /v1.0/sites"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-v1-0-sites-0"
+          ]
+        },
+        {
+          "command": "msgraph-files-generate-login-url",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-get-sensitivity-label",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "msgraph-assign-sensitivity-label",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "get-file-content",
+          "calls": [
+            "GET /v1.0/shares/{share_id}/driveItem/content",
+            "GET /v1.0/shares/{share_id}/driveItem"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -152,6 +329,122 @@
           ]
         },
         "fixture": "{\n  \"value\": [\n    {\n      \"id\": \"contoso.sharepoint.com,bf6fb551-d508-4946-a439-b2a6154fc1d9,65a04b8b-1f44-442b-a1fc-9e5852fb946c\",\n      \"name\": \"Root Site\",\n      \"isPersonalSite\": false,\n      \"root\": {},\n      \"siteCollection\": {\n        \"hostname\": \"contoso.sharepoint.com\",\n        \"dataLocationCode\": \"NAM\",\n        \"root\": {}\n      },\n      \"webUrl\": \"https://contoso.sharepoint.com\"\n    },\n    {\n      \"id\": \"contoso.sharepoint.com,d9ecf079-9b13-4376-ac5d-f242dda55626,746dbcc1-fa2b-4120-b657-2670bae5bb6f\",\n      \"name\": \"Site A\",\n      \"isPersonalSite\": false,\n      \"root\": {},\n      \"siteCollection\": {\n        \"hostname\": \"contoso.sharepoint.com\"\n      },\n      \"webUrl\": \"https://contoso.sharepoint.com/sites/siteA\"\n    },\n    {\n      \"id\": \"contoso.sharepoint.com,fd1a778f-263e-4c43-acdf-d5c2519d80eb,c06016db-dfec-4f79-83a1-09c6dbfd7022\",\n      \"name\": \"Site B\",\n      \"isPersonalSite\": false,\n      \"root\": {},\n      \"siteCollection\": {\n        \"hostname\": \"contoso.sharepoint.com\"\n      },\n      \"webUrl\": \"https://contoso.sharepoint.com/sites/siteB\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--v1-0-sites-site-id-permissions",
+        "summary": "GET /v1.0/sites/{site_id}/permissions",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/v1.0/sites/{site_id}/permissions",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": [\n    {\n      \"id\": \"1\",\n      \"@deprecated.GrantedToIdentities\": \"GrantedToIdentities has been deprecated. Refer to GrantedToIdentitiesV2\",\n      \"roles\": [\n        \"read\"\n      ],\n      \"grantedToIdentities\": [\n        {\n          \"application\": {\n            \"id\": \"89ea5c94-7736-4e25-95ad-3fa95f62b66e\",\n            \"displayName\": \"Contoso Time Manager App\"\n          }\n        }\n      ],\n      \"grantedToIdentitiesV2\": [\n        {\n          \"application\": {\n            \"id\": \"89ea5c94-7736-4e25-95ad-3fa95f62b66e\",\n            \"displayName\": \"Contoso Time Manager App\"\n          }\n        }\n      ]\n    },\n    {\n      \"id\": \"2\",\n      \"@deprecated.GrantedToIdentities\": \"GrantedToIdentities has been deprecated. Refer to GrantedToIdentitiesV2\",\n      \"roles\": [\n        \"write\"\n      ],\n      \"grantedToIdentities\": [\n        {\n          \"application\": {\n            \"id\": \"22f09bb7-dd29-403e-bec2-ab5cde52c2b3\",\n            \"displayName\": \"Fabrikam Dashboard App\"\n          }\n        }\n      ],\n      \"grantedToIdentitiesV2\": [\n        {\n          \"application\": {\n            \"id\": \"22f09bb7-dd29-403e-bec2-ab5cde52c2b3\",\n            \"displayName\": \"Fabrikam Dashboard App\"\n          }\n        }\n      ]\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "post--v1-0-sites-site-id-permissions",
+        "summary": "POST /v1.0/sites/{site_id}/permissions",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/v1.0/sites/{site_id}/permissions",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"1\",\n  \"@deprecated.GrantedToIdentities\": \"GrantedToIdentities has been deprecated. Refer to GrantedToIdentitiesV2\",\n  \"roles\": [\n    \"write\"\n  ],\n  \"grantedToIdentities\": [\n    {\n      \"application\": {\n        \"id\": \"89ea5c94-7736-4e25-95ad-3fa95f62b66e\",\n        \"displayName\": \"Contoso Time Manager App\"\n      }\n    }\n  ],\n  \"grantedToIdentitiesV2\": [\n    {\n      \"application\": {\n        \"id\": \"89ea5c94-7736-4e25-95ad-3fa95f62b66e\",\n        \"displayName\": \"Contoso Time Manager App\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "patch--v1-0-sites-site-id-permissions-permission-id",
+        "summary": "PATCH /v1.0/sites/{site_id}/permissions/{permission_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "PATCH",
+        "pathTemplate": "/v1.0/sites/{site_id}/permissions/{permission_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"2\",\n  \"@deprecated.GrantedToIdentities\": \"GrantedToIdentities has been deprecated. Refer to GrantedToIdentitiesV2\",\n  \"roles\": [\n    \"read\"\n  ],\n  \"grantedToIdentities\": [\n    {\n      \"application\": {\n        \"id\": \"89ea5c94-7736-4e25-95ad-3fa95f62b66e\",\n        \"displayName\": \"Fabrikam Dashboard App\"\n      }\n    }\n  ],\n  \"grantedToIdentitiesV2\": [\n    {\n      \"application\": {\n        \"id\": \"89ea5c94-7736-4e25-95ad-3fa95f62b66e\",\n        \"displayName\": \"Fabrikam Dashboard App\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--v1-0-sites-site-id-lists-list-id-items-list-item-unique-id-activities",
+        "summary": "GET /v1.0/sites/{site_id}/lists/{list_id}/items/{list_item_unique_id}/activities",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/v1.0/sites/{site_id}/lists/{list_id}/items/{list_item_unique_id}/activities",
+        "contentType": "application/json",
+        "fixture": "{\n  \"value\": [\n    {\n      \"id\": \"EJalEvjV1EgIYFQAAAAAAA==\",\n      \"access\": {},\n      \"activityDateTime\": \"2017-07-29T18:34:40Z\",\n      \"actor\": {\n        \"user\": {\n          \"displayName\": \"Xavier Wilke\"\n        }\n      }\n    },\n    {\n      \"id\": \"cInT6/fV1EgFYFQAAAAAAA==\",\n      \"access\": {},\n      \"activityDateTime\": \"2017-07-29T16:23:35Z\",\n      \"actor\": {\n        \"user\": {\n          \"displayName\": \"Judith Clemons\"\n        }\n      }\n    },\n    {\n      \"id\": \"EBJa0vPV1EjFX1QAAAAAAA==\",\n      \"access\": {},\n      \"activityDateTime\": \"2017-07-28T20:14:14Z\",\n      \"actor\": {\n        \"user\": {\n          \"displayName\": \"Misty Suarez\"\n        }\n      }\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {
