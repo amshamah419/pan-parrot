@@ -49,12 +49,14 @@ export default function MockStudio() {
   const [sampleNote, setSampleNote] = useState("");
   const [locked, setLocked] = useState(false);
   const [lockToken, setLockToken] = useState("");
+  const [notifyFirstCatch, setNotifyFirstCatch] = useState(false);
 
   useEffect(() => {
     getEndpoint(endpointId)
       .then((endpoint) => {
         setUrl(endpoint.url);
         setLocked(Boolean(endpoint.locked));
+        setNotifyFirstCatch(Boolean(endpoint.notifyFirstCatch));
         setAccess(endpoint.access || "owner");
         setPublishedFlag(Boolean(endpoint.published));
         if (!endpoint.mockSpec) {
@@ -200,6 +202,28 @@ export default function MockStudio() {
               {locked ? "Remove lock" : "Lock this catch URL"}
             </Button>
             {lockToken && <code className="break-all">Lock token, shown once: {lockToken}</code>}
+          </div>
+        )}
+        {access === "owner" && (
+          <div className="mt-3 flex items-center justify-between gap-3 text-sm">
+            <span>Email me when this catch URL gets its first call. The note names the mock and leaves out the request.</span>
+            <Switch
+              checked={notifyFirstCatch}
+              aria-label="Email me on the first call"
+              onCheckedChange={(value) => {
+                void fetch(`/api/endpoints/${endpointId}/notify`, {
+                  method: "POST",
+                  credentials: "include",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ enabled: value }),
+                })
+                  .then(async (response) => {
+                    if (!response.ok) throw new Error("Could not update the first-call email");
+                    setNotifyFirstCatch(value);
+                  })
+                  .catch((err) => setError(err instanceof Error ? err.message : "Could not update the first-call email"));
+              }}
+            />
           </div>
         )}
         <p className="mt-4 text-sm font-medium">2. Hit it once to see a page of records</p>

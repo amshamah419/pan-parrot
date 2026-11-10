@@ -110,6 +110,8 @@ describe("sharing, catalog, versions, and purge", () => {
     const versions = await app.request(`/api/endpoints/${endpoint.id}/versions`, { headers: { cookie: owner } });
     const history = await versions.json();
     expect(history[0].summary).toBe("Saved");
+    expect(history[0].changes.join(" ")).toContain("one");
+    expect(history[0].changes.join(" ")).toContain("two");
     const reverted = await app.request(`/api/endpoints/${endpoint.id}/versions/${history[0].id}/revert`, {
       method: "POST",
       headers: { cookie: owner, "content-type": "application/json" },

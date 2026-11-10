@@ -14,6 +14,7 @@ import { CATCH_ID_BYTES } from "../shared/surface";
 import { ipInCidrs, validCidrList } from "../shared/cidr";
 import { ENDPOINT_PATH_RE, POLICY } from "../shared/policy";
 import { newMocksLocked } from "./site-settings";
+import { sendFirstCatchEmail } from "./email-delivery";
 import type { AppDb } from "../db/client";
 import { apiTokens, capturedRequests, endpoints, sessions, users } from "../db/schema";
 import { isFoundingAdmin, maxBodyBytes, maxStoredBodyChars, publicSiteUrl, rateMax } from "./config";
@@ -409,6 +410,7 @@ export async function captureOnPath(
     endpointId: endpoint.id,
   });
   await noteCatch(db, produced.status, durationMs);
+  await notifyFirstCatch(db, endpoint.id);
 
   try {
     await trimEndpoint(db, endpoint.id);
@@ -723,6 +725,42 @@ export async function setEndpointLock(
   return { locked: true, lockToken: token };
 }
 
+export async function setNotifyFirstCatch(db: AppDb, user: PublicUser, endpointId: string, enabled: boolean) {
+  const access = await endpointAccess(db, user, endpointId);
+  if (access !== "owner") throw new HttpError(404, "Endpoint not found");
+  await db
+    .update(endpoints)
+    .set({ notifyFirstCatch: enabled, updatedAt: new Date() })
+    .where(eq(endpoints.id, endpointId));
+  return { notifyFirstCatch: enabled };
+}
+
+async function notifyFirstCatch(db: AppDb, endpointId: string) {
+  const claimed = await db
+    .update(endpoints)
+    .set({ firstCatchAt: new Date() })
+    .where(and(eq(endpoints.id, endpointId), isNull(endpoints.firstCatchAt)))
+    .returning({ notify: endpoints.notifyFirstCatch, name: endpoints.name, userId: endpoints.userId });
+  const row = claimed[0];
+  if (!row?.notify) return;
+  const [owner] = await db.select({ email: users.email }).from(users).where(eq(users.id, row.userId)).limit(1);
+  if (!owner?.email) return;
+  try {
+    await enforceRateLimit(db, `first-catch-mail:${owner.email}`, rateMax("RATE_FIRST_CATCH_EMAIL_MAX", 10), 60 * 60 * 1000);
+  } catch {
+    return;
+  }
+  try {
+    await sendFirstCatchEmail({
+      to: owner.email,
+      name: row.name,
+      link: `${publicSiteUrl()}/mock/${endpointId}`,
+    });
+  } catch (error) {
+    console.error("first-call email failed", error instanceof Error ? error.message : "");
+  }
+}
+
 function toEndpointDto(
   endpoint: typeof endpoints.$inferSelect,
   requests: number,
@@ -738,6 +776,7 @@ function toEndpointDto(
     created: iso(endpoint.createdAt),
     published: endpoint.published,
     locked: Boolean(endpoint.lockTokenHash || endpoint.lockCidrs),
+    notifyFirstCatch: endpoint.notifyFirstCatch,
     access: extra.access,
     ownerEmail: extra.ownerEmail,
     requests,

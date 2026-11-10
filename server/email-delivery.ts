@@ -82,3 +82,40 @@ export async function sendInviteEmail(input: { to: string; link: string }): Prom
     throw new HttpError(502, "Could not send the invite email");
   }
 }
+
+export function firstCatchLetter(input: { name: string; link: string }): { subject: string; text: string } {
+  return {
+    subject: `First call on ${input.name}`.slice(0, 120),
+    text: [
+      `Your mock "${input.name}" received its first catch-URL call.`,
+      "Open it here:",
+      input.link,
+      "",
+      "This note does not include the request.",
+      "PAN Parrot is an unofficial personal tool, not a Palo Alto Networks service.",
+    ].join("\n"),
+  };
+}
+
+export async function sendFirstCatchEmail(input: { to: string; name: string; link: string }): Promise<void> {
+  const apiKey = env("RESEND_API_KEY");
+  const from = env("EMAIL_FROM");
+  if (!apiKey || !from) return;
+  const letter = firstCatchLetter(input);
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from,
+      to: [input.to],
+      subject: letter.subject,
+      text: letter.text,
+    }),
+  });
+  if (!response.ok) {
+    console.error("Email provider rejected the first-call note", response.status);
+  }
+}
