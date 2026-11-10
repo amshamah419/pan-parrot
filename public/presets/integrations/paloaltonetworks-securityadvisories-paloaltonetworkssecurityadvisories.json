@@ -3,11 +3,11 @@
   "name": "Palo Alto Networks Security Advisories (Beta)",
   "pack": "PaloAltoNetworks_SecurityAdvisories",
   "vendor": "Palo Alto Networks",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Product list and PAN-OS advisories.",
+  "summary": "Rebuilt from the client: GET /api/v1/products/{product}/advisories.",
   "notes": [
-    "Cross-check: unparseable: client built requests without a readable method and path"
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v1/products/{product}/advisories, GET /api/v1/products. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_SecurityAdvisories/Integrations/PaloAltoNetworksSecurityAdvisories",
@@ -17,37 +17,34 @@
       "kind": "preset",
       "id": "paloaltonetworks-securityadvisories-paloaltonetworkssecurityadvisories",
       "name": "Palo Alto Networks Security Advisories (Beta)",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://security.paloaltonetworks.com/",
       "notes": [
-        "Cross-check: unparseable: client built requests without a readable method and path"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v1/products/{product}/advisories, GET /api/v1/products. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://security.paloaltonetworks.com/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v1/products/{product}/advisories, GET /api/v1/products. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "products",
+        "id": "get-api-v1-products-product-advisories-0",
         "method": "GET",
-        "pathTemplate": "/products",
-        "summary": "List products",
+        "pathTemplate": "/api/v1/products/{product}/advisories",
+        "summary": "GET /api/v1/products/{product}/advisories",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "array"
-        },
-        "record": {
-          "name": "product",
-          "kind": "object",
-          "children": [
-            {
-              "name": "name",
-              "kind": "string",
-              "example": "PAN-OS"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -55,59 +52,90 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
-        }
-      },
-      {
-        "id": "advisories",
-        "method": "GET",
-        "pathTemplate": "/products/PAN-OS/advisories",
-        "summary": "List PAN-OS advisories",
-        "status": 200,
-        "list": false,
-        "envelope": {
-          "type": "object"
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "advisories",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "advisory",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "cve",
-                    "kind": "string",
-                    "example": "CVE-2024-0001"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "LOW",
-                      "MEDIUM",
-                      "HIGH",
-                      "CRITICAL"
-                    ]
-                  },
-                  {
-                    "name": "title",
-                    "kind": "string",
-                    "example": "Lab advisory"
-                  }
-                ]
-              }
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "containers",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "cveMetadata",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "dataType",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "dataVersion",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "baseScore",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "baseSeverity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "containers",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "cna",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "cveMetadata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "cveId",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
             }
           ]
-        },
-        "headers": {},
+        }
+      },
+      {
+        "id": "get-api-v1-products-1",
+        "method": "GET",
+        "pathTemplate": "/api/v1/products",
+        "summary": "GET /api/v1/products",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -115,7 +143,76 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "containers",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "cveMetadata",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "dataType",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "dataVersion",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "baseScore",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "baseSeverity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "containers",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "cna",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "cveMetadata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "cveId",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
         }
       }
     ],

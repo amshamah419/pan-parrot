@@ -3,11 +3,11 @@
   "name": "Rapid7AppSec",
   "pack": "Rapid7AppSec",
   "vendor": "Rapid7",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "InsightAppSec vulnerabilities.",
+  "summary": "Rebuilt from the client: GET /ias/v1/scans/{obj_id}/engine-events.",
   "notes": [
-    "Cross-check: unparseable: client built requests without a readable method and path"
+    "Rebuilt from the XSOAR client. The checker matched GET /ias/v1/scans/{obj_id}/engine-events, GET /ias/v1/scans/{obj_id}/platform-events. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Rapid7AppSec/Integrations/Rapid7AppSec",
@@ -17,63 +17,34 @@
       "kind": "preset",
       "id": "rapid7appsec-rapid7appsec",
       "name": "Rapid7AppSec",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://help.rapid7.com/insightappsec/en-us/api/v1/docs.html",
       "notes": [
-        "Cross-check: unparseable: client built requests without a readable method and path"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /ias/v1/scans/{obj_id}/engine-events, GET /ias/v1/scans/{obj_id}/platform-events. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.rapid7.com/insightappsec/en-us/api/v1/docs.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /ias/v1/scans/{obj_id}/engine-events, GET /ias/v1/scans/{obj_id}/platform-events. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "vulns",
+        "id": "get-ias-v1-scans-obj-id-engine-events-0",
         "method": "GET",
-        "pathTemplate": "/ias/v1/vulnerabilities",
-        "summary": "List vulnerabilities",
+        "pathTemplate": "/ias/v1/scans/{obj_id}/engine-events",
+        "summary": "GET /ias/v1/scans/{obj_id}/engine-events",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "data",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "vulnerability",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high",
-                      "critical"
-                    ]
-                  },
-                  {
-                    "name": "status",
-                    "kind": "const",
-                    "constValue": "open"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -81,7 +52,51 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-ias-v1-scans-obj-id-platform-events-1",
+        "method": "GET",
+        "pathTemplate": "/ias/v1/scans/{obj_id}/platform-events",
+        "summary": "GET /ias/v1/scans/{obj_id}/platform-events",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

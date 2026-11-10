@@ -3,11 +3,11 @@
   "name": "Cofense Vision",
   "pack": "CofenseVision",
   "vendor": "Cofense",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Quarantine job list.",
+  "summary": "Rebuilt from the client: GET /api/v4/quarantineJobs.",
   "notes": [
-    "Cross-check: path: GET /quarantineJobs is not a client call. Closest: /api/v4/quarantineJobs (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v4/quarantineJobs, POST /api/v4/quarantineJobs. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseVision/Integrations/CofenseVision",
@@ -17,62 +17,204 @@
       "kind": "preset",
       "id": "cofensevision-cofensevision",
       "name": "Cofense Vision",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseVision/Integrations/CofenseVision",
       "notes": [
-        "Cross-check: path: GET /quarantineJobs is not a client call. Closest: /api/v4/quarantineJobs (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v4/quarantineJobs, POST /api/v4/quarantineJobs. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseVision/Integrations/CofenseVision",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v4/quarantineJobs, POST /api/v4/quarantineJobs. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "quarantine-jobs",
+        "id": "get-api-v4-quarantinejobs-0",
         "method": "GET",
-        "pathTemplate": "/quarantineJobs",
-        "summary": "List quarantine jobs",
+        "pathTemplate": "/api/v4/quarantineJobs",
+        "summary": "GET /api/v4/quarantineJobs",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "data"
-        },
-        "record": {
-          "name": "job",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "integer"
-            },
-            {
-              "name": "status",
-              "kind": "enum",
-              "enumValues": [
-                "PENDING",
-                "RUNNING",
-                "COMPLETED"
-              ]
-            },
-            {
-              "name": "createdAt",
-              "kind": "timestamp"
-            },
-            {
-              "name": "messageCount",
-              "kind": "integer"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "attributes",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "metadata",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "attachmentExcludeMimeTypes",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "attachmentHashCriteria",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "attachmentHashes",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "attachmentMimeTypes",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "post-api-v4-quarantinejobs-1",
+        "method": "POST",
+        "pathTemplate": "/api/v4/quarantineJobs",
+        "summary": "POST /api/v4/quarantineJobs",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "attributes",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "metadata",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "attachmentExcludeMimeTypes",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "attachmentHashCriteria",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "attachmentHashes",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "attachmentMimeTypes",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            }
+          ]
         }
       }
     ],

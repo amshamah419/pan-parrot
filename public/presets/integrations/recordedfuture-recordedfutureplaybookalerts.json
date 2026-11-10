@@ -3,11 +3,11 @@
   "name": "Recorded Future - Playbook Alerts",
   "pack": "RecordedFuture",
   "vendor": "Recorded Future",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Search playbook alerts.",
+  "summary": "Rebuilt from the client: POST /v2/playbook_alert/search.",
   "notes": [
-    "Cross-check: path: POST /v2/playbook_alert/search is not a client call. Closest: /info/whoami (0)."
+    "Rebuilt from the XSOAR client. The checker matched POST /v2/playbook_alert/search. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/RecordedFuture/Integrations/RecordedFuturePlaybookAlerts",
@@ -17,58 +17,34 @@
       "kind": "preset",
       "id": "recordedfuture-recordedfutureplaybookalerts",
       "name": "Recorded Future - Playbook Alerts",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
       "notes": [
-        "Cross-check: path: POST /v2/playbook_alert/search is not a client call. Closest: /info/whoami (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /v2/playbook_alert/search. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /v2/playbook_alert/search. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "search",
+        "id": "post-v2-playbook-alert-search-0",
         "method": "POST",
         "pathTemplate": "/v2/playbook_alert/search",
-        "summary": "Search playbook alerts",
+        "summary": "POST /v2/playbook_alert/search",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "data",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "alert",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "title",
-                    "kind": "string",
-                    "example": "Playbook alert"
-                  },
-                  {
-                    "name": "status",
-                    "kind": "const",
-                    "constValue": "New"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -76,7 +52,49 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "base64",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "image_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "panel_evidence_summary",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "screenshots",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "rawJSON",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

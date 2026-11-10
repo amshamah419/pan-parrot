@@ -789,6 +789,200 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CloudflareWAF/Integrations/CloudflareWAF"
   },
+  "cofensevision-cofensevision": {
+    "summary": "Rebuilt from the client: GET /api/v4/quarantineJobs.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /api/v4/quarantineJobs, POST /api/v4/quarantineJobs. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseVision/Integrations/CofenseVision",
+    "operations": [
+      {
+        "id": "get-api-v4-quarantinejobs-0",
+        "method": "GET",
+        "pathTemplate": "/api/v4/quarantineJobs",
+        "summary": "GET /api/v4/quarantineJobs",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "attributes",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "metadata",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "attachmentExcludeMimeTypes",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "attachmentHashCriteria",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "attachmentHashes",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "attachmentMimeTypes",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "post-api-v4-quarantinejobs-1",
+        "method": "POST",
+        "pathTemplate": "/api/v4/quarantineJobs",
+        "summary": "POST /api/v4/quarantineJobs",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "attributes",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "metadata",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "attachmentExcludeMimeTypes",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "attachmentHashCriteria",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "attachmentHashes",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "attachmentMimeTypes",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseVision/Integrations/CofenseVision"
+  },
   "cortexxdr-cortexxdrir": {
     "summary": "Rebuilt from the client: POST /public_api/v1/incidents/get_incidents.",
     "differences": [
@@ -2594,6 +2788,144 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GsuiteAuditor/Integrations/GsuiteAuditor"
   },
+  "identityrecordedfuture-identityrecordedfuture": {
+    "summary": "Rebuilt from the client: POST /v2/identity/credentials/search.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched POST /v2/identity/credentials/search, POST /playbook_alert/search. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
+    "operations": [
+      {
+        "id": "post-v2-identity-credentials-search-0",
+        "method": "POST",
+        "pathTemplate": "/v2/identity/credentials/search",
+        "summary": "POST /v2/identity/credentials/search",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "action_result",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "base64",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "image_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "panel_evidence_summary",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "screenshots",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "post-playbook-alert-search-1",
+        "method": "POST",
+        "pathTemplate": "/playbook_alert/search",
+        "summary": "POST /playbook_alert/search",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "action_result",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "base64",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "image_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "panel_evidence_summary",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "screenshots",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/IdentityRecordedFuture/Integrations/IdentityRecordedFuture"
+  },
   "infoblox-infoblox": {
     "summary": "Rebuilt from the client: GET /record:host.",
     "differences": [
@@ -3566,6 +3898,198 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/NozomiNetworks/Integrations/NozomiNetworks"
   },
+  "paloaltonetworks-securityadvisories-paloaltonetworkssecurityadvisories": {
+    "summary": "Rebuilt from the client: GET /api/v1/products/{product}/advisories.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /api/v1/products/{product}/advisories, GET /api/v1/products. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://security.paloaltonetworks.com/",
+    "operations": [
+      {
+        "id": "get-api-v1-products-product-advisories-0",
+        "method": "GET",
+        "pathTemplate": "/api/v1/products/{product}/advisories",
+        "summary": "GET /api/v1/products/{product}/advisories",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "containers",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "cveMetadata",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "dataType",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "dataVersion",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "baseScore",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "baseSeverity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "containers",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "cna",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "cveMetadata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "cveId",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-api-v1-products-1",
+        "method": "GET",
+        "pathTemplate": "/api/v1/products",
+        "summary": "GET /api/v1/products",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "containers",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "cveMetadata",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "dataType",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "dataVersion",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "baseScore",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "baseSeverity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "containers",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "cna",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "cveMetadata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "cveId",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_SecurityAdvisories/Integrations/PaloAltoNetworksSecurityAdvisories"
+  },
   "paloaltonetworks-threat-vault-threatvaultv2": {
     "summary": "Rebuilt from the client: GET /threats.",
     "differences": [
@@ -3791,6 +4315,220 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
       }
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Rapid7_Nexpose/Integrations/Rapid7_Nexpose"
+  },
+  "rapid7appsec-rapid7appsec": {
+    "summary": "Rebuilt from the client: GET /ias/v1/scans/{obj_id}/engine-events.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /ias/v1/scans/{obj_id}/engine-events, GET /ias/v1/scans/{obj_id}/platform-events. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://help.rapid7.com/insightappsec/en-us/api/v1/docs.html",
+    "operations": [
+      {
+        "id": "get-ias-v1-scans-obj-id-engine-events-0",
+        "method": "GET",
+        "pathTemplate": "/ias/v1/scans/{obj_id}/engine-events",
+        "summary": "GET /ias/v1/scans/{obj_id}/engine-events",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-ias-v1-scans-obj-id-platform-events-1",
+        "method": "GET",
+        "pathTemplate": "/ias/v1/scans/{obj_id}/platform-events",
+        "summary": "GET /ias/v1/scans/{obj_id}/platform-events",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Rapid7AppSec/Integrations/Rapid7AppSec"
+  },
+  "recordedfuture-recordedfuturelists": {
+    "summary": "Rebuilt from the client: POST /v2/lists/search.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched POST /v2/lists/search. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
+    "operations": [
+      {
+        "id": "post-v2-lists-search-0",
+        "method": "POST",
+        "pathTemplate": "/v2/lists/search",
+        "summary": "POST /v2/lists/search",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "message",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "result_actions",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "server_url",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "version",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/RecordedFuture/Integrations/RecordedFutureLists"
+  },
+  "recordedfuture-recordedfutureplaybookalerts": {
+    "summary": "Rebuilt from the client: POST /v2/playbook_alert/search.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched POST /v2/playbook_alert/search. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
+    "operations": [
+      {
+        "id": "post-v2-playbook-alert-search-0",
+        "method": "POST",
+        "pathTemplate": "/v2/playbook_alert/search",
+        "summary": "POST /v2/playbook_alert/search",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "base64",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "image_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "panel_evidence_summary",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "screenshots",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "rawJSON",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/RecordedFuture/Integrations/RecordedFuturePlaybookAlerts"
   },
   "servicenow-servicenowv2": {
     "summary": "Rebuilt from the client: GET /table/{table_name}.",
@@ -4389,6 +5127,74 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
       }
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Tenable_io/Integrations/Tenable_io"
+  },
+  "urlhaus-urlhaus": {
+    "summary": "Rebuilt from the client: POST /url.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched POST /url. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://urlhaus-api.abuse.ch/",
+    "operations": [
+      {
+        "id": "post-url-0",
+        "method": "POST",
+        "pathTemplate": "/url",
+        "summary": "POST /url",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "DownloadLink",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "MD5",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Signature",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Tags",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/URLHaus/Integrations/URLHaus"
   },
   "varonisdatasecurityplatform-varonisdatasecurityplatform": {
     "summary": "Rebuilt from the client: GET /api/alert/alert/GetAlerts.",

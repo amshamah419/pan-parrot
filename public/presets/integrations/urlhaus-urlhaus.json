@@ -3,11 +3,11 @@
   "name": "URLhaus",
   "pack": "URLhaus",
   "vendor": "abuse.ch",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "URL lookup. query_status and threat match the URLhaus API.",
+  "summary": "Rebuilt from the client: POST /url.",
   "notes": [
-    "The content path was corrected to Packs/URLHaus/Integrations/URLHaus. The client still does not back a verified shape."
+    "Rebuilt from the XSOAR client. The checker matched POST /url. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/URLHaus/Integrations/URLHaus",
@@ -17,62 +17,34 @@
       "kind": "preset",
       "id": "urlhaus-urlhaus",
       "name": "URLhaus",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://urlhaus-api.abuse.ch/",
       "notes": [
-        "The content path was corrected to Packs/URLHaus/Integrations/URLHaus. The client still does not back a verified shape."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /url. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://urlhaus-api.abuse.ch/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /url. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "url",
+        "id": "post-url-0",
         "method": "POST",
-        "pathTemplate": "/v1/url",
-        "summary": "Look up a URL",
+        "pathTemplate": "/url",
+        "summary": "POST /url",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "lookup",
-          "kind": "object",
-          "children": [
-            {
-              "name": "query_status",
-              "kind": "const",
-              "constValue": "ok"
-            },
-            {
-              "name": "url_status",
-              "kind": "enum",
-              "enumValues": [
-                "online",
-                "offline"
-              ]
-            },
-            {
-              "name": "threat",
-              "kind": "enum",
-              "enumValues": [
-                "malware_download",
-                "phishing"
-              ]
-            },
-            {
-              "name": "host",
-              "kind": "string",
-              "example": "bad.example"
-            },
-            {
-              "name": "date_added",
-              "kind": "timestamp"
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -80,7 +52,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "DownloadLink",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "MD5",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Signature",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Tags",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

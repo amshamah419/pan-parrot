@@ -748,6 +748,8 @@ def emit_sink(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> None
     if method not in VERBS or not paths:
         return
     paths = [path for path in paths if static_segment(path)]
+    paths = with_base_aliases(paths)
+    paths = [path for path in paths if static_segment(path)]
     if not paths:
         return
     row = {
@@ -839,6 +841,35 @@ def url_argument(call: ast.Call, env: dict[str, Val], mod: Mod, cls: str, attr: 
     return None
 
 
+BASE_HOLE = re.compile(r"^(api_url|url|server_url|server|base_url|base|host|endpoint|serverport)$", re.I)
+
+
+def with_base_aliases(paths: list[str]) -> list[str]:
+    """Keep a copy of the path with a server variable removed.
+
+    Clients prepend ``{API_URL}``, ``:{serverPort}``, or a glued ``{url}api/...``
+    because the instance URL already includes the host. The route the preset
+    mocks is the remainder.
+    """
+    aliases = list(paths)
+    for path in paths:
+        normed = norm_path(path)
+        parts = segments(normed)
+        if parts and base_hole(parts[0]) and len(parts) > 1:
+            aliases.append("/" + "/".join(parts[1:]))
+        glued = re.match(r"^/\{([A-Za-z0-9_]+)\}([^/{].+)$", normed)
+        if glued and BASE_HOLE.match(glued.group(1)):
+            aliases.append(norm_path("/" + glued.group(2)))
+    return sorted(set(aliases))
+
+
+def base_hole(segment: str) -> bool:
+    bare = segment[1:] if segment.startswith(":") else segment
+    if not (bare.startswith("{") and bare.endswith("}")):
+        return False
+    return bool(BASE_HOLE.match(bare[1:-1]))
+
+
 def join_suffix(suffix: Val, server: Val | None, mod: Mod) -> list[str]:
     raw = suffix.path or suffix.text
     if not raw:
@@ -901,7 +932,10 @@ def bind_args(func: Func, call: ast.Call, env: dict[str, Val], mod: Mod, cls: st
             bound[keyword.arg] = val
         else:
             extra[keyword.arg] = val
-    if extra:
+    # An empty **kwargs still has to exist so kwargs.get("method", "post") can see the default.
+    if args.kwarg:
+        bound[kwname] = Val(items=extra)
+    elif extra:
         bound[kwname] = Val(items=extra)
     if vararg:
         extra_pos = call.args[len(names) :]
@@ -1064,6 +1098,9 @@ def eval_call_value(node: ast.Call, env: dict[str, Val], mod: Mod | None, cls: s
         key = literal_str(node.args[0]) if node.args else ""
         if owner.items is not None and key and key in owner.items:
             return owner.items[key].copy()
+        # kwargs.get("method", "post") is the verb when the caller did not pass one.
+        if owner.items is not None and key and len(node.args) >= 2:
+            return eval_expr(node.args[1], env, mod, cls)
         if key and mod is not None and is_demisto_params(func.value) and key in mod.yml_defaults:
             default = mod.yml_defaults[key]
             return Val(text=default, path=path_of(default) if default.startswith("http") else "")
@@ -2145,6 +2182,59 @@ def self_test() -> int:
     assert std_row["status"] == "match", std_row
     kept = check_preset(lab_preset("Std", click), content)
     assert kept["status"] == "mismatch", kept
+
+    write(
+        "Wrapped",
+        "\n".join(
+            [
+                "from CommonServerPython import *",
+                "class Client(BaseClient):",
+                "    def _call(self, url_suffix, **kwargs):",
+                "        method = kwargs.get('method', 'post')",
+                "        request_kwargs = {'method': method, 'url_suffix': url_suffix}",
+                "        return self._http_request(**request_kwargs)",
+                "    def search(self):",
+                "        return self._call(url_suffix='/v2/lists/search')",
+            ]
+        ),
+    )
+    wrapped = {
+        "method": "POST",
+        "pathTemplate": "/v2/lists/search",
+        "envelope": {"type": "object"},
+        "pagination": {"style": "none", "limitParam": "limit", "offsetParam": "offset", "pageParam": "page", "cursorParam": "cursor"},
+        "record": {"name": "body", "kind": "object", "children": []},
+    }
+    wrapped_row = check_preset(lab_preset("Wrapped", wrapped), content)
+    assert wrapped_row["status"] == "match", wrapped_row
+
+    write(
+        "Host",
+        "\n".join(
+            [
+                "from CommonServerPython import *",
+                "API_URL = demisto.params().get('API_URL')",
+                "def http_request(method, url):",
+                "    return requests.request(method, url)",
+                "def lookup(ip):",
+                "    return http_request('GET', API_URL + '/shodan/host/' + ip)",
+                "def incidents():",
+                "    return http_request('GET', demisto.params().get('url') + 'api/incidents')",
+            ]
+        ),
+    )
+    host = {
+        "method": "GET",
+        "pathTemplate": "/shodan/host/{ip}",
+        "envelope": {"type": "object"},
+        "pagination": {"style": "none", "limitParam": "limit", "offsetParam": "offset", "pageParam": "page", "cursorParam": "cursor"},
+        "record": {"name": "body", "kind": "object", "children": []},
+    }
+    host_row = check_preset(lab_preset("Host", host), content)
+    assert host_row["status"] == "match", host_row
+    glued = dict(host, pathTemplate="/api/incidents")
+    glued_row = check_preset(lab_preset("Host", glued), content)
+    assert glued_row["status"] == "match", glued_row
     print("self-test ok")
     return 0
 
