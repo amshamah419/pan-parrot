@@ -12,7 +12,9 @@ import {
   rateMax,
 } from "./config";
 import { sendSignInEmail } from "./email-delivery";
+import { noteHealth } from "./health";
 import { HttpError } from "./http";
+import { consumeInviteToken, markEmailInvitesAccepted, maySignUp } from "./invites";
 import { enforceRateLimit, limitAuthVerify } from "./rate-limit";
 import { mac, safeEqual, signSession, verifySession } from "./session";
 
@@ -61,6 +63,10 @@ export async function requestSignIn(
     rateMax("RATE_AUTH_EMAIL_MAX", 5),
     15 * 60 * 1000,
   );
+  if (!(await maySignUp(db, email))) {
+    throw new HttpError(403, "An invite is required before this address can sign in.");
+  }
+  await noteHealth(db, "signin_attempt");
 
   const id = randomUUID();
   const code = randomInt(0, 10 ** POLICY.codeDigits)
@@ -116,9 +122,11 @@ export async function verifySignIn(
       if (challenge) {
         await db.delete(loginChallenges).where(eq(loginChallenges.id, challenge.id));
       }
+      await noteHealth(db, "signin_failure");
       throw new HttpError(401, "Invalid or expired sign-in link");
     }
     await db.delete(loginChallenges).where(eq(loginChallenges.email, challenge.email));
+    await markEmailInvitesAccepted(db, challenge.email);
     const user = await upsertVerifiedUser(db, challenge.email);
     const cookieValue = await createSession(db, user.id);
     return { user: toPublicUser(user), cookieValue };
@@ -151,6 +159,10 @@ export async function verifySignIn(
     challenge.attempts >= POLICY.maxVerifyAttempts ||
     !matches
   ) {
+    await noteHealth(db, "signin_failure");
+    if (challenge && challenge.attempts + 1 >= POLICY.maxVerifyAttempts) {
+      await noteHealth(db, "signin_lockout");
+    }
     if (challenge) {
       const attempts = challenge.attempts + 1;
       if (
@@ -169,6 +181,7 @@ export async function verifySignIn(
   }
 
   await db.delete(loginChallenges).where(eq(loginChallenges.email, email));
+  await markEmailInvitesAccepted(db, email);
   const user = await upsertVerifiedUser(db, email);
   const cookieValue = await createSession(db, user.id);
   return { user: toPublicUser(user), cookieValue };
@@ -226,6 +239,25 @@ async function upsertVerifiedUser(db: AppDb, email: string) {
     .where(eq(users.id, existing.id))
     .returning();
   return updated;
+}
+
+export async function acceptInvite(
+  db: AppDb,
+  token: unknown,
+  ip: string,
+): Promise<{ user: PublicUser; cookieValue: string }> {
+  await limitAuthVerify(db, ip, "invite");
+  await noteHealth(db, "signin_attempt");
+  let email = "";
+  try {
+    email = await consumeInviteToken(db, typeof token === "string" ? token : "");
+  } catch (error) {
+    await noteHealth(db, "signin_failure");
+    throw error;
+  }
+  const user = await upsertVerifiedUser(db, email);
+  await markEmailInvitesAccepted(db, email);
+  return { user: toPublicUser(user), cookieValue: await createSession(db, user.id) };
 }
 
 async function createSession(db: AppDb, userId: string): Promise<string> {

@@ -212,6 +212,38 @@ test("a new content developer can mock, load-test, and share", async ({ page, br
   await friendContext.close();
 });
 
+test("an admin can read health and send an invite", async ({ page }) => {
+  await signIn(page, "ashamah@paloaltonetworks.com");
+  await page.getByRole("button", { name: "Account menu for ashamah@paloaltonetworks.com" }).click();
+  await page.getByRole("menuitem", { name: "Admin Panel" }).click();
+  await expect(page.getByRole("heading", { name: "Admin" })).toBeVisible();
+  await expect(page.getByText("Database").first()).toBeVisible();
+  await expect(page.getByText("Last 24 hours")).toBeVisible();
+  await page.screenshot({ path: "test-results/admin-health.png", fullPage: true });
+  await page.getByRole("tab", { name: "Mocks" }).click();
+  await expect(page.getByText("Disabling a mock blocks its catch URL")).toBeVisible();
+  await page.getByRole("tab", { name: "People" }).click();
+  await page.getByLabel("Search people").fill("ashamah");
+  await page.getByRole("button", { name: "Search" }).click();
+  await expect(page.getByText("ashamah@paloaltonetworks.com", { exact: true })).toBeVisible();
+  await expect(page.getByText("Always admin")).toBeVisible();
+  await page.screenshot({ path: "test-results/admin-people.png", fullPage: true });
+  await page.getByRole("tab", { name: "Invites" }).click();
+  await expect(page.getByLabel("Require an invite for new sign-ups")).toBeVisible();
+  const invitee = `e2e.invite.${Date.now().toString(36)}@paloaltonetworks.com`;
+  await page.getByLabel("Email addresses").fill(invitee);
+  await page.getByRole("button", { name: "Send invites" }).click();
+  await expect(page.getByText(invitee)).toBeVisible();
+  await page.getByLabel("Email addresses").fill("person@gmail.com");
+  await expect(page.getByLabel("Email addresses")).toHaveValue("person@gmail.com");
+  await page.getByRole("button", { name: "Send invites" }).click();
+  await expect(page.getByText("Sign-in is limited to verified @paloaltonetworks.com email addresses.")).toBeVisible();
+  await page.screenshot({ path: "test-results/admin-invites.png", fullPage: true });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await noSideScroll(page);
+  await page.screenshot({ path: "test-results/admin-invites-mobile.png", fullPage: true });
+});
+
 test("dark mode follows the system and the request log can be searched", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   const email = `theme.${Date.now().toString(36)}@paloaltonetworks.com`;

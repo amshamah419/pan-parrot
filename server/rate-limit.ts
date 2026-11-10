@@ -3,6 +3,7 @@ import { rateLimits } from "../db/schema";
 import type { AppDb } from "../db/client";
 import { rateMax } from "./config";
 import { HttpError } from "./http";
+import { noteHealth } from "./health";
 
 const FIFTEEN_MINUTES = 15 * 60 * 1000;
 const ONE_MINUTE = 60 * 1000;
@@ -32,6 +33,7 @@ export async function enforceRateLimit(
   `);
   const count = Number(firstCount(result));
   if (!Number.isFinite(count) || count > limit) {
+    await noteHealth(db, "rate_limit");
     throw new HttpError(429, "Too many requests");
   }
 }

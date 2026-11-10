@@ -7,6 +7,7 @@ import {
   jsonb,
   pgEnum,
   pgTable,
+  primaryKey,
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
@@ -69,6 +70,7 @@ export const endpoints = pgTable(
     mockSpec: jsonb("mock_spec"),
     mockRequestCount: integer("mock_request_count").notNull().default(0),
     published: boolean("published").notNull().default(false),
+    disabled: boolean("disabled").notNull().default(false),
     userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
@@ -94,6 +96,7 @@ export const capturedRequests = pgTable(
     responsePreview: text("response_preview"),
     chaosEffects: jsonb("chaos_effects").$type<string[]>(),
     recordCount: integer("record_count"),
+    durationMs: integer("duration_ms"),
     createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
       .notNull()
       .defaultNow(),
@@ -259,6 +262,51 @@ export const auditEvents = pgTable(
   },
   (table) => [index("audit_events_created_idx").on(table.createdAt)],
 );
+
+export const healthBuckets = pgTable(
+  "health_buckets",
+  {
+    hour: timestamp("hour", { withTimezone: true, mode: "date" }).notNull(),
+    kind: text("kind").notNull(),
+    count: integer("count").notNull().default(0),
+    durationMs: integer("duration_ms").notNull().default(0),
+  },
+  (table) => [primaryKey({ columns: [table.hour, table.kind] })],
+);
+
+export const recentErrors = pgTable("recent_errors", {
+  id: text("id").primaryKey(),
+  message: text("message").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
+    .notNull()
+    .defaultNow(),
+});
+
+export const invites = pgTable(
+  "invites",
+  {
+    id: text("id").primaryKey(),
+    email: text("email").notNull(),
+    tokenHash: text("token_hash").notNull().unique(),
+    status: text("status").notNull(),
+    invitedBy: text("invited_by").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true, mode: "date" }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
+      .notNull()
+      .defaultNow(),
+    acceptedAt: timestamp("accepted_at", { withTimezone: true, mode: "date" }),
+  },
+  (table) => [
+    index("invites_email_idx").on(table.email),
+    check("invites_email_domain", sql`${table.email} ~ '^[^@]+@paloaltonetworks\\.com$'`),
+    check("invites_status", sql`${table.status} in ('pending', 'accepted', 'revoked')`),
+  ],
+);
+
+export const appSettings = pgTable("app_settings", {
+  key: text("key").primaryKey(),
+  value: text("value").notNull(),
+});
 
 export const rateLimits = pgTable("rate_limits", {
   key: text("key").primaryKey(),

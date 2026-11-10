@@ -44,6 +44,33 @@ export default function Login() {
     if (step === "code") document.getElementById("code")?.focus();
   }, [step]);
 
+  useEffect(() => {
+    const invite = new URLSearchParams(window.location.search).get("invite");
+    if (!invite) return;
+    let cancelled = false;
+    setIsLoading(true);
+    setInfo("Opening your invite…");
+    void fetch("/api/auth/invite", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: invite }),
+    })
+      .then(async (response) => {
+        if (cancelled) return;
+        await finish(response);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err instanceof Error ? err.message : "Invite failed");
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const finish = async (response: Response) => {
     const data = (await response.json()) as {
       error?: string;

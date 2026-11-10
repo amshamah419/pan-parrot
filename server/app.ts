@@ -35,6 +35,7 @@ import { createToken, listTokens, revokeToken, userFromApiToken } from "./tokens
 import type { AppDb } from "../db/client";
 import { getDb } from "../db/client";
 import {
+  acceptInvite,
   destroySession,
   requestSignIn,
   secureCookie,
@@ -53,6 +54,11 @@ import {
   createEndpointForUser,
   deleteEndpointForUser,
   deleteUserAsAdmin,
+  listAdminMocks,
+  purgeMockRequests,
+  revokeUserSessions,
+  revokeUserTokens,
+  setMockDisabled,
   getEndpointForUser,
   getRequest,
   cloneEndpointForUser,
@@ -67,6 +73,16 @@ import {
 import { clientIp, HttpError, readJson } from "./http";
 import { runMaintenance } from "./maintenance";
 import { adminSignals, readHealth } from "./ops";
+import { healthReport, noteError, noteHealth } from "./health";
+import { appVersion } from "./version";
+import {
+  createInvites,
+  inviteOnlyEnabled,
+  listInvites,
+  resendInvite,
+  revokeInvite,
+  setInviteOnly,
+} from "./invites";
 import { enforceRateLimit, limitAuthed, limitPing } from "./rate-limit";
 import { guardCatchResponseHeaders } from "./headers";
 import { sessionCookieOptions } from "./session";
@@ -117,7 +133,18 @@ export function createServer(options?: {
 }) {
   const app = new Hono<AppEnv>();
 
-  app.onError((error, c) => {
+  app.onError(async (error, c) => {
+    if (!(error instanceof HttpError)) {
+      try {
+        const db = c.get("db");
+        if (db) {
+          await noteHealth(db, "error");
+          await noteError(db, error instanceof Error ? error.message : "request failed");
+        }
+      } catch {
+        // The health tables are best-effort.
+      }
+    }
     if (error instanceof HttpError) {
       return c.json({ error: error.message }, error.status as 400);
     }
@@ -206,6 +233,19 @@ export function createServer(options?: {
       { email: record.email, code: record.code, token: record.token },
       c.get("ip"),
     );
+    setCookie(
+      c,
+      POLICY.sessionCookieName,
+      result.cookieValue,
+      sessionCookieOptions(secureCookie()),
+    );
+    return c.json({ user: result.user });
+  });
+
+  app.post("/api/auth/invite", async (c) => {
+    const body = await readJson(c.req.raw, POLICY.apiJsonBytes);
+    const token = isRecord(body) ? body.token : undefined;
+    const result = await acceptInvite(c.get("db"), token, c.get("ip"));
     setCookie(
       c,
       POLICY.sessionCookieName,
@@ -583,6 +623,31 @@ export function createServer(options?: {
     return c.json(await adminSignals(c.get("db")));
   });
 
+  app.get("/api/admin/health", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    const db = c.get("db");
+    const [health, signals, report] = await Promise.all([
+      readHealth(db),
+      adminSignals(db),
+      healthReport(db),
+    ]);
+    return c.json({
+      ok: health.ok && signals.email === "configured" && signals.sessionSecret === "ok",
+      functions: {
+        api: "up",
+        database: health.database,
+        email: signals.email,
+        catch: "up",
+      },
+      ...appVersion(),
+      devCodeExposed: signals.devCodeExposed,
+      sessionSecret: signals.sessionSecret,
+      siteUrl: signals.siteUrl,
+      ...report,
+    });
+  });
+
   app.get("/api/admin/usage", async (c) => {
     const user = await requireAdmin(c);
     await limitAuthed(c.get("db"), user.id);
@@ -605,7 +670,81 @@ export function createServer(options?: {
   app.get("/api/admin/users", async (c) => {
     const user = await requireAdmin(c);
     await limitAuthed(c.get("db"), user.id);
-    return c.json(await listUsers(c.get("db")));
+    return c.json(await listUsers(c.get("db"), c.req.query("q") || ""));
+  });
+
+  app.post("/api/admin/users/:userId/sessions/revoke", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    await revokeUserSessions(c.get("db"), user, c.req.param("userId"));
+    return c.json({ ok: true });
+  });
+
+  app.post("/api/admin/users/:userId/tokens/revoke", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    await revokeUserTokens(c.get("db"), user, c.req.param("userId"));
+    return c.json({ ok: true });
+  });
+
+  app.get("/api/admin/mocks", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await listAdminMocks(c.get("db"), c.req.query("q") || ""));
+  });
+
+  app.patch("/api/admin/mocks/:endpointId", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    const body = await readJson(c.req.raw, POLICY.apiJsonBytes);
+    const disabled = isRecord(body) ? body.disabled : undefined;
+    if (typeof disabled !== "boolean") throw new HttpError(400, "Invalid request");
+    return c.json(await setMockDisabled(c.get("db"), user, c.req.param("endpointId"), disabled));
+  });
+
+  app.post("/api/admin/mocks/:endpointId/purge", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    await purgeMockRequests(c.get("db"), user, c.req.param("endpointId"));
+    return c.json({ ok: true });
+  });
+
+  app.get("/api/admin/invites", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json({
+      inviteOnly: await inviteOnlyEnabled(c.get("db")),
+      invites: await listInvites(c.get("db")),
+    });
+  });
+
+  app.put("/api/admin/invites/settings", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    const body = await readJson(c.req.raw, POLICY.apiJsonBytes);
+    const inviteOnly = isRecord(body) ? body.inviteOnly : undefined;
+    if (typeof inviteOnly !== "boolean") throw new HttpError(400, "Invalid request");
+    return c.json({ inviteOnly: await setInviteOnly(c.get("db"), user.email, inviteOnly) });
+  });
+
+  app.post("/api/admin/invites", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    const body = await readJson(c.req.raw, POLICY.apiJsonBytes);
+    const emails = isRecord(body) && Array.isArray(body.emails) ? body.emails.filter((item) => typeof item === "string") : [];
+    return c.json(await createInvites(c.get("db"), user.email, emails));
+  });
+
+  app.post("/api/admin/invites/:inviteId/resend", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await resendInvite(c.get("db"), user.email, c.req.param("inviteId")));
+  });
+
+  app.post("/api/admin/invites/:inviteId/revoke", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await revokeInvite(c.get("db"), user.email, c.req.param("inviteId")));
   });
 
   app.put("/api/admin/users/:userId", updateAdminUser);

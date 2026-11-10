@@ -1,5 +1,5 @@
 import { normalizePanEmail } from "../shared/email";
-import { POLICY } from "../shared/policy";
+import { FOUNDING_ADMIN, POLICY } from "../shared/policy";
 
 export function env(name: string): string | undefined {
   try {
@@ -97,11 +97,18 @@ export function cookieIsSecure(): boolean {
 
 export function bootstrapAdminEmails(): Set<string> {
   const emails = new Set<string>();
-  for (const part of (env("ADMIN_EMAILS") ?? "").split(",")) {
+  const configured = env("ADMIN_EMAILS")?.trim();
+  for (const part of (configured || FOUNDING_ADMIN).split(",")) {
     const email = normalizePanEmail(part.trim());
     if (email) emails.add(email);
   }
+  const founder = normalizePanEmail(FOUNDING_ADMIN);
+  if (founder) emails.add(founder);
   return emails;
+}
+
+export function isFoundingAdmin(email: string): boolean {
+  return normalizePanEmail(email) === normalizePanEmail(FOUNDING_ADMIN);
 }
 
 export function retentionDays(): number {
