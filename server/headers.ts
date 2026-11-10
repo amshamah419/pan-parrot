@@ -1,3 +1,5 @@
+import { maxStoredBodyChars } from "./config";
+
 const SENSITIVE_REQUEST_HEADERS = new Set([
   "authorization",
   "cookie",
@@ -88,10 +90,33 @@ export function bodyForStorage(
     return { omitted: "unsupported content type", contentType: type.slice(0, 120) };
   }
   try {
-    return JSON.parse(text) as unknown;
+    return clampStoredBody(JSON.parse(text) as unknown);
   } catch {
-    return { raw: text };
+    return clampStoredBody({ raw: text });
   }
+}
+
+function clampStoredBody(value: unknown): unknown {
+  const text = JSON.stringify(value);
+  const cap = maxStoredBodyChars();
+  if (text.length <= cap) return value;
+  return { truncated: true, preview: text.slice(0, cap) };
+}
+
+const ACTIVE_CONTENT = /(?:text\/html|application\/xhtml\+xml|image\/svg\+xml)\b/i;
+
+/** HTML and SVG from a catch URL download instead of rendering on this origin. */
+export function guardCatchResponseHeaders(
+  headers: Record<string, string>,
+): Record<string, string> {
+  const type = Object.entries(headers).find(([key]) => key.toLowerCase() === "content-type")?.[1] || "";
+  if (!ACTIVE_CONTENT.test(type)) return headers;
+  const next = { ...headers };
+  for (const key of Object.keys(next)) {
+    if (key.toLowerCase() === "content-disposition") delete next[key];
+  }
+  next["content-disposition"] = 'attachment; filename="response.txt"';
+  return next;
 }
 
 export function sanitizeMockHeaders(

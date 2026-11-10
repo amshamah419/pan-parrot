@@ -86,7 +86,7 @@ export async function requestSignIn(
   });
 
   if (exposeDevCode()) {
-    console.info(`Dev sign-in code issued for ${email}`);
+    console.info("Dev sign-in code issued");
   }
 
   return {

@@ -108,6 +108,14 @@ export function retentionDays(): number {
   return intEnv("REQUEST_RETENTION_DAYS", POLICY.defaultRetentionDays, 1, 90);
 }
 
+export function maxRequestsPerUser(): number {
+  return intEnv("MAX_REQUESTS_PER_USER", POLICY.maxRequestsPerUser, 1, 20_000);
+}
+
+export function maxStoredBodyChars(): number {
+  return intEnv("MAX_STORED_BODY_CHARS", POLICY.maxStoredBodyChars, 256, 64_000);
+}
+
 export function maxRequestsPerEndpoint(): number {
   return intEnv(
     "MAX_REQUESTS_PER_ENDPOINT",

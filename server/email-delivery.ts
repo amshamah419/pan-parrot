@@ -7,7 +7,7 @@ export async function sendSignInEmail(input: {
   link: string;
 }): Promise<void> {
   if (exposeDevCode()) {
-    console.info(`Dev sign-in code issued for ${input.to}`);
+    console.info("Dev sign-in code issued");
     return;
   }
 

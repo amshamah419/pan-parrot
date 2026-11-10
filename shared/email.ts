@@ -1,7 +1,7 @@
 import { POLICY } from "./policy";
 
 const LOCAL_PART =
-  /^[a-z0-9](?:[a-z0-9._%+-]{0,62}[a-z0-9])?$/;
+  /^[a-z0-9](?:[a-z0-9._%-]{0,62}[a-z0-9])?$/;
 
 /**
  * Normalize an address and accept it only when the domain is exactly
@@ -9,9 +9,9 @@ const LOCAL_PART =
  * subdomains, trailing dots, unicode lookalikes, and plus-tricks that
  * would land on a different domain.
  *
- * Plus-addressing on the real domain (name+tag@paloaltonetworks.com)
- * is allowed: the domain is unchanged, and mail still has to be
- * delivered there before a session exists.
+ * Plus-addressing (name+tag@paloaltonetworks.com) is folded to the
+ * mailbox before the plus. One inbox is one account and one email
+ * quota, so tags cannot multiply sign-in messages or users.
  */
 export function normalizePanEmail(input: unknown): string | null {
   if (typeof input !== "string") return null;
@@ -29,11 +29,12 @@ export function normalizePanEmail(input: unknown): string | null {
   const domain = normalized.slice(at + 1);
   if (!local || !domain) return null;
   if (domain !== POLICY.allowedDomain) return null;
-  if (local.length > 64) return null;
-  if (!LOCAL_PART.test(local)) return null;
-  if (local.includes("..")) return null;
+  const mailbox = local.split("+")[0];
+  if (!mailbox || mailbox.length > 64) return null;
+  if (!LOCAL_PART.test(mailbox)) return null;
+  if (mailbox.includes("..") || mailbox.includes("+")) return null;
 
-  return `${local}@${domain}`;
+  return `${mailbox}@${domain}`;
 }
 
 export function nameFromEmail(email: string): string {
