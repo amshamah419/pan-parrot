@@ -32,10 +32,7 @@
         "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateUser.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "62 of 66 commands from vendor docs, 0 approximate, 4 missing.",
-          "boto3 ListUsers is the IAM query protocol. POST / matches Action=ListUsers from the form body or the query string and returns ListUsersResponse XML in the namespace https://iam.amazonaws.com/doc/2010-05-08/.",
-          "ListUsersResult/Users/member includes Path, UserName, UserId, Arn, and CreateDate. IsTruncated and Marker page with MaxItems. ResponseMetadata/RequestId is present.",
-          "Access keys and policies are omitted. The Marker is pp_ plus a base36 index. Version is not checked. SigV4 is not checked."
+          "63 of 66 commands from vendor docs, 0 approximate, 3 missing."
         ]
       },
       "commandDocs": [
@@ -740,17 +737,27 @@
         },
         {
           "command": "aws-iam-list-mfa-devices",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "iam:ListMFADevices"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-m-f-a-devices"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/iam/list-mfa-devices.html"
         },
         {
           "command": "aws-iam-deactivate-mfa-devices",
-          "calls": [],
+          "calls": [
+            "iam:DeactivateMFADevice"
+          ],
           "status": "missing"
         },
         {
           "command": "aws-iam-delete-mfa-devices",
-          "calls": [],
+          "calls": [
+            "iam:DeleteVirtualMFADevice"
+          ],
           "status": "missing"
         }
       ]
@@ -2866,6 +2873,39 @@
         "fixture": "<ListAttachedRolePoliciesResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ListAttachedRolePoliciesResult>\n    <AttachedPolicies>\n      <member>\n        <PolicyName>ReadOnlyAccess</PolicyName>\n        <PolicyArn>arn:aws:iam::aws:policy/ReadOnlyAccess</PolicyArn>\n      </member>\n    </AttachedPolicies>\n    <IsTruncated>false</IsTruncated>\n  </ListAttachedRolePoliciesResult>\n  <ResponseMetadata>\n    <RequestId>9a3b490d-3ea5-11e4-9d0d-6f969EXAMPLE</RequestId>\n  </ResponseMetadata>\n</ListAttachedRolePoliciesResponse>",
         "queryMatch": {
           "Action": "ListAttachedRolePolicies"
+        }
+      },
+      {
+        "id": "iam-list-m-f-a-devices",
+        "summary": "iam ListMFADevices",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "ListMFADevices",
+        "fixture": "{\n  \"MFADevices\": [\n    {\n      \"UserName\": \"Bob\",\n      \"SerialNumber\": \"arn:aws:iam::123456789012:mfa/Bob\",\n      \"EnableDate\": \"2019-10-28T20:37:09+00:00\"\n    },\n    {\n      \"UserName\": \"Bob\",\n      \"SerialNumber\": \"GAKT12345678\",\n      \"EnableDate\": \"2023-02-18T21:44:42+00:00\"\n    },\n    {\n      \"UserName\": \"Bob\",\n      \"SerialNumber\": \"arn:aws:iam::123456789012:u2f/user/Bob/fidosecuritykey1-7XNL7NFNLZ123456789EXAMPLE\",\n      \"EnableDate\": \"2023-09-19T02:25:35+00:00\"\n    },\n    {\n      \"UserName\": \"Bob\",\n      \"SerialNumber\": \"arn:aws:iam::123456789012:u2f/user/Bob/fidosecuritykey2-VDRQTDBBN5123456789EXAMPLE\",\n      \"EnableDate\": \"2023-09-19T01:49:18+00:00\"\n    }\n  ]\n}\n",
+        "queryMatch": {
+          "Action": "ListMFADevices"
         }
       }
     ],

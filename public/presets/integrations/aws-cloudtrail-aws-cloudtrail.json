@@ -3,9 +3,9 @@
   "name": "AWS - CloudTrail",
   "pack": "AWS-CloudTrail",
   "vendor": "Amazon Web Services",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "LookupEvents. Events with EventId and EventName.",
+  "summary": "From vendor docs. LookupEvents. Events with EventId and EventName.",
   "notes": [
     "POST / with X-Amz-Target CloudTrail_20131101.LookupEvents returns { Events }.",
     "CloudTrailEvent is a shortened JSON string, not the full record.",
@@ -19,7 +19,7 @@
       "kind": "preset",
       "id": "aws-cloudtrail-aws-cloudtrail",
       "name": "AWS - CloudTrail",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-CloudTrail/Integrations/AWS-CloudTrail",
       "notes": [
@@ -28,14 +28,11 @@
         "SigV4 is not checked."
       ],
       "verification": {
-        "status": "approximate",
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/create-trail.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "4 of 8 commands from vendor docs, 1 approximate, 3 missing.",
-          "0 of 8 commands from vendor docs, 8 approximate, 0 missing.",
-          "POST / with X-Amz-Target CloudTrail_20131101.LookupEvents returns { Events }.",
-          "CloudTrailEvent is a shortened JSON string, not the full record.",
-          "SigV4 is not checked."
+          "5 of 8 commands from vendor docs, 0 approximate, 3 missing."
         ]
       },
       "commandDocs": [
@@ -44,7 +41,11 @@
           "calls": [
             "cloudtrail:CreateTrail"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "cloudtrail-create-trail"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/create-trail.html"
         },
         {
           "command": "aws-cloudtrail-delete-trail",
@@ -58,14 +59,22 @@
           "calls": [
             "cloudtrail:DescribeTrails"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "cloudtrail-describe-trails"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/describe-trails.html"
         },
         {
           "command": "aws-cloudtrail-update-trail",
           "calls": [
             "cloudtrail:UpdateTrail"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "cloudtrail-update-trail"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/update-trail.html"
         },
         {
           "command": "aws-cloudtrail-start-logging",
@@ -86,17 +95,22 @@
           "calls": [
             "cloudtrail:LookupEvents"
           ],
-          "status": "approximate",
+          "status": "vendor",
           "operationIds": [
             "lookup-events"
-          ]
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/lookup-events.html"
         },
         {
           "command": "aws-cloudtrail-get-trail-status",
           "calls": [
             "cloudtrail:GetTrailStatus"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "cloudtrail-get-trail-status"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/get-trail-status.html"
         }
       ]
     },
@@ -113,7 +127,7 @@
           "arrayKey": "Events"
         },
         "headerMatch": {
-          "x-amz-target": "CloudTrail_20131101.LookupEvents"
+          "x-amz-target": "com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101.LookupEvents"
         },
         "record": {
           "name": "event",
@@ -145,15 +159,149 @@
           ]
         },
         "headers": {},
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/x-amz-json-1.1",
         "pagination": {
-          "style": "cursor",
+          "style": "none",
           "limitParam": "MaxResults",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "NextToken",
           "defaultLimit": 20,
           "maxLimit": 500
+        },
+        "awsAction": "LookupEvents",
+        "fixture": "{\n  \"Events\": [\n    {\n      \"EventId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n      \"Username\": \"my-session-name\",\n      \"EventTime\": \"2021-11-18T09:41:02-08:00\",\n      \"CloudTrailEvent\": \"{\\\"eventVersion\\\":\\\"1.02\\\",\\\"userIdentity\\\":{\\\"type\\\":\\\"AssumedRole\\\",\\\"principalId\\\":\\\"AROAJIKPFTA72SWU4L7T4:my-session-name\\\",\\\"arn\\\":\\\"arn:aws:sts::123456789012:assumed-role/my-role/my-session-name\\\",\\\"accountId\\\":\\\"123456789012\\\",\\\"sessionContext\\\":{\\\"attributes\\\":{\\\"mfaAuthenticated\\\":\\\"false\\\",\\\"creationDate\\\":\\\"2016-01-26T21:42:12Z\\\"},\\\"sessionIssuer\\\":{\\\"type\\\":\\\"Role\\\",\\\"principalId\\\":\\\"AROAJIKPFTA72SWU4L7T4\\\",\\\"arn\\\":\\\"arn:aws:iam::123456789012:role/my-role\\\",\\\"accountId\\\":\\\"123456789012\\\",\\\"userName\\\":\\\"my-role\\\"}}},\\\"eventTime\\\":\\\"2016-01-26T21:42:12Z\\\",\\\"eventSource\\\":\\\"signin.amazonaws.com\\\",\\\"eventName\\\":\\\"ConsoleLogin\\\",\\\"awsRegion\\\":\\\"us-west-2\\\",\\\"sourceIPAddress\\\":\\\"72.21.198.70\\\",\\\"userAgent\\\":\\\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36\\\",\\\"requestParameters\\\":null,\\\"responseElements\\\":{\\\"ConsoleLogin\\\":\\\"Success\\\"},\\\"additionalEventData\\\":{\\\"MobileVersion\\\":\\\"No\\\",\\\"MFAUsed\\\":\\\"No\\\"},\\\"eventID\\\":\\\"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\\\",\\\"eventType\\\":\\\"AwsConsoleSignIn\\\",\\\"recipientAccountId\\\":\\\"123456789012\\\"}\",\n      \"EventName\": \"ConsoleLogin\",\n      \"Resources\": []\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "cloudtrail-create-trail",
+        "summary": "cloudtrail CreateTrail",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "CreateTrail",
+        "fixture": "{\n  \"IncludeGlobalServiceEvents\": true,\n  \"Name\": \"Trail1\",\n  \"TrailARN\": \"arn:aws:cloudtrail:us-west-2:123456789012:trail/Trail1\",\n  \"LogFileValidationEnabled\": false,\n  \"IsMultiRegionTrail\": true,\n  \"S3BucketName\": \"amzn-s3-demo-bucket\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101.CreateTrail"
+        }
+      },
+      {
+        "id": "cloudtrail-describe-trails",
+        "summary": "cloudtrail DescribeTrails",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "DescribeTrails",
+        "fixture": "{\n  \"trailList\": [\n    {\n      \"IncludeGlobalServiceEvents\": true,\n      \"Name\": \"Trail1\",\n      \"TrailARN\": \"arn:aws:cloudtrail:us-west-2:123456789012:trail/Trail1\",\n      \"LogFileValidationEnabled\": false,\n      \"IsMultiRegionTrail\": false,\n      \"S3BucketName\": \"amzn-s3-demo-bucket\",\n      \"CloudWatchLogsRoleArn\": \"arn:aws:iam::123456789012:role/CloudTrail_CloudWatchLogs_Role\",\n      \"CloudWatchLogsLogGroupArn\": \"arn:aws:logs:us-west-2:123456789012:log-group:CloudTrail:*\",\n      \"SnsTopicName\": \"my-topic\",\n      \"HomeRegion\": \"us-west-2\"\n    },\n    {\n      \"IncludeGlobalServiceEvents\": true,\n      \"Name\": \"Trail2\",\n      \"S3KeyPrefix\": \"my-prefix\",\n      \"TrailARN\": \"arn:aws:cloudtrail:us-west-2:123456789012:trail/Trail2\",\n      \"LogFileValidationEnabled\": false,\n      \"IsMultiRegionTrail\": false,\n      \"S3BucketName\": \"amzn-s3-demo-bucket2\",\n      \"KmsKeyId\": \"arn:aws:kms:us-west-2:123456789012:key/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n      \"HomeRegion\": \"us-west-2\"\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101.DescribeTrails"
+        }
+      },
+      {
+        "id": "cloudtrail-update-trail",
+        "summary": "cloudtrail UpdateTrail",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "UpdateTrail",
+        "fixture": "{\n  \"IncludeGlobalServiceEvents\": true,\n  \"Name\": \"Trail1\",\n  \"TrailARN\": \"arn:aws:cloudtrail:us-west-2:123456789012:trail/Trail1\",\n  \"LogFileValidationEnabled\": false,\n  \"IsMultiRegionTrail\": true,\n  \"S3BucketName\": \"amzn-s3-demo-bucket\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101.UpdateTrail"
+        }
+      },
+      {
+        "id": "cloudtrail-get-trail-status",
+        "summary": "cloudtrail GetTrailStatus",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "GetTrailStatus",
+        "fixture": "{\n  \"LatestNotificationTime\": 1454022144.869,\n  \"LatestNotificationAttemptSucceeded\": \"2016-01-28T23:02:24Z\",\n  \"LatestDeliveryAttemptTime\": \"2016-01-28T23:02:24Z\",\n  \"LatestDeliveryTime\": 1454022144.869,\n  \"TimeLoggingStarted\": \"2015-11-06T18:36:38Z\",\n  \"LatestDeliveryAttemptSucceeded\": \"2016-01-28T23:02:24Z\",\n  \"IsLogging\": true,\n  \"LatestCloudWatchLogsDeliveryTime\": 1454022144.918,\n  \"StartLoggingTime\": 1446834998.695,\n  \"StopLoggingTime\": 1446834996.933,\n  \"LatestNotificationAttemptTime\": \"2016-01-28T23:02:24Z\",\n  \"TimeLoggingStopped\": \"2015-11-06T18:36:36Z\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101.GetTrailStatus"
         }
       }
     ],

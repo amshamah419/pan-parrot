@@ -480,6 +480,439 @@
       "sourceType": "vendor-example",
       "excerpt": "<CreateVpcEndpointResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\">\n    <requestId>bf5a49f9-4c36-41c9-a4be-13dexample</requestId>\n    <vpcEndpoint>\n        <policyDocument>{\n  \"Statement\": [\n    {\n      \"Action\": \"*\", \n      \"Effect\": \"Allow\", \n      \"Principal\": \"*\", \n      \"Resource\": \"*\"\n    }\n  ]\n}</policyDocument>\n        <routeTableIdSet/>\n        <dnsEntrySet>\n            <item>\n                <hostedZoneId>Z7HUB22UULQXV</hostedZoneId>\n                <dnsName>vpce-0324151a02f327ff5-3k8nfxtt.elasticloadbalancing.us-east-1.vpce.amazonaws.com</dnsName>\n            </item>\n            <item>\n                <hostedZoneId>Z7HUB22UULQXV</hostedZoneId>\n                <dnsName>vpce-0324151a02f327ff5-3k8nfxtt-us-east-1a.elasticloadbalancing.us-east-1.vpce.amazonaws.com</dnsName>\n            </item>\n            <item>\n                <hostedZoneId>Z2THV5YBYUN78V</hostedZoneId>\n                <dnsName>elasticloadbalancing.us-east-1.amazonaws.com</dnsName>\n            </item>\n        </dnsEntrySet>\n        <serviceName>com.amazonaws.us-east-1.elasticloadbalancing</serviceName>\n        <privateDnsEnabled>true</privateDnsEnabled>\n        <groupSet>\n            <item>\n                <groupName>default</groupName>\n                <groupId>sg-11aa22bb</groupId>\n            </item>\n        </groupSet>\n        <vpcEndpointId>vpce-0324151a02f327ff5</vpcEndpointId>\n        <subnetIdSet>\n            <item>subnet-1a2b3c4d</item>\n        </subnetIdSet>\n        <networkInterfaceIdSet>\n            <item>eni-cd1a3319</item>\n        </networkInterfaceIdSet>\n        <vpcEndpointType>Interface</vpcEndpointType>\n        <vpcId>vpc-1a2b3c4d</vpcId>\n        <creationTimestamp>2017-09-05T20:57:46.307Z</creationTimestamp>\n        <state>pending</state>\n    </vpcEndpoint>\n</CreateVpcEndpointResponse>",
       "scrubs": []
+    },
+    {
+      "operationId": "ec2-run-instances",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html",
+      "rstPath": "awscli/examples/ec2/run-instances.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Instances": [
+          {
+            "AmiLaunchIndex": 0,
+            "ImageId": "ami-0abcdef1234567890",
+            "InstanceId": "i-1231231230abcdef0",
+            "InstanceType": "t2.micro",
+            "KeyName": "MyKeyPair",
+            "LaunchTime": "2018-05-10T08:05:20.000Z",
+            "Monitoring": {
+              "State": "disabled"
+            },
+            "Placement": {
+              "AvailabilityZone": "us-west-2a",
+              "GroupName": "",
+              "Tenancy": "default"
+            },
+            "PrivateDnsName": "ip-10-0-0-157.us-west-2.compute.internal",
+            "PrivateIpAddress": "10.0.0.157",
+            "ProductCodes": [],
+            "PublicDnsName": "",
+            "State": {
+              "Code": 0,
+              "Name": "pending"
+            },
+            "StateTransitionReason": "",
+            "SubnetId": "subnet-04a636d18e83cfacb",
+            "VpcId": "vpc-1234567890abcdef0",
+            "Architecture": "x86_64",
+            "BlockDeviceMappings": [],
+            "ClientToken": "",
+            "EbsOptimized": false,
+            "Hypervisor": "xen",
+            "NetworkInterfaces": [
+              {
+                "Attachment": {
+                  "AttachTime": "2018-05-10T08:05:20.000Z",
+                  "AttachmentId": "eni-attach-0e325c07e928a0405",
+                  "DeleteOnTermination": true,
+                  "DeviceIndex": 0,
+                  "Status": "attaching"
+                },
+                "Description": "",
+                "Groups": [
+                  {
+                    "GroupName": "MySecurityGroup",
+                    "GroupId": "sg-0598c7d356eba48d7"
+                  }
+                ],
+                "Ipv6Addresses": [],
+                "MacAddress": "0a:ab:58:e0:67:e2",
+                "NetworkInterfaceId": "eni-0c0a29997760baee7",
+                "OwnerId": "123456789012",
+                "PrivateDnsName": "ip-10-0-0-157.us-west-2.compute.internal",
+                "PrivateIpAddress": "10.0.0.157",
+                "PrivateIpAddresses": [
+                  {
+                    "Primary": true,
+                    "PrivateDnsName": "ip-10-0-0-157.us-west-2.compute.internal",
+                    "PrivateIpAddress": "10.0.0.157"
+                  }
+                ],
+                "SourceDestCheck": true,
+                "Status": "in-use",
+                "SubnetId": "subnet-04a636d18e83cfacb",
+                "VpcId": "vpc-1234567890abcdef0",
+                "InterfaceType": "interface"
+              }
+            ],
+            "RootDeviceName": "/dev/xvda",
+            "RootDeviceType": "ebs",
+            "SecurityGroups": [
+              {
+                "GroupName": "MySecurityGroup",
+                "GroupId": "sg-0598c7d356eba48d7"
+              }
+            ],
+            "SourceDestCheck": true,
+            "StateReason": {
+              "Code": "pending",
+              "Message": "pending"
+            },
+            "Tags": [],
+            "VirtualizationType": "hvm",
+            "CpuOptions": {
+              "CoreCount": 1,
+              "ThreadsPerCore": 1
+            },
+            "CapacityReservationSpecification": {
+              "CapacityReservationPreference": "open"
+            },
+            "MetadataOptions": {
+              "State": "pending",
+              "HttpTokens": "optional",
+              "HttpPutResponseHopLimit": 1,
+              "HttpEndpoint": "enabled"
+            }
+          }
+        ],
+        "OwnerId": "123456789012",
+        "ReservationId": "r-02a3f596d91211712"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ec2-authorize-security-group-ingress",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html",
+      "rstPath": "awscli/examples/ec2/authorize-security-group-ingress.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Return": true,
+        "SecurityGroupRules": [
+          {
+            "SecurityGroupRuleId": "sgr-01afa97ef3e1bedfc",
+            "GroupId": "sg-1234567890abcdef0",
+            "GroupOwnerId": "123456789012",
+            "IsEgress": false,
+            "IpProtocol": "tcp",
+            "FromPort": 22,
+            "ToPort": 22,
+            "CidrIpv4": "203.0.113.0/24"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ec2-describe-reserved-instances",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-reserved-instances.html",
+      "rstPath": "awscli/examples/ec2/describe-reserved-instances.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "ReservedInstances": [
+          {
+            "ReservedInstancesId": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "OfferingType": "No Upfront",
+            "AvailabilityZone": "us-west-2c",
+            "End": "2016-08-14T21:34:34.000Z",
+            "ProductDescription": "Linux/UNIX",
+            "UsagePrice": 0.0,
+            "RecurringCharges": [
+              {
+                "Amount": 0.104,
+                "Frequency": "Hourly"
+              }
+            ],
+            "Start": "2015-08-15T21:34:35.086Z",
+            "State": "active",
+            "FixedPrice": 0.0,
+            "CurrencyCode": "USD",
+            "Duration": 31536000,
+            "InstanceTenancy": "default",
+            "InstanceType": "m3.medium",
+            "InstanceCount": 2
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ec2-create-fleet",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/create-fleet.html",
+      "rstPath": "awscli/examples/ec2/create-fleet.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "FleetId": "fleet-12a34b55-67cd-8ef9-ba9b-9208dEXAMPLE"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ec2-delete-fleets",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-fleets.html",
+      "rstPath": "awscli/examples/ec2/delete-fleets.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "SuccessfulFleetDeletions": [
+          {
+            "CurrentFleetState": "deleted_terminating",
+            "PreviousFleetState": "active",
+            "FleetId": "fleet-12a34b55-67cd-8ef9-ba9b-9208dEXAMPLE"
+          }
+        ],
+        "UnsuccessfulFleetDeletions": []
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ec2-describe-fleets",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-fleets.html",
+      "rstPath": "awscli/examples/ec2/describe-fleets.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Fleets": [
+          {
+            "ActivityStatus": "pending_fulfillment",
+            "CreateTime": "2020-09-01T18:26:05.000Z",
+            "FleetId": "fleet-12a34b55-67cd-8ef9-ba9b-9208dEXAMPLE",
+            "FleetState": "active",
+            "ExcessCapacityTerminationPolicy": "termination",
+            "FulfilledCapacity": 0.0,
+            "FulfilledOnDemandCapacity": 0.0,
+            "LaunchTemplateConfigs": [
+              {
+                "LaunchTemplateSpecification": {
+                  "LaunchTemplateId": "lt-0e632f2855a979cd5",
+                  "Version": "1"
+                }
+              }
+            ],
+            "TargetCapacitySpecification": {
+              "TotalTargetCapacity": 2,
+              "OnDemandTargetCapacity": 0,
+              "SpotTargetCapacity": 2,
+              "DefaultTargetCapacityType": "spot"
+            },
+            "TerminateInstancesWithExpiration": false,
+            "Type": "maintain",
+            "ReplaceUnhealthyInstances": false,
+            "SpotOptions": {
+              "AllocationStrategy": "lowestPrice",
+              "InstanceInterruptionBehavior": "terminate",
+              "InstancePoolsToUseCount": 1
+            },
+            "OnDemandOptions": {
+              "AllocationStrategy": "lowestPrice"
+            }
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ec2-describe-fleet-instances",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-fleet-instances.html",
+      "rstPath": "awscli/examples/ec2/describe-fleet-instances.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "ActiveInstances": [
+          {
+            "InstanceId": "i-090db02406cc3c2d6",
+            "InstanceType": "t2.small",
+            "SpotInstanceRequestId": "sir-a43gtpfk",
+            "InstanceHealth": "healthy"
+          },
+          {
+            "InstanceId": "i-083a1c446e66085d2",
+            "InstanceType": "t2.small",
+            "SpotInstanceRequestId": "sir-iwcit2nj",
+            "InstanceHealth": "healthy"
+          }
+        ],
+        "FleetId": "fleet-12a34b55-67cd-8ef9-ba9b-9208dEXAMPLE"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ec2-modify-fleet",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-fleet.html",
+      "rstPath": "awscli/examples/ec2/modify-fleet.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Return": true
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ec2-create-traffic-mirror-session",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/create-traffic-mirror-session.html",
+      "rstPath": "awscli/examples/ec2/create-traffic-mirror-session.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "TrafficMirrorSession": {
+          "TrafficMirrorSessionId": "tms-08a33b1214EXAMPLE",
+          "TrafficMirrorTargetId": "tmt-07f75d8feeEXAMPLE",
+          "TrafficMirrorFilterId": "tmf-04812ff784EXAMPLE",
+          "NetworkInterfaceId": "eni-070203f901EXAMPLE",
+          "OwnerId": "123456789012",
+          "PacketLength": 25,
+          "SessionNumber": 1,
+          "VirtualNetworkId": 7159709,
+          "Description": "example session",
+          "Tags": []
+        },
+        "ClientToken": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ec2-describe-ipam-resource-discoveries",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-ipam-resource-discoveries.html",
+      "rstPath": "awscli/examples/ec2/describe-ipam-resource-discoveries.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "IpamResourceDiscoveries": [
+          {
+            "OwnerId": "123456789012",
+            "IpamResourceDiscoveryId": "ipam-res-disco-0f8bdee9067137c0d",
+            "IpamResourceDiscoveryArn": "arn:aws:ec2::123456789012:ipam-resource-discovery/ipam-res-disco-0f8bdee9067137c0d",
+            "IpamResourceDiscoveryRegion": "us-west-2",
+            "OperatingRegions": [
+              {
+                "RegionName": "us-west-2"
+              }
+            ],
+            "IsDefault": false,
+            "State": "create-complete",
+            "Tags": []
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ec2-describe-ipam-resource-discovery-associations",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-ipam-resource-discovery-associations.html",
+      "rstPath": "awscli/examples/ec2/describe-ipam-resource-discovery-associations.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "IpamResourceDiscoveryAssociations": [
+          {
+            "OwnerId": "123456789111",
+            "IpamResourceDiscoveryAssociationId": "ipam-res-disco-assoc-05e6b45eca5bf5cf7",
+            "IpamResourceDiscoveryAssociationArn": "arn:aws:ec2::123456789111:ipam-resource-discovery-association/ipam-res-disco-assoc-05e6b45eca5bf5cf7",
+            "IpamResourceDiscoveryId": "ipam-res-disco-0f4ef577a9f37a162",
+            "IpamId": "ipam-005f921c17ebd5107",
+            "IpamArn": "arn:aws:ec2::123456789111:ipam/ipam-005f921c17ebd5107",
+            "IpamRegion": "us-west-2",
+            "IsDefault": true,
+            "ResourceDiscoveryStatus": "active",
+            "State": "associate-complete",
+            "Tags": []
+          },
+          {
+            "OwnerId": "123456789222",
+            "IpamResourceDiscoveryAssociationId": "ipam-res-disco-assoc-0dfd21ae189ab5f62",
+            "IpamResourceDiscoveryAssociationArn": "arn:aws:ec2::123456789222:ipam-resource-discovery-association/ipam-res-disco-assoc-0dfd21ae189ab5f62",
+            "IpamResourceDiscoveryId": "ipam-res-disco-0365d2977fc1672fe",
+            "IpamId": "ipam-005f921c17ebd5107",
+            "IpamArn": "arn:aws:ec2::123456789222:ipam/ipam-005f921c17ebd5107",
+            "IpamRegion": "us-west-2",
+            "IsDefault": false,
+            "ResourceDiscoveryStatus": "active",
+            "State": "create-complete",
+            "Tags": []
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ec2-get-ipam-discovered-public-addresses",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/get-ipam-discovered-public-addresses.html",
+      "rstPath": "awscli/examples/ec2/get-ipam-discovered-public-addresses.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "IpamDiscoveredPublicAddresses": [
+          {
+            "IpamResourceDiscoveryId": "ipam-res-disco-0f4ef577a9f37a162",
+            "AddressRegion": "us-west-2",
+            "Address": "54.208.155.7",
+            "AddressOwnerId": "123456789012",
+            "AssociationStatus": "associated",
+            "AddressType": "ec2-public-ip",
+            "VpcId": "vpc-073b294916198ce49",
+            "SubnetId": "subnet-0b6c8a8839e9a4f15",
+            "NetworkInterfaceId": "eni-081c446b5284a5e06",
+            "NetworkInterfaceDescription": "",
+            "InstanceId": "i-07459a6fca5b35823",
+            "Tags": {},
+            "NetworkBorderGroup": "us-west-2c",
+            "SecurityGroups": [
+              {
+                "GroupName": "launch-wizard-2",
+                "GroupId": "sg-0a489dd6a65c244ce"
+              }
+            ],
+            "SampleTime": "2024-04-05T15:13:59.228000+00:00"
+          },
+          {
+            "IpamResourceDiscoveryId": "ipam-res-disco-0f4ef577a9f37a162",
+            "AddressRegion": "us-west-2",
+            "Address": "44.201.251.218",
+            "AddressOwnerId": "123456789111",
+            "AssociationStatus": "associated",
+            "AddressType": "ec2-public-ip",
+            "VpcId": "vpc-6c31a611",
+            "SubnetId": "subnet-062f47608b99834b1",
+            "NetworkInterfaceId": "eni-024845359c2c3ae9b",
+            "NetworkInterfaceDescription": "",
+            "InstanceId": "i-04ef786d9c4e03f41",
+            "Tags": {},
+            "NetworkBorderGroup": "us-west-2a",
+            "SecurityGroups": [
+              {
+                "GroupName": "launch-wizard-32",
+                "GroupId": "sg-0ed1a426e96a68374"
+              }
+            ],
+            "SampleTime": "2024-04-05T15:13:59.145000+00:00"
+          }
+        ]
+      },
+      "scrubs": []
     }
   ]
 }

@@ -3,9 +3,9 @@
   "name": "AWS - Security Hub",
   "pack": "AWS-SecurityHub",
   "vendor": "Amazon Web Services",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "GetFindings on POST /, selected by X-Amz-Target.",
+  "summary": "From vendor docs. GetFindings on POST /, selected by X-Amz-Target.",
   "notes": [
     "The XSOAR pack uses boto3. GetFindings is POST / with X-Amz-Target SecurityHub_2018-10-26.GetFindings and a Findings array.",
     "Finding objects keep Id, ProductArn, Title, Severity.Label, and UpdatedAt. Resources and compliance are omitted.",
@@ -19,18 +19,16 @@
       "kind": "preset",
       "id": "aws-securityhub-aws-securityhub",
       "name": "AWS - Security Hub",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_GetFindings.html",
       "notes": [],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_GetFindings.html",
-        "checkedAt": "2026-11-09",
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/batch-update-findings.html",
+        "checkedAt": "2026-11-10",
         "differences": [
-          "The XSOAR pack uses boto3. GetFindings is POST / with X-Amz-Target SecurityHub_2018-10-26.GetFindings and a Findings array.",
-          "Finding objects keep Id, ProductArn, Title, Severity.Label, and UpdatedAt. Resources and compliance are omitted.",
-          "SigV4 is not checked. BatchUpdateFindings is not modeled."
+          "5 of 9 commands from vendor docs, 0 approximate, 4 missing."
         ]
       },
       "commandDocs": [
@@ -46,7 +44,11 @@
           "calls": [
             "securityhub:BatchUpdateFindings"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "securityhub-batch-update-findings"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/batch-update-findings.html"
         },
         {
           "command": "aws-securityhub-enable-security-hub",
@@ -60,24 +62,33 @@
           "calls": [
             "securityhub:GetFindings"
           ],
-          "status": "approximate",
+          "status": "vendor",
           "operationIds": [
             "get-findings"
-          ]
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/get-findings.html"
         },
         {
           "command": "aws-securityhub-get-master-account",
           "calls": [
             "securityhub:GetMasterAccount"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "securityhub-get-master-account"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/get-master-account.html"
         },
         {
           "command": "aws-securityhub-list-members",
           "calls": [
             "securityhub:ListMembers"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "securityhub-list-members"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/list-members.html"
         },
         {
           "command": "aws-securityhub-update-findings",
@@ -91,10 +102,11 @@
           "calls": [
             "securityhub:GetFindings"
           ],
-          "status": "approximate",
+          "status": "vendor",
           "operationIds": [
             "get-findings"
-          ]
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/get-findings.html"
         },
         {
           "command": "get-mapping-fields",
@@ -106,9 +118,9 @@
     "operations": [
       {
         "headers": {},
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "pagination": {
-          "style": "cursor",
+          "style": "none",
           "limitParam": "MaxResults",
           "offsetParam": "offset",
           "pageParam": "page",
@@ -118,7 +130,7 @@
         },
         "id": "get-findings",
         "method": "POST",
-        "pathTemplate": "/",
+        "pathTemplate": "/findings",
         "summary": "Get findings",
         "status": 200,
         "list": true,
@@ -169,7 +181,99 @@
         },
         "headerMatch": {
           "x-amz-target": "SecurityHub_2018-10-26.GetFindings"
-        }
+        },
+        "awsAction": "GetFindings",
+        "fixture": "{\n  \"Findings\": [\n    {\n      \"SchemaVersion\": \"2018-10-08\",\n      \"Id\": \"arn:aws:securityhub:us-west-2:123456789012:subscription/pci-dss/v/3.2.1/PCI.Lambda.2/finding/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n      \"ProductArn\": \"arn:aws:securityhub:us-west-2::product/aws/securityhub\",\n      \"GeneratorId\": \"pci-dss/v/3.2.1/PCI.Lambda.2\",\n      \"AwsAccountId\": \"123456789012\",\n      \"Types\": [\n        \"Software and Configuration Checks/Industry and Regulatory Standards/PCI-DSS\"\n      ],\n      \"FindingProviderFields\": {\n        \"Severity\": {\n          \"Original\": \"0\",\n          \"Label\": \"INFORMATIONAL\"\n        },\n        \"Types\": [\n          \"Software and Configuration Checks/Industry and Regulatory Standards/PCI-DSS\"\n        ]\n      },\n      \"FirstObservedAt\": \"2020-06-02T14:02:49.159Z\",\n      \"LastObservedAt\": \"2020-06-02T14:02:52.397Z\",\n      \"CreatedAt\": \"2020-06-02T14:02:49.159Z\",\n      \"UpdatedAt\": \"2020-06-02T14:02:52.397Z\",\n      \"Severity\": {\n        \"Original\": \"0\",\n        \"Label\": \"INFORMATIONAL\",\n        \"Normalized\": 0\n      },\n      \"Title\": \"PCI.Lambda.2 Lambda functions should be in a VPC\",\n      \"Description\": \"This AWS control checks whether a Lambda function is in a VPC.\",\n      \"Remediation\": {\n        \"Recommendation\": {\n          \"Text\": \"For directions on how to fix this issue, please consult the AWS Security Hub PCI DSS documentation.\",\n          \"Url\": \"https://docs.aws.amazon.com/console/securityhub/PCI.Lambda.2/remediation\"\n        }\n      },\n      \"ProductFields\": {\n        \"StandardsArn\": \"arn:aws:securityhub:::standards/pci-dss/v/3.2.1\",\n        \"StandardsSubscriptionArn\": \"arn:aws:securityhub:us-west-2:123456789012:subscription/pci-dss/v/3.2.1\",\n        \"ControlId\": \"PCI.Lambda.2\",\n        \"RecommendationUrl\": \"https://docs.aws.amazon.com/console/securityhub/PCI.Lambda.2/remediation\",\n        \"RelatedAWSResources:0/name\": \"securityhub-lambda-inside-vpc-0e904a3b\",\n        \"RelatedAWSResources:0/type\": \"AWS::Config::ConfigRule\",\n        \"StandardsControlArn\": \"arn:aws:securityhub:us-west-2:123456789012:control/pci-dss/v/3.2.1/PCI.Lambda.2\",\n        \"aws/securityhub/SeverityLabel\": \"INFORMATIONAL\",\n        \"aws/securityhub/ProductName\": \"Security Hub\",\n        \"aws/securityhub/CompanyName\": \"AWS\",\n        \"aws/securityhub/FindingId\": \"arn:aws:securityhub:us-west-2::product/aws/securityhub/arn:aws:securityhub:us-west-2:123456789012:subscription/pci-dss/v/3.2.1/PCI.Lambda.2/finding/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n      },\n      \"Resources\": [\n        {\n          \"Type\": \"AwsAccount\",\n          \"Id\": \"AWS::::Account:123456789012\",\n          \"Partition\": \"aws\",\n          \"Region\": \"us-west-2\"\n        }\n      ],\n      \"Compliance\": {\n        \"Status\": \"PASSED\",\n        \"RelatedRequirements\": [\n          \"PCI DSS 1.2.1\",\n          \"PCI DSS 1.3.1\",\n          \"PCI DSS 1.3.2\",\n          \"PCI DSS 1.3.4\"\n        ]\n      },\n      \"WorkflowState\": \"NEW\",\n      \"Workflow\": {\n        \"Status\": \"NEW\"\n      },\n      \"RecordState\": \"ARCHIVED\"\n    }\n  ],\n  \"NextToken\": \"eyJOZXh0VG9rZW4iOiBudWxsLCAiYm90b190cnVuY2F0ZV9hbW91bnQiOiAxfQ==\"\n}\n"
+      },
+      {
+        "id": "securityhub-batch-update-findings",
+        "summary": "securityhub BatchUpdateFindings",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "PATCH",
+        "pathTemplate": "/findings/batchupdate",
+        "contentType": "application/json",
+        "awsAction": "BatchUpdateFindings",
+        "fixture": "{\n  \"ProcessedFindings\": [\n    {\n      \"Id\": \"arn:aws:securityhub:us-west-2:123456789012:subscription/pci-dss/v/3.2.1/PCI.Lambda.2/finding/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n      \"ProductArn\": \"arn:aws:securityhub:us-west-2::product/aws/securityhub\"\n    },\n    {\n      \"Id\": \"arn:aws:securityhub:us-west-2:123456789012:subscription/pci-dss/v/3.2.1/PCI.Lambda.2/finding/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n      \"ProductArn\": \"arn:aws:securityhub:us-west-2::product/aws/securityhub\"\n    }\n  ],\n  \"UnprocessedFindings\": []\n}\n"
+      },
+      {
+        "id": "securityhub-get-master-account",
+        "summary": "securityhub GetMasterAccount",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/master",
+        "contentType": "application/json",
+        "awsAction": "GetMasterAccount",
+        "fixture": "{\n  \"Master\": {\n    \"AccountId\": \"123456789012\",\n    \"InvitationId\": \"7ab938c5d52d7904ad09f9e7c20cc4eb\",\n    \"InvitedAt\": \"2020-06-01T20:21:18.042000+00:00\",\n    \"MemberStatus\": \"ASSOCIATED\"\n  }\n}\n"
+      },
+      {
+        "id": "securityhub-list-members",
+        "summary": "securityhub ListMembers",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/members",
+        "contentType": "application/json",
+        "awsAction": "ListMembers",
+        "fixture": "{\n  \"Members\": [\n    {\n      \"AccountId\": \"123456789111\",\n      \"AdministratorId\": \"123456789012\",\n      \"InvitedAt\": \"2020-06-01T20:15:15.289000+00:00\",\n      \"MasterId\": \"123456789012\",\n      \"MemberStatus\": \"ASSOCIATED\",\n      \"UpdatedAt\": \"2020-06-01T20:15:15.289000+00:00\"\n    },\n    {\n      \"AccountId\": \"123456789222\",\n      \"AdministratorId\": \"123456789012\",\n      \"InvitedAt\": \"2020-06-01T20:15:15.289000+00:00\",\n      \"MasterId\": \"123456789012\",\n      \"MemberStatus\": \"ASSOCIATED\",\n      \"UpdatedAt\": \"2020-06-01T20:15:15.289000+00:00\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

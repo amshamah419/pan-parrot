@@ -37,7 +37,11 @@
           "calls": [
             "sns:ListTopics"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "aws-sns-list-topics"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/sns/list-topics.html"
         },
         {
           "command": "aws-sns-send-message",
@@ -89,7 +93,7 @@
         "docUrl": "https://docs.aws.amazon.com/sns/latest/api/API_Subscribe.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "5 of 6 commands from vendor docs, 0 approximate, 1 missing."
+          "6 of 6 commands from vendor docs, 0 approximate, 0 missing."
         ]
       }
     },
@@ -158,11 +162,11 @@
       },
       {
         "id": "aws-sns-list-topics",
-        "method": "GET",
+        "method": "POST",
         "pathTemplate": "/",
         "summary": "Returns a list of the requester's topics.",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "headers": {},
         "list": false,
         "envelope": {
@@ -211,6 +215,11 @@
               ]
             }
           ]
+        },
+        "awsAction": "ListTopics",
+        "fixture": "{\n  \"Topics\": [\n    {\n      \"TopicArn\": \"arn:aws:sns:us-west-2:123456789012:my-topic\"\n    }\n  ]\n}\n",
+        "queryMatch": {
+          "Action": "ListTopics"
         }
       },
       {

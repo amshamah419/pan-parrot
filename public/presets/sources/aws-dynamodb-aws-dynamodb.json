@@ -333,6 +333,693 @@
         }
       },
       "scrubs": []
+    },
+    {
+      "operationId": "aws-dynamodb-batch-write-item",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/batch-write-item.html",
+      "rstPath": "awscli/examples/dynamodb/batch-write-item.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "UnprocessedItems": {},
+        "ItemCollectionMetrics": {
+          "MusicCollection": [
+            {
+              "ItemCollectionKey": {
+                "Artist": {
+                  "S": "No One You Know"
+                }
+              },
+              "SizeEstimateRangeGB": [
+                0.0,
+                1.0
+              ]
+            },
+            {
+              "ItemCollectionKey": {
+                "Artist": {
+                  "S": "Acme Band"
+                }
+              },
+              "SizeEstimateRangeGB": [
+                0.0,
+                1.0
+              ]
+            }
+          ]
+        },
+        "ConsumedCapacity": [
+          {
+            "TableName": "MusicCollection",
+            "CapacityUnits": 6.0,
+            "Table": {
+              "CapacityUnits": 3.0
+            },
+            "LocalSecondaryIndexes": {
+              "AlbumTitleIndex": {
+                "CapacityUnits": 3.0
+              }
+            }
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "aws-dynamodb-create-backup",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/create-backup.html",
+      "rstPath": "awscli/examples/dynamodb/create-backup.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "BackupDetails": {
+          "BackupArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection/backup/01576616366715-b4e58d3a",
+          "BackupName": "MusicCollectionBackup",
+          "BackupSizeBytes": 0,
+          "BackupStatus": "CREATING",
+          "BackupType": "USER",
+          "BackupCreationDateTime": 1576616366.715
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "aws-dynamodb-create-global-table",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/create-global-table.html",
+      "rstPath": "awscli/examples/dynamodb/create-global-table.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "GlobalTableDescription": {
+          "ReplicationGroup": [
+            {
+              "RegionName": "us-east-2"
+            },
+            {
+              "RegionName": "us-east-1"
+            }
+          ],
+          "GlobalTableArn": "arn:aws:dynamodb::123456789012:global-table/MusicCollection",
+          "CreationDateTime": 1576625818.532,
+          "GlobalTableStatus": "CREATING",
+          "GlobalTableName": "MusicCollection"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "aws-dynamodb-delete-backup",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/delete-backup.html",
+      "rstPath": "awscli/examples/dynamodb/delete-backup.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "BackupDescription": {
+          "BackupDetails": {
+            "BackupArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection/backup/01576616366715-b4e58d3a",
+            "BackupName": "MusicCollectionBackup",
+            "BackupSizeBytes": 0,
+            "BackupStatus": "DELETED",
+            "BackupType": "USER",
+            "BackupCreationDateTime": 1576616366.715
+          },
+          "SourceTableDetails": {
+            "TableName": "MusicCollection",
+            "TableId": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "TableArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection",
+            "TableSizeBytes": 0,
+            "KeySchema": [
+              {
+                "AttributeName": "Artist",
+                "KeyType": "HASH"
+              },
+              {
+                "AttributeName": "SongTitle",
+                "KeyType": "RANGE"
+              }
+            ],
+            "TableCreationDateTime": 1576615228.571,
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": 5,
+              "WriteCapacityUnits": 5
+            },
+            "ItemCount": 0,
+            "BillingMode": "PROVISIONED"
+          },
+          "SourceTableFeatureDetails": {}
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-describe-backup",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/describe-backup.html",
+      "rstPath": "awscli/examples/dynamodb/describe-backup.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "BackupDescription": {
+          "BackupDetails": {
+            "BackupArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection/backup/01576616366715-b4e58d3a",
+            "BackupName": "MusicCollectionBackup",
+            "BackupSizeBytes": 0,
+            "BackupStatus": "AVAILABLE",
+            "BackupType": "USER",
+            "BackupCreationDateTime": 1576616366.715
+          },
+          "SourceTableDetails": {
+            "TableName": "MusicCollection",
+            "TableId": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "TableArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection",
+            "TableSizeBytes": 0,
+            "KeySchema": [
+              {
+                "AttributeName": "Artist",
+                "KeyType": "HASH"
+              },
+              {
+                "AttributeName": "SongTitle",
+                "KeyType": "RANGE"
+              }
+            ],
+            "TableCreationDateTime": 1576615228.571,
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": 5,
+              "WriteCapacityUnits": 5
+            },
+            "ItemCount": 0,
+            "BillingMode": "PROVISIONED"
+          },
+          "SourceTableFeatureDetails": {}
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-describe-continuous-backups",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/describe-continuous-backups.html",
+      "rstPath": "awscli/examples/dynamodb/describe-continuous-backups.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "ContinuousBackupsDescription": {
+          "ContinuousBackupsStatus": "ENABLED",
+          "PointInTimeRecoveryDescription": {
+            "PointInTimeRecoveryStatus": "DISABLED"
+          }
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-describe-endpoints",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/describe-endpoints.html",
+      "rstPath": "awscli/examples/dynamodb/describe-endpoints.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Endpoints": [
+          {
+            "Address": "dynamodb.us-west-2.amazonaws.com",
+            "CachePeriodInMinutes": 1440
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-describe-global-table",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/describe-global-table.html",
+      "rstPath": "awscli/examples/dynamodb/describe-global-table.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "GlobalTableDescription": {
+          "ReplicationGroup": [
+            {
+              "RegionName": "us-east-2"
+            },
+            {
+              "RegionName": "us-east-1"
+            }
+          ],
+          "GlobalTableArn": "arn:aws:dynamodb::123456789012:global-table/MusicCollection",
+          "CreationDateTime": 1576625818.532,
+          "GlobalTableStatus": "ACTIVE",
+          "GlobalTableName": "MusicCollection"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-describe-global-table-settings",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/describe-global-table-settings.html",
+      "rstPath": "awscli/examples/dynamodb/describe-global-table-settings.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "GlobalTableName": "MusicCollection",
+        "ReplicaSettings": [
+          {
+            "RegionName": "us-east-1",
+            "ReplicaStatus": "ACTIVE",
+            "ReplicaProvisionedReadCapacityUnits": 10,
+            "ReplicaProvisionedReadCapacityAutoScalingSettings": {
+              "AutoScalingDisabled": true
+            },
+            "ReplicaProvisionedWriteCapacityUnits": 5,
+            "ReplicaProvisionedWriteCapacityAutoScalingSettings": {
+              "AutoScalingDisabled": true
+            }
+          },
+          {
+            "RegionName": "us-east-2",
+            "ReplicaStatus": "ACTIVE",
+            "ReplicaProvisionedReadCapacityUnits": 10,
+            "ReplicaProvisionedReadCapacityAutoScalingSettings": {
+              "AutoScalingDisabled": true
+            },
+            "ReplicaProvisionedWriteCapacityUnits": 5,
+            "ReplicaProvisionedWriteCapacityAutoScalingSettings": {
+              "AutoScalingDisabled": true
+            }
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-describe-time-to-live",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/describe-time-to-live.html",
+      "rstPath": "awscli/examples/dynamodb/describe-time-to-live.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "TimeToLiveDescription": {
+          "TimeToLiveStatus": "ENABLED",
+          "AttributeName": "ttl"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-list-backups",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/list-backups.html",
+      "rstPath": "awscli/examples/dynamodb/list-backups.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "BackupSummaries": [
+          {
+            "TableName": "MusicCollection",
+            "TableId": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "TableArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection",
+            "BackupArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection/backup/01234567890123-a1bcd234",
+            "BackupName": "MusicCollectionBackup1",
+            "BackupCreationDateTime": "2020-02-12T14:41:51.617000-08:00",
+            "BackupStatus": "AVAILABLE",
+            "BackupType": "USER",
+            "BackupSizeBytes": 170
+          },
+          {
+            "TableName": "MusicCollection",
+            "TableId": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "TableArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection",
+            "BackupArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection/backup/01234567890123-b2abc345",
+            "BackupName": "MusicCollectionBackup2",
+            "BackupCreationDateTime": "2020-06-26T11:08:35.431000-07:00",
+            "BackupStatus": "AVAILABLE",
+            "BackupType": "USER",
+            "BackupSizeBytes": 400
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-list-global-tables",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/list-global-tables.html",
+      "rstPath": "awscli/examples/dynamodb/list-global-tables.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "GlobalTables": [
+          {
+            "GlobalTableName": "MusicCollection",
+            "ReplicationGroup": [
+              {
+                "RegionName": "us-east-2"
+              },
+              {
+                "RegionName": "us-east-1"
+              }
+            ]
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-list-tags-of-resource",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/list-tags-of-resource.html",
+      "rstPath": "awscli/examples/dynamodb/list-tags-of-resource.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Tags": [
+          {
+            "Key": "Owner",
+            "Value": "blueTeam"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Production"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-restore-table-from-backup",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/restore-table-from-backup.html",
+      "rstPath": "awscli/examples/dynamodb/restore-table-from-backup.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "TableDescription": {
+          "AttributeDefinitions": [
+            {
+              "AttributeName": "Artist",
+              "AttributeType": "S"
+            },
+            {
+              "AttributeName": "SongTitle",
+              "AttributeType": "S"
+            }
+          ],
+          "TableName": "MusicCollection2",
+          "KeySchema": [
+            {
+              "AttributeName": "Artist",
+              "KeyType": "HASH"
+            },
+            {
+              "AttributeName": "SongTitle",
+              "KeyType": "RANGE"
+            }
+          ],
+          "TableStatus": "CREATING",
+          "CreationDateTime": 1576618274.326,
+          "ProvisionedThroughput": {
+            "NumberOfDecreasesToday": 0,
+            "ReadCapacityUnits": 5,
+            "WriteCapacityUnits": 5
+          },
+          "TableSizeBytes": 0,
+          "ItemCount": 0,
+          "TableArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection2",
+          "TableId": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "BillingModeSummary": {
+            "BillingMode": "PROVISIONED"
+          },
+          "RestoreSummary": {
+            "SourceBackupArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection/backup/01576616366715-b4e58d3a",
+            "SourceTableArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection",
+            "RestoreDateTime": 1576616366.715,
+            "RestoreInProgress": true
+          }
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-restore-table-to-point-in-time",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/restore-table-to-point-in-time.html",
+      "rstPath": "awscli/examples/dynamodb/restore-table-to-point-in-time.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "TableDescription": {
+          "AttributeDefinitions": [
+            {
+              "AttributeName": "Artist",
+              "AttributeType": "S"
+            },
+            {
+              "AttributeName": "SongTitle",
+              "AttributeType": "S"
+            }
+          ],
+          "TableName": "MusicCollectionRestore",
+          "KeySchema": [
+            {
+              "AttributeName": "Artist",
+              "KeyType": "HASH"
+            },
+            {
+              "AttributeName": "SongTitle",
+              "KeyType": "RANGE"
+            }
+          ],
+          "TableStatus": "CREATING",
+          "CreationDateTime": 1576623311.86,
+          "ProvisionedThroughput": {
+            "NumberOfDecreasesToday": 0,
+            "ReadCapacityUnits": 5,
+            "WriteCapacityUnits": 5
+          },
+          "TableSizeBytes": 0,
+          "ItemCount": 0,
+          "TableArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollectionRestore",
+          "TableId": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "BillingModeSummary": {
+            "BillingMode": "PROVISIONED"
+          },
+          "RestoreSummary": {
+            "SourceTableArn": "arn:aws:dynamodb:us-west-2:123456789012:table/MusicCollection",
+            "RestoreDateTime": 1576622404.0,
+            "RestoreInProgress": true
+          }
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-transact-get-items",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/transact-get-items.html",
+      "rstPath": "awscli/examples/dynamodb/transact-get-items.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "ConsumedCapacity": [
+          {
+            "TableName": "MusicCollection",
+            "CapacityUnits": 4.0,
+            "ReadCapacityUnits": 4.0
+          }
+        ],
+        "Responses": [
+          {
+            "Item": {
+              "AlbumTitle": {
+                "S": "Songs About Life"
+              },
+              "Artist": {
+                "S": "Acme Band"
+              },
+              "SongTitle": {
+                "S": "Happy Day"
+              }
+            }
+          },
+          {
+            "Item": {
+              "AlbumTitle": {
+                "S": "Somewhat Famous"
+              },
+              "Artist": {
+                "S": "No One You Know"
+              },
+              "SongTitle": {
+                "S": "Call Me Today"
+              }
+            }
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-transact-write-items",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/transact-write-items.html",
+      "rstPath": "awscli/examples/dynamodb/transact-write-items.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "ConsumedCapacity": [
+          {
+            "TableName": "MusicCollection",
+            "CapacityUnits": 10.0,
+            "WriteCapacityUnits": 10.0
+          }
+        ],
+        "ItemCollectionMetrics": {
+          "MusicCollection": [
+            {
+              "ItemCollectionKey": {
+                "Artist": {
+                  "S": "No One You Know"
+                }
+              },
+              "SizeEstimateRangeGB": [
+                0.0,
+                1.0
+              ]
+            },
+            {
+              "ItemCollectionKey": {
+                "Artist": {
+                  "S": "Acme Band"
+                }
+              },
+              "SizeEstimateRangeGB": [
+                0.0,
+                1.0
+              ]
+            }
+          ]
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-update-continuous-backups",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/update-continuous-backups.html",
+      "rstPath": "awscli/examples/dynamodb/update-continuous-backups.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "ContinuousBackupsDescription": {
+          "ContinuousBackupsStatus": "ENABLED",
+          "PointInTimeRecoveryDescription": {
+            "PointInTimeRecoveryStatus": "ENABLED",
+            "EarliestRestorableDateTime": 1576622404.0,
+            "LatestRestorableDateTime": 1576622404.0
+          }
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-update-global-table",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/update-global-table.html",
+      "rstPath": "awscli/examples/dynamodb/update-global-table.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "GlobalTableDescription": {
+          "ReplicationGroup": [
+            {
+              "RegionName": "eu-west-1"
+            },
+            {
+              "RegionName": "us-east-2"
+            },
+            {
+              "RegionName": "us-east-1"
+            }
+          ],
+          "GlobalTableArn": "arn:aws:dynamodb::123456789012:global-table/MusicCollection",
+          "CreationDateTime": 1576625818.532,
+          "GlobalTableStatus": "ACTIVE",
+          "GlobalTableName": "MusicCollection"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-update-global-table-settings",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/update-global-table-settings.html",
+      "rstPath": "awscli/examples/dynamodb/update-global-table-settings.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "GlobalTableName": "MusicCollection",
+        "ReplicaSettings": [
+          {
+            "RegionName": "eu-west-1",
+            "ReplicaStatus": "UPDATING",
+            "ReplicaProvisionedReadCapacityUnits": 10,
+            "ReplicaProvisionedReadCapacityAutoScalingSettings": {
+              "AutoScalingDisabled": true
+            },
+            "ReplicaProvisionedWriteCapacityUnits": 10,
+            "ReplicaProvisionedWriteCapacityAutoScalingSettings": {
+              "AutoScalingDisabled": true
+            }
+          },
+          {
+            "RegionName": "us-east-1",
+            "ReplicaStatus": "UPDATING",
+            "ReplicaProvisionedReadCapacityUnits": 10,
+            "ReplicaProvisionedReadCapacityAutoScalingSettings": {
+              "AutoScalingDisabled": true
+            },
+            "ReplicaProvisionedWriteCapacityUnits": 10,
+            "ReplicaProvisionedWriteCapacityAutoScalingSettings": {
+              "AutoScalingDisabled": true
+            }
+          },
+          {
+            "RegionName": "us-east-2",
+            "ReplicaStatus": "UPDATING",
+            "ReplicaProvisionedReadCapacityUnits": 10,
+            "ReplicaProvisionedReadCapacityAutoScalingSettings": {
+              "AutoScalingDisabled": true
+            },
+            "ReplicaProvisionedWriteCapacityUnits": 10,
+            "ReplicaProvisionedWriteCapacityAutoScalingSettings": {
+              "AutoScalingDisabled": true
+            }
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "dynamodb-update-time-to-live",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/dynamodb/update-time-to-live.html",
+      "rstPath": "awscli/examples/dynamodb/update-time-to-live.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "TimeToLiveSpecification": {
+          "Enabled": true,
+          "AttributeName": "ttl"
+        }
+      },
+      "scrubs": []
     }
   ]
 }

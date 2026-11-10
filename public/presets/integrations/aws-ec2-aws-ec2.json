@@ -32,10 +32,7 @@
         "docUrl": "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "53 of 75 commands from vendor docs, 0 approximate, 22 missing.",
-          "boto3 DescribeInstances is the EC2 query protocol. POST / matches Action=DescribeInstances from the form body or the query string and returns DescribeInstancesResponse XML in the namespace http://ec2.amazonaws.com/doc/2016-11-15/.",
-          "reservationSet/item/instancesSet/item includes instanceId, imageId, instanceType, instanceState, launchTime, and placement. requestId is a sibling. MaxResults pages the catalog. The next page token is nextToken and is sent back as NextToken.",
-          "Network interfaces, tags, and block devices are omitted. The token is pp_ plus a base36 index, which boto3 sends back unchanged. Version is not checked. SigV4 is not checked."
+          "65 of 75 commands from vendor docs, 0 approximate, 10 missing."
         ]
       },
       "commandDocs": [
@@ -355,7 +352,11 @@
           "calls": [
             "ec2:RunInstances"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "ec2-run-instances"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html"
         },
         {
           "command": "aws-ec2-waiter-instance-running",
@@ -425,7 +426,11 @@
           "calls": [
             "ec2:AuthorizeSecurityGroupIngress"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "ec2-authorize-security-group-ingress"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html"
         },
         {
           "command": "aws-ec2-authorize-security-group-egress-rule",
@@ -476,7 +481,11 @@
           "calls": [
             "ec2:DescribeReservedInstances"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "ec2-describe-reserved-instances"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-reserved-instances.html"
         },
         {
           "command": "aws-ec2-monitor-instances",
@@ -567,35 +576,55 @@
           "calls": [
             "ec2:CreateFleet"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "ec2-create-fleet"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/create-fleet.html"
         },
         {
           "command": "aws-ec2-delete-fleet",
           "calls": [
             "ec2:DeleteFleets"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "ec2-delete-fleets"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-fleets.html"
         },
         {
           "command": "aws-ec2-describe-fleets",
           "calls": [
             "ec2:DescribeFleets"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "ec2-describe-fleets"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-fleets.html"
         },
         {
           "command": "aws-ec2-describe-fleet-instances",
           "calls": [
             "ec2:DescribeFleetInstances"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "ec2-describe-fleet-instances"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-fleet-instances.html"
         },
         {
           "command": "aws-ec2-modify-fleet",
           "calls": [
             "ec2:ModifyFleet"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "ec2-modify-fleet"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-fleet.html"
         },
         {
           "command": "aws-ec2-create-launch-template",
@@ -690,7 +719,11 @@
           "calls": [
             "ec2:CreateTrafficMirrorSession"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "ec2-create-traffic-mirror-session"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/create-traffic-mirror-session.html"
         },
         {
           "command": "aws-ec2-revoke-security-group-egress-rule",
@@ -737,21 +770,33 @@
           "calls": [
             "ec2:DescribeIpamResourceDiscoveries"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "ec2-describe-ipam-resource-discoveries"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-ipam-resource-discoveries.html"
         },
         {
           "command": "aws-ec2-describe-ipam-resource-discovery-associations",
           "calls": [
             "ec2:DescribeIpamResourceDiscoveryAssociations"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "ec2-describe-ipam-resource-discovery-associations"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-ipam-resource-discovery-associations.html"
         },
         {
           "command": "aws-ec2-get-ipam-discovered-public-addresses",
           "calls": [
             "ec2:GetIpamDiscoveredPublicAddresses"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "ec2-get-ipam-discovered-public-addresses"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/ec2/get-ipam-discovered-public-addresses.html"
         },
         {
           "command": "aws-ec2-create-vpc-endpoint",
@@ -2553,6 +2598,402 @@
         "fixture": "<CreateVpcEndpointResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\">\n    <requestId>bf5a49f9-4c36-41c9-a4be-13dexample</requestId>\n    <vpcEndpoint>\n        <policyDocument>{\n  \"Statement\": [\n    {\n      \"Action\": \"*\", \n      \"Effect\": \"Allow\", \n      \"Principal\": \"*\", \n      \"Resource\": \"*\"\n    }\n  ]\n}</policyDocument>\n        <routeTableIdSet/>\n        <dnsEntrySet>\n            <item>\n                <hostedZoneId>Z7HUB22UULQXV</hostedZoneId>\n                <dnsName>vpce-0324151a02f327ff5-3k8nfxtt.elasticloadbalancing.us-east-1.vpce.amazonaws.com</dnsName>\n            </item>\n            <item>\n                <hostedZoneId>Z7HUB22UULQXV</hostedZoneId>\n                <dnsName>vpce-0324151a02f327ff5-3k8nfxtt-us-east-1a.elasticloadbalancing.us-east-1.vpce.amazonaws.com</dnsName>\n            </item>\n            <item>\n                <hostedZoneId>Z2THV5YBYUN78V</hostedZoneId>\n                <dnsName>elasticloadbalancing.us-east-1.amazonaws.com</dnsName>\n            </item>\n        </dnsEntrySet>\n        <serviceName>com.amazonaws.us-east-1.elasticloadbalancing</serviceName>\n        <privateDnsEnabled>true</privateDnsEnabled>\n        <groupSet>\n            <item>\n                <groupName>default</groupName>\n                <groupId>sg-11aa22bb</groupId>\n            </item>\n        </groupSet>\n        <vpcEndpointId>vpce-0324151a02f327ff5</vpcEndpointId>\n        <subnetIdSet>\n            <item>subnet-1a2b3c4d</item>\n        </subnetIdSet>\n        <networkInterfaceIdSet>\n            <item>eni-cd1a3319</item>\n        </networkInterfaceIdSet>\n        <vpcEndpointType>Interface</vpcEndpointType>\n        <vpcId>vpc-1a2b3c4d</vpcId>\n        <creationTimestamp>2017-09-05T20:57:46.307Z</creationTimestamp>\n        <state>pending</state>\n    </vpcEndpoint>\n</CreateVpcEndpointResponse>",
         "queryMatch": {
           "Action": "CreateVpcEndpoint"
+        }
+      },
+      {
+        "id": "ec2-run-instances",
+        "summary": "ec2 RunInstances",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "RunInstances",
+        "fixture": "{\n  \"Instances\": [\n    {\n      \"AmiLaunchIndex\": 0,\n      \"ImageId\": \"ami-0abcdef1234567890\",\n      \"InstanceId\": \"i-1231231230abcdef0\",\n      \"InstanceType\": \"t2.micro\",\n      \"KeyName\": \"MyKeyPair\",\n      \"LaunchTime\": \"2018-05-10T08:05:20.000Z\",\n      \"Monitoring\": {\n        \"State\": \"disabled\"\n      },\n      \"Placement\": {\n        \"AvailabilityZone\": \"us-west-2a\",\n        \"GroupName\": \"\",\n        \"Tenancy\": \"default\"\n      },\n      \"PrivateDnsName\": \"ip-10-0-0-157.us-west-2.compute.internal\",\n      \"PrivateIpAddress\": \"10.0.0.157\",\n      \"ProductCodes\": [],\n      \"PublicDnsName\": \"\",\n      \"State\": {\n        \"Code\": 0,\n        \"Name\": \"pending\"\n      },\n      \"StateTransitionReason\": \"\",\n      \"SubnetId\": \"subnet-04a636d18e83cfacb\",\n      \"VpcId\": \"vpc-1234567890abcdef0\",\n      \"Architecture\": \"x86_64\",\n      \"BlockDeviceMappings\": [],\n      \"ClientToken\": \"\",\n      \"EbsOptimized\": false,\n      \"Hypervisor\": \"xen\",\n      \"NetworkInterfaces\": [\n        {\n          \"Attachment\": {\n            \"AttachTime\": \"2018-05-10T08:05:20.000Z\",\n            \"AttachmentId\": \"eni-attach-0e325c07e928a0405\",\n            \"DeleteOnTermination\": true,\n            \"DeviceIndex\": 0,\n            \"Status\": \"attaching\"\n          },\n          \"Description\": \"\",\n          \"Groups\": [\n            {\n              \"GroupName\": \"MySecurityGroup\",\n              \"GroupId\": \"sg-0598c7d356eba48d7\"\n            }\n          ],\n          \"Ipv6Addresses\": [],\n          \"MacAddress\": \"0a:ab:58:e0:67:e2\",\n          \"NetworkInterfaceId\": \"eni-0c0a29997760baee7\",\n          \"OwnerId\": \"123456789012\",\n          \"PrivateDnsName\": \"ip-10-0-0-157.us-west-2.compute.internal\",\n          \"PrivateIpAddress\": \"10.0.0.157\",\n          \"PrivateIpAddresses\": [\n            {\n              \"Primary\": true,\n              \"PrivateDnsName\": \"ip-10-0-0-157.us-west-2.compute.internal\",\n              \"PrivateIpAddress\": \"10.0.0.157\"\n            }\n          ],\n          \"SourceDestCheck\": true,\n          \"Status\": \"in-use\",\n          \"SubnetId\": \"subnet-04a636d18e83cfacb\",\n          \"VpcId\": \"vpc-1234567890abcdef0\",\n          \"InterfaceType\": \"interface\"\n        }\n      ],\n      \"RootDeviceName\": \"/dev/xvda\",\n      \"RootDeviceType\": \"ebs\",\n      \"SecurityGroups\": [\n        {\n          \"GroupName\": \"MySecurityGroup\",\n          \"GroupId\": \"sg-0598c7d356eba48d7\"\n        }\n      ],\n      \"SourceDestCheck\": true,\n      \"StateReason\": {\n        \"Code\": \"pending\",\n        \"Message\": \"pending\"\n      },\n      \"Tags\": [],\n      \"VirtualizationType\": \"hvm\",\n      \"CpuOptions\": {\n        \"CoreCount\": 1,\n        \"ThreadsPerCore\": 1\n      },\n      \"CapacityReservationSpecification\": {\n        \"CapacityReservationPreference\": \"open\"\n      },\n      \"MetadataOptions\": {\n        \"State\": \"pending\",\n        \"HttpTokens\": \"optional\",\n        \"HttpPutResponseHopLimit\": 1,\n        \"HttpEndpoint\": \"enabled\"\n      }\n    }\n  ],\n  \"OwnerId\": \"123456789012\",\n  \"ReservationId\": \"r-02a3f596d91211712\"\n}\n",
+        "queryMatch": {
+          "Action": "RunInstances"
+        }
+      },
+      {
+        "id": "ec2-authorize-security-group-ingress",
+        "summary": "ec2 AuthorizeSecurityGroupIngress",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "AuthorizeSecurityGroupIngress",
+        "fixture": "{\n  \"Return\": true,\n  \"SecurityGroupRules\": [\n    {\n      \"SecurityGroupRuleId\": \"sgr-01afa97ef3e1bedfc\",\n      \"GroupId\": \"sg-1234567890abcdef0\",\n      \"GroupOwnerId\": \"123456789012\",\n      \"IsEgress\": false,\n      \"IpProtocol\": \"tcp\",\n      \"FromPort\": 22,\n      \"ToPort\": 22,\n      \"CidrIpv4\": \"203.0.113.0/24\"\n    }\n  ]\n}\n",
+        "queryMatch": {
+          "Action": "AuthorizeSecurityGroupIngress"
+        }
+      },
+      {
+        "id": "ec2-describe-reserved-instances",
+        "summary": "ec2 DescribeReservedInstances",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "DescribeReservedInstances",
+        "fixture": "{\n  \"ReservedInstances\": [\n    {\n      \"ReservedInstancesId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n      \"OfferingType\": \"No Upfront\",\n      \"AvailabilityZone\": \"us-west-2c\",\n      \"End\": \"2016-08-14T21:34:34.000Z\",\n      \"ProductDescription\": \"Linux/UNIX\",\n      \"UsagePrice\": 0.0,\n      \"RecurringCharges\": [\n        {\n          \"Amount\": 0.104,\n          \"Frequency\": \"Hourly\"\n        }\n      ],\n      \"Start\": \"2015-08-15T21:34:35.086Z\",\n      \"State\": \"active\",\n      \"FixedPrice\": 0.0,\n      \"CurrencyCode\": \"USD\",\n      \"Duration\": 31536000,\n      \"InstanceTenancy\": \"default\",\n      \"InstanceType\": \"m3.medium\",\n      \"InstanceCount\": 2\n    }\n  ]\n}\n",
+        "queryMatch": {
+          "Action": "DescribeReservedInstances"
+        }
+      },
+      {
+        "id": "ec2-create-fleet",
+        "summary": "ec2 CreateFleet",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "CreateFleet",
+        "fixture": "{\n  \"FleetId\": \"fleet-12a34b55-67cd-8ef9-ba9b-9208dEXAMPLE\"\n}\n",
+        "queryMatch": {
+          "Action": "CreateFleet"
+        }
+      },
+      {
+        "id": "ec2-delete-fleets",
+        "summary": "ec2 DeleteFleets",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "DeleteFleets",
+        "fixture": "{\n  \"SuccessfulFleetDeletions\": [\n    {\n      \"CurrentFleetState\": \"deleted_terminating\",\n      \"PreviousFleetState\": \"active\",\n      \"FleetId\": \"fleet-12a34b55-67cd-8ef9-ba9b-9208dEXAMPLE\"\n    }\n  ],\n  \"UnsuccessfulFleetDeletions\": []\n}\n",
+        "queryMatch": {
+          "Action": "DeleteFleets"
+        }
+      },
+      {
+        "id": "ec2-describe-fleets",
+        "summary": "ec2 DescribeFleets",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "DescribeFleets",
+        "fixture": "{\n  \"Fleets\": [\n    {\n      \"ActivityStatus\": \"pending_fulfillment\",\n      \"CreateTime\": \"2020-09-01T18:26:05.000Z\",\n      \"FleetId\": \"fleet-12a34b55-67cd-8ef9-ba9b-9208dEXAMPLE\",\n      \"FleetState\": \"active\",\n      \"ExcessCapacityTerminationPolicy\": \"termination\",\n      \"FulfilledCapacity\": 0.0,\n      \"FulfilledOnDemandCapacity\": 0.0,\n      \"LaunchTemplateConfigs\": [\n        {\n          \"LaunchTemplateSpecification\": {\n            \"LaunchTemplateId\": \"lt-0e632f2855a979cd5\",\n            \"Version\": \"1\"\n          }\n        }\n      ],\n      \"TargetCapacitySpecification\": {\n        \"TotalTargetCapacity\": 2,\n        \"OnDemandTargetCapacity\": 0,\n        \"SpotTargetCapacity\": 2,\n        \"DefaultTargetCapacityType\": \"spot\"\n      },\n      \"TerminateInstancesWithExpiration\": false,\n      \"Type\": \"maintain\",\n      \"ReplaceUnhealthyInstances\": false,\n      \"SpotOptions\": {\n        \"AllocationStrategy\": \"lowestPrice\",\n        \"InstanceInterruptionBehavior\": \"terminate\",\n        \"InstancePoolsToUseCount\": 1\n      },\n      \"OnDemandOptions\": {\n        \"AllocationStrategy\": \"lowestPrice\"\n      }\n    }\n  ]\n}\n",
+        "queryMatch": {
+          "Action": "DescribeFleets"
+        }
+      },
+      {
+        "id": "ec2-describe-fleet-instances",
+        "summary": "ec2 DescribeFleetInstances",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "DescribeFleetInstances",
+        "fixture": "{\n  \"ActiveInstances\": [\n    {\n      \"InstanceId\": \"i-090db02406cc3c2d6\",\n      \"InstanceType\": \"t2.small\",\n      \"SpotInstanceRequestId\": \"sir-a43gtpfk\",\n      \"InstanceHealth\": \"healthy\"\n    },\n    {\n      \"InstanceId\": \"i-083a1c446e66085d2\",\n      \"InstanceType\": \"t2.small\",\n      \"SpotInstanceRequestId\": \"sir-iwcit2nj\",\n      \"InstanceHealth\": \"healthy\"\n    }\n  ],\n  \"FleetId\": \"fleet-12a34b55-67cd-8ef9-ba9b-9208dEXAMPLE\"\n}\n",
+        "queryMatch": {
+          "Action": "DescribeFleetInstances"
+        }
+      },
+      {
+        "id": "ec2-modify-fleet",
+        "summary": "ec2 ModifyFleet",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "ModifyFleet",
+        "fixture": "{\n  \"Return\": true\n}\n",
+        "queryMatch": {
+          "Action": "ModifyFleet"
+        }
+      },
+      {
+        "id": "ec2-create-traffic-mirror-session",
+        "summary": "ec2 CreateTrafficMirrorSession",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "CreateTrafficMirrorSession",
+        "fixture": "{\n  \"TrafficMirrorSession\": {\n    \"TrafficMirrorSessionId\": \"tms-08a33b1214EXAMPLE\",\n    \"TrafficMirrorTargetId\": \"tmt-07f75d8feeEXAMPLE\",\n    \"TrafficMirrorFilterId\": \"tmf-04812ff784EXAMPLE\",\n    \"NetworkInterfaceId\": \"eni-070203f901EXAMPLE\",\n    \"OwnerId\": \"123456789012\",\n    \"PacketLength\": 25,\n    \"SessionNumber\": 1,\n    \"VirtualNetworkId\": 7159709,\n    \"Description\": \"example session\",\n    \"Tags\": []\n  },\n  \"ClientToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n}\n",
+        "queryMatch": {
+          "Action": "CreateTrafficMirrorSession"
+        }
+      },
+      {
+        "id": "ec2-describe-ipam-resource-discoveries",
+        "summary": "ec2 DescribeIpamResourceDiscoveries",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "DescribeIpamResourceDiscoveries",
+        "fixture": "{\n  \"IpamResourceDiscoveries\": [\n    {\n      \"OwnerId\": \"123456789012\",\n      \"IpamResourceDiscoveryId\": \"ipam-res-disco-0f8bdee9067137c0d\",\n      \"IpamResourceDiscoveryArn\": \"arn:aws:ec2::123456789012:ipam-resource-discovery/ipam-res-disco-0f8bdee9067137c0d\",\n      \"IpamResourceDiscoveryRegion\": \"us-west-2\",\n      \"OperatingRegions\": [\n        {\n          \"RegionName\": \"us-west-2\"\n        }\n      ],\n      \"IsDefault\": false,\n      \"State\": \"create-complete\",\n      \"Tags\": []\n    }\n  ]\n}\n",
+        "queryMatch": {
+          "Action": "DescribeIpamResourceDiscoveries"
+        }
+      },
+      {
+        "id": "ec2-describe-ipam-resource-discovery-associations",
+        "summary": "ec2 DescribeIpamResourceDiscoveryAssociations",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "DescribeIpamResourceDiscoveryAssociations",
+        "fixture": "{\n  \"IpamResourceDiscoveryAssociations\": [\n    {\n      \"OwnerId\": \"123456789111\",\n      \"IpamResourceDiscoveryAssociationId\": \"ipam-res-disco-assoc-05e6b45eca5bf5cf7\",\n      \"IpamResourceDiscoveryAssociationArn\": \"arn:aws:ec2::123456789111:ipam-resource-discovery-association/ipam-res-disco-assoc-05e6b45eca5bf5cf7\",\n      \"IpamResourceDiscoveryId\": \"ipam-res-disco-0f4ef577a9f37a162\",\n      \"IpamId\": \"ipam-005f921c17ebd5107\",\n      \"IpamArn\": \"arn:aws:ec2::123456789111:ipam/ipam-005f921c17ebd5107\",\n      \"IpamRegion\": \"us-west-2\",\n      \"IsDefault\": true,\n      \"ResourceDiscoveryStatus\": \"active\",\n      \"State\": \"associate-complete\",\n      \"Tags\": []\n    },\n    {\n      \"OwnerId\": \"123456789222\",\n      \"IpamResourceDiscoveryAssociationId\": \"ipam-res-disco-assoc-0dfd21ae189ab5f62\",\n      \"IpamResourceDiscoveryAssociationArn\": \"arn:aws:ec2::123456789222:ipam-resource-discovery-association/ipam-res-disco-assoc-0dfd21ae189ab5f62\",\n      \"IpamResourceDiscoveryId\": \"ipam-res-disco-0365d2977fc1672fe\",\n      \"IpamId\": \"ipam-005f921c17ebd5107\",\n      \"IpamArn\": \"arn:aws:ec2::123456789222:ipam/ipam-005f921c17ebd5107\",\n      \"IpamRegion\": \"us-west-2\",\n      \"IsDefault\": false,\n      \"ResourceDiscoveryStatus\": \"active\",\n      \"State\": \"create-complete\",\n      \"Tags\": []\n    }\n  ]\n}\n",
+        "queryMatch": {
+          "Action": "DescribeIpamResourceDiscoveryAssociations"
+        }
+      },
+      {
+        "id": "ec2-get-ipam-discovered-public-addresses",
+        "summary": "ec2 GetIpamDiscoveredPublicAddresses",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/json",
+        "awsAction": "GetIpamDiscoveredPublicAddresses",
+        "fixture": "{\n  \"IpamDiscoveredPublicAddresses\": [\n    {\n      \"IpamResourceDiscoveryId\": \"ipam-res-disco-0f4ef577a9f37a162\",\n      \"AddressRegion\": \"us-west-2\",\n      \"Address\": \"54.208.155.7\",\n      \"AddressOwnerId\": \"123456789012\",\n      \"AssociationStatus\": \"associated\",\n      \"AddressType\": \"ec2-public-ip\",\n      \"VpcId\": \"vpc-073b294916198ce49\",\n      \"SubnetId\": \"subnet-0b6c8a8839e9a4f15\",\n      \"NetworkInterfaceId\": \"eni-081c446b5284a5e06\",\n      \"NetworkInterfaceDescription\": \"\",\n      \"InstanceId\": \"i-07459a6fca5b35823\",\n      \"Tags\": {},\n      \"NetworkBorderGroup\": \"us-west-2c\",\n      \"SecurityGroups\": [\n        {\n          \"GroupName\": \"launch-wizard-2\",\n          \"GroupId\": \"sg-0a489dd6a65c244ce\"\n        }\n      ],\n      \"SampleTime\": \"2024-04-05T15:13:59.228000+00:00\"\n    },\n    {\n      \"IpamResourceDiscoveryId\": \"ipam-res-disco-0f4ef577a9f37a162\",\n      \"AddressRegion\": \"us-west-2\",\n      \"Address\": \"44.201.251.218\",\n      \"AddressOwnerId\": \"123456789111\",\n      \"AssociationStatus\": \"associated\",\n      \"AddressType\": \"ec2-public-ip\",\n      \"VpcId\": \"vpc-6c31a611\",\n      \"SubnetId\": \"subnet-062f47608b99834b1\",\n      \"NetworkInterfaceId\": \"eni-024845359c2c3ae9b\",\n      \"NetworkInterfaceDescription\": \"\",\n      \"InstanceId\": \"i-04ef786d9c4e03f41\",\n      \"Tags\": {},\n      \"NetworkBorderGroup\": \"us-west-2a\",\n      \"SecurityGroups\": [\n        {\n          \"GroupName\": \"launch-wizard-32\",\n          \"GroupId\": \"sg-0ed1a426e96a68374\"\n        }\n      ],\n      \"SampleTime\": \"2024-04-05T15:13:59.145000+00:00\"\n    }\n  ]\n}\n",
+        "queryMatch": {
+          "Action": "GetIpamDiscoveredPublicAddresses"
         }
       }
     ],

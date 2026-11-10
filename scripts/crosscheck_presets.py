@@ -2469,6 +2469,17 @@ def snake_action(action: str) -> str:
     return re.sub(r"(?<!^)(?=[A-Z])", "_", action).lower()
 
 
+def action_mentioned(action: str, source_text: str) -> bool:
+    """True when the integration calls this boto3 method, including CreateIPSet vs create_ip_set."""
+    snake_name = snake_action(action)
+    if snake_name in source_text:
+        return True
+    target = snake_name.replace("_", "")
+    if len(target) < 6:
+        return False
+    return any(token.replace("_", "").lower() == target for token in re.findall(r"[A-Za-z_][A-Za-z0-9_]{5,}", source_text))
+
+
 def check_operation(
     operation: dict,
     calls: list[HttpCall],
@@ -2486,7 +2497,7 @@ def check_operation(
         by_action = [call for call in calls if call.boto3 and call.action == action]
         if by_action:
             matched = by_action
-        elif not matched and snake_action(action) in source_text:
+        elif not matched and action_mentioned(action, source_text):
             # boto3 method call. The wire path comes from the AWS action, not a REST url_suffix.
             return []
     if not matched:

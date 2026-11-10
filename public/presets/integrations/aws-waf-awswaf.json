@@ -2,9 +2,9 @@
   "id": "aws-waf-awswaf",
   "name": "AWS-WAF",
   "pack": "AWS_WAF",
-  "fidelity": "shape",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Amazon Web Services Web Application Firewall (WAF).",
+  "summary": "From vendor docs. Amazon Web Services Web Application Firewall (WAF).",
   "operations": 5,
   "origin": "sample",
   "spec": {
@@ -15,7 +15,7 @@
       "name": "AWS-WAF",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS_WAF/Integrations/AWSWAF",
-      "fidelity": "shape",
+      "fidelity": "vendor",
       "notes": [
         "Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.",
         "No HTTP path was recovered from the client. The sample shape is served at the catch URL root."
@@ -23,42 +23,83 @@
       "commandDocs": [
         {
           "command": "aws-waf-ip-set-create",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "wafv2:CreateIPSet"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-create-i-p-set"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/create-ip-set.html"
         },
         {
           "command": "aws-waf-ip-set-get",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "wafv2:GetIPSet"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-i-p-set"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-ip-set.html"
         },
         {
           "command": "aws-waf-ip-set-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "wafv2:GetIPSet",
+            "wafv2:UpdateIPSet"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-i-p-set",
+            "wafv2-update-i-p-set"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-ip-set.html"
         },
         {
           "command": "aws-waf-ip-set-list",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "wafv2:ListIPSets"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-list-i-p-sets"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/list-ip-sets.html"
         },
         {
           "command": "aws-waf-ip-set-delete",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "wafv2:GetIPSet",
+            "wafv2:DeleteIPSet"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "wafv2-get-i-p-set"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-ip-set.html"
         },
         {
           "command": "aws-waf-regex-set-create",
           "calls": [
             "wafv2:CreateRegexPatternSet"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-create-regex-pattern-set"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/create-regex-pattern-set.html"
         },
         {
           "command": "aws-waf-regex-set-get",
           "calls": [
             "wafv2:GetRegexPatternSet"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-regex-pattern-set"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-regex-pattern-set.html"
         },
         {
           "command": "aws-waf-regex-set-update",
@@ -66,14 +107,23 @@
             "wafv2:GetRegexPatternSet",
             "wafv2:UpdateRegexPatternSet"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-regex-pattern-set",
+            "wafv2-update-regex-pattern-set"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-regex-pattern-set.html"
         },
         {
           "command": "aws-waf-regex-set-list",
           "calls": [
             "wafv2:ListRegexPatternSets"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-list-regex-pattern-sets"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/list-regex-pattern-sets.html"
         },
         {
           "command": "aws-waf-regex-set-delete",
@@ -81,21 +131,33 @@
             "wafv2:GetRegexPatternSet",
             "wafv2:DeleteRegexPatternSet"
           ],
-          "status": "missing"
+          "status": "approximate",
+          "operationIds": [
+            "wafv2-get-regex-pattern-set"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-regex-pattern-set.html"
         },
         {
           "command": "aws-waf-rule-group-list",
           "calls": [
             "wafv2:ListRuleGroups"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-list-rule-groups"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/list-rule-groups.html"
         },
         {
           "command": "aws-waf-rule-group-get",
           "calls": [
             "wafv2:GetRuleGroup"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-rule-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-rule-group.html"
         },
         {
           "command": "aws-waf-rule-group-delete",
@@ -103,14 +165,22 @@
             "wafv2:GetRuleGroup",
             "wafv2:DeleteRuleGroup"
           ],
-          "status": "missing"
+          "status": "approximate",
+          "operationIds": [
+            "wafv2-get-rule-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-rule-group.html"
         },
         {
           "command": "aws-waf-rule-group-create",
           "calls": [
             "wafv2:CreateRuleGroup"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-create-rule-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/create-rule-group.html"
         },
         {
           "command": "aws-waf-ip-rule-create",
@@ -118,7 +188,12 @@
             "wafv2:GetRuleGroup",
             "wafv2:UpdateRuleGroup"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-rule-group",
+            "wafv2-update-rule-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-rule-group.html"
         },
         {
           "command": "aws-waf-country-rule-create",
@@ -126,7 +201,12 @@
             "wafv2:GetRuleGroup",
             "wafv2:UpdateRuleGroup"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-rule-group",
+            "wafv2-update-rule-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-rule-group.html"
         },
         {
           "command": "aws-waf-string-match-rule-create",
@@ -134,7 +214,12 @@
             "wafv2:GetRuleGroup",
             "wafv2:UpdateRuleGroup"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-rule-group",
+            "wafv2-update-rule-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-rule-group.html"
         },
         {
           "command": "aws-waf-rule-delete",
@@ -142,7 +227,12 @@
             "wafv2:GetRuleGroup",
             "wafv2:UpdateRuleGroup"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-rule-group",
+            "wafv2-update-rule-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-rule-group.html"
         },
         {
           "command": "aws-waf-ip-statement-add",
@@ -150,7 +240,12 @@
             "wafv2:GetRuleGroup",
             "wafv2:UpdateRuleGroup"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-rule-group",
+            "wafv2-update-rule-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-rule-group.html"
         },
         {
           "command": "aws-waf-country-statement-add",
@@ -158,7 +253,12 @@
             "wafv2:GetRuleGroup",
             "wafv2:UpdateRuleGroup"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-rule-group",
+            "wafv2-update-rule-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-rule-group.html"
         },
         {
           "command": "aws-waf-string-match-statement-add",
@@ -166,7 +266,12 @@
             "wafv2:GetRuleGroup",
             "wafv2:UpdateRuleGroup"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-rule-group",
+            "wafv2-update-rule-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-rule-group.html"
         },
         {
           "command": "aws-waf-statement-json-add",
@@ -174,7 +279,12 @@
             "wafv2:GetRuleGroup",
             "wafv2:UpdateRuleGroup"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "wafv2-get-rule-group",
+            "wafv2-update-rule-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/get-rule-group.html"
         },
         {
           "command": "aws-waf-statement-json-template-get",
@@ -183,10 +293,11 @@
         }
       ],
       "verification": {
-        "status": "shape",
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/create-regex-pattern-set.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "0 of 23 commands from vendor docs, 9 approximate, 14 missing."
+          "19 of 23 commands from vendor docs, 3 approximate, 1 missing."
         ]
       }
     },
@@ -757,6 +868,402 @@
               ]
             }
           ]
+        }
+      },
+      {
+        "id": "wafv2-create-regex-pattern-set",
+        "summary": "wafv2 CreateRegexPatternSet",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "CreateRegexPatternSet",
+        "fixture": "{\n  \"Summary\": {\n    \"ARN\": \"arn:aws:wafv2:us-west-2:123456789012:regional/regexpatternset/regexPatterSet01/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n    \"Description\": \"Test web-acl\",\n    \"Name\": \"regexPatterSet01\",\n    \"LockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n    \"Id\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSWAF_20190729.CreateRegexPatternSet"
+        }
+      },
+      {
+        "id": "wafv2-get-regex-pattern-set",
+        "summary": "wafv2 GetRegexPatternSet",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "GetRegexPatternSet",
+        "fixture": "{\n  \"RegexPatternSet\": {\n    \"Description\": \"Test web-acl\",\n    \"RegularExpressionList\": [\n      {\n        \"RegexString\": \"/[0-9]*/\"\n      },\n      {\n        \"RegexString\": \"/[a-z]*/\"\n      }\n    ],\n    \"Name\": \"regexPatterSet01\",\n    \"ARN\": \"arn:aws:wafv2:us-west-2:123456789012:regional/regexpatternset/regexPatterSet01/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n    \"Id\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n  },\n  \"LockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSWAF_20190729.GetRegexPatternSet"
+        }
+      },
+      {
+        "id": "wafv2-update-regex-pattern-set",
+        "summary": "wafv2 UpdateRegexPatternSet",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "UpdateRegexPatternSet",
+        "fixture": "{\n  \"NextLockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE33333\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSWAF_20190729.UpdateRegexPatternSet"
+        }
+      },
+      {
+        "id": "wafv2-list-regex-pattern-sets",
+        "summary": "wafv2 ListRegexPatternSets",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "ListRegexPatternSets",
+        "fixture": "{\n  \"NextMarker\": \"regexPatterSet01\",\n  \"RegexPatternSets\": [\n    {\n      \"ARN\": \"arn:aws:wafv2:us-west-2:123456789012:regional/regexpatternset/regexPatterSet01/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n      \"Description\": \"Test web-acl\",\n      \"Name\": \"regexPatterSet01\",\n      \"LockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n      \"Id\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSWAF_20190729.ListRegexPatternSets"
+        }
+      },
+      {
+        "id": "wafv2-list-rule-groups",
+        "summary": "wafv2 ListRuleGroups",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "ListRuleGroups",
+        "fixture": "{\n  \"RuleGroups\": [\n    {\n      \"ARN\": \"arn:aws:wafv2:us-west-2:123456789012:regional/rulegroup/TestRuleGroup/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n      \"Description\": \"\",\n      \"Name\": \"TestRuleGroup\",\n      \"LockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE33333\",\n      \"Id\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n    },\n    {\n      \"ARN\": \"arn:aws:wafv2:us-west-2:123456789012:regional/rulegroup/test/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n      \"Description\": \"\",\n      \"Name\": \"test\",\n      \"LockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE44444\",\n      \"Id\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\"\n    }\n  ],\n  \"NextMarker\": \"test\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSWAF_20190729.ListRuleGroups"
+        }
+      },
+      {
+        "id": "wafv2-get-rule-group",
+        "summary": "wafv2 GetRuleGroup",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "GetRuleGroup",
+        "fixture": "{\n  \"RuleGroup\": {\n    \"Capacity\": 1,\n    \"Description\": \"\",\n    \"Rules\": [\n      {\n        \"Priority\": 0,\n        \"Action\": {\n          \"Block\": {}\n        },\n        \"VisibilityConfig\": {\n          \"SampledRequestsEnabled\": true,\n          \"CloudWatchMetricsEnabled\": true,\n          \"MetricName\": \"jj\"\n        },\n        \"Name\": \"jj\",\n        \"Statement\": {\n          \"SizeConstraintStatement\": {\n            \"ComparisonOperator\": \"LE\",\n            \"TextTransformations\": [\n              {\n                \"Priority\": 0,\n                \"Type\": \"NONE\"\n              }\n            ],\n            \"FieldToMatch\": {\n              \"UriPath\": {}\n            },\n            \"Size\": 7\n          }\n        }\n      }\n    ],\n    \"VisibilityConfig\": {\n      \"SampledRequestsEnabled\": true,\n      \"CloudWatchMetricsEnabled\": true,\n      \"MetricName\": \"ff\"\n    },\n    \"Id\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n    \"ARN\": \"arn:aws:wafv2:us-west-2:123456789012:regional/rulegroup/ff/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n    \"Name\": \"ff\"\n  },\n  \"LockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSWAF_20190729.GetRuleGroup"
+        }
+      },
+      {
+        "id": "wafv2-create-rule-group",
+        "summary": "wafv2 CreateRuleGroup",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "CreateRuleGroup",
+        "fixture": "{\n  \"Summary\": {\n    \"ARN\": \"arn:aws:wafv2:us-west-2:123456789012:regional/rulegroup/TestRuleGroup/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n    \"Description\": \"\",\n    \"Name\": \"TestRuleGroup\",\n    \"LockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n    \"Id\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSWAF_20190729.CreateRuleGroup"
+        }
+      },
+      {
+        "id": "wafv2-update-rule-group",
+        "summary": "wafv2 UpdateRuleGroup",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "UpdateRuleGroup",
+        "fixture": "{\n  \"NextLockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE33333\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSWAF_20190729.UpdateRuleGroup"
+        }
+      },
+      {
+        "id": "wafv2-create-i-p-set",
+        "summary": "wafv2 CreateIPSet",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "CreateIPSet",
+        "fixture": "{\n  \"Summary\": {\n    \"ARN\": \"arn:aws:wafv2:us-west-2:123456789012:regional/ipset/testip/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n    \"Description\": \"\",\n    \"Name\": \"testip\",\n    \"LockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n    \"Id\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSWAF_20190729.CreateIPSet"
+        }
+      },
+      {
+        "id": "wafv2-get-i-p-set",
+        "summary": "wafv2 GetIPSet",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "GetIPSet",
+        "fixture": "{\n  \"IPSet\": {\n    \"Description\": \"\",\n    \"Name\": \"testip\",\n    \"IPAddressVersion\": \"IPV4\",\n    \"Id\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE1111\",\n    \"ARN\": \"arn:aws:wafv2:us-west-2:123456789012:regional/ipset/testip/a1b2c3d4-5678-90ab-cdef-EXAMPLE1111\",\n    \"Addresses\": [\n      \"192.0.2.0/16\"\n    ]\n  },\n  \"LockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSWAF_20190729.GetIPSet"
+        }
+      },
+      {
+        "id": "wafv2-update-i-p-set",
+        "summary": "wafv2 UpdateIPSet",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "UpdateIPSet",
+        "fixture": "{\n  \"NextLockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE33333\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSWAF_20190729.UpdateIPSet"
+        }
+      },
+      {
+        "id": "wafv2-list-i-p-sets",
+        "summary": "wafv2 ListIPSets",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "ListIPSets",
+        "fixture": "{\n  \"IPSets\": [\n    {\n      \"ARN\": \"arn:aws:wafv2:us-west-2:123456789012:regional/ipset/testip/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n      \"Description\": \"\",\n      \"Name\": \"testip\",\n      \"LockToken\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n      \"Id\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111  \"\n    }\n  ],\n  \"NextMarker\": \"testip\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSWAF_20190729.ListIPSets"
         }
       }
     ],

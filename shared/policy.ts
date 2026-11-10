@@ -33,7 +33,7 @@ export const MOCK_LIMITS = {
   maxResponseBytes: 2_000_000,
   maxDownloadBytes: 6_000_000,
   maxVirtualRecords: 20_000,
-  maxOperations: 250,
+  maxOperations: 400,
   maxFields: 400,
   maxFieldDepth: 8,
   maxSpecBytes: 400_000,

@@ -1,0 +1,122 @@
+{
+  "id": "aws-cloudtrail-aws-cloudtrail",
+  "retrievedAt": "2026-11-10",
+  "sourceType": "vendor-example",
+  "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/create-trail.html",
+  "operations": [
+    {
+      "operationId": "cloudtrail-create-trail",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/create-trail.html",
+      "rstPath": "awscli/examples/cloudtrail/create-trail.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "IncludeGlobalServiceEvents": true,
+        "Name": "Trail1",
+        "TrailARN": "arn:aws:cloudtrail:us-west-2:123456789012:trail/Trail1",
+        "LogFileValidationEnabled": false,
+        "IsMultiRegionTrail": true,
+        "S3BucketName": "amzn-s3-demo-bucket"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "cloudtrail-describe-trails",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/describe-trails.html",
+      "rstPath": "awscli/examples/cloudtrail/describe-trails.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "trailList": [
+          {
+            "IncludeGlobalServiceEvents": true,
+            "Name": "Trail1",
+            "TrailARN": "arn:aws:cloudtrail:us-west-2:123456789012:trail/Trail1",
+            "LogFileValidationEnabled": false,
+            "IsMultiRegionTrail": false,
+            "S3BucketName": "amzn-s3-demo-bucket",
+            "CloudWatchLogsRoleArn": "arn:aws:iam::123456789012:role/CloudTrail_CloudWatchLogs_Role",
+            "CloudWatchLogsLogGroupArn": "arn:aws:logs:us-west-2:123456789012:log-group:CloudTrail:*",
+            "SnsTopicName": "my-topic",
+            "HomeRegion": "us-west-2"
+          },
+          {
+            "IncludeGlobalServiceEvents": true,
+            "Name": "Trail2",
+            "S3KeyPrefix": "my-prefix",
+            "TrailARN": "arn:aws:cloudtrail:us-west-2:123456789012:trail/Trail2",
+            "LogFileValidationEnabled": false,
+            "IsMultiRegionTrail": false,
+            "S3BucketName": "amzn-s3-demo-bucket2",
+            "KmsKeyId": "arn:aws:kms:us-west-2:123456789012:key/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "HomeRegion": "us-west-2"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "cloudtrail-update-trail",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/update-trail.html",
+      "rstPath": "awscli/examples/cloudtrail/update-trail.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "IncludeGlobalServiceEvents": true,
+        "Name": "Trail1",
+        "TrailARN": "arn:aws:cloudtrail:us-west-2:123456789012:trail/Trail1",
+        "LogFileValidationEnabled": false,
+        "IsMultiRegionTrail": true,
+        "S3BucketName": "amzn-s3-demo-bucket"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "lookup-events",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/lookup-events.html",
+      "rstPath": "awscli/examples/cloudtrail/lookup-events.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Events": [
+          {
+            "EventId": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "Username": "my-session-name",
+            "EventTime": "2021-11-18T09:41:02-08:00",
+            "CloudTrailEvent": "{\"eventVersion\":\"1.02\",\"userIdentity\":{\"type\":\"AssumedRole\",\"principalId\":\"AROAJIKPFTA72SWU4L7T4:my-session-name\",\"arn\":\"arn:aws:sts::123456789012:assumed-role/my-role/my-session-name\",\"accountId\":\"123456789012\",\"sessionContext\":{\"attributes\":{\"mfaAuthenticated\":\"false\",\"creationDate\":\"2016-01-26T21:42:12Z\"},\"sessionIssuer\":{\"type\":\"Role\",\"principalId\":\"AROAJIKPFTA72SWU4L7T4\",\"arn\":\"arn:aws:iam::123456789012:role/my-role\",\"accountId\":\"123456789012\",\"userName\":\"my-role\"}}},\"eventTime\":\"2016-01-26T21:42:12Z\",\"eventSource\":\"signin.amazonaws.com\",\"eventName\":\"ConsoleLogin\",\"awsRegion\":\"us-west-2\",\"sourceIPAddress\":\"72.21.198.70\",\"userAgent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36\",\"requestParameters\":null,\"responseElements\":{\"ConsoleLogin\":\"Success\"},\"additionalEventData\":{\"MobileVersion\":\"No\",\"MFAUsed\":\"No\"},\"eventID\":\"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\"eventType\":\"AwsConsoleSignIn\",\"recipientAccountId\":\"123456789012\"}",
+            "EventName": "ConsoleLogin",
+            "Resources": []
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "cloudtrail-get-trail-status",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/get-trail-status.html",
+      "rstPath": "awscli/examples/cloudtrail/get-trail-status.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "LatestNotificationTime": 1454022144.869,
+        "LatestNotificationAttemptSucceeded": "2016-01-28T23:02:24Z",
+        "LatestDeliveryAttemptTime": "2016-01-28T23:02:24Z",
+        "LatestDeliveryTime": 1454022144.869,
+        "TimeLoggingStarted": "2015-11-06T18:36:38Z",
+        "LatestDeliveryAttemptSucceeded": "2016-01-28T23:02:24Z",
+        "IsLogging": true,
+        "LatestCloudWatchLogsDeliveryTime": 1454022144.918,
+        "StartLoggingTime": 1446834998.695,
+        "StopLoggingTime": 1446834996.933,
+        "LatestNotificationAttemptTime": "2016-01-28T23:02:24Z",
+        "TimeLoggingStopped": "2015-11-06T18:36:36Z"
+      },
+      "scrubs": []
+    }
+  ]
+}
