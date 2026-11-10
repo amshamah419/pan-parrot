@@ -3,9 +3,9 @@
   "name": "Elasticsearch v2",
   "pack": "Elasticsearch",
   "vendor": "Elastic",
-  "fidelity": "verified",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: POST /{index}/_search.",
+  "summary": "From vendor docs. Rebuilt from the client: POST /{index}/_search.",
   "notes": [
     "Sample fields are the ones POST /{index}/_search reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,18 +17,19 @@
       "kind": "preset",
       "id": "elasticsearch-elasticsearch-v2",
       "name": "Elasticsearch v2",
-      "fidelity": "verified",
+      "fidelity": "vendor",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
       "notes": [
-        "Sample fields are the ones POST /{index}/_search reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones POST /{index}/_search reads in the matched command. Lists the command iterates are arrays.",
+        "Response body is the vendor's documented example, copied on 2026-11-10."
       ],
       "verification": {
-        "status": "verified",
-        "docUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
+        "status": "vendor",
+        "docUrl": "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /{index}/_search reads in the matched command. Lists the command iterates are arrays."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
         ]
       }
     },
@@ -178,7 +179,8 @@
               ]
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"took\": 5,\n  \"timed_out\": false,\n  \"_shards\": {\n    \"total\": 1,\n    \"successful\": 1,\n    \"skipped\": 0,\n    \"failed\": 0\n  },\n  \"hits\": {\n    \"total\": {\n      \"value\": 20,\n      \"relation\": \"eq\"\n    },\n    \"max_score\": 1.3862942,\n    \"hits\": [\n      {\n        \"_index\": \"my-index-000001\",\n        \"_id\": \"0\",\n        \"_score\": 1.3862942,\n        \"_source\": {\n          \"@timestamp\": \"2099-11-15T14:12:12\",\n          \"http\": {\n            \"request\": {\n              \"method\": \"get\"\n            },\n            \"response\": {\n              \"status_code\": 200,\n              \"bytes\": 1070000\n            },\n            \"version\": \"1.1\"\n          },\n          \"source\": {\n            \"ip\": \"127.0.0.1\"\n          },\n          \"message\": \"GET /search HTTP/1.1 200 1070000\",\n          \"user\": {\n            \"id\": \"kimchy\"\n          }\n        }\n      }\n    ]\n  }\n}\n"
       }
     ],
     "chaos": {

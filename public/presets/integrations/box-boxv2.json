@@ -2,9 +2,9 @@
   "id": "box-boxv2",
   "name": "Box v2",
   "pack": "Box",
-  "fidelity": "verified",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "GET /2.0/events",
+  "summary": "From vendor docs. GET /2.0/events",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "Box v2",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Box/Integrations/BoxV2",
-      "fidelity": "verified",
+      "fidelity": "vendor",
       "notes": [
-        "The client base is /2.0 and GET /events returns entries[] plus next_stream_position. Authorization and the JWT app settings are not the event body."
+        "The client base is /2.0 and GET /events returns entries[] plus next_stream_position. Authorization and the JWT app settings are not the event body.",
+        "Response body is the vendor's documented example, copied on 2026-11-10."
       ],
       "verification": {
-        "status": "verified",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Box/Integrations/BoxV2",
+        "status": "vendor",
+        "docUrl": "https://developer.box.com/reference/get-events/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client base is /2.0 and GET /events returns entries[] plus next_stream_position. Authorization and the JWT app settings are not the event body."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
         ]
       }
     },
@@ -85,7 +86,8 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"chunk_size\": 2,\n  \"next_stream_position\": \"1152922976252290886\",\n  \"entries\": [\n    {\n      \"type\": \"event\",\n      \"created_at\": \"2022-12-12T10:53:43-08:00\",\n      \"recorded_at\": \"2022-12-12T10:54:43-08:00\",\n      \"event_id\": \"f82c3ba03e41f7e8a7608363cc6c0390183c3f83\",\n      \"created_by\": {\n        \"id\": \"11446498\",\n        \"type\": \"user\",\n        \"name\": \"Aaron Levie\",\n        \"login\": \"ceo@example.com\"\n      },\n      \"event_type\": \"FILE_MARKED_MALICIOUS\",\n      \"session_id\": \"70090280850c8d2a1933c1\",\n      \"source\": {\n        \"id\": \"11446498\",\n        \"type\": \"user\",\n        \"name\": \"Aaron Levie\",\n        \"login\": \"ceo@example.com\",\n        \"created_at\": \"2012-12-12T10:53:43-08:00\",\n        \"modified_at\": \"2012-12-12T10:53:43-08:00\",\n        \"language\": \"en\",\n        \"timezone\": \"Africa/Bujumbura\",\n        \"space_amount\": 11345156112,\n        \"space_used\": 1237009912,\n        \"max_upload_size\": 2147483648,\n        \"status\": \"active\",\n        \"job_title\": \"CEO\",\n        \"phone\": \"6509241374\",\n        \"address\": \"900 Jefferson Ave, Redwood City, CA 94063\",\n        \"avatar_url\": \"https://www.box.com/api/avatar/large/181216415\",\n        \"notification_email\": {\n          \"email\": \"notifications@example.com\",\n          \"is_confirmed\": true\n        }\n      },\n      \"additional_details\": {\n        \"key\": \"value\"\n      }\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

@@ -2,9 +2,9 @@
   "id": "microsoftgraphdevicemanagement-microsoftgraphdevicemanagement",
   "name": "Microsoft Endpoint Manager (Intune)",
   "pack": "MicrosoftGraphDeviceManagement",
-  "fidelity": "verified",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /v1.0/deviceManagement/managedDevices.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /v1.0/deviceManagement/managedDevices.",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "Microsoft Endpoint Manager (Intune)",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphDeviceManagement/Integrations/MicrosoftGraphDeviceManagement",
-      "fidelity": "verified",
+      "fidelity": "vendor",
       "notes": [
-        "Sample fields are the ones GET /v1.0/deviceManagement/managedDevices reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /v1.0/deviceManagement/managedDevices reads in the matched command. Lists the command iterates are arrays.",
+        "Response body is the vendor's documented example, copied on 2026-11-10."
       ],
       "verification": {
-        "status": "verified",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphDeviceManagement/Integrations/MicrosoftGraphDeviceManagement",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/intune-devices-manageddevice-list?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /v1.0/deviceManagement/managedDevices reads in the matched command. Lists the command iterates are arrays."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
         ]
       }
     },
@@ -73,7 +74,8 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.managedDevice\",\n      \"id\": \"705c034c-034c-705c-4c03-5c704c035c70\",\n      \"userId\": \"User Id value\",\n      \"deviceName\": \"Device Name value\",\n      \"managedDeviceOwnerType\": \"company\",\n      \"deviceActionResults\": [\n        {\n          \"@odata.type\": \"microsoft.graph.deviceActionResult\",\n          \"actionName\": \"Action Name value\",\n          \"actionState\": \"pending\",\n          \"startDateTime\": \"2016-12-31T23:58:46.7156189-08:00\",\n          \"lastUpdatedDateTime\": \"2017-01-01T00:00:56.8321556-08:00\"\n        }\n      ],\n      \"managementState\": \"retirePending\",\n      \"enrolledDateTime\": \"2016-12-31T23:59:43.797191-08:00\",\n      \"lastSyncDateTime\": \"2017-01-01T00:02:49.3205976-08:00\",\n      \"operatingSystem\": \"Operating System value\",\n      \"complianceState\": \"compliant\",\n      \"jailBroken\": \"Jail Broken value\",\n      \"managementAgent\": \"mdm\",\n      \"osVersion\": \"Os Version value\",\n      \"easActivated\": true,\n      \"easDeviceId\": \"Eas Device Id value\",\n      \"easActivationDateTime\": \"2016-12-31T23:59:43.4878784-08:00\",\n      \"azureADRegistered\": true,\n      \"deviceEnrollmentType\": \"userEnrollment\",\n      \"activationLockBypassCode\": \"Activation Lock Bypass Code value\",\n      \"emailAddress\": \"Email Address value\",\n      \"azureADDeviceId\": \"Azure ADDevice Id value\",\n      \"deviceRegistrationState\": \"registered\",\n      \"deviceCategoryDisplayName\": \"Device Category Display Name value\",\n      \"isSupervised\": true,\n      \"exchangeLastSuccessfulSyncDateTime\": \"2017-01-01T00:00:45.8803083-08:00\",\n      \"exchangeAccessState\": \"unknown\",\n      \"exchangeAccessStateReason\": \"unknown\",\n      \"remoteAssistanceSessionUrl\": \"https://example.com/remoteAssistanceSessionUrl/\",\n      \"remoteAssistanceSessionErrorDetails\": \"Remote Assistance Session Error Details value\",\n      \"isEncrypted\": true,\n      \"userPrincipalName\": \"User Principal Name value\",\n      \"model\": \"Model value\",\n      \"manufacturer\": \"Manufacturer value\",\n      \"imei\": \"Imei value\",\n      \"complianceGracePeriodExpirationDateTime\": \"2016-12-31T23:56:44.951111-08:00\",\n      \"serialNumber\": \"Serial Number value\",\n      \"phoneNumber\": \"Phone Number value\",\n      \"androidSecurityPatchLevel\": \"Android Security Patch Level value\",\n      \"userDisplayName\": \"User Display Name value\",\n      \"configurationManagerClientEnabledFeatures\": {\n        \"@odata.type\": \"microsoft.graph.configurationManagerClientEnabledFeatures\",\n        \"inventory\": true,\n        \"modernApps\": true,\n        \"resourceAccess\": true,\n        \"deviceConfiguration\": true,\n        \"compliancePolicy\": true,\n        \"windowsUpdateForBusiness\": true\n      },\n      \"wiFiMacAddress\": \"Wi Fi Mac Address value\",\n      \"deviceHealthAttestationState\": {\n        \"@odata.type\": \"microsoft.graph.deviceHealthAttestationState\",\n        \"lastUpdateDateTime\": \"Last Update Date Time value\",\n        \"contentNamespaceUrl\": \"https://example.com/contentNamespaceUrl/\",\n        \"deviceHealthAttestationStatus\": \"Device Health Attestation Status value\",\n        \"contentVersion\": \"Content Version value\",\n        \"issuedDateTime\": \"2016-12-31T23:58:22.1231038-08:00\",\n        \"attestationIdentityKey\": \"Attestation Identity Key value\",\n        \"resetCount\": 10,\n        \"restartCount\": 12,\n        \"dataExcutionPolicy\": \"Data Excution Policy value\",\n        \"bitLockerStatus\": \"Bit Locker Status value\",\n        \"bootManagerVersion\": \"Boot Manager Version value\",\n        \"codeIntegrityCheckVersion\": \"Code Integrity Check Version value\",\n        \"secureBoot\": \"Secure Boot value\",\n        \"bootDebugging\": \"Boot Debugging value\",\n        \"operatingSystemKernelDebugging\": \"Operating System Kernel Debugging value\",\n        \"codeIntegrity\": \"Code Integrity value\",\n        \"testSigning\": \"Test Signing value\",\n        \"safeMode\": \"Safe Mode value\",\n        \"windowsPE\": \"Windows PE value\",\n        \"earlyLaunchAntiMalwareDriverProtection\": \"Early Launch Anti Malware Driver Protection value\",\n        \"virtualSecureMode\": \"Virtual Secure Mode value\",\n        \"pcrHashAlgorithm\": \"Pcr Hash Algorithm value\",\n        \"bootAppSecurityVersion\": \"Boot App Security Version value\",\n        \"bootManagerSecurityVersion\": \"Boot Manager Security Version value\",\n        \"tpmVersion\": \"Tpm Version value\",\n        \"pcr0\": \"Pcr0 value\",\n        \"secureBootConfigurationPolicyFingerPrint\": \"Secure Boot Configuration Policy Finger Print value\",\n        \"codeIntegrityPolicy\": \"Code Integrity Policy value\",\n        \"bootRevisionListInfo\": \"Boot Revision List Info value\",\n        \"operatingSystemRevListInfo\": \"Operating System Rev List Info value\",\n        \"healthStatusMismatchInfo\": \"Health Status Mismatch Info value\",\n        \"healthAttestationSupportedStatus\": \"Health Attestation Supported Status value\"\n      },\n      \"subscriberCarrier\": \"Subscriber Carrier value\",\n      \"meid\": \"Meid value\",\n      \"totalStorageSpaceInBytes\": 8,\n      \"freeStorageSpaceInBytes\": 7,\n      \"managedDeviceName\": \"Managed Device Name value\",\n      \"partnerReportedThreatState\": \"activated\",\n      \"requireUserEnrollmentApproval\": true,\n      \"managementCertificateExpirationDate\": \"2016-12-31T23:57:59.9789653-08:00\",\n      \"iccid\": \"Iccid value\",\n      \"udid\": \"Udid value\",\n      \"notes\": \"Notes value\",\n      \"ethernetMacAddress\": \"Ethernet Mac Address value\",\n      \"physicalMemoryInBytes\": 5,\n      \"enrollmentProfileName\": \"Enrollment Profile Name value\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

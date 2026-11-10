@@ -3,9 +3,9 @@
   "name": "Slack v3",
   "pack": "Slack",
   "vendor": "Slack",
-  "fidelity": "verified",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: GET /api/conversations.history.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /api/conversations.history.",
   "notes": [
     "Sample fields are the ones GET /api/conversations.history reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,18 +17,19 @@
       "kind": "preset",
       "id": "slack-slackv3",
       "name": "Slack v3",
-      "fidelity": "verified",
+      "fidelity": "vendor",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs.slack.dev/reference/methods/conversations.history",
       "notes": [
-        "Sample fields are the ones GET /api/conversations.history reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /api/conversations.history reads in the matched command. Lists the command iterates are arrays.",
+        "Response body is the vendor's documented example, copied on 2026-11-10."
       ],
       "verification": {
-        "status": "verified",
+        "status": "vendor",
         "docUrl": "https://docs.slack.dev/reference/methods/conversations.history",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /api/conversations.history reads in the matched command. Lists the command iterates are arrays."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
         ]
       }
     },
@@ -75,7 +76,8 @@
               ]
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"ok\": true,\n  \"messages\": [\n    {\n      \"type\": \"message\",\n      \"user\": \"U123ABC456\",\n      \"text\": \"I find you punny and would like to smell your nose letter\",\n      \"ts\": \"1512085950.000216\"\n    },\n    {\n      \"type\": \"message\",\n      \"user\": \"U222BBB222\",\n      \"text\": \"What, you want to smell my shoes better?\",\n      \"ts\": \"1512104434.000490\"\n    }\n  ],\n  \"has_more\": true,\n  \"pin_count\": 0,\n  \"response_metadata\": {\n    \"next_cursor\": \"bmV4dF90czoxNTEyMDg1ODYxMDAwNTQz\"\n  }\n}\n"
       }
     ],
     "chaos": {

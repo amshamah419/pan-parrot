@@ -3,9 +3,9 @@
   "name": "PagerDuty",
   "pack": "PagerDuty",
   "vendor": "PagerDuty",
-  "fidelity": "verified",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Incident list. incidents, limit, offset, and more.",
+  "summary": "From vendor docs. Incident list. incidents, limit, offset, and more.",
   "notes": [
     "GET /incidents returns { incidents, limit, offset, more }. This mock returns incidents.",
     "The client asks for include[]=assignees. Assignee objects are omitted.",
@@ -19,22 +19,21 @@
       "kind": "preset",
       "id": "pagerduty-pagerduty",
       "name": "PagerDuty",
-      "fidelity": "verified",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents",
       "notes": [
         "GET /incidents returns { incidents, limit, offset, more }. This mock returns incidents.",
         "The client asks for include[]=assignees. Assignee objects are omitted.",
-        "Authorization is Token token=dummy-key."
+        "Authorization is Token token=dummy-key.",
+        "Response body is the vendor's documented example, copied on 2026-11-10."
       ],
       "verification": {
-        "status": "verified",
+        "status": "vendor",
         "docUrl": "https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents",
         "checkedAt": "2026-11-10",
         "differences": [
-          "GET /incidents returns { incidents, limit, offset, more }. This mock returns incidents.",
-          "The client asks for include[]=assignees. Assignee objects are omitted.",
-          "Authorization is Token token=dummy-key."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
         ]
       }
     },
@@ -100,7 +99,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "{\n  \"incidents\": [\n    {\n      \"id\": \"PT4KHLK\",\n      \"type\": \"incident\",\n      \"summary\": \"[#1234] The server is on fire.\",\n      \"self\": \"https://api.pagerduty.com/incidents/PT4KHLK\",\n      \"html_url\": \"https://subdomain.pagerduty.com/incidents/PT4KHLK\",\n      \"incident_number\": 1234,\n      \"title\": \"The server is on fire.\",\n      \"created_at\": \"2015-10-06T21:30:42Z\",\n      \"updated_at\": \"2015-10-06T21:40:23Z\",\n      \"status\": \"resolved\",\n      \"incident_key\": \"baf7cf21b1da41b4b0221008339ff357\",\n      \"service\": {\n        \"id\": \"PIJ90N7\",\n        \"type\": \"service_reference\",\n        \"summary\": \"My Mail Service\",\n        \"self\": \"https://api.pagerduty.com/services/PIJ90N7\",\n        \"html_url\": \"https://subdomain.pagerduty.com/service-directory/PIJ90N7\"\n      },\n      \"assignments\": [],\n      \"assigned_via\": \"escalation_policy\",\n      \"last_status_change_at\": \"2015-10-06T21:38:23Z\",\n      \"resolved_at\": \"2015-10-06T21:38:23Z\",\n      \"first_trigger_log_entry\": {\n        \"id\": \"Q02JTSNZWHSEKV\",\n        \"type\": \"trigger_log_entry_reference\",\n        \"summary\": \"Triggered through the API\",\n        \"self\": \"https://api.pagerduty.com/log_entries/Q02JTSNZWHSEKV?incident_id=PT4KHLK\",\n        \"html_url\": \"https://subdomain.pagerduty.com/incidents/PT4KHLK/log_entries/Q02JTSNZWHSEKV\"\n      },\n      \"alert_counts\": {\n        \"all\": 2,\n        \"triggered\": 0,\n        \"resolved\": 2\n      },\n      \"is_mergeable\": true,\n      \"incident_type\": {\n        \"name\": \"incident_default\"\n      },\n      \"escalation_policy\": {\n        \"id\": \"PT20YPA\",\n        \"type\": \"escalation_policy_reference\",\n        \"summary\": \"Another Escalation Policy\",\n        \"self\": \"https://api.pagerduty.com/escalation_policies/PT20YPA\",\n        \"html_url\": \"https://subdomain.pagerduty.com/escalation_policies/PT20YPA\"\n      },\n      \"teams\": [\n        {\n          \"id\": \"PQ9K7I8\",\n          \"type\": \"team_reference\",\n          \"summary\": \"Engineering\",\n          \"self\": \"https://api.pagerduty.com/teams/PQ9K7I8\",\n          \"html_url\": \"https://subdomain.pagerduty.com/teams/PQ9K7I8\"\n        }\n      ],\n      \"pending_actions\": [],\n      \"acknowledgements\": [],\n      \"alert_grouping\": {\n        \"grouping_type\": \"advanced\",\n        \"started_at\": \"2015-10-06T21:30:42Z\",\n        \"ended_at\": null,\n        \"alert_grouping_active\": true\n      },\n      \"last_status_change_by\": {\n        \"id\": \"PXPGF42\",\n        \"type\": \"user_reference\",\n        \"summary\": \"Earline Greenholt\",\n        \"self\": \"https://api.pagerduty.com/users/PXPGF42\",\n        \"html_url\": \"https://subdomain.pagerduty.com/users/PXPGF42\"\n      },\n      \"priority\": {\n        \"id\": \"P53ZZH5\",\n        \"type\": \"priority_reference\",\n        \"summary\": \"P2\",\n        \"self\": \"https://api.pagerduty.com/priorities/P53ZZH5\"\n      },\n      \"resolve_reason\": null,\n      \"conference_bridge\": {\n        \"conference_number\": \"+1-415-555-1212,,,,1234#\",\n        \"conference_url\": \"https://example.com/acb-123\"\n      },\n      \"incidents_responders\": [],\n      \"responder_requests\": [],\n      \"urgency\": \"high\"\n    }\n  ],\n  \"limit\": 1,\n  \"offset\": 0,\n  \"more\": true\n}\n"
       }
     ],
     "chaos": {

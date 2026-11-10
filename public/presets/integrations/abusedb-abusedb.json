@@ -3,9 +3,9 @@
   "name": "AbuseIPDB",
   "pack": "AbuseDB",
   "vendor": "AbuseIPDB",
-  "fidelity": "verified",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: GET /api/v2/check.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /api/v2/check.",
   "notes": [
     "Rebuilt from the XSOAR client. The checker matched GET /api/v2/check. Fields are keys the client reads or test_data contains."
   ],
@@ -17,18 +17,19 @@
       "kind": "preset",
       "id": "abusedb-abusedb",
       "name": "AbuseIPDB",
-      "fidelity": "verified",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.abuseipdb.com/#check-endpoint",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/v2/check. Fields are keys the client reads or test_data contains."
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v2/check. Fields are keys the client reads or test_data contains.",
+        "Response body is the vendor's documented example, copied on 2026-11-10."
       ],
       "verification": {
-        "status": "verified",
+        "status": "vendor",
         "docUrl": "https://docs.abuseipdb.com/#check-endpoint",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/v2/check. Fields are keys the client reads or test_data contains."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
         ]
       }
     },
@@ -95,7 +96,8 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"data\": {\n    \"ipAddress\": \"118.25.6.39\",\n    \"isPublic\": true,\n    \"ipVersion\": 4,\n    \"isWhitelisted\": false,\n    \"abuseConfidenceScore\": 100,\n    \"countryCode\": \"CN\",\n    \"countryName\": \"China\",\n    \"usageType\": \"Data Center/Web Hosting/Transit\",\n    \"isp\": \"Tencent Cloud Computing (Beijing) Co. Ltd\",\n    \"domain\": \"tencent.com\",\n    \"hostnames\": [],\n    \"isTor\": false,\n    \"totalReports\": 1,\n    \"numDistinctUsers\": 1,\n    \"lastReportedAt\": \"2018-12-20T20:55:14+00:00\",\n    \"reports\": [\n      {\n        \"reportedAt\": \"2018-12-20T20:55:14+00:00\",\n        \"comment\": \"Dec 20 20:55:14 srv206 sshd[13937]: Invalid user oracle from 118.25.6.39\",\n        \"categories\": [\n          18,\n          22\n        ],\n        \"reporterId\": 1,\n        \"reporterCountryCode\": \"US\",\n        \"reporterCountryName\": \"United States\"\n      }\n    ]\n  }\n}\n"
       }
     ],
     "chaos": {

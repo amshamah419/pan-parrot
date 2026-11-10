@@ -1,6 +1,7 @@
 import { generateMockResponse } from "./generate";
 import type { MockSpec } from "./mock-spec";
-const FIXTURE_BODY_MAX = 8_000;
+import { MOCK_LIMITS } from "./policy";
+const FIXTURE_BODY_MAX = MOCK_LIMITS.maxFixtureBytes;
 
 export interface FixtureFile {
   pytest: string;

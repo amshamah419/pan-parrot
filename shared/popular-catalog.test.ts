@@ -17,26 +17,26 @@ const pins: Record<string, string> = {
 describe("popular catalog presets", () => {
   it("verifies client paths from the most-used packs", () => {
     const files = readdirSync("public/presets/integrations").filter((name) => name.endsWith(".json"));
-    let verified = 0;
+    let clientChecked = 0;
     for (const name of files) {
       const preset = JSON.parse(readFileSync(`public/presets/integrations/${name}`, "utf8")) as {
         fidelity?: string;
         spec?: { operations?: Array<{ pathTemplate?: string }> };
       };
-      if (preset.fidelity !== "verified") continue;
-      verified += 1;
+      if (preset.fidelity !== "approximate" && preset.fidelity !== "vendor") continue;
+      clientChecked += 1;
       for (const operation of preset.spec?.operations || []) {
         expect(operation.pathTemplate || "", name).not.toContain("/:");
       }
     }
-    expect(verified).toBe(283);
+    expect(clientChecked).toBe(283);
     for (const [id, path] of Object.entries(pins)) {
       const preset = JSON.parse(readFileSync(`public/presets/integrations/${id}.json`, "utf8")) as {
         fidelity: string;
         sourceUrl: string;
         spec: { operations: Array<{ pathTemplate: string }> };
       };
-      expect(preset.fidelity).toBe("verified");
+      expect(["vendor", "approximate"]).toContain(preset.fidelity);
       expect(preset.sourceUrl).toContain("github.com/demisto/content/");
       expect(preset.spec.operations[0]?.pathTemplate).toBe(path);
     }

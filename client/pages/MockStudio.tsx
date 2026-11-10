@@ -150,7 +150,11 @@ export default function MockStudio() {
           <h1 className="text-2xl font-bold">{spec.source.name}</h1>
         </div>
         <div className="flex gap-2">
-          <TrustBadge status={verification?.status} fidelity={spec.source.fidelity} />
+          <TrustBadge
+            status={verification?.status}
+            fidelity={spec.source.fidelity}
+            docUrl={spec.source.fidelity === "vendor" ? verification?.docUrl : undefined}
+          />
           <Button variant="outline" asChild>
             <a href={`/api/endpoints/${endpointId}/export?format=zip`}>Export pytest</a>
           </Button>
@@ -338,7 +342,7 @@ export default function MockStudio() {
         <section className="rounded-lg border p-4 text-sm">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="font-medium">How this mock was checked</p>
-            {verification.docUrl && (
+            {spec.source.fidelity === "vendor" && verification.docUrl && (
               <a className="underline" href={verification.docUrl} target="_blank" rel="noreferrer">
                 Vendor docs
               </a>

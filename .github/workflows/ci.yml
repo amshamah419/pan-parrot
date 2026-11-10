@@ -53,7 +53,9 @@ jobs:
             Packs/*/Integrations
             Packs/ApiModules/Scripts
           sparse-checkout-cone-mode: false
-      - name: Cross-check verified presets
+      - name: Check vendor doc provenance
+        run: python3 scripts/check_vendor_provenance.py
+      - name: Cross-check client-checked presets
         run: python3 scripts/crosscheck_presets.py --content content --strict
       - run: npm run build
       - name: Bundle Netlify functions and edge functions

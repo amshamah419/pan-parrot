@@ -297,7 +297,7 @@ export default function Dashboard() {
             <div className="max-w-xl">
               <h1 className="text-2xl font-bold">Mocks</h1>
               <p className="text-muted-foreground">
-                Point an XSOAR integration at a catch URL. Verified mocks follow the vendor's public API. The log below shows what the integration actually sent.
+                Point an XSOAR integration at a catch URL. A From vendor docs mock returns the vendor's published example. Every other mock is an approximate shape. The log below shows what the integration actually sent.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">

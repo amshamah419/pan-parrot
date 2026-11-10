@@ -3,9 +3,9 @@
   "name": "Entra ID Groups",
   "pack": "MicrosoftGraphGroups",
   "vendor": "Microsoft",
-  "fidelity": "verified",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: GET /groups.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /groups.",
   "notes": [
     "Sample fields are the ones GET /groups reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,18 +17,19 @@
       "kind": "preset",
       "id": "microsoftgraphgroups-microsoftgraphgroups",
       "name": "Entra ID Groups",
-      "fidelity": "verified",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/group-list",
       "notes": [
-        "Sample fields are the ones GET /groups reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /groups reads in the matched command. Lists the command iterates are arrays.",
+        "Response body is the vendor's documented example, copied on 2026-11-10."
       ],
       "verification": {
-        "status": "verified",
-        "docUrl": "https://learn.microsoft.com/en-us/graph/api/group-list",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /groups reads in the matched command. Lists the command iterates are arrays."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
         ]
       }
     },
@@ -73,7 +74,8 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#groups\",\n  \"value\": [\n    {\n      \"id\": \"45b7d2e7-b882-4a80-ba97-10b7a63b8fa4\",\n      \"deletedDateTime\": null,\n      \"classification\": null,\n      \"createdDateTime\": \"2018-12-22T02:21:05Z\",\n      \"description\": \"Self help community for golf\",\n      \"displayName\": \"Golf Assist\",\n      \"expirationDateTime\": null,\n      \"groupTypes\": [\n        \"Unified\"\n      ],\n      \"isAssignableToRole\": null,\n      \"mail\": \"user@example.invalid\",\n      \"mailEnabled\": true,\n      \"mailNickname\": \"golfassist\",\n      \"membershipRule\": null,\n      \"membershipRuleProcessingState\": null,\n      \"onPremisesLastSyncDateTime\": null,\n      \"onPremisesSecurityIdentifier\": null,\n      \"onPremisesSyncEnabled\": null,\n      \"preferredDataLocation\": \"CAN\",\n      \"preferredLanguage\": null,\n      \"proxyAddresses\": [\n        \"smtp:user@example.invalid\",\n        \"SMTP:user@example.invalid\"\n      ],\n      \"renewedDateTime\": \"2018-12-22T02:21:05Z\",\n      \"resourceBehaviorOptions\": [],\n      \"resourceProvisioningOptions\": [],\n      \"securityEnabled\": false,\n      \"theme\": null,\n      \"visibility\": \"Public\",\n      \"onPremisesProvisioningErrors\": []\n    },\n    {\n      \"id\": \"d7797254-3084-44d0-99c9-a3b5ab149538\",\n      \"deletedDateTime\": null,\n      \"classification\": null,\n      \"createdDateTime\": \"2018-11-19T20:29:40Z\",\n      \"description\": \"Talk about golf\",\n      \"displayName\": \"Golf Discussion\",\n      \"expirationDateTime\": null,\n      \"groupTypes\": [],\n      \"isAssignableToRole\": null,\n      \"mail\": \"user2@example.invalid\",\n      \"mailEnabled\": true,\n      \"mailNickname\": \"golftalk\",\n      \"membershipRule\": null,\n      \"membershipRuleProcessingState\": null,\n      \"onPremisesLastSyncDateTime\": null,\n      \"onPremisesSecurityIdentifier\": null,\n      \"onPremisesSyncEnabled\": null,\n      \"preferredDataLocation\": \"CAN\",\n      \"preferredLanguage\": null,\n      \"proxyAddresses\": [\n        \"smtp:user2@example.invalid\",\n        \"SMTP:user2@example.invalid\"\n      ],\n      \"renewedDateTime\": \"2018-11-19T20:29:40Z\",\n      \"resourceBehaviorOptions\": [],\n      \"resourceProvisioningOptions\": [],\n      \"securityEnabled\": false,\n      \"serviceProvisioningErrors\": [],\n      \"theme\": null,\n      \"visibility\": null,\n      \"onPremisesProvisioningErrors\": []\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

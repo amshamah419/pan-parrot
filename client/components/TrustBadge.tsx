@@ -1,29 +1,31 @@
 import { Badge } from "@/components/ui/badge";
 
 export function trustLabel(status?: string, fidelity?: string): string {
-  if (status === "verified") return "Verified";
-  if (status === "sample") return "Checked sample";
-  if (status === "shape") return "Checked shape";
-  if (fidelity === "verified") return "Verified";
-  if (fidelity === "high") return "Hand-built";
-  if (fidelity === "generated") return "From spec";
-  if (fidelity === "sample") return "From sample";
-  if (fidelity === "guessed" || fidelity === "shape") return "Guessed shape";
-  return "Guessed shape";
+  if (fidelity === "vendor" || status === "vendor") return "From vendor docs";
+  return "Approximate";
 }
 
 export function TrustBadge({
   status,
   fidelity,
+  docUrl,
 }: {
   status?: string;
   fidelity?: string;
+  docUrl?: string;
 }) {
-  const label = trustLabel(status, fidelity);
-  const verified = label === "Verified";
-  return (
-    <Badge variant={verified ? "default" : "secondary"} className="shrink-0">
-      {label}
+  const vendor = fidelity === "vendor" || status === "vendor";
+  const badge = (
+    <Badge variant={vendor ? "default" : "secondary"} className="shrink-0">
+      {trustLabel(status, fidelity)}
     </Badge>
   );
+  if (vendor && docUrl) {
+    return (
+      <a href={docUrl} target="_blank" rel="noreferrer" className="inline-flex shrink-0">
+        {badge}
+      </a>
+    );
+  }
+  return badge;
 }
