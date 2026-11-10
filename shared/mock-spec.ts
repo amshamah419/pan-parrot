@@ -590,6 +590,7 @@ function normalizeFixture(value: unknown): string | undefined {
   const trimmed = value.trim();
   if (!trimmed || trimmed.length > MOCK_LIMITS.maxFixtureBytes) return undefined;
   if (trimmed.includes("\0")) return undefined;
+  if (trimmed.startsWith("<")) return trimmed;
   if (!trimmed.startsWith("{") && !trimmed.startsWith("[")) return undefined;
   try {
     JSON.parse(trimmed);

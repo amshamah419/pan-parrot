@@ -3,9 +3,9 @@
   "name": "AWS - SQS fetch",
   "pack": "AWS-SQS",
   "vendor": "Amazon Web Services",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "ReceiveMessage and DeleteMessage as SQS query-protocol XML.",
+  "summary": "From vendor docs. ReceiveMessage and DeleteMessage as SQS query-protocol XML.",
   "notes": [
     "The SQS API reference is query XML. POST / with Action=ReceiveMessage returns repeated Message elements in http://queue.amazonaws.com/doc/2012-11-05/. Current boto3 sends JSON instead: X-Amz-Target AmazonSQS.ReceiveMessage and { Messages }.",
     "ReceiveMessage returns MessageId, ReceiptHandle, MD5OfBody, and Body. MaxNumberOfMessages selects how many, up to 10. The next poll returns the same messages. XSOAR fetch skips receipt handles it already stored.",
@@ -19,22 +19,22 @@
       "kind": "preset",
       "id": "aws-sqs-fetch",
       "name": "AWS - SQS fetch",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "AWS API reference plus demisto/content client (MIT).",
       "sourceUrl": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html",
       "notes": [
         "The SQS API reference is query XML. POST / with Action=ReceiveMessage returns repeated Message elements in http://queue.amazonaws.com/doc/2012-11-05/. Current boto3 sends JSON instead: X-Amz-Target AmazonSQS.ReceiveMessage and { Messages }.",
         "ReceiveMessage returns MessageId, ReceiptHandle, MD5OfBody, and Body. MaxNumberOfMessages selects how many, up to 10. The next poll returns the same messages. XSOAR fetch skips receipt handles it already stored.",
-        "DeleteMessage returns an empty result and ResponseMetadata. The receipt handle is not removed. Attributes are omitted. Signature checks are off until you turn them on. The AssumeRole session key is accepted when checks are on."
+        "DeleteMessage returns an empty result and ResponseMetadata. The receipt handle is not removed. Attributes are omitted. Signature checks are off until you turn them on. The AssumeRole session key is accepted when checks are on.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
+        "status": "vendor",
         "docUrl": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The SQS API reference is query XML. POST / with Action=ReceiveMessage returns repeated Message elements in http://queue.amazonaws.com/doc/2012-11-05/. Current boto3 sends JSON instead: X-Amz-Target AmazonSQS.ReceiveMessage and { Messages }.",
-          "ReceiveMessage returns MessageId, ReceiptHandle, MD5OfBody, and Body. MaxNumberOfMessages selects how many, up to 10. The next poll returns the same messages. XSOAR fetch skips receipt handles it already stored.",
-          "DeleteMessage returns an empty result and ResponseMetadata. The receipt handle is not removed. Attributes are omitted. Signature checks are off until you turn them on. The AssumeRole session key is accepted when checks are on."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file.",
+          "These operations stay approximate: POST /."
         ]
       }
     },
@@ -93,7 +93,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 1,
           "maxLimit": 10
-        }
+        },
+        "fixture": "<ReceiveMessageResponse xmlns=\"http://queue.amazonaws.com/doc/2012-11-05/\">\n    <ReceiveMessageResult>\n        <Message>\n            <MessageId>60e827c3-c8a5-410a-af0e-fb43746e70b1</MessageId>\n            <ReceiptHandle>receipt-handle-redacted</ReceiptHandle>\n            <MD5OfBody>0e024d309850c78cba5eabbeff7cae71</MD5OfBody>\n            <Body>test message body 1</Body>\n            <Attribute>\n                <Name>SenderId</Name>\n                <Value>AIDASSYFHUBOBT7F4XT75</Value>\n            </Attribute>\n            <Attribute>\n                <Name>ApproximateFirstReceiveTimestamp</Name>\n                <Value>1677112300463</Value>\n            </Attribute>\n            <Attribute>\n                <Name>ApproximateReceiveCount</Name>\n                <Value>1</Value>\n            </Attribute>\n            <Attribute>\n                <Name>SentTimestamp</Name>\n                <Value>1677111805489</Value>\n            </Attribute>\n        </Message>\n    </ReceiveMessageResult>\n    <ResponseMetadata>\n        <RequestId>5ba605cc-1e4b-58ba-93db-59bca8677ec9</RequestId>\n    </ResponseMetadata>\n</ReceiveMessageResponse>"
       },
       {
         "id": "delete-message",
@@ -130,7 +131,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "<?xml version=\"1.0\"?>\n<DeleteMessageResponse xmlns=\"http://queue.amazonaws.com/doc/2012-11-05/\">\n    <ResponseMetadata>\n        <RequestId>b5293cb5-d306-4a17-9048-b263635abe42</RequestId>\n    </ResponseMetadata>\n</DeleteMessageResponse>"
       },
       {
         "id": "receive-message-json",
@@ -180,7 +182,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 1,
           "maxLimit": 10
-        }
+        },
+        "fixture": "{\n  \"Messages\": [\n    {\n      \"Attributes\": {\n        \"SenderId\": \"AIDASSYFHUBOBT7F4XT75\",\n        \"ApproximateFirstReceiveTimestamp\": \"1677112433437\",\n        \"ApproximateReceiveCount\": \"1\",\n        \"SentTimestamp\": \"1677112427387\"\n      },\n      \"Body\": \"This is a test message\",\n      \"MD5OfBody\": \"fafb00f5732ab283681e124bf8747ed1\",\n      \"MessageId\": \"219f8380-5770-4cc2-8c3e-5c715e145f5e\",\n      \"ReceiptHandle\": \"receipt-handle-redacted\"\n    }\n  ]\n}\n"
       },
       {
         "id": "delete-message-json",

@@ -3,9 +3,9 @@
   "name": "Microsoft Graph Mail Single User",
   "pack": "MicrosoftGraphMail",
   "vendor": "Microsoft",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: GET /users/{_mailbox_to_fetch}/messages.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /users/{_mailbox_to_fetch}/messages.",
   "notes": [
     "Sample fields are the ones GET /users/{_mailbox_to_fetch}/messages, GET /users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,18 +17,19 @@
       "kind": "preset",
       "id": "microsoftgraphmail-microsoftgraphlistener",
       "name": "Microsoft Graph Mail Single User",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/subscription-post-subscriptions",
       "notes": [
-        "Sample fields are the ones GET /users/{_mailbox_to_fetch}/messages, GET /users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /users/{_mailbox_to_fetch}/messages, GET /users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://learn.microsoft.com/en-us/graph/api/subscription-post-subscriptions",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-messages?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /users/{_mailbox_to_fetch}/messages, GET /users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -58,7 +59,8 @@
           "name": "body",
           "kind": "object",
           "children": []
-        }
+        },
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#users('bb8775a4-4d8c-42cf-a1d4-4d58c2bb668f')/messages(sender,subject)\",\n  \"value\": [\n    {\n      \"@odata.etag\": \"W/\\\"CQAAABYAAADHcgC8Hl9tRZ/hc1wEUs1TAAAwR4Hg\\\"\",\n      \"id\": \"AAMkAGUAAAwTW09AAA=\",\n      \"subject\": \"You have late tasks!\",\n      \"sender\": {\n        \"emailAddress\": {\n          \"name\": \"Microsoft Planner\",\n          \"address\": \"user@example.invalid\"\n        }\n      }\n    }\n  ]\n}\n"
       },
       {
         "id": "get-users-mailbox-to-fetch-mailfolders-folde-1",
@@ -110,7 +112,8 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"receivedDateTime\": \"2018-02-13T03:53:55Z\",\n      \"sentDateTime\": \"2018-02-13T03:53:55Z\",\n      \"hasAttachments\": true,\n      \"subject\": \"MyAnalytics | Your past week\",\n      \"body\": {\n        \"contentType\": \"html\",\n        \"content\": \"<html lang=\\\"en\\\">\\r\\n<head></head>\\r\\n<body> </body>\\r\\n</html>\\r\\n\"\n      },\n      \"bodyPreview\": \"February 4-10, 2018\\r\\n\\r\\n\\r\\nHi Megan Bowen,\\r\\n\\r\\nWe've got your highlights from last week\\r\\n\\r\\n\\r\\n\\r\\nYour time\\r\\n\\r\\n\\r\\nEmail hours\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n0 hrs\\r\\n\\r\\n\\r\\n\\r\\nMeeting hours\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n12 hrs\\r\\n\\r\\n\\r\\n\\r\\n\\r\\nFocus hours\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n30 hrs\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\nGoals keep you motivated. Set them\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

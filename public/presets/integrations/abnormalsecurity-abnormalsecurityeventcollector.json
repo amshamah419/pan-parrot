@@ -3,9 +3,9 @@
   "name": "Abnormal Security Event Collector",
   "pack": "AbnormalSecurity",
   "vendor": "Abnormal",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Threat page for the event collector. Same /threats list as the main integration.",
+  "summary": "From vendor docs. Threat page for the event collector. Same /threats list as the main integration.",
   "notes": [
     "GET /threats returns { threats }. The collector polls the same list as the main Abnormal integration.",
     "The readme was not reloaded. pageNumber and pageSize page the list.",
@@ -19,22 +19,21 @@
       "kind": "preset",
       "id": "abnormalsecurity-abnormalsecurityeventcollector",
       "name": "Abnormal Security Event Collector",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://abnormalsecurity.readme.io/reference/get_threats",
       "notes": [
         "GET /threats returns { threats }. The collector polls the same list as the main Abnormal integration.",
         "The readme was not reloaded. pageNumber and pageSize page the list.",
-        "A bearer token is required."
+        "A bearer token is required.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://abnormalsecurity.readme.io/reference/get_threats",
+        "status": "vendor",
+        "docUrl": "https://api.swaggerhub.com/apis/abnormal-security/abx/1.4.3",
         "checkedAt": "2026-11-10",
         "differences": [
-          "GET /threats returns { threats }. The collector polls the same list as the main Abnormal integration.",
-          "The readme was not reloaded. pageNumber and pageSize page the list.",
-          "A bearer token is required."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -91,7 +90,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "{\n  \"threats\": [\n    {\n      \"threatId\": \"184712ab-6d8b-47b3-89d3-a314efef79e2\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

@@ -3,9 +3,9 @@
   "name": "Cloudflare WAF",
   "pack": "CloudflareWAF",
   "vendor": "Cloudflare",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: POST /zones/{zone_id}/firewall/rules.",
+  "summary": "From vendor docs. Rebuilt from the client: POST /zones/{zone_id}/firewall/rules.",
   "notes": [
     "Sample fields are the ones POST /zones/{zone_id}/firewall/rules, GET /zones reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,18 +17,20 @@
       "kind": "preset",
       "id": "cloudflarewaf-cloudflarewaf",
       "name": "Cloudflare WAF",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developers.cloudflare.com/api/resources/firewall/subresources/rules/methods/list/",
       "notes": [
-        "Sample fields are the ones POST /zones/{zone_id}/firewall/rules, GET /zones reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones POST /zones/{zone_id}/firewall/rules, GET /zones reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://developers.cloudflare.com/api/resources/firewall/subresources/rules/methods/list/",
+        "status": "vendor",
+        "docUrl": "https://developers.cloudflare.com/api/resources/zones/methods/list/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /zones/{zone_id}/firewall/rules, GET /zones reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file.",
+          "These operations stay approximate: POST /zones/{zone_id}/firewall/rules."
         ]
       }
     },
@@ -147,7 +149,8 @@
           "name": "body",
           "kind": "object",
           "children": []
-        }
+        },
+        "fixture": "{\n  \"errors\": [\n    {\n      \"code\": 1000,\n      \"message\": \"message\",\n      \"documentation_url\": \"documentation_url\",\n      \"source\": {\n        \"pointer\": \"pointer\"\n      }\n    }\n  ],\n  \"messages\": [\n    {\n      \"code\": 1000,\n      \"message\": \"message\",\n      \"documentation_url\": \"documentation_url\",\n      \"source\": {\n        \"pointer\": \"pointer\"\n      }\n    }\n  ],\n  \"success\": true,\n  \"result\": [\n    {\n      \"id\": \"023e105f4ecef8ad9ca31a8372d0c353\",\n      \"account\": {\n        \"id\": \"023e105f4ecef8ad9ca31a8372d0c353\",\n        \"name\": \"Example Account Name\"\n      },\n      \"activated_on\": \"2014-01-02T00:01:00.12345Z\",\n      \"created_on\": \"2014-01-01T05:20:00.12345Z\",\n      \"development_mode\": 7200,\n      \"meta\": {\n        \"cdn_only\": true,\n        \"custom_certificate_quota\": 1,\n        \"dns_only\": true,\n        \"foundation_dns\": true,\n        \"page_rule_quota\": 100,\n        \"phishing_detected\": false,\n        \"step\": 2\n      },\n      \"modified_on\": \"2014-01-01T05:20:00.12345Z\",\n      \"name\": \"example.com\",\n      \"name_servers\": [\n        \"bob.ns.cloudflare.com\",\n        \"lola.ns.cloudflare.com\"\n      ],\n      \"original_dnshost\": \"NameCheap\",\n      \"original_name_servers\": [\n        \"ns1.originaldnshost.com\",\n        \"ns2.originaldnshost.com\"\n      ],\n      \"original_registrar\": \"GoDaddy\",\n      \"owner\": {\n        \"id\": \"023e105f4ecef8ad9ca31a8372d0c353\",\n        \"name\": \"Example Org\",\n        \"type\": \"organization\"\n      },\n      \"plan\": {\n        \"id\": \"023e105f4ecef8ad9ca31a8372d0c353\",\n        \"can_subscribe\": false,\n        \"currency\": \"USD\",\n        \"externally_managed\": false,\n        \"frequency\": \"monthly\",\n        \"is_subscribed\": false,\n        \"legacy_discount\": false,\n        \"legacy_id\": \"free\",\n        \"name\": \"Example Org\",\n        \"price\": 10.99\n      },\n      \"cname_suffix\": \"cdn.cloudflare.com\",\n      \"paused\": true,\n      \"permissions\": [\n        \"#worker:read\"\n      ],\n      \"status\": \"active\",\n      \"tenant\": {\n        \"id\": \"023e105f4ecef8ad9ca31a8372d0c353\",\n        \"name\": \"Example Account Name\"\n      },\n      \"tenant_unit\": {\n        \"id\": \"023e105f4ecef8ad9ca31a8372d0c353\"\n      },\n      \"type\": \"full\",\n      \"vanity_name_servers\": [\n        \"ns1.example.com\",\n        \"ns2.example.com\"\n      ],\n      \"verification_key\": \"284344499-1084221259\"\n    }\n  ],\n  \"result_info\": {\n    \"count\": 1,\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total_count\": 2000,\n    \"total_pages\": 100\n  }\n}\n"
       }
     ],
     "chaos": {

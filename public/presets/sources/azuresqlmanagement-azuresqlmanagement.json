@@ -1,0 +1,51 @@
+{
+  "id": "azuresqlmanagement-azuresqlmanagement",
+  "retrievedAt": "2026-11-10",
+  "sourceType": "vendor-example",
+  "docUrl": "https://learn.microsoft.com/en-us/rest/api/sql/database-security-alert-policies/get?view=rest-sql-2021-11-01&tabs=HTTP",
+  "operations": [
+    {
+      "operationId": "get-subscriptions-subscription-id-resourcegr-0",
+      "method": "GET",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPolicies/default",
+      "docUrl": "https://learn.microsoft.com/en-us/rest/api/sql/database-security-alert-policies/get?view=rest-sql-2021-11-01&tabs=HTTP",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/securityalert-6852/providers/Microsoft.Sql/servers/securityalert-2080/databases/testdb",
+        "name": "default",
+        "type": "Microsoft.Sql/servers/databases/securityAlertPolicies",
+        "systemData": {
+          "createdBy": "string",
+          "createdByType": "User",
+          "createdAt": "2020-04-03T04:41:33.937Z",
+          "lastModifiedBy": "string",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2020-04-03T04:41:33.937Z"
+        },
+        "properties": {
+          "state": "Enabled",
+          "emailAccountAdmins": true,
+          "emailAddresses": [
+            "test@consoto.com",
+            "user@consoto.com"
+          ],
+          "disabledAlerts": [
+            "Usage_Anomaly"
+          ],
+          "retentionDays": 0,
+          "creationTime": "2020-04-03T04:41:33.937Z"
+        }
+      },
+      "scrubs": [
+        {
+          "find": "test@consoto.com",
+          "replace": "user@example.invalid"
+        },
+        {
+          "find": "user@consoto.com",
+          "replace": "user2@example.invalid"
+        }
+      ]
+    }
+  ]
+}

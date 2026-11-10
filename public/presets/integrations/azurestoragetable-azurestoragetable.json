@@ -2,9 +2,9 @@
   "id": "azurestoragetable-azurestoragetable",
   "name": "Azure Storage Table",
   "pack": "AzureStorageTable",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /Tables.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /Tables.",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "Azure Storage Table",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureStorageTable/Integrations/AzureStorageTable",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "notes": [
-        "Sample fields are the ones GET /Tables reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /Tables reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureStorageTable/Integrations/AzureStorageTable",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/rest/api/storageservices/query-tables",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /Tables reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -70,7 +71,8 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"odata.metadata\": \"https://myaccount.table.core.windows.net/$metadata#Tables\",\n  \"value\": [\n    {\n      \"TableName\": \"mytable\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

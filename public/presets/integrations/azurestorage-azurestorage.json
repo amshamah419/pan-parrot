@@ -2,9 +2,9 @@
   "id": "azurestorage-azurestorage",
   "name": "Azure Storage Management",
   "pack": "AzureStorage",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default",
+  "summary": "From vendor docs. GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "Azure Storage Management",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureStorage/Integrations/AzureStorage",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "notes": [
-        "GET blobServices/default returns one resource. The command reads id, name, and properties.changeFeed, deleteRetentionPolicy, and isVersioningEnabled."
+        "GET blobServices/default returns one resource. The command reads id, name, and properties.changeFeed, deleteRetentionPolicy, and isVersioningEnabled.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureStorage/Integrations/AzureStorage",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/rest/api/storagerp/blob-services/get-service-properties?tabs=HTTP",
         "checkedAt": "2026-11-10",
         "differences": [
-          "GET blobServices/default returns one resource. The command reads id, name, and properties.changeFeed, deleteRetentionPolicy, and isVersioningEnabled."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -95,7 +96,8 @@
               ]
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"name\": \"default\",\n  \"type\": \"Microsoft.Storage/storageAccounts/blobServices\",\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/res4410/providers/Microsoft.Storage/storageAccounts/sto8607/blobServices/default\",\n  \"properties\": {\n    \"changeFeed\": {\n      \"enabled\": true,\n      \"retentionInDays\": 7\n    },\n    \"cors\": {\n      \"corsRules\": [\n        {\n          \"allowedHeaders\": [\n            \"x-ms-meta-abc\",\n            \"x-ms-meta-data*\",\n            \"x-ms-meta-target*\"\n          ],\n          \"allowedMethods\": [\n            \"GET\",\n            \"HEAD\",\n            \"POST\",\n            \"OPTIONS\",\n            \"MERGE\",\n            \"PUT\"\n          ],\n          \"allowedOrigins\": [\n            \"http://www.contoso.com\",\n            \"http://www.fabrikam.com\"\n          ],\n          \"exposedHeaders\": [\n            \"x-ms-meta-*\"\n          ],\n          \"maxAgeInSeconds\": 100\n        },\n        {\n          \"allowedHeaders\": [\n            \"*\"\n          ],\n          \"allowedMethods\": [\n            \"GET\"\n          ],\n          \"allowedOrigins\": [\n            \"*\"\n          ],\n          \"exposedHeaders\": [\n            \"*\"\n          ],\n          \"maxAgeInSeconds\": 2\n        },\n        {\n          \"allowedHeaders\": [\n            \"x-ms-meta-12345675754564*\"\n          ],\n          \"allowedMethods\": [\n            \"GET\",\n            \"PUT\"\n          ],\n          \"allowedOrigins\": [\n            \"http://www.abc23.com\",\n            \"https://www.fabrikam.com/*\"\n          ],\n          \"exposedHeaders\": [\n            \"x-ms-meta-abc\",\n            \"x-ms-meta-data*\",\n            \"x -ms-meta-target*\"\n          ],\n          \"maxAgeInSeconds\": 2000\n        }\n      ]\n    },\n    \"defaultServiceVersion\": \"2017-07-29\",\n    \"deleteRetentionPolicy\": {\n      \"days\": 300,\n      \"enabled\": true\n    },\n    \"isVersioningEnabled\": true,\n    \"staticWebsite\": {\n      \"enabled\": true,\n      \"indexDocument\": \"home.html\",\n      \"errorDocument404Path\": \"site/errors/not-found.html\"\n    }\n  },\n  \"sku\": {\n    \"name\": \"Standard_GRS\",\n    \"tier\": \"Standard\"\n  }\n}\n"
       }
     ],
     "chaos": {

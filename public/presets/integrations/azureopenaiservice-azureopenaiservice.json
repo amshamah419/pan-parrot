@@ -2,9 +2,9 @@
   "id": "azureopenaiservice-azureopenaiservice",
   "name": "Azure Open AI Service",
   "pack": "AzureOpenAIService",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: POST /openai/deployments/{deployment_name}/chat/completions.",
+  "summary": "From vendor docs. Rebuilt from the client: POST /openai/deployments/{deployment_name}/chat/completions.",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "Azure Open AI Service",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureOpenAIService/Integrations/AzureOpenAIService",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /openai/deployments/{deployment_name}/chat/completions. Fields are keys the client reads or test_data contains."
+        "Rebuilt from the XSOAR client. The checker matched POST /openai/deployments/{deployment_name}/chat/completions. Fields are keys the client reads or test_data contains.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureOpenAIService/Integrations/AzureOpenAIService",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/rest/api/microsoft-foundry/azureopenai/chat?view=rest-microsoft-foundry-2024-10-21",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /openai/deployments/{deployment_name}/chat/completions. Fields are keys the client reads or test_data contains."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -85,7 +86,8 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"id\": \"chatcmpl-7R1nGnsXO8n4oi9UPz2f3UHdgAYMn\",\n  \"created\": 1686676106,\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"finish_reason\": \"stop\",\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"Ahoy matey! So ye be wantin' to care for a fine squawkin' parrot, eh? ...\"\n      }\n    }\n  ],\n  \"usage\": {\n    \"completion_tokens\": 557,\n    \"prompt_tokens\": 33,\n    \"total_tokens\": 590\n  }\n}\n"
       }
     ],
     "chaos": {

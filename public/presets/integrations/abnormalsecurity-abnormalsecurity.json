@@ -3,9 +3,9 @@
   "name": "Abnormal Security",
   "pack": "AbnormalSecurity",
   "vendor": "Abnormal",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Threat list for fetch. GET /threats.",
+  "summary": "From vendor docs. Threat list for fetch. GET /threats.",
   "notes": [
     "GET /threats returns { threats }. The client method get_a_list_of_threats_request calls that path with pageSize and pageNumber.",
     "The readme page was not reloaded. Paging uses page and pageSize.",
@@ -19,22 +19,21 @@
       "kind": "preset",
       "id": "abnormalsecurity-abnormalsecurity",
       "name": "Abnormal Security",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://abnormalsecurity.readme.io/reference/get_threats",
       "notes": [
         "GET /threats returns { threats }. The client method get_a_list_of_threats_request calls that path with pageSize and pageNumber.",
         "The readme page was not reloaded. Paging uses page and pageSize.",
-        "A bearer token is required. Threat actions and the CSV export are not modeled."
+        "A bearer token is required. Threat actions and the CSV export are not modeled.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://abnormalsecurity.readme.io/reference/get_threats",
+        "status": "vendor",
+        "docUrl": "https://api.swaggerhub.com/apis/abnormal-security/abx/1.4.3",
         "checkedAt": "2026-11-10",
         "differences": [
-          "GET /threats returns { threats }. The client method get_a_list_of_threats_request calls that path with pageSize and pageNumber.",
-          "The readme page was not reloaded. Paging uses page and pageSize.",
-          "A bearer token is required. Threat actions and the CSV export are not modeled."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -92,7 +91,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "{\n  \"threats\": [\n    {\n      \"threatId\": \"184712ab-6d8b-47b3-89d3-a314efef79e2\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

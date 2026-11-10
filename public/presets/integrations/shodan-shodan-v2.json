@@ -3,9 +3,9 @@
   "name": "Shodan v2",
   "pack": "Shodan",
   "vendor": "Shodan",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "The checker matched GET /shodan/host/{ip}.",
+  "summary": "From vendor docs. The checker matched GET /shodan/host/{ip}.",
   "notes": [
     "Sample fields are the ones GET /shodan/host/{ip} reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,18 +17,19 @@
       "kind": "preset",
       "id": "shodan-shodan-v2",
       "name": "Shodan v2",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://developer.shodan.io/api",
       "notes": [
-        "Sample fields are the ones GET /shodan/host/{ip} reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /shodan/host/{ip} reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
+        "status": "vendor",
         "docUrl": "https://developer.shodan.io/api",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /shodan/host/{ip} reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -248,7 +249,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "{\n  \"region_code\": null,\n  \"ip\": 134744072,\n  \"postal_code\": null,\n  \"country_code\": \"US\",\n  \"city\": null,\n  \"dma_code\": null,\n  \"last_update\": \"2021-01-22T08:49:35.190817\",\n  \"latitude\": 37.751,\n  \"tags\": [],\n  \"area_code\": null,\n  \"country_name\": \"United States\",\n  \"hostnames\": [\n    \"dns.google\"\n  ],\n  \"org\": \"Google\",\n  \"data\": [\n    {\n      \"_shodan\": {\n        \"id\": \"cea5795b-55fd-4595-b9e5-ad5ca847cb4b\",\n        \"options\": {},\n        \"ptr\": true,\n        \"module\": \"dns-udp\",\n        \"crawler\": \"ac284849be0745621b3c518f74c14cf43cafbf08\"\n      },\n      \"hash\": -553166942,\n      \"os\": null,\n      \"opts\": {\n        \"raw\": \"34ef818200010000000000000776657273696f6e0462696e640000100003\"\n      },\n      \"ip\": 134744072,\n      \"isp\": \"Google\",\n      \"port\": 53,\n      \"hostnames\": [\n        \"dns.google\"\n      ],\n      \"location\": {\n        \"city\": null,\n        \"region_code\": null,\n        \"area_code\": null,\n        \"longitude\": -97.822,\n        \"country_code3\": null,\n        \"country_name\": \"United States\",\n        \"postal_code\": null,\n        \"dma_code\": null,\n        \"country_code\": \"US\",\n        \"latitude\": 37.751\n      },\n      \"dns\": {\n        \"resolver_hostname\": null,\n        \"recursive\": true,\n        \"resolver_id\": null,\n        \"software\": null\n      },\n      \"timestamp\": \"2021-01-22T08:49:35.190817\",\n      \"domains\": [\n        \"dns.google\"\n      ],\n      \"org\": \"Google\",\n      \"data\": \"\\nRecursion: enabled\",\n      \"asn\": \"AS15169\",\n      \"transport\": \"udp\",\n      \"ip_str\": \"8.8.8.8\"\n    }\n  ],\n  \"asn\": \"AS15169\",\n  \"isp\": \"Google\",\n  \"longitude\": -97.822,\n  \"country_code3\": null,\n  \"domains\": [\n    \"dns.google\"\n  ],\n  \"ip_str\": \"8.8.8.8\",\n  \"os\": null,\n  \"ports\": [\n    53\n  ]\n}\n"
       }
     ],
     "chaos": {

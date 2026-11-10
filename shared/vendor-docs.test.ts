@@ -38,24 +38,39 @@ describe("vendor doc provenance", () => {
         id: string;
         sourceType: string;
         docUrl: string;
-        operations: Array<{ method: string; path: string; excerpt: unknown; scrubs: Scrub[] }>;
+        operations: Array<{ method: string; path: string; operationId?: string; excerpt: unknown; scrubs: Scrub[] }>;
       };
-      expect(source.sourceType).toBe("vendor-example");
+      expect(["vendor-example", "vendor-schema"]).toContain(source.sourceType);
       expect(source.docUrl.startsWith("https://")).toBe(true);
       const preset = JSON.parse(readFileSync(`public/presets/integrations/${name}`, "utf8")) as {
-        spec: { operations: Array<{ method: string; pathTemplate: string; fixture?: string }> };
+        spec: { operations: Array<{ id?: string; method: string; pathTemplate: string; fixture?: string }> };
       };
       const validated = validateMockSpec(preset.spec);
+      const covered = new Set<string>();
       for (const entry of source.operations) {
-        const operation = preset.spec.operations.find(
-          (item) => item.method === entry.method && item.pathTemplate === entry.path,
-        );
-        expect(operation?.fixture, `${name} ${entry.method} ${entry.path}`).toBeTruthy();
-        expect(JSON.parse(operation?.fixture || "")).toEqual(scrub(entry.excerpt, entry.scrubs || []));
-        const kept = validated.operations.find(
-          (item) => item.method === entry.method && item.pathTemplate === entry.path,
-        );
-        expect(JSON.parse(kept?.fixture || "")).toEqual(scrub(entry.excerpt, entry.scrubs || []));
+        const matches = preset.spec.operations.filter((item) => {
+          if (entry.operationId) return item.id === entry.operationId;
+          return item.method === entry.method && item.pathTemplate === entry.path;
+        });
+        expect(matches, `${name} ${entry.method} ${entry.path}`).toHaveLength(1);
+        const operation = matches[0];
+        covered.add(operation.id || "");
+        expect(operation.fixture, `${name} ${entry.method} ${entry.path}`).toBeTruthy();
+        const expected = scrub(entry.excerpt, entry.scrubs || []);
+        if (typeof entry.excerpt === "string") {
+          expect(operation.fixture?.trim()).toBe(String(expected).trim());
+        } else {
+          expect(JSON.parse(operation.fixture || "")).toEqual(expected);
+        }
+        const kept = validated.operations.find((item) => item.id === operation.id);
+        if (typeof entry.excerpt === "string") {
+          expect(kept?.fixture?.trim()).toBe(String(expected).trim());
+        } else {
+          expect(JSON.parse(kept?.fixture || "")).toEqual(expected);
+        }
+      }
+      for (const operation of preset.spec.operations) {
+        if (operation.fixture) expect(covered.has(operation.id || "")).toBe(true);
       }
     }
   });

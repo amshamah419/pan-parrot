@@ -2,9 +2,9 @@
   "id": "microsoftgraphsearch-microsoftgraphsearch",
   "name": "Microsoft Graph Search",
   "pack": "MicrosoftGraphSearch",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "POST /v1.0/search/query",
+  "summary": "From vendor docs. POST /v1.0/search/query",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "Microsoft Graph Search",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSearch/Integrations/MicrosoftGraphSearch",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "notes": [
-        "Sample fields are the ones POST /v1.0/search/query reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones POST /v1.0/search/query reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSearch/Integrations/MicrosoftGraphSearch",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/search-query?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /v1.0/search/query reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -106,7 +107,8 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"searchTerms\": [\n        \"contoso\"\n      ],\n      \"hitsContainers\": [\n        {\n          \"hits\": [\n            {\n              \"hitId\": \"1\",\n              \"rank\": 1,\n              \"summary\": \"_summary-value\",\n              \"resource\": {\n                \"@odata.type\": \"#microsoft.graph.listItem\",\n                \"id\": \"c23c7035-73d6-4bad-8901-9e2930d4be8e\",\n                \"createdBy\": {\n                  \"user\": {\n                    \"displayName\": \"Bob\",\n                    \"email\": \"user@example.invalid\"\n                  }\n                },\n                \"createdDateTime\": \"2021-11-19T17:04:18Z\",\n                \"lastModifiedDateTime\": \"2023-03-09T18:52:26Z\"\n              }\n            }\n          ],\n          \"total\": 1,\n          \"moreResultsAvailable\": false\n        }\n      ]\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

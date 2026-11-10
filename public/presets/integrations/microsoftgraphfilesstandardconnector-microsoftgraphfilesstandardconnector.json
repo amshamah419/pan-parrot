@@ -2,9 +2,9 @@
   "id": "microsoftgraphfilesstandardconnector-microsoftgraphfilesstandardconnector",
   "name": "O365 File Management (Onedrive/Sharepoint/Teams) (Standard Connector)",
   "pack": "MicrosoftGraphFilesStandardConnector",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /v1.0/sites.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /v1.0/sites.",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "O365 File Management (Onedrive/Sharepoint/Teams) (Standard Connector)",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphFilesStandardConnector/Integrations/MicrosoftGraphFilesStandardConnector",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "notes": [
-        "Sample fields are the ones GET /v1.0/sites reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /v1.0/sites reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphFilesStandardConnector/Integrations/MicrosoftGraphFilesStandardConnector",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/site-list?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /v1.0/sites reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -149,7 +150,8 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"id\": \"contoso.sharepoint.com,bf6fb551-d508-4946-a439-b2a6154fc1d9,65a04b8b-1f44-442b-a1fc-9e5852fb946c\",\n      \"name\": \"Root Site\",\n      \"isPersonalSite\": false,\n      \"root\": {},\n      \"siteCollection\": {\n        \"hostname\": \"contoso.sharepoint.com\",\n        \"dataLocationCode\": \"NAM\",\n        \"root\": {}\n      },\n      \"webUrl\": \"https://contoso.sharepoint.com\"\n    },\n    {\n      \"id\": \"contoso.sharepoint.com,d9ecf079-9b13-4376-ac5d-f242dda55626,746dbcc1-fa2b-4120-b657-2670bae5bb6f\",\n      \"name\": \"Site A\",\n      \"isPersonalSite\": false,\n      \"root\": {},\n      \"siteCollection\": {\n        \"hostname\": \"contoso.sharepoint.com\"\n      },\n      \"webUrl\": \"https://contoso.sharepoint.com/sites/siteA\"\n    },\n    {\n      \"id\": \"contoso.sharepoint.com,fd1a778f-263e-4c43-acdf-d5c2519d80eb,c06016db-dfec-4f79-83a1-09c6dbfd7022\",\n      \"name\": \"Site B\",\n      \"isPersonalSite\": false,\n      \"root\": {},\n      \"siteCollection\": {\n        \"hostname\": \"contoso.sharepoint.com\"\n      },\n      \"webUrl\": \"https://contoso.sharepoint.com/sites/siteB\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

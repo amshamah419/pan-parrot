@@ -3,9 +3,9 @@
   "name": "Microsoft Teams",
   "pack": "MicrosoftTeams",
   "vendor": "Microsoft",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "List channels and chat messages on Microsoft Graph.",
+  "summary": "From vendor docs. List channels and chat messages on Microsoft Graph.",
   "notes": [
     "The client calls Graph /v1.0/teams/{id}/channels and /v1.0/chats/{id}/messages. This mock uses team lab-team and chat lab-chat.",
     "Creating chats, membership, and the bot callback are not modeled. The value array is one item.",
@@ -19,22 +19,22 @@
       "kind": "preset",
       "id": "microsoftteams-microsoftteams",
       "name": "Microsoft Teams",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/channel-list",
       "notes": [
         "The client calls Graph /v1.0/teams/{id}/channels and /v1.0/chats/{id}/messages. This mock uses team lab-team and chat lab-chat.",
         "Creating chats, membership, and the bot callback are not modeled. The value array is one item.",
-        "The channel-list page was not reloaded. A bearer token is required."
+        "The channel-list page was not reloaded. A bearer token is required.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://learn.microsoft.com/en-us/graph/api/channel-list",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/chat-list-messages?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client calls Graph /v1.0/teams/{id}/channels and /v1.0/chats/{id}/messages. This mock uses team lab-team and chat lab-chat.",
-          "Creating chats, membership, and the bot callback are not modeled. The value array is one item.",
-          "The channel-list page was not reloaded. A bearer token is required."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file.",
+          "These operations stay approximate: GET /v1.0/teams/lab-team/channels."
         ]
       }
     },
@@ -135,7 +135,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#chats('19%3A2da4c29f6d7041eca70b638b43d45437%40thread.v2')/messages\",\n  \"@odata.count\": 3,\n  \"@odata.nextLink\": \"https://graph.microsoft.com/v1.0/chats/19:2da4c29f6d7041eca70b638b43d45437@thread.v2/messages?$top=2&$skiptoken=M2UyZDAwMDAwMDMxMzkzYTMyNjQ2MTM0NjMzMjM5NjYzNjY0MzczMDM0MzE2NTYzNjEzNzMwNjIzNjMzMzg2MjM0MzM2NDM0MzUzNDMzMzc0MDc0Njg3MjY1NjE2NDJlNzYzMjAxZThmYjY4M2Y3ODAxMDAwMDg4NjA5ODdhNzgwMTAwMDB8MTYxNjk2NDUwOTgzMg%3d%3d\",\n  \"value\": [\n    {\n      \"id\": \"1616964509832\",\n      \"replyToId\": null,\n      \"etag\": \"1616964509832\",\n      \"messageType\": \"message\",\n      \"createdDateTime\": \"2021-03-28T20:48:29.832Z\",\n      \"lastModifiedDateTime\": \"2021-03-28T20:48:29.832Z\",\n      \"lastEditedDateTime\": null,\n      \"deletedDateTime\": null,\n      \"subject\": null,\n      \"summary\": null,\n      \"chatId\": \"19:2da4c29f6d7041eca70b638b43d45437@thread.v2\",\n      \"importance\": \"normal\",\n      \"locale\": \"en-us\",\n      \"webUrl\": null,\n      \"channelIdentity\": null,\n      \"policyViolation\": null,\n      \"eventDetail\": null,\n      \"from\": {\n        \"application\": null,\n        \"device\": null,\n        \"user\": {\n          \"id\": \"8ea0e38b-efb3-4757-924a-5f94061cf8c2\",\n          \"displayName\": \"Robin Kline\",\n          \"userIdentityType\": \"aadUser\"\n        }\n      },\n      \"body\": {\n        \"contentType\": \"text\",\n        \"content\": \"Hello world\"\n      },\n      \"attachments\": [],\n      \"mentions\": [],\n      \"reactions\": [],\n      \"messageHistory\": []\n    },\n    {\n      \"id\": \"1615971548136\",\n      \"replyToId\": null,\n      \"etag\": \"1615971548136\",\n      \"messageType\": \"message\",\n      \"createdDateTime\": \"2021-03-17T08:59:08.136Z\",\n      \"lastModifiedDateTime\": \"2021-03-17T08:59:08.136Z\",\n      \"lastEditedDateTime\": null,\n      \"deletedDateTime\": null,\n      \"subject\": null,\n      \"summary\": null,\n      \"chatId\": \"19:2da4c29f6d7041eca70b638b43d45437@thread.v2\",\n      \"importance\": \"normal\",\n      \"locale\": \"en-us\",\n      \"webUrl\": null,\n      \"channelIdentity\": null,\n      \"policyViolation\": null,\n      \"eventDetail\": null,\n      \"from\": {\n        \"application\": null,\n        \"device\": null,\n        \"user\": {\n          \"id\": \"8ea0e38b-efb3-4757-924a-5f94061cf8c2\",\n          \"displayName\": \"Robin Kline\",\n          \"userIdentityType\": \"aadUser\"\n        }\n      },\n      \"body\": {\n        \"contentType\": \"html\",\n        \"content\": \"<div><div><div><span><img height=\\\"63\\\" src=\\\"https://graph.microsoft.com/v1.0/chats/19:2da4c29f6d7041eca70b638b43d45437@thread.v2/messages/1615971548136/hostedContents/aWQ9eF8wLXd1cy1kOS1lNTRmNjM1NWYxYmJkNGQ3ZTNmNGJhZmU4NTI5MTBmNix0eXBlPTEsdXJsPWh0dHBzOi8vdXMtYXBpLmFzbS5za3lwZS5jb20vdjEvb2JqZWN0cy8wLXd1cy1kOS1lNTRmNjM1NWYxYmJkNGQ3ZTNmNGJhZmU4NTI5MTBmNi92aWV3cy9pbWdv/$value\\\" width=\\\"67\\\" style=\\\"vertical-align:bottom; width:67px; height:63px\\\"></span></div></div></div>\"\n      },\n      \"attachments\": [],\n      \"mentions\": [],\n      \"reactions\": [],\n      \"messageHistory\": []\n    },\n    {\n      \"id\": \"1615943825123\",\n      \"replyToId\": null,\n      \"etag\": \"1615943825123\",\n      \"messageType\": \"unknownFutureValue\",\n      \"createdDateTime\": \"2021-03-1706:47:05.123Z\",\n      \"lastModifiedDateTime\": \"2021-03-1706:47:05.123Z\",\n      \"lastEditedDateTime\": null,\n      \"deletedDateTime\": null,\n      \"subject\": null,\n      \"summary\": null,\n      \"chatId\": \"19:2da4c29f6d7041eca70b638b43d45437@thread.v2\",\n      \"importance\": \"normal\",\n      \"locale\": \"en-us\",\n      \"webUrl\": null,\n      \"channelIdentity\": null,\n      \"policyViolation\": null,\n      \"from\": null,\n      \"body\": {\n        \"contentType\": \"html\",\n        \"content\": \"<systemEventMessage/>\"\n      },\n      \"attachments\": [],\n      \"mentions\": [],\n      \"reactions\": [],\n      \"messageHistory\": [],\n      \"eventDetail\": {\n        \"@odata.type\": \"#microsoft.graph.chatRenamedEventMessageDetail\",\n        \"chatId\": \"19:2da4c29f6d7041eca70b638b43d45437@thread.v2\",\n        \"chatDisplayName\": \"Graph Members\",\n        \"initiator\": {\n          \"application\": null,\n          \"device\": null,\n          \"user\": {\n            \"id\": \"1fb8890f-423e-4154-8fbf-db6809bc8756\",\n            \"displayName\": null,\n            \"userIdentityType\": \"aadUser\"\n          }\n        }\n      }\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

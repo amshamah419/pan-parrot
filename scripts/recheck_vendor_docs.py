@@ -50,6 +50,13 @@ def collect_keys(value, depth: int = 0, found: list[str] | None = None) -> list[
 
 
 def distinctive_keys(excerpt) -> list[str]:
+    if isinstance(excerpt, str):
+        import re
+        tags = []
+        for tag in re.findall(r"</([A-Za-z0-9_]+)>", excerpt):
+            if len(tag) >= 4 and tag not in tags and tag not in GENERIC:
+                tags.append(tag)
+        return tags[:8]
     keys = []
     for key in collect_keys(excerpt):
         if key.startswith("@") or len(key) < 4 or key in GENERIC:

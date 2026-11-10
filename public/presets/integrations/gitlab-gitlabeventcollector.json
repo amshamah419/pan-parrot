@@ -2,9 +2,9 @@
   "id": "gitlab-gitlabeventcollector",
   "name": "GitLab Event Collector",
   "pack": "GitLab",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /audit_events.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /audit_events.",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "GitLab Event Collector",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GitLab/Integrations/GitLabEventCollector",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "notes": [
-        "Sample fields are the ones GET /audit_events reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /audit_events reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/GitLab/Integrations/GitLabEventCollector",
+        "status": "vendor",
+        "docUrl": "https://docs.gitlab.com/api/audit_events/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /audit_events reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -101,7 +102,8 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "[\n  {\n    \"id\": 1,\n    \"author_id\": 1,\n    \"entity_id\": 6,\n    \"entity_type\": \"Project\",\n    \"details\": {\n      \"custom_message\": \"Project archived\",\n      \"author_name\": \"Administrator\",\n      \"author_email\": \"admin@example.com\",\n      \"target_id\": \"flightjs/flight\",\n      \"target_type\": \"Project\",\n      \"target_details\": \"flightjs/flight\",\n      \"ip_address\": \"127.0.0.1\",\n      \"entity_path\": \"flightjs/flight\"\n    },\n    \"created_at\": \"2019-08-30T07:00:41.885Z\"\n  },\n  {\n    \"id\": 2,\n    \"author_id\": 1,\n    \"entity_id\": 60,\n    \"entity_type\": \"Group\",\n    \"details\": {\n      \"add\": \"group\",\n      \"author_name\": \"Administrator\",\n      \"author_email\": \"admin@example.com\",\n      \"target_id\": \"flightjs\",\n      \"target_type\": \"Group\",\n      \"target_details\": \"flightjs\",\n      \"ip_address\": \"127.0.0.1\",\n      \"entity_path\": \"flightjs\"\n    },\n    \"created_at\": \"2019-08-27T18:36:44.162Z\"\n  },\n  {\n    \"id\": 3,\n    \"author_id\": 51,\n    \"entity_id\": 51,\n    \"entity_type\": \"User\",\n    \"details\": {\n      \"change\": \"email address\",\n      \"from\": \"user@example.invalid\",\n      \"to\": \"user2@example.invalid\",\n      \"author_name\": \"Andreas\",\n      \"author_email\": \"admin@example.com\",\n      \"target_id\": 51,\n      \"target_type\": \"User\",\n      \"target_details\": \"Andreas\",\n      \"ip_address\": null,\n      \"entity_path\": \"Andreas\"\n    },\n    \"created_at\": \"2019-08-22T16:34:25.639Z\"\n  },\n  {\n    \"id\": 4,\n    \"author_id\": 43,\n    \"entity_id\": 1,\n    \"entity_type\": \"Gitlab::Audit::InstanceScope\",\n    \"details\": {\n      \"author_name\": \"Administrator\",\n      \"author_class\": \"User\",\n      \"target_id\": 32,\n      \"target_type\": \"AuditEvents::Streaming::InstanceHeader\",\n      \"target_details\": \"unknown\",\n      \"custom_message\": \"Created custom HTTP header with key X-arg.\",\n      \"ip_address\": \"127.0.0.1\",\n      \"entity_path\": \"gitlab_instance\"\n    },\n    \"ip_address\": \"127.0.0.1\",\n    \"author_name\": \"Administrator\",\n    \"entity_path\": \"gitlab_instance\",\n    \"target_details\": \"unknown\",\n    \"created_at\": \"2023-08-01T11:29:44.764Z\",\n    \"target_type\": \"AuditEvents::Streaming::InstanceHeader\",\n    \"target_id\": 32,\n    \"event_type\": \"audit_events_streaming_instance_headers_create\"\n  }\n]\n"
       }
     ],
     "chaos": {
