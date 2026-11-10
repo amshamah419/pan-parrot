@@ -123,6 +123,7 @@ class HttpCall:
     chain_lists: set[str] = field(default_factory=set)
     response_keys: set[str] = field(default_factory=set)
     stack: list[str] = field(default_factory=list)
+    query: dict[str, str] = field(default_factory=dict)
 
 
 @dataclass
@@ -152,6 +153,7 @@ class Mod:
     enum_routes: list[str] = field(default_factory=list)
     response_calls: set[int] = field(default_factory=set)
     chain_cache: dict[tuple[str, ...], tuple[set[str], set[str], set[str]]] = field(default_factory=dict)
+    api_roots: set[str] = field(default_factory=set)
 
 
 def main() -> int:
@@ -451,6 +453,7 @@ def parse_file(path: Path) -> Mod | None:
     mod.enum_routes = enum_path_pairs(tree)
     seed_module(mod, tree)
     seed_class_constants(mod, tree)
+    note_api_roots(mod, tree)
     inits = [func for func in funcs.values() if func.name == "__init__"]
     for func in inits:
         run_func(mod, func, {}, MAX_HOP)
@@ -508,6 +511,66 @@ def seed_class_constants(mod: Mod, tree: ast.AST) -> None:
                 bucket.setdefault(target.id, value)
 
 
+PANOS_TYPES = {"op", "config", "commit", "log", "keygen", "version", "export", "import", "user-id", "report"}
+PANOS_QUERY_KEYS = ("type", "action", "cmd", "xpath")
+
+
+def note_api_roots(mod: Mod, tree: ast.AST) -> None:
+    """PAN-OS sets URL to ``server:port/api/`` inside initialize_instance.
+
+    The module-level ``URL = ""`` hides that suffix. Remember the name so a
+    later ``http_request(URL, ...)`` is the ``/api`` XML API.
+    """
+    for node in ast.walk(tree):
+        targets: list[ast.Name] = []
+        value: ast.expr | None = None
+        if isinstance(node, ast.Assign):
+            targets = [target for target in node.targets if isinstance(target, ast.Name)]
+            value = node.value
+        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
+            targets = [node.target]
+            value = node.value
+        if not targets or value is None:
+            continue
+        if not api_suffix(value):
+            continue
+        for target in targets:
+            # Only the PAN-OS pattern: a module constant seeded as "" is later
+            # assigned server:port + "/api/". Other clients that concatenate
+            # "/api/" onto a real base keep the path the rest of the checker saw.
+            current = mod.env.get(target.id)
+            if current is None or current.text or current.path:
+                continue
+            mod.api_roots.add(target.id)
+            mod.env[target.id] = Val(text="/api/", path="/api")
+
+
+def api_suffix(node: ast.AST) -> bool:
+    for child in ast.walk(node):
+        if isinstance(child, ast.Constant) and isinstance(child.value, str) and child.value.rstrip("/") == "/api":
+            return True
+    return False
+
+
+def panos_query(val: Val | None) -> dict[str, str]:
+    if not val or not val.items:
+        return {}
+    found: dict[str, str] = {}
+    for key in PANOS_QUERY_KEYS:
+        item = val.items.get(key)
+        if item is None:
+            continue
+        text = (item.text or "").strip()
+        if not text or (text.startswith("{") and text.endswith("}") and text.count("{") == 1):
+            continue
+        if key == "type" and text not in PANOS_TYPES:
+            continue
+        if len(text) > 500:
+            text = text[:500]
+        found[key] = text
+    return found
+
+
 def seed_module(mod: Mod, tree: ast.AST) -> None:
     for node in tree.body:
         if isinstance(node, ast.Assign):
@@ -555,6 +618,7 @@ def decode_calls(blob: str) -> list[HttpCall]:
             boto3=row.get("boto3", False),
             action=str(row.get("action") or ""),
             stack=list(row.get("stack") or [row["func"]]),
+            query={str(key): str(value) for key, value in (row.get("query") or {}).items()},
         )
         for row in rows
     ]
@@ -1114,7 +1178,7 @@ def is_super_init(call: ast.Call) -> bool:
 
 
 def emit_sink(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> None:
-    method, paths, params, dynamic = sink_facts(call, env, mod, func)
+    method, paths, params, dynamic, query = sink_facts(call, env, mod, func)
     paths = [path for path in paths if concrete_path(Val(path=path))]
     if not paths and method in VERBS and mod.enum_routes:
         paths = list(mod.enum_routes)
@@ -1132,6 +1196,7 @@ def emit_sink(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> None
         "dynamic": dynamic,
         "func": func.qual,
         "boto3": False,
+        "query": query,
     }
     store_call(mod, row)
 
@@ -1153,7 +1218,7 @@ def store_call(mod: Mod, row: dict) -> None:
     mod.env["__calls__"] = blob
 
 
-def sink_facts(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> tuple[str, list[str], set[str], bool]:
+def sink_facts(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> tuple[str, list[str], set[str], bool, dict[str, str]]:
     keywords = expand_keywords(call, env, mod, func.cls)
     method = ""
     attr = call.func.attr if isinstance(call.func, ast.Attribute) else ""
@@ -1166,7 +1231,11 @@ def sink_facts(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> tup
     elif positional:
         if positional[0].text.upper() in VERBS:
             method = positional[0].text.upper()
-    params, dynamic = param_keys(keywords.get("params") or keywords.get("query_params"))
+    param_val = keywords.get("params") or keywords.get("query_params")
+    params, dynamic = param_keys(param_val)
+    query = panos_query(param_val)
+    query.update(panos_query(keywords.get("body")))
+    query.update(panos_query(keywords.get("data")))
     owner = owner_name(call.func.value) if isinstance(call.func, ast.Attribute) else ""
     if attr in {"get", "post", "put", "patch", "delete"} or attr == "request":
         url = keywords.get("url") or url_argument(call, env, mod, func.cls, attr)
@@ -1178,12 +1247,12 @@ def sink_facts(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> tup
                     raw = path_of(raw)
                 if raw:
                     paths.append(norm_path(raw))
-            return method, paths, params, dynamic
-        return method, [], params, dynamic
+            return method, panos_paths(paths, query, url, mod), params, dynamic, query
+        return method, panos_paths([], query, url, mod), params, dynamic, query
     full = keywords.get("full_url")
     if full and (full.path or full.text.startswith("http")):
         raw = full.path or path_of(full.text)
-        return method, [norm_path(raw)], params, dynamic
+        return method, panos_paths([norm_path(raw)], query, full, mod), params, dynamic, query
     suffix = keywords.get("url_suffix") or keywords.get("url") or keywords.get("path")
     if suffix is None and len(positional) >= 2 and attr in {"_http_request", "http_request", "generic_http_request"}:
         suffix = positional[1]
@@ -1192,11 +1261,21 @@ def sink_facts(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> tup
     if suffix is None and len(positional) >= 2 and attr == "request":
         suffix = positional[1]
     if suffix is None:
-        return method, [], params, dynamic
+        return method, panos_paths([], query, None, mod), params, dynamic, query
     paths: list[str] = []
     for option in suffix.alts or [suffix]:
         paths.extend(join_suffix(option, keywords.get("server_url"), mod))
-    return method, paths, params, dynamic
+    return method, panos_paths(paths, query, suffix, mod), params, dynamic, query
+
+
+def panos_paths(paths: list[str], query: dict[str, str], url: Val | None, mod: Mod) -> list[str]:
+    if paths or query.get("type") not in PANOS_TYPES:
+        return paths
+    if url and (url.path == "/api" or url.hole in {f"{{{name}}}" for name in mod.api_roots} or url.text in mod.api_roots):
+        return ["/api"]
+    if url and url.path.endswith("/api"):
+        return [norm_path(url.path)]
+    return paths
 
 
 def positional_vals(call: ast.Call, env: dict[str, Val], mod: Mod, cls: str) -> list[Val]:
@@ -2521,6 +2600,18 @@ def check_operation(
         findings.append(
             f"paging: {label} says {style} {paging_names(operation)} but the client sends {client_params or 'no paging params'}."
         )
+    query_match = operation.get("queryMatch") or {}
+    if (
+        operation.get("fixture")
+        and isinstance(query_match, dict)
+        and query_match
+        and any(call.query for call in matched)
+    ):
+        covered = any(
+            all(call.query.get(str(key)) == str(value) for key, value in query_match.items()) for call in matched
+        )
+        if not covered:
+            findings.append(f"query: {label} fixture query is not sent by a matched client call.")
     if (
         not skip_fields
         and operation.get("envelope", {}).get("type") not in SKIP_FIELD_ENVELOPES
@@ -3321,6 +3412,47 @@ def self_test() -> int:
     }
     safe_row = check_preset(lab_preset("Safe", safe), content)
     assert safe_row["status"] == "match", safe_row
+
+    write(
+        "Panos",
+        "\n".join(
+            [
+                "URL = ''",
+                "API_KEY = ''",
+                "def initialize_instance(params):",
+                "    global URL",
+                "    URL = params.get('server', '').rstrip('/:') + ':' + params.get('port', '') + '/api/'",
+                "def http_request(uri, method, headers={}, body={}, params={}):",
+                "    return requests.request(method, uri, headers=headers, data=body, params=params)",
+                "def show_info():",
+                "    params = {'type': 'op', 'cmd': '<show><system><info></info></system></show>', 'key': API_KEY}",
+                "    return http_request(URL, 'GET', params=params)",
+                "def list_addresses():",
+                "    params = {'action': 'get', 'type': 'config', 'xpath': XPATH_OBJECTS + 'address/entry', 'key': API_KEY}",
+                "    return http_request(URL, 'GET', params=params)",
+            ]
+        ),
+    )
+    panos_calls = client_calls(lab_preset("Panos", safe), content)
+    show = [call for call in panos_calls if call.query.get("cmd", "").startswith("<show><system>")]
+    assert show and show[0].method == "GET" and "/api" in show[0].paths, panos_calls
+    listed = [call for call in panos_calls if call.query.get("type") == "config" and "address/entry" in call.query.get("xpath", "")]
+    assert listed, [(call.query, call.paths) for call in panos_calls]
+    info = {
+        "method": "GET",
+        "pathTemplate": "/api",
+        "envelope": {"type": "xml"},
+        "queryMatch": {"type": "op"},
+        "pagination": {"style": "none", "limitParam": "limit", "offsetParam": "offset", "pageParam": "page", "cursorParam": "cursor"},
+        "record": {"name": "response", "kind": "object", "children": [{"name": "status", "kind": "const", "constValue": "success"}]},
+    }
+    assert check_preset(lab_preset("Panos", info), content)["status"] == "match"
+    info["fixture"] = '<response status="success"><result/></response>'
+    info["queryMatch"] = {"type": "op", "cmd": "<show><system><info></info></system></show>"}
+    assert check_preset(lab_preset("Panos", info), content)["status"] == "match"
+    info["queryMatch"] = {"type": "op", "cmd": "<show><nope></nope></show>"}
+    missed = check_preset(lab_preset("Panos", info), content)
+    assert missed["status"] == "mismatch" and any(item.startswith("query:") for item in missed["findings"]), missed
     print("self-test ok")
     return 0
 
