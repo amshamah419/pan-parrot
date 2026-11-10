@@ -1,1 +1,138 @@
-{"id":"ipinfo-ipinfo-v2","name":"IPinfo v2","pack":"ipinfo","fidelity":"shape","curated":false,"summary":"Use the IPinfo.io API to get data about an IP address.","operations":2,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"ipinfo-ipinfo-v2","name":"IPinfo v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/ipinfo/Integrations/ipinfo_v2","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-ip-1-1-1-1-response-json","method":"GET","pathTemplate":"/","summary":"test_data/ip_1.1.1.1_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ip","kind":"ip","optional":false,"example":"1.1.1.1"},{"name":"hostname","kind":"string","optional":false,"example":"one.one.one.one"},{"name":"anycast","kind":"boolean","optional":false},{"name":"city","kind":"string","optional":false,"example":"Miami"},{"name":"region","kind":"string","optional":false,"example":"Florida"},{"name":"country","kind":"string","optional":false,"example":"US"},{"name":"loc","kind":"string","optional":false,"example":"25.7867,-80.1800"},{"name":"org","kind":"string","optional":false,"example":"AS13335 Cloudflare, Inc."},{"name":"postal","kind":"string","optional":false,"example":"33132"},{"name":"timezone","kind":"string","optional":false,"example":"America/New_York"},{"name":"readme","kind":"string","optional":false,"example":"https://ipinfo.io/missingauth"}]}},{"id":"test-data-ip-8-8-8-8-response-json","method":"GET","pathTemplate":"/","summary":"test_data/ip_8.8.8.8_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ip","kind":"ip","optional":false,"example":"8.8.8.8"},{"name":"hostname","kind":"string","optional":false,"example":"dns.google"},{"name":"anycast","kind":"boolean","optional":false},{"name":"city","kind":"string","optional":false,"example":"Mountain View"},{"name":"region","kind":"string","optional":false,"example":"California"},{"name":"country","kind":"string","optional":false,"example":"US"},{"name":"loc","kind":"string","optional":false,"example":"37.4056,-122.0775"},{"name":"org","kind":"string","optional":false,"example":"AS15169 Google LLC"},{"name":"postal","kind":"string","optional":false,"example":"94043"},{"name":"timezone","kind":"string","optional":false,"example":"America/Los_Angeles"},{"name":"readme","kind":"string","optional":false,"example":"https://ipinfo.io/missingauth"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "ipinfo-ipinfo-v2",
+  "name": "IPinfo v2",
+  "pack": "ipinfo",
+  "vendor": "IPinfo",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "IP geolocation. ip, city, region, country, and org.",
+  "notes": [
+    "GET /{ip}/json returns ip, hostname, city, region, country, loc, and org.",
+    "The privacy, ASN, and company details objects are omitted.",
+    "A token query parameter is not required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ipinfo/Integrations/ipinfo_v2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "ipinfo-ipinfo-v2",
+      "name": "IPinfo v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://ipinfo.io/developers",
+      "notes": [
+        "GET /{ip}/json returns ip, hostname, city, region, country, loc, and org.",
+        "The privacy, ASN, and company details objects are omitted.",
+        "A token query parameter is not required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://ipinfo.io/developers",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /{ip}/json returns ip, hostname, city, region, country, loc, and org.",
+          "The privacy, ASN, and company details objects are omitted.",
+          "A token query parameter is not required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "lookup",
+        "method": "GET",
+        "pathTemplate": "/{ip}/json",
+        "summary": "Look up an IP",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "ip",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ip",
+              "kind": "ip"
+            },
+            {
+              "name": "hostname",
+              "kind": "string",
+              "example": "scan.example.com"
+            },
+            {
+              "name": "city",
+              "kind": "const",
+              "constValue": "Ashburn"
+            },
+            {
+              "name": "region",
+              "kind": "const",
+              "constValue": "Virginia"
+            },
+            {
+              "name": "country",
+              "kind": "const",
+              "constValue": "US"
+            },
+            {
+              "name": "loc",
+              "kind": "const",
+              "constValue": "39.04,-77.49"
+            },
+            {
+              "name": "org",
+              "kind": "const",
+              "constValue": "AS64500 Example Hosting"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "ipinfo-ipinfo-v2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

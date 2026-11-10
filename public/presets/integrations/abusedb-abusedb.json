@@ -1,1 +1,151 @@
-{"id":"abusedb-abusedb","name":"AbuseIPDB","pack":"AbuseDB","fidelity":"shape","curated":false,"summary":"Central repository to report and identify IP addresses that have been associated with malicious activity online. Check the Detailed Information section for more information on how ","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"abusedb-abusedb","name":"AbuseIPDB","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AbuseDB/Integrations/AbuseDB","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"ip","method":"GET","pathTemplate":"/","summary":"Checks the specified IP address against the AbuseIP database.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IP","kind":"object","optional":false,"children":[{"name":"Address","kind":"string","optional":false,"example":"Address"},{"name":"Geo","kind":"object","optional":false,"children":[{"name":"Country","kind":"string","optional":false,"example":"Country"},{"name":"CountryCode","kind":"string","optional":false,"example":"CountryCode"}]},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Detections","kind":"string","optional":false,"example":"Detections"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"AbuseIPDB","kind":"object","optional":false,"children":[{"name":"IP","kind":"object","optional":false,"children":[{"name":"Address","kind":"string","optional":false,"example":"Address"},{"name":"AbuseConfidenceScore","kind":"string","optional":false,"example":"AbuseConfidenceScore"},{"name":"TotalReports","kind":"number","optional":false},{"name":"Geo","kind":"object","optional":false,"children":[{"name":"Country","kind":"string","optional":false,"example":"Country"},{"name":"CountryCode","kind":"string","optional":false,"example":"CountryCode"}]},{"name":"Hostnames","kind":"string","optional":false,"example":"Hostnames"},{"name":"IpVersion","kind":"string","optional":false,"example":"IpVersion"},{"name":"IsPublic","kind":"string","optional":false,"example":"IsPublic"},{"name":"IsTor","kind":"string","optional":false,"example":"IsTor"},{"name":"IsWhitelisted","kind":"string","optional":false,"example":"IsWhitelisted"},{"name":"LastReportedAt","kind":"string","optional":false,"example":"LastReportedAt"},{"name":"NumDistinctUsers","kind":"string","optional":false,"example":"NumDistinctUsers"},{"name":"Reports","kind":"string","optional":false,"example":"Reports"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Detections","kind":"string","optional":false,"example":"Detections"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]},{"name":"ISP","kind":"string","optional":false,"example":"ISP"},{"name":"UsageType","kind":"string","optional":false,"example":"UsageType"},{"name":"Domain","kind":"string","optional":false,"example":"Domain"}]}]},{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Score","kind":"number","optional":false},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}},{"id":"abuseipdb-check-cidr-block","method":"GET","pathTemplate":"/","summary":"Queries a block of IP addresses to check against the database.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IP","kind":"object","optional":false,"children":[{"name":"Address","kind":"string","optional":false,"example":"Address"},{"name":"Geo","kind":"object","optional":false,"children":[{"name":"Country","kind":"string","optional":false,"example":"Country"},{"name":"CountryCode","kind":"string","optional":false,"example":"CountryCode"}]},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Detections","kind":"string","optional":false,"example":"Detections"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"AbuseIPDB","kind":"object","optional":false,"children":[{"name":"IP","kind":"object","optional":false,"children":[{"name":"Address","kind":"string","optional":false,"example":"Address"},{"name":"AbuseConfidenceScore","kind":"string","optional":false,"example":"AbuseConfidenceScore"},{"name":"TotalReports","kind":"string","optional":false,"example":"TotalReports"},{"name":"Geo","kind":"object","optional":false,"children":[{"name":"Country","kind":"string","optional":false,"example":"Country"},{"name":"CountryCode","kind":"string","optional":false,"example":"CountryCode"}]},{"name":"Hostnames","kind":"string","optional":false,"example":"Hostnames"},{"name":"IpVersion","kind":"string","optional":false,"example":"IpVersion"},{"name":"IsPublic","kind":"string","optional":false,"example":"IsPublic"},{"name":"IsTor","kind":"string","optional":false,"example":"IsTor"},{"name":"IsWhitelisted","kind":"string","optional":false,"example":"IsWhitelisted"},{"name":"LastReportedAt","kind":"string","optional":false,"example":"LastReportedAt"},{"name":"NumDistinctUsers","kind":"string","optional":false,"example":"NumDistinctUsers"},{"name":"Reports","kind":"string","optional":false,"example":"Reports"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Detections","kind":"string","optional":false,"example":"Detections"}]},{"name":"ISP","kind":"string","optional":false,"example":"ISP"},{"name":"UsageType","kind":"string","optional":false,"example":"UsageType"},{"name":"Domain","kind":"string","optional":false,"example":"Domain"}]}]},{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Score","kind":"number","optional":false},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}},{"id":"abuseipdb-report-ip","method":"GET","pathTemplate":"/","summary":"Reports an IP address to AbuseIPDB.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ip","kind":"string","optional":false,"example":"ip"},{"name":"categories","kind":"string","optional":false,"example":"categories"}]}},{"id":"abuseipdb-get-blacklist","method":"GET","pathTemplate":"/","summary":"Returns a list of the most reported IP addresses.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AbuseIPDB","kind":"object","optional":false,"children":[{"name":"Blacklist","kind":"string","optional":false,"example":"Blacklist"}]}]}},{"id":"abuseipdb-get-categories","method":"GET","pathTemplate":"/","summary":"Returns a list of report categories from AbuseIPDB.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AbuseIPDB","kind":"object","optional":false,"children":[{"name":"Categories","kind":"string","optional":false,"example":"Categories"}]}]}},{"id":"abuseipdb-get-fplist","method":"GET","pathTemplate":"/","summary":"Returns the False Positive List (FPL) from abuse.ch, including IP and domain indicators removed from their blocklists.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AbuseIPDB","kind":"object","optional":false,"children":[{"name":"FPL","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"time_stamp","kind":"string","optional":false,"example":"time_stamp"},{"name":"platform","kind":"string","optional":false,"example":"platform"},{"name":"entry_type","kind":"string","optional":false,"example":"entry_type"},{"name":"entry_value","kind":"string","optional":false,"example":"entry_value"},{"name":"removed_by","kind":"string","optional":false,"example":"removed_by"},{"name":"removal_notes","kind":"string","optional":false,"example":"removal_notes"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "abusedb-abusedb",
+  "name": "AbuseIPDB",
+  "pack": "AbuseDB",
+  "vendor": "AbuseIPDB",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "IP check. data.abuseConfidenceScore is what reputation playbooks read.",
+  "notes": [
+    "GET /api/v2/check returns { data }. The documented fields kept here are ipAddress, abuseConfidenceScore, countryCode, usageType, isp, domain, totalReports, and lastReportedAt.",
+    "The reports array and the check-block CIDR route are omitted.",
+    "Key is the dummy API key header."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AbuseDB/Integrations/AbuseDB",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "abusedb-abusedb",
+      "name": "AbuseIPDB",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://docs.abuseipdb.com/#check-endpoint",
+      "notes": [
+        "GET /api/v2/check returns { data }. The documented fields kept here are ipAddress, abuseConfidenceScore, countryCode, usageType, isp, domain, totalReports, and lastReportedAt.",
+        "The reports array and the check-block CIDR route are omitted.",
+        "Key is the dummy API key header."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.abuseipdb.com/#check-endpoint",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /api/v2/check returns { data }. The documented fields kept here are ipAddress, abuseConfidenceScore, countryCode, usageType, isp, domain, totalReports, and lastReportedAt.",
+          "The reports array and the check-block CIDR route are omitted.",
+          "Key is the dummy API key header."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "check-ip",
+        "method": "GET",
+        "pathTemplate": "/api/v2/check",
+        "summary": "Check an IP",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "ipAddress",
+                  "kind": "ip"
+                },
+                {
+                  "name": "abuseConfidenceScore",
+                  "kind": "integer"
+                },
+                {
+                  "name": "countryCode",
+                  "kind": "const",
+                  "constValue": "US"
+                },
+                {
+                  "name": "usageType",
+                  "kind": "const",
+                  "constValue": "Data Center/Web Hosting/Transit"
+                },
+                {
+                  "name": "isp",
+                  "kind": "string",
+                  "example": "Example Hosting"
+                },
+                {
+                  "name": "domain",
+                  "kind": "string",
+                  "example": "example.com"
+                },
+                {
+                  "name": "totalReports",
+                  "kind": "integer"
+                },
+                {
+                  "name": "lastReportedAt",
+                  "kind": "timestamp"
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "abusedb-abusedb",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "Key",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

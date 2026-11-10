@@ -1,1 +1,137 @@
-{"id":"sailpointidentityiq-sailpointidentityiq","name":"SailPoint IdentityIQ","pack":"SailPointIdentityIQ","fidelity":"sample","curated":false,"summary":"SailPoint IdentityIQ context pack enables XSOAR customers to utilize the deep, enriched contextual data in the SailPoint predictive identity platform to better drive identity-aware","operations":3,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"sailpointidentityiq-sailpointidentityiq","name":"SailPoint IdentityIQ","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/SailPointIdentityIQ/Integrations/SailPointIdentityIQ","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-400-bad-request-json","method":"GET","pathTemplate":"/POST","summary":"test_data/400_Bad_Request.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"schemas","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"urn:ietf:params:scim:api:messages:2.0:Error"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"scimType","kind":"string","optional":false,"example":"invalidFilter"},{"name":"detail","kind":"string","optional":false,"example":"Invalid filter:urn:ietf:params:scim:schemas:sailpoint:1.0:User:riskScore eq -1"},{"name":"status","kind":"string","optional":false,"example":"400"}]}},{"id":"test-data-404-not-found-json","method":"PUT","pathTemplate":"/DELETE","summary":"test_data/404_Not_Found.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"schemas","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"urn:ietf:params:scim:api:messages:2.0:Error"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"detail","kind":"string","optional":false,"example":"Resource 7f000001705911b4817059d30cf50348 not found."},{"name":"status","kind":"string","optional":false,"example":"404"}]}},{"id":"test-data-405-method-not-allowed-json","method":"GET","pathTemplate":"/","summary":"test_data/405_Method_Not_Allowed.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"schemas","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"urn:ietf:params:scim:api:messages:2.0:Error"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"status","kind":"string","optional":false,"example":"405"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "sailpointidentityiq-sailpointidentityiq",
+  "name": "SailPoint IdentityIQ",
+  "pack": "SailPointIdentityIQ",
+  "vendor": "SailPoint",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "SCIM users. Resources and totalResults.",
+  "notes": [
+    "GET /scim/v2/Users returns { totalResults, Resources }. Users keep id, userName, and active.",
+    "The SCIM configuration page was not reloaded. The path is the public client.",
+    "OAuth token issuance is not modeled. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SailPointIdentityIQ/Integrations/SailPointIdentityIQ",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "sailpointidentityiq-sailpointidentityiq",
+      "name": "SailPoint IdentityIQ",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://documentation.sailpoint.com/identityiq/help/systemconfig/scim_config.html",
+      "notes": [
+        "GET /scim/v2/Users returns { totalResults, Resources }. Users keep id, userName, and active.",
+        "The SCIM configuration page was not reloaded. The path is the public client.",
+        "OAuth token issuance is not modeled. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://documentation.sailpoint.com/identityiq/help/systemconfig/scim_config.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /scim/v2/Users returns { totalResults, Resources }. Users keep id, userName, and active.",
+          "The SCIM configuration page was not reloaded. The path is the public client.",
+          "OAuth token issuance is not modeled. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-users",
+        "method": "GET",
+        "pathTemplate": "/scim/v2/Users",
+        "summary": "List users",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "Resources"
+        },
+        "record": {
+          "name": "user",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "userName",
+              "kind": "string",
+              "example": "jsmith"
+            },
+            {
+              "name": "active",
+              "kind": "boolean"
+            },
+            {
+              "name": "name",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "givenName",
+                  "kind": "const",
+                  "constValue": "Jordan"
+                },
+                {
+                  "name": "familyName",
+                  "kind": "const",
+                  "constValue": "Smith"
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "count",
+          "offsetParam": "startIndex",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "sailpointidentityiq-sailpointidentityiq",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

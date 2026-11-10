@@ -1,1 +1,132 @@
-{"id":"cyberarkpas-cyberarkpas","name":"CyberArk PAM","pack":"CyberArkPAS","fidelity":"shape","curated":false,"summary":"Use the CyberArk Privileged Access Management (PAM) solution to manage users, safes, vaults, and accounts from Cortex XSOAR.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"cyberarkpas-cyberarkpas","name":"CyberArk PAM","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CyberArkPAS/Integrations/CyberArkPAS","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"cyberark-pas-user-add","method":"POST","pathTemplate":"/PasswordVault/API/Auth/CyberArk/Logon","summary":"Add a new user to the vault.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CyberArkPAS","kind":"object","optional":false,"children":[{"name":"Users","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"authenticationMethod","kind":"string","optional":false,"example":"authenticationMethod"},{"name":"changePassOnNextLogon","kind":"boolean","optional":false},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"enableUser","kind":"boolean","optional":false},{"name":"expiryDate","kind":"number","optional":false},{"name":"internet","kind":"object","optional":false,"children":[{"name":"businessEmail","kind":"string","optional":false,"example":"businessEmail"}]},{"name":"lastSuccessfulLoginDate","kind":"number","optional":false},{"name":"location","kind":"string","optional":false,"example":"location"},{"name":"personalDetails","kind":"object","optional":false,"children":[{"name":"profession","kind":"string","optional":false,"example":"profession"}]},{"name":"suspended","kind":"boolean","optional":false},{"name":"userType","kind":"string","optional":false,"example":"userType"},{"name":"username","kind":"string","optional":false,"example":"username"},{"name":"vaultAuthorization","kind":"string","optional":false,"example":"vaultAuthorization"}]}]}]}},{"id":"cyberark-pas-user-update","method":"POST","pathTemplate":"/PasswordVault/API/Auth/Logoff","summary":"Update an existing vault user.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CyberArkPAS","kind":"object","optional":false,"children":[{"name":"Users","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"authenticationMethod","kind":"string","optional":false,"example":"authenticationMethod"},{"name":"changePassOnNextLogon","kind":"boolean","optional":false},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"enableUser","kind":"boolean","optional":false},{"name":"expiryDate","kind":"number","optional":false},{"name":"internet","kind":"object","optional":false,"children":[{"name":"businessEmail","kind":"string","optional":false,"example":"businessEmail"}]},{"name":"lastSuccessfulLoginDate","kind":"number","optional":false},{"name":"location","kind":"string","optional":false,"example":"location"},{"name":"personalDetails","kind":"object","optional":false,"children":[{"name":"profession","kind":"string","optional":false,"example":"profession"}]},{"name":"suspended","kind":"boolean","optional":false},{"name":"userType","kind":"string","optional":false,"example":"userType"},{"name":"username","kind":"string","optional":false,"example":"username"},{"name":"vaultAuthorization","kind":"string","optional":false,"example":"vaultAuthorization"}]}]}]}},{"id":"cyberark-pas-user-delete","method":"GET","pathTemplate":"/","summary":"Delete a specific user in the vault.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CyberArkPAS","kind":"object","optional":false,"children":[{"name":"Users","kind":"object","optional":false,"children":[{"name":"Deleted","kind":"boolean","optional":false}]}]}]}},{"id":"cyberark-pas-users-list","method":"GET","pathTemplate":"/","summary":"Return a list of all existing users in the vault that meet the filter and search criteria.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CyberArkPAS","kind":"object","optional":false,"children":[{"name":"Users","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"},{"name":"source","kind":"string","optional":false,"example":"source"},{"name":"userType","kind":"string","optional":false,"example":"userType"},{"name":"componentUser","kind":"boolean","optional":false},{"name":"location","kind":"string","optional":false,"example":"location"},{"name":"personalDetails","kind":"object","optional":false,"children":[{"name":"firstName","kind":"string","optional":false,"example":"firstName"},{"name":"middleName","kind":"string","optional":false,"example":"middleName"},{"name":"lastName","kind":"string","optional":false,"example":"lastName"}]},{"name":"vaultAuthorization","kind":"string","optional":false,"example":"vaultAuthorization"}]}]}]}},{"id":"cyberark-pas-user-activate","method":"GET","pathTemplate":"/","summary":"Activate an existing vault user who was suspended after entering incorrect credentials multiple times.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"user_id","kind":"string","optional":false,"example":"user_id"}]}},{"id":"cyberark-pas-safes-list","method":"GET","pathTemplate":"/","summary":"Return information about all of the user’s safes in the vault.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CyberArkPAS","kind":"object","optional":false,"children":[{"name":"Safes","kind":"object","optional":false,"children":[{"name":"SafeName","kind":"string","optional":false,"example":"SafeName"},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Location","kind":"string","optional":false,"example":"Location"},{"name":"ManagingCPM","kind":"string","optional":false,"example":"ManagingCPM"},{"name":"NumberOfDaysRetention","kind":"number","optional":false},{"name":"NumberOfVersionsRetention","kind":"number","optional":false},{"name":"OLACEnabled","kind":"boolean","optional":false}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "cyberarkpas-cyberarkpas",
+  "name": "CyberArk PAM",
+  "pack": "CyberArkPAS",
+  "vendor": "CyberArk",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Account list. value[] from /PasswordVault/api/Accounts.",
+  "notes": [
+    "GET /PasswordVault/api/Accounts returns { value, count }. Accounts keep id, name, address, userName, and safeName.",
+    "Logon returns a raw JSON string. This preset does not model that string. A bearer token stands in for the session token.",
+    "Safes and members are not modeled."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CyberArkPAS/Integrations/CyberArkPAS",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "cyberarkpas-cyberarkpas",
+      "name": "CyberArk PAM",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://docs.cyberark.com/pam-self-hosted/latest/en/content/webservices/getaccounts.htm",
+      "notes": [
+        "GET /PasswordVault/api/Accounts returns { value, count }. Accounts keep id, name, address, userName, and safeName.",
+        "Logon returns a raw JSON string. This preset does not model that string. A bearer token stands in for the session token.",
+        "Safes and members are not modeled."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.cyberark.com/pam-self-hosted/latest/en/content/webservices/getaccounts.htm",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /PasswordVault/api/Accounts returns { value, count }. Accounts keep id, name, address, userName, and safeName.",
+          "Logon returns a raw JSON string. This preset does not model that string. A bearer token stands in for the session token.",
+          "Safes and members are not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-accounts",
+        "method": "GET",
+        "pathTemplate": "/PasswordVault/api/Accounts",
+        "summary": "List accounts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "value"
+        },
+        "record": {
+          "name": "account",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "Operating System-LabHost-Administrator"
+            },
+            {
+              "name": "address",
+              "kind": "string",
+              "example": "lab-host"
+            },
+            {
+              "name": "userName",
+              "kind": "string",
+              "example": "Administrator"
+            },
+            {
+              "name": "safeName",
+              "kind": "const",
+              "constValue": "Lab"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "cyberarkpas-cyberarkpas",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 20,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

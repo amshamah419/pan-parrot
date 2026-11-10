@@ -1,6 +1,7 @@
 import { defaultChaos, defaultPagination, type FieldSpec, type MockAuth, type MockSpec } from "./mock-spec";
 import { WIZ_EXAMPLE_QUERY, WIZ_SDL } from "./wiz-schema";
 import { fetchVerifiedPresets } from "./verified-presets-fetch";
+import { intelVerifiedPresets } from "./verified-presets-intel";
 import { moreVerifiedPresets } from "./verified-presets-more";
 
 const checkedAt = "2026-11-09";
@@ -1279,6 +1280,7 @@ export const verifiedPresets: VerifiedPresetFile[] = [
   ...moreVerifiedPresets,
   wizPreset,
   ...fetchVerifiedPresets,
+  ...intelVerifiedPresets,
 ];
 
 export const checkedNotUpgraded: Array<{
