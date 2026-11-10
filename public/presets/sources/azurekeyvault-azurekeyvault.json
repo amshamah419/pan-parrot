@@ -97,6 +97,485 @@
         "nextLink": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resources?api-version=22024-11-01&$skiptoken=dmF1bHQtcGVza3ktanVyeS03MzA3Ng=="
       },
       "scrubs": []
+    },
+    {
+      "operationId": "put--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+      "method": "PUT",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/resource-manager/Microsoft.KeyVault/KeyVault/stable/2026-05-15/examples/createVaultWithNetworkAcls.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "sample-vault",
+        "type": "Microsoft.KeyVault/vaults",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-resource-group/providers/Microsoft.KeyVault/vaults/sample-vault",
+        "location": "westus",
+        "properties": {
+          "enabledForDeployment": true,
+          "enabledForDiskEncryption": true,
+          "enabledForTemplateDeployment": true,
+          "hsmPoolResourceId": "00000000-0000-0000-0000-000000000000",
+          "networkAcls": {
+            "bypass": "AzureServices",
+            "defaultAction": "Deny",
+            "ipRules": [
+              {
+                "value": "124.56.78.91/32"
+              },
+              {
+                "value": "'10.91.4.0/24'"
+              }
+            ],
+            "virtualNetworkRules": [
+              {
+                "id": "/subscriptions/subid/resourcegroups/rg1/providers/microsoft.network/virtualnetworks/test-vnet/subnets/subnet1"
+              }
+            ]
+          },
+          "sku": {
+            "name": "standard",
+            "family": "A"
+          },
+          "tenantId": "00000000-0000-0000-0000-000000000000",
+          "vaultUri": "https://sample-vault.vault.azure.net"
+        },
+        "systemData": {
+          "createdAt": "2020-01-01T12:00:00.0000000Z",
+          "createdBy": "keyVaultUser1",
+          "createdByType": "User",
+          "lastModifiedAt": "2020-01-01T12:00:00.0000000Z",
+          "lastModifiedBy": "keyVaultUser2",
+          "lastModifiedByType": "User"
+        },
+        "tags": {}
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+      "method": "GET",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/resource-manager/Microsoft.KeyVault/KeyVault/stable/2026-05-15/examples/getVault.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "sample-vault",
+        "type": "Microsoft.KeyVault/vaults",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-resource-group/providers/Microsoft.KeyVault/vaults/sample-vault",
+        "location": "westus",
+        "properties": {
+          "accessPolicies": [
+            {
+              "objectId": "00000000-0000-0000-0000-000000000000",
+              "permissions": {
+                "certificates": [
+                  "get",
+                  "list",
+                  "delete",
+                  "create",
+                  "import",
+                  "update",
+                  "managecontacts",
+                  "getissuers",
+                  "listissuers",
+                  "setissuers",
+                  "deleteissuers",
+                  "manageissuers",
+                  "recover",
+                  "purge"
+                ],
+                "keys": [
+                  "encrypt",
+                  "decrypt",
+                  "wrapKey",
+                  "unwrapKey",
+                  "sign",
+                  "verify",
+                  "get",
+                  "list",
+                  "create",
+                  "update",
+                  "import",
+                  "delete",
+                  "backup",
+                  "restore",
+                  "recover",
+                  "purge"
+                ],
+                "secrets": [
+                  "get",
+                  "list",
+                  "set",
+                  "delete",
+                  "backup",
+                  "restore",
+                  "recover",
+                  "purge"
+                ]
+              },
+              "tenantId": "00000000-0000-0000-0000-000000000000"
+            }
+          ],
+          "enabledForDeployment": true,
+          "enabledForDiskEncryption": true,
+          "enabledForTemplateDeployment": true,
+          "hsmPoolResourceId": "00000000-0000-0000-0000-000000000000",
+          "provisioningState": "Succeeded",
+          "publicNetworkAccess": "Enabled",
+          "sku": {
+            "name": "standard",
+            "family": "A"
+          },
+          "tenantId": "00000000-0000-0000-0000-000000000000",
+          "vaultUri": "https://sample-vault.vault.azure.net"
+        },
+        "systemData": {
+          "createdAt": "2020-01-01T12:00:00.0000000Z",
+          "createdBy": "keyVaultUser1",
+          "createdByType": "User",
+          "lastModifiedAt": "2020-01-01T12:00:00.0000000Z",
+          "lastModifiedBy": "keyVaultUser2",
+          "lastModifiedByType": "User"
+        },
+        "tags": {}
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "put--subscriptions-subscription-id-resourcegroups-resource-g-2",
+      "method": "PUT",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{vault_name}/accessPolicies/{operation_kind}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/resource-manager/Microsoft.KeyVault/KeyVault/stable/2026-05-15/examples/updateAccessPoliciesAdd.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "type": "Microsoft.KeyVault/vaults/accessPolicies",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-group/providers/Microsoft.KeyVault/vaults/sample-vault/accessPolicies/",
+        "properties": {
+          "accessPolicies": [
+            {
+              "objectId": "00000000-0000-0000-0000-000000000000",
+              "permissions": {
+                "certificates": [
+                  "get"
+                ],
+                "keys": [
+                  "encrypt"
+                ],
+                "secrets": [
+                  "get"
+                ]
+              },
+              "tenantId": "00000000-0000-0000-0000-000000000000"
+            }
+          ]
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--keys-key-name-key-version",
+      "method": "GET",
+      "path": "/keys/{key_name}/{key_version}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/data-plane/Keys/stable/2026-04-01/examples/GetKey-example.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "key": {
+          "kid": "https://myvault.vault.azure.net/keys/CreateSoftKeyTest/78deebed173b48e48f55abf87ed4cf71",
+          "kty": "RSA",
+          "key_ops": [
+            "encrypt",
+            "decrypt",
+            "sign",
+            "verify",
+            "wrapKey",
+            "unwrapKey"
+          ],
+          "n": "2HJAE5fU3Cw2Rt9hEuq-F6XjINKGa-zskfISVqopqUy60GOs2eyhxbWbJBeUXNor_gf-tXtNeuqeBgitLeVa640UDvnEjYTKWjCniTxZRaU7ewY8BfTSk-7KxoDdLsPSpX_MX4rwlAx-_1UGk5t4sQgTbm9T6Fm2oqFd37dsz5-Gj27UP2GTAShfJPFD7MqU_zIgOI0pfqsbNL5xTQVM29K6rX4jSPtylZV3uWJtkoQIQnrIHhk1d0SC0KwlBV3V7R_LVYjiXLyIXsFzSNYgQ68ZjAwt8iL7I8Osa-ehQLM13DVvLASaf7Jnu3sC3CWl3Gyirgded6cfMmswJzY87w",
+          "e": "AQAB"
+        },
+        "attributes": {
+          "enabled": true,
+          "created": 1493942451,
+          "updated": 1493942451,
+          "recoveryLevel": "Recoverable+Purgeable"
+        },
+        "tags": {
+          "purpose": "unit test",
+          "test name ": "CreateGetDeleteKeyTest"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--keys",
+      "method": "GET",
+      "path": "/keys",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/data-plane/Keys/stable/2026-04-01/examples/GetKeys-example.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "value": [
+          {
+            "kid": "https://myvault.vault.azure.net/keys/sdktestkey",
+            "attributes": {
+              "enabled": true,
+              "created": 1493937656,
+              "updated": 1493937656,
+              "recoveryLevel": "Recoverable+Purgeable"
+            }
+          }
+        ],
+        "nextLink": "https://myvault.vault.azure.net:443/keys?api-version=7.2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5NiFNREF3TURJM0lXdGxlUzlWVUVSQlZFVkxSVmxCVkZSU1NVSlZWRVZUVkVWVFZDRXdNREF3TWpnaE1qQXhOeTB3TlMwd05GUXdNVG94TVRveE5pNDNNekE0TnpReVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "delete--keys-key-name",
+      "method": "DELETE",
+      "path": "/keys/{key_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/data-plane/Keys/stable/2026-04-01/examples/DeleteKey-example.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "recoveryId": "https://myvault.vault.azure.net/deletedkeys/CreateSoftKeyTest",
+        "deletedDate": 1493942452,
+        "scheduledPurgeDate": 1501718452,
+        "key": {
+          "kid": "https://myvault.vault.azure.net/keys/CreateSoftKeyTest/78deebed173b48e48f55abf87ed4cf71",
+          "kty": "RSA",
+          "key_ops": [
+            "encrypt",
+            "decrypt",
+            "sign",
+            "verify",
+            "wrapKey",
+            "unwrapKey"
+          ],
+          "n": "2HJAE5fU3Cw2Rt9hEuq-F6XjINKGa-zskfISVqopqUy60GOs2eyhxbWbJBeUXNor_gf-tXtNeuqeBgitLeVa640UDvnEjYTKWjCniTxZRaU7ewY8BfTSk-7KxoDdLsPSpX_MX4rwlAx-_1UGk5t4sQgTbm9T6Fm2oqFd37dsz5-Gj27UP2GTAShfJPFD7MqU_zIgOI0pfqsbNL5xTQVM29K6rX4jSPtylZV3uWJtkoQIQnrIHhk1d0SC0KwlBV3V7R_LVYjiXLyIXsFzSNYgQ68ZjAwt8iL7I8Osa-ehQLM13DVvLASaf7Jnu3sC3CWl3Gyirgded6cfMmswJzY87w",
+          "e": "AQAB"
+        },
+        "attributes": {
+          "enabled": true,
+          "created": 1493942451,
+          "updated": 1493942451,
+          "recoveryLevel": "Recoverable+Purgeable"
+        },
+        "tags": {
+          "purpose": "unit test",
+          "test name ": "CreateGetDeleteKeyTest"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--secrets-secret-name-secret-version",
+      "method": "GET",
+      "path": "/secrets/{secret_name}/{secret_version}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/data-plane/Secrets/stable/2026-04-01/examples/GetSecret-example.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "value": "mysecretvalue",
+        "id": "https://myvault.vault.azure.net/secrets/mysecretname/4387e9f3d6e14c459867679a90fd0f79",
+        "attributes": {
+          "enabled": true,
+          "created": 1493938410,
+          "updated": 1493938410,
+          "recoveryLevel": "Recoverable+Purgeable"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--secrets",
+      "method": "GET",
+      "path": "/secrets",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/data-plane/Secrets/stable/2026-04-01/examples/GetSecrets-example.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "value": [
+          {
+            "contentType": "plainText",
+            "id": "https://myvault.vault.azure.net/secrets/listsecrettest0",
+            "attributes": {
+              "enabled": true,
+              "created": 1482189047,
+              "updated": 1482189047
+            }
+          }
+        ],
+        "nextLink": "https://myvault.vault.azure.net:443/secrets?api-version=7.2&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeUlYTmxZM0psZEM5TVNWTlVVMFZEVWtWVVZFVlRWREVoTURBd01ESTRJVEl3TVRZdE1USXRNVGxVTWpNNk1UQTZORFV1T0RneE9ERXhNRm9oIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "delete--secrets-secret-name",
+      "method": "DELETE",
+      "path": "/secrets/{secret_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/data-plane/Secrets/stable/2026-04-01/examples/DeleteSecret-example.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "recoveryId": "https://myvault.vault.azure.net/deletedsecrets/GetDeletedSecretTest",
+        "deletedDate": 1493938433,
+        "scheduledPurgeDate": 1501714433,
+        "id": "https://myvault.vault.azure.net/secrets/GetDeletedSecretTest/b595353d9c39413d80626575b3b5d865",
+        "attributes": {
+          "enabled": true,
+          "created": 1493938433,
+          "updated": 1493938433,
+          "recoveryLevel": "Recoverable+Purgeable"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--certificates-certificate-name-certificate-version",
+      "method": "GET",
+      "path": "/certificates/{certificate_name}/{certificate_version}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/data-plane/Certificates/stable/2026-04-01/examples/GetCertificate-example.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "id": "https://myvault.vault.azure.net/certificates/selfSignedCert01/f60f2a4f8ae442cfb41ca2090bd4b769",
+        "kid": "https://myvault.vault.azure.net/keys/selfSignedCert01/f60f2a4f8ae442cfb41ca2090bd4b769",
+        "sid": "https://myvault.vault.azure.net/secrets/selfSignedCert01/f60f2a4f8ae442cfb41ca2090bd4b769",
+        "x5t": "fLi3U52HunIVNXubkEnf8tP6Wbo",
+        "cer": "MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=",
+        "attributes": {
+          "enabled": true,
+          "nbf": 1430344421,
+          "exp": 2208988799,
+          "created": 1493938289,
+          "updated": 1493938291,
+          "recoveryLevel": "Recoverable+Purgeable"
+        },
+        "policy": {
+          "id": "https://myvault.vault.azure.net/certificates/selfSignedCert01/policy",
+          "key_props": {
+            "exportable": true,
+            "kty": "RSA",
+            "key_size": 2048,
+            "reuse_key": false
+          },
+          "secret_props": {
+            "contentType": "application/x-pkcs12"
+          },
+          "x509_props": {
+            "subject": "CN=KeyVaultTest",
+            "ekus": [],
+            "key_usage": [],
+            "validity_months": 297
+          },
+          "lifetime_actions": [
+            {
+              "trigger": {
+                "lifetime_percentage": 80
+              },
+              "action": {
+                "action_type": "EmailContacts"
+              }
+            }
+          ],
+          "issuer": {
+            "name": "Unknown"
+          },
+          "attributes": {
+            "enabled": true,
+            "created": 1493938289,
+            "updated": 1493938291
+          }
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--certificates",
+      "method": "GET",
+      "path": "/certificates",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/data-plane/Certificates/stable/2026-04-01/examples/GetCertificates-example.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "value": [
+          {
+            "id": "https://myvault.vault.azure.net/certificates/listCert01",
+            "x5t": "fLi3U52HunIVNXubkEnf8tP6Wbo",
+            "attributes": {
+              "enabled": true,
+              "nbf": 1430344421,
+              "exp": 2208988799,
+              "created": 1482188987,
+              "updated": 1482188987
+            }
+          },
+          {
+            "id": "https://myvault.vault.azure.net/certificates/listCert02",
+            "x5t": "fLi3U52HunIVNXubkEnf8tP6Wbo",
+            "attributes": {
+              "enabled": true,
+              "nbf": 1430344421,
+              "exp": 2208988799,
+              "created": 1482188988,
+              "updated": 1482188988
+            }
+          }
+        ],
+        "nextLink": null
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--subscriptions",
+      "method": "GET",
+      "path": "/subscriptions",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/resources/resource-manager/Microsoft.Resources/subscriptions/stable/2022-12-01/examples/GetSubscriptions.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "nextLink": "http://nextlink",
+        "value": [
+          {
+            "authorizationSource": "RoleBased",
+            "displayName": "Example Subscription",
+            "id": "/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05",
+            "managedByTenants": [
+              {
+                "tenantId": "8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7"
+              }
+            ],
+            "state": "Enabled",
+            "subscriptionId": "291bba3f-e0a5-47bc-a099-3bdcb2a50a05",
+            "subscriptionPolicies": {
+              "locationPlacementId": "Internal_2014-09-01",
+              "quotaId": "Internal_2014-09-01",
+              "spendingLimit": "Off"
+            },
+            "tags": {
+              "tagKey1": "tagValue1",
+              "tagKey2": "tagValue2"
+            },
+            "tenantId": "31c75423-32d6-4322-88b7-c478bdde4858"
+          },
+          {
+            "authorizationSource": "RoleBased",
+            "displayName": "Example Subscription2",
+            "id": "/subscriptions/72ac930a-f34e-42d8-b06d-dc2a9e12ed71",
+            "managedByTenants": [
+              {
+                "tenantId": "8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7"
+              },
+              {
+                "tenantId": "f7fb6af2-321d-47c8-9c0f-b0239eaad39a"
+              }
+            ],
+            "state": "Enabled",
+            "subscriptionId": "72ac930a-f34e-42d8-b06d-dc2a9e12ed71",
+            "subscriptionPolicies": {
+              "locationPlacementId": "Internal_2014-09-01",
+              "quotaId": "Internal_2014-09-01",
+              "spendingLimit": "Off"
+            },
+            "tags": {
+              "tagKey1": "tagValue1",
+              "tagKey2": "tagValue2"
+            },
+            "tenantId": "2a0ff0de-96b2-4859-bb7c-a430d07a3e0c"
+          }
+        ]
+      },
+      "scrubs": []
     }
   ]
 }

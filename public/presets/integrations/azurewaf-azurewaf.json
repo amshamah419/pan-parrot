@@ -2,9 +2,9 @@
   "id": "azurewaf-azurewaf",
   "name": "Azure Web Application Firewall",
   "pack": "AzureWAF",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /subscriptions/{subscription_id}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /subscriptions/{subscription_id}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies.",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -15,18 +15,136 @@
       "name": "Azure Web Application Firewall",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureWAF/Integrations/AzureWAF",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "notes": [
         "Sample fields are the ones GET /subscriptions/{subscription_id}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureWAF/Integrations/AzureWAF",
+        "status": "vendor",
+        "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/WafPolicyGetBasic.json",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /subscriptions/{subscription_id}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies reads in the matched command. Lists the command iterates are arrays."
+          "Sample fields are the ones GET /subscriptions/{subscription_id}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies reads in the matched command. Lists the command iterates are arrays.",
+          "Command coverage is 5 from vendor docs, 1 approximate, and 9 missing, out of 15. Response bodies are the x-ms-examples in Azure/azure-rest-api-specs."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "azure-waf-policies-get",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policy_name}",
+            "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+            "get--subscriptions-subscription-id-resourcegroups-resource-g-2"
+          ]
+        },
+        {
+          "command": "azure-waf-policies-list-all-in-subscription",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions-subscription-id-providers-microsoft-network-applica"
+          ]
+        },
+        {
+          "command": "azure-waf-policy-update-or-create",
+          "calls": [
+            "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policy_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "put--subscriptions-subscription-id-resourcegroups-resource-group-name-"
+          ]
+        },
+        {
+          "command": "azure-waf-policy-delete",
+          "calls": [
+            "DELETE /resourceGroups/{resource_group_name}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policy_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-waf-front-door-policies-list",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policy_name}",
+            "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-waf-front-door-policies-list-all-in-subscription",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies"
+          ],
+          "status": "approximate"
+        },
+        {
+          "command": "azure-waf-front-door-policy-update-or-create",
+          "calls": [
+            "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policy_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-waf-front-door-policy-delete",
+          "calls": [
+            "DELETE /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policy_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-waf-auth-start",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-waf-auth-complete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-waf-auth-reset",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-waf-auth-test",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-waf-generate-login-url",
+          "calls": [
+            "GET /subscriptions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions"
+          ]
+        },
+        {
+          "command": "azure-waf-subscriptions-list",
+          "calls": [
+            "GET /subscriptions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions"
+          ]
+        },
+        {
+          "command": "azure-waf-resource-group-list",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/resourcegroups"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -147,6 +265,606 @@
             }
           ]
         }
+      },
+      {
+        "id": "get--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policy_name}",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policy_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "customRules",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "etag",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "location",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "managedRules",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "managedRuleSets",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "policySettings",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "mode",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "provisioningState",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "resourceState",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sku",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"Policy1\",\n  \"type\": \"Microsoft.Network/applicationgatewaywebapplicationfirewallpolicies\",\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/Policy1\",\n  \"location\": \"WestUs\",\n  \"properties\": {\n    \"applicationGatewayForContainers\": [\n      {\n        \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ServiceNetworking/trafficControllers/agc1\"\n      }\n    ],\n    \"customRules\": [\n      {\n        \"name\": \"Rule1\",\n        \"action\": \"Block\",\n        \"matchConditions\": [\n          {\n            \"matchValues\": [\n              \"192.168.1.0/24\",\n              \"10.0.0.0/24\"\n            ],\n            \"matchVariables\": [\n              {\n                \"selector\": null,\n                \"variableName\": \"RemoteAddr\"\n              }\n            ],\n            \"negationConditon\": false,\n            \"operator\": \"IPMatch\",\n            \"transforms\": []\n          }\n        ],\n        \"priority\": 1,\n        \"ruleType\": \"MatchRule\",\n        \"state\": \"Enabled\"\n      },\n      {\n        \"name\": \"Rule2\",\n        \"action\": \"Block\",\n        \"matchConditions\": [\n          {\n            \"matchValues\": [\n              \"192.168.1.0/24\"\n            ],\n            \"matchVariables\": [\n              {\n                \"selector\": null,\n                \"variableName\": \"RemoteAddr\"\n              }\n            ],\n            \"negationConditon\": false,\n            \"operator\": \"IPMatch\"\n          },\n          {\n            \"matchValues\": [\n              \"Windows\"\n            ],\n            \"matchVariables\": [\n              {\n                \"selector\": \"UserAgent\",\n                \"variableName\": \"RequestHeader\"\n              }\n            ],\n            \"negationConditon\": false,\n            \"operator\": \"Contains\"\n          }\n        ],\n        \"priority\": 2,\n        \"ruleType\": \"MatchRule\",\n        \"state\": \"Enabled\"\n      },\n      {\n        \"name\": \"RateLimitRule3\",\n        \"action\": \"Block\",\n        \"groupByUserSession\": [\n          {\n            \"groupByVariables\": [\n              {\n                \"variableName\": \"ClientAddr\"\n              }\n            ]\n          }\n        ],\n        \"matchConditions\": [\n          {\n            \"matchValues\": [\n              \"192.168.1.0/24\",\n              \"10.0.0.0/24\"\n            ],\n            \"matchVariables\": [\n              {\n                \"selector\": null,\n                \"variableName\": \"RemoteAddr\"\n              }\n            ],\n            \"negationConditon\": true,\n            \"operator\": \"IPMatch\"\n          }\n        ],\n        \"priority\": 3,\n        \"rateLimitDuration\": \"OneMin\",\n        \"rateLimitThreshold\": 10,\n        \"ruleType\": \"RateLimitRule\"\n      },\n      {\n        \"name\": \"Rule4\",\n        \"action\": \"JSChallenge\",\n        \"matchConditions\": [\n          {\n            \"matchValues\": [\n              \"192.168.1.0/24\"\n            ],\n            \"matchVariables\": [\n              {\n                \"selector\": null,\n                \"variableName\": \"RemoteAddr\"\n              }\n            ],\n            \"negationConditon\": false,\n            \"operator\": \"IPMatch\"\n          },\n          {\n            \"matchValues\": [\n              \"Bot\"\n            ],\n            \"matchVariables\": [\n              {\n                \"selector\": \"UserAgent\",\n                \"variableName\": \"RequestHeaders\"\n              }\n            ],\n            \"negationConditon\": false,\n            \"operator\": \"Contains\"\n          }\n        ],\n        \"priority\": 4,\n        \"ruleType\": \"MatchRule\",\n        \"state\": \"Enabled\"\n      }\n    ],\n    \"managedRules\": {\n      \"exclusions\": [\n        {\n          \"matchVariable\": \"RequestHeaderNames\",\n          \"selector\": \"testHeader1\",\n          \"selectorMatchOperator\": \"Equals\"\n        },\n        {\n          \"matchVariable\": \"RequestHeaderNames\",\n          \"selector\": \"testHeader2\",\n          \"selectorMatchOperator\": \"StartsWith\"\n        },\n        {\n          \"matchVariable\": \"RequestArgValues\",\n          \"selector\": \"hello\",\n          \"selectorMatchOperator\": \"StartsWith\"\n        },\n        {\n          \"exclusionManagedRuleSets\": [\n            {\n              \"ruleGroups\": [\n                {\n                  \"ruleGroupName\": \"REQUEST-930-APPLICATION-ATTACK-LFI\",\n                  \"rules\": [\n                    {\n                      \"ruleId\": \"930120\"\n                    }\n                  ]\n                },\n                {\n                  \"ruleGroupName\": \"REQUEST-932-APPLICATION-ATTACK-RCE\"\n                }\n              ],\n              \"ruleSetType\": \"OWASP\",\n              \"ruleSetVersion\": \"3.2\"\n            }\n          ],\n          \"matchVariable\": \"RequestArgNames\",\n          \"selector\": \"hello\",\n          \"selectorMatchOperator\": \"StartsWith\"\n        },\n        {\n          \"exclusionManagedRuleSets\": [\n            {\n              \"ruleGroups\": [],\n              \"ruleSetType\": \"OWASP\",\n              \"ruleSetVersion\": \"3.1\"\n            }\n          ],\n          \"matchVariable\": \"RequestArgNames\",\n          \"selector\": \"hello\",\n          \"selectorMatchOperator\": \"EndsWith\"\n        }\n      ],\n      \"managedRuleSets\": [\n        {\n          \"computedDisabledRules\": [\n            {\n              \"ruleGroupName\": \"REQUEST-942-APPLICATION-ATTACK-SQLI\",\n              \"rules\": [\n                942130,\n                942110\n              ]\n            },\n            {\n              \"ruleGroupName\": \"REQUEST-920-PROTOCOL-ENFORCEMENT\",\n              \"rules\": [\n                920100,\n                920120\n              ]\n            },\n            {\n              \"ruleGroupName\": \"General\",\n              \"rules\": [\n                200003\n              ]\n            }\n          ],\n          \"ruleGroupOverrides\": [\n            {\n              \"ruleGroupName\": \"REQUEST-942-APPLICATION-ATTACK-SQLI\",\n              \"rules\": [\n                {\n                  \"action\": \"AnomalyScoring\",\n                  \"ruleId\": \"942130\",\n                  \"state\": \"Disabled\"\n                },\n                {\n                  \"action\": \"AnomalyScoring\",\n                  \"ruleId\": \"942110\",\n                  \"state\": \"Disabled\"\n                },\n                {\n                  \"action\": \"Log\",\n                  \"ruleId\": \"942140\",\n                  \"state\": \"Enabled\"\n                }\n              ]\n            },\n            {\n              \"ruleGroupName\": \"REQUEST-920-PROTOCOL-ENFORCEMENT\",\n              \"rules\": [\n                {\n                  \"action\": \"AnomalyScoring\",\n                  \"ruleId\": \"920100\",\n                  \"state\": \"Disabled\"\n                },\n                {\n                  \"action\": \"AnomalyScoring\",\n                  \"ruleId\": \"920120\",\n                  \"state\": \"Disabled\"\n                },\n                {\n                  \"action\": \"Block\",\n                  \"ruleId\": \"920130\",\n                  \"state\": \"Enabled\"\n                }\n              ]\n            }\n          ],\n          \"ruleSetType\": \"OWASP\",\n          \"ruleSetVersion\": \"3.2\"\n        },\n        {\n          \"ruleGroupOverrides\": [\n            {\n              \"ruleGroupName\": \"UnknownBots\",\n              \"rules\": [\n                {\n                  \"action\": \"JSChallenge\",\n                  \"ruleId\": \"300700\",\n                  \"state\": \"Enabled\"\n                }\n              ]\n            }\n          ],\n          \"ruleSetType\": \"Microsoft_BotManagerRuleSet\",\n          \"ruleSetVersion\": \"1.0\"\n        },\n        {\n          \"ruleGroupOverrides\": [\n            {\n              \"ruleGroupName\": \"ExcessiveRequests\",\n              \"rules\": [\n                {\n                  \"action\": \"Block\",\n                  \"ruleId\": \"500100\",\n                  \"sensitivity\": \"High\",\n                  \"state\": \"Enabled\"\n                }\n              ]\n            }\n          ],\n          \"ruleSetType\": \"Microsoft_HTTPDDoSRuleSet\",\n          \"ruleSetVersion\": \"1.0\"\n        }\n      ],\n      \"exceptions\": [\n        {\n          \"exceptionManagedRuleSets\": [\n            {\n              \"ruleSetType\": \"OWASP\",\n              \"ruleSetVersion\": \"3.2\"\n            }\n          ],\n          \"matchVariable\": \"RequestURI\",\n          \"valueMatchOperator\": \"Contains\",\n          \"values\": [\n            \"health\",\n            \"account/images\",\n            \"default.aspx\"\n          ]\n        },\n        {\n          \"exceptionManagedRuleSets\": [\n            {\n              \"ruleGroups\": [\n                {\n                  \"ruleGroupName\": \"REQUEST-932-APPLICATION-ATTACK-RCE\"\n                }\n              ],\n              \"ruleSetType\": \"OWASP\",\n              \"ruleSetVersion\": \"3.2\"\n            }\n          ],\n          \"matchVariable\": \"RequestHeader\",\n          \"selector\": \"User-Agent\",\n          \"selectorMatchOperator\": \"StartsWith\",\n          \"valueMatchOperator\": \"Contains\",\n          \"values\": [\n            \"Mozilla/5.0\",\n            \"Chrome/122.0.0.0\"\n          ]\n        },\n        {\n          \"exceptionManagedRuleSets\": [\n            {\n              \"ruleGroups\": [\n                {\n                  \"ruleGroupName\": \"BadBots\",\n                  \"rules\": [\n                    {\n                      \"ruleId\": \"100100\"\n                    }\n                  ]\n                }\n              ],\n              \"ruleSetType\": \"Microsoft_BotManagerRuleSet\",\n              \"ruleSetVersion\": \"1.0\"\n            }\n          ],\n          \"matchVariable\": \"RemoteAddr\",\n          \"valueMatchOperator\": \"IPMatch\",\n          \"values\": [\n            \"1.2.3.4\",\n            \"10.0.0.1/6\"\n          ]\n        }\n      ]\n    },\n    \"policySettings\": {\n      \"customBlockResponseBody\": \"SGVsbG8=\",\n      \"customBlockResponseStatusCode\": 405,\n      \"fileUploadEnforcement\": true,\n      \"fileUploadLimitInMb\": 4000,\n      \"jsChallengeCookieExpirationInMins\": 100,\n      \"logScrubbing\": {\n        \"scrubbingRules\": [\n          {\n            \"matchVariable\": \"RequestArgNames\",\n            \"selector\": \"test\",\n            \"selectorMatchOperator\": \"Equals\",\n            \"state\": \"Enabled\"\n          },\n          {\n            \"matchVariable\": \"RequestIPAddress\",\n            \"selectorMatchOperator\": \"EqualsAny\",\n            \"state\": \"Enabled\"\n          }\n        ],\n        \"state\": \"Enabled\"\n      },\n      \"maxRequestBodySizeInKb\": 2000,\n      \"mode\": \"Prevention\",\n      \"requestBodyCheck\": true,\n      \"requestBodyEnforcement\": true,\n      \"requestBodyInspectLimitInKB\": 2000,\n      \"state\": \"Enabled\"\n    },\n    \"provisioningState\": \"Succeeded\",\n    \"resourceState\": \"Enabled\",\n    \"tier\": \"Basic\"\n  },\n  \"tags\": {\n    \"key1\": \"value1\",\n    \"key2\": \"value2\"\n  }\n}\n"
+      },
+      {
+        "id": "get--subscriptions-subscription-id-resourcegroups-resource-g-2",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "customRules",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "etag",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "location",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "managedRules",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "managedRuleSets",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "policySettings",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "mode",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "provisioningState",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "resourceState",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sku",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"Policy1\",\n      \"type\": \"Microsoft.Network/applicationgatewaywebapplicationfirewallpolicies\",\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/Policy1\",\n      \"location\": \"WestUs\",\n      \"properties\": {\n        \"customRules\": [\n          {\n            \"name\": \"Rule1\",\n            \"action\": \"Block\",\n            \"matchConditions\": [\n              {\n                \"matchValues\": [\n                  \"192.168.1.0/24\",\n                  \"10.0.0.0/24\"\n                ],\n                \"matchVariables\": [\n                  {\n                    \"selector\": null,\n                    \"variableName\": \"RemoteAddr\"\n                  }\n                ],\n                \"negationConditon\": false,\n                \"operator\": \"IPMatch\",\n                \"transforms\": []\n              }\n            ],\n            \"priority\": 1,\n            \"ruleType\": \"MatchRule\",\n            \"state\": \"Enabled\"\n          },\n          {\n            \"name\": \"Rule2\",\n            \"action\": \"Block\",\n            \"matchConditions\": [\n              {\n                \"matchValues\": [\n                  \"192.168.1.0/24\"\n                ],\n                \"matchVariables\": [\n                  {\n                    \"selector\": null,\n                    \"variableName\": \"RemoteAddr\"\n                  }\n                ],\n                \"negationConditon\": false,\n                \"operator\": \"IPMatch\"\n              },\n              {\n                \"matchValues\": [\n                  \"Windows\"\n                ],\n                \"matchVariables\": [\n                  {\n                    \"selector\": \"UserAgent\",\n                    \"variableName\": \"RequestHeader\"\n                  }\n                ],\n                \"negationConditon\": false,\n                \"operator\": \"Contains\"\n              }\n            ],\n            \"priority\": 2,\n            \"ruleType\": \"MatchRule\",\n            \"state\": \"Enabled\"\n          },\n          {\n            \"name\": \"RateLimitRule3\",\n            \"action\": \"Block\",\n            \"groupByUserSession\": [\n              {\n                \"groupByVariables\": [\n                  {\n                    \"variableName\": \"ClientAddr\"\n                  }\n                ]\n              }\n            ],\n            \"matchConditions\": [\n              {\n                \"matchValues\": [\n                  \"192.168.1.0/24\",\n                  \"10.0.0.0/24\"\n                ],\n                \"matchVariables\": [\n                  {\n                    \"selector\": null,\n                    \"variableName\": \"RemoteAddr\"\n                  }\n                ],\n                \"negationConditon\": true,\n                \"operator\": \"IPMatch\"\n              }\n            ],\n            \"priority\": 3,\n            \"rateLimitDuration\": \"OneMin\",\n            \"rateLimitThreshold\": 10,\n            \"ruleType\": \"RateLimitRule\"\n          }\n        ],\n        \"managedRules\": {\n          \"managedRuleSets\": [\n            {\n              \"computedDisabledRules\": [\n                {\n                  \"ruleGroupName\": \"General\",\n                  \"rules\": [\n                    200003\n                  ]\n                }\n              ],\n              \"ruleSetType\": \"OWASP\",\n              \"ruleSetVersion\": \"3.2\"\n            }\n          ],\n          \"exceptions\": [\n            {\n              \"exceptionManagedRuleSets\": [\n                {\n                  \"ruleSetType\": \"OWASP\",\n                  \"ruleSetVersion\": \"3.2\"\n                }\n              ],\n              \"matchVariable\": \"RequestURI\",\n              \"valueMatchOperator\": \"Contains\",\n              \"values\": [\n                \"health\",\n                \"account/images\",\n                \"default.aspx\"\n              ]\n            },\n            {\n              \"exceptionManagedRuleSets\": [\n                {\n                  \"ruleGroups\": [\n                    {\n                      \"ruleGroupName\": \"REQUEST-932-APPLICATION-ATTACK-RCE\"\n                    }\n                  ],\n                  \"ruleSetType\": \"OWASP\",\n                  \"ruleSetVersion\": \"3.2\"\n                }\n              ],\n              \"matchVariable\": \"RequestHeader\",\n              \"selector\": \"User-Agent\",\n              \"selectorMatchOperator\": \"StartsWith\",\n              \"valueMatchOperator\": \"Contains\",\n              \"values\": [\n                \"Mozilla/5.0\",\n                \"Chrome/122.0.0.0\"\n              ]\n            },\n            {\n              \"exceptionManagedRuleSets\": [\n                {\n                  \"ruleGroups\": [\n                    {\n                      \"ruleGroupName\": \"BadBots\",\n                      \"rules\": [\n                        {\n                          \"ruleId\": \"100100\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"ruleSetType\": \"Microsoft_BotManagerRuleSet\",\n                  \"ruleSetVersion\": \"1.0\"\n                }\n              ],\n              \"matchVariable\": \"RemoteAddr\",\n              \"valueMatchOperator\": \"IPMatch\",\n              \"values\": [\n                \"1.2.3.4\",\n                \"10.0.0.1/6\"\n              ]\n            }\n          ]\n        },\n        \"policySettings\": {\n          \"customBlockResponseBody\": \"SGVsbG8=\",\n          \"customBlockResponseStatusCode\": 405,\n          \"fileUploadEnforcement\": true,\n          \"fileUploadLimitInMb\": 4000,\n          \"logScrubbing\": {\n            \"scrubbingRules\": [\n              {\n                \"matchVariable\": \"RequestArgNames\",\n                \"selector\": \"test\",\n                \"selectorMatchOperator\": \"Equals\",\n                \"state\": \"Enabled\"\n              },\n              {\n                \"matchVariable\": \"RequestIPAddress\",\n                \"selectorMatchOperator\": \"EqualsAny\",\n                \"state\": \"Enabled\"\n              }\n            ],\n            \"state\": \"Enabled\"\n          },\n          \"maxRequestBodySizeInKb\": 2000,\n          \"mode\": \"Detection\",\n          \"requestBodyCheck\": true,\n          \"requestBodyEnforcement\": true,\n          \"requestBodyInspectLimitInKB\": 2000,\n          \"state\": \"Enabled\"\n        },\n        \"provisioningState\": \"Succeeded\",\n        \"resourceState\": \"Enabled\"\n      },\n      \"tags\": {\n        \"key1\": \"value1\",\n        \"key2\": \"value2\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--subscriptions-subscription-id-providers-microsoft-network-applica",
+        "summary": "GET /subscriptions/{subscription_id}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "customRules",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "etag",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "location",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "managedRules",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "managedRuleSets",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "policySettings",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "mode",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "provisioningState",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "resourceState",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sku",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"Policy1\",\n      \"type\": \"Microsoft.Network/applicationgatewaywebapplicationfirewallpolicies\",\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/Policy1\",\n      \"location\": \"WestUs\",\n      \"properties\": {\n        \"customRules\": [\n          {\n            \"name\": \"Rule1\",\n            \"action\": \"Block\",\n            \"matchConditions\": [\n              {\n                \"matchValues\": [\n                  \"192.168.1.0/24\",\n                  \"10.0.0.0/24\"\n                ],\n                \"matchVariables\": [\n                  {\n                    \"selector\": null,\n                    \"variableName\": \"RemoteAddr\"\n                  }\n                ],\n                \"negationConditon\": false,\n                \"operator\": \"IPMatch\",\n                \"transforms\": []\n              }\n            ],\n            \"priority\": 1,\n            \"ruleType\": \"MatchRule\",\n            \"state\": \"Enabled\"\n          },\n          {\n            \"name\": \"Rule2\",\n            \"action\": \"Block\",\n            \"matchConditions\": [\n              {\n                \"matchValues\": [\n                  \"192.168.1.0/24\"\n                ],\n                \"matchVariables\": [\n                  {\n                    \"selector\": null,\n                    \"variableName\": \"RemoteAddr\"\n                  }\n                ],\n                \"negationConditon\": false,\n                \"operator\": \"IPMatch\"\n              },\n              {\n                \"matchValues\": [\n                  \"Windows\"\n                ],\n                \"matchVariables\": [\n                  {\n                    \"selector\": \"UserAgent\",\n                    \"variableName\": \"RequestHeader\"\n                  }\n                ],\n                \"negationConditon\": false,\n                \"operator\": \"Contains\"\n              }\n            ],\n            \"priority\": 2,\n            \"ruleType\": \"MatchRule\",\n            \"state\": \"Enabled\"\n          },\n          {\n            \"name\": \"RateLimitRule3\",\n            \"action\": \"Block\",\n            \"groupByUserSession\": [\n              {\n                \"groupByVariables\": [\n                  {\n                    \"variableName\": \"ClientAddr\"\n                  }\n                ]\n              }\n            ],\n            \"matchConditions\": [\n              {\n                \"matchValues\": [\n                  \"192.168.1.0/24\",\n                  \"10.0.0.0/24\"\n                ],\n                \"matchVariables\": [\n                  {\n                    \"selector\": null,\n                    \"variableName\": \"RemoteAddr\"\n                  }\n                ],\n                \"negationConditon\": true,\n                \"operator\": \"IPMatch\"\n              }\n            ],\n            \"priority\": 3,\n            \"rateLimitDuration\": \"OneMin\",\n            \"rateLimitThreshold\": 10,\n            \"ruleType\": \"RateLimitRule\"\n          }\n        ],\n        \"managedRules\": {\n          \"managedRuleSets\": [\n            {\n              \"computedDisabledRules\": [\n                {\n                  \"ruleGroupName\": \"General\",\n                  \"rules\": [\n                    200003\n                  ]\n                }\n              ],\n              \"ruleSetType\": \"OWASP\",\n              \"ruleSetVersion\": \"3.2\"\n            }\n          ],\n          \"exceptions\": [\n            {\n              \"exceptionManagedRuleSets\": [\n                {\n                  \"ruleSetType\": \"OWASP\",\n                  \"ruleSetVersion\": \"3.2\"\n                }\n              ],\n              \"matchVariable\": \"RequestURI\",\n              \"valueMatchOperator\": \"Contains\",\n              \"values\": [\n                \"health\",\n                \"account/images\",\n                \"default.aspx\"\n              ]\n            },\n            {\n              \"exceptionManagedRuleSets\": [\n                {\n                  \"ruleGroups\": [\n                    {\n                      \"ruleGroupName\": \"REQUEST-932-APPLICATION-ATTACK-RCE\"\n                    }\n                  ],\n                  \"ruleSetType\": \"OWASP\",\n                  \"ruleSetVersion\": \"3.2\"\n                }\n              ],\n              \"matchVariable\": \"RequestHeader\",\n              \"selector\": \"User-Agent\",\n              \"selectorMatchOperator\": \"StartsWith\",\n              \"valueMatchOperator\": \"Contains\",\n              \"values\": [\n                \"Mozilla/5.0\",\n                \"Chrome/122.0.0.0\"\n              ]\n            },\n            {\n              \"exceptionManagedRuleSets\": [\n                {\n                  \"ruleGroups\": [\n                    {\n                      \"ruleGroupName\": \"BadBots\",\n                      \"rules\": [\n                        {\n                          \"ruleId\": \"100100\"\n                        }\n                      ]\n                    }\n                  ],\n                  \"ruleSetType\": \"Microsoft_BotManagerRuleSet\",\n                  \"ruleSetVersion\": \"1.0\"\n                }\n              ],\n              \"matchVariable\": \"RemoteAddr\",\n              \"valueMatchOperator\": \"IPMatch\",\n              \"values\": [\n                \"1.2.3.4\",\n                \"10.0.0.1/6\"\n              ]\n            }\n          ]\n        },\n        \"policySettings\": {\n          \"customBlockResponseBody\": \"SGVsbG8=\",\n          \"customBlockResponseStatusCode\": 405,\n          \"fileUploadEnforcement\": true,\n          \"fileUploadLimitInMb\": 4000,\n          \"logScrubbing\": {\n            \"scrubbingRules\": [\n              {\n                \"matchVariable\": \"RequestArgNames\",\n                \"selector\": \"test\",\n                \"selectorMatchOperator\": \"Equals\",\n                \"state\": \"Enabled\"\n              },\n              {\n                \"matchVariable\": \"RequestIPAddress\",\n                \"selector\": \"*\",\n                \"selectorMatchOperator\": \"EqualsAny\",\n                \"state\": \"Enabled\"\n              }\n            ],\n            \"state\": \"Enabled\"\n          },\n          \"maxRequestBodySizeInKb\": 2000,\n          \"mode\": \"Prevention\",\n          \"requestBodyCheck\": true,\n          \"requestBodyEnforcement\": true,\n          \"requestBodyInspectLimitInKB\": 2000,\n          \"state\": \"Enabled\"\n        },\n        \"provisioningState\": \"Succeeded\",\n        \"resourceState\": \"Enabled\"\n      },\n      \"tags\": {\n        \"key1\": \"value1\",\n        \"key2\": \"value2\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "put--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+        "summary": "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policy_name}",
+        "method": "PUT",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policy_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "customRules",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "etag",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "location",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "managedRules",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "managedRuleSets",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "policySettings",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "mode",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "provisioningState",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "resourceState",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sku",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"Policy1\",\n  \"type\": \"Microsoft.Network/applicationgatewaywebapplicationfirewallpolicies\",\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/Policy1\",\n  \"location\": \"WestUs\",\n  \"properties\": {\n    \"customRules\": [\n      {\n        \"name\": \"Rule1\",\n        \"action\": \"Block\",\n        \"matchConditions\": [\n          {\n            \"matchValues\": [\n              \"192.168.1.0/24\",\n              \"10.0.0.0/24\"\n            ],\n            \"matchVariables\": [\n              {\n                \"selector\": null,\n                \"variableName\": \"RemoteAddr\"\n              }\n            ],\n            \"negationConditon\": false,\n            \"operator\": \"IPMatch\",\n            \"transforms\": []\n          }\n        ],\n        \"priority\": 1,\n        \"ruleType\": \"MatchRule\",\n        \"state\": \"Enabled\"\n      },\n      {\n        \"name\": \"Rule2\",\n        \"action\": \"Block\",\n        \"matchConditions\": [\n          {\n            \"matchValues\": [\n              \"192.168.1.0/24\"\n            ],\n            \"matchVariables\": [\n              {\n                \"selector\": null,\n                \"variableName\": \"RemoteAddr\"\n              }\n            ],\n            \"negationConditon\": false,\n            \"operator\": \"IPMatch\"\n          },\n          {\n            \"matchValues\": [\n              \"Windows\"\n            ],\n            \"matchVariables\": [\n              {\n                \"selector\": \"UserAgent\",\n                \"variableName\": \"RequestHeader\"\n              }\n            ],\n            \"negationConditon\": false,\n            \"operator\": \"Contains\"\n          }\n        ],\n        \"priority\": 2,\n        \"ruleType\": \"MatchRule\",\n        \"state\": \"Enabled\"\n      },\n      {\n        \"name\": \"RateLimitRule3\",\n        \"action\": \"Block\",\n        \"groupByUserSession\": [\n          {\n            \"groupByVariables\": [\n              {\n                \"variableName\": \"ClientAddr\"\n              }\n            ]\n          }\n        ],\n        \"matchConditions\": [\n          {\n            \"matchValues\": [\n              \"192.168.1.0/24\",\n              \"10.0.0.0/24\"\n            ],\n            \"matchVariables\": [\n              {\n                \"selector\": null,\n                \"variableName\": \"RemoteAddr\"\n              }\n            ],\n            \"negationConditon\": true,\n            \"operator\": \"IPMatch\"\n          }\n        ],\n        \"priority\": 3,\n        \"rateLimitDuration\": \"OneMin\",\n        \"rateLimitThreshold\": 10,\n        \"ruleType\": \"RateLimitRule\"\n      },\n      {\n        \"name\": \"Rule4\",\n        \"action\": \"JSChallenge\",\n        \"matchConditions\": [\n          {\n            \"matchValues\": [\n              \"192.168.1.0/24\"\n            ],\n            \"matchVariables\": [\n              {\n                \"selector\": null,\n                \"variableName\": \"RemoteAddr\"\n              }\n            ],\n            \"negationConditon\": false,\n            \"operator\": \"IPMatch\"\n          },\n          {\n            \"matchValues\": [\n              \"Bot\"\n            ],\n            \"matchVariables\": [\n              {\n                \"selector\": \"UserAgent\",\n                \"variableName\": \"RequestHeaders\"\n              }\n            ],\n            \"negationConditon\": false,\n            \"operator\": \"Contains\"\n          }\n        ],\n        \"priority\": 4,\n        \"ruleType\": \"MatchRule\",\n        \"state\": \"Enabled\"\n      }\n    ],\n    \"managedRules\": {\n      \"exclusions\": [\n        {\n          \"exclusionManagedRuleSets\": [\n            {\n              \"ruleGroups\": [\n                {\n                  \"ruleGroupName\": \"REQUEST-930-APPLICATION-ATTACK-LFI\",\n                  \"rules\": [\n                    {\n                      \"ruleId\": \"930120\"\n                    }\n                  ]\n                },\n                {\n                  \"ruleGroupName\": \"REQUEST-932-APPLICATION-ATTACK-RCE\"\n                }\n              ],\n              \"ruleSetType\": \"OWASP\",\n              \"ruleSetVersion\": \"3.2\"\n            }\n          ],\n          \"matchVariable\": \"RequestArgNames\",\n          \"selector\": \"hello\",\n          \"selectorMatchOperator\": \"StartsWith\"\n        },\n        {\n          \"exclusionManagedRuleSets\": [\n            {\n              \"ruleGroups\": [],\n              \"ruleSetType\": \"OWASP\",\n              \"ruleSetVersion\": \"3.1\"\n            }\n          ],\n          \"matchVariable\": \"RequestArgNames\",\n          \"selector\": \"hello\",\n          \"selectorMatchOperator\": \"EndsWith\"\n        },\n        {\n          \"matchVariable\": \"RequestArgNames\",\n          \"selector\": \"test\",\n          \"selectorMatchOperator\": \"StartsWith\"\n        },\n        {\n          \"matchVariable\": \"RequestArgValues\",\n          \"selector\": \"test\",\n          \"selectorMatchOperator\": \"StartsWith\"\n        }\n      ],\n      \"managedRuleSets\": [\n        {\n          \"ruleGroupOverrides\": [\n            {\n              \"ruleGroupName\": \"REQUEST-931-APPLICATION-ATTACK-RFI\",\n              \"rules\": [\n                {\n                  \"action\": \"Log\",\n                  \"ruleId\": \"931120\",\n                  \"state\": \"Enabled\"\n                },\n                {\n                  \"action\": \"AnomalyScoring\",\n                  \"ruleId\": \"931130\",\n                  \"state\": \"Disabled\"\n                }\n              ]\n            }\n          ],\n          \"ruleSetType\": \"OWASP\",\n          \"ruleSetVersion\": \"3.2\"\n        },\n        {\n          \"ruleGroupOverrides\": [\n            {\n              \"ruleGroupName\": \"UnknownBots\",\n              \"rules\": [\n                {\n                  \"action\": \"JSChallenge\",\n                  \"ruleId\": \"300700\",\n                  \"state\": \"Enabled\"\n                }\n              ]\n            }\n          ],\n          \"ruleSetType\": \"Microsoft_BotManagerRuleSet\",\n          \"ruleSetVersion\": \"1.0\"\n        },\n        {\n          \"ruleGroupOverrides\": [\n            {\n              \"ruleGroupName\": \"ExcessiveRequests\",\n              \"rules\": [\n                {\n                  \"action\": \"Block\",\n                  \"ruleId\": \"500100\",\n                  \"sensitivity\": \"High\",\n                  \"state\": \"Enabled\"\n                }\n              ]\n            }\n          ],\n          \"ruleSetType\": \"Microsoft_HTTPDDoSRuleSet\",\n          \"ruleSetVersion\": \"1.0\"\n        }\n      ],\n      \"exceptions\": [\n        {\n          \"exceptionManagedRuleSets\": [\n            {\n              \"ruleSetType\": \"OWASP\",\n              \"ruleSetVersion\": \"3.2\"\n            }\n          ],\n          \"matchVariable\": \"RequestURI\",\n          \"valueMatchOperator\": \"Contains\",\n          \"values\": [\n            \"health\",\n            \"account/images\",\n            \"default.aspx\"\n          ]\n        },\n        {\n          \"exceptionManagedRuleSets\": [\n            {\n              \"ruleGroups\": [\n                {\n                  \"ruleGroupName\": \"REQUEST-932-APPLICATION-ATTACK-RCE\"\n                }\n              ],\n              \"ruleSetType\": \"OWASP\",\n              \"ruleSetVersion\": \"3.2\"\n            }\n          ],\n          \"matchVariable\": \"RequestHeader\",\n          \"selector\": \"User-Agent\",\n          \"selectorMatchOperator\": \"StartsWith\",\n          \"valueMatchOperator\": \"Contains\",\n          \"values\": [\n            \"Mozilla/5.0\",\n            \"Chrome/122.0.0.0\"\n          ]\n        },\n        {\n          \"exceptionManagedRuleSets\": [\n            {\n              \"ruleGroups\": [\n                {\n                  \"ruleGroupName\": \"BadBots\",\n                  \"rules\": [\n                    {\n                      \"ruleId\": \"100100\"\n                    }\n                  ]\n                }\n              ],\n              \"ruleSetType\": \"Microsoft_BotManagerRuleSet\",\n              \"ruleSetVersion\": \"1.0\"\n            }\n          ],\n          \"matchVariable\": \"RemoteAddr\",\n          \"valueMatchOperator\": \"IPMatch\",\n          \"values\": [\n            \"1.2.3.4\",\n            \"10.0.0.1/6\"\n          ]\n        }\n      ]\n    },\n    \"policySettings\": {\n      \"customBlockResponseBody\": \"SGVsbG8=\",\n      \"customBlockResponseStatusCode\": 405,\n      \"fileUploadEnforcement\": true,\n      \"fileUploadLimitInMb\": 4000,\n      \"jsChallengeCookieExpirationInMins\": 100,\n      \"logScrubbing\": {\n        \"scrubbingRules\": [\n          {\n            \"matchVariable\": \"RequestArgNames\",\n            \"selector\": \"test\",\n            \"selectorMatchOperator\": \"Equals\",\n            \"state\": \"Enabled\"\n          },\n          {\n            \"matchVariable\": \"RequestIPAddress\",\n            \"selectorMatchOperator\": \"EqualsAny\",\n            \"state\": \"Enabled\"\n          }\n        ],\n        \"state\": \"Enabled\"\n      },\n      \"maxRequestBodySizeInKb\": 2000,\n      \"mode\": \"Detection\",\n      \"requestBodyCheck\": true,\n      \"requestBodyEnforcement\": true,\n      \"requestBodyInspectLimitInKB\": 2000,\n      \"state\": \"Enabled\"\n    },\n    \"provisioningState\": \"Succeeded\",\n    \"resourceState\": \"Enabled\"\n  },\n  \"tags\": {\n    \"key1\": \"value1\",\n    \"key2\": \"value2\"\n  }\n}\n"
+      },
+      {
+        "id": "get--subscriptions",
+        "summary": "GET /subscriptions",
+        "method": "GET",
+        "pathTemplate": "/subscriptions",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "customRules",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "etag",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "location",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "managedRules",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "managedRuleSets",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "policySettings",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "mode",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "provisioningState",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "resourceState",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sku",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"nextLink\": \"http://nextlink\",\n  \"value\": [\n    {\n      \"authorizationSource\": \"RoleBased\",\n      \"displayName\": \"Example Subscription\",\n      \"id\": \"/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05\",\n      \"managedByTenants\": [\n        {\n          \"tenantId\": \"8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7\"\n        }\n      ],\n      \"state\": \"Enabled\",\n      \"subscriptionId\": \"291bba3f-e0a5-47bc-a099-3bdcb2a50a05\",\n      \"subscriptionPolicies\": {\n        \"locationPlacementId\": \"Internal_2014-09-01\",\n        \"quotaId\": \"Internal_2014-09-01\",\n        \"spendingLimit\": \"Off\"\n      },\n      \"tags\": {\n        \"tagKey1\": \"tagValue1\",\n        \"tagKey2\": \"tagValue2\"\n      },\n      \"tenantId\": \"31c75423-32d6-4322-88b7-c478bdde4858\"\n    },\n    {\n      \"authorizationSource\": \"RoleBased\",\n      \"displayName\": \"Example Subscription2\",\n      \"id\": \"/subscriptions/72ac930a-f34e-42d8-b06d-dc2a9e12ed71\",\n      \"managedByTenants\": [\n        {\n          \"tenantId\": \"8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7\"\n        },\n        {\n          \"tenantId\": \"f7fb6af2-321d-47c8-9c0f-b0239eaad39a\"\n        }\n      ],\n      \"state\": \"Enabled\",\n      \"subscriptionId\": \"72ac930a-f34e-42d8-b06d-dc2a9e12ed71\",\n      \"subscriptionPolicies\": {\n        \"locationPlacementId\": \"Internal_2014-09-01\",\n        \"quotaId\": \"Internal_2014-09-01\",\n        \"spendingLimit\": \"Off\"\n      },\n      \"tags\": {\n        \"tagKey1\": \"tagValue1\",\n        \"tagKey2\": \"tagValue2\"\n      },\n      \"tenantId\": \"2a0ff0de-96b2-4859-bb7c-a430d07a3e0c\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

@@ -25,9 +25,165 @@
         "docUrl": "https://learn.microsoft.com/en-us/rest/api/sql/database-security-alert-policies/get?view=rest-sql-2021-11-01&tabs=HTTP",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file.",
+          "Command coverage is 10 from vendor docs, 0 approximate, and 7 missing, out of 17. Response bodies are the x-ms-examples in Azure/azure-rest-api-specs."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "azure-sql-auth-start",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-sql-auth-complete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-sql-auth-reset",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-sql-auth-test",
+          "calls": [
+            "GET /subscriptions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions"
+          ]
+        },
+        {
+          "command": "azure-sql-servers-list",
+          "calls": [
+            "GET /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers",
+            "GET /providers/Microsoft.Sql/servers"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--resourcegroups-resource-group-name-providers-microsoft-sql-server",
+            "get--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+            "get--providers-microsoft-sql-servers",
+            "get--subscriptions-subscription-id-providers-microsoft-sql-servers"
+          ]
+        },
+        {
+          "command": "azure-sql-db-list",
+          "calls": [
+            "GET /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--resourcegroups-resource-group-name-providers-microsoft--2",
+            "get--subscriptions-subscription-id-resourcegroups-resource-g-2"
+          ]
+        },
+        {
+          "command": "azure-sql-db-audit-policy-list",
+          "calls": [
+            "GET /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/auditingSettings"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--resourcegroups-resource-group-name-providers-microsoft--3",
+            "get--subscriptions-subscription-id-resourcegroups-resource-g-3"
+          ]
+        },
+        {
+          "command": "azure-sql-db-threat-policy-get",
+          "calls": [
+            "GET /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPolicies/default"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-subscriptions-subscription-id-resourcegr-0"
+          ]
+        },
+        {
+          "command": "azure-sql-db-audit-policy-create-update",
+          "calls": [
+            "PUT /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/auditingSettings/default"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-sql-db-threat-policy-create-update",
+          "calls": [
+            "PUT /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPolicies/default"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-sql-generate-login-url",
+          "calls": [
+            "GET /subscriptions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions"
+          ]
+        },
+        {
+          "command": "azure-sql-subscriptions-list",
+          "calls": [
+            "GET /subscriptions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions"
+          ]
+        },
+        {
+          "command": "azure-sql-resource-group-list",
+          "calls": [
+            "GET /subscriptions/{sub_id}/resourcegroups",
+            "GET /subscriptions/{subscriptions_id}/resourcegroups"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-sql-firewall-rule-list",
+          "calls": [
+            "GET /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--resourcegroups-resource-group-name-providers-microsoft--4",
+            "get--subscriptions-subscription-id-resourcegroups-resource-g-4"
+          ]
+        },
+        {
+          "command": "azure-sql-firewall-rule-create-update",
+          "calls": [
+            "PUT /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules/{firewall_rule_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "put--resourcegroups-resource-group-name-providers-microsoft-sql-server",
+            "put--subscriptions-subscription-id-resourcegroups-resource-group-name-"
+          ]
+        },
+        {
+          "command": "azure-sql-firewall-rule-delete",
+          "calls": [
+            "DELETE /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules/{firewall_rule_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-sql-firewall-rule-replace",
+          "calls": [
+            "PUT /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "put--resourcegroups-resource-group-name-providers-microsoft--2",
+            "put--subscriptions-subscription-id-resourcegroups-resource-g-2"
+          ]
+        }
+      ]
     },
     "operations": [
       {
@@ -127,6 +283,1476 @@
           ]
         },
         "fixture": "{\n  \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/securityalert-6852/providers/Microsoft.Sql/servers/securityalert-2080/databases/testdb\",\n  \"name\": \"default\",\n  \"type\": \"Microsoft.Sql/servers/databases/securityAlertPolicies\",\n  \"systemData\": {\n    \"createdBy\": \"string\",\n    \"createdByType\": \"User\",\n    \"createdAt\": \"2020-04-03T04:41:33.937Z\",\n    \"lastModifiedBy\": \"string\",\n    \"lastModifiedByType\": \"User\",\n    \"lastModifiedAt\": \"2020-04-03T04:41:33.937Z\"\n  },\n  \"properties\": {\n    \"state\": \"Enabled\",\n    \"emailAccountAdmins\": true,\n    \"emailAddresses\": [\n      \"user@example.invalid\",\n      \"user2@example.invalid\"\n    ],\n    \"disabledAlerts\": [\n      \"Usage_Anomaly\"\n    ],\n    \"retentionDays\": 0,\n    \"creationTime\": \"2020-04-03T04:41:33.937Z\"\n  }\n}\n"
+      },
+      {
+        "id": "get--subscriptions",
+        "summary": "GET /subscriptions",
+        "method": "GET",
+        "pathTemplate": "/subscriptions",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"nextLink\": \"http://nextlink\",\n  \"value\": [\n    {\n      \"authorizationSource\": \"RoleBased\",\n      \"displayName\": \"Example Subscription\",\n      \"id\": \"/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05\",\n      \"managedByTenants\": [\n        {\n          \"tenantId\": \"8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7\"\n        }\n      ],\n      \"state\": \"Enabled\",\n      \"subscriptionId\": \"291bba3f-e0a5-47bc-a099-3bdcb2a50a05\",\n      \"subscriptionPolicies\": {\n        \"locationPlacementId\": \"Internal_2014-09-01\",\n        \"quotaId\": \"Internal_2014-09-01\",\n        \"spendingLimit\": \"Off\"\n      },\n      \"tags\": {\n        \"tagKey1\": \"tagValue1\",\n        \"tagKey2\": \"tagValue2\"\n      },\n      \"tenantId\": \"31c75423-32d6-4322-88b7-c478bdde4858\"\n    },\n    {\n      \"authorizationSource\": \"RoleBased\",\n      \"displayName\": \"Example Subscription2\",\n      \"id\": \"/subscriptions/72ac930a-f34e-42d8-b06d-dc2a9e12ed71\",\n      \"managedByTenants\": [\n        {\n          \"tenantId\": \"8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7\"\n        },\n        {\n          \"tenantId\": \"f7fb6af2-321d-47c8-9c0f-b0239eaad39a\"\n        }\n      ],\n      \"state\": \"Enabled\",\n      \"subscriptionId\": \"72ac930a-f34e-42d8-b06d-dc2a9e12ed71\",\n      \"subscriptionPolicies\": {\n        \"locationPlacementId\": \"Internal_2014-09-01\",\n        \"quotaId\": \"Internal_2014-09-01\",\n        \"spendingLimit\": \"Off\"\n      },\n      \"tags\": {\n        \"tagKey1\": \"tagValue1\",\n        \"tagKey2\": \"tagValue2\"\n      },\n      \"tenantId\": \"2a0ff0de-96b2-4859-bb7c-a430d07a3e0c\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--resourcegroups-resource-group-name-providers-microsoft-sql-server",
+        "summary": "GET /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers",
+        "method": "GET",
+        "pathTemplate": "/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"sqlcrudtest-4645\",\n      \"type\": \"Microsoft.Sql/servers\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-4645\",\n      \"kind\": \"v12.0\",\n      \"location\": \"japaneast\",\n      \"properties\": {\n        \"administratorLogin\": \"dummylogin\",\n        \"externalGovernanceStatus\": \"Enabled\",\n        \"fullyQualifiedDomainName\": \"sqlcrudtest-4645.database.windows.net\",\n        \"isIPv6Enabled\": \"Enabled\",\n        \"privateEndpointConnections\": [\n          {\n            \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-4645/privateEndpointConnections/private-endpoint-name-00000000-1111-2222-3333-444444444444\",\n            \"properties\": {\n              \"privateEndpoint\": {\n                \"id\": \"/subscriptions/55555555-6666-7777-8888-999999999999/resourceGroups/Default-Network/providers/Microsoft.Network/privateEndpoints/private-endpoint-name\"\n              },\n              \"privateLinkServiceConnectionState\": {\n                \"description\": \"Auto-approved\",\n                \"actionsRequired\": \"None\",\n                \"status\": \"Approved\"\n              },\n              \"provisioningState\": \"Ready\"\n            }\n          }\n        ],\n        \"publicNetworkAccess\": \"Enabled\",\n        \"restrictOutboundNetworkAccess\": \"Enabled\",\n        \"retentionDays\": 7,\n        \"state\": \"Ready\",\n        \"version\": \"12.0\",\n        \"workspaceFeature\": \"Connected\"\n      }\n    },\n    {\n      \"name\": \"sqlcrudtest-6661\",\n      \"type\": \"Microsoft.Sql/servers\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-6661\",\n      \"kind\": \"v12.0\",\n      \"location\": \"japaneast\",\n      \"properties\": {\n        \"administratorLogin\": \"dummylogin\",\n        \"externalGovernanceStatus\": \"Enabled\",\n        \"fullyQualifiedDomainName\": \"sqlcrudtest-6661.database.windows.net\",\n        \"isIPv6Enabled\": \"Enabled\",\n        \"privateEndpointConnections\": [\n          {\n            \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-4645/privateEndpointConnections/private-endpoint-name-00000000-1111-2222-3333-444444444444\",\n            \"properties\": {\n              \"privateEndpoint\": {\n                \"id\": \"/subscriptions/55555555-6666-7777-8888-999999999999/resourceGroups/Default-Network/providers/Microsoft.Network/privateEndpoints/private-endpoint-name\"\n              },\n              \"privateLinkServiceConnectionState\": {\n                \"description\": \"Auto-approved\",\n                \"actionsRequired\": \"None\",\n                \"status\": \"Approved\"\n              },\n              \"provisioningState\": \"Ready\"\n            }\n          }\n        ],\n        \"publicNetworkAccess\": \"Enabled\",\n        \"restrictOutboundNetworkAccess\": \"Enabled\",\n        \"retentionDays\": 7,\n        \"state\": \"Ready\",\n        \"version\": \"12.0\",\n        \"workspaceFeature\": \"Connected\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"sqlcrudtest-4645\",\n      \"type\": \"Microsoft.Sql/servers\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-4645\",\n      \"kind\": \"v12.0\",\n      \"location\": \"japaneast\",\n      \"properties\": {\n        \"administratorLogin\": \"dummylogin\",\n        \"externalGovernanceStatus\": \"Enabled\",\n        \"fullyQualifiedDomainName\": \"sqlcrudtest-4645.database.windows.net\",\n        \"isIPv6Enabled\": \"Enabled\",\n        \"privateEndpointConnections\": [\n          {\n            \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-4645/privateEndpointConnections/private-endpoint-name-00000000-1111-2222-3333-444444444444\",\n            \"properties\": {\n              \"privateEndpoint\": {\n                \"id\": \"/subscriptions/55555555-6666-7777-8888-999999999999/resourceGroups/Default-Network/providers/Microsoft.Network/privateEndpoints/private-endpoint-name\"\n              },\n              \"privateLinkServiceConnectionState\": {\n                \"description\": \"Auto-approved\",\n                \"actionsRequired\": \"None\",\n                \"status\": \"Approved\"\n              },\n              \"provisioningState\": \"Ready\"\n            }\n          }\n        ],\n        \"publicNetworkAccess\": \"Enabled\",\n        \"restrictOutboundNetworkAccess\": \"Enabled\",\n        \"retentionDays\": 7,\n        \"state\": \"Ready\",\n        \"version\": \"12.0\",\n        \"workspaceFeature\": \"Connected\"\n      }\n    },\n    {\n      \"name\": \"sqlcrudtest-6661\",\n      \"type\": \"Microsoft.Sql/servers\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-6661\",\n      \"kind\": \"v12.0\",\n      \"location\": \"japaneast\",\n      \"properties\": {\n        \"administratorLogin\": \"dummylogin\",\n        \"externalGovernanceStatus\": \"Enabled\",\n        \"fullyQualifiedDomainName\": \"sqlcrudtest-6661.database.windows.net\",\n        \"isIPv6Enabled\": \"Enabled\",\n        \"privateEndpointConnections\": [\n          {\n            \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-4645/privateEndpointConnections/private-endpoint-name-00000000-1111-2222-3333-444444444444\",\n            \"properties\": {\n              \"privateEndpoint\": {\n                \"id\": \"/subscriptions/55555555-6666-7777-8888-999999999999/resourceGroups/Default-Network/providers/Microsoft.Network/privateEndpoints/private-endpoint-name\"\n              },\n              \"privateLinkServiceConnectionState\": {\n                \"description\": \"Auto-approved\",\n                \"actionsRequired\": \"None\",\n                \"status\": \"Approved\"\n              },\n              \"provisioningState\": \"Ready\"\n            }\n          }\n        ],\n        \"publicNetworkAccess\": \"Enabled\",\n        \"restrictOutboundNetworkAccess\": \"Enabled\",\n        \"retentionDays\": 7,\n        \"state\": \"Ready\",\n        \"version\": \"12.0\",\n        \"workspaceFeature\": \"Connected\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--providers-microsoft-sql-servers",
+        "summary": "GET /providers/Microsoft.Sql/servers",
+        "method": "GET",
+        "pathTemplate": "/providers/Microsoft.Sql/servers",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"sqlcrudtest-4645\",\n      \"type\": \"Microsoft.Sql/servers\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-4645\",\n      \"kind\": \"v12.0\",\n      \"location\": \"japaneast\",\n      \"properties\": {\n        \"administratorLogin\": \"dummylogin\",\n        \"externalGovernanceStatus\": \"Enabled\",\n        \"fullyQualifiedDomainName\": \"sqlcrudtest-4645.database.windows.net\",\n        \"isIPv6Enabled\": \"Enabled\",\n        \"privateEndpointConnections\": [\n          {\n            \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-4645/privateEndpointConnections/private-endpoint-name-00000000-1111-2222-3333-444444444444\",\n            \"properties\": {\n              \"privateEndpoint\": {\n                \"id\": \"/subscriptions/55555555-6666-7777-8888-999999999999/resourceGroups/Default-Network/providers/Microsoft.Network/privateEndpoints/private-endpoint-name\"\n              },\n              \"privateLinkServiceConnectionState\": {\n                \"description\": \"Auto-approved\",\n                \"actionsRequired\": \"None\",\n                \"status\": \"Approved\"\n              },\n              \"provisioningState\": \"Ready\"\n            }\n          }\n        ],\n        \"publicNetworkAccess\": \"Enabled\",\n        \"restrictOutboundNetworkAccess\": \"Enabled\",\n        \"state\": \"Ready\",\n        \"version\": \"12.0\",\n        \"workspaceFeature\": \"Connected\"\n      }\n    },\n    {\n      \"name\": \"sqlcrudtest-6661\",\n      \"type\": \"Microsoft.Sql/servers\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-6661\",\n      \"kind\": \"v12.0\",\n      \"location\": \"japaneast\",\n      \"properties\": {\n        \"administratorLogin\": \"dummylogin\",\n        \"externalGovernanceStatus\": \"Enabled\",\n        \"fullyQualifiedDomainName\": \"sqlcrudtest-6661.database.windows.net\",\n        \"isIPv6Enabled\": \"Enabled\",\n        \"privateEndpointConnections\": [\n          {\n            \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-4645/privateEndpointConnections/private-endpoint-name-00000000-1111-2222-3333-444444444444\",\n            \"properties\": {\n              \"privateEndpoint\": {\n                \"id\": \"/subscriptions/55555555-6666-7777-8888-999999999999/resourceGroups/Default-Network/providers/Microsoft.Network/privateEndpoints/private-endpoint-name\"\n              },\n              \"privateLinkServiceConnectionState\": {\n                \"description\": \"Auto-approved\",\n                \"actionsRequired\": \"None\",\n                \"status\": \"Approved\"\n              },\n              \"provisioningState\": \"Ready\"\n            }\n          }\n        ],\n        \"publicNetworkAccess\": \"Enabled\",\n        \"restrictOutboundNetworkAccess\": \"Enabled\",\n        \"state\": \"Ready\",\n        \"version\": \"12.0\",\n        \"workspaceFeature\": \"Connected\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--subscriptions-subscription-id-providers-microsoft-sql-servers",
+        "summary": "GET /subscriptions/{subscription_id}/providers/Microsoft.Sql/servers",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/providers/Microsoft.Sql/servers",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"sqlcrudtest-4645\",\n      \"type\": \"Microsoft.Sql/servers\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-4645\",\n      \"kind\": \"v12.0\",\n      \"location\": \"japaneast\",\n      \"properties\": {\n        \"administratorLogin\": \"dummylogin\",\n        \"externalGovernanceStatus\": \"Enabled\",\n        \"fullyQualifiedDomainName\": \"sqlcrudtest-4645.database.windows.net\",\n        \"isIPv6Enabled\": \"Enabled\",\n        \"privateEndpointConnections\": [\n          {\n            \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-4645/privateEndpointConnections/private-endpoint-name-00000000-1111-2222-3333-444444444444\",\n            \"properties\": {\n              \"privateEndpoint\": {\n                \"id\": \"/subscriptions/55555555-6666-7777-8888-999999999999/resourceGroups/Default-Network/providers/Microsoft.Network/privateEndpoints/private-endpoint-name\"\n              },\n              \"privateLinkServiceConnectionState\": {\n                \"description\": \"Auto-approved\",\n                \"actionsRequired\": \"None\",\n                \"status\": \"Approved\"\n              },\n              \"provisioningState\": \"Ready\"\n            }\n          }\n        ],\n        \"publicNetworkAccess\": \"Enabled\",\n        \"restrictOutboundNetworkAccess\": \"Enabled\",\n        \"state\": \"Ready\",\n        \"version\": \"12.0\",\n        \"workspaceFeature\": \"Connected\"\n      }\n    },\n    {\n      \"name\": \"sqlcrudtest-6661\",\n      \"type\": \"Microsoft.Sql/servers\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-6661\",\n      \"kind\": \"v12.0\",\n      \"location\": \"japaneast\",\n      \"properties\": {\n        \"administratorLogin\": \"dummylogin\",\n        \"externalGovernanceStatus\": \"Enabled\",\n        \"fullyQualifiedDomainName\": \"sqlcrudtest-6661.database.windows.net\",\n        \"isIPv6Enabled\": \"Enabled\",\n        \"privateEndpointConnections\": [\n          {\n            \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/sqlcrudtest-7398/providers/Microsoft.Sql/servers/sqlcrudtest-4645/privateEndpointConnections/private-endpoint-name-00000000-1111-2222-3333-444444444444\",\n            \"properties\": {\n              \"privateEndpoint\": {\n                \"id\": \"/subscriptions/55555555-6666-7777-8888-999999999999/resourceGroups/Default-Network/providers/Microsoft.Network/privateEndpoints/private-endpoint-name\"\n              },\n              \"privateLinkServiceConnectionState\": {\n                \"description\": \"Auto-approved\",\n                \"actionsRequired\": \"None\",\n                \"status\": \"Approved\"\n              },\n              \"provisioningState\": \"Ready\"\n            }\n          }\n        ],\n        \"publicNetworkAccess\": \"Enabled\",\n        \"restrictOutboundNetworkAccess\": \"Enabled\",\n        \"state\": \"Ready\",\n        \"version\": \"12.0\",\n        \"workspaceFeature\": \"Connected\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--resourcegroups-resource-group-name-providers-microsoft--2",
+        "summary": "GET /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases",
+        "method": "GET",
+        "pathTemplate": "/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"testdb\",\n      \"type\": \"Microsoft.Sql/servers/databases\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/testdb\",\n      \"kind\": \"v12.0,user,vcore\",\n      \"location\": \"southeastasia\",\n      \"properties\": {\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\n        \"creationDate\": \"2017-06-07T04:41:33.937Z\",\n        \"currentBackupStorageRedundancy\": \"Zone\",\n        \"currentServiceObjectiveName\": \"BC_Gen4_2\",\n        \"currentSku\": {\n          \"name\": \"BC_Gen4\",\n          \"capacity\": 2,\n          \"tier\": \"BusinessCritical\"\n        },\n        \"databaseId\": \"6c764297-577b-470f-9af4-96d3d41e2ba3\",\n        \"defaultSecondaryLocation\": \"North Europe\",\n        \"earliestRestoreDate\": \"2017-06-07T04:51:33.937Z\",\n        \"isInfraEncryptionEnabled\": false,\n        \"isLedgerOn\": false,\n        \"licenseType\": \"LicenseIncluded\",\n        \"maxLogSizeBytes\": 104857600,\n        \"maxSizeBytes\": 268435456000,\n        \"readScale\": \"Enabled\",\n        \"requestedBackupStorageRedundancy\": \"Zone\",\n        \"requestedServiceObjectiveName\": \"BC_Gen4_2\",\n        \"status\": \"Online\",\n        \"zoneRedundant\": false\n      },\n      \"sku\": {\n        \"name\": \"BC_Gen4\",\n        \"capacity\": 2,\n        \"tier\": \"BusinessCritical\"\n      }\n    },\n    {\n      \"name\": \"master\",\n      \"type\": \"Microsoft.Sql/servers/databases\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/master\",\n      \"kind\": \"v12.0,system\",\n      \"location\": \"southeastasia\",\n      \"properties\": {\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\n        \"creationDate\": \"2017-06-07T04:23:42.537Z\",\n        \"currentBackupStorageRedundancy\": \"Local\",\n        \"currentServiceObjectiveName\": \"System0\",\n        \"currentSku\": {\n          \"name\": \"System0\",\n          \"capacity\": 0,\n          \"tier\": \"System\"\n        },\n        \"databaseId\": \"e6be351f-2cc9-4604-9e52-b0b28b2710b0\",\n        \"defaultSecondaryLocation\": \"North Europe\",\n        \"isInfraEncryptionEnabled\": false,\n        \"isLedgerOn\": false,\n        \"maxSizeBytes\": 32212254720,\n        \"readScale\": \"Disabled\",\n        \"requestedBackupStorageRedundancy\": \"Local\",\n        \"requestedServiceObjectiveName\": \"System0\",\n        \"status\": \"Online\",\n        \"zoneRedundant\": false\n      },\n      \"sku\": {\n        \"name\": \"System0\",\n        \"capacity\": 0,\n        \"tier\": \"System\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--subscriptions-subscription-id-resourcegroups-resource-g-2",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"testdb\",\n      \"type\": \"Microsoft.Sql/servers/databases\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/testdb\",\n      \"kind\": \"v12.0,user,vcore\",\n      \"location\": \"southeastasia\",\n      \"properties\": {\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\n        \"creationDate\": \"2017-06-07T04:41:33.937Z\",\n        \"currentBackupStorageRedundancy\": \"Zone\",\n        \"currentServiceObjectiveName\": \"BC_Gen4_2\",\n        \"currentSku\": {\n          \"name\": \"BC_Gen4\",\n          \"capacity\": 2,\n          \"tier\": \"BusinessCritical\"\n        },\n        \"databaseId\": \"6c764297-577b-470f-9af4-96d3d41e2ba3\",\n        \"defaultSecondaryLocation\": \"North Europe\",\n        \"earliestRestoreDate\": \"2017-06-07T04:51:33.937Z\",\n        \"isInfraEncryptionEnabled\": false,\n        \"isLedgerOn\": false,\n        \"licenseType\": \"LicenseIncluded\",\n        \"maxLogSizeBytes\": 104857600,\n        \"maxSizeBytes\": 268435456000,\n        \"readScale\": \"Enabled\",\n        \"requestedBackupStorageRedundancy\": \"Zone\",\n        \"requestedServiceObjectiveName\": \"BC_Gen4_2\",\n        \"status\": \"Online\",\n        \"zoneRedundant\": false\n      },\n      \"sku\": {\n        \"name\": \"BC_Gen4\",\n        \"capacity\": 2,\n        \"tier\": \"BusinessCritical\"\n      }\n    },\n    {\n      \"name\": \"master\",\n      \"type\": \"Microsoft.Sql/servers/databases\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/servers/testsvr/databases/master\",\n      \"kind\": \"v12.0,system\",\n      \"location\": \"southeastasia\",\n      \"properties\": {\n        \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\n        \"creationDate\": \"2017-06-07T04:23:42.537Z\",\n        \"currentBackupStorageRedundancy\": \"Local\",\n        \"currentServiceObjectiveName\": \"System0\",\n        \"currentSku\": {\n          \"name\": \"System0\",\n          \"capacity\": 0,\n          \"tier\": \"System\"\n        },\n        \"databaseId\": \"e6be351f-2cc9-4604-9e52-b0b28b2710b0\",\n        \"defaultSecondaryLocation\": \"North Europe\",\n        \"isInfraEncryptionEnabled\": false,\n        \"isLedgerOn\": false,\n        \"maxSizeBytes\": 32212254720,\n        \"readScale\": \"Disabled\",\n        \"requestedBackupStorageRedundancy\": \"Local\",\n        \"requestedServiceObjectiveName\": \"System0\",\n        \"status\": \"Online\",\n        \"zoneRedundant\": false\n      },\n      \"sku\": {\n        \"name\": \"System0\",\n        \"capacity\": 0,\n        \"tier\": \"System\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--resourcegroups-resource-group-name-providers-microsoft--3",
+        "summary": "GET /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/auditingSettings",
+        "method": "GET",
+        "pathTemplate": "/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/auditingSettings",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"default\",\n      \"type\": \"Microsoft.Sql/servers/databases/auditingSettings\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/blobauditingtest-6852/providers/Microsoft.Sql/servers/blobauditingtest-2080/databases/testdb/auditingSettings/default\",\n      \"kind\": \"V12\",\n      \"properties\": {\n        \"auditActionsAndGroups\": [],\n        \"isAzureMonitorTargetEnabled\": false,\n        \"isManagedIdentityInUse\": false,\n        \"isStorageSecondaryKeyInUse\": false,\n        \"retentionDays\": 0,\n        \"state\": \"Disabled\",\n        \"storageAccountSubscriptionId\": \"00000000-0000-0000-0000-000000000000\",\n        \"storageEndpoint\": \"\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--subscriptions-subscription-id-resourcegroups-resource-g-3",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/auditingSettings",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/auditingSettings",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"default\",\n      \"type\": \"Microsoft.Sql/servers/databases/auditingSettings\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/blobauditingtest-6852/providers/Microsoft.Sql/servers/blobauditingtest-2080/databases/testdb/auditingSettings/default\",\n      \"kind\": \"V12\",\n      \"properties\": {\n        \"auditActionsAndGroups\": [],\n        \"isAzureMonitorTargetEnabled\": false,\n        \"isManagedIdentityInUse\": false,\n        \"isStorageSecondaryKeyInUse\": false,\n        \"retentionDays\": 0,\n        \"state\": \"Disabled\",\n        \"storageAccountSubscriptionId\": \"00000000-0000-0000-0000-000000000000\",\n        \"storageEndpoint\": \"\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--resourcegroups-resource-group-name-providers-microsoft--4",
+        "summary": "GET /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules",
+        "method": "GET",
+        "pathTemplate": "/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"firewallrulecrudtest-2304\",\n      \"type\": \"Microsoft.Sql/servers/firewallRules\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/firewallrulecrudtest-12/providers/Microsoft.Sql/servers/firewallrulecrudtest-6285/firewallRules/firewallrulecrudtest-2304\",\n      \"properties\": {\n        \"endIpAddress\": \"0.0.0.0\",\n        \"startIpAddress\": \"0.0.0.0\"\n      }\n    },\n    {\n      \"name\": \"firewallrulecrudtest-3927\",\n      \"type\": \"Microsoft.Sql/servers/firewallRules\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/firewallrulecrudtest-12/providers/Microsoft.Sql/servers/firewallrulecrudtest-6285/firewallRules/firewallrulecrudtest-3927\",\n      \"properties\": {\n        \"endIpAddress\": \"0.0.0.1\",\n        \"startIpAddress\": \"0.0.0.1\"\n      }\n    },\n    {\n      \"name\": \"firewallrulecrudtest-5370\",\n      \"type\": \"Microsoft.Sql/servers/firewallRules\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/firewallrulecrudtest-12/providers/Microsoft.Sql/servers/firewallrulecrudtest-6285/firewallRules/firewallrulecrudtest-5370\",\n      \"properties\": {\n        \"endIpAddress\": \"0.0.0.3\",\n        \"startIpAddress\": \"0.0.0.3\"\n      }\n    },\n    {\n      \"name\": \"firewallrulecrudtest-5767\",\n      \"type\": \"Microsoft.Sql/servers/firewallRules\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/firewallrulecrudtest-12/providers/Microsoft.Sql/servers/firewallrulecrudtest-6285/firewallRules/firewallrulecrudtest-5767\",\n      \"properties\": {\n        \"endIpAddress\": \"0.0.0.2\",\n        \"startIpAddress\": \"0.0.0.2\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--subscriptions-subscription-id-resourcegroups-resource-g-4",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"firewallrulecrudtest-2304\",\n      \"type\": \"Microsoft.Sql/servers/firewallRules\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/firewallrulecrudtest-12/providers/Microsoft.Sql/servers/firewallrulecrudtest-6285/firewallRules/firewallrulecrudtest-2304\",\n      \"properties\": {\n        \"endIpAddress\": \"0.0.0.0\",\n        \"startIpAddress\": \"0.0.0.0\"\n      }\n    },\n    {\n      \"name\": \"firewallrulecrudtest-3927\",\n      \"type\": \"Microsoft.Sql/servers/firewallRules\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/firewallrulecrudtest-12/providers/Microsoft.Sql/servers/firewallrulecrudtest-6285/firewallRules/firewallrulecrudtest-3927\",\n      \"properties\": {\n        \"endIpAddress\": \"0.0.0.1\",\n        \"startIpAddress\": \"0.0.0.1\"\n      }\n    },\n    {\n      \"name\": \"firewallrulecrudtest-5370\",\n      \"type\": \"Microsoft.Sql/servers/firewallRules\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/firewallrulecrudtest-12/providers/Microsoft.Sql/servers/firewallrulecrudtest-6285/firewallRules/firewallrulecrudtest-5370\",\n      \"properties\": {\n        \"endIpAddress\": \"0.0.0.3\",\n        \"startIpAddress\": \"0.0.0.3\"\n      }\n    },\n    {\n      \"name\": \"firewallrulecrudtest-5767\",\n      \"type\": \"Microsoft.Sql/servers/firewallRules\",\n      \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/firewallrulecrudtest-12/providers/Microsoft.Sql/servers/firewallrulecrudtest-6285/firewallRules/firewallrulecrudtest-5767\",\n      \"properties\": {\n        \"endIpAddress\": \"0.0.0.2\",\n        \"startIpAddress\": \"0.0.0.2\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "put--resourcegroups-resource-group-name-providers-microsoft-sql-server",
+        "summary": "PUT /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules/{firewall_rule_name}",
+        "method": "PUT",
+        "pathTemplate": "/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules/{firewall_rule_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"firewallrulecrudtest-5370\",\n  \"type\": \"Microsoft.Sql/servers/firewallRules\",\n  \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/firewallrulecrudtest-12/providers/Microsoft.Sql/servers/firewallrulecrudtest-6285/firewallRules/firewallrulecrudtest-5370\",\n  \"properties\": {\n    \"endIpAddress\": \"0.0.0.3\",\n    \"startIpAddress\": \"0.0.0.3\"\n  }\n}\n"
+      },
+      {
+        "id": "put--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+        "summary": "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules/{firewall_rule_name}",
+        "method": "PUT",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules/{firewall_rule_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"firewallrulecrudtest-5370\",\n  \"type\": \"Microsoft.Sql/servers/firewallRules\",\n  \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/firewallrulecrudtest-12/providers/Microsoft.Sql/servers/firewallrulecrudtest-6285/firewallRules/firewallrulecrudtest-5370\",\n  \"properties\": {\n    \"endIpAddress\": \"0.0.0.3\",\n    \"startIpAddress\": \"0.0.0.3\"\n  }\n}\n"
+      },
+      {
+        "id": "put--resourcegroups-resource-group-name-providers-microsoft--2",
+        "summary": "PUT /resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules",
+        "method": "PUT",
+        "pathTemplate": "/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"firewallrulecrudtest-5370\",\n  \"type\": \"Microsoft.Sql/servers/firewallRules\",\n  \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/firewallrulecrudtest-12/providers/Microsoft.Sql/servers/firewallrulecrudtest-6285/firewallRules/firewallrulecrudtest-5370\",\n  \"properties\": {\n    \"endIpAddress\": \"0.0.0.3\",\n    \"startIpAddress\": \"0.0.0.3\"\n  }\n}\n"
+      },
+      {
+        "id": "put--subscriptions-subscription-id-resourcegroups-resource-g-2",
+        "summary": "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules",
+        "method": "PUT",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/firewallRules",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "creationTime",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "disabledAlerts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "emailAccountAdmins",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "emailAddresses",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "retentionDays",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageAccountAccessKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "storageEndpoint",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"firewallrulecrudtest-5370\",\n  \"type\": \"Microsoft.Sql/servers/firewallRules\",\n  \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/firewallrulecrudtest-12/providers/Microsoft.Sql/servers/firewallrulecrudtest-6285/firewallRules/firewallrulecrudtest-5370\",\n  \"properties\": {\n    \"endIpAddress\": \"0.0.0.3\",\n    \"startIpAddress\": \"0.0.0.3\"\n  }\n}\n"
       }
     ],
     "chaos": {

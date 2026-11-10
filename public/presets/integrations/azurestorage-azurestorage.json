@@ -25,9 +25,131 @@
         "docUrl": "https://learn.microsoft.com/en-us/rest/api/storagerp/blob-services/get-service-properties?tabs=HTTP",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file.",
+          "Command coverage is 8 from vendor docs, 0 approximate, and 7 missing, out of 15. Response bodies are the x-ms-examples in Azure/azure-rest-api-specs."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "azure-storage-auth-test",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-storage-auth-start",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-storage-auth-complete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-storage-auth-reset",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-storage-account-list",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions-subscription-id-resourcegroups-resource-group-name-"
+          ]
+        },
+        {
+          "command": "azure-storage-account-create-update",
+          "calls": [
+            "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "put--subscriptions-subscription-id-resourcegroups-resource-group-name-"
+          ]
+        },
+        {
+          "command": "azure-storage-blob-service-properties-get",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "audited-call"
+          ]
+        },
+        {
+          "command": "azure-storage-blob-service-properties-set",
+          "calls": [
+            "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "put--subscriptions-subscription-id-resourcegroups-resource-g-2"
+          ]
+        },
+        {
+          "command": "azure-storage-blob-containers-create",
+          "calls": [
+            "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default/containers/{container_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "put--subscriptions-subscription-id-resourcegroups-resource-g-3"
+          ]
+        },
+        {
+          "command": "azure-storage-blob-containers-update",
+          "calls": [
+            "PATCH /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default/containers/{container_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "patch--subscriptions-subscription-id-resourcegroups-resource-group-nam"
+          ]
+        },
+        {
+          "command": "azure-storage-blob-containers-list",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default/containers/{container_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions-subscription-id-resourcegroups-resource-g-2"
+          ]
+        },
+        {
+          "command": "azure-storage-blob-container-delete",
+          "calls": [
+            "DELETE /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default/containers/{container_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-storage-subscriptions-list",
+          "calls": [
+            "GET /subscriptions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions"
+          ]
+        },
+        {
+          "command": "azure-storage-resource-group-list",
+          "calls": [
+            "GET /subscriptions/{subscription_id}/resourcegroups"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-storage-generate-login-url",
+          "calls": [],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -98,6 +220,489 @@
           ]
         },
         "fixture": "{\n  \"name\": \"default\",\n  \"type\": \"Microsoft.Storage/storageAccounts/blobServices\",\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/res4410/providers/Microsoft.Storage/storageAccounts/sto8607/blobServices/default\",\n  \"properties\": {\n    \"changeFeed\": {\n      \"enabled\": true,\n      \"retentionInDays\": 7\n    },\n    \"cors\": {\n      \"corsRules\": [\n        {\n          \"allowedHeaders\": [\n            \"x-ms-meta-abc\",\n            \"x-ms-meta-data*\",\n            \"x-ms-meta-target*\"\n          ],\n          \"allowedMethods\": [\n            \"GET\",\n            \"HEAD\",\n            \"POST\",\n            \"OPTIONS\",\n            \"MERGE\",\n            \"PUT\"\n          ],\n          \"allowedOrigins\": [\n            \"http://www.contoso.com\",\n            \"http://www.fabrikam.com\"\n          ],\n          \"exposedHeaders\": [\n            \"x-ms-meta-*\"\n          ],\n          \"maxAgeInSeconds\": 100\n        },\n        {\n          \"allowedHeaders\": [\n            \"*\"\n          ],\n          \"allowedMethods\": [\n            \"GET\"\n          ],\n          \"allowedOrigins\": [\n            \"*\"\n          ],\n          \"exposedHeaders\": [\n            \"*\"\n          ],\n          \"maxAgeInSeconds\": 2\n        },\n        {\n          \"allowedHeaders\": [\n            \"x-ms-meta-12345675754564*\"\n          ],\n          \"allowedMethods\": [\n            \"GET\",\n            \"PUT\"\n          ],\n          \"allowedOrigins\": [\n            \"http://www.abc23.com\",\n            \"https://www.fabrikam.com/*\"\n          ],\n          \"exposedHeaders\": [\n            \"x-ms-meta-abc\",\n            \"x-ms-meta-data*\",\n            \"x -ms-meta-target*\"\n          ],\n          \"maxAgeInSeconds\": 2000\n        }\n      ]\n    },\n    \"defaultServiceVersion\": \"2017-07-29\",\n    \"deleteRetentionPolicy\": {\n      \"days\": 300,\n      \"enabled\": true\n    },\n    \"isVersioningEnabled\": true,\n    \"staticWebsite\": {\n      \"enabled\": true,\n      \"indexDocument\": \"home.html\",\n      \"errorDocument404Path\": \"site/errors/not-found.html\"\n    }\n  },\n  \"sku\": {\n    \"name\": \"Standard_GRS\",\n    \"tier\": \"Standard\"\n  }\n}\n"
+      },
+      {
+        "id": "get--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "changeFeed",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "deleteRetentionPolicy",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "isVersioningEnabled",
+                  "kind": "boolean"
+                }
+              ]
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"sto8596\",\n  \"type\": \"Microsoft.Storage/storageAccounts\",\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/res9407/providers/Microsoft.Storage/storageAccounts/sto8596\",\n  \"kind\": \"StorageV2\",\n  \"location\": \"eastus\",\n  \"properties\": {\n    \"allowBlobPublicAccess\": false,\n    \"minimumTlsVersion\": \"TLS1_2\",\n    \"storageAccountSkuConversionStatus\": {\n      \"endTime\": \"2021-09-02T02:53:39.0932539Z\",\n      \"skuConversionStatus\": \"InProgress\",\n      \"startTime\": \"2022-09-01T02:53:39.0932539Z\",\n      \"targetSkuName\": \"Standard_GRS\"\n    }\n  },\n  \"sku\": {\n    \"name\": \"Standard_GRS\",\n    \"tier\": \"Standard\"\n  }\n}\n"
+      },
+      {
+        "id": "put--subscriptions-subscription-id-resourcegroups-resource-group-name-",
+        "summary": "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}",
+        "method": "PUT",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "changeFeed",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "deleteRetentionPolicy",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "isVersioningEnabled",
+                  "kind": "boolean"
+                }
+              ]
+            }
+          ]
+        },
+        "fixture": "{\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.Storage/storageAccounts/staturbocontoso01\",\n  \"kind\": \"StorageV2\",\n  \"location\": \"eastus2\",\n  \"name\": \"staturbocontoso01\",\n  \"properties\": {\n    \"accessTier\": \"Hot\",\n    \"provisioningState\": \"Succeeded\",\n    \"turboTier\": {\n      \"status\": \"Enabled\",\n      \"targetPercent\": 10\n    }\n  },\n  \"sku\": {\n    \"name\": \"Standard_LRS\",\n    \"tier\": \"Standard\"\n  },\n  \"type\": \"Microsoft.Storage/storageAccounts\"\n}\n"
+      },
+      {
+        "id": "put--subscriptions-subscription-id-resourcegroups-resource-g-2",
+        "summary": "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default",
+        "method": "PUT",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "changeFeed",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "deleteRetentionPolicy",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "isVersioningEnabled",
+                  "kind": "boolean"
+                }
+              ]
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"default\",\n  \"type\": \"Microsoft.Storage/storageAccounts/blobServices\",\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/res4410/providers/Microsoft.Storage/storageAccounts/sto8607/blobServices/default\",\n  \"properties\": {\n    \"deleteRetentionPolicy\": {\n      \"allowPermanentDelete\": true,\n      \"days\": 300,\n      \"enabled\": true\n    },\n    \"isVersioningEnabled\": true\n  }\n}\n"
+      },
+      {
+        "id": "put--subscriptions-subscription-id-resourcegroups-resource-g-3",
+        "summary": "PUT /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default/containers/{container_name",
+        "method": "PUT",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default/containers/{container_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "changeFeed",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "deleteRetentionPolicy",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "isVersioningEnabled",
+                  "kind": "boolean"
+                }
+              ]
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"container6185\",\n  \"type\": \"Microsoft.Storage/storageAccounts/blobServices/containers\",\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/res3376/providers/Microsoft.Storage/storageAccounts/sto328/blobServices/default/containers/container6185\"\n}\n"
+      },
+      {
+        "id": "patch--subscriptions-subscription-id-resourcegroups-resource-group-nam",
+        "summary": "PATCH /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default/containers/{container_na",
+        "method": "PATCH",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default/containers/{container_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "changeFeed",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "deleteRetentionPolicy",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "isVersioningEnabled",
+                  "kind": "boolean"
+                }
+              ]
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"container6185\",\n  \"type\": \"Microsoft.Storage/storageAccounts/blobServices/containers\",\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/res3376/providers/Microsoft.Storage/storageAccounts/sto328/blobServices/default/containers/container6185\",\n  \"properties\": {\n    \"hasImmutabilityPolicy\": false,\n    \"hasLegalHold\": false,\n    \"metadata\": {\n      \"metadata\": \"true\"\n    },\n    \"publicAccess\": \"Container\"\n  }\n}\n"
+      },
+      {
+        "id": "get--subscriptions-subscription-id-resourcegroups-resource-g-2",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default/containers/{container_name",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default/containers/{container_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "changeFeed",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "deleteRetentionPolicy",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "isVersioningEnabled",
+                  "kind": "boolean"
+                }
+              ]
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"container1634\",\n  \"type\": \"Microsoft.Storage/storageAccounts/blobServices/containers\",\n  \"etag\": \"\\\"0x8D592D74CC20EBA\\\"\",\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/res9871/providers/Microsoft.Storage/storageAccounts/sto6217/blobServices/default/containers/container1634\",\n  \"properties\": {\n    \"hasImmutabilityPolicy\": true,\n    \"hasLegalHold\": true,\n    \"immutabilityPolicy\": {\n      \"etag\": \"\\\"8d592d74cb3011a\\\"\",\n      \"properties\": {\n        \"immutabilityPeriodSinceCreationInDays\": 100,\n        \"state\": \"Locked\"\n      },\n      \"updateHistory\": [\n        {\n          \"immutabilityPeriodSinceCreationInDays\": 3,\n          \"objectIdentifier\": \"ce7cd28a-fc25-4bf1-8fb9-e1b9833ffd4b\",\n          \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\n          \"timestamp\": \"2018-03-26T05:06:11.431403Z\",\n          \"update\": \"put\"\n        },\n        {\n          \"immutabilityPeriodSinceCreationInDays\": 3,\n          \"objectIdentifier\": \"ce7cd28a-fc25-4bf1-8fb9-e1b9833ffd4b\",\n          \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\n          \"timestamp\": \"2018-03-26T05:06:13.0907641Z\",\n          \"update\": \"lock\"\n        },\n        {\n          \"immutabilityPeriodSinceCreationInDays\": 100,\n          \"objectIdentifier\": \"ce7cd28a-fc25-4bf1-8fb9-e1b9833ffd4b\",\n          \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\n          \"timestamp\": \"2018-03-26T05:06:14.7097716Z\",\n          \"update\": \"extend\"\n        }\n      ]\n    },\n    \"lastModifiedTime\": \"2018-03-26T05:06:14Z\",\n    \"leaseState\": \"Available\",\n    \"leaseStatus\": \"Unlocked\",\n    \"legalHold\": {\n      \"hasLegalHold\": true,\n      \"tags\": [\n        {\n          \"objectIdentifier\": \"ce7cd28a-fc25-4bf1-8fb9-e1b9833ffd4b\",\n          \"tag\": \"tag1\",\n          \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\n          \"timestamp\": \"2018-03-26T05:06:09.6964643Z\"\n        },\n        {\n          \"objectIdentifier\": \"ce7cd28a-fc25-4bf1-8fb9-e1b9833ffd4b\",\n          \"tag\": \"tag2\",\n          \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\n          \"timestamp\": \"2018-03-26T05:06:09.6964643Z\"\n        },\n        {\n          \"objectIdentifier\": \"ce7cd28a-fc25-4bf1-8fb9-e1b9833ffd4b\",\n          \"tag\": \"tag3\",\n          \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\n          \"timestamp\": \"2018-03-26T05:06:09.6964643Z\"\n        }\n      ]\n    },\n    \"publicAccess\": \"None\"\n  }\n}\n"
+      },
+      {
+        "id": "get--subscriptions",
+        "summary": "GET /subscriptions",
+        "method": "GET",
+        "pathTemplate": "/subscriptions",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "changeFeed",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "deleteRetentionPolicy",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "enabled",
+                      "kind": "boolean"
+                    }
+                  ]
+                },
+                {
+                  "name": "isVersioningEnabled",
+                  "kind": "boolean"
+                }
+              ]
+            }
+          ]
+        },
+        "fixture": "{\n  \"nextLink\": \"http://nextlink\",\n  \"value\": [\n    {\n      \"authorizationSource\": \"RoleBased\",\n      \"displayName\": \"Example Subscription\",\n      \"id\": \"/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05\",\n      \"managedByTenants\": [\n        {\n          \"tenantId\": \"8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7\"\n        }\n      ],\n      \"state\": \"Enabled\",\n      \"subscriptionId\": \"291bba3f-e0a5-47bc-a099-3bdcb2a50a05\",\n      \"subscriptionPolicies\": {\n        \"locationPlacementId\": \"Internal_2014-09-01\",\n        \"quotaId\": \"Internal_2014-09-01\",\n        \"spendingLimit\": \"Off\"\n      },\n      \"tags\": {\n        \"tagKey1\": \"tagValue1\",\n        \"tagKey2\": \"tagValue2\"\n      },\n      \"tenantId\": \"31c75423-32d6-4322-88b7-c478bdde4858\"\n    },\n    {\n      \"authorizationSource\": \"RoleBased\",\n      \"displayName\": \"Example Subscription2\",\n      \"id\": \"/subscriptions/72ac930a-f34e-42d8-b06d-dc2a9e12ed71\",\n      \"managedByTenants\": [\n        {\n          \"tenantId\": \"8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7\"\n        },\n        {\n          \"tenantId\": \"f7fb6af2-321d-47c8-9c0f-b0239eaad39a\"\n        }\n      ],\n      \"state\": \"Enabled\",\n      \"subscriptionId\": \"72ac930a-f34e-42d8-b06d-dc2a9e12ed71\",\n      \"subscriptionPolicies\": {\n        \"locationPlacementId\": \"Internal_2014-09-01\",\n        \"quotaId\": \"Internal_2014-09-01\",\n        \"spendingLimit\": \"Off\"\n      },\n      \"tags\": {\n        \"tagKey1\": \"tagValue1\",\n        \"tagKey2\": \"tagValue2\"\n      },\n      \"tenantId\": \"2a0ff0de-96b2-4859-bb7c-a430d07a3e0c\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

@@ -928,6 +928,407 @@
         "nextLink": "a"
       },
       "scrubs": []
+    },
+    {
+      "operationId": "get--resource-group-providers-microsoft-compute-virtualmachines-virtua",
+      "method": "GET",
+      "path": "/{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2026-04-01/examples/virtualMachineExamples/VirtualMachine_Get_WithOpportunisticProcessorMode.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "myVM",
+        "id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+        "type": "Microsoft.Compute/virtualMachines",
+        "location": "westus",
+        "properties": {
+          "vmId": "1a58b200-694d-59f4-b5c1-bfdd3dcced2",
+          "hardwareProfile": {
+            "vmSize": "Standard_D2s_v5",
+            "processorMode": "Opportunistic"
+          },
+          "storageProfile": {
+            "imageReference": {
+              "publisher": "MicrosoftWindowsServer",
+              "offer": "WindowsServer",
+              "sku": "2019-Datacenter",
+              "version": "latest"
+            },
+            "osDisk": {
+              "osType": "Windows",
+              "name": "myVMosdisk",
+              "createOption": "FromImage",
+              "caching": "ReadWrite",
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS",
+                "id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myVMosdisk"
+              },
+              "diskSizeGB": 127
+            },
+            "dataDisks": []
+          },
+          "osProfile": {
+            "computerName": "myVM",
+            "adminUsername": "{your-username}",
+            "windowsConfiguration": {
+              "provisionVMAgent": true,
+              "enableAutomaticUpdates": true
+            },
+            "secrets": [],
+            "allowExtensionOperations": true
+          },
+          "networkProfile": {
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}",
+                "properties": {
+                  "primary": true
+                }
+              }
+            ]
+          },
+          "provisioningState": "Succeeded"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "put--resource-group-providers-microsoft-compute-virtualmachines-virtua",
+      "method": "PUT",
+      "path": "/{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2026-04-01/examples/virtualMachineExamples/VirtualMachine_Create_FromASpecializedSharedImage.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM",
+        "type": "Microsoft.Compute/virtualMachines",
+        "properties": {
+          "networkProfile": {
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic",
+                "properties": {
+                  "primary": true
+                }
+              }
+            ]
+          },
+          "storageProfile": {
+            "imageReference": {
+              "id": "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"
+            },
+            "osDisk": {
+              "name": "myVMosdisk",
+              "diskSizeGB": 30,
+              "managedDisk": {
+                "storageAccountType": "Standard_LRS"
+              },
+              "caching": "ReadWrite",
+              "createOption": "FromImage",
+              "osType": "Linux"
+            },
+            "dataDisks": []
+          },
+          "vmId": "71aa3d5a-d73d-4970-9182-8580433b2865",
+          "hardwareProfile": {
+            "vmSize": "Standard_D1_v2"
+          },
+          "provisioningState": "Creating"
+        },
+        "name": "myVM",
+        "location": "westus"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--subscriptions",
+      "method": "GET",
+      "path": "/subscriptions",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/resources/resource-manager/Microsoft.Resources/subscriptions/stable/2022-12-01/examples/GetSubscriptions.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "nextLink": "http://nextlink",
+        "value": [
+          {
+            "authorizationSource": "RoleBased",
+            "displayName": "Example Subscription",
+            "id": "/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05",
+            "managedByTenants": [
+              {
+                "tenantId": "8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7"
+              }
+            ],
+            "state": "Enabled",
+            "subscriptionId": "291bba3f-e0a5-47bc-a099-3bdcb2a50a05",
+            "subscriptionPolicies": {
+              "locationPlacementId": "Internal_2014-09-01",
+              "quotaId": "Internal_2014-09-01",
+              "spendingLimit": "Off"
+            },
+            "tags": {
+              "tagKey1": "tagValue1",
+              "tagKey2": "tagValue2"
+            },
+            "tenantId": "31c75423-32d6-4322-88b7-c478bdde4858"
+          },
+          {
+            "authorizationSource": "RoleBased",
+            "displayName": "Example Subscription2",
+            "id": "/subscriptions/72ac930a-f34e-42d8-b06d-dc2a9e12ed71",
+            "managedByTenants": [
+              {
+                "tenantId": "8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7"
+              },
+              {
+                "tenantId": "f7fb6af2-321d-47c8-9c0f-b0239eaad39a"
+              }
+            ],
+            "state": "Enabled",
+            "subscriptionId": "72ac930a-f34e-42d8-b06d-dc2a9e12ed71",
+            "subscriptionPolicies": {
+              "locationPlacementId": "Internal_2014-09-01",
+              "quotaId": "Internal_2014-09-01",
+              "spendingLimit": "Off"
+            },
+            "tags": {
+              "tagKey1": "tagValue1",
+              "tagKey2": "tagValue2"
+            },
+            "tenantId": "2a0ff0de-96b2-4859-bb7c-a430d07a3e0c"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--resource-group-providers-microsoft-network-networkinterfaces-nic-",
+      "method": "GET",
+      "path": "/{resource_group}/providers/Microsoft.Network/networkInterfaces/{nic_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/NetworkInterfaceGet.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "test-nic",
+        "type": "Microsoft.Network/networkInterfaces",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/test-nic",
+        "location": "eastus",
+        "properties": {
+          "disableTcpStateTracking": true,
+          "dnsSettings": {
+            "appliedDnsServers": [],
+            "dnsServers": [],
+            "internalDomainNameSuffix": "test.bx.internal.cloudapp.net"
+          },
+          "dscpConfiguration": {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/dscpConfiguration/mydscpconfiguration"
+          },
+          "enableAcceleratedNetworking": true,
+          "enableIPForwarding": false,
+          "ipConfigurations": [
+            {
+              "name": "ipconfig1",
+              "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/test-nic/ipConfigurations/ipconfig1",
+              "properties": {
+                "primary": true,
+                "privateIPAddress": "172.20.2.4",
+                "privateIPAddressVersion": "IPv4",
+                "privateIPAllocationMethod": "Dynamic",
+                "provisioningState": "Succeeded",
+                "publicIPAddress": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/test-ip"
+                },
+                "subnet": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/rg1-vnet/subnets/default"
+                }
+              }
+            },
+            {
+              "name": "ipconfig2",
+              "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/test-nic/ipConfigurations/ipconfig2",
+              "properties": {
+                "primary": false,
+                "privateIPAddress": "172.20.2.16/28",
+                "privateIPAddressPrefixLength": 28,
+                "privateIPAddressVersion": "IPv4",
+                "privateIPAllocationMethod": "Dynamic",
+                "provisioningState": "Succeeded",
+                "subnet": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/rg1-vnet/subnets/default"
+                }
+              }
+            }
+          ],
+          "macAddress": "00-0D-3A-1B-C7-21",
+          "networkSecurityGroup": {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityGroups/nsg"
+          },
+          "primary": true,
+          "provisioningState": "Succeeded",
+          "virtualMachine": {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1"
+          },
+          "vnetEncryptionSupported": false
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--resource-group-providers-microsoft-network-publicipaddresses-addr",
+      "method": "GET",
+      "path": "/{resource_group}/providers/Microsoft.Network/publicIPAddresses/{address_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/PublicIpAddressGet.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "testDNS-ip",
+        "type": "Microsoft.Network/publicIPAddresses",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/testDNS-ip",
+        "location": "westus",
+        "properties": {
+          "ddosSettings": {
+            "ddosProtectionPlan": {
+              "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/ddosProtectionPlans/test-plan"
+            },
+            "protectionMode": "Enabled"
+          },
+          "idleTimeoutInMinutes": 4,
+          "ipConfiguration": {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/testDNS649/ipConfigurations/ipconfig1"
+          },
+          "ipTags": [
+            {
+              "ipTagType": "FirstPartyUsage",
+              "tag": "SQL"
+            },
+            {
+              "ipTagType": "FirstPartyUsage",
+              "tag": "Storage"
+            }
+          ],
+          "provisioningState": "Succeeded",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--providers-microsoft-network-publicipaddresses",
+      "method": "GET",
+      "path": "/providers/Microsoft.Network/publicIPAddresses",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/PublicIpAddressListAll.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "value": [
+          {
+            "name": "testDNS-ip",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/testDNS-ip",
+            "location": "westus",
+            "properties": {
+              "ddosSettings": {
+                "protectionMode": "VirtualNetworkInherited"
+              },
+              "idleTimeoutInMinutes": 4,
+              "ipConfiguration": {
+                "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/testDNS649/ipConfigurations/ipconfig1"
+              },
+              "provisioningState": "Succeeded",
+              "publicIPAddressVersion": "IPv4",
+              "publicIPAllocationMethod": "Dynamic"
+            }
+          },
+          {
+            "name": "ip01",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg2/providers/Microsoft.Network/publicIPAddresses/ip01",
+            "location": "westus",
+            "properties": {
+              "ddosSettings": {
+                "protectionMode": "VirtualNetworkInherited"
+              },
+              "dnsSettings": {
+                "domainNameLabel": "testlbl",
+                "fqdn": "testlbl.westus.cloudapp.azure.com"
+              },
+              "idleTimeoutInMinutes": 4,
+              "ipAddress": "40.85.154.247",
+              "ipConfiguration": {
+                "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg2/providers/Microsoft.Network/loadBalancers/testLb/frontendIPConfigurations/LoadBalancerFrontEnd"
+              },
+              "provisioningState": "Succeeded",
+              "publicIPAddressVersion": "IPv4",
+              "publicIPAllocationMethod": "Dynamic"
+            }
+          },
+          {
+            "name": "ip02",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg2/providers/Microsoft.Network/publicIPAddresses/ip02",
+            "location": "westus",
+            "properties": {
+              "ddosSettings": {
+                "protectionMode": "VirtualNetworkInherited"
+              },
+              "dnsSettings": {
+                "domainNameLabel": "testlbl",
+                "domainNameLabelScope": "TenantReuse",
+                "fqdn": "testlbl.hxdwgjcdfgbhgebs.eastus.sysgen.cloudapp.azure.com"
+              },
+              "idleTimeoutInMinutes": 4,
+              "ipAddress": "40.85.154.248",
+              "ipConfiguration": {
+                "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg2/providers/Microsoft.Network/loadBalancers/testLb/frontendIPConfigurations/LoadBalancerFrontEnd"
+              },
+              "provisioningState": "Succeeded",
+              "publicIPAddressVersion": "IPv4",
+              "publicIPAllocationMethod": "Dynamic"
+            }
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "put--resource-group-providers-microsoft-network-networkinterfaces-nic-",
+      "method": "PUT",
+      "path": "/{resource_group}/providers/Microsoft.Network/networkInterfaces/{nic_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/NetworkInterfaceCreateGatewayLoadBalancerConsumer.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "test-nic",
+        "type": "Microsoft.Network/networkInterfaces",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/test-nic",
+        "location": "eastus",
+        "properties": {
+          "dnsSettings": {
+            "appliedDnsServers": [],
+            "dnsServers": []
+          },
+          "enableAcceleratedNetworking": true,
+          "enableIPForwarding": false,
+          "ipConfigurations": [
+            {
+              "name": "ipconfig1",
+              "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/test-nic/ipConfigurations/ipconfig1",
+              "properties": {
+                "gatewayLoadBalancer": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb-provider"
+                },
+                "primary": true,
+                "privateIPAddress": "172.20.2.4",
+                "privateIPAddressVersion": "IPv4",
+                "privateIPAllocationMethod": "Dynamic",
+                "provisioningState": "Succeeded",
+                "publicIPAddress": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/test-ip"
+                },
+                "subnet": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/rg1-vnet/subnets/default"
+                }
+              }
+            }
+          ],
+          "provisioningState": "Succeeded"
+        }
+      },
+      "scrubs": []
     }
   ]
 }

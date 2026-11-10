@@ -25,9 +25,134 @@
         "docUrl": "https://learn.microsoft.com/en-us/rest/api/compute/virtual-machines/list?view=rest-compute-2024-07-01&tabs=HTTP",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file.",
+          "Command coverage is 8 from vendor docs, 2 approximate, and 3 missing, out of 13. Response bodies are the x-ms-examples in Azure/azure-rest-api-specs."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "azure-vm-list-instances",
+          "calls": [
+            "GET /{resource_group}/providers/Microsoft.Compute/virtualMachines"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-resource-group-providers-microsoft-compu-0"
+          ]
+        },
+        {
+          "command": "azure-vm-start-instance",
+          "calls": [
+            "GET /{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}",
+            "POST /{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}/start"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "get--resource-group-providers-microsoft-compute-virtualmachines-virtua"
+          ]
+        },
+        {
+          "command": "azure-vm-poweroff-instance",
+          "calls": [
+            "GET /{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}",
+            "POST /{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}/powerOff"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "get--resource-group-providers-microsoft-compute-virtualmachines-virtua"
+          ]
+        },
+        {
+          "command": "azure-vm-get-instance-details",
+          "calls": [
+            "GET /{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--resource-group-providers-microsoft-compute-virtualmachines-virtua"
+          ]
+        },
+        {
+          "command": "azure-vm-create-instance",
+          "calls": [
+            "PUT /{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "put--resource-group-providers-microsoft-compute-virtualmachines-virtua"
+          ]
+        },
+        {
+          "command": "azure-list-resource-groups",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "azure-vm-delete-instance",
+          "calls": [
+            "POST /{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}/deallocate",
+            "DELETE /{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "azure-list-subscriptions",
+          "calls": [
+            "GET /subscriptions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--subscriptions"
+          ]
+        },
+        {
+          "command": "azure-vm-get-nic-details",
+          "calls": [
+            "GET /{resource_group}/providers/Microsoft.Network/networkInterfaces/{nic_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--resource-group-providers-microsoft-network-networkinterfaces-nic-"
+          ]
+        },
+        {
+          "command": "azure-vm-get-public-ip-details",
+          "calls": [
+            "GET /{resource_group}/providers/Microsoft.Network/publicIPAddresses/{address_name}",
+            "GET /providers/Microsoft.Network/publicIPAddresses"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--resource-group-providers-microsoft-network-publicipaddresses-addr",
+            "get--providers-microsoft-network-publicipaddresses"
+          ]
+        },
+        {
+          "command": "azure-vm-create-nic",
+          "calls": [
+            "PUT /{resource_group}/providers/Microsoft.Network/networkInterfaces/{nic_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "put--resource-group-providers-microsoft-network-networkinterfaces-nic-"
+          ]
+        },
+        {
+          "command": "azure-vm-get-all-public-ip-details",
+          "calls": [
+            "GET /providers/Microsoft.Network/publicIPAddresses"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--providers-microsoft-network-publicipaddresses"
+          ]
+        },
+        {
+          "command": "azure-vm-auth-reset",
+          "calls": [],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -121,6 +246,650 @@
           ]
         },
         "fixture": "{\n  \"value\": [\n    {\n      \"properties\": {\n        \"vmId\": \"{vmId}\",\n        \"availabilitySet\": {\n          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n        },\n        \"hardwareProfile\": {\n          \"vmSize\": \"Standard_A0\",\n          \"vmSizeProperties\": {\n            \"vCPUsAvailable\": 7,\n            \"vCPUsPerCore\": 14\n          }\n        },\n        \"storageProfile\": {\n          \"imageReference\": {\n            \"publisher\": \"MicrosoftWindowsServer\",\n            \"offer\": \"WindowsServer\",\n            \"sku\": \"2012-R2-Datacenter\",\n            \"version\": \"4.127.20170406\",\n            \"exactVersion\": \"aaaaaaaaaaaaa\",\n            \"sharedGalleryImageId\": \"aaaaaaaaaaaaaaa\",\n            \"communityGalleryImageId\": \"aaaa\",\n            \"id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n          },\n          \"osDisk\": {\n            \"osType\": \"Windows\",\n            \"name\": \"test\",\n            \"createOption\": \"FromImage\",\n            \"vhd\": {\n              \"uri\": \"https://{storageAccountName}.blob.core.windows.net/{containerName}/{vhdName}.vhd\"\n            },\n            \"caching\": \"None\",\n            \"diskSizeGB\": 127,\n            \"encryptionSettings\": {\n              \"diskEncryptionKey\": {\n                \"secretUrl\": \"aaaaaaaaa\",\n                \"sourceVault\": {\n                  \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                }\n              },\n              \"keyEncryptionKey\": {\n                \"keyUrl\": \"aaaaaaaaaaaaa\",\n                \"sourceVault\": {\n                  \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                }\n              },\n              \"enabled\": true\n            },\n            \"image\": {\n              \"uri\": \"https://{storageAccountName}.blob.core.windows.net/{containerName}/{vhdName}.vhd\"\n            },\n            \"writeAcceleratorEnabled\": true,\n            \"diffDiskSettings\": {\n              \"option\": \"Local\",\n              \"placement\": \"CacheDisk\"\n            },\n            \"managedDisk\": {\n              \"storageAccountType\": \"Standard_LRS\",\n              \"diskEncryptionSet\": {\n                \"id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n              },\n              \"securityProfile\": {\n                \"securityEncryptionType\": \"VMGuestStateOnly\",\n                \"diskEncryptionSet\": {\n                  \"id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n                }\n              },\n              \"id\": \"/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f\"\n            },\n            \"deleteOption\": \"Delete\"\n          },\n          \"dataDisks\": []\n        },\n        \"osProfile\": {\n          \"computerName\": \"Test\",\n          \"adminUsername\": \"Foo12\",\n          \"windowsConfiguration\": {\n            \"provisionVMAgent\": true,\n            \"enableAutomaticUpdates\": true,\n            \"timeZone\": \"aaaaaaaaaaaaaaaaaaaaaa\",\n            \"additionalUnattendContent\": [\n              {\n                \"passName\": \"OobeSystem\",\n                \"componentName\": \"Microsoft-Windows-Shell-Setup\",\n                \"settingName\": \"AutoLogon\",\n                \"content\": \"aaaaaaaaaaaaaaaaaaaaaaaaaa\"\n              }\n            ],\n            \"patchSettings\": {\n              \"patchMode\": \"Manual\",\n              \"enableHotpatching\": true,\n              \"assessmentMode\": \"ImageDefault\"\n            },\n            \"winRM\": {\n              \"listeners\": [\n                {\n                  \"protocol\": \"Http\",\n                  \"certificateUrl\": \"aaaaaaaaaaaaaaaaaaaaa\"\n                }\n              ]\n            }\n          },\n          \"secrets\": [],\n          \"allowExtensionOperations\": true,\n          \"customData\": \"aaaa\",\n          \"linuxConfiguration\": {\n            \"disablePasswordAuthentication\": true,\n            \"ssh\": {\n              \"publicKeys\": [\n                {\n                  \"path\": \"aaaaaaaaaaaaaaaaaaaaaa\",\n                  \"keyData\": \"aaa\"\n                }\n              ]\n            },\n            \"provisionVMAgent\": true,\n            \"patchSettings\": {\n              \"patchMode\": \"ImageDefault\",\n              \"assessmentMode\": \"ImageDefault\"\n            }\n          },\n          \"requireGuestProvisionSignal\": true\n        },\n        \"networkProfile\": {\n          \"networkInterfaces\": [\n            {\n              \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}\",\n              \"properties\": {\n                \"primary\": true,\n                \"deleteOption\": \"Delete\"\n              }\n            }\n          ],\n          \"networkApiVersion\": \"2022-05-01\",\n          \"networkInterfaceConfigurations\": [\n            {\n              \"name\": \"aaaaaaaa\",\n              \"properties\": {\n                \"primary\": true,\n                \"deleteOption\": \"Delete\",\n                \"enableAcceleratedNetworking\": true,\n                \"disableTcpStateTracking\": true,\n                \"enableFpga\": true,\n                \"enableIPForwarding\": true,\n                \"networkSecurityGroup\": {\n                  \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                },\n                \"dnsSettings\": {\n                  \"dnsServers\": [\n                    \"aaaaaaaaaaaaaaaaaaaaaaaa\"\n                  ]\n                },\n                \"ipConfigurations\": [\n                  {\n                    \"name\": \"aaaaaaaa\",\n                    \"properties\": {\n                      \"subnet\": {\n                        \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                      },\n                      \"primary\": true,\n                      \"publicIPAddressConfiguration\": {\n                        \"name\": \"aaaaaaaaaaaaaaaaaa\",\n                        \"properties\": {\n                          \"idleTimeoutInMinutes\": 23,\n                          \"deleteOption\": \"Delete\",\n                          \"dnsSettings\": {\n                            \"domainNameLabel\": \"aaaaa\"\n                          },\n                          \"ipTags\": [\n                            {\n                              \"ipTagType\": \"aaaaa\",\n                              \"tag\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n                            }\n                          ],\n                          \"publicIPPrefix\": {\n                            \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                          },\n                          \"publicIPAddressVersion\": \"IPv4\",\n                          \"publicIPAllocationMethod\": \"Dynamic\"\n                        },\n                        \"sku\": {\n                          \"name\": \"Basic\",\n                          \"tier\": \"Regional\"\n                        }\n                      },\n                      \"privateIPAddressVersion\": \"IPv4\",\n                      \"applicationSecurityGroups\": [\n                        {\n                          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                        }\n                      ],\n                      \"applicationGatewayBackendAddressPools\": [\n                        {\n                          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                        }\n                      ],\n                      \"loadBalancerBackendAddressPools\": [\n                        {\n                          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                        }\n                      ]\n                    }\n                  }\n                ],\n                \"dscpConfiguration\": {\n                  \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                }\n              }\n            }\n          ]\n        },\n        \"provisioningState\": \"Succeeded\",\n        \"additionalCapabilities\": {\n          \"ultraSSDEnabled\": true,\n          \"hibernationEnabled\": true\n        },\n        \"securityProfile\": {\n          \"uefiSettings\": {\n            \"secureBootEnabled\": true,\n            \"vTpmEnabled\": true\n          },\n          \"encryptionAtHost\": true,\n          \"securityType\": \"TrustedLaunch\"\n        },\n        \"diagnosticsProfile\": {\n          \"bootDiagnostics\": {\n            \"enabled\": true,\n            \"storageUri\": \"aaaaaaaaaaaaaaaaaaaaa\"\n          }\n        },\n        \"virtualMachineScaleSet\": {\n          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n        },\n        \"proximityPlacementGroup\": {\n          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n        },\n        \"priority\": \"Regular\",\n        \"evictionPolicy\": \"Deallocate\",\n        \"billingProfile\": {\n          \"maxPrice\": 26\n        },\n        \"host\": {\n          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n        },\n        \"hostGroup\": {\n          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n        },\n        \"licenseType\": \"aaaaaaaaaaaaaaa\",\n        \"extensionsTimeBudget\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n        \"platformFaultDomain\": 8,\n        \"scheduledEventsProfile\": {\n          \"terminateNotificationProfile\": {\n            \"notBeforeTimeout\": \"PT10M\",\n            \"enable\": true\n          },\n          \"osImageNotificationProfile\": {\n            \"notBeforeTimeout\": \"PT15M\",\n            \"enable\": true\n          }\n        },\n        \"userData\": \"aaa\",\n        \"capacityReservation\": {\n          \"capacityReservationGroup\": {\n            \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n          }\n        },\n        \"applicationProfile\": {\n          \"galleryApplications\": [\n            {\n              \"tags\": \"aaaaa\",\n              \"order\": 4,\n              \"packageReferenceId\": \"aaaaaaaaaaaaaaaaaaaaaa\",\n              \"configurationReference\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n            }\n          ]\n        },\n        \"timeCreated\": \"2022-01-14T16:43:41.683Z\"\n      },\n      \"type\": \"Microsoft.Compute/virtualMachines\",\n      \"location\": \"eastus\",\n      \"tags\": {},\n      \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}\",\n      \"name\": \"{virtualMachineName}\",\n      \"plan\": {\n        \"name\": \"aaaaaaaaaaaaaaaaaa\",\n        \"publisher\": \"aaaaaaaaaaaaaaaaa\",\n        \"product\": \"aaaaaaaaaaaaaaaaaaaaaa\",\n        \"promotionCode\": \"aaaaaaaaaaaaaa\"\n      },\n      \"resources\": [\n        {\n          \"properties\": {\n            \"forceUpdateTag\": \"aaaaaaaaaaaaaaa\",\n            \"publisher\": \"aaaaaaaaaaaaaaaa\",\n            \"type\": \"aaaaaaaa\",\n            \"typeHandlerVersion\": \"aaaaaaaaaaaa\",\n            \"autoUpgradeMinorVersion\": true,\n            \"enableAutomaticUpgrade\": true,\n            \"settings\": {},\n            \"protectedSettings\": {},\n            \"provisioningState\": \"aaa\",\n            \"instanceView\": {\n              \"name\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n              \"type\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n              \"typeHandlerVersion\": \"aaaaaa\",\n              \"substatuses\": [\n                {\n                  \"code\": \"aaa\",\n                  \"level\": \"Info\",\n                  \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n                  \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n                  \"time\": \"2022-01-14T16:43:41.657Z\"\n                }\n              ],\n              \"statuses\": [\n                {\n                  \"code\": \"aaa\",\n                  \"level\": \"Info\",\n                  \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n                  \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n                  \"time\": \"2022-01-14T16:43:41.657Z\"\n                }\n              ]\n            },\n            \"suppressFailures\": true,\n            \"protectedSettingsFromKeyVault\": {\n              \"sourceVault\": {\n                \"id\": \"/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/kvName\"\n              },\n              \"secretUrl\": \"https://kvName.vault.azure.net/secrets/secretName/79b88b3a6f5440ffb2e73e44a0db712e\"\n            }\n          },\n          \"id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n          \"name\": \"aaaaaaaaaaaaa\",\n          \"type\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n          \"location\": \"aaaaaaaaaaaaaaaa\",\n          \"tags\": {\n            \"key9428\": \"aaaaaaa\"\n          }\n        }\n      ],\n      \"identity\": {\n        \"principalId\": \"aaaaaaaaaaaaaaaa\",\n        \"tenantId\": \"aaaaa\",\n        \"type\": \"SystemAssigned\",\n        \"userAssignedIdentities\": {\n          \"key5688\": {\n            \"principalId\": \"aaaaaaaaaaaaaaa\",\n            \"clientId\": \"aaaaaaaaaaa\"\n          }\n        }\n      },\n      \"zones\": [\n        \"aaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n      ],\n      \"extendedLocation\": {\n        \"name\": \"aaaa\",\n        \"type\": \"EdgeZone\"\n      }\n    },\n    {\n      \"properties\": {\n        \"vmId\": \"{vmId}\",\n        \"availabilitySet\": {\n          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n        },\n        \"hardwareProfile\": {\n          \"vmSize\": \"Standard_A0\",\n          \"vmSizeProperties\": {\n            \"vCPUsAvailable\": 7,\n            \"vCPUsPerCore\": 14\n          }\n        },\n        \"storageProfile\": {\n          \"imageReference\": {\n            \"publisher\": \"MicrosoftWindowsServer\",\n            \"offer\": \"WindowsServer\",\n            \"sku\": \"2012-R2-Datacenter\",\n            \"version\": \"4.127.20170406\",\n            \"exactVersion\": \"aa\",\n            \"sharedGalleryImageId\": \"aaaaaaaaaaaaaaaaaaaaaaaaa\",\n            \"communityGalleryImageId\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n            \"id\": \"aaaaaaaa\"\n          },\n          \"osDisk\": {\n            \"osType\": \"Windows\",\n            \"name\": \"test\",\n            \"createOption\": \"FromImage\",\n            \"vhd\": {\n              \"uri\": \"https://{storageAccountName}.blob.core.windows.net/{containerName}/{vhdName}.vhd\"\n            },\n            \"caching\": \"None\",\n            \"diskSizeGB\": 127,\n            \"encryptionSettings\": {\n              \"diskEncryptionKey\": {\n                \"secretUrl\": \"aaaaaaaaa\",\n                \"sourceVault\": {\n                  \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                }\n              },\n              \"keyEncryptionKey\": {\n                \"keyUrl\": \"aaaaaaaaaaaaa\",\n                \"sourceVault\": {\n                  \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                }\n              },\n              \"enabled\": true\n            },\n            \"image\": {\n              \"uri\": \"https://{storageAccountName}.blob.core.windows.net/{containerName}/{vhdName}.vhd\"\n            },\n            \"writeAcceleratorEnabled\": true,\n            \"diffDiskSettings\": {\n              \"option\": \"Local\",\n              \"placement\": \"CacheDisk\"\n            },\n            \"managedDisk\": {\n              \"storageAccountType\": \"Standard_LRS\",\n              \"diskEncryptionSet\": {\n                \"id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n              },\n              \"securityProfile\": {\n                \"securityEncryptionType\": \"VMGuestStateOnly\",\n                \"diskEncryptionSet\": {\n                  \"id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n                }\n              },\n              \"id\": \"/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/testingexcludedisk_OsDisk_1_74cdaedcea50483d9833c96adefa100f\"\n            },\n            \"deleteOption\": \"Delete\"\n          },\n          \"dataDisks\": []\n        },\n        \"osProfile\": {\n          \"computerName\": \"Test\",\n          \"adminUsername\": \"Foo12\",\n          \"windowsConfiguration\": {\n            \"provisionVMAgent\": true,\n            \"enableAutomaticUpdates\": true,\n            \"timeZone\": \"aaaaaaaaaaaaaaaaaaaa\",\n            \"additionalUnattendContent\": [\n              {\n                \"passName\": \"OobeSystem\",\n                \"componentName\": \"Microsoft-Windows-Shell-Setup\",\n                \"settingName\": \"AutoLogon\",\n                \"content\": \"aaaaaaaaaaaaaaaaaaaaaaaaaa\"\n              }\n            ],\n            \"patchSettings\": {\n              \"patchMode\": \"Manual\",\n              \"enableHotpatching\": true,\n              \"assessmentMode\": \"ImageDefault\"\n            },\n            \"winRM\": {\n              \"listeners\": [\n                {\n                  \"protocol\": \"Http\",\n                  \"certificateUrl\": \"aaaaaaaaaaaaaaaaaaaaa\"\n                }\n              ]\n            }\n          },\n          \"secrets\": [],\n          \"allowExtensionOperations\": true,\n          \"customData\": \"aaaaaaaaaaaaaaaaaaaaaaa\",\n          \"linuxConfiguration\": {\n            \"disablePasswordAuthentication\": true,\n            \"ssh\": {\n              \"publicKeys\": [\n                {\n                  \"path\": \"aaaaaaaaaaaaaaaaaaaaaa\",\n                  \"keyData\": \"aaa\"\n                }\n              ]\n            },\n            \"provisionVMAgent\": true,\n            \"patchSettings\": {\n              \"patchMode\": \"ImageDefault\",\n              \"assessmentMode\": \"ImageDefault\"\n            }\n          },\n          \"requireGuestProvisionSignal\": true\n        },\n        \"networkProfile\": {\n          \"networkInterfaces\": [\n            {\n              \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}\",\n              \"properties\": {\n                \"primary\": true,\n                \"deleteOption\": \"Delete\"\n              }\n            }\n          ],\n          \"networkApiVersion\": \"2022-05-01\",\n          \"networkInterfaceConfigurations\": [\n            {\n              \"name\": \"aaaaaaaa\",\n              \"properties\": {\n                \"primary\": true,\n                \"deleteOption\": \"Delete\",\n                \"enableAcceleratedNetworking\": true,\n                \"disableTcpStateTracking\": true,\n                \"enableFpga\": true,\n                \"enableIPForwarding\": true,\n                \"networkSecurityGroup\": {\n                  \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                },\n                \"dnsSettings\": {\n                  \"dnsServers\": [\n                    \"aaaaaaaaaaaaaaaaaaaaaaaa\"\n                  ]\n                },\n                \"ipConfigurations\": [\n                  {\n                    \"name\": \"aaaaaaaa\",\n                    \"properties\": {\n                      \"subnet\": {\n                        \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                      },\n                      \"primary\": true,\n                      \"publicIPAddressConfiguration\": {\n                        \"name\": \"aaaaaaaaaaaaaaaaaa\",\n                        \"properties\": {\n                          \"idleTimeoutInMinutes\": 23,\n                          \"deleteOption\": \"Delete\",\n                          \"dnsSettings\": {\n                            \"domainNameLabel\": \"aaaaa\"\n                          },\n                          \"ipTags\": [\n                            {\n                              \"ipTagType\": \"aaaaa\",\n                              \"tag\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n                            }\n                          ],\n                          \"publicIPPrefix\": {\n                            \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                          },\n                          \"publicIPAddressVersion\": \"IPv4\",\n                          \"publicIPAllocationMethod\": \"Dynamic\"\n                        },\n                        \"sku\": {\n                          \"name\": \"Basic\",\n                          \"tier\": \"Regional\"\n                        }\n                      },\n                      \"privateIPAddressVersion\": \"IPv4\",\n                      \"applicationSecurityGroups\": [\n                        {\n                          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                        }\n                      ],\n                      \"applicationGatewayBackendAddressPools\": [\n                        {\n                          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                        }\n                      ],\n                      \"loadBalancerBackendAddressPools\": [\n                        {\n                          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                        }\n                      ]\n                    }\n                  }\n                ],\n                \"dscpConfiguration\": {\n                  \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                }\n              }\n            }\n          ]\n        },\n        \"provisioningState\": \"Succeeded\",\n        \"additionalCapabilities\": {\n          \"ultraSSDEnabled\": true,\n          \"hibernationEnabled\": true\n        },\n        \"securityProfile\": {\n          \"uefiSettings\": {\n            \"secureBootEnabled\": true,\n            \"vTpmEnabled\": true\n          },\n          \"encryptionAtHost\": true,\n          \"securityType\": \"TrustedLaunch\"\n        },\n        \"diagnosticsProfile\": {\n          \"bootDiagnostics\": {\n            \"enabled\": true,\n            \"storageUri\": \"aaaaaaaaaaaaaaaaaaaaa\"\n          }\n        },\n        \"virtualMachineScaleSet\": {\n          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n        },\n        \"proximityPlacementGroup\": {\n          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n        },\n        \"priority\": \"Regular\",\n        \"evictionPolicy\": \"Deallocate\",\n        \"billingProfile\": {\n          \"maxPrice\": 26\n        },\n        \"host\": {\n          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n        },\n        \"hostGroup\": {\n          \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n        },\n        \"instanceView\": {\n          \"platformUpdateDomain\": 1,\n          \"platformFaultDomain\": 29,\n          \"computerName\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n          \"osName\": \"aaaaaaaaaaa\",\n          \"osVersion\": \"aaaaaaaaaaaaaa\",\n          \"hyperVGeneration\": \"V1\",\n          \"rdpThumbPrint\": \"aaaaaaaaaaaaaaaaaaaaaaa\",\n          \"vmAgent\": {\n            \"vmAgentVersion\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n            \"extensionHandlers\": [\n              {\n                \"type\": \"aaaaa\",\n                \"typeHandlerVersion\": \"aaaaaaaaaaaaaaaaaaa\",\n                \"status\": {\n                  \"code\": \"aaa\",\n                  \"level\": \"Info\",\n                  \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n                  \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n                  \"time\": \"2022-01-14T16:43:41.657Z\"\n                }\n              }\n            ],\n            \"statuses\": [\n              {\n                \"code\": \"aaa\",\n                \"level\": \"Info\",\n                \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n                \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n                \"time\": \"2022-01-14T16:43:41.657Z\"\n              }\n            ]\n          },\n          \"maintenanceRedeployStatus\": {\n            \"isCustomerInitiatedMaintenanceAllowed\": true,\n            \"preMaintenanceWindowStartTime\": \"2022-01-14T16:43:41.682Z\",\n            \"preMaintenanceWindowEndTime\": \"2022-01-14T16:43:41.682Z\",\n            \"maintenanceWindowStartTime\": \"2022-01-14T16:43:41.682Z\",\n            \"maintenanceWindowEndTime\": \"2022-01-14T16:43:41.682Z\",\n            \"lastOperationResultCode\": \"None\",\n            \"lastOperationMessage\": \"aa\"\n          },\n          \"disks\": [\n            {\n              \"name\": \"a\",\n              \"encryptionSettings\": [\n                {\n                  \"diskEncryptionKey\": {\n                    \"secretUrl\": \"aaaaaaaaa\",\n                    \"sourceVault\": {\n                      \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                    }\n                  },\n                  \"keyEncryptionKey\": {\n                    \"keyUrl\": \"aaaaaaaaaaaaa\",\n                    \"sourceVault\": {\n                      \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n                    }\n                  },\n                  \"enabled\": true\n                }\n              ],\n              \"statuses\": [\n                {\n                  \"code\": \"aaa\",\n                  \"level\": \"Info\",\n                  \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n                  \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n                  \"time\": \"2022-01-14T16:43:41.657Z\"\n                }\n              ]\n            }\n          ],\n          \"extensions\": [\n            {\n              \"name\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n              \"type\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n              \"typeHandlerVersion\": \"aaaaaa\",\n              \"substatuses\": [\n                {\n                  \"code\": \"aaa\",\n                  \"level\": \"Info\",\n                  \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n                  \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n                  \"time\": \"2022-01-14T16:43:41.657Z\"\n                }\n              ],\n              \"statuses\": [\n                {\n                  \"code\": \"aaa\",\n                  \"level\": \"Info\",\n                  \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n                  \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n                  \"time\": \"2022-01-14T16:43:41.657Z\"\n                }\n              ]\n            }\n          ],\n          \"vmHealth\": {\n            \"status\": {\n              \"code\": \"aaa\",\n              \"level\": \"Info\",\n              \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n              \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n              \"time\": \"2022-01-14T16:43:41.657Z\"\n            }\n          },\n          \"bootDiagnostics\": {\n            \"consoleScreenshotBlobUri\": \"aaaaaaaaaaaaaaaaaaaaaaa\",\n            \"serialConsoleLogBlobUri\": \"aaaaaaaaaaaaaaaaaaa\",\n            \"status\": {\n              \"code\": \"aaa\",\n              \"level\": \"Info\",\n              \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n              \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n              \"time\": \"2022-01-14T16:43:41.657Z\"\n            }\n          },\n          \"assignedHost\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n          \"statuses\": [\n            {\n              \"code\": \"aaa\",\n              \"level\": \"Info\",\n              \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n              \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n              \"time\": \"2022-01-14T16:43:41.657Z\"\n            }\n          ],\n          \"patchStatus\": {\n            \"availablePatchSummary\": {\n              \"status\": \"Unknown\",\n              \"assessmentActivityId\": \"aaaaaaaaaaaaaaaaaaa\",\n              \"rebootPending\": true,\n              \"criticalAndSecurityPatchCount\": 22,\n              \"otherPatchCount\": 25,\n              \"startTime\": \"2022-01-14T16:43:41.682Z\",\n              \"lastModifiedTime\": \"2022-01-14T16:43:41.683Z\",\n              \"error\": {\n                \"details\": [\n                  {\n                    \"code\": \"aaaaaaaaaaaaaaaaaaaaa\",\n                    \"target\": \"aaaaaa\",\n                    \"message\": \"aaaaaaaaaaaaa\"\n                  }\n                ],\n                \"innererror\": {\n                  \"exceptiontype\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n                  \"errordetail\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n                },\n                \"code\": \"aaaaaa\",\n                \"target\": \"aaaaaaaaa\",\n                \"message\": \"aaa\"\n              }\n            },\n            \"lastPatchInstallationSummary\": {\n              \"status\": \"Unknown\",\n              \"installationActivityId\": \"aaaaaa\",\n              \"maintenanceWindowExceeded\": true,\n              \"notSelectedPatchCount\": 20,\n              \"excludedPatchCount\": 1,\n              \"pendingPatchCount\": 2,\n              \"installedPatchCount\": 28,\n              \"failedPatchCount\": 30,\n              \"startTime\": \"2022-01-14T16:43:41.683Z\",\n              \"lastModifiedTime\": \"2022-01-14T16:43:41.683Z\",\n              \"error\": {\n                \"details\": [\n                  {\n                    \"code\": \"aaaaaaaaaaaaaaaaaaaaa\",\n                    \"target\": \"aaaaaa\",\n                    \"message\": \"aaaaaaaaaaaaa\"\n                  }\n                ],\n                \"innererror\": {\n                  \"exceptiontype\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n                  \"errordetail\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n                },\n                \"code\": \"aaaaaa\",\n                \"target\": \"aaaaaaaaa\",\n                \"message\": \"aaa\"\n              }\n            },\n            \"configurationStatuses\": [\n              {\n                \"code\": \"aaa\",\n                \"level\": \"Info\",\n                \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n                \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n                \"time\": \"2022-01-14T16:43:41.657Z\"\n              }\n            ]\n          },\n          \"isVMInStandbyPool\": false\n        },\n        \"licenseType\": \"aaaaaaaaaaaaaa\",\n        \"extensionsTimeBudget\": \"aaaaaaaaaaaaaaaaaaaaaa\",\n        \"platformFaultDomain\": 11,\n        \"scheduledEventsProfile\": {\n          \"terminateNotificationProfile\": {\n            \"notBeforeTimeout\": \"PT10M\",\n            \"enable\": true\n          },\n          \"osImageNotificationProfile\": {\n            \"notBeforeTimeout\": \"PT15M\",\n            \"enable\": true\n          }\n        },\n        \"userData\": \"aaaaaaaaaaaaaaaaaaa\",\n        \"capacityReservation\": {\n          \"capacityReservationGroup\": {\n            \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}\"\n          }\n        },\n        \"applicationProfile\": {\n          \"galleryApplications\": [\n            {\n              \"tags\": \"aaaaa\",\n              \"order\": 4,\n              \"packageReferenceId\": \"aaaaaaaaaaaaaaaaaaaaaa\",\n              \"configurationReference\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n            }\n          ]\n        },\n        \"timeCreated\": \"2022-01-14T16:43:41.685Z\"\n      },\n      \"type\": \"Microsoft.Compute/virtualMachines\",\n      \"location\": \"eastus\",\n      \"tags\": {},\n      \"id\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}\",\n      \"name\": \"{virtualMachineName}\",\n      \"plan\": {\n        \"name\": \"aaaaaaaaaaaaaaaaaa\",\n        \"publisher\": \"aaaaaaaaaaaaaaaaa\",\n        \"product\": \"aaaaaaaaaaaaaaaaaaaaaa\",\n        \"promotionCode\": \"aaaaaaaaaaaaaa\"\n      },\n      \"resources\": [\n        {\n          \"properties\": {\n            \"forceUpdateTag\": \"aaaaaaaaaaaaaaa\",\n            \"publisher\": \"aaaaaaaaaaaaaaaa\",\n            \"type\": \"aaaaaaaa\",\n            \"typeHandlerVersion\": \"aaaaaaaaaaaa\",\n            \"autoUpgradeMinorVersion\": true,\n            \"enableAutomaticUpgrade\": true,\n            \"settings\": {},\n            \"protectedSettings\": {},\n            \"provisioningState\": \"aaa\",\n            \"instanceView\": {\n              \"name\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n              \"type\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n              \"typeHandlerVersion\": \"aaaaaa\",\n              \"substatuses\": [\n                {\n                  \"code\": \"aaa\",\n                  \"level\": \"Info\",\n                  \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n                  \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n                  \"time\": \"2022-01-14T16:43:41.657Z\"\n                }\n              ],\n              \"statuses\": [\n                {\n                  \"code\": \"aaa\",\n                  \"level\": \"Info\",\n                  \"displayStatus\": \"aaaaaaaaaaaaaaaaaaaaaaaa\",\n                  \"message\": \"aaaaaaaaaaaaaaaaaaa\",\n                  \"time\": \"2022-01-14T16:43:41.657Z\"\n                }\n              ]\n            },\n            \"suppressFailures\": true,\n            \"protectedSettingsFromKeyVault\": {\n              \"sourceVault\": {\n                \"id\": \"/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/kvName\"\n              },\n              \"secretUrl\": \"https://kvName.vault.azure.net/secrets/secretName/79b88b3a6f5440ffb2e73e44a0db712e\"\n            }\n          },\n          \"id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n          \"name\": \"aaaaaaaaaaaaa\",\n          \"type\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n          \"location\": \"aaaaaaaaaaaaaaaa\",\n          \"tags\": {\n            \"key9428\": \"aaaaaaa\"\n          }\n        }\n      ],\n      \"identity\": {\n        \"principalId\": \"aaaaaaaaaaaaaaaa\",\n        \"tenantId\": \"aaaaa\",\n        \"type\": \"SystemAssigned\",\n        \"userAssignedIdentities\": {\n          \"key5688\": {\n            \"principalId\": \"aaaaaaaaaaaaaaa\",\n            \"clientId\": \"aaaaaaaaaaa\"\n          }\n        }\n      },\n      \"zones\": [\n        \"aaaaaa\"\n      ],\n      \"extendedLocation\": {\n        \"name\": \"aaaa\",\n        \"type\": \"EdgeZone\"\n      }\n    }\n  ],\n  \"nextLink\": \"a\"\n}\n"
+      },
+      {
+        "id": "get--resource-group-providers-microsoft-compute-virtualmachines-virtua",
+        "summary": "GET /{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}",
+        "method": "GET",
+        "pathTemplate": "/{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "location",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "properties",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "provisioningState",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "storageProfile",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "osDisk",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "diskSizeGB",
+                                "kind": "integer",
+                                "example": 1
+                              },
+                              {
+                                "name": "osType",
+                                "kind": "string",
+                                "example": "lab"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "vmId",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"myVM\",\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM\",\n  \"type\": \"Microsoft.Compute/virtualMachines\",\n  \"location\": \"westus\",\n  \"properties\": {\n    \"vmId\": \"1a58b200-694d-59f4-b5c1-bfdd3dcced2\",\n    \"hardwareProfile\": {\n      \"vmSize\": \"Standard_D2s_v5\",\n      \"processorMode\": \"Opportunistic\"\n    },\n    \"storageProfile\": {\n      \"imageReference\": {\n        \"publisher\": \"MicrosoftWindowsServer\",\n        \"offer\": \"WindowsServer\",\n        \"sku\": \"2019-Datacenter\",\n        \"version\": \"latest\"\n      },\n      \"osDisk\": {\n        \"osType\": \"Windows\",\n        \"name\": \"myVMosdisk\",\n        \"createOption\": \"FromImage\",\n        \"caching\": \"ReadWrite\",\n        \"managedDisk\": {\n          \"storageAccountType\": \"Premium_LRS\",\n          \"id\": \"/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myVMosdisk\"\n        },\n        \"diskSizeGB\": 127\n      },\n      \"dataDisks\": []\n    },\n    \"osProfile\": {\n      \"computerName\": \"myVM\",\n      \"adminUsername\": \"{your-username}\",\n      \"windowsConfiguration\": {\n        \"provisionVMAgent\": true,\n        \"enableAutomaticUpdates\": true\n      },\n      \"secrets\": [],\n      \"allowExtensionOperations\": true\n    },\n    \"networkProfile\": {\n      \"networkInterfaces\": [\n        {\n          \"id\": \"/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}\",\n          \"properties\": {\n            \"primary\": true\n          }\n        }\n      ]\n    },\n    \"provisioningState\": \"Succeeded\"\n  }\n}\n"
+      },
+      {
+        "id": "put--resource-group-providers-microsoft-compute-virtualmachines-virtua",
+        "summary": "PUT /{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}",
+        "method": "PUT",
+        "pathTemplate": "/{resource_group}/providers/Microsoft.Compute/virtualMachines/{virtual_machine_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "location",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "properties",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "provisioningState",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "storageProfile",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "osDisk",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "diskSizeGB",
+                                "kind": "integer",
+                                "example": 1
+                              },
+                              {
+                                "name": "osType",
+                                "kind": "string",
+                                "example": "lab"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "vmId",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"id\": \"/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM\",\n  \"type\": \"Microsoft.Compute/virtualMachines\",\n  \"properties\": {\n    \"networkProfile\": {\n      \"networkInterfaces\": [\n        {\n          \"id\": \"/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic\",\n          \"properties\": {\n            \"primary\": true\n          }\n        }\n      ]\n    },\n    \"storageProfile\": {\n      \"imageReference\": {\n        \"id\": \"/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage\"\n      },\n      \"osDisk\": {\n        \"name\": \"myVMosdisk\",\n        \"diskSizeGB\": 30,\n        \"managedDisk\": {\n          \"storageAccountType\": \"Standard_LRS\"\n        },\n        \"caching\": \"ReadWrite\",\n        \"createOption\": \"FromImage\",\n        \"osType\": \"Linux\"\n      },\n      \"dataDisks\": []\n    },\n    \"vmId\": \"71aa3d5a-d73d-4970-9182-8580433b2865\",\n    \"hardwareProfile\": {\n      \"vmSize\": \"Standard_D1_v2\"\n    },\n    \"provisioningState\": \"Creating\"\n  },\n  \"name\": \"myVM\",\n  \"location\": \"westus\"\n}\n"
+      },
+      {
+        "id": "get--subscriptions",
+        "summary": "GET /subscriptions",
+        "method": "GET",
+        "pathTemplate": "/subscriptions",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "location",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "properties",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "provisioningState",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "storageProfile",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "osDisk",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "diskSizeGB",
+                                "kind": "integer",
+                                "example": 1
+                              },
+                              {
+                                "name": "osType",
+                                "kind": "string",
+                                "example": "lab"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "vmId",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"nextLink\": \"http://nextlink\",\n  \"value\": [\n    {\n      \"authorizationSource\": \"RoleBased\",\n      \"displayName\": \"Example Subscription\",\n      \"id\": \"/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05\",\n      \"managedByTenants\": [\n        {\n          \"tenantId\": \"8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7\"\n        }\n      ],\n      \"state\": \"Enabled\",\n      \"subscriptionId\": \"291bba3f-e0a5-47bc-a099-3bdcb2a50a05\",\n      \"subscriptionPolicies\": {\n        \"locationPlacementId\": \"Internal_2014-09-01\",\n        \"quotaId\": \"Internal_2014-09-01\",\n        \"spendingLimit\": \"Off\"\n      },\n      \"tags\": {\n        \"tagKey1\": \"tagValue1\",\n        \"tagKey2\": \"tagValue2\"\n      },\n      \"tenantId\": \"31c75423-32d6-4322-88b7-c478bdde4858\"\n    },\n    {\n      \"authorizationSource\": \"RoleBased\",\n      \"displayName\": \"Example Subscription2\",\n      \"id\": \"/subscriptions/72ac930a-f34e-42d8-b06d-dc2a9e12ed71\",\n      \"managedByTenants\": [\n        {\n          \"tenantId\": \"8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7\"\n        },\n        {\n          \"tenantId\": \"f7fb6af2-321d-47c8-9c0f-b0239eaad39a\"\n        }\n      ],\n      \"state\": \"Enabled\",\n      \"subscriptionId\": \"72ac930a-f34e-42d8-b06d-dc2a9e12ed71\",\n      \"subscriptionPolicies\": {\n        \"locationPlacementId\": \"Internal_2014-09-01\",\n        \"quotaId\": \"Internal_2014-09-01\",\n        \"spendingLimit\": \"Off\"\n      },\n      \"tags\": {\n        \"tagKey1\": \"tagValue1\",\n        \"tagKey2\": \"tagValue2\"\n      },\n      \"tenantId\": \"2a0ff0de-96b2-4859-bb7c-a430d07a3e0c\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--resource-group-providers-microsoft-network-networkinterfaces-nic-",
+        "summary": "GET /{resource_group}/providers/Microsoft.Network/networkInterfaces/{nic_name}",
+        "method": "GET",
+        "pathTemplate": "/{resource_group}/providers/Microsoft.Network/networkInterfaces/{nic_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "location",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "properties",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "provisioningState",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "storageProfile",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "osDisk",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "diskSizeGB",
+                                "kind": "integer",
+                                "example": 1
+                              },
+                              {
+                                "name": "osType",
+                                "kind": "string",
+                                "example": "lab"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "vmId",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"test-nic\",\n  \"type\": \"Microsoft.Network/networkInterfaces\",\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/test-nic\",\n  \"location\": \"eastus\",\n  \"properties\": {\n    \"disableTcpStateTracking\": true,\n    \"dnsSettings\": {\n      \"appliedDnsServers\": [],\n      \"dnsServers\": [],\n      \"internalDomainNameSuffix\": \"test.bx.internal.cloudapp.net\"\n    },\n    \"dscpConfiguration\": {\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/dscpConfiguration/mydscpconfiguration\"\n    },\n    \"enableAcceleratedNetworking\": true,\n    \"enableIPForwarding\": false,\n    \"ipConfigurations\": [\n      {\n        \"name\": \"ipconfig1\",\n        \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/test-nic/ipConfigurations/ipconfig1\",\n        \"properties\": {\n          \"primary\": true,\n          \"privateIPAddress\": \"172.20.2.4\",\n          \"privateIPAddressVersion\": \"IPv4\",\n          \"privateIPAllocationMethod\": \"Dynamic\",\n          \"provisioningState\": \"Succeeded\",\n          \"publicIPAddress\": {\n            \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/test-ip\"\n          },\n          \"subnet\": {\n            \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/rg1-vnet/subnets/default\"\n          }\n        }\n      },\n      {\n        \"name\": \"ipconfig2\",\n        \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/test-nic/ipConfigurations/ipconfig2\",\n        \"properties\": {\n          \"primary\": false,\n          \"privateIPAddress\": \"172.20.2.16/28\",\n          \"privateIPAddressPrefixLength\": 28,\n          \"privateIPAddressVersion\": \"IPv4\",\n          \"privateIPAllocationMethod\": \"Dynamic\",\n          \"provisioningState\": \"Succeeded\",\n          \"subnet\": {\n            \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/rg1-vnet/subnets/default\"\n          }\n        }\n      }\n    ],\n    \"macAddress\": \"00-0D-3A-1B-C7-21\",\n    \"networkSecurityGroup\": {\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityGroups/nsg\"\n    },\n    \"primary\": true,\n    \"provisioningState\": \"Succeeded\",\n    \"virtualMachine\": {\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1\"\n    },\n    \"vnetEncryptionSupported\": false\n  }\n}\n"
+      },
+      {
+        "id": "get--resource-group-providers-microsoft-network-publicipaddresses-addr",
+        "summary": "GET /{resource_group}/providers/Microsoft.Network/publicIPAddresses/{address_name}",
+        "method": "GET",
+        "pathTemplate": "/{resource_group}/providers/Microsoft.Network/publicIPAddresses/{address_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "location",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "properties",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "provisioningState",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "storageProfile",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "osDisk",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "diskSizeGB",
+                                "kind": "integer",
+                                "example": 1
+                              },
+                              {
+                                "name": "osType",
+                                "kind": "string",
+                                "example": "lab"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "vmId",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"testDNS-ip\",\n  \"type\": \"Microsoft.Network/publicIPAddresses\",\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/testDNS-ip\",\n  \"location\": \"westus\",\n  \"properties\": {\n    \"ddosSettings\": {\n      \"ddosProtectionPlan\": {\n        \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/ddosProtectionPlans/test-plan\"\n      },\n      \"protectionMode\": \"Enabled\"\n    },\n    \"idleTimeoutInMinutes\": 4,\n    \"ipConfiguration\": {\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/testDNS649/ipConfigurations/ipconfig1\"\n    },\n    \"ipTags\": [\n      {\n        \"ipTagType\": \"FirstPartyUsage\",\n        \"tag\": \"SQL\"\n      },\n      {\n        \"ipTagType\": \"FirstPartyUsage\",\n        \"tag\": \"Storage\"\n      }\n    ],\n    \"provisioningState\": \"Succeeded\",\n    \"publicIPAddressVersion\": \"IPv4\",\n    \"publicIPAllocationMethod\": \"Dynamic\"\n  }\n}\n"
+      },
+      {
+        "id": "get--providers-microsoft-network-publicipaddresses",
+        "summary": "GET /providers/Microsoft.Network/publicIPAddresses",
+        "method": "GET",
+        "pathTemplate": "/providers/Microsoft.Network/publicIPAddresses",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "location",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "properties",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "provisioningState",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "storageProfile",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "osDisk",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "diskSizeGB",
+                                "kind": "integer",
+                                "example": 1
+                              },
+                              {
+                                "name": "osType",
+                                "kind": "string",
+                                "example": "lab"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "vmId",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"name\": \"testDNS-ip\",\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/testDNS-ip\",\n      \"location\": \"westus\",\n      \"properties\": {\n        \"ddosSettings\": {\n          \"protectionMode\": \"VirtualNetworkInherited\"\n        },\n        \"idleTimeoutInMinutes\": 4,\n        \"ipConfiguration\": {\n          \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/testDNS649/ipConfigurations/ipconfig1\"\n        },\n        \"provisioningState\": \"Succeeded\",\n        \"publicIPAddressVersion\": \"IPv4\",\n        \"publicIPAllocationMethod\": \"Dynamic\"\n      }\n    },\n    {\n      \"name\": \"ip01\",\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg2/providers/Microsoft.Network/publicIPAddresses/ip01\",\n      \"location\": \"westus\",\n      \"properties\": {\n        \"ddosSettings\": {\n          \"protectionMode\": \"VirtualNetworkInherited\"\n        },\n        \"dnsSettings\": {\n          \"domainNameLabel\": \"testlbl\",\n          \"fqdn\": \"testlbl.westus.cloudapp.azure.com\"\n        },\n        \"idleTimeoutInMinutes\": 4,\n        \"ipAddress\": \"40.85.154.247\",\n        \"ipConfiguration\": {\n          \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg2/providers/Microsoft.Network/loadBalancers/testLb/frontendIPConfigurations/LoadBalancerFrontEnd\"\n        },\n        \"provisioningState\": \"Succeeded\",\n        \"publicIPAddressVersion\": \"IPv4\",\n        \"publicIPAllocationMethod\": \"Dynamic\"\n      }\n    },\n    {\n      \"name\": \"ip02\",\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg2/providers/Microsoft.Network/publicIPAddresses/ip02\",\n      \"location\": \"westus\",\n      \"properties\": {\n        \"ddosSettings\": {\n          \"protectionMode\": \"VirtualNetworkInherited\"\n        },\n        \"dnsSettings\": {\n          \"domainNameLabel\": \"testlbl\",\n          \"domainNameLabelScope\": \"TenantReuse\",\n          \"fqdn\": \"testlbl.hxdwgjcdfgbhgebs.eastus.sysgen.cloudapp.azure.com\"\n        },\n        \"idleTimeoutInMinutes\": 4,\n        \"ipAddress\": \"40.85.154.248\",\n        \"ipConfiguration\": {\n          \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg2/providers/Microsoft.Network/loadBalancers/testLb/frontendIPConfigurations/LoadBalancerFrontEnd\"\n        },\n        \"provisioningState\": \"Succeeded\",\n        \"publicIPAddressVersion\": \"IPv4\",\n        \"publicIPAllocationMethod\": \"Dynamic\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "put--resource-group-providers-microsoft-network-networkinterfaces-nic-",
+        "summary": "PUT /{resource_group}/providers/Microsoft.Network/networkInterfaces/{nic_name}",
+        "method": "PUT",
+        "pathTemplate": "/{resource_group}/providers/Microsoft.Network/networkInterfaces/{nic_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "location",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "properties",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "provisioningState",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "storageProfile",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "osDisk",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "diskSizeGB",
+                                "kind": "integer",
+                                "example": 1
+                              },
+                              {
+                                "name": "osType",
+                                "kind": "string",
+                                "example": "lab"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "vmId",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "fixture": "{\n  \"name\": \"test-nic\",\n  \"type\": \"Microsoft.Network/networkInterfaces\",\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/test-nic\",\n  \"location\": \"eastus\",\n  \"properties\": {\n    \"dnsSettings\": {\n      \"appliedDnsServers\": [],\n      \"dnsServers\": []\n    },\n    \"enableAcceleratedNetworking\": true,\n    \"enableIPForwarding\": false,\n    \"ipConfigurations\": [\n      {\n        \"name\": \"ipconfig1\",\n        \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/test-nic/ipConfigurations/ipconfig1\",\n        \"properties\": {\n          \"gatewayLoadBalancer\": {\n            \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb-provider\"\n          },\n          \"primary\": true,\n          \"privateIPAddress\": \"172.20.2.4\",\n          \"privateIPAddressVersion\": \"IPv4\",\n          \"privateIPAllocationMethod\": \"Dynamic\",\n          \"provisioningState\": \"Succeeded\",\n          \"publicIPAddress\": {\n            \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/test-ip\"\n          },\n          \"subnet\": {\n            \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/rg1-vnet/subnets/default\"\n          }\n        }\n      }\n    ],\n    \"provisioningState\": \"Succeeded\"\n  }\n}\n"
       }
     ],
     "chaos": {

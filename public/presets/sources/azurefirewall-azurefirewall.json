@@ -1,0 +1,930 @@
+{
+  "id": "azurefirewall-azurefirewall",
+  "retrievedAt": "2026-11-10",
+  "sourceType": "vendor-example",
+  "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/resources/resource-manager/Microsoft.Resources/subscriptions/stable/2022-12-01/examples/GetSubscriptions.json",
+  "operations": [
+    {
+      "operationId": "get--subscriptions",
+      "method": "GET",
+      "path": "/subscriptions",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/resources/resource-manager/Microsoft.Resources/subscriptions/stable/2022-12-01/examples/GetSubscriptions.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "nextLink": "http://nextlink",
+        "value": [
+          {
+            "authorizationSource": "RoleBased",
+            "displayName": "Example Subscription",
+            "id": "/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05",
+            "managedByTenants": [
+              {
+                "tenantId": "8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7"
+              }
+            ],
+            "state": "Enabled",
+            "subscriptionId": "291bba3f-e0a5-47bc-a099-3bdcb2a50a05",
+            "subscriptionPolicies": {
+              "locationPlacementId": "Internal_2014-09-01",
+              "quotaId": "Internal_2014-09-01",
+              "spendingLimit": "Off"
+            },
+            "tags": {
+              "tagKey1": "tagValue1",
+              "tagKey2": "tagValue2"
+            },
+            "tenantId": "31c75423-32d6-4322-88b7-c478bdde4858"
+          },
+          {
+            "authorizationSource": "RoleBased",
+            "displayName": "Example Subscription2",
+            "id": "/subscriptions/72ac930a-f34e-42d8-b06d-dc2a9e12ed71",
+            "managedByTenants": [
+              {
+                "tenantId": "8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7"
+              },
+              {
+                "tenantId": "f7fb6af2-321d-47c8-9c0f-b0239eaad39a"
+              }
+            ],
+            "state": "Enabled",
+            "subscriptionId": "72ac930a-f34e-42d8-b06d-dc2a9e12ed71",
+            "subscriptionPolicies": {
+              "locationPlacementId": "Internal_2014-09-01",
+              "quotaId": "Internal_2014-09-01",
+              "spendingLimit": "Off"
+            },
+            "tags": {
+              "tagKey1": "tagValue1",
+              "tagKey2": "tagValue2"
+            },
+            "tenantId": "2a0ff0de-96b2-4859-bb7c-a430d07a3e0c"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--subscriptions-subscription-id-providers-microsoft-network-azurefi",
+      "method": "GET",
+      "path": "/subscriptions/{subscription_id}/providers/Microsoft.Network/azureFirewalls",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/AzureFirewallListBySubscription.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "value": [
+          {
+            "name": "azurefirewall",
+            "type": "Microsoft.Network/azureFirewalls",
+            "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall",
+            "location": "West US",
+            "properties": {
+              "additionalProperties": {
+                "key1": "value1",
+                "key2": "value2"
+              },
+              "applicationRuleCollections": [
+                {
+                  "name": "apprulecoll",
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll",
+                  "properties": {
+                    "action": {
+                      "type": "Deny"
+                    },
+                    "priority": 110,
+                    "rules": [
+                      {
+                        "name": "rule1",
+                        "description": "Deny inbound rule",
+                        "protocols": [
+                          {
+                            "port": 443,
+                            "protocolType": "Https"
+                          }
+                        ],
+                        "sourceAddresses": [
+                          "216.58.216.164",
+                          "10.0.0.0/24"
+                        ],
+                        "targetFqdns": [
+                          "www.test.com"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "ipConfigurations": [
+                {
+                  "name": "azureFirewallIpConfiguration",
+                  "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/ipConfigurations/azureFirewallIpConfiguration",
+                  "properties": {
+                    "privateIPAddress": "10.0.0.0",
+                    "provisioningState": "Succeeded",
+                    "publicIPAddress": {
+                      "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"
+                    },
+                    "subnet": {
+                      "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"
+                    }
+                  }
+                }
+              ],
+              "ipGroups": [],
+              "managementIpConfiguration": {
+                "name": "azureFirewallMgmtIpConfiguration",
+                "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+                "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/ipConfigurations/azureFirewallMgmtIpConfiguration",
+                "properties": {
+                  "provisioningState": "Succeeded",
+                  "publicIPAddress": {
+                    "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/managementPipName"
+                  },
+                  "subnet": {
+                    "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallManagementSubnet"
+                  }
+                }
+              },
+              "natRuleCollections": [
+                {
+                  "name": "natrulecoll",
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll",
+                  "properties": {
+                    "action": {
+                      "type": "Dnat"
+                    },
+                    "priority": 112,
+                    "rules": [
+                      {
+                        "name": "DNAT-HTTPS-traffic",
+                        "description": "D-NAT all outbound web traffic for inspection",
+                        "destinationAddresses": [
+                          "1.2.3.4"
+                        ],
+                        "destinationPorts": [
+                          "443"
+                        ],
+                        "protocols": [
+                          "TCP"
+                        ],
+                        "sourceAddresses": [
+                          "*"
+                        ],
+                        "translatedAddress": "1.2.3.5",
+                        "translatedPort": "8443"
+                      },
+                      {
+                        "name": "DNAT-HTTP-traffic-With-FQDN",
+                        "description": "D-NAT all inbound web traffic for inspection",
+                        "destinationAddresses": [
+                          "1.2.3.4"
+                        ],
+                        "destinationPorts": [
+                          "80"
+                        ],
+                        "protocols": [
+                          "TCP"
+                        ],
+                        "sourceAddresses": [
+                          "*"
+                        ],
+                        "translatedFqdn": "internalhttpserver",
+                        "translatedPort": "880"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "networkRuleCollections": [
+                {
+                  "name": "netrulecoll",
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll",
+                  "properties": {
+                    "action": {
+                      "type": "Deny"
+                    },
+                    "priority": 112,
+                    "rules": [
+                      {
+                        "name": "L4-traffic",
+                        "description": "Block traffic based on source IPs and ports",
+                        "destinationAddresses": [
+                          "*"
+                        ],
+                        "destinationPorts": [
+                          "443-444",
+                          "8443"
+                        ],
+                        "protocols": [
+                          "TCP"
+                        ],
+                        "sourceAddresses": [
+                          "192.168.1.1-192.168.1.12",
+                          "10.1.4.12-10.1.4.255"
+                        ]
+                      },
+                      {
+                        "name": "L4-traffic-with-FQDN",
+                        "description": "Block traffic based on source IPs and ports to amazon",
+                        "destinationFqdns": [
+                          "www.amazon.com"
+                        ],
+                        "destinationPorts": [
+                          "443-444",
+                          "8443"
+                        ],
+                        "protocols": [
+                          "TCP"
+                        ],
+                        "sourceAddresses": [
+                          "10.2.4.12-10.2.4.255"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded",
+              "threatIntelMode": "Alert"
+            },
+            "tags": {
+              "key1": "value1"
+            },
+            "zones": []
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--subscriptions-subscription-id-resourcegroups-resource-group-provi",
+      "method": "GET",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group}/providers/Microsoft.Network/azureFirewalls/{firewall_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/AzureFirewallGetWithAfcConfiguration.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "azurefirewall",
+        "type": "Microsoft.Network/azureFirewalls",
+        "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall",
+        "location": "West US",
+        "properties": {
+          "ipConfigurations": [
+            {
+              "name": "azureFirewallIpConfiguration",
+              "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+              "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/ipConfigurations/azureFirewallIpConfiguration",
+              "properties": {
+                "privateIPAddress": "10.0.0.0",
+                "provisioningState": "Succeeded",
+                "publicIPAddress": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"
+                },
+                "subnet": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/AzureFirewallSubnet"
+                }
+              }
+            }
+          ],
+          "provisioningState": "Succeeded",
+          "sku": {
+            "name": "AZFW_VNet",
+            "tier": "Standard"
+          },
+          "threatIntelMode": "Alert",
+          "afcConfiguration": {
+            "serviceEndpoint": "5e73bbe79102451d968d1cac9b5dbd41.afc.azure.com"
+          }
+        },
+        "tags": {
+          "key1": "value1"
+        },
+        "zones": []
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--subscriptions-subscription-id-resourcegroups-resource-g-2",
+      "method": "GET",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group}/providers/Microsoft.Network/firewallPolicies/{policy}/ruleCollectionGroups",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesList.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "value": [
+          {
+            "name": "ruleCollectionGroup1",
+            "etag": "W/\"72090554-7e3b-43f2-80ad-99a9020dcb11\"",
+            "id": "/subscriptions/e747cc13-97d4-4a79-b463-42d7f4e558f2/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy/ruleCollectionGroups/ruleCollectionGroup1",
+            "properties": {
+              "priority": 110,
+              "provisioningState": "Succeeded",
+              "ruleCollections": [
+                {
+                  "name": "Example-Filter-Rule-Collection",
+                  "action": {
+                    "type": "Deny"
+                  },
+                  "priority": 120,
+                  "ruleCollectionType": "FirewallPolicyFilterRuleCollection",
+                  "rules": [
+                    {
+                      "name": "rule1",
+                      "description": "Deny inbound rule",
+                      "protocols": [
+                        {
+                          "port": 443,
+                          "protocolType": "Https"
+                        }
+                      ],
+                      "ruleType": "ApplicationRule",
+                      "sourceAddresses": [
+                        "216.58.216.164",
+                        "10.0.0.0/24"
+                      ],
+                      "webCategories": [
+                        "Hacking"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--subscriptions-subscription-id-resourcegroups-resource-g-3",
+      "method": "GET",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group}/providers/Microsoft.Network/firewallPolicies/{policy}/ruleCollectionGroups/{collection_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesGet.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "ruleCollectionGroup1",
+        "etag": "W/\"72090554-7e3b-43f2-80ad-99a9020dcb11\"",
+        "id": "/subscriptions/e747cc13-97d4-4a79-b463-42d7f4e558f2/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy/ruleCollectionGroups/ruleCollectionGroup1",
+        "properties": {
+          "priority": 110,
+          "provisioningState": "Succeeded",
+          "ruleCollections": [
+            {
+              "name": "Example-Filter-Rule-Collection",
+              "action": {
+                "type": "Deny"
+              },
+              "priority": 200,
+              "ruleCollectionType": "FirewallPolicyFilterRuleCollection",
+              "rules": [
+                {
+                  "name": "rule1",
+                  "description": "Deny inbound rule",
+                  "protocols": [
+                    {
+                      "port": 443,
+                      "protocolType": "Https"
+                    }
+                  ],
+                  "ruleType": "ApplicationRule",
+                  "sourceAddresses": [
+                    "216.58.216.164",
+                    "10.0.0.0/24"
+                  ],
+                  "webCategories": [
+                    "Hacking"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "put--subscriptions-subscription-id-resourcegroups-resource-group-provi",
+      "method": "PUT",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group}/providers/Microsoft.Network/firewallPolicies/{policy_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/FirewallPolicyPut.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "firewallPolicy",
+        "type": "Microsoft.Network/firewallPolicies",
+        "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy",
+        "location": "West US",
+        "properties": {
+          "dnsSettings": {
+            "enableProxy": true,
+            "requireProxyForNetworkRules": false,
+            "servers": [
+              "30.3.4.5"
+            ]
+          },
+          "explicitProxy": {
+            "enableExplicitProxy": true,
+            "enablePacFile": true,
+            "httpPort": 8087,
+            "httpsPort": 8087,
+            "pacFile": "https://tinawstorage.file.core.windows.net/?sv=2020-02-10&ss=bfqt&srt=sco&sp=rwdlacuptfx&se=2021-06-04T07:01:12Z&st=2021-06-03T23:01:12Z&sip=68.65.171.11&spr=https&sig=Plsa0RRVpGbY0IETZZOT6znOHcSro71LLTTbzquYPgs%3D",
+            "pacFilePort": 8087
+          },
+          "firewalls": [],
+          "insights": {
+            "isEnabled": true,
+            "logAnalyticsResources": {
+              "defaultWorkspaceId": {
+                "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/microsoft.operationalinsights/workspaces/defaultWorkspace"
+              },
+              "workspaces": [
+                {
+                  "region": "westus",
+                  "workspaceId": {
+                    "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/microsoft.operationalinsights/workspaces/workspace1"
+                  }
+                },
+                {
+                  "region": "eastus",
+                  "workspaceId": {
+                    "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/microsoft.operationalinsights/workspaces/workspace2"
+                  }
+                }
+              ]
+            },
+            "retentionDays": 100
+          },
+          "intrusionDetection": {
+            "configuration": {
+              "bypassTrafficSettings": [
+                {
+                  "name": "bypassRule1",
+                  "description": "Rule 1",
+                  "destinationAddresses": [
+                    "5.6.7.8"
+                  ],
+                  "destinationPorts": [
+                    "*"
+                  ],
+                  "sourceAddresses": [
+                    "1.2.3.4"
+                  ],
+                  "protocol": "TCP"
+                }
+              ],
+              "signatureOverrides": [
+                {
+                  "id": "2525004",
+                  "mode": "Deny"
+                }
+              ]
+            },
+            "mode": "Alert",
+            "profile": "Balanced"
+          },
+          "provisioningState": "Succeeded",
+          "ruleCollectionGroups": [
+            {
+              "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy/ruleCollectionGroups/ruleCollectionGroup1"
+            },
+            {
+              "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy/ruleCollectionGroups/ruleCollectionGroup2"
+            }
+          ],
+          "size": "0.5MB",
+          "sku": {
+            "tier": "Premium"
+          },
+          "snat": {
+            "privateRanges": [
+              "IANAPrivateRanges"
+            ]
+          },
+          "sql": {
+            "allowSqlRedirect": true
+          },
+          "threatIntelMode": "Alert",
+          "threatIntelWhitelist": {
+            "fqdns": [
+              "*.microsoft.com"
+            ],
+            "ipAddresses": [
+              "20.3.4.5"
+            ]
+          },
+          "transportSecurity": {
+            "certificateAuthority": {
+              "name": "clientcert",
+              "keyVaultSecretId": "https://kv/secret"
+            }
+          },
+          "afcManaged": true
+        },
+        "tags": {
+          "key1": "value1"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--subscriptions-subscription-id-resourcegroups-resource-g-4",
+      "method": "GET",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group}/providers/Microsoft.Network/firewallPolicies/{policy_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/FirewallPolicyGet.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "firewallPolicy",
+        "type": "Microsoft.Network/firewallPolicies",
+        "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy",
+        "location": "West US",
+        "properties": {
+          "dnsSettings": {
+            "enableProxy": true,
+            "requireProxyForNetworkRules": false,
+            "servers": [
+              "30.3.4.5"
+            ]
+          },
+          "explicitProxy": {
+            "enableExplicitProxy": true,
+            "enablePacFile": true,
+            "httpPort": 8087,
+            "httpsPort": 8087,
+            "pacFile": "https://tinawstorage.file.core.windows.net/?sv=2020-02-10&ss=bfqt&srt=sco&sp=rwdlacuptfx&se=2021-06-04T07:01:12Z&st=2021-06-03T23:01:12Z&sip=68.65.171.11&spr=https&sig=Plsa0RRVpGbY0IETZZOT6znOHcSro71LLTTbzquYPgs%3D",
+            "pacFilePort": 8087
+          },
+          "firewalls": [],
+          "insights": {
+            "isEnabled": true,
+            "logAnalyticsResources": {
+              "defaultWorkspaceId": {
+                "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/microsoft.operationalinsights/workspaces/defaultWorkspace"
+              },
+              "workspaces": [
+                {
+                  "region": "westus",
+                  "workspaceId": {
+                    "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/microsoft.operationalinsights/workspaces/workspace1"
+                  }
+                },
+                {
+                  "region": "eastus",
+                  "workspaceId": {
+                    "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/microsoft.operationalinsights/workspaces/workspace2"
+                  }
+                }
+              ]
+            },
+            "retentionDays": 100
+          },
+          "intrusionDetection": {
+            "configuration": {
+              "bypassTrafficSettings": [
+                {
+                  "name": "bypassRule1",
+                  "description": "Rule 1",
+                  "destinationAddresses": [
+                    "5.6.7.8"
+                  ],
+                  "destinationPorts": [
+                    "*"
+                  ],
+                  "sourceAddresses": [
+                    "1.2.3.4"
+                  ],
+                  "protocol": "TCP"
+                }
+              ],
+              "signatureOverrides": [
+                {
+                  "id": "2525004",
+                  "mode": "Deny"
+                }
+              ]
+            },
+            "mode": "Alert"
+          },
+          "provisioningState": "Succeeded",
+          "ruleCollectionGroups": [
+            {
+              "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy/ruleCollectionGroups/ruleCollectionGroup1"
+            }
+          ],
+          "size": "0.5MB",
+          "sku": {
+            "tier": "Premium"
+          },
+          "snat": {
+            "privateRanges": [
+              "IANAPrivateRanges"
+            ]
+          },
+          "sql": {
+            "allowSqlRedirect": true
+          },
+          "threatIntelMode": "Alert",
+          "threatIntelWhitelist": {
+            "fqdns": [
+              "*.microsoft.com"
+            ],
+            "ipAddresses": [
+              "20.3.4.5"
+            ]
+          },
+          "transportSecurity": {
+            "certificateAuthority": {
+              "name": "clientcert",
+              "keyVaultSecretId": "https://kv/secret"
+            }
+          },
+          "afcManaged": true
+        },
+        "tags": {
+          "key1": "value1"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get-subscriptions-subscription-id-providers--0",
+      "method": "GET",
+      "path": "/subscriptions/{subscription_id}/providers/Microsoft.Network/firewallPolicies",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/FirewallPolicyListBySubscription.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "value": [
+          {
+            "name": "firewallPolicy",
+            "type": "Microsoft.Network/firewallPolicies",
+            "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy",
+            "location": "West US",
+            "properties": {
+              "dnsSettings": {
+                "enableProxy": true,
+                "requireProxyForNetworkRules": false,
+                "servers": [
+                  "30.3.4.5"
+                ]
+              },
+              "firewalls": [],
+              "provisioningState": "Succeeded",
+              "ruleCollectionGroups": [
+                {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy/ruleCollectionGroups/ruleCollectionGroup1"
+                }
+              ],
+              "sku": {
+                "tier": "Standard"
+              },
+              "snat": {
+                "privateRanges": [
+                  "IANAPrivateRanges"
+                ]
+              },
+              "sql": {
+                "allowSqlRedirect": true
+              },
+              "threatIntelMode": "Alert",
+              "afcManaged": true
+            },
+            "tags": {
+              "key1": "value1"
+            }
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "put--subscriptions-subscription-id-resourcegroups-resource-g-2",
+      "method": "PUT",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group}/providers/Microsoft.Network/azureFirewalls/{firewall_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/AzureFirewallPutInHub.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "azurefirewall",
+        "type": "Microsoft.Network/azureFirewalls",
+        "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall",
+        "location": "West US",
+        "properties": {
+          "additionalProperties": {},
+          "firewallPolicy": {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/policy1"
+          },
+          "hubIPAddresses": {
+            "privateIPAddress": "10.0.0.0",
+            "publicIPs": {
+              "addresses": [
+                {
+                  "address": "13.73.240.12"
+                }
+              ],
+              "count": 1
+            }
+          },
+          "provisioningState": "Succeeded",
+          "sku": {
+            "name": "AZFW_Hub",
+            "tier": "Standard"
+          },
+          "threatIntelMode": "Alert",
+          "virtualHub": {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/hub1"
+          }
+        },
+        "tags": {
+          "key1": "value1"
+        },
+        "zones": []
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "put--subscriptions-subscription-id-resourcegroups-resource-g-3",
+      "method": "PUT",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group}/providers/Microsoft.Network/firewallPolicies/{policy}/ruleCollectionGroups/{collection_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesPut.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "ruleCollectionGroup1",
+        "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+        "id": "/subscriptions/e747cc13-97d4-4a79-b463-42d7f4e558f2/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy/ruleCollectionGroups/ruleCollectionGroup1",
+        "properties": {
+          "priority": 110,
+          "provisioningState": "Succeeded",
+          "ruleCollections": [
+            {
+              "name": "Example-Filter-Rule-Collection",
+              "action": {
+                "type": "Deny"
+              },
+              "ruleCollectionType": "FirewallPolicyFilterRuleCollection",
+              "rules": [
+                {
+                  "name": "rule1",
+                  "description": "Deny inbound rule",
+                  "protocols": [
+                    {
+                      "port": 443,
+                      "protocolType": "Https"
+                    }
+                  ],
+                  "ruleType": "ApplicationRule",
+                  "sourceAddresses": [
+                    "216.58.216.164",
+                    "10.0.0.0/24"
+                  ],
+                  "webCategories": [
+                    "Hacking"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--subscriptions-subscription-id-providers-microsoft-network-locatio",
+      "method": "GET",
+      "path": "/subscriptions/{subscription_id}/providers/Microsoft.Network/locations/{location}/serviceTagDetails",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/ServiceTagInformationListResultWithTagname.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "value": [
+          {
+            "name": "ApiManagement",
+            "id": "ApiManagement",
+            "properties": {
+              "addressPrefixes": [
+                "13.64.39.16/32",
+                "40.74.146.80/31",
+                "40.74.147.32/28"
+              ],
+              "changeNumber": "7",
+              "region": "",
+              "systemService": "AzureApiManagement"
+            }
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "put--subscriptions-subscription-id-resourcegroups-resource-g-4",
+      "method": "PUT",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group}/providers/Microsoft.Network/ipGroups/{ip_group_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/IpGroupsCreate.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "ipGroups1",
+        "type": "Microsoft.Network/ipGroups",
+        "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/resourceGroups/myResourceGroup/ipGroups/ipGroups1",
+        "location": "westcentralus",
+        "properties": {
+          "firewallPolicies": [],
+          "firewalls": [
+            {
+              "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall"
+            }
+          ],
+          "ipAddresses": [
+            "13.64.39.16/32",
+            "40.74.146.80/31",
+            "40.74.147.32/28"
+          ],
+          "provisioningState": "Succeeded"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--subscriptions-subscription-id-resourcegroups-resource-g-5",
+      "method": "GET",
+      "path": "/subscriptions/{subscription_id}/resourceGroups/{resource_group}/providers/Microsoft.Network/ipGroups/{ip_group_name}",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/IpGroupsGet.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "name": "ipGroups1",
+        "type": "Microsoft.Network/ipGroups",
+        "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/resourceGroups/myResourceGroup/ipGroups/ipGroups1",
+        "location": "westcentralus",
+        "properties": {
+          "firewallPolicies": [],
+          "firewalls": [
+            {
+              "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall"
+            }
+          ],
+          "ipAddresses": [
+            "13.64.39.16/32",
+            "40.74.146.80/31",
+            "40.74.147.32/28"
+          ],
+          "provisioningState": "Succeeded"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get--subscriptions-subscription-id-providers-microsoft-network-ipgroup",
+      "method": "GET",
+      "path": "/subscriptions/{subscription_id}/providers/Microsoft.Network/ipGroups",
+      "docUrl": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/examples/IpGroupsListBySubscription.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "value": [
+          {
+            "name": "iptag1",
+            "type": "Microsoft.Network/ipGroups",
+            "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/resourceGroups/myResourceGroup1/ipGroups",
+            "location": "westcentralus",
+            "properties": {
+              "firewallPolicies": [],
+              "firewalls": [
+                {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall"
+                }
+              ],
+              "ipAddresses": [
+                "13.64.39.16/32",
+                "40.74.146.80/31",
+                "40.74.147.32/28"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "name": "iptag2",
+            "type": "Microsoft.Network/ipGroups",
+            "etag": "w/\\00000000-0000-0000-0000-000000000000\\",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/resourceGroups/myResourceGroup2/ipGroups",
+            "location": "centralus",
+            "properties": {
+              "firewallPolicies": [],
+              "firewalls": [
+                {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall"
+                }
+              ],
+              "ipAddresses": [
+                "14.64.39.16/32",
+                "41.74.146.80/31",
+                "42.74.147.32/28"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      },
+      "scrubs": []
+    }
+  ]
+}
