@@ -1,1 +1,126 @@
-{"id":"aws-iam-aws-iam","name":"AWS - Identity and Access Management","pack":"AWS-IAM","fidelity":"shape","curated":false,"summary":"Amazon Web Services Identity and Access Management (IAM).","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-iam-aws-iam","name":"AWS - Identity and Access Management","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-IAM/Integrations/AWS-IAM","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-iam-create-user","method":"GET","pathTemplate":"/","summary":"Creates a new IAM user for your AWS account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Users","kind":"object","optional":false,"children":[{"name":"UserName","kind":"string","optional":false,"example":"UserName"},{"name":"UserId","kind":"id","optional":false},{"name":"Arn","kind":"string","optional":false,"example":"Arn"},{"name":"CreateDate","kind":"timestamp","optional":false,"format":"iso"},{"name":"Path","kind":"string","optional":false,"example":"Path"}]}]}]}]}},{"id":"aws-iam-get-user","method":"GET","pathTemplate":"/","summary":"Retrieves information about the specified IAM user, including the user's creation date, path, unique ID, and ARN.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Users","kind":"object","optional":false,"children":[{"name":"UserName","kind":"string","optional":false,"example":"UserName"},{"name":"UserId","kind":"id","optional":false},{"name":"Arn","kind":"string","optional":false,"example":"Arn"},{"name":"CreateDate","kind":"timestamp","optional":false,"format":"iso"},{"name":"Path","kind":"string","optional":false,"example":"Path"},{"name":"PasswordLastUsed","kind":"timestamp","optional":false,"format":"iso"}]}]}]}]}},{"id":"aws-iam-list-users","method":"GET","pathTemplate":"/","summary":"Lists the IAM users, returns all users in the AWS account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Users","kind":"object","optional":false,"children":[{"name":"UserName","kind":"string","optional":false,"example":"UserName"},{"name":"UserId","kind":"id","optional":false},{"name":"Arn","kind":"string","optional":false,"example":"Arn"},{"name":"CreateDate","kind":"timestamp","optional":false,"format":"iso"},{"name":"Path","kind":"string","optional":false,"example":"Path"},{"name":"PasswordLastUsed","kind":"timestamp","optional":false,"format":"iso"}]}]}]}]}},{"id":"aws-iam-update-user","method":"GET","pathTemplate":"/","summary":"Updates the name and/or the path of the specified IAM user.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"oldUserName","kind":"string","optional":false,"example":"oldUserName"},{"name":"newUserName","kind":"string","optional":false,"example":"newUserName"},{"name":"newPath","kind":"string","optional":false,"example":"newPath"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}},{"id":"aws-iam-delete-user","method":"GET","pathTemplate":"/","summary":"Deletes the specified IAM user. The user must not belong to any groups or have any access keys, signing certificates, or attached policies.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"userName","kind":"string","optional":false,"example":"userName"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}},{"id":"aws-iam-update-login-profile","method":"GET","pathTemplate":"/","summary":"Changes the password for the specified IAM user.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"userName","kind":"string","optional":false,"example":"userName"},{"name":"newPassword","kind":"string","optional":false,"example":"newPassword"},{"name":"passwordResetRequired","kind":"string","optional":false,"example":"passwordResetRequired"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-iam-aws-iam",
+  "name": "AWS - IAM",
+  "pack": "AWS-IAM",
+  "vendor": "Amazon Web Services",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "ListUsers. UserName, UserId, and Arn.",
+  "notes": [
+    "IAM's query protocol is XML. This mock is POST / with X-Amz-Target IAM.ListUsers and returns JSON { Users }.",
+    "Access keys and policies are omitted.",
+    "SigV4 is not checked."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-IAM/Integrations/AWS-IAM",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-iam-aws-iam",
+      "name": "AWS - IAM",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUsers.html",
+      "notes": [
+        "IAM's query protocol is XML. This mock is POST / with X-Amz-Target IAM.ListUsers and returns JSON { Users }.",
+        "Access keys and policies are omitted.",
+        "SigV4 is not checked."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUsers.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "IAM's query protocol is XML. This mock is POST / with X-Amz-Target IAM.ListUsers and returns JSON { Users }.",
+          "Access keys and policies are omitted.",
+          "SigV4 is not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-users",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "List users",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "Users"
+        },
+        "headerMatch": {
+          "x-amz-target": "IAM.ListUsers"
+        },
+        "record": {
+          "name": "user",
+          "kind": "object",
+          "children": [
+            {
+              "name": "UserName",
+              "kind": "string",
+              "example": "jsmith"
+            },
+            {
+              "name": "UserId",
+              "kind": "id"
+            },
+            {
+              "name": "Arn",
+              "kind": "string",
+              "example": "arn:aws:iam::123456789012:user/jsmith"
+            },
+            {
+              "name": "CreateDate",
+              "kind": "timestamp"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "MaxItems",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "Marker",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "aws-iam-aws-iam",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

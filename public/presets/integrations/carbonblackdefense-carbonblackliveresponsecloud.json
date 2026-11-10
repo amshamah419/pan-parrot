@@ -1,1 +1,122 @@
-{"id":"carbonblackdefense-carbonblackliveresponsecloud","name":"Carbon Black Live Response Cloud","pack":"CarbonBlackDefense","fidelity":"shape","curated":false,"summary":"VMware Carbon Black Endpoint Standard Live Response is a feature that enables security operators to collect information and take action on remote endpoints in real time. These acti","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"carbonblackdefense-carbonblackliveresponsecloud","name":"Carbon Black Live Response Cloud","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CarbonBlackDefense/Integrations/CarbonBlackLiveResponseCloud","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"cbd-lr-file-put","method":"GET","pathTemplate":"/","summary":"Creates a new file on the remote machine with the specified data.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"device_id","kind":"string","optional":false,"example":"device_id"},{"name":"destination_path","kind":"string","optional":false,"example":"destination_path"},{"name":"file_id","kind":"string","optional":false,"example":"file_id"}]}},{"id":"cbd-lr-file-get","method":"GET","pathTemplate":"/","summary":"Retrieves the contents of the specified file on the remote machine.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"device_id","kind":"string","optional":false,"example":"device_id"},{"name":"source_path","kind":"string","optional":false,"example":"source_path"},{"name":"timeout","kind":"string","optional":false,"example":"timeout"},{"name":"delay","kind":"string","optional":false,"example":"delay"}]}},{"id":"cbd-lr-file-delete","method":"GET","pathTemplate":"/","summary":"Deletes the specified file name on the remote machine.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"device_id","kind":"string","optional":false,"example":"device_id"},{"name":"source_path","kind":"string","optional":false,"example":"source_path"}]}},{"id":"cbd-lr-directory-listing","method":"GET","pathTemplate":"/","summary":"Lists the contents of a directory on the remote machine.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CarbonBlackDefenseLR","kind":"object","optional":false,"children":[{"name":"Directory","kind":"object","optional":false,"children":[{"name":"content","kind":"string","optional":false,"example":"content"},{"name":"device_id","kind":"id","optional":false},{"name":"directory_path","kind":"string","optional":false,"example":"directory_path"}]}]}]}},{"id":"cbd-lr-reg-sub-keys","method":"GET","pathTemplate":"/","summary":"Enumerates the subkeys of the specified registry key on the remote machine.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CarbonBlackDefenseLR","kind":"object","optional":false,"children":[{"name":"RegistrySubKeys","kind":"object","optional":false,"children":[{"name":"key","kind":"string","optional":false,"example":"key"},{"name":"sub_keys","kind":"string","optional":false,"example":"sub_keys"},{"name":"device_id","kind":"id","optional":false}]}]}]}},{"id":"cbd-lr-reg-get-values","method":"GET","pathTemplate":"/","summary":"Enumerates all registry values from the specified registry key on the remote machine. Due to API limitations, binary values will not be shown.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CarbonBlackDefenseLR","kind":"object","optional":false,"children":[{"name":"RegistryValues","kind":"object","optional":false,"children":[{"name":"key","kind":"string","optional":false,"example":"key"},{"name":"values","kind":"string","optional":false,"example":"values"},{"name":"device_id","kind":"id","optional":false}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "carbonblackdefense-carbonblackliveresponsecloud",
+  "name": "Carbon Black Live Response Cloud",
+  "pack": "CarbonBlackDefense",
+  "vendor": "Carbon Black",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Live Response session create.",
+  "notes": [
+    "POST /appservices/v6/orgs/{org_key}/liveresponse/sessions returns { id, status, device_id }.",
+    "File get, process list, and the command poll are not modeled.",
+    "X-Auth-Token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CarbonBlackDefense/Integrations/CarbonBlackLiveResponseCloud",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "carbonblackdefense-carbonblackliveresponsecloud",
+      "name": "Carbon Black Live Response Cloud",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developer.carbonblack.com/reference/carbon-black-cloud/platform/latest/live-response-api/",
+      "notes": [
+        "POST /appservices/v6/orgs/{org_key}/liveresponse/sessions returns { id, status, device_id }.",
+        "File get, process list, and the command poll are not modeled.",
+        "X-Auth-Token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.carbonblack.com/reference/carbon-black-cloud/platform/latest/live-response-api/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "POST /appservices/v6/orgs/{org_key}/liveresponse/sessions returns { id, status, device_id }.",
+          "File get, process list, and the command poll are not modeled.",
+          "X-Auth-Token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "create-session",
+        "method": "POST",
+        "pathTemplate": "/appservices/v6/orgs/{org_key}/liveresponse/sessions",
+        "summary": "Create a Live Response session",
+        "status": 201,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "session",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "ACTIVE"
+            },
+            {
+              "name": "device_id",
+              "kind": "integer"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "carbonblackdefense-carbonblackliveresponsecloud",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "X-Auth-Token",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

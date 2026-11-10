@@ -1,1 +1,131 @@
-{"id":"carbon-black-enterprise-response-carbonblackresponsev2","name":"VMware Carbon Black EDR v2","pack":"Carbon_Black_Enterprise_Response","fidelity":"sample","curated":false,"summary":"VMware Carbon Black EDR (formerly known as Carbon Black Response).","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"carbon-black-enterprise-response-carbonblackresponsev2","name":"VMware Carbon Black EDR v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Carbon_Black_Enterprise_Response/Integrations/CarbonBlackResponseV2","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-commands-test-data-json","method":"GET","pathTemplate":"/v1/watchlist/{id}/action_type/{action_type}","summary":"test_data/commands_test_data.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"processes_search_command","kind":"object","optional":false,"children":[{"name":"terms","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"chrome.exe"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"process_md5","kind":"string","optional":false,"example":"8698e468bc379e30383a72ce63da7972"},{"name":"sensor_id","kind":"integer","optional":false},{"name":"filtering_known_dlls","kind":"boolean","optional":false},{"name":"modload_count","kind":"integer","optional":false},{"name":"parent_unique_id","kind":"id","optional":false,"example":"00000018-ffff-ffff-0000-000000000000-000000000001"},{"name":"emet_count","kind":"integer","optional":false},{"name":"cmdline","kind":"string","optional":false,"example":"(unknown)"},{"name":"filemod_count","kind":"integer","optional":false},{"name":"id","kind":"id","optional":false,"example":"00000018-0000-164c-01d5-9ed472b33472"},{"name":"parent_name","kind":"string","optional":false,"example":"(unknown)"},{"name":"parent_md5","kind":"string","optional":false,"example":"000000000000000000000000000000"},{"name":"group","kind":"string","optional":false,"example":"default group"},{"name":"parent_id","kind":"id","optional":false,"example":"00000018-ffff-ffff-0000-000000000000"},{"name":"hostname","kind":"string","optional":false,"example":"host"},{"name":"last_update","kind":"timestamp","optional":false,"example":"2021-04-20T12:47:27.187Z","format":"iso"},{"name":"start","kind":"timestamp","optional":false,"example":"2019-11-19T12:25:37.19Z","format":"iso"},{"name":"comms_ip","kind":"integer","optional":false},{"name":"regmod_count","kind":"integer","optional":false},{"name":"interface_ip","kind":"integer","optional":false},{"name":"process_pid","kind":"integer","optional":false},{"name":"username","kind":"string","optional":false,"example":"host\\user"},{"name":"terminated","kind":"boolean","optional":false},{"name":"process_name","kind":"string","optional":false,"example":"chrome.exe"},{"name":"emet_config","kind":"string","optional":false},{"name":"last_server_update","kind":"timestamp","optional":false,"example":"2021-04-20T13:00:03.241Z","format":"iso"},{"name":"path","kind":"string","optional":false,"example":"c:\\program files (x86)\\google\\chrome\\application\\chrome.exe"},{"name":"netconn_count","kind":"integer","optional":false},{"name":"parent_pid","kind":"integer","optional":false},{"name":"crossproc_count","kind":"integer","optional":false},{"name":"segment_id","kind":"integer","optional":false},{"name":"watchlists","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"segments_hit","kind":"string","optional":false,"example":"nested"},{"name":"wid","kind":"string","optional":false,"example":"nested"},{"name":"value","kind":"string","optional":false,"example":"nested"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"host_type","kind":"string","optional":false,"example":"server"},{"name":"processblock_count","kind":"integer","optional":false},{"name":"os_type","kind":"string","optional":false,"example":"windows"},{"name":"childproc_count","kind":"integer","optional":false},{"name":"unique_id","kind":"id","optional":false,"example":"00000018-0000-164c-01d5-9ed472b33472-0178ef5dc528"}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"elapsed","kind":"number","optional":false},{"name":"comprehensive_search","kind":"boolean","optional":false},{"name":"all_segments","kind":"boolean","optional":false},{"name":"total_results","kind":"integer","optional":false},{"name":"highlights","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"c:\\program files (x86)\\google\\chrome\\application\\PREPREPREchrome.exePOSTPOSTPOST"},{"name":"ids","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"00000018-0000-164c-01d5-9ed472b33472-0178ef5dc528"},"minItems":0,"maxItems":3,"pageItems":false}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"facets","kind":"object","optional":false,"children":[]},{"name":"tagged_pids","kind":"object","optional":false,"children":[]},{"name":"start","kind":"integer","optional":false},{"name":"incomplete_results","kind":"boolean","optional":false},{"name":"filtered","kind":"object","optional":false,"children":[]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "carbon-black-enterprise-response-carbonblackresponsev2",
+  "name": "VMware Carbon Black EDR v2",
+  "pack": "Carbon_Black_Enterprise_Response",
+  "vendor": "Carbon Black",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Sensor list from the on-prem Response API.",
+  "notes": [
+    "GET /api/v1/sensor returns an array of sensors. This mock keeps id, computer_name, status, and os.",
+    "The 6.3 REST guide was not reloaded. The client base path is /api.",
+    "The API token header is X-Auth-Token."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Carbon_Black_Enterprise_Response/Integrations/CarbonBlackResponseV2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "carbon-black-enterprise-response-carbonblackresponsev2",
+      "name": "VMware Carbon Black EDR v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developer.carbonblack.com/reference/enterprise-response/6.3/rest-api/",
+      "notes": [
+        "GET /api/v1/sensor returns an array of sensors. This mock keeps id, computer_name, status, and os.",
+        "The 6.3 REST guide was not reloaded. The client base path is /api.",
+        "The API token header is X-Auth-Token."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.carbonblack.com/reference/enterprise-response/6.3/rest-api/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /api/v1/sensor returns an array of sensors. This mock keeps id, computer_name, status, and os.",
+          "The 6.3 REST guide was not reloaded. The client base path is /api.",
+          "The API token header is X-Auth-Token."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "sensors",
+        "method": "GET",
+        "pathTemplate": "/api/v1/sensor",
+        "summary": "List sensors",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "sensor",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "computer_name",
+              "kind": "string",
+              "example": "lab-host"
+            },
+            {
+              "name": "status",
+              "kind": "enum",
+              "enumValues": [
+                "Online",
+                "Offline"
+              ]
+            },
+            {
+              "name": "os_type",
+              "kind": "const",
+              "constValue": "Windows"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "carbon-black-enterprise-response-carbonblackresponsev2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "X-Auth-Token",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

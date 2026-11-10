@@ -1,1 +1,131 @@
-{"id":"proofpointserverprotection-proofpointprotectionserverv2","name":"Proofpoint Protection Server v2","pack":"ProofpointServerProtection","fidelity":"sample","curated":false,"summary":"Proofpoint email security appliance.","operations":2,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"proofpointserverprotection-proofpointprotectionserverv2","name":"Proofpoint Protection Server v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/ProofpointServerProtection/Integrations/ProofpointProtectionServerV2","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-quarantined-messages-response-json","method":"GET","pathTemplate":"/enduser/{email_or_uid}","summary":"test_data/quarantined_messages_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"count","kind":"integer","optional":false},{"name":"records","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"processingserver","kind":"string","optional":false,"example":"..."},{"name":"date","kind":"string","optional":false,"example":"2020-01-15 20:00:00"},{"name":"subject","kind":"string","optional":false,"example":"Loan"},{"name":"messageid","kind":"id","optional":false,"example":"YATQ2LPCWC3MFA2YUTDH.448380834@example.net"},{"name":"folder","kind":"string","optional":false,"example":"Quarantine"},{"name":"size","kind":"string","optional":false,"example":"6496"},{"name":"rcpts","kind":"array","optional":false,"item":{"name":"item","kind":"email","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"from","kind":"email","optional":false},{"name":"spamscore","kind":"string","optional":false,"example":"100"},{"name":"guid","kind":"id","optional":false,"example":"lR_SjEF1Llfn9gML8YZzpVPUukjXQcPO"},{"name":"host_ip","kind":"string","optional":false,"example":"[10.54.40.3] [10.54.40.3]"},{"name":"localguid","kind":"id","optional":false,"example":"6:6:239"}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-smart-search-response-json","method":"GET","pathTemplate":"/enduser/{email}","summary":"test_data/smart_search_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"result","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"Rule_ID","kind":"id","optional":false,"example":"system"},{"name":"Disposition_Action","kind":"string","optional":false},{"name":"Sendmail_Action","kind":"string","optional":false},{"name":"Attachment_Names","kind":"string","optional":false},{"name":"Recipients","kind":"email","optional":false},{"name":"SendmailRaw_Log","kind":"string","optional":false},{"name":"GUID","kind":"id","optional":false,"example":"9rLtu31xs8H24NF8KcRw-S6EihtLK-y_"},{"name":"Date","kind":"string","optional":false,"example":"2020-05-20 14:13:02 [UTC-0600]"},{"name":"Raw_Log","kind":"string","optional":false},{"name":"Sender_Host","kind":"string","optional":false,"example":"localhost"},{"name":"Module_ID","kind":"id","optional":false,"example":"access"},{"name":"Sender_IP_Address","kind":"ip","optional":false,"example":"127.0.0.1"},{"name":"Quarantine_Folder","kind":"string","optional":false},{"name":"QID","kind":"id","optional":false,"example":"u8P6D24m919880"},{"name":"Quarantine_Rule","kind":"string","optional":false},{"name":"Duration","kind":"string","optional":false,"example":"0.124094999905240"},{"name":"Spam_Score","kind":"string","optional":false},{"name":"country","kind":"string","optional":false,"example":"**"},{"name":"TLS","kind":"string","optional":false},{"name":"Policy_Routes","kind":"string","optional":false,"example":"allow_relay,firewallsafe,internalnet"},{"name":"current_folder","kind":"string","optional":false},{"name":"FID","kind":"id","optional":false,"example":"8lLtu31xs8H24NF8McYw-S6EidtLK-y_"},{"name":"module_rules","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"access.system"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"PE_Recipients","kind":"string","optional":false},{"name":"Virus_Names","kind":"string","optional":false},{"name":"Sendmail_Errorcode","kind":"string","optional":false},{"name":"FQIN","kind":"string","optional":false,"example":"example.com-10000_instance1"},{"name":"SMIME_Recipients","kind":"string","optional":false},{"name":"Agent","kind":"string","optional":false,"example":"example.com"},{"name":"Subject","kind":"email","optional":false},{"name":"Final_Rule","kind":"string","optional":false,"example":"access.system"},{"name":"Suborg","kind":"string","optional":false},{"name":"SMIME_Recipients_Signed","kind":"string","optional":false},{"name":"Message_Encrypted","kind":"string","optional":false},{"name":"Message_Split","kind":"string","optional":false},{"name":"Disposition_SmtpProfile","kind":"string","optional":false},{"name":"Sendmail_To","kind":"string","optional":false},{"name":"Sendmail_Stat","kind":"string","optional":false},{"name":"SID","kind":"id","optional":false,"example":"25nnq08028"},{"name":"Message_ID","kind":"id","optional":false,"example":"<551609250613.u8P6D1l3019878@user.example.com>"}]},"minItems":0,"maxItems":1,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "proofpointserverprotection-proofpointprotectionserverv2",
+  "name": "Proofpoint Protection Server v2",
+  "pack": "ProofpointServerProtection",
+  "vendor": "Proofpoint",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Quarantine message list.",
+  "notes": [
+    "GET /quarantine/messages returns { messages }. The client path is /quarantine.",
+    "The appliance guide was not reloaded. Release and delete are not modeled.",
+    "Basic auth is the console user."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ProofpointServerProtection/Integrations/ProofpointProtectionServerv2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "proofpointserverprotection-proofpointprotectionserverv2",
+      "name": "Proofpoint Protection Server v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ProofpointServerProtection/Integrations/ProofpointProtectionServerv2",
+      "notes": [
+        "GET /quarantine/messages returns { messages }. The client path is /quarantine.",
+        "The appliance guide was not reloaded. Release and delete are not modeled.",
+        "Basic auth is the console user."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/ProofpointServerProtection/Integrations/ProofpointProtectionServerv2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /quarantine/messages returns { messages }. The client path is /quarantine.",
+          "The appliance guide was not reloaded. Release and delete are not modeled.",
+          "Basic auth is the console user."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "messages",
+        "method": "GET",
+        "pathTemplate": "/quarantine/messages",
+        "summary": "List quarantined messages",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "messages"
+        },
+        "record": {
+          "name": "message",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "subject",
+              "kind": "string",
+              "example": "Wire transfer"
+            },
+            {
+              "name": "from",
+              "kind": "email"
+            },
+            {
+              "name": "queue",
+              "kind": "const",
+              "constValue": "spam"
+            },
+            {
+              "name": "received",
+              "kind": "timestamp"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "proofpointserverprotection-proofpointprotectionserverv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "basic",
+      "basic": {
+        "username": "lab",
+        "password": "dummy-not-a-real-password"
+      }
+    }
+  }
+}

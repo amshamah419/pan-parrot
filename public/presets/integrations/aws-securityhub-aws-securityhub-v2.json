@@ -1,1 +1,131 @@
-{"id":"aws-securityhub-aws-securityhub-v2","name":"AWS - Security Hub v2","pack":"AWS-SecurityHub","fidelity":"shape","curated":false,"summary":"Use the AWS Security Hub V2 integration to import, manage, and retrieve unified security and compliance findings across your cloud environments.","operations":5,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-securityhub-aws-securityhub-v2","name":"AWS - Security Hub v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-SecurityHub/Integrations/AWS_SecurityHub_V2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-securityhub-v2-security-hub-enable","method":"GET","pathTemplate":"/","summary":"Enables AWS Security Hub V2 for the configured account and region. Required IAM Permission: securityhub:EnableSecurityHubV2.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"SecurityHubV2","kind":"object","optional":false,"children":[{"name":"EnableHubV2","kind":"object","optional":false,"children":[{"name":"HubV2Arn","kind":"string","optional":false,"example":"HubV2Arn"}]}]}]}]}},{"id":"aws-securityhub-v2-findings-get","method":"GET","pathTemplate":"/","summary":"Retrieves a list of OCSF-formatted findings from AWS Security Hub V2. Required IAM Permission: securityhub:GetFindingsV2.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"SecurityHubV2","kind":"object","optional":false,"children":[{"name":"Findings","kind":"string","optional":false,"example":"Findings"},{"name":"FindingsNextToken","kind":"string","optional":false,"example":"FindingsNextToken"}]}]}]}},{"id":"aws-securityhub-v2-findings-batch-update","method":"GET","pathTemplate":"/","summary":"Updates one or more AWS Security Hub V2 findings in a single batch request. Findings are targeted by metadata_uids and/or finding_identifiers. Required IAM Perm","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"SecurityHubV2","kind":"object","optional":false,"children":[{"name":"BatchUpdateFindings","kind":"object","optional":false,"children":[{"name":"ProcessedFindings","kind":"string","optional":false,"example":"ProcessedFindings"},{"name":"UnprocessedFindings","kind":"string","optional":false,"example":"UnprocessedFindings"}]}]}]}]}},{"id":"get-remote-data","method":"GET","pathTemplate":"/","summary":"Returns the updated data of a single mirrored AWS Security Hub V2 finding. This command is used for mirroring and is not intended to be run manually.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"string","optional":false,"example":"id"},{"name":"lastUpdate","kind":"string","optional":false,"example":"lastUpdate"}]}},{"id":"update-remote-system","method":"GET","pathTemplate":"/","summary":"Pushes local (Cortex XSOAR) incident changes to the corresponding AWS Security Hub V2 finding. This command is used for mirroring and is not intended to be run","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"remoteId","kind":"string","optional":false,"example":"remoteId"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-securityhub-aws-securityhub-v2",
+  "name": "AWS - Security Hub v2",
+  "pack": "AWS-SecurityHub",
+  "vendor": "Amazon Web Services",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GetFindings for Security Hub v2.",
+  "notes": [
+    "POST / with X-Amz-Target SecurityHub_2018-10-26.GetFindings returns { Findings }.",
+    "Resources and compliance are omitted, matching the v1 Security Hub preset.",
+    "SigV4 is not checked."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-SecurityHub/Integrations/AWS_SecurityHub",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-securityhub-aws-securityhub-v2",
+      "name": "AWS - Security Hub v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_GetFindings.html",
+      "notes": [
+        "POST / with X-Amz-Target SecurityHub_2018-10-26.GetFindings returns { Findings }.",
+        "Resources and compliance are omitted, matching the v1 Security Hub preset.",
+        "SigV4 is not checked."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_GetFindings.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "POST / with X-Amz-Target SecurityHub_2018-10-26.GetFindings returns { Findings }.",
+          "Resources and compliance are omitted, matching the v1 Security Hub preset.",
+          "SigV4 is not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-findings",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Get findings",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "Findings"
+        },
+        "headerMatch": {
+          "x-amz-target": "SecurityHub_2018-10-26.GetFindings"
+        },
+        "record": {
+          "name": "finding",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Id",
+              "kind": "id"
+            },
+            {
+              "name": "ProductArn",
+              "kind": "string",
+              "example": "arn:aws:securityhub:us-east-1::product/aws/securityhub"
+            },
+            {
+              "name": "Title",
+              "kind": "string",
+              "example": "S3 bucket public"
+            },
+            {
+              "name": "Severity",
+              "kind": "const",
+              "constValue": "HIGH"
+            },
+            {
+              "name": "UpdatedAt",
+              "kind": "timestamp"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "aws-securityhub-aws-securityhub-v2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

@@ -1,1 +1,133 @@
-{"id":"mimecast-mimecasteventcollectorv2","name":"Mimecast Event Collector v2","pack":"Mimecast","fidelity":"shape","curated":false,"summary":"Use the Mimecast Event Collector v2 integration to fetch Audit events and SIEM logs for various SIEM event types, using API 2.0 with OAuth2 authentication.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"mimecast-mimecasteventcollectorv2","name":"Mimecast Event Collector v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastEventCollectorV2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"mimecast-get-events","method":"GET","pathTemplate":"/POST","summary":"Retrieves Mimecast Audit events and SIEM logs. Use this command for development and debugging only, as it may produce duplicate events, exceed API rate limits,","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"should_push_events","kind":"string","optional":false,"example":"should_push_events"},{"name":"event_types","kind":"string","optional":false,"example":"event_types"},{"name":"limit","kind":"string","optional":false,"example":"limit"},{"name":"start_date","kind":"string","optional":false,"example":"start_date"},{"name":"end_date","kind":"string","optional":false,"example":"end_date"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "mimecast-mimecasteventcollectorv2",
+  "name": "Mimecast Event Collector v2",
+  "pack": "Mimecast",
+  "vendor": "Mimecast",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "SIEM CG events. The client calls /siem/v1/events/cg.",
+  "notes": [
+    "GET /siem/v1/events/cg returns { data, pagination }. The v2 collector also calls /api/audit/get-audit-events. This mock is the CG route.",
+    "The next token is a query parameter here, not the mc-siem-token header used by the older SIEM logs mock.",
+    "OAuth bearer is required. The token route is not modeled."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastEventCollectorV2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "mimecast-mimecasteventcollectorv2",
+      "name": "Mimecast Event Collector v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
+      "notes": [
+        "GET /siem/v1/events/cg returns { data, pagination }. The v2 collector also calls /api/audit/get-audit-events. This mock is the CG route.",
+        "The next token is a query parameter here, not the mc-siem-token header used by the older SIEM logs mock.",
+        "OAuth bearer is required. The token route is not modeled."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /siem/v1/events/cg returns { data, pagination }. The v2 collector also calls /api/audit/get-audit-events. This mock is the CG route.",
+          "The next token is a query parameter here, not the mc-siem-token header used by the older SIEM logs mock.",
+          "OAuth bearer is required. The token route is not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "cg-events",
+        "method": "GET",
+        "pathTemplate": "/siem/v1/events/cg",
+        "summary": "List CG events",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "data"
+        },
+        "record": {
+          "name": "event",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "action",
+              "kind": "enum",
+              "enumValues": [
+                "accept",
+                "reject",
+                "hold"
+              ]
+            },
+            {
+              "name": "sender",
+              "kind": "email"
+            },
+            {
+              "name": "recipient",
+              "kind": "email"
+            },
+            {
+              "name": "timestamp",
+              "kind": "timestamp"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "pageSize",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "pageToken",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "mimecast-mimecasteventcollectorv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

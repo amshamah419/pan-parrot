@@ -1,1 +1,116 @@
-{"id":"gmailsingleuser-gmailsingleuser","name":"Gmail Single User","pack":"GmailSingleUser","fidelity":"shape","curated":false,"summary":"Gmail API using OAuth 2.0.","operations":3,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"gmailsingleuser-gmailsingleuser","name":"Gmail Single User","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/GmailSingleUser/Integrations/GmailSingleUser","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-email-no-date-json","method":"GET","pathTemplate":"/","summary":"test_data/email_no_date.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"17686ee0f58fde1a"},{"name":"threadId","kind":"id","optional":false,"example":"17686ee0f58fde1a"},{"name":"labelIds","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"CATEGORY_PERSONAL"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"snippet","kind":"email","optional":false},{"name":"payload","kind":"object","optional":false,"children":[{"name":"partId","kind":"id","optional":false},{"name":"mimeType","kind":"string","optional":false,"example":"multipart/mixed"},{"name":"filename","kind":"string","optional":false},{"name":"headers","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"Delivered-To"},{"name":"value","kind":"email","optional":false}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"body","kind":"object","optional":false,"children":[{"name":"size","kind":"integer","optional":false}]},{"name":"parts","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"partId","kind":"id","optional":false,"example":"0"},{"name":"mimeType","kind":"string","optional":false,"example":"multipart/related"},{"name":"filename","kind":"string","optional":false},{"name":"headers","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"nested"},{"name":"value","kind":"string","optional":false,"example":"nested"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"body","kind":"object","optional":false,"children":[{"name":"size","kind":"integer","optional":false}]},{"name":"parts","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"partId","kind":"string","optional":false,"example":"nested"},{"name":"mimeType","kind":"string","optional":false,"example":"nested"},{"name":"filename","kind":"string","optional":false,"example":"nested"},{"name":"headers","kind":"string","optional":false,"example":"nested"},{"name":"body","kind":"string","optional":false,"example":"nested"},{"name":"parts","kind":"string","optional":false,"example":"nested"}]},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"sizeEstimate","kind":"integer","optional":false},{"name":"historyId","kind":"id","optional":false,"example":"18559851"},{"name":"internalDate","kind":"string","optional":false,"example":"0"}]}},{"id":"test-data-lookback-emails-json","method":"GET","pathTemplate":"/","summary":"test_data/lookback_emails.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"1"},{"name":"threadId","kind":"id","optional":false,"example":"AAA"},{"name":"labelIds","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"SENT"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"snippet","kind":"string","optional":false,"example":"Test message 1234"},{"name":"payload","kind":"object","optional":false,"children":[{"name":"partId","kind":"id","optional":false},{"name":"mimeType","kind":"string","optional":false,"example":"text/plain"},{"name":"filename","kind":"string","optional":false},{"name":"headers","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"from"},{"name":"value","kind":"email","optional":false}]},"minItems":0,"maxItems":2,"pageItems":false}]},{"name":"sizeEstimate","kind":"integer","optional":false},{"name":"historyId","kind":"id","optional":false,"example":"12345"},{"name":"internalDate","kind":"string","optional":false,"example":"1742839025000"}]}},{"id":"test-data-search-email-list-json","method":"GET","pathTemplate":"/","summary":"test_data/search_email_list.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"111"},{"name":"threadId","kind":"id","optional":false,"example":"AAA"},{"name":"labelIds","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"SENT"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"snippet","kind":"string","optional":false,"example":"Test message 1234"},{"name":"payload","kind":"object","optional":false,"children":[{"name":"partId","kind":"id","optional":false},{"name":"mimeType","kind":"string","optional":false,"example":"text/plain"},{"name":"filename","kind":"string","optional":false},{"name":"headers","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"from"},{"name":"value","kind":"email","optional":false}]},"minItems":0,"maxItems":2,"pageItems":false}]},{"name":"sizeEstimate","kind":"integer","optional":false},{"name":"historyId","kind":"id","optional":false,"example":"12345"},{"name":"internalDate","kind":"string","optional":false,"example":"1742829478000"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "gmailsingleuser-gmailsingleuser",
+  "name": "Gmail Single User",
+  "pack": "GmailSingleUser",
+  "vendor": "Google",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "users.messages.list for one mailbox.",
+  "notes": [
+    "GET /gmail/v1/users/me/messages returns { messages: [{ id, threadId }], nextPageToken }.",
+    "The raw RFC822 body is omitted, the same as the Gmail preset.",
+    "A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GmailSingleUser/Integrations/GmailSingleUser",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "gmailsingleuser-gmailsingleuser",
+      "name": "Gmail Single User",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.messages/list",
+      "notes": [
+        "GET /gmail/v1/users/me/messages returns { messages: [{ id, threadId }], nextPageToken }.",
+        "The raw RFC822 body is omitted, the same as the Gmail preset.",
+        "A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.messages/list",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /gmail/v1/users/me/messages returns { messages: [{ id, threadId }], nextPageToken }.",
+          "The raw RFC822 body is omitted, the same as the Gmail preset.",
+          "A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-messages",
+        "method": "GET",
+        "pathTemplate": "/gmail/v1/users/me/messages",
+        "summary": "List messages",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "messages"
+        },
+        "record": {
+          "name": "message",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "threadId",
+              "kind": "id"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "maxResults",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "pageToken",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "gmailsingleuser-gmailsingleuser",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

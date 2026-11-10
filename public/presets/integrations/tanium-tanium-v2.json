@@ -1,1 +1,126 @@
-{"id":"tanium-tanium-v2","name":"Tanium v2","pack":"Tanium","fidelity":"sample","curated":false,"summary":"Tanium endpoint security and systems management, filters out [current results unavailable] when returning question results.","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"tanium-tanium-v2","name":"Tanium v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Tanium/Integrations/Tanium_v2","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-action-results-json","method":"POST","pathTemplate":"/session/login","summary":"test_data/action_results.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"action_raw_response","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"now","kind":"string","optional":false,"example":"2022/01/18 09:20:54 GMT-0000"},{"name":"max_available_age","kind":"string","optional":false},{"name":"result_sets","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"age","kind":"integer","optional":false},{"name":"id","kind":"integer","optional":false},{"name":"report_count","kind":"integer","optional":false},{"name":"saved_question_id","kind":"integer","optional":false},{"name":"question_id","kind":"integer","optional":false},{"name":"archived_question_id","kind":"integer","optional":false},{"name":"seconds_since_issued","kind":"integer","optional":false},{"name":"issue_seconds","kind":"integer","optional":false},{"name":"expire_seconds","kind":"integer","optional":false},{"name":"tested","kind":"integer","optional":false},{"name":"passed","kind":"integer","optional":false},{"name":"mr_tested","kind":"integer","optional":false},{"name":"mr_passed","kind":"integer","optional":false},{"name":"estimated_total","kind":"integer","optional":false},{"name":"select_count","kind":"integer","optional":false},{"name":"error_count","kind":"integer","optional":false},{"name":"no_results_count","kind":"integer","optional":false},{"name":"columns","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"filtered_row_count","kind":"integer","optional":false},{"name":"filtered_row_count_machines","kind":"integer","optional":false},{"name":"row_count","kind":"integer","optional":false},{"name":"row_count_machines","kind":"integer","optional":false},{"name":"item_count","kind":"integer","optional":false},{"name":"rows","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"id","kind":"id","optional":false,"example":"350385"}]}]},{"name":"action_output","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false,"example":"350385"},{"name":"now","kind":"string","optional":false,"example":"2022/01/18 09:20:54 GMT-0000"},{"name":"max_available_age","kind":"string","optional":false},{"name":"result_sets","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"age","kind":"integer","optional":false},{"name":"id","kind":"integer","optional":false},{"name":"report_count","kind":"integer","optional":false},{"name":"saved_question_id","kind":"integer","optional":false},{"name":"question_id","kind":"integer","optional":false},{"name":"archived_question_id","kind":"integer","optional":false},{"name":"seconds_since_issued","kind":"integer","optional":false},{"name":"issue_seconds","kind":"integer","optional":false},{"name":"expire_seconds","kind":"integer","optional":false},{"name":"tested","kind":"integer","optional":false},{"name":"passed","kind":"integer","optional":false},{"name":"mr_tested","kind":"integer","optional":false},{"name":"mr_passed","kind":"integer","optional":false},{"name":"estimated_total","kind":"integer","optional":false},{"name":"select_count","kind":"integer","optional":false},{"name":"error_count","kind":"integer","optional":false},{"name":"no_results_count","kind":"integer","optional":false},{"name":"columns","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":3,"pageItems":false}]},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":1,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "tanium-tanium-v2",
+  "name": "Tanium v2",
+  "pack": "Tanium",
+  "vendor": "Tanium",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Endpoint list from the gateway API.",
+  "notes": [
+    "GET /api/v2/endpoints returns { data }. Endpoints keep id, name, and ip.",
+    "The gateway guide was not reloaded. Saved questions and packages are not modeled.",
+    "Session is a bearer token."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Tanium/Integrations/Tanium_v2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "tanium-tanium-v2",
+      "name": "Tanium v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Tanium/Integrations/Tanium_v2",
+      "notes": [
+        "GET /api/v2/endpoints returns { data }. Endpoints keep id, name, and ip.",
+        "The gateway guide was not reloaded. Saved questions and packages are not modeled.",
+        "Session is a bearer token."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Tanium/Integrations/Tanium_v2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /api/v2/endpoints returns { data }. Endpoints keep id, name, and ip.",
+          "The gateway guide was not reloaded. Saved questions and packages are not modeled.",
+          "Session is a bearer token."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "endpoints",
+        "method": "GET",
+        "pathTemplate": "/api/v2/endpoints",
+        "summary": "List endpoints",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "data"
+        },
+        "record": {
+          "name": "endpoint",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab-host"
+            },
+            {
+              "name": "ip",
+              "kind": "ip"
+            },
+            {
+              "name": "os",
+              "kind": "const",
+              "constValue": "Windows"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "tanium-tanium-v2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

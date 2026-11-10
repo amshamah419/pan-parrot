@@ -1,1 +1,133 @@
-{"id":"abnormalsecurity-abnormalsecurityeventcollector","name":"Abnormal Security Event Collector","pack":"AbnormalSecurity","fidelity":"shape","curated":false,"summary":"Abnormal Security Event Collector integration for XSIAM.","operations":2,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"abnormalsecurity-abnormalsecurityeventcollector","name":"Abnormal Security Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AbnormalSecurity/Integrations/AbnormalSecurityEventCollector","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-test-get-list-threats-json","method":"GET","pathTemplate":"/","summary":"test_data/test_get_list_threats.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"threats","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"threatId","kind":"id","optional":false,"example":"123456789-1"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"pageNumber","kind":"integer","optional":false}]}},{"id":"test-data-test-get-threat-json","method":"GET","pathTemplate":"/","summary":"test_data/test_get_threat.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"123456789-1","kind":"object","optional":false,"children":[{"name":"threatId","kind":"id","optional":false,"example":"123456789-1"},{"name":"messages","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"threatId","kind":"id","optional":false,"example":"123456789-1"},{"name":"abxMessageId","kind":"integer","optional":false},{"name":"receivedTime","kind":"timestamp","optional":false,"example":"2022-10-01T18:44:38Z","format":"iso"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"pageNumber","kind":"integer","optional":false}]},{"name":"123456789-2","kind":"object","optional":false,"children":[{"name":"threatId","kind":"id","optional":false,"example":"123456789-2"},{"name":"messages","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"threatId","kind":"id","optional":false,"example":"123456789-2"},{"name":"abxMessageId","kind":"integer","optional":false},{"name":"receivedTime","kind":"timestamp","optional":false,"example":"2022-10-02T18:44:38Z","format":"iso"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"pageNumber","kind":"integer","optional":false}]},{"name":"123456789-3","kind":"object","optional":false,"children":[{"name":"threatId","kind":"id","optional":false,"example":"123456789-3"},{"name":"messages","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"threatId","kind":"id","optional":false,"example":"123456789-3"},{"name":"abxMessageId","kind":"integer","optional":false},{"name":"receivedTime","kind":"timestamp","optional":false,"example":"2022-10-03T18:44:38Z","format":"iso"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"pageNumber","kind":"integer","optional":false}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "abnormalsecurity-abnormalsecurityeventcollector",
+  "name": "Abnormal Security Event Collector",
+  "pack": "AbnormalSecurity",
+  "vendor": "Abnormal",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Threat page for the event collector. Same /threats list as the main integration.",
+  "notes": [
+    "GET /threats returns { threats }. The collector polls the same list as the main Abnormal integration.",
+    "The readme was not reloaded. pageNumber and pageSize page the list.",
+    "A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AbnormalSecurity/Integrations/AbnormalSecurityEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "abnormalsecurity-abnormalsecurityeventcollector",
+      "name": "Abnormal Security Event Collector",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://abnormalsecurity.readme.io/reference/get_threats",
+      "notes": [
+        "GET /threats returns { threats }. The collector polls the same list as the main Abnormal integration.",
+        "The readme was not reloaded. pageNumber and pageSize page the list.",
+        "A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://abnormalsecurity.readme.io/reference/get_threats",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /threats returns { threats }. The collector polls the same list as the main Abnormal integration.",
+          "The readme was not reloaded. pageNumber and pageSize page the list.",
+          "A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "threats",
+        "method": "GET",
+        "pathTemplate": "/threats",
+        "summary": "List threats",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "threats"
+        },
+        "record": {
+          "name": "threat",
+          "kind": "object",
+          "children": [
+            {
+              "name": "threatId",
+              "kind": "id"
+            },
+            {
+              "name": "subject",
+              "kind": "string",
+              "example": "Payroll change"
+            },
+            {
+              "name": "fromAddress",
+              "kind": "email"
+            },
+            {
+              "name": "receivedTime",
+              "kind": "timestamp"
+            },
+            {
+              "name": "attackType",
+              "kind": "enum",
+              "enumValues": [
+                "Phishing",
+                "Malware"
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "page",
+          "limitParam": "pageSize",
+          "offsetParam": "offset",
+          "pageParam": "pageNumber",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "abnormalsecurity-abnormalsecurityeventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

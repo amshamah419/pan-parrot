@@ -1,1 +1,130 @@
-{"id":"aws-guardduty-awsguarddutyeventcollector","name":"AWS - GuardDuty Event Collector","pack":"AWS-GuardDuty","fidelity":"shape","curated":false,"summary":"Amazon Web Services Guard Duty Service (gd) event collector integration for Cortex XSIAM.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-guardduty-awsguarddutyeventcollector","name":"AWS - GuardDuty Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-GuardDuty/Integrations/AWSGuardDutyEventCollector","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-gd-get-events","method":"GET","pathTemplate":"/","summary":"Manual command used to fetch events and display them.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"should_push_events","kind":"string","optional":false,"example":"should_push_events"},{"name":"severity","kind":"string","optional":false,"example":"severity"},{"name":"collect_from","kind":"string","optional":false,"example":"collect_from"},{"name":"limit","kind":"string","optional":false,"example":"limit"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-guardduty-awsguarddutyeventcollector",
+  "name": "AWS - GuardDuty Event Collector",
+  "pack": "AWS-GuardDuty",
+  "vendor": "Amazon Web Services",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GetFindings for the event collector. Same JSON target as the GuardDuty integration.",
+  "notes": [
+    "POST / with X-Amz-Target GuardDuty_20171201.GetFindings returns { Findings } with Id, Type, Severity, and Title.",
+    "This is the collector integration. ListFindings is on the other GuardDuty preset.",
+    "SigV4 is not checked."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-GuardDuty/Integrations/AWSGuardDutyEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-guardduty-awsguarddutyeventcollector",
+      "name": "AWS - GuardDuty Event Collector",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.aws.amazon.com/guardduty/latest/APIReference/API_GetFindings.html",
+      "notes": [
+        "POST / with X-Amz-Target GuardDuty_20171201.GetFindings returns { Findings } with Id, Type, Severity, and Title.",
+        "This is the collector integration. ListFindings is on the other GuardDuty preset.",
+        "SigV4 is not checked."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.aws.amazon.com/guardduty/latest/APIReference/API_GetFindings.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "POST / with X-Amz-Target GuardDuty_20171201.GetFindings returns { Findings } with Id, Type, Severity, and Title.",
+          "This is the collector integration. ListFindings is on the other GuardDuty preset.",
+          "SigV4 is not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-findings",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Get findings",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "Findings"
+        },
+        "headerMatch": {
+          "x-amz-target": "GuardDuty_20171201.GetFindings"
+        },
+        "record": {
+          "name": "finding",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Id",
+              "kind": "id"
+            },
+            {
+              "name": "Type",
+              "kind": "string",
+              "example": "Recon:EC2/PortProbeUnprotectedPort"
+            },
+            {
+              "name": "Severity",
+              "kind": "number"
+            },
+            {
+              "name": "Title",
+              "kind": "string",
+              "example": "Port probe"
+            },
+            {
+              "name": "UpdatedAt",
+              "kind": "timestamp"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "aws-guardduty-awsguarddutyeventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}
