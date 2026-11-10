@@ -1,5 +1,5 @@
 import { randomBytes } from "node:crypto";
-import { and, count, desc, eq, sql } from "drizzle-orm";
+import { and, count, desc, eq, isNull, sql } from "drizzle-orm";
 import { applyBehavior, emptyRuntime } from "../shared/behavior";
 import { chaosTriggers, generateMockResponse, matchOperation } from "../shared/generate";
 import { checkMockAuth } from "../shared/mock-auth";
@@ -12,8 +12,9 @@ import { openAuth, sealAuth, sealSecret } from "./mock-secrets";
 import { loadRuntime, resetRuntime, saveRuntime } from "./runtime-state";
 import { ENDPOINT_PATH_RE, POLICY } from "../shared/policy";
 import type { AppDb } from "../db/client";
-import { capturedRequests, endpoints, sessions, users } from "../db/schema";
-import { maxBodyBytes, maxStoredBodyChars, publicSiteUrl, rateMax } from "./config";
+import { apiTokens, capturedRequests, endpoints, sessions, users } from "../db/schema";
+import { isFoundingAdmin, maxBodyBytes, maxStoredBodyChars, publicSiteUrl, rateMax } from "./config";
+import { noteCatch } from "./health";
 import {
   bodyForStorage,
   clampQuery,
@@ -315,6 +316,7 @@ export async function captureOnPath(
   stream?: boolean;
   dripMs?: number;
 }> {
+  const started = Date.now();
   if (!ENDPOINT_PATH_RE.test(path)) {
     throw new HttpError(404, "Endpoint not found");
   }
@@ -324,6 +326,11 @@ export async function captureOnPath(
     .where(eq(endpoints.path, path))
     .limit(1);
   if (!endpoint) throw new HttpError(404, "Endpoint not found");
+  const [owner] = await db.select().from(users).where(eq(users.id, endpoint.userId)).limit(1);
+  if (!owner?.active || endpoint.disabled) {
+    await noteCatch(db, 403, Date.now() - started);
+    throw new HttpError(403, endpoint.disabled ? "This mock is disabled" : "This mock is unavailable");
+  }
 
   await enforceRateLimit(
     db,
@@ -357,6 +364,7 @@ export async function captureOnPath(
     text,
     urlQuery,
   );
+  const durationMs = Date.now() - started;
 
   await db.insert(capturedRequests).values({
     method: request.method.slice(0, 16),
@@ -371,9 +379,11 @@ export async function captureOnPath(
     responsePreview: (produced.preview || produced.body).slice(0, 2000),
     chaosEffects: produced.chaosEffects,
     recordCount: produced.recordCount,
+    durationMs,
     userId: endpoint.userId,
     endpointId: endpoint.id,
   });
+  await noteCatch(db, produced.status, durationMs);
 
   try {
     await trimEndpoint(db, endpoint.id);
@@ -850,9 +860,15 @@ function redactStoredBody(body: unknown): unknown {
   return body;
 }
 
-export async function listUsers(db: AppDb) {
+export async function listUsers(db: AppDb, query = "") {
   const rows = await db.select().from(users).orderBy(desc(users.createdAt));
-  return rows.map((user) => ({
+  const needle = query.trim().toLowerCase().slice(0, 80);
+  const filtered = needle
+    ? rows.filter(
+        (user) => user.email.toLowerCase().includes(needle) || user.name.toLowerCase().includes(needle),
+      )
+    : rows;
+  return filtered.map((user) => ({
     id: user.id,
     email: user.email,
     name: user.name,
@@ -860,6 +876,7 @@ export async function listUsers(db: AppDb) {
     created: iso(user.createdAt),
     lastLogin: iso(user.lastLogin),
     active: user.active,
+    permanentAdmin: isFoundingAdmin(user.email),
   }));
 }
 
@@ -879,6 +896,9 @@ export async function updateUserAsAdmin(
         ? "ADMIN"
         : "USER";
   const nextActive = input.active === undefined ? user.active : input.active;
+  if (isFoundingAdmin(user.email) && (nextRole !== "ADMIN" || !nextActive)) {
+    throw new HttpError(400, "ashamah@paloaltonetworks.com stays an admin");
+  }
   await assertKeepsAnAdmin(db, user, nextRole, nextActive);
 
   const [updated] = await db
@@ -895,7 +915,12 @@ export async function updateUserAsAdmin(
   if (!nextActive) {
     await db.delete(sessions).where(eq(sessions.userId, user.id));
   }
-  void actor;
+  if (nextActive !== user.active) {
+    await writeAudit(db, actor.email, nextActive ? "unsuspend" : "suspend", null, user.email);
+  }
+  if (nextRole !== user.role) {
+    await writeAudit(db, actor.email, nextRole === "ADMIN" ? "promote" : "demote", null, user.email);
+  }
   return {
     id: updated.id,
     email: updated.email,
@@ -904,6 +929,7 @@ export async function updateUserAsAdmin(
     created: iso(updated.createdAt),
     lastLogin: iso(updated.lastLogin),
     active: updated.active,
+    permanentAdmin: isFoundingAdmin(updated.email),
   };
 }
 
@@ -917,8 +943,72 @@ export async function deleteUserAsAdmin(
   }
   const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
   if (!user) throw new HttpError(404, "User not found");
+  if (isFoundingAdmin(user.email)) {
+    throw new HttpError(400, "ashamah@paloaltonetworks.com stays an admin");
+  }
   await assertKeepsAnAdmin(db, user, "USER", false);
+  await writeAudit(db, actor.email, "delete-user", null, user.email);
   await db.delete(users).where(eq(users.id, user.id));
+}
+
+export async function revokeUserSessions(db: AppDb, actor: PublicUser, userId: string) {
+  const user = await requireAdminTarget(db, userId);
+  await db.delete(sessions).where(eq(sessions.userId, user.id));
+  await writeAudit(db, actor.email, "revoke-sessions", null, user.email);
+}
+
+export async function revokeUserTokens(db: AppDb, actor: PublicUser, userId: string) {
+  const user = await requireAdminTarget(db, userId);
+  await db
+    .update(apiTokens)
+    .set({ revokedAt: new Date() })
+    .where(and(eq(apiTokens.userId, user.id), isNull(apiTokens.revokedAt)));
+  await writeAudit(db, actor.email, "revoke-tokens", null, user.email);
+}
+
+export async function listAdminMocks(db: AppDb, query = "") {
+  const rows = await db
+    .select({
+      id: endpoints.id,
+      name: endpoints.name,
+      path: endpoints.path,
+      disabled: endpoints.disabled,
+      owner: users.email,
+    })
+    .from(endpoints)
+    .innerJoin(users, eq(users.id, endpoints.userId))
+    .orderBy(desc(endpoints.updatedAt));
+  const needle = query.trim().toLowerCase().slice(0, 80);
+  return (needle
+    ? rows.filter(
+        (row) =>
+          row.name.toLowerCase().includes(needle) ||
+          row.path.toLowerCase().includes(needle) ||
+          row.owner.toLowerCase().includes(needle),
+      )
+    : rows
+  ).slice(0, 100);
+}
+
+export async function setMockDisabled(db: AppDb, actor: PublicUser, endpointId: string, disabled: boolean) {
+  const [endpoint] = await db.select().from(endpoints).where(eq(endpoints.id, endpointId)).limit(1);
+  if (!endpoint) throw new HttpError(404, "Endpoint not found");
+  await db.update(endpoints).set({ disabled, updatedAt: new Date() }).where(eq(endpoints.id, endpoint.id));
+  await writeAudit(db, actor.email, disabled ? "disable-mock" : "enable-mock", endpoint.id, endpoint.path);
+  return { id: endpoint.id, disabled };
+}
+
+export async function purgeMockRequests(db: AppDb, actor: PublicUser, endpointId: string) {
+  const [endpoint] = await db.select().from(endpoints).where(eq(endpoints.id, endpointId)).limit(1);
+  if (!endpoint) throw new HttpError(404, "Endpoint not found");
+  await db.delete(capturedRequests).where(eq(capturedRequests.endpointId, endpoint.id));
+  await writeAudit(db, actor.email, "purge-mock", endpoint.id, endpoint.path);
+}
+
+async function requireAdminTarget(db: AppDb, userId: string) {
+  const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  if (!user) throw new HttpError(404, "User not found");
+  return user;
 }
 
 async function assertKeepsAnAdmin(

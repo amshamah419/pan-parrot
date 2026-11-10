@@ -1,6 +1,10 @@
 /** Limits shared by the API and the dashboard copy. */
+/** Always an admin. Not removable from the role, even when ADMIN_EMAILS lists other people. */
+export const FOUNDING_ADMIN = "ashamah@paloaltonetworks.com";
+
 export const POLICY = {
   allowedDomain: "paloaltonetworks.com",
+  inviteTtlMs: 7 * 24 * 60 * 60 * 1000,
   sessionTtlSeconds: 60 * 60 * 24 * 7,
   challengeTtlMs: 10 * 60 * 1000,
   maxVerifyAttempts: 5,

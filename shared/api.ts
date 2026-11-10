@@ -70,6 +70,7 @@ export interface AdminUser {
   created: string;
   lastLogin?: string;
   active: boolean;
+  permanentAdmin?: boolean;
 }
 
 export interface AdminSignals {

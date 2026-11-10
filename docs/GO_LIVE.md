@@ -12,7 +12,7 @@ Do not put the site on a `paloaltonetworks.com` hostname. Use a `netlify.app` na
 4. Verify a domain in Resend, create a sending API key, and set `EMAIL_FROM` on that domain.
 5. Trigger a new deploy so the functions see the variables.
 6. Run `npm run smoke -- https://<site>` from this repo.
-7. Sign in as the address in `ADMIN_EMAILS`, open `/admin`, and confirm Signals says the database is up and sign-in email is configured.
+7. Sign in as `ashamah@paloaltonetworks.com` (an admin even when `ADMIN_EMAILS` is unset), open `/admin`, and confirm Health shows the database up and sign-in email configured.
 8. Create one mock and send one request to its catch URL.
 
 Leave `AUTH_DEV_EXPOSE_CODE` and `DATABASE_URL` unset on Netlify.
@@ -77,7 +77,7 @@ npx netlify env:set EMAIL_FROM "PAN Parrot <noreply@your-domain>" --context prod
 | Variable | Required | Notes |
 | --- | --- | --- |
 | `SESSION_SECRET` | yes | Output of `openssl rand -base64 32`. Signs the session cookie and encrypts dummy mock secrets. |
-| `ADMIN_EMAILS` | yes | Comma-separated `@paloaltonetworks.com` addresses. Promoted to admin the next time that person signs in. Start with `ashamah@paloaltonetworks.com`. |
+| `ADMIN_EMAILS` | no | Comma-separated `@paloaltonetworks.com` addresses, promoted to admin the next time they sign in. When this is unset, `ashamah@paloaltonetworks.com` is the only bootstrap admin. That address stays an admin even if the variable lists other people, and the People tab cannot demote it. |
 | `SITE_URL` | yes | Production origin, for example `https://<site>.netlify.app`. |
 | `RESEND_API_KEY` | yes | Sending key from Resend. |
 | `EMAIL_FROM` | yes | An address on the domain you verified in Resend. |
@@ -160,13 +160,11 @@ These values are in the ancestry of `main` (from the initial commit through the 
 
 Rotating the live session secret later signs everyone out and makes already-sealed dummy mock secrets unreadable. Plan that as a maintenance window: export any mock you still need, set the new secret, redeploy, and recreate dummy credentials. Rotating the Resend key is a new API key in Resend, then `netlify env:set`, then a redeploy. Old personal API tokens stay valid across a Resend rotation. They are hashes in the database, not derived from `SESSION_SECRET`.
 
-## 7. Backup and retention
+## 7. Retention
 
 Captured calls are disposable. The app deletes them after 14 days (`REQUEST_RETENTION_DAYS`) and keeps at most 200 per mock (`MAX_REQUESTS_PER_ENDPOINT`). The same caps run when a call is captured, and a scheduled function (`netlify/functions/cleanup.ts`, `@daily`) repeats the delete for idle mocks, expired sessions, expired sign-in codes, and rate-limit rows older than a day. The function log line is `maintenance deleted_requests=<n>`. Scheduled functions run on the published production deploy.
 
-There is no second backup vendor and no scheduled dump. Netlify Database is the only copy of accounts, mock specs, shares, and the audit log. A deploy preview's database branch is a fork taken when the preview was built. It is not a backup, and edits made in the preview UI do not flow back to production.
-
-Before you delete the Netlify project, export any mock you want to keep (studio → **Export pytest**, or `npm run parrot -- export <id>`). That zip is a pytest fixture, not a full database restore. Treat mock specs you have not exported as gone if the database is gone.
+A database backup product is not planned. Netlify Database is the only copy of accounts, mock specs, shares, and the audit log. Pytest export (`Export pytest` or `npm run parrot -- export`) is a test fixture for one mock, not a restore. Deleting the Netlify project deletes the database. A deploy preview's database branch is a fork taken when the preview was built, and edits there do not flow back to production.
 
 Do not connect to production with `NETLIFY_DB_URL` to take an ad-hoc dump or to change schema. Schema changes ship as migration files and the deploy applies them.
 
@@ -176,9 +174,9 @@ Three places, and nothing else:
 
 1. **Netlify function logs** (Project → Logs → Functions). Search for `health check failed`, `request failed`, `Email provider rejected the sign-in message`, and `maintenance deleted_requests=`. The push schedule logs from `netlify/functions/push-schedule.ts` every 15 minutes on production.
 2. **`GET /api/health`** (and `/api/ping`, the same check). It runs `select 1` and returns 200 or 503. It does not require a session and does not say whether email is configured. It is rate limited (`RATE_PING_MAX`, 60 per minute per IP).
-3. **Admin → Signals** (`GET /api/admin/signals`, admin session only). Database up or down, whether Resend is configured, whether the session secret meets the length check, whether dev codes are exposed, retention numbers, and counts of accounts, mocks, captures, and audit events.
+3. **Admin → Health** (`GET /api/admin/health`, admin session only), which includes the Signals checks. Database, email, and the catch handler, plus 24-hour and 7-day catch latency, error rate, 4xx/5xx counts, rate-limit hits, sign-in attempts, failures, lockouts, storage against the quotas, top mocks and people, recent errors, and the app version and commit (`COMMIT_REF` on Netlify).
 
-A failed health check is the page you curl after a deploy. There is no pager integration. If you want a human to notice an outage, run the smoke script after each production deploy and look at Signals when you sign in.
+A failed health check is the page you curl after a deploy. There is no pager integration. If you want a human to notice an outage, run the smoke script after each production deploy and look at Health when you sign in.
 
 ## 9. Abuse limits
 
