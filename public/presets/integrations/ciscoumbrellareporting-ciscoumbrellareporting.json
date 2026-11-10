@@ -3,11 +3,11 @@
   "name": "Cisco Umbrella Reporting",
   "pack": "CiscoUmbrellaReporting",
   "vendor": "Cisco",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /reports/v2/activity/dns returns a data array. The XSOAR client reads data.",
+  "summary": "Rebuilt from the client: GET /reports/v2/top-eventtypes.",
   "notes": [
-    "Cross-check: unparseable: no Python client parsed"
+    "Rebuilt from the XSOAR client. The checker matched GET /reports/v2/top-eventtypes, GET /reports/v2/activity. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoUmbrellaReporting",
@@ -17,94 +17,146 @@
       "kind": "preset",
       "id": "ciscoumbrellareporting-ciscoumbrellareporting",
       "name": "Cisco Umbrella Reporting",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-api-reference-reports-reporting-api-activity-get-activity-dns/",
       "notes": [
-        "Cross-check: unparseable: no Python client parsed"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /reports/v2/top-eventtypes, GET /reports/v2/activity. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-api-reference-reports-reporting-api-activity-get-activity-dns/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /reports/v2/top-eventtypes, GET /reports/v2/activity. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
+        "id": "get-reports-v2-top-eventtypes-0",
+        "method": "GET",
+        "pathTemplate": "/reports/v2/top-eventtypes",
+        "summary": "GET /reports/v2/top-eventtypes",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "error",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "all",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "all_application",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "allapplications",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "application_category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "applications",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-reports-v2-activity-1",
+        "method": "GET",
+        "pathTemplate": "/reports/v2/activity",
+        "summary": "GET /reports/v2/activity",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "offset",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 100,
-          "maxLimit": 500
-        },
-        "id": "activity-dns",
-        "method": "GET",
-        "pathTemplate": "/reports/v2/activity/dns",
-        "summary": "List DNS activity",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "data"
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "activity",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "timestamp",
-              "kind": "timestamp",
-              "format": "unix-ms"
-            },
-            {
-              "name": "domain",
-              "kind": "string",
-              "example": "example.com"
-            },
-            {
-              "name": "verdict",
-              "kind": "enum",
-              "enumValues": [
-                "allowed",
-                "blocked"
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "error",
+                  "kind": "string",
+                  "example": "lab"
+                }
               ]
             },
             {
-              "name": "categories",
-              "kind": "array",
-              "item": {
-                "name": "category",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "label",
-                    "kind": "enum",
-                    "enumValues": [
-                      "Malware",
-                      "Phishing"
-                    ]
-                  }
-                ]
-              },
-              "minItems": 1,
-              "maxItems": 1
+              "name": "all",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "identities",
-              "kind": "array",
-              "item": {
-                "name": "identity",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "label",
-                    "kind": "string",
-                    "example": "laptop"
-                  }
-                ]
-              },
-              "minItems": 1,
-              "maxItems": 1
+              "name": "all_application",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "allapplications",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "application_category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "applications",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

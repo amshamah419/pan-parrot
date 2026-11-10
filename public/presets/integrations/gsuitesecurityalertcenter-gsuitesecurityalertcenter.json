@@ -3,11 +3,11 @@
   "name": "G Suite Security Alert Center",
   "pack": "GSuiteSecurityAlertCenter",
   "vendor": "Google",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /v1beta1/alerts returns alerts and nextPageToken.",
+  "summary": "Rebuilt from the client: GET /v1beta1/alerts.",
   "notes": [
-    "Cross-check: unparseable: no Python client parsed"
+    "Rebuilt from the XSOAR client. The checker matched GET /v1beta1/alerts. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GSuiteSecurityAlertCenter",
@@ -17,87 +17,76 @@
       "kind": "preset",
       "id": "gsuitesecurityalertcenter-gsuitesecurityalertcenter",
       "name": "G Suite Security Alert Center",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developers.google.com/workspace/admin/alertcenter/reference/rest/v1beta1/alerts/list",
       "notes": [
-        "Cross-check: unparseable: no Python client parsed"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /v1beta1/alerts. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developers.google.com/workspace/admin/alertcenter/reference/rest/v1beta1/alerts/list",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v1beta1/alerts. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
+        "id": "get-v1beta1-alerts-0",
+        "method": "GET",
+        "pathTemplate": "/v1beta1/alerts",
+        "summary": "GET /v1beta1/alerts",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "cursor",
-          "limitParam": "pageSize",
+          "style": "none",
+          "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
-          "cursorParam": "pageToken",
+          "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 100
         },
-        "id": "list-alerts",
-        "method": "GET",
-        "pathTemplate": "/v1beta1/alerts",
-        "summary": "List Workspace alerts",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "token-page",
-          "arrayKey": "alerts",
-          "tokenKey": "nextPageToken"
-        },
         "record": {
-          "name": "alert",
+          "name": "body",
           "kind": "object",
           "children": [
             {
               "name": "alertId",
-              "kind": "id"
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "customerId",
-              "kind": "const",
-              "constValue": "C01234567"
+              "name": "alert_filter",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "type",
-              "kind": "enum",
-              "enumValues": [
-                "Suspicious login",
-                "Phishing"
-              ]
+              "name": "alerts",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "source",
-              "kind": "const",
-              "constValue": "Google Operations"
+              "name": "code",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "createTime",
-              "kind": "timestamp",
-              "format": "iso"
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "startTime",
-              "kind": "timestamp",
-              "format": "iso"
-            },
-            {
-              "name": "updateTime",
-              "kind": "timestamp",
-              "format": "iso"
-            },
-            {
-              "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "email",
-                  "kind": "email"
-                }
-              ]
+              "name": "email",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

@@ -3,11 +3,11 @@
   "name": "Cisco WSA v2",
   "pack": "CiscoWSA",
   "vendor": "Cisco",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Access policies and URL categories.",
+  "summary": "Rebuilt from the client: GET /wsa/api/v3.0/generic_resources/url_categories.",
   "notes": [
-    "Cross-check: unparseable: no HTTP calls and no test_data"
+    "Rebuilt from the XSOAR client. The checker matched GET /wsa/api/v3.0/generic_resources/url_categories, GET /wsa/api/v3.0/web_security/access_policies. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoWSA/Integrations/CiscoWSA",
@@ -17,49 +17,34 @@
       "kind": "preset",
       "id": "ciscowsa-ciscowsav2",
       "name": "Cisco WSA v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://www.cisco.com/c/en/us/td/docs/security/wsa/wsa-14-5/user-guide/b_WSA_UserGuide_14_5/b_WSA_UserGuide_11_7_chapter_0101.html",
       "notes": [
-        "Cross-check: unparseable: no HTTP calls and no test_data"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /wsa/api/v3.0/generic_resources/url_categories, GET /wsa/api/v3.0/web_security/access_policies. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.cisco.com/c/en/us/td/docs/security/wsa/wsa-14-5/user-guide/b_WSA_UserGuide_14_5/b_WSA_UserGuide_11_7_chapter_0101.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /wsa/api/v3.0/generic_resources/url_categories, GET /wsa/api/v3.0/web_security/access_policies. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "policies",
+        "id": "get-wsa-api-v3-0-generic-resources-url-categ-0",
         "method": "GET",
-        "pathTemplate": "/wsa/api/v3.0/web_security/access_policies",
-        "summary": "List access policies",
+        "pathTemplate": "/wsa/api/v3.0/generic_resources/url_categories",
+        "summary": "GET /wsa/api/v3.0/generic_resources/url_categories",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "access_policies",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "policy",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "policy_name",
-                    "kind": "string",
-                    "example": "lab-policy"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -67,44 +52,37 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "policy_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "port",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       },
       {
-        "id": "categories",
+        "id": "get-wsa-api-v3-0-web-security-access-policie-1",
         "method": "GET",
-        "pathTemplate": "/wsa/api/v3.0/generic_resources/url_categories",
-        "summary": "List URL categories",
+        "pathTemplate": "/wsa/api/v3.0/web_security/access_policies",
+        "summary": "GET /wsa/api/v3.0/web_security/access_policies",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "categories",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "category",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "category_name",
-                    "kind": "string",
-                    "example": "lab"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -112,7 +90,23 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "policy_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "port",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

@@ -61,9 +61,10 @@ class Val:
     seq: list["Val"] | None = None
     alts: list["Val"] | None = None
     boto3: bool = False
+    chain: tuple[str, ...] | None = None
 
     def copy(self) -> "Val":
-        return Val(
+        copied = Val(
             self.text,
             self.path,
             self.dynamic,
@@ -73,6 +74,9 @@ class Val:
             None if self.seq is None else list(self.seq),
             None if self.alts is None else list(self.alts),
         )
+        copied.boto3 = self.boto3
+        copied.chain = self.chain
+        return copied
 
 
 @dataclass
@@ -109,6 +113,7 @@ class Mod:
     sdks: set[str] = field(default_factory=set)
     stack: list[str] = field(default_factory=list)
     yml_defaults: dict[str, str] = field(default_factory=dict)
+    enum_routes: list[str] = field(default_factory=list)
 
 
 def main() -> int:
@@ -214,8 +219,7 @@ def client_calls(preset: dict, content: Path) -> list[HttpCall]:
     folder = content / rel
     if not folder.is_dir():
         return []
-    if not any(folder.glob("*.py")):
-        folder = sibling_client(folder, preset["id"]) or folder
+    folder = client_folder(folder, preset["id"])
     return [call for mod in load_modules(folder, content) for call in module_calls(mod)]
 
 
@@ -252,8 +256,7 @@ def check_preset(preset: dict, content: Path) -> dict:
     folder = content / rel
     if not folder.is_dir():
         return result(preset, "unparseable", [f"no-source: {rel} is not in the content checkout"])
-    if not any(folder.glob("*.py")):
-        folder = sibling_client(folder, preset["id"]) or folder
+    folder = client_folder(folder, preset["id"])
     modules = load_modules(folder, content)
     if not modules:
         return result(preset, "unparseable", ["unparseable: no Python client parsed"])
@@ -281,11 +284,26 @@ def result(preset: dict, status: str, findings: list[str], calls: int = 0) -> di
     }
 
 
+def client_folder(folder: Path, preset_id: str) -> Path:
+    """Use the integration directory when sourceUrl points at the pack root."""
+    if any(folder.glob("*.py")):
+        return folder
+    nested = folder / "Integrations"
+    if nested.is_dir():
+        found = search_children(nested, preset_id, "")
+        if found:
+            return found
+    return sibling_client(folder, preset_id) or folder
+
+
 def sibling_client(folder: Path, preset_id: str) -> Path | None:
-    parent = folder.parent
+    wanted = folder.name.lower().replace("_", "-")
+    return search_children(folder.parent, preset_id, wanted)
+
+
+def search_children(parent: Path, preset_id: str, wanted: str) -> Path | None:
     if not parent.is_dir():
         return None
-    wanted = folder.name.lower().replace("_", "-")
     best: tuple[int, Path] | None = None
     for candidate in parent.iterdir():
         if not candidate.is_dir() or not any(candidate.glob("*.py")):
@@ -296,6 +314,8 @@ def sibling_client(folder: Path, preset_id: str) -> Path | None:
             score = 100
         elif preset_id.lower().endswith(slug):
             score = 80
+        elif slug.replace("-", "") and slug.replace("-", "") in preset_id.lower().replace("-", ""):
+            score = 60
         elif wanted and wanted in slug:
             score = 40
         if score and (best is None or score > best[0]):
@@ -382,6 +402,7 @@ def parse_file(path: Path) -> Mod | None:
     if "laceworksdk" in source:
         mod.sdks.add("lacework")
     mod.yml_defaults = load_yml_defaults(path)
+    mod.enum_routes = enum_path_pairs(tree)
     seed_module(mod, tree)
     inits = [func for func in funcs.values() if func.name == "__init__"]
     for func in inits:
@@ -514,6 +535,10 @@ def walk_stmt(stmt: ast.stmt, env: dict[str, Val], mod: Mod, func: Func, depth: 
         walk_body(stmt.body, env, mod, func, depth)
         return
     if isinstance(stmt, ast.ClassDef):
+        return
+    if isinstance(stmt, ast.Match):
+        for case in stmt.cases:
+            walk_body(case.body, env, mod, func, depth)
         return
     if isinstance(stmt, ast.Assign):
         value = visit_calls(stmt.value, env, mod, func, depth)
@@ -668,7 +693,11 @@ def handle_call(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func, depth
                 mod.stack.append(target.qual)
                 run_func(mod, target, bind_args(target, call, env, mod, func.cls), depth - 1)
                 mod.stack.pop()
-    return eval_call_value(call, env, mod, func.cls)
+    value = eval_call_value(call, env, mod, func.cls)
+    chain = discovery_chain(call)
+    if chain:
+        value.chain = chain
+    return value
 
 
 def is_super_call(call: ast.Call) -> bool:
@@ -745,6 +774,9 @@ def is_super_init(call: ast.Call) -> bool:
 
 def emit_sink(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> None:
     method, paths, params, dynamic = sink_facts(call, env, mod, func)
+    paths = [path for path in paths if concrete_path(Val(path=path))]
+    if not paths and method in VERBS and mod.enum_routes:
+        paths = list(mod.enum_routes)
     if method not in VERBS or not paths:
         return
     paths = [path for path in paths if static_segment(path)]
@@ -949,6 +981,32 @@ def add_base(mod: Mod, path: str) -> None:
         mod.base_paths.append(normed)
 
 
+def enum_path_pairs(tree: ast.AST) -> list[str]:
+    """Join an enum tuple's API base and endpoint, such as ('/api/now/', 'table/sys_audit')."""
+    routes: list[str] = []
+    for node in ast.walk(tree):
+        value = node.value if isinstance(node, ast.Assign) else None
+        if not isinstance(value, ast.Tuple):
+            continue
+        texts = [elt.value for elt in value.elts if isinstance(elt, ast.Constant) and isinstance(elt.value, str)]
+        for left, right in zip(texts, texts[1:]):
+            if not left.startswith("/") or not right or right.startswith("/") or " " in right or right.startswith("last_"):
+                continue
+            joined = norm_path(left.rstrip("/") + "/" + right.lstrip("/"))
+            if static_segment(joined) and joined not in routes:
+                routes.append(joined)
+    return routes
+
+
+def concrete_path(val: Val) -> str:
+    raw = val.path or ""
+    if not raw or raw.lower() in {"/none", "/null"}:
+        return ""
+    if any(part.lower() in {"none", "null"} for part in raw.split("/")):
+        return ""
+    return raw
+
+
 def eval_expr(node: ast.expr | None, env: dict[str, Val] | None, mod: Mod | None, cls: str) -> Val:
     env = env or {}
     if node is None:
@@ -1059,7 +1117,12 @@ def eval_expr(node: ast.expr | None, env: dict[str, Val] | None, mod: Mod | None
             return Val(path=dot(owner.path, key), text=key)
         return Val(dynamic=True)
     if isinstance(node, ast.IfExp):
-        return eval_expr(node.body, env, mod, cls)
+        body = eval_expr(node.body, env, mod, cls)
+        orelse = eval_expr(node.orelse, env, mod, cls)
+        # full_url if full_url else urljoin(base, suffix): an empty full_url keeps the suffix.
+        if concrete_path(orelse) and not concrete_path(body):
+            return orelse
+        return body if body.text or body.path or body.alts else orelse
     return Val(dynamic=True)
 
 
@@ -1182,7 +1245,7 @@ def emit_sdk(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> bool:
     if found is None and "slack" in mod.sdks:
         found = slack_endpoint(call, env, mod, func.cls)
     if found is None and "google" in mod.sdks:
-        found = google_endpoint(call)
+        found = google_endpoint(call, env)
     if found is None and "elastic" in mod.sdks:
         found = elastic_endpoint(call)
     if found is None and "greynoise" in mod.sdks:
@@ -1269,6 +1332,7 @@ def slack_explicit_method(call: ast.Call, env: dict[str, Val], mod: Mod, cls: st
 GMAIL_METHODS = {
     ("users", "messages", "list"): ("GET", "/gmail/v1/users/{userId}/messages"),
     ("users", "messages", "get"): ("GET", "/gmail/v1/users/{userId}/messages/{id}"),
+    ("users", "messages", "send"): ("POST", "/gmail/v1/users/{userId}/messages/send"),
     ("users", "messages", "attachments", "get"): ("GET", "/gmail/v1/users/{userId}/messages/{messageId}/attachments/{id}"),
     ("users", "getProfile"): ("GET", "/gmail/v1/users/{userId}/profile"),
 }
@@ -1277,16 +1341,35 @@ DIRECTORY_METHODS = {
     ("users", "get"): ("GET", "/admin/directory/v1/users/{userKey}"),
     ("users", "update"): ("PUT", "/admin/directory/v1/users/{userKey}"),
 }
+# https://cloud.google.com/compute/docs/reference/rest/v1/instances/list
+COMPUTE_METHODS = {
+    ("instances", "list"): ("GET", "/compute/v1/projects/{project}/zones/{zone}/instances"),
+    ("instances", "get"): ("GET", "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}"),
+    ("instances", "insert"): ("POST", "/compute/v1/projects/{project}/zones/{zone}/instances"),
+}
+# https://cloud.google.com/resource-manager/docs/reference/rest/v3/tagBindings/list
+# https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts/list
+IAM_METHODS = {
+    ("tagBindings", "list"): ("GET", "/v3/tagBindings"),
+    ("tagValues", "get"): ("GET", "/v3/{name}"),
+    ("tagKeys", "get"): ("GET", "/v3/{name}"),
+    ("projects", "serviceAccounts", "list"): ("GET", "/v1/projects/{project}/serviceAccounts"),
+    ("projects", "serviceAccounts", "get"): ("GET", "/v1/{name}"),
+}
 
 
-def google_endpoint(call: ast.Call) -> tuple[str, str] | None:
+def google_endpoint(call: ast.Call, env: dict[str, Val] | None = None) -> tuple[str, str] | None:
     if not isinstance(call.func, ast.Attribute):
         return None
-    if call.func.attr not in {"execute", "list"}:
+    if call.func.attr not in {"execute", "list", "get", "insert"}:
         return None
     attrs = chain_attrs(call)
-    if attrs and attrs[-1] in {"execute", "list"} and call.func.attr == "execute":
+    if attrs and attrs[-1] == "execute" and call.func.attr == "execute":
         attrs = attrs[:-1]
+    if (not attrs or attrs == ["execute"]) and env is not None and isinstance(call.func.value, ast.Name):
+        stored = env.get(call.func.value.id)
+        if stored and stored.chain:
+            attrs = list(stored.chain)
     key = tuple(attrs)
     # organizations().sources().findings().list()
     # https://cloud.google.com/security-command-center/docs/reference/rest/v1/organizations.sources.findings/list
@@ -1294,7 +1377,21 @@ def google_endpoint(call: ast.Call) -> tuple[str, str] | None:
         return ("GET", "/v1/organizations/{organization}/sources/{source}/findings")
     if "messages" in key or "getProfile" in key:
         return GMAIL_METHODS.get(key)
+    if "instances" in key:
+        return COMPUTE_METHODS.get(key)
+    if "tagBindings" in key or "serviceAccounts" in key or "tagValues" in key or "tagKeys" in key:
+        return IAM_METHODS.get(key)
     return DIRECTORY_METHODS.get(key)
+
+
+def discovery_chain(call: ast.Call) -> tuple[str, ...] | None:
+    """Remember service.instances().list() so a later request.execute() still has the route."""
+    if not isinstance(call.func, ast.Attribute) or call.func.attr == "execute":
+        return None
+    attrs = chain_attrs(call)
+    if len(attrs) < 2:
+        return None
+    return tuple(attrs)
 
 
 def elastic_endpoint(call: ast.Call) -> tuple[str, str] | None:
@@ -2235,6 +2332,34 @@ def self_test() -> int:
     glued = dict(host, pathTemplate="/api/incidents")
     glued_row = check_preset(lab_preset("Host", glued), content)
     assert glued_row["status"] == "match", glued_row
+
+    write(
+        "Match",
+        "\n".join(
+            [
+                "from googleapiclient.discovery import build",
+                "def execute_gmail_action(service, action):",
+                "    match action:",
+                "        case 'list':",
+                "            return service.users().messages().list().execute()",
+                "def list_instances():",
+                "    request = get_compute().instances().list(project='p', zone='z')",
+                "    return request.execute()",
+            ]
+        ),
+    )
+    listed = {
+        "method": "GET",
+        "pathTemplate": "/gmail/v1/users/{userId}/messages",
+        "envelope": {"type": "object"},
+        "pagination": {"style": "none", "limitParam": "limit", "offsetParam": "offset", "pageParam": "page", "cursorParam": "cursor"},
+        "record": {"name": "body", "kind": "object", "children": []},
+    }
+    match_row = check_preset(lab_preset("Match", listed), content)
+    assert match_row["status"] == "match", match_row
+    compute = dict(listed, pathTemplate="/compute/v1/projects/{project}/zones/{zone}/instances")
+    compute_row = check_preset(lab_preset("Match", compute), content)
+    assert compute_row["status"] == "match", compute_row
     print("self-test ok")
     return 0
 

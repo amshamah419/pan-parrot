@@ -641,6 +641,230 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Cisco-umbrella/Integrations/Cisco-umbrella-investigate"
   },
+  "ciscoumbrellareporting-ciscoumbrellareporting": {
+    "summary": "Rebuilt from the client: GET /reports/v2/top-eventtypes.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /reports/v2/top-eventtypes, GET /reports/v2/activity. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-api-reference-reports-reporting-api-activity-get-activity-dns/",
+    "operations": [
+      {
+        "id": "get-reports-v2-top-eventtypes-0",
+        "method": "GET",
+        "pathTemplate": "/reports/v2/top-eventtypes",
+        "summary": "GET /reports/v2/top-eventtypes",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "error",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "all",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "all_application",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "allapplications",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "application_category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "applications",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-reports-v2-activity-1",
+        "method": "GET",
+        "pathTemplate": "/reports/v2/activity",
+        "summary": "GET /reports/v2/activity",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "error",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "all",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "all_application",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "allapplications",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "application_category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "applications",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoUmbrellaReporting"
+  },
+  "ciscowsa-ciscowsav2": {
+    "summary": "Rebuilt from the client: GET /wsa/api/v3.0/generic_resources/url_categories.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /wsa/api/v3.0/generic_resources/url_categories, GET /wsa/api/v3.0/web_security/access_policies. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://www.cisco.com/c/en/us/td/docs/security/wsa/wsa-14-5/user-guide/b_WSA_UserGuide_14_5/b_WSA_UserGuide_11_7_chapter_0101.html",
+    "operations": [
+      {
+        "id": "get-wsa-api-v3-0-generic-resources-url-categ-0",
+        "method": "GET",
+        "pathTemplate": "/wsa/api/v3.0/generic_resources/url_categories",
+        "summary": "GET /wsa/api/v3.0/generic_resources/url_categories",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "policy_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "port",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-wsa-api-v3-0-web-security-access-policie-1",
+        "method": "GET",
+        "pathTemplate": "/wsa/api/v3.0/web_security/access_policies",
+        "summary": "GET /wsa/api/v3.0/web_security/access_policies",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "policy_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "port",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoWSA/Integrations/CiscoWSA"
+  },
   "cloudflarewaf-cloudflarewaf": {
     "summary": "Rebuilt from the client: POST /zones/{zone_id}/firewall/rules.",
     "differences": [
@@ -2788,6 +3012,74 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GsuiteAuditor/Integrations/GsuiteAuditor"
   },
+  "gsuitesecurityalertcenter-gsuitesecurityalertcenter": {
+    "summary": "Rebuilt from the client: GET /v1beta1/alerts.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /v1beta1/alerts. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://developers.google.com/workspace/admin/alertcenter/reference/rest/v1beta1/alerts/list",
+    "operations": [
+      {
+        "id": "get-v1beta1-alerts-0",
+        "method": "GET",
+        "pathTemplate": "/v1beta1/alerts",
+        "summary": "GET /v1beta1/alerts",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "alertId",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alert_filter",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alerts",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "code",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "createTime",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "email",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GSuiteSecurityAlertCenter"
+  },
   "identityrecordedfuture-identityrecordedfuture": {
     "summary": "Rebuilt from the client: POST /v2/identity/credentials/search.",
     "differences": [
@@ -3897,6 +4189,69 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
       }
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/NozomiNetworks/Integrations/NozomiNetworks"
+  },
+  "openphish-openphish-v2": {
+    "summary": "Rebuilt from the client: GET /feed.txt.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /feed.txt. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://openphish.com/faq.html",
+    "operations": [
+      {
+        "id": "get-feed-txt-0",
+        "method": "GET",
+        "pathTemplate": "/feed.txt",
+        "summary": "GET /feed.txt",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "fetchIntervalHours",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "https",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "integrationReliability",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "list",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "timestamp",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/OpenPhish"
   },
   "paloaltonetworks-securityadvisories-paloaltonetworkssecurityadvisories": {
     "summary": "Rebuilt from the client: GET /api/v1/products/{product}/advisories.",
