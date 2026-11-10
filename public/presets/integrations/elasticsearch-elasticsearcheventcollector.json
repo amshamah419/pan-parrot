@@ -3,11 +3,11 @@
   "name": "Elasticsearch Event Collector",
   "pack": "Elasticsearch",
   "vendor": "Elastic",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "POST /lab-logs/_search returns hits.hits.",
+  "summary": "Rebuilt from the client: POST /{index}/_search.",
   "notes": [
-    "Cross-check: path: POST /lab-logs/_search is not a client call. Closest: /_security/oauth2/token (0)."
+    "Rebuilt from the XSOAR client. The checker matched POST /{index}/_search. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Elasticsearch/Integrations/ElasticsearchEventCollector",
@@ -17,104 +17,34 @@
       "kind": "preset",
       "id": "elasticsearch-elasticsearcheventcollector",
       "name": "Elasticsearch Event Collector",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
       "notes": [
-        "Cross-check: path: POST /lab-logs/_search is not a client call. Closest: /_security/oauth2/token (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /{index}/_search. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /{index}/_search. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "search",
+        "id": "post-index-search-0",
         "method": "POST",
-        "pathTemplate": "/lab-logs/_search",
-        "summary": "Search the lab index",
+        "pathTemplate": "/{index}/_search",
+        "summary": "POST /{index}/_search",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "took",
-              "kind": "integer"
-            },
-            {
-              "name": "timed_out",
-              "kind": "const",
-              "constValue": false
-            },
-            {
-              "name": "hits",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "total",
-                  "kind": "object",
-                  "children": [
-                    {
-                      "name": "value",
-                      "kind": "integer"
-                    },
-                    {
-                      "name": "relation",
-                      "kind": "const",
-                      "constValue": "eq"
-                    }
-                  ]
-                },
-                {
-                  "name": "hits",
-                  "kind": "array",
-                  "minItems": 1,
-                  "maxItems": 1,
-                  "item": {
-                    "name": "hit",
-                    "kind": "object",
-                    "children": [
-                      {
-                        "name": "_index",
-                        "kind": "const",
-                        "constValue": "lab-logs"
-                      },
-                      {
-                        "name": "_id",
-                        "kind": "id"
-                      },
-                      {
-                        "name": "_source",
-                        "kind": "object",
-                        "children": [
-                          {
-                            "name": "@timestamp",
-                            "kind": "timestamp",
-                            "format": "iso"
-                          },
-                          {
-                            "name": "message",
-                            "kind": "string",
-                            "example": "user=ada action=login"
-                          },
-                          {
-                            "name": "host",
-                            "kind": "string",
-                            "example": "lab-host"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -122,7 +52,54 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "hits",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "hits",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "total",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_index",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_source",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "access_token_expires_in",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

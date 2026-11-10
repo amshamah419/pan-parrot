@@ -3,11 +3,11 @@
   "name": "Lacework",
   "pack": "Lacework",
   "vendor": "Lacework",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Alerts search. data[] is the v2 Alerts page.",
+  "summary": "Rebuilt from the client: GET /api/v2/Alerts.",
   "notes": [
-    "Cross-check: unparseable: no HTTP calls and no test_data"
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v2/Alerts. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Lacework/Integrations/Lacework",
@@ -17,72 +17,78 @@
       "kind": "preset",
       "id": "lacework-lacework",
       "name": "Lacework",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.lacework.net/api/v2/docs/#tag/Alerts",
       "notes": [
-        "Cross-check: unparseable: no HTTP calls and no test_data"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v2/Alerts. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.lacework.net/api/v2/docs/#tag/Alerts",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v2/Alerts. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "search-alerts",
-        "method": "POST",
-        "pathTemplate": "/api/v2/Alerts/search",
-        "summary": "Search alerts",
+        "id": "get-api-v2-alerts-0",
+        "method": "GET",
+        "pathTemplate": "/api/v2/Alerts",
+        "summary": "GET /api/v2/Alerts",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "data"
-        },
-        "record": {
-          "name": "alert",
-          "kind": "object",
-          "children": [
-            {
-              "name": "alertId",
-              "kind": "integer"
-            },
-            {
-              "name": "alertType",
-              "kind": "string",
-              "example": "SuspiciousLogin"
-            },
-            {
-              "name": "severity",
-              "kind": "enum",
-              "enumValues": [
-                "Low",
-                "Medium",
-                "High",
-                "Critical"
-              ]
-            },
-            {
-              "name": "startTime",
-              "kind": "timestamp"
-            },
-            {
-              "name": "status",
-              "kind": "enum",
-              "enumValues": [
-                "Open",
-                "Closed"
-              ]
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "account_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alertId",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alertType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alert_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "end_time",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

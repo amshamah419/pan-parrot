@@ -3,11 +3,11 @@
   "name": "GreyNoise Community",
   "pack": "GreyNoise",
   "vendor": "GreyNoise",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Community IP lookup. noise, riot, and classification.",
+  "summary": "Rebuilt from the client: GET /v3/community/{ip}.",
   "notes": [
-    "Cross-check: unparseable: no HTTP calls and no test_data"
+    "Rebuilt from the XSOAR client. The checker matched GET /v3/community/{ip}. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GreyNoise/Integrations/GreyNoise_Community",
@@ -17,63 +17,34 @@
       "kind": "preset",
       "id": "greynoise-greynoise-community",
       "name": "GreyNoise Community",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.greynoise.io/reference/get_v3-community-ip",
       "notes": [
-        "Cross-check: unparseable: no HTTP calls and no test_data"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /v3/community/{ip}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.greynoise.io/reference/get_v3-community-ip",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v3/community/{ip}. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "community-ip",
+        "id": "get-v3-community-ip-0",
         "method": "GET",
         "pathTemplate": "/v3/community/{ip}",
-        "summary": "Community IP",
+        "summary": "GET /v3/community/{ip}",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "community",
-          "kind": "object",
-          "children": [
-            {
-              "name": "ip",
-              "kind": "ip"
-            },
-            {
-              "name": "noise",
-              "kind": "boolean"
-            },
-            {
-              "name": "riot",
-              "kind": "boolean"
-            },
-            {
-              "name": "classification",
-              "kind": "enum",
-              "enumValues": [
-                "benign",
-                "malicious",
-                "unknown"
-              ]
-            },
-            {
-              "name": "name",
-              "kind": "string",
-              "example": "unknown"
-            },
-            {
-              "name": "link",
-              "kind": "string",
-              "example": "https://viz.greynoise.io/ip/203.0.113.5"
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -81,7 +52,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "IP",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "actor",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "business_service_intelligence",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "classification",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

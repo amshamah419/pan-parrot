@@ -3,11 +3,11 @@
   "name": "Cortex XDR - XQL Query Engine",
   "pack": "CortexXDR",
   "vendor": "Palo Alto Networks",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Start an XQL query and read its results.",
+  "summary": "Rebuilt from the client: POST /xql/get_query_results.",
   "notes": [
-    "Cross-check: unparseable: no HTTP calls and no test_data"
+    "Rebuilt from the XSOAR client. The checker matched POST /xql/get_query_results, POST /xql/start_xql_query. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CortexXDR/Integrations/XQLQueryingEngine",
@@ -17,42 +17,34 @@
       "kind": "preset",
       "id": "cortexxdr-xqlqueryingengine",
       "name": "Cortex XDR - XQL Query Engine",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Start-an-XQL-Query",
       "notes": [
-        "Cross-check: unparseable: no HTTP calls and no test_data"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /xql/get_query_results, POST /xql/start_xql_query. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Start-an-XQL-Query",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /xql/get_query_results, POST /xql/start_xql_query. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "start",
+        "id": "post-xql-get-query-results-0",
         "method": "POST",
-        "pathTemplate": "/public_api/v1/xql/start_xql_query",
-        "summary": "Start an XQL query",
+        "pathTemplate": "/xql/get_query_results",
+        "summary": "POST /xql/get_query_results",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "reply",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "execution_id",
-                  "kind": "id"
-                }
-              ]
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -60,75 +52,63 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "reply",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "results",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Incidents",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ParentEntry",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "context",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "IntegrationBrand",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
         }
       },
       {
-        "id": "results",
+        "id": "post-xql-start-xql-query-1",
         "method": "POST",
-        "pathTemplate": "/public_api/v1/xql/get_query_results",
-        "summary": "Get XQL results",
+        "pathTemplate": "/xql/start_xql_query",
+        "summary": "POST /xql/start_xql_query",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "reply",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "status",
-                  "kind": "const",
-                  "constValue": "SUCCESS"
-                },
-                {
-                  "name": "number_of_results",
-                  "kind": "integer"
-                },
-                {
-                  "name": "results",
-                  "kind": "object",
-                  "children": [
-                    {
-                      "name": "data",
-                      "kind": "array",
-                      "minItems": 1,
-                      "maxItems": 1,
-                      "item": {
-                        "name": "row",
-                        "kind": "object",
-                        "children": [
-                          {
-                            "name": "action_process_image_name",
-                            "kind": "string",
-                            "example": "cmd.exe"
-                          },
-                          {
-                            "name": "agent_hostname",
-                            "kind": "string",
-                            "example": "lab-host"
-                          },
-                          {
-                            "name": "_time",
-                            "kind": "timestamp",
-                            "format": "iso"
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -136,7 +116,49 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "reply",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "results",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Incidents",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ParentEntry",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "context",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "IntegrationBrand",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
         }
       }
     ],

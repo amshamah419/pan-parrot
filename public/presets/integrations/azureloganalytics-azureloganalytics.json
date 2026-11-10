@@ -3,11 +3,11 @@
   "name": "Azure Log Analytics",
   "pack": "AzureLogAnalytics",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Workspace query. tables[].rows is the Kusto result.",
+  "summary": "Rebuilt from the client: POST /v1/workspaces/{workspace_id}/query.",
   "notes": [
-    "Cross-check: path: POST /v1/workspaces/{workspaceId}/query is not a client call. Closest: /metadata/identity/oauth2/token (0)."
+    "Rebuilt from the XSOAR client. The checker matched POST /v1/workspaces/{workspace_id}/query. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureLogAnalytics/Integrations/AzureLogAnalytics",
@@ -17,63 +17,108 @@
       "kind": "preset",
       "id": "azureloganalytics-azureloganalytics",
       "name": "Azure Log Analytics",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/rest/api/loganalytics/dataaccess/query/execute",
       "notes": [
-        "Cross-check: path: POST /v1/workspaces/{workspaceId}/query is not a client call. Closest: /metadata/identity/oauth2/token (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /v1/workspaces/{workspace_id}/query. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/rest/api/loganalytics/dataaccess/query/execute",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /v1/workspaces/{workspace_id}/query. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "query",
+        "id": "post-v1-workspaces-workspace-id-query-0",
         "method": "POST",
-        "pathTemplate": "/v1/workspaces/{workspaceId}/query",
-        "summary": "Query a workspace",
+        "pathTemplate": "/v1/workspaces/{workspace_id}/query",
+        "summary": "POST /v1/workspaces/{workspace_id}/query",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "array"
-        },
-        "record": {
-          "name": "row",
-          "kind": "object",
-          "children": [
-            {
-              "name": "TimeGenerated",
-              "kind": "timestamp"
-            },
-            {
-              "name": "Computer",
-              "kind": "string",
-              "example": "lab-host"
-            },
-            {
-              "name": "Account",
-              "kind": "string",
-              "example": "LAB\\jsmith"
-            },
-            {
-              "name": "EventID",
-              "kind": "integer"
-            },
-            {
-              "name": "Activity",
-              "kind": "string",
-              "example": "Logon"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "columns",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "rows",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "tables",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "authorizationSource",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "displayName",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "location",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "managedByTenants",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "createDate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

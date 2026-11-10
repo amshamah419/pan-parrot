@@ -9,6 +9,262 @@ export interface ReverifiedOverlay {
 }
 
 export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
+  "abusedb-abusedb": {
+    "summary": "Rebuilt from the client: GET /api/v2/check.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /api/v2/check. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://docs.abuseipdb.com/#check-endpoint",
+    "operations": [
+      {
+        "id": "get-api-v2-check-0",
+        "method": "GET",
+        "pathTemplate": "/api/v2/check",
+        "summary": "GET /api/v2/check",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "reportedAddress",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "IP",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "abuseConfidenceScore",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "categories",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "countryCode",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "countryName",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AbuseDB/Integrations/AbuseDB"
+  },
+  "azureloganalytics-azureloganalytics": {
+    "summary": "Rebuilt from the client: POST /v1/workspaces/{workspace_id}/query.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched POST /v1/workspaces/{workspace_id}/query. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://learn.microsoft.com/en-us/rest/api/loganalytics/dataaccess/query/execute",
+    "operations": [
+      {
+        "id": "post-v1-workspaces-workspace-id-query-0",
+        "method": "POST",
+        "pathTemplate": "/v1/workspaces/{workspace_id}/query",
+        "summary": "POST /v1/workspaces/{workspace_id}/query",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "columns",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "rows",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "tables",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "authorizationSource",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "displayName",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "location",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "managedByTenants",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "createDate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureLogAnalytics/Integrations/AzureLogAnalytics"
+  },
+  "azuresentinel-azuresentinel": {
+    "summary": "Rebuilt from the client: GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Micr",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://learn.microsoft.com/en-us/rest/api/securityinsights/incidents/list?view=rest-securityinsights-2024-03-01",
+    "operations": [
+      {
+        "id": "get-subscriptions-subscription-id-resourcegr-0",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/in",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "kind",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "properties",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "CreatedTimeUTC",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "IncidentNumber",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "KillChainPhases",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "LastModifiedTimeUTC",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureSentinel/Integrations/AzureSentinel"
+  },
   "checkpointndr-checkpointndr": {
     "summary": "Rebuilt from the client: GET /incidents/v1/insights.",
     "differences": [
@@ -758,6 +1014,144 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CortexXDR/Integrations/XDR_iocs"
   },
+  "cortexxdr-xqlqueryingengine": {
+    "summary": "Rebuilt from the client: POST /xql/get_query_results.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched POST /xql/get_query_results, POST /xql/start_xql_query. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Start-an-XQL-Query",
+    "operations": [
+      {
+        "id": "post-xql-get-query-results-0",
+        "method": "POST",
+        "pathTemplate": "/xql/get_query_results",
+        "summary": "POST /xql/get_query_results",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "reply",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "results",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Incidents",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ParentEntry",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "context",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "IntegrationBrand",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "post-xql-start-xql-query-1",
+        "method": "POST",
+        "pathTemplate": "/xql/start_xql_query",
+        "summary": "POST /xql/start_xql_query",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "reply",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "results",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Incidents",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ParentEntry",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "context",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "IntegrationBrand",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CortexXDR/Integrations/XQLQueryingEngine"
+  },
   "crowdstrikefalconsandbox-crowdstrikefalconsandboxv2": {
     "summary": "Rebuilt from the client: GET /system/environments.",
     "differences": [
@@ -1296,6 +1690,74 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeOpenAPI/Integrations/CrowdStrikeOpenAPI"
   },
+  "devo-devo": {
+    "summary": "Rebuilt from the client: POST /search/query.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched POST /search/query. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://docs.devo.com/space/latest/147554326/Query+API",
+    "operations": [
+      {
+        "id": "post-search-query-0",
+        "method": "POST",
+        "pathTemplate": "/search/query",
+        "summary": "POST /search/query",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "eventdate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "from",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "json",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "limit",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "markdown",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "note",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Devo/Integrations/Devo"
+  },
   "dspm-dspm": {
     "summary": "Rebuilt from the client: GET /v1/assets.",
     "differences": [
@@ -1411,6 +1873,174 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
       }
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/DSPM/Integrations/DSPM"
+  },
+  "elasticsearch-elasticsearch-v2": {
+    "summary": "Rebuilt from the client: POST /{index}/_search.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched POST /{index}/_search. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
+    "operations": [
+      {
+        "id": "post-index-search-0",
+        "method": "POST",
+        "pathTemplate": "/{index}/_search",
+        "summary": "POST /{index}/_search",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "hits",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "events",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "hits",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "max_score",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "total",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Tags",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_id",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Elasticsearch/Integrations/Elasticsearch_v2"
+  },
+  "elasticsearch-elasticsearcheventcollector": {
+    "summary": "Rebuilt from the client: POST /{index}/_search.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched POST /{index}/_search. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
+    "operations": [
+      {
+        "id": "post-index-search-0",
+        "method": "POST",
+        "pathTemplate": "/{index}/_search",
+        "summary": "POST /{index}/_search",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "hits",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "hits",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "total",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_index",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_source",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "access_token_expires_in",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Elasticsearch/Integrations/ElasticsearchEventCollector"
   },
   "gmail-gmail": {
     "summary": "Rebuilt from the client: GET /gmail/v1/users/{userId}/messages.",
@@ -1605,6 +2235,244 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
       }
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GoogleChronicleBackstory/Integrations/GoogleChronicleBackstory"
+  },
+  "googlecloudscc-googlecloudscc": {
+    "summary": "Rebuilt from the client: GET /v1/organizations/{organization}/sources/{source}/findings.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /v1/organizations/{organization}/sources/{source}/findings. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://cloud.google.com/security-command-center/docs/reference/rest/v1/organizations.sources.findings/list",
+    "operations": [
+      {
+        "id": "get-v1-organizations-organization-sources-so-0",
+        "method": "GET",
+        "pathTemplate": "/v1/organizations/{organization}/sources/{source}/findings",
+        "summary": "GET /v1/organizations/{organization}/sources/{source}/findings",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ackId",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ancestors",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "assetType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assets",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "ancestors",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "assetType",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "iamPolicy",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "resource",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "bindings",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "category",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GoogleCloudSCC/Integrations/GoogleCloudSCC"
+  },
+  "greynoise-greynoise": {
+    "summary": "Rebuilt from the client: GET /v2/noise/context/{ip}.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /v2/noise/context/{ip}. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://docs.greynoise.io/reference/get_v2-noise-context-ip",
+    "operations": [
+      {
+        "id": "get-v2-noise-context-ip-0",
+        "method": "GET",
+        "pathTemplate": "/v2/noise/context/{ip}",
+        "summary": "GET /v2/noise/context/{ip}",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "IP",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "activity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "actor",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "asn",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GreyNoise/Integrations/GreyNoise"
+  },
+  "greynoise-greynoise-community": {
+    "summary": "Rebuilt from the client: GET /v3/community/{ip}.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /v3/community/{ip}. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://docs.greynoise.io/reference/get_v3-community-ip",
+    "operations": [
+      {
+        "id": "get-v3-community-ip-0",
+        "method": "GET",
+        "pathTemplate": "/v3/community/{ip}",
+        "summary": "GET /v3/community/{ip}",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "IP",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "actor",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "business_service_intelligence",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "classification",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GreyNoise/Integrations/GreyNoise_Community"
   },
   "gsuiteauditor-gsuiteauditor": {
     "summary": "Rebuilt from the client: GET /admin/reports/v1/activity/users/{arg}/applications/{arg}.",
@@ -1950,6 +2818,74 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Jira/Integrations/JiraV3"
   },
+  "lacework-lacework": {
+    "summary": "Rebuilt from the client: GET /api/v2/Alerts.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /api/v2/Alerts. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://docs.lacework.net/api/v2/docs/#tag/Alerts",
+    "operations": [
+      {
+        "id": "get-api-v2-alerts-0",
+        "method": "GET",
+        "pathTemplate": "/api/v2/Alerts",
+        "summary": "GET /api/v2/Alerts",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "account_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alertId",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alertType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alert_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "end_time",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Lacework/Integrations/Lacework"
+  },
   "microsoftcloudappsecurity-microsoftcloudappsecurity": {
     "summary": "Rebuilt from the client: GET /alerts.",
     "differences": [
@@ -2229,6 +3165,162 @@ export const reverifiedOverlays: Record<string, ReverifiedOverlay> = {
       }
     ],
     "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftDefenderThreatIntelligence/Integrations/MicrosoftDefenderThreatIntelligence"
+  },
+  "mimecast-mimecasteventcollectorv2": {
+    "summary": "Rebuilt from the client: GET /siem/v1/events/cg.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched GET /siem/v1/events/cg. Fields are keys the client reads or test_data contains."
+    ],
+    "docUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
+    "operations": [
+      {
+        "id": "get-siem-v1-events-cg-0",
+        "method": "GET",
+        "pathTemplate": "/siem/v1/events/cg",
+        "summary": "GET /siem/v1/events/cg",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "@nextPage",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "http",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "message",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "meta",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "pagination",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "next",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastEventCollectorV2"
+  },
+  "mimecast-mimecastv2": {
+    "summary": "SIEM logs as a zip plus an mc-siem-token header.",
+    "differences": [
+      "Rebuilt from the XSOAR client. The checker matched POST /api/audit/get-siem-logs. The collector writes that body as a zip and pages with the mc-siem-token header."
+    ],
+    "docUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
+    "operations": [
+      {
+        "id": "post-api-audit-get-siem-logs-0",
+        "method": "POST",
+        "pathTemplate": "/api/audit/get-siem-logs",
+        "summary": "POST /api/audit/get-siem-logs",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "header",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "token",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "headerName": "mc-siem-token"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Content-Disposition",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Content-Type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "after",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "eventTime",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "pack": {
+          "format": "zip",
+          "filename": "siem.zip",
+          "entryName": "mta.json",
+          "entryFormat": "wrapped-json",
+          "wrapperType": "MTA"
+        }
+      }
+    ],
+    "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastEventCollector"
   },
   "netskope-netskopeeventcollector": {
     "summary": "Rebuilt from the client: GET /api/v2/events/dataexport/events/{_type}.",

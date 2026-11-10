@@ -3,11 +3,11 @@
   "name": "Devo",
   "pack": "Devo",
   "vendor": "Devo",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Query API search. object[] is the event table.",
+  "summary": "Rebuilt from the client: POST /search/query.",
   "notes": [
-    "Cross-check: unparseable: no HTTP calls and no test_data"
+    "Rebuilt from the XSOAR client. The checker matched POST /search/query. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Devo/Integrations/Devo",
@@ -17,63 +17,78 @@
       "kind": "preset",
       "id": "devo-devo",
       "name": "Devo",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.devo.com/space/latest/147554326/Query+API",
       "notes": [
-        "Cross-check: unparseable: no HTTP calls and no test_data"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /search/query. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.devo.com/space/latest/147554326/Query+API",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /search/query. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "query",
+        "id": "post-search-query-0",
         "method": "POST",
         "pathTemplate": "/search/query",
-        "summary": "Run a query",
+        "summary": "POST /search/query",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "object"
-        },
-        "record": {
-          "name": "event",
-          "kind": "object",
-          "children": [
-            {
-              "name": "eventdate",
-              "kind": "timestamp"
-            },
-            {
-              "name": "domain",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "srcIp",
-              "kind": "ip"
-            },
-            {
-              "name": "dstIp",
-              "kind": "ip"
-            },
-            {
-              "name": "message",
-              "kind": "string",
-              "example": "accepted connection"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "eventdate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "from",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "json",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "limit",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "markdown",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "note",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

@@ -108,6 +108,7 @@ class Mod:
     env: dict[str, Val]
     sdks: set[str] = field(default_factory=set)
     stack: list[str] = field(default_factory=list)
+    yml_defaults: dict[str, str] = field(default_factory=dict)
 
 
 def main() -> int:
@@ -374,6 +375,13 @@ def parse_file(path: Path) -> Mod | None:
         mod.sdks.add("slack")
     if "googleapiclient" in source or "google.auth" in source or "google.oauth2" in source:
         mod.sdks.add("google")
+    if "elasticsearch" in source:
+        mod.sdks.add("elastic")
+    if "greynoise" in source:
+        mod.sdks.add("greynoise")
+    if "laceworksdk" in source:
+        mod.sdks.add("lacework")
+    mod.yml_defaults = load_yml_defaults(path)
     seed_module(mod, tree)
     inits = [func for func in funcs.values() if func.name == "__init__"]
     for func in inits:
@@ -522,6 +530,7 @@ def walk_stmt(stmt: ast.stmt, env: dict[str, Val], mod: Mod, func: Func, depth: 
     if isinstance(stmt, ast.Return):
         if stmt.value:
             visit_calls(stmt.value, env, mod, func, depth)
+            note_request_object(stmt.value, env, mod, func)
         return
     if isinstance(stmt, ast.If):
         walk_body(stmt.body, env, mod, func, depth)
@@ -539,7 +548,12 @@ def walk_stmt(stmt: ast.stmt, env: dict[str, Val], mod: Mod, func: Func, depth: 
         walk_body(stmt.body, env, mod, func, depth)
         walk_body(stmt.orelse, env, mod, func, depth)
         return
-    if isinstance(stmt, (ast.While, ast.With, ast.AsyncWith)):
+    if isinstance(stmt, (ast.With, ast.AsyncWith)):
+        for item in stmt.items:
+            visit_calls(item.context_expr, env, mod, func, depth)
+        walk_body(stmt.body, env, mod, func, depth)
+        return
+    if isinstance(stmt, ast.While):
         walk_body(stmt.body, env, mod, func, depth)
         return
     if isinstance(stmt, ast.Try):
@@ -635,6 +649,8 @@ def handle_call(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func, depth
     if is_super_init(call):
         remember_base(call, env, mod, func)
         return Val(dynamic=True)
+    if any(keyword.arg in {"base_url", "_base_url"} for keyword in call.keywords):
+        remember_base(call, env, mod, func)
     if is_sink(call, mod, func) and not local_wrapper(call, mod, func):
         emit_sink(call, env, mod, func)
         return Val(dynamic=True, path="")
@@ -668,6 +684,12 @@ def is_super_call(call: ast.Call) -> bool:
 def local_wrapper(call: ast.Call, mod: Mod, func: Func) -> bool:
     if is_super_call(call):
         return False
+    # self/client.http_request is this integration's wrapper and must be followed.
+    # ms_client.http_request and BaseClient._http_request already carry the URL.
+    if isinstance(call.func, ast.Attribute):
+        owner = call.func.value
+        if not isinstance(owner, ast.Name) or owner.id not in {"self", "cls", "client"}:
+            return False
     name = call_name(call)
     if name not in {"http_request", "_http_request"}:
         return False
@@ -685,7 +707,9 @@ def is_sink(call: ast.Call, mod: Mod, func: Func) -> bool:
     if attr == "request":
         owner = owner_name(call.func.value)
         names = {keyword.arg for keyword in call.keywords}
-        return owner in {"requests", "session", "http_client"} or "url" in names or "full_url" in names
+        return owner in {"requests", "session", "http_client", "_session"} or "url" in names or "full_url" in names
+    if attr == "_apiCall":
+        return True
     if attr in {"get", "post", "put", "patch", "delete"}:
         owner = owner_name(call.func.value)
         return owner in {"requests", "session"}
@@ -764,19 +788,25 @@ def sink_facts(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> tup
     owner = owner_name(call.func.value) if isinstance(call.func, ast.Attribute) else ""
     if attr in {"get", "post", "put", "patch", "delete"} or attr == "request":
         url = keywords.get("url") or url_argument(call, env, mod, func.cls, attr)
-        if url and (url.path or url.text):
-            raw = url.path or url.text
-            if raw.startswith("http"):
-                raw = path_of(raw)
-            return method, [norm_path(raw)], params, dynamic
+        if url and (url.path or url.text or url.alts):
+            paths: list[str] = []
+            for option in url.alts or [url]:
+                raw = option.path or option.text
+                if raw.startswith("http"):
+                    raw = path_of(raw)
+                if raw:
+                    paths.append(norm_path(raw))
+            return method, paths, params, dynamic
         return method, [], params, dynamic
     full = keywords.get("full_url")
     if full and (full.path or full.text.startswith("http")):
         raw = full.path or path_of(full.text)
         return method, [norm_path(raw)], params, dynamic
-    suffix = keywords.get("url_suffix") or keywords.get("url")
+    suffix = keywords.get("url_suffix") or keywords.get("url") or keywords.get("path")
     if suffix is None and len(positional) >= 2 and attr in {"_http_request", "http_request", "generic_http_request"}:
         suffix = positional[1]
+    if suffix is None and positional and attr == "http_request" and positional[0].text.upper() not in VERBS:
+        suffix = positional[0]
     if suffix is None and len(positional) >= 2 and attr == "request":
         suffix = positional[1]
     if suffix is None:
@@ -898,11 +928,25 @@ def eval_expr(node: ast.expr | None, env: dict[str, Val] | None, mod: Mod | None
             return env[node.id].copy()
         return Val(dynamic=True, hole="{" + node.id + "}", text="{" + node.id + "}")
     if isinstance(node, ast.Attribute):
+        azure = azure_endpoint(node)
+        if azure:
+            return Val(text=azure, path=path_of(azure))
+        if isinstance(node.value, ast.Name) and node.value.id == "Method" and node.attr.upper() in VERBS:
+            return Val(text=node.attr.upper())
         if isinstance(node.value, ast.Name) and node.value.id == "self" and mod is not None:
             found = mod.class_attrs.get(cls, {}).get(node.attr)
             if found:
                 return found.copy()
             return Val(dynamic=True, hole="{" + node.attr + "}", text="{" + node.attr + "}")
+        if mod is not None and node.attr == "endpoint":
+            owner = eval_expr(node.value, env, mod, cls)
+            alts = endpoint_literals(mod, node.attr, owner.text)
+            if alts:
+                return Val(text=alts[0].text, path=alts[0].path, alts=alts if len(alts) > 1 else None)
+        if mod is not None and isinstance(node.value, ast.Name) and node.value.id[:1].isupper():
+            member = enum_member(mod, node.value.id, node.attr)
+            if member:
+                return Val(text=member)
         return Val(dynamic=True)
     if isinstance(node, ast.JoinedStr):
         parts = []
@@ -911,19 +955,40 @@ def eval_expr(node: ast.expr | None, env: dict[str, Val] | None, mod: Mod | None
             if isinstance(part, ast.Constant):
                 parts.append(str(part.value))
                 path_parts.append(str(part.value))
-            elif isinstance(part, ast.FormattedValue) and isinstance(part.value, ast.Name):
-                known = env.get(part.value.id) if env else None
-                if known and known.text and not known.dynamic:
-                    parts.append(known.text)
-                    path_parts.append(known.path or known.text)
-                else:
+            elif isinstance(part, ast.FormattedValue):
+                ev = eval_expr(part.value, env, mod, cls)
+                # A leading ? is a query string. norm_path drops it, which keeps
+                # the path that was verified before odata was appended.
+                concrete = bool(ev.text) and "{" not in ev.text and not ev.dynamic
+                if not ev.text:
+                    if isinstance(part.value, ast.Constant):
+                        continue
+                    if isinstance(part.value, ast.Name):
+                        hole = "{" + part.value.id + "}"
+                    elif isinstance(part.value, ast.Attribute):
+                        hole = "{" + part.value.attr + "}"
+                    else:
+                        hole = ev.hole or "{expr}"
+                    parts.append(hole)
+                    path_parts.append(hole)
+                    continue
+                if ev.text.startswith("?") or concrete or ev.text.startswith("http") or ev.text.startswith("/"):
+                    parts.append(ev.text)
+                    path_parts.append(ev.path or ev.text)
+                elif ev.hole:
+                    parts.append(ev.hole)
+                    path_parts.append(ev.hole)
+                elif isinstance(part.value, ast.Name):
                     hole = "{" + part.value.id + "}"
                     parts.append(hole)
                     path_parts.append(hole)
-            elif isinstance(part, ast.FormattedValue) and isinstance(part.value, ast.Attribute):
-                hole = "{" + part.value.attr + "}"
-                parts.append(hole)
-                path_parts.append(hole)
+                elif isinstance(part.value, ast.Attribute):
+                    hole = "{" + part.value.attr + "}"
+                    parts.append(hole)
+                    path_parts.append(hole)
+                else:
+                    parts.append("{expr}")
+                    path_parts.append("{expr}")
             else:
                 parts.append("{expr}")
                 path_parts.append("{expr}")
@@ -999,6 +1064,9 @@ def eval_call_value(node: ast.Call, env: dict[str, Val], mod: Mod | None, cls: s
         key = literal_str(node.args[0]) if node.args else ""
         if owner.items is not None and key and key in owner.items:
             return owner.items[key].copy()
+        if key and mod is not None and is_demisto_params(func.value) and key in mod.yml_defaults:
+            default = mod.yml_defaults[key]
+            return Val(text=default, path=path_of(default) if default.startswith("http") else "")
         if key:
             return Val(dynamic=True, hole="{" + key + "}", text="{" + key + "}")
         return Val(dynamic=True)
@@ -1046,13 +1114,15 @@ def apply_format(base: Val, node: ast.Call, env: dict[str, Val] | None, mod: Mod
 
 
 def hole_from(value: Val, node: ast.expr) -> str:
+    if value.text and "{" not in value.text:
+        return value.text
     if value.hole:
         return value.hole
     if isinstance(node, ast.Name):
         return "{" + node.id + "}"
     if isinstance(node, ast.Attribute):
         return "{" + node.attr + "}"
-    if value.text and "{" in value.text:
+    if value.text:
         return value.text
     return "{arg}"
 
@@ -1076,6 +1146,12 @@ def emit_sdk(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> bool:
         found = slack_endpoint(call, env, mod, func.cls)
     if found is None and "google" in mod.sdks:
         found = google_endpoint(call)
+    if found is None and "elastic" in mod.sdks:
+        found = elastic_endpoint(call)
+    if found is None and "greynoise" in mod.sdks:
+        found = greynoise_endpoint(call, mod)
+    if found is None and "lacework" in mod.sdks:
+        found = lacework_endpoint(call)
     if found is None:
         return False
     method, path = found
@@ -1167,15 +1243,105 @@ DIRECTORY_METHODS = {
 
 
 def google_endpoint(call: ast.Call) -> tuple[str, str] | None:
-    if not isinstance(call.func, ast.Attribute) or call.func.attr != "execute":
+    if not isinstance(call.func, ast.Attribute):
+        return None
+    if call.func.attr not in {"execute", "list"}:
         return None
     attrs = chain_attrs(call)
-    if attrs and attrs[-1] == "execute":
+    if attrs and attrs[-1] in {"execute", "list"} and call.func.attr == "execute":
         attrs = attrs[:-1]
     key = tuple(attrs)
+    # organizations().sources().findings().list()
+    # https://cloud.google.com/security-command-center/docs/reference/rest/v1/organizations.sources.findings/list
+    if key == ("organizations", "sources", "findings", "list"):
+        return ("GET", "/v1/organizations/{organization}/sources/{source}/findings")
     if "messages" in key or "getProfile" in key:
         return GMAIL_METHODS.get(key)
     return DIRECTORY_METHODS.get(key)
+
+
+def elastic_endpoint(call: ast.Call) -> tuple[str, str] | None:
+    """elasticsearch.Elasticsearch.search sends POST /{index}/_search.
+
+    https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html
+    """
+    func = call.func
+    if not isinstance(func, ast.Attribute) or func.attr != "search":
+        return None
+    if isinstance(func.value, ast.Attribute) and func.value.attr == "eql":
+        return ("POST", "/{index}/_eql/search")
+    return ("POST", "/{index}/_search")
+
+
+def greynoise_endpoint(call: ast.Call, mod: Mod) -> tuple[str, str] | None:
+    """GreyNoise.ip is the v2 noise-context route. The community integration uses v3.
+
+    https://docs.greynoise.io/reference/get_v2-noise-context-ip
+    https://docs.greynoise.io/reference/get_v3-community-ip
+    """
+    func = call.func
+    if not isinstance(func, ast.Attribute) or func.attr != "ip":
+        return None
+    if "GreyNoise_Community" in str(mod.path):
+        return ("GET", "/v3/community/{ip}")
+    return ("GET", "/v2/noise/context/{ip}")
+
+
+def lacework_endpoint(call: ast.Call) -> tuple[str, str] | None:
+    """laceworksdk alerts.get is GET /api/v2/Alerts.
+
+    https://docs.lacework.net/api/v2/docs/#tag/Alerts
+    """
+    func = call.func
+    if (
+        isinstance(func, ast.Attribute)
+        and func.attr == "get"
+        and isinstance(func.value, ast.Attribute)
+        and func.value.attr == "alerts"
+    ):
+        return ("GET", "/api/v2/Alerts")
+    return None
+
+
+def azure_endpoint(node: ast.Attribute) -> str:
+    """Worldwide cloud endpoints from MicrosoftApiModule.AZURE_WORLDWIDE_CLOUD.
+
+    Packs/ApiModules/Scripts/MicrosoftApiModule/MicrosoftApiModule.py
+    """
+    chain: list[str] = []
+    current: ast.AST | None = node
+    while isinstance(current, ast.Attribute):
+        chain.append(current.attr)
+        current = current.value
+    if not chain:
+        return ""
+    endpoints = {
+        "log_analytics_resource_id": "https://api.loganalytics.io",
+        "resource_manager": "https://management.azure.com",
+        "active_directory": "https://login.microsoftonline.com",
+        "microsoft_graph_resource_id": "https://graph.microsoft.com",
+    }
+    return endpoints.get(chain[0], "")
+
+
+def is_demisto_params(node: ast.AST) -> bool:
+    return isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == "params"
+
+
+def load_yml_defaults(py_path: Path) -> dict[str, str]:
+    defaults: dict[str, str] = {}
+    for yml in py_path.parent.glob("*.yml"):
+        pending = ""
+        for line in yml.read_text(encoding="utf-8", errors="replace").splitlines():
+            value = re.search(r"defaultvalue:\s*(.+)", line)
+            if value:
+                pending = value.group(1).strip().strip("'\"")
+                continue
+            name = re.search(r"(?:^|\s)name:\s*([A-Za-z0-9_]+)", line)
+            if name and pending:
+                defaults[name.group(1)] = pending
+                pending = ""
+    return defaults
 
 
 def chain_attrs(node: ast.AST) -> list[str]:
@@ -1188,7 +1354,109 @@ def chain_attrs(node: ast.AST) -> list[str]:
     return attrs
 
 
+def note_request_object(node: ast.expr, env: dict[str, Val], mod: Mod, func: Func) -> None:
+    """Mimecast's collector returns a request dict that IntegrationHTTPRequest sends."""
+    if not func.name.startswith("get_req_object"):
+        return
+    value = env.get(node.id) if isinstance(node, ast.Name) else eval_expr(node, env, mod, func.cls)
+    if not value or not value.items:
+        return
+    method = value.items.get("method")
+    url = value.items.get("url")
+    if not method or not url or method.text.upper() not in VERBS:
+        return
+    raw = url.path or url.text
+    if raw.startswith("http"):
+        raw = path_of(raw)
+    path = norm_path(raw) if raw else ""
+    if not path or not static_segment(path):
+        return
+    store_call(
+        mod,
+        {
+            "method": method.text.upper(),
+            "paths": [path],
+            "params": [],
+            "dynamic": False,
+            "func": func.qual,
+            "boto3": False,
+        },
+    )
+
+
+def endpoint_literals(mod: Mod, name: str, owner: str = "") -> list[Val]:
+    """String paths returned by a property such as Mimecast EventTypes.endpoint.
+
+    When the owner is an enum value (``siem``), only that entry is returned so a
+    GET call is not also recorded against the audit route.
+    """
+    found: list[Val] = []
+    seen: set[str] = set()
+    for func in mod.by_short.get(name, []):
+        for node in ast.walk(func.node):
+            if not isinstance(node, ast.Dict):
+                continue
+            pairs = list(zip(node.keys, node.values))
+            if owner and not owner.startswith("{"):
+                matched = [
+                    (key, value)
+                    for key, value in pairs
+                    if isinstance(key, ast.Constant) and key.value == owner
+                ]
+                if matched:
+                    pairs = matched
+            for _key, value in pairs:
+                if isinstance(value, ast.Constant) and isinstance(value.value, str) and value.value.startswith("/"):
+                    path = norm_path(value.value)
+                    if path not in seen:
+                        seen.add(path)
+                        found.append(Val(text=value.value, path=path))
+    return found
+
+
+def enum_member(mod: Mod, class_name: str, attr: str) -> str:
+    cached = getattr(enum_member, "_cache", None)
+    if cached is None:
+        cached = {}
+        setattr(enum_member, "_cache", cached)
+    key = (str(mod.path), class_name, attr)
+    if key in cached:
+        return cached[key]
+    found = ""
+    try:
+        tree = ast.parse(mod.path.read_text(encoding="utf-8", errors="replace"))
+    except SyntaxError:
+        cached[key] = ""
+        return ""
+    for item in getattr(tree, "body", []):
+        if not isinstance(item, ast.ClassDef) or item.name != class_name:
+            continue
+        for stmt in item.body:
+            target = None
+            value = None
+            if isinstance(stmt, ast.Assign) and stmt.targets:
+                target = stmt.targets[0]
+                value = stmt.value
+            elif isinstance(stmt, ast.AnnAssign):
+                target = stmt.target
+                value = stmt.value
+            if (
+                isinstance(target, ast.Name)
+                and target.id == attr
+                and isinstance(value, ast.Constant)
+                and isinstance(value.value, str)
+            ):
+                found = value.value
+                break
+    cached[key] = found
+    return found
+
+
 def apply_urljoin(base: Val, suffix: Val, style: str) -> Val:
+    if suffix.alts:
+        joined = [apply_urljoin(base, alt, style) for alt in suffix.alts]
+        first = joined[0]
+        return Val(text=first.text, path=first.path, dynamic=first.dynamic, alts=joined)
     suf = suffix.path or suffix.text or suffix.hole
     if not suf and suffix.dynamic:
         return Val(dynamic=True)

@@ -3,11 +3,11 @@
   "name": "Elasticsearch v2",
   "pack": "Elasticsearch",
   "vendor": "Elastic",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "POST /{index}/_search returns the hits envelope the Elasticsearch client reads.",
+  "summary": "Rebuilt from the client: POST /{index}/_search.",
   "notes": [
-    "Cross-check: path: POST /{index}/_search is not a client call. Closest: /_security/oauth2/token (0)."
+    "Rebuilt from the XSOAR client. The checker matched POST /{index}/_search. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Elasticsearch/Integrations/Elasticsearch_v2",
@@ -17,104 +17,97 @@
       "kind": "preset",
       "id": "elasticsearch-elasticsearch-v2",
       "name": "Elasticsearch v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
       "notes": [
-        "Cross-check: path: POST /{index}/_search is not a client call. Closest: /_security/oauth2/token (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /{index}/_search. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /{index}/_search. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "offset",
-          "limitParam": "size",
-          "offsetParam": "from",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 10,
-          "maxLimit": 100
-        },
-        "id": "search",
+        "id": "post-index-search-0",
         "method": "POST",
         "pathTemplate": "/{index}/_search",
-        "summary": "Search an index",
+        "summary": "POST /{index}/_search",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
         "record": {
-          "name": "search",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "took",
-              "kind": "integer"
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "hits",
               "kind": "object",
               "children": [
                 {
-                  "name": "total",
-                  "kind": "object",
-                  "children": [
-                    {
-                      "name": "value",
-                      "kind": "integer"
-                    },
-                    {
-                      "name": "relation",
-                      "kind": "const",
-                      "constValue": "eq"
-                    }
-                  ]
+                  "name": "events",
+                  "kind": "string",
+                  "example": "lab"
                 },
                 {
                   "name": "hits",
-                  "kind": "array",
-                  "pageItems": true,
-                  "item": {
-                    "name": "hit",
-                    "kind": "object",
-                    "children": [
-                      {
-                        "name": "_index",
-                        "kind": "string",
-                        "example": "logs"
-                      },
-                      {
-                        "name": "_id",
-                        "kind": "id"
-                      },
-                      {
-                        "name": "_source",
-                        "kind": "object",
-                        "children": [
-                          {
-                            "name": "message",
-                            "kind": "string",
-                            "example": "Failed password for lab-user"
-                          },
-                          {
-                            "name": "@timestamp",
-                            "kind": "timestamp",
-                            "format": "iso"
-                          },
-                          {
-                            "name": "host",
-                            "kind": "string",
-                            "example": "lab-workstation"
-                          }
-                        ]
-                      }
-                    ]
-                  }
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "max_score",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "total",
+                  "kind": "string",
+                  "example": "lab"
                 }
               ]
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Tags",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_id",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

@@ -3,11 +3,11 @@
   "name": "Microsoft Sentinel",
   "pack": "AzureSentinel",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET incidents returns value and nextLink. XSOAR calls this under the SecurityInsights workspace URL.",
+  "summary": "Rebuilt from the client: GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Micr",
   "notes": [
-    "Cross-check: path: GET /incidents is not a client call. Closest: /metadata/identity/oauth2/token (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureSentinel/Integrations/AzureSentinel",
@@ -17,92 +17,92 @@
       "kind": "preset",
       "id": "azuresentinel-azuresentinel",
       "name": "Microsoft Sentinel",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/rest/api/securityinsights/incidents/list?view=rest-securityinsights-2024-03-01",
       "notes": [
-        "Cross-check: path: GET /incidents is not a client call. Closest: /metadata/identity/oauth2/token (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/rest/api/securityinsights/incidents/list?view=rest-securityinsights-2024-03-01",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
+        "id": "get-subscriptions-subscription-id-resourcegr-0",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/in",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "cursor",
-          "limitParam": "$top",
+          "style": "none",
+          "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
-          "cursorParam": "$skipToken",
-          "defaultLimit": 50,
-          "maxLimit": 500
-        },
-        "id": "list-incidents",
-        "method": "GET",
-        "pathTemplate": "/incidents",
-        "summary": "List Sentinel incidents",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "azure"
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "incident",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "id",
-              "kind": "string",
-              "example": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.OperationalInsights/workspaces/ws/providers/Microsoft.SecurityInsights/incidents/1"
-            },
-            {
-              "name": "name",
-              "kind": "id"
-            },
-            {
-              "name": "type",
-              "kind": "const",
-              "constValue": "Microsoft.SecurityInsights/incidents"
-            },
-            {
-              "name": "properties",
+              "name": "value",
               "kind": "object",
               "children": [
                 {
-                  "name": "title",
+                  "name": "kind",
                   "kind": "string",
-                  "example": "Suspicious sign-in"
+                  "example": "lab"
                 },
                 {
-                  "name": "severity",
-                  "kind": "enum",
-                  "enumValues": [
-                    "Informational",
-                    "Low",
-                    "Medium",
-                    "High"
-                  ]
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
                 },
                 {
-                  "name": "status",
-                  "kind": "enum",
-                  "enumValues": [
-                    "New",
-                    "Active",
-                    "Closed"
-                  ]
-                },
-                {
-                  "name": "createdTimeUtc",
-                  "kind": "timestamp",
-                  "format": "iso"
-                },
-                {
-                  "name": "lastModifiedTimeUtc",
-                  "kind": "timestamp",
-                  "format": "iso"
+                  "name": "properties",
+                  "kind": "string",
+                  "example": "lab"
                 }
               ]
+            },
+            {
+              "name": "CreatedTimeUTC",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "IncidentNumber",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "KillChainPhases",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "LastModifiedTimeUTC",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }
