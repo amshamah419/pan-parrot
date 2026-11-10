@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /api/alert/alert/GetAlerts.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/alert/alert/GetAlerts, GET /api/alert/alert/GetAlertedEvents. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/alert/alert/GetAlerts, GET /api/alert/alert/GetAlertedEvents reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VaronisDataSecurityPlatform/Integrations/VaronisDataSecurityPlatform",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VaronisDataSecurityPlatform",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/alert/alert/GetAlerts, GET /api/alert/alert/GetAlertedEvents. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/alert/alert/GetAlerts, GET /api/alert/alert/GetAlertedEvents reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/VaronisDataSecurityPlatform",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/alert/alert/GetAlerts, GET /api/alert/alert/GetAlertedEvents. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/alert/alert/GetAlerts, GET /api/alert/alert/GetAlertedEvents reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -60,7 +60,8 @@
           "children": [
             {
               "name": "AlertSeqId",
-              "kind": "integer"
+              "kind": "integer",
+              "example": 1
             },
             {
               "name": "EventUTC",
@@ -71,10 +72,6 @@
               "name": "ID",
               "kind": "string",
               "example": "lab"
-            },
-            {
-              "name": "Id",
-              "kind": "integer"
             },
             {
               "name": "Name",
@@ -115,11 +112,277 @@
           "kind": "object",
           "children": [
             {
-              "name": "AlertSeqId",
-              "kind": "integer"
+              "name": "ByUser",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "DisabledAccount",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "Domain",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "LockoutAccounts",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "Name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "SAMAccountName",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "StaleAccount",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "UserAccountType",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "UserType",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
             },
             {
-              "name": "EventUTC",
+              "name": "Country",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Details",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "IsBlacklist",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "Operation",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "Event",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "ByUser",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "DisabledAccount",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "Domain",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "LockoutAccounts",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "Name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "SAMAccountName",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "StaleAccount",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "UserAccountType",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "UserType",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Country",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "Description",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "Details",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "IsBlacklist",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "Operation",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "ExternalIP",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "ID",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "IPReputation",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "IPThreatType",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "IsMaliciousIP",
+                    "kind": "boolean",
+                    "example": false
+                  },
+                  {
+                    "name": "OnObject",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "DestinationDevice",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "DestinationIP",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "FileServerOrDomain",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "IsDisabledAccount",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "IsLockOutAccount",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "IsSensitive",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "Name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "ObjectType",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "Path",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "Platform",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "SAMAccountName",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "UserAccountType",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "SourceIP",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "State",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "Status",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "Type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "UTCTime",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "ExternalIP",
               "kind": "string",
               "example": "lab"
             },
@@ -129,16 +392,134 @@
               "example": "lab"
             },
             {
-              "name": "Id",
-              "kind": "integer"
-            },
-            {
-              "name": "Name",
+              "name": "IPReputation",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "ResultSet",
+              "name": "IPThreatType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "IsMaliciousIP",
+              "kind": "boolean",
+              "example": false
+            },
+            {
+              "name": "OnObject",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "DestinationDevice",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "DestinationIP",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "FileServerOrDomain",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "IsDisabledAccount",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "IsLockOutAccount",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "IsSensitive",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "Name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "ObjectType",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Path",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Platform",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "SAMAccountName",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "UserAccountType",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "Pagination",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "Page",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "PageSize",
+                  "kind": "integer",
+                  "example": 1
+                }
+              ]
+            },
+            {
+              "name": "SourceIP",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "State",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "UTCTime",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alert_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "max_results",
               "kind": "string",
               "example": "lab"
             }

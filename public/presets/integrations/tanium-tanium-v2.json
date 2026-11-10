@@ -7,9 +7,7 @@
   "curated": true,
   "summary": "Sensor list and session login on /api/v2.",
   "notes": [
-    "The client base is server + /api/v2/. It does not call /endpoints. do_request reads data from sensors, packages, and saved questions.",
-    "POST session/login returns data.session. Later calls send that value in the session header.",
-    "The gateway guide was not reloaded. Packages and saved questions are not modeled."
+    "Sample fields are the ones POST /api/v2/session/login, GET /api/v2/sensors reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Tanium/Integrations/Tanium_v2",
@@ -23,18 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Tanium/Integrations/Tanium_v2",
       "notes": [
-        "The client base is server + /api/v2/. It does not call /endpoints. do_request reads data from sensors, packages, and saved questions.",
-        "POST session/login returns data.session. Later calls send that value in the session header.",
-        "The gateway guide was not reloaded. Packages and saved questions are not modeled."
+        "Sample fields are the ones POST /api/v2/session/login, GET /api/v2/sensors reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Tanium/Integrations/Tanium_v2",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client base is server + /api/v2/. It does not call /endpoints. do_request reads data from sensors, packages, and saved questions.",
-          "POST session/login returns data.session. Later calls send that value in the session header.",
-          "The gateway guide was not reloaded. Packages and saved questions are not modeled."
+          "Sample fields are the ones POST /api/v2/session/login, GET /api/v2/sensors reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -54,15 +48,676 @@
           "kind": "object",
           "children": [
             {
+              "name": "Parameters",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "columns",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "content_set",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "creation_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
               "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "session",
-                  "kind": "const",
-                  "constValue": "dummy-tanium-session"
-                }
-              ]
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "ModUser",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "domain",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "action_group",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "action_group_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "approved_flag",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "approver",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "archive_enabled_flag",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "archive_owner",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "category",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "command",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "command_timeout",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "computer_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "content_set",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "creation_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "deleted_flag",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "description",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "display_name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "end_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "expiration",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "expiration_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "expire_seconds",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "files",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "hash",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "id",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "name",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "force_computer_id_flag",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "full_version",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "hash",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "history_saved_question",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "host_name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "ignore_case_flag",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "ipaddress_client",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "ipaddress_server",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "is_expired",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "issue_seconds",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "issue_seconds_never_flag",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "keep_duplicates_flag",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "keep_seconds",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "last_action",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "start_time",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "last_modified_by",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "last_registration",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "last_start_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "last_update",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "max_age_seconds",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "mod_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "mod_user",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "domain",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "modification_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "most_recent_question_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "next_start_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "owner_user_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "package_spec",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "source_hash",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "parameter_definition",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "query_text",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "question",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "result_sets",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "columns",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "name",
+                                "kind": "string",
+                                "example": "lab"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "name": "estimated_total",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "mr_tested",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "row_count",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "rows",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "data",
+                                "kind": "array",
+                                "item": {
+                                  "name": "item",
+                                  "kind": "string",
+                                  "example": "lab"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "row_count_flag",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "saved_action",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "saved_question",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "session",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "sort_column",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "source_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "start_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "status",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "stopped_flag",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "target_group",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "text",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "user",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "domain",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "verify_expire_seconds",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "domain",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "hash",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ignore_case_flag",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "keep_duplicates_flag",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_modified_by",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "max_age_seconds",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "mod_user",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "modification_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "parameter_definition",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "rows",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "selects",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "source_id",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         },
@@ -86,21 +741,208 @@
         "status": 200,
         "list": true,
         "envelope": {
-          "type": "wrapped",
-          "arrayKey": "data"
+          "type": "object"
         },
         "record": {
-          "name": "sensor",
+          "name": "body",
           "kind": "object",
           "children": [
             {
+              "name": "category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "content_set",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "creation_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "category",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "content_set",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "creation_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "description",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "hash",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "ignore_case_flag",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "keep_duplicates_flag",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "last_modified_by",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "max_age_seconds",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "mod_user",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "domain",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "modification_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "parameter_definition",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "session",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "source_id",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "domain",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "hash",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
               "name": "id",
-              "kind": "integer"
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ignore_case_flag",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "keep_duplicates_flag",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_modified_by",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "max_age_seconds",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "mod_user",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "modification_time",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "name",
               "kind": "string",
-              "example": "Computer Name"
+              "example": "lab"
+            },
+            {
+              "name": "parameter_definition",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "source_id",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         },

@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /threats.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /threats. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /threats reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Threat_Vault/Integrations/ThreatVaultv2",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://pan.dev/threat-vault/api/threat-vault-apis/",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /threats. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /threats reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://pan.dev/threat-vault/api/threat-vault-apis/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /threats. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /threats reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,7 +59,22 @@
           "kind": "object",
           "children": [
             {
-              "name": "asn",
+              "name": "action",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "content_version",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "create_time",
               "kind": "string",
               "example": "lab"
             },
@@ -70,15 +85,430 @@
             },
             {
               "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "action",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "category",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "content_version",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "create_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "cve",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "default_action",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "description",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "details",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "family",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "filetype",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "latest_release_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "latest_release_version",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "max_version",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "md5",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "min_version",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "ori_release_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "ori_release_version",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "platform",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "reference",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "related_sha256_hashes",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "release",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "release_notes",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "applications",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "modified",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "new",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "obsoleted",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "notes",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "spyware",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "disabled",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "modified",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "new",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "vulnerability",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "disabled",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "modified",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "new",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "release_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "release_version",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "sha1",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "sha256",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "signatures",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "antivirus",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "object",
+                          "children": [
+                            {
+                              "name": "description",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "id",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "name",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "release",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "severity",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "status",
+                              "kind": "string",
+                              "example": "lab"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "size",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "status",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "subtype",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "vendor",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "wildfire_verdict",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "default_action",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "details",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "disabled",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "family",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "filetype",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "latest_release_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "latest_release_version",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "max_version",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "md5",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "min_version",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "modified",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "new",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "obsoleted",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ori_release_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ori_release_version",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "platform",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "reference",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "related_sha256_hashes",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "release",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "release_notes",
               "kind": "object",
               "children": [
                 {
-                  "name": "fileinfo",
+                  "name": "applications",
                   "kind": "string",
                   "example": "lab"
                 },
                 {
-                  "name": "reports",
+                  "name": "notes",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "spyware",
                   "kind": "string",
                   "example": "lab"
                 },
@@ -90,17 +520,72 @@
               ]
             },
             {
-              "name": "description",
+              "name": "release_time",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "geo",
+              "name": "release_version",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "id",
+              "name": "severity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sha1",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sha256",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "signatures",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "antivirus",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "size",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "subtype",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "vendor",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "wildfire_verdict",
               "kind": "string",
               "example": "lab"
             }

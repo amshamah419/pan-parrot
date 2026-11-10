@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /apiv1/threat/search.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /apiv1/threat/search. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /apiv1/threat/search reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseIntelligenceV2/Integrations/CofenseIntelligenceV2",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseIntelligenceV2/Integrations/CofenseIntelligenceV2",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /apiv1/threat/search. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /apiv1/threat/search reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseIntelligenceV2/Integrations/CofenseIntelligenceV2",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /apiv1/threat/search. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /apiv1/threat/search reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -60,6 +60,15 @@
           "children": [
             {
               "name": "blockSet",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "blockType",
               "kind": "string",
               "example": "lab"
             },
@@ -68,56 +77,402 @@
               "kind": "object",
               "children": [
                 {
-                  "name": "page",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
                   "name": "threats",
-                  "kind": "string",
-                  "example": "lab"
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "blockSet",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "object",
+                          "children": [
+                            {
+                              "name": "blockType",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "data",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "data_1",
+                              "kind": "object",
+                              "children": [
+                                {
+                                  "name": "url",
+                                  "kind": "string",
+                                  "example": "lab"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "impact",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "ipDetail",
+                              "kind": "object",
+                              "children": [
+                                {
+                                  "name": "asn",
+                                  "kind": "string",
+                                  "example": "lab"
+                                },
+                                {
+                                  "name": "countryIsoCode",
+                                  "kind": "string",
+                                  "example": "lab"
+                                },
+                                {
+                                  "name": "ip",
+                                  "kind": "string",
+                                  "example": "lab"
+                                },
+                                {
+                                  "name": "latitude",
+                                  "kind": "string",
+                                  "example": "lab"
+                                },
+                                {
+                                  "name": "longitude",
+                                  "kind": "string",
+                                  "example": "lab"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "malwareFamily",
+                              "kind": "object",
+                              "children": [
+                                {
+                                  "name": "familyName",
+                                  "kind": "string",
+                                  "example": "lab"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "name": "executableSet",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "object",
+                          "children": [
+                            {
+                              "name": "fileName",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "fileNameExtension",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "malwareFamily",
+                              "kind": "object",
+                              "children": [
+                                {
+                                  "name": "familyName",
+                                  "kind": "string",
+                                  "example": "lab"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "md5Hex",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "severityLevel",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "sha1Hex",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "sha256Hex",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "sha512Hex",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "ssdeep",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "type",
+                              "kind": "string",
+                              "example": "lab"
+                            },
+                            {
+                              "name": "vendorDetections",
+                              "kind": "array",
+                              "item": {
+                                "name": "item",
+                                "kind": "object",
+                                "children": [
+                                  {
+                                    "name": "detected",
+                                    "kind": "string",
+                                    "example": "lab"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "name": "executiveSummary",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "hasReport",
+                        "kind": "boolean",
+                        "example": false
+                      },
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "label",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "lastPublished",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "malwareFamilySet",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "object",
+                          "children": []
+                        }
+                      },
+                      {
+                        "name": "reportURL",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "subjectSet",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "object",
+                          "children": []
+                        }
+                      },
+                      {
+                        "name": "threatType",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
                 }
               ]
             },
             {
               "name": "data_1",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "description",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "domain_search_response",
               "kind": "object",
               "children": [
                 {
-                  "name": "data",
+                  "name": "url",
                   "kind": "string",
                   "example": "lab"
-                },
-                {
-                  "name": "success",
-                  "kind": "boolean"
                 }
               ]
             },
             {
-              "name": "email_search_response",
+              "name": "detected",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "executableSet",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "executiveSummary",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "fileName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "fileNameExtension",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "impact",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ipDetail",
               "kind": "object",
               "children": [
                 {
-                  "name": "data",
+                  "name": "asn",
                   "kind": "string",
                   "example": "lab"
                 },
                 {
-                  "name": "success",
-                  "kind": "boolean"
+                  "name": "countryIsoCode",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "ip",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "latitude",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "longitude",
+                  "kind": "string",
+                  "example": "lab"
                 }
               ]
+            },
+            {
+              "name": "label",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "lastPublished",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "malwareFamily",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "familyName",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "malwareFamilySet",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "md5Hex",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "reportURL",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "severityLevel",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sha1Hex",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sha256Hex",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sha512Hex",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ssdeep",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "subjectSet",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "threatType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "vendorDetections",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }

@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /api/5.0/fo/asset/host/vm/detection.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/5.0/fo/asset/host/vm/detection, GET /api/3.0/fo/scan. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/5.0/fo/asset/host/vm/detection, GET /api/3.0/fo/scan reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/qualys/Integrations/Qualysv2",
@@ -21,14 +21,14 @@
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs.qualys.com/en/vm/api/assets/index.htm",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/5.0/fo/asset/host/vm/detection, GET /api/3.0/fo/scan. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/5.0/fo/asset/host/vm/detection, GET /api/3.0/fo/scan reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.qualys.com/en/vm/api/assets/index.htm",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/5.0/fo/asset/host/vm/detection, GET /api/3.0/fo/scan. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/5.0/fo/asset/host/vm/detection, GET /api/3.0/fo/scan reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,52 +59,127 @@
           "kind": "object",
           "children": [
             {
-              "name": "Address",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "BUGTRAQ_LIST",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "BUGTRAQ",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "CATEGORY",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "CODE",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "CORRELATION",
+              "name": "DETECTION",
               "kind": "object",
               "children": [
                 {
-                  "name": "EXPLOITS",
+                  "name": "FIRST_FOUND_DATETIME",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "QID",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "RESULTS",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "UNIQUE_VULN_ID",
                   "kind": "string",
                   "example": "lab"
                 }
               ]
             },
             {
-              "name": "CVE_LIST",
+              "name": "DETECTION_LIST",
               "kind": "object",
               "children": [
                 {
-                  "name": "CVE",
+                  "name": "DETECTION",
                   "kind": "string",
                   "example": "lab"
                 }
               ]
+            },
+            {
+              "name": "Date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "HOST",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "SIMPLE_RETURN",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "RESPONSE",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "URL",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "VULN",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "WARNING",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assets",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "limit",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "next_page",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "next_url",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "since_datetime",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "snapshot_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "total_assets",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "total_vulnerabilities",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }
@@ -133,56 +208,7 @@
         "record": {
           "name": "body",
           "kind": "object",
-          "children": [
-            {
-              "name": "Address",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "BUGTRAQ_LIST",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "BUGTRAQ",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "CATEGORY",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "CODE",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "CORRELATION",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "EXPLOITS",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "CVE_LIST",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "CVE",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            }
-          ]
+          "children": []
         }
       }
     ],

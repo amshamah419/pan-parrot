@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/McAfeeNSM/Integrations/McAfeeNSMv2",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /alerts. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /alerts reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/McAfeeNSM/Integrations/McAfeeNSMv2",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /alerts. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /alerts reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,46 +55,23 @@
           "kind": "object",
           "children": [
             {
-              "name": "value",
+              "name": "alertsList",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "status",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "AttackCategory",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "ExpolitAttackList",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "AttackDescriptor",
+              "name": "totalAlertsCount",
               "kind": "string",
               "example": "lab"
-            },
-            {
-              "name": "AttackDescriptorDetailsList",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "AttackSeverity",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "Attacker",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "ipAddrs",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
             }
           ]
         }
@@ -125,6 +102,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/McAfeeNSM/Integrations/McAfeeNSMv2",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /alerts. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /alerts reads in the matched command. Lists the command iterates are arrays."
   ]
 }

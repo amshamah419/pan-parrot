@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /api/v4/quarantineJobs.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/v4/quarantineJobs, POST /api/v4/quarantineJobs. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/v4/quarantineJobs, POST /api/v4/quarantineJobs reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseVision/Integrations/CofenseVision",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseVision/Integrations/CofenseVision",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/v4/quarantineJobs, POST /api/v4/quarantineJobs. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/v4/quarantineJobs, POST /api/v4/quarantineJobs reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseVision/Integrations/CofenseVision",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/v4/quarantineJobs, POST /api/v4/quarantineJobs. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/v4/quarantineJobs, POST /api/v4/quarantineJobs reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,38 +59,27 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "attributes",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "metadata",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "ID",
+              "name": "createdBy",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "address",
+              "name": "createdDate",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "attachmentExcludeMimeTypes",
+              "name": "emailCount",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "id",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "matchingIOCs",
               "kind": "array",
               "item": {
                 "name": "item",
@@ -99,28 +88,53 @@
               }
             },
             {
-              "name": "attachmentHashCriteria",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "attachmentHashes",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
+              "name": "matchingSources",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "modifiedBy",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "modifiedDate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "quarantineJobRuns",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "completedDate",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "jobRunType",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "status",
                     "kind": "string",
                     "example": "lab"
                   }
-                }
-              ]
+                ]
+              }
             },
             {
-              "name": "attachmentMimeTypes",
-              "kind": "array",
-              "item": {
-                "name": "item",
-                "kind": "string",
-                "example": "lab"
-              }
+              "name": "searchId",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }
@@ -151,68 +165,376 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
+              "name": "createdBy",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "createdDate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "emailCount",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "matchingIOCs",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "matchingSources",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "modifiedBy",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "modifiedDate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "outputs",
               "kind": "object",
               "children": [
                 {
-                  "name": "attributes",
+                  "name": "autoQuarantine",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "createdBy",
                   "kind": "string",
                   "example": "lab"
+                },
+                {
+                  "name": "createdDate",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "emailcount",
+                  "kind": "integer",
+                  "example": 1
                 },
                 {
                   "name": "id",
-                  "kind": "string",
-                  "example": "lab"
+                  "kind": "integer",
+                  "example": 1
                 },
                 {
-                  "name": "metadata",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "ID",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "address",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "attachmentExcludeMimeTypes",
-              "kind": "array",
-              "item": {
-                "name": "item",
-                "kind": "string",
-                "example": "lab"
-              }
-            },
-            {
-              "name": "attachmentHashCriteria",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "attachmentHashes",
+                  "name": "matchingIOCs",
                   "kind": "array",
                   "item": {
                     "name": "item",
                     "kind": "string",
                     "example": "lab"
                   }
+                },
+                {
+                  "name": "matchingSources",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "modifiedBy",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "modifiedDate",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "quarantineEmails",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "createdDate",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "internetMessageId",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "recipientAddress",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "status",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "quarantineJobRuns",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "completedDate",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "error",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "jobRunType",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "startedDate",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "status",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "total",
+                        "kind": "integer",
+                        "example": 1
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "searchId",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "stopRequested",
+                  "kind": "boolean",
+                  "example": false
                 }
               ]
             },
             {
-              "name": "attachmentMimeTypes",
-              "kind": "array",
-              "item": {
-                "name": "item",
-                "kind": "string",
-                "example": "lab"
-              }
+              "name": "raw_response",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "autoQuarantine",
+                  "kind": "boolean",
+                  "example": false
+                },
+                {
+                  "name": "createdBy",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "createdDate",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "emailcount",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "id",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "matchingIOCs",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "matchingIocInfo",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "matchingSources",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "modifiedBy",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "modifiedDate",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "quarantineEmails",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "createdDate",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "errorMessage",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "ewsMessageId",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "internetMessageId",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "originalFolderId",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "quarantinedDate",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "recipientAddress",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "status",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "quarantineJobRuns",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "completedDate",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "error",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "id",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "jobRunType",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "startedDate",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "status",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "total",
+                        "kind": "integer",
+                        "example": 1
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "searchId",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "stopRequested",
+                  "kind": "boolean",
+                  "example": false
+                }
+              ]
+            },
+            {
+              "name": "searchId",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

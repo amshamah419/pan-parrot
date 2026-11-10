@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /public_api/v1/incidents/get_incidents.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /public_api/v1/incidents/get_incidents. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /public_api/v1/incidents/get_incidents reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CortexXDR/Integrations/CortexXDRIR",
@@ -21,14 +21,14 @@
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Get-Incidents",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /public_api/v1/incidents/get_incidents. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /public_api/v1/incidents/get_incidents reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Get-Incidents",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /public_api/v1/incidents/get_incidents. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /public_api/v1/incidents/get_incidents reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,65 +59,246 @@
           "kind": "object",
           "children": [
             {
-              "name": "XDM",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "ASSET_GROUP",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
               "name": "action_file_path",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "alert_count",
-              "kind": "integer"
-            },
-            {
-              "name": "alert_id",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
               "name": "alerts",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "data",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "endpoint_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "host_name",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "assigned_user_mail",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "creation_time",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "file_artifacts",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "data",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "host_ip",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "hosts",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "incident",
               "kind": "object",
               "children": [
                 {
-                  "name": "action",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "action_country",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "action_external_hostname",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "action_file_macro_sha256",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "action_file_md5",
-                  "kind": "string",
-                  "example": "lab"
+                  "name": "alert_count",
+                  "kind": "integer",
+                  "example": 1
                 }
               ]
             },
             {
-              "name": "alerts_limit_per_incident",
+              "name": "incident_sources",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "incidents",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "incidents_from_previous_run",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "network_artifacts",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "data",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "reply",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "DATA",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "alerts",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "data",
+                      "kind": "array",
+                      "item": {
+                        "name": "item",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "action_file_path",
+                            "kind": "array",
+                            "item": {
+                              "name": "item",
+                              "kind": "string",
+                              "example": "lab"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "alerts_limit_per_incident",
+                  "kind": "integer",
+                  "example": 1
+                },
+                {
+                  "name": "incidents",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "alerts",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "data",
+                            "kind": "array",
+                            "item": {
+                              "name": "item",
+                              "kind": "object",
+                              "children": [
+                                {
+                                  "name": "action_file_path",
+                                  "kind": "array",
+                                  "item": {
+                                    "name": "item",
+                                    "kind": "string",
+                                    "example": "lab"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "name": "incident_id",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "sync_owners",
               "kind": "string",
               "example": "lab"
+            },
+            {
+              "name": "users",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }

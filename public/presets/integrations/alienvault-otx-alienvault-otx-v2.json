@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /IPv4/general.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /IPv4/general, GET /cve/general. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /IPv4/general, GET /cve/general reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AlienVault_OTX/Integrations/AlienVault_OTX_v2",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://otx.alienvault.com/api",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /IPv4/general, GET /cve/general. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /IPv4/general, GET /cve/general reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://otx.alienvault.com/api",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /IPv4/general, GET /cve/general. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /IPv4/general, GET /cve/general reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,11 +59,6 @@
           "kind": "object",
           "children": [
             {
-              "name": "AlienVaultOTX",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "alexa",
               "kind": "string",
               "example": "lab"
@@ -74,28 +69,118 @@
               "example": "lab"
             },
             {
-              "name": "attack_ids",
+              "name": "assessment",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "author",
+              "name": "attack_ids",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "count",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "country_code",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "false_positive",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "assessment",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "indicator",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "latitude",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "longitude",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "passive_dns",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "pulse_info",
               "kind": "object",
               "children": [
                 {
-                  "name": "id",
+                  "name": "count",
                   "kind": "string",
                   "example": "lab"
                 },
                 {
-                  "name": "username",
+                  "name": "pulses",
                   "kind": "string",
                   "example": "lab"
                 }
               ]
             },
             {
-              "name": "count",
+              "name": "reputation",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "url_list",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "validation",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "whois",
               "kind": "string",
               "example": "lab"
             }
@@ -128,45 +213,146 @@
           "kind": "object",
           "children": [
             {
-              "name": "AlienVaultOTX",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "alexa",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "asn",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "attack_ids",
+              "name": "assessment",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "author",
+              "name": "attack_ids",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "count",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "country_code",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "cvss",
               "kind": "object",
               "children": [
                 {
-                  "name": "id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "username",
+                  "name": "Score",
                   "kind": "string",
                   "example": "lab"
                 }
               ]
             },
             {
-              "name": "count",
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "date_created",
               "kind": "string",
               "example": "lab"
+            },
+            {
+              "name": "date_modified",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "false_positive",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "assessment",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "indicator",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "latitude",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "longitude",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "passive_dns",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "pulse_info",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "count",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "pulses",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "reputation",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "url_list",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "validation",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }

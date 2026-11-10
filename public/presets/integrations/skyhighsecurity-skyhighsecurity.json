@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /external/api/v1/queryIncidents.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /external/api/v1/queryIncidents. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /external/api/v1/queryIncidents reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SkyhighSecurity/Integrations/SkyhighSecurity",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://success.myshn.net/Skyhigh_CASB/Skyhigh_CASB_APIs",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /external/api/v1/queryIncidents. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /external/api/v1/queryIncidents reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://success.myshn.net/Skyhigh_CASB/Skyhigh_CASB_APIs",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /external/api/v1/queryIncidents. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /external/api/v1/queryIncidents reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,44 +59,30 @@
           "kind": "object",
           "children": [
             {
-              "name": "actorId",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "body",
               "kind": "object",
               "children": [
                 {
                   "name": "incidents",
-                  "kind": "string",
-                  "example": "lab"
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
                 },
                 {
                   "name": "responseInfo",
-                  "kind": "string",
-                  "example": "lab"
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "nextStartTime",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
                 }
               ]
-            },
-            {
-              "name": "content",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "content_checksum",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "id",
-              "kind": "integer"
-            },
-            {
-              "name": "identifier",
-              "kind": "string",
-              "example": "lab"
             }
           ]
         }

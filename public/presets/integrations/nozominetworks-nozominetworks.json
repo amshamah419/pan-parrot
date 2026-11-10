@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /api/open/query/do.",
   "notes": [
-    "Removed credential or fetch-state fields that the response command does not read."
+    "Sample fields are the ones GET /api/open/query/do reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/NozomiNetworks/Integrations/NozomiNetworks",
@@ -21,15 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/NozomiNetworks/Integrations/NozomiNetworks",
       "notes": [
-        "Removed credential or fetch-state fields that the response command does not read."
+        "Sample fields are the ones GET /api/open/query/do reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/NozomiNetworks/Integrations/NozomiNetworks",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/open/query/do. Fields are keys the client reads or test_data contains.",
-          "Removed credential or fetch-state fields that the response command does not read."
+          "Sample fields are the ones GET /api/open/query/do reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -60,29 +59,24 @@
           "kind": "object",
           "children": [
             {
-              "name": "customAlertFilter",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "defaultIncidentRole",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "endpoint",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "error",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "fecthAlsoIncidents",
-              "kind": "string",
-              "example": "lab"
+              "name": "result",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             }
           ]
         }

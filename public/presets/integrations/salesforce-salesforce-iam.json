@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Salesforce/Integrations/Salesforce_IAM",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /services/data/v44.0/parameterizedSearch. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /services/data/v44.0/parameterizedSearch reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Salesforce/Integrations/Salesforce_IAM",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /services/data/v44.0/parameterizedSearch. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /services/data/v44.0/parameterizedSearch reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -75,14 +75,29 @@
               "example": "lab"
             },
             {
-              "name": "create_if_not_exists",
+              "name": "id",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "disable_user_enabled",
-              "kind": "string",
-              "example": "lab"
+              "name": "searchRecords",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "Id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "IsActive",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -113,6 +128,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Salesforce/Integrations/Salesforce_IAM",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /services/data/v44.0/parameterizedSearch. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /services/data/v44.0/parameterizedSearch reads in the matched command. Lists the command iterates are arrays."
   ]
 }

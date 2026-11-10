@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /sample/submit.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /sample/submit, GET /analysis/sample/{sample}. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /sample/submit, GET /analysis/sample/{sample} reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VMRay/Integrations/VMRay",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://www.vmray.com/cyber-security-blog/vmray-analyzer-api/",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /sample/submit, GET /analysis/sample/{sample}. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /sample/submit, GET /analysis/sample/{sample} reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://www.vmray.com/cyber-security-blog/vmray-analyzer-api/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /sample/submit, GET /analysis/sample/{sample}. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /sample/submit, GET /analysis/sample/{sample} reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -79,12 +79,169 @@
               "example": "lab"
             },
             {
-              "name": "VMRay",
+              "name": "archive_password",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Verdict",
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "document_password",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "entry_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "file_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "job_created",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "job_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "job_jobrule_sampletype",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "job_sample_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "job_vm_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "job_vm_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "jobs",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "max_jobs",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "net_scheme_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "path",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sample_created",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sample_filesize",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sample_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sample_sha1hash",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sample_ssdeephash",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sample_type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sample_webif_url",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "samples",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "shareable",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "submission_filename",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "submission_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "submission_sample_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "submission_webif_url",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "submissions",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "tags",
               "kind": "string",
               "example": "lab"
             }
@@ -117,32 +274,95 @@
           "kind": "object",
           "children": [
             {
-              "name": "JobID",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "SampleID",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "SampleURL",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "SubmissionID",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "VMRay",
-              "kind": "string",
-              "example": "lab"
+              "kind": "object",
+              "children": [
+                {
+                  "name": "Analysis(val",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "AnalysisID === obj",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "AnalysisID)",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
             {
               "name": "Verdict",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis_job_started",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis_sample_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis_sample_md5",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis_sample_sha1",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis_sample_sha256",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis_severity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis_verdict",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis_verdict_reason_description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis_webif_url",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "limit",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sample_id",
               "kind": "string",
               "example": "lab"
             }

@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecEmailSecurity/Integrations/SymantecEmailSecurity",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /v1/mails/preview. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /v1/mails/preview reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecEmailSecurity/Integrations/SymantecEmailSecurity",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /v1/mails/preview. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /v1/mails/preview reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,63 +55,6 @@
           "kind": "object",
           "children": [
             {
-              "name": "Domains",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "DeliveryQueueCountInbound",
-                  "kind": "integer"
-                },
-                {
-                  "name": "DeliveryQueueCountOutbound",
-                  "kind": "integer"
-                },
-                {
-                  "name": "LongestTimeInDeliveryQueueInbound",
-                  "kind": "integer"
-                },
-                {
-                  "name": "LongestTimeInDeliveryQueueOutbound",
-                  "kind": "integer"
-                },
-                {
-                  "name": "LongestTimeInReceiveQueueInbound",
-                  "kind": "integer"
-                }
-              ]
-            },
-            {
-              "name": "Incidents",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "Action",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "Severity",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "Verdict",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "action",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "description",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "details",
               "kind": "object",
               "children": [
@@ -120,8 +63,8 @@
                   "kind": "array",
                   "item": {
                     "name": "item",
-                    "kind": "string",
-                    "example": "lab"
+                    "kind": "object",
+                    "children": []
                   }
                 },
                 {
@@ -129,16 +72,58 @@
                   "kind": "array",
                   "item": {
                     "name": "item",
-                    "kind": "string",
-                    "example": "lab"
+                    "kind": "object",
+                    "children": []
                   }
+                },
+                {
+                  "name": "headers",
+                  "kind": "object",
+                  "children": []
                 }
               ]
             },
             {
-              "name": "detectionMethod",
-              "kind": "string",
-              "example": "lab"
+              "name": "mail_list",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "metadata",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "email_date_received",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "quarantine_info",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "quarantine_type",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "quarantine_reason",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
             }
           ]
         }
@@ -169,6 +154,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecEmailSecurity/Integrations/SymantecEmailSecurity",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /v1/mails/preview. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /v1/mails/preview reads in the matched command. Lists the command iterates are arrays."
   ]
 }

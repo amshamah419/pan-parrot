@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "SIEM logs as a zip plus an mc-siem-token header.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /api/audit/get-siem-logs. The collector writes that body as a zip and pages with the mc-siem-token header."
+    "Sample fields are the ones POST /api/audit/get-siem-logs reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastEventCollector",
@@ -21,14 +21,14 @@
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /api/audit/get-siem-logs. The collector writes that body as a zip and pages with the mc-siem-token header."
+        "Sample fields are the ones POST /api/audit/get-siem-logs reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /api/audit/get-siem-logs. The collector writes that body as a zip and pages with the mc-siem-token header."
+          "Sample fields are the ones POST /api/audit/get-siem-logs reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -60,32 +60,35 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "Content-Disposition",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Content-Type",
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "fail",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "mc-siem-token",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "after",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "eventTime",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "id",
+              "name": "type",
               "kind": "string",
               "example": "lab"
             }

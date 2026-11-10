@@ -5,11 +5,9 @@
   "vendor": "Broadcom",
   "fidelity": "verified",
   "curated": true,
-  "summary": "POST /api/alerts/v7/orgs/{org_key}/alerts/_search returns results.",
+  "summary": "POST /api/alerts/v7/orgs/{org_key}/alerts/_search",
   "notes": [
-    "The v7 search response is { results, num_found, num_available }. This mock returns results and num_found. num_available is omitted.",
-    "The XSOAR client posts to api/alerts/v7/orgs/{org_key}/alerts/_search. Devices search is not modeled.",
-    "X-Auth-Token must be the dummy token. The org key is a path parameter."
+    "Sample fields are the ones POST /api/alerts/v7/orgs/{org_key}/alerts/_search reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CarbonBlackDefense/Integrations/CarbonBlackEndpointStandardV3",
@@ -22,15 +20,15 @@
       "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.carbonblack.com/reference/carbon-black-cloud/platform/latest/alerts-api/",
-      "notes": [],
+      "notes": [
+        "Sample fields are the ones POST /api/alerts/v7/orgs/{org_key}/alerts/_search reads in the matched command. Lists the command iterates are arrays."
+      ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developer.carbonblack.com/reference/carbon-black-cloud/platform/latest/alerts-api/",
-        "checkedAt": "2026-11-09",
+        "checkedAt": "2026-11-10",
         "differences": [
-          "The v7 search response is { results, num_found, num_available }. This mock returns results and num_found. num_available is omitted.",
-          "The XSOAR client posts to api/alerts/v7/orgs/{org_key}/alerts/_search. Devices search is not modeled.",
-          "X-Auth-Token must be the dummy token. The org key is a path parameter."
+          "Sample fields are the ones POST /api/alerts/v7/orgs/{org_key}/alerts/_search reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -57,43 +55,30 @@
           "type": "object"
         },
         "record": {
-          "name": "search",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "num_found",
-              "kind": "integer"
-            },
-            {
               "name": "results",
               "kind": "array",
-              "pageItems": true,
               "item": {
-                "name": "alert",
+                "name": "item",
                 "kind": "object",
                 "children": [
                   {
-                    "name": "id",
-                    "kind": "id"
+                    "name": "backend_timestamp",
+                    "kind": "string",
+                    "example": "lab"
                   },
                   {
-                    "name": "type",
+                    "name": "id",
                     "kind": "string",
-                    "example": "CB_ANALYTICS"
+                    "example": "lab"
                   },
                   {
                     "name": "severity",
-                    "kind": "integer"
-                  },
-                  {
-                    "name": "device_name",
                     "kind": "string",
-                    "example": "lab-workstation"
-                  },
-                  {
-                    "name": "backend_timestamp",
-                    "kind": "timestamp",
-                    "format": "iso"
+                    "example": "lab"
                   }
                 ]
               }

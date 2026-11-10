@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Bitbucket/Integrations/Bitbucket",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /workspaces/{workspace}/members. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /workspaces/{workspace}/members reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Bitbucket/Integrations/Bitbucket",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /workspaces/{workspace}/members. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /workspaces/{workspace}/members reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,7 +55,17 @@
           "kind": "object",
           "children": [
             {
-              "name": "assignee",
+              "name": "next",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "pagelen",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "user",
               "kind": "object",
               "children": [
                 {
@@ -71,67 +81,29 @@
               ]
             },
             {
-              "name": "author",
+              "name": "values",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "workspace",
               "kind": "object",
               "children": [
                 {
-                  "name": "account_id",
+                  "name": "name",
                   "kind": "string",
                   "example": "lab"
                 },
                 {
-                  "name": "display_name",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "raw",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "user",
-                  "kind": "object",
-                  "children": [
-                    {
-                      "name": "account_id",
-                      "kind": "string",
-                      "example": "lab"
-                    },
-                    {
-                      "name": "display_name",
-                      "kind": "string",
-                      "example": "lab"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "client_id",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "content",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "raw",
+                  "name": "slug",
                   "kind": "string",
                   "example": "lab"
                 }
               ]
-            },
-            {
-              "name": "created_on",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "date",
-              "kind": "string",
-              "example": "lab"
             }
           ]
         }
@@ -162,6 +134,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Bitbucket/Integrations/Bitbucket",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /workspaces/{workspace}/members. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /workspaces/{workspace}/members reads in the matched command. Lists the command iterates are arrays."
   ]
 }

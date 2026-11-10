@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /api/v2/alert.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/v2/alert, POST /api/v1/alerts. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/v2/alert, POST /api/v1/alerts reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Carbon_Black_Enterprise_Response/Integrations/CarbonBlackResponseV2",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.carbonblack.com/reference/enterprise-response/6.3/rest-api/",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/v2/alert, POST /api/v1/alerts. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/v2/alert, POST /api/v1/alerts reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developer.carbonblack.com/reference/enterprise-response/6.3/rest-api/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/v2/alert, POST /api/v1/alerts. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/v2/alert, POST /api/v1/alerts reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,32 +59,72 @@
           "kind": "object",
           "children": [
             {
-              "name": "ProcessOpen_sub-type",
+              "name": "facets",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "alert_severity",
+              "name": "results",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "alert_severity",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "created_time",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "hostname",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "md5",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "process_name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "process_path",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "segment_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "status",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "unique_id",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "terms",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "build_version_string",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "computer_name",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "created_time",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "description",
+              "name": "total_results",
               "kind": "string",
               "example": "lab"
             }
@@ -115,38 +155,7 @@
         "record": {
           "name": "body",
           "kind": "object",
-          "children": [
-            {
-              "name": "ProcessOpen_sub-type",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "alert_severity",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "build_version_string",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "computer_name",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "created_time",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "description",
-              "kind": "string",
-              "example": "lab"
-            }
-          ]
+          "children": []
         }
       }
     ],

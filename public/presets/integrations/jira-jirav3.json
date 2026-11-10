@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /rest/api/{api_version}/search/jql.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /rest/api/{api_version}/search/jql, GET /rest/api/3/project/search. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /rest/api/{api_version}/search/jql, GET /rest/api/3/project/search reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Jira/Integrations/JiraV3",
@@ -21,14 +21,14 @@
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /rest/api/{api_version}/search/jql, GET /rest/api/3/project/search. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /rest/api/{api_version}/search/jql, GET /rest/api/3/project/search reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /rest/api/{api_version}/search/jql, GET /rest/api/3/project/search. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /rest/api/{api_version}/search/jql, GET /rest/api/3/project/search reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,32 +59,142 @@
           "kind": "object",
           "children": [
             {
-              "name": "Comment",
+              "name": "choices",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "comments",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "description",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Components",
+              "name": "design",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "questions",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "settings",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "name",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "fields",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "description",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "id",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Creator",
+              "name": "issue_ids",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "issues",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "fields",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "key",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "key",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Description",
+              "name": "names",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "FileID",
+              "name": "nextPageToken",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "ID",
+              "name": "renderedFields",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "description",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "state",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "answers",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "timeZone",
               "kind": "string",
               "example": "lab"
             }
@@ -117,34 +227,43 @@
           "kind": "object",
           "children": [
             {
-              "name": "Comment",
+              "name": "Key",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Components",
+              "name": "baseUrl",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Creator",
+              "name": "id",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Description",
+              "name": "key",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "FileID",
+              "name": "self",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "ID",
+              "name": "ticket_id",
               "kind": "string",
               "example": "lab"
+            },
+            {
+              "name": "values",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }

@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /logs.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /logs. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /logs reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Slack/Integrations/SlackEventCollector",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://api.slack.com/admins/audit-logs",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /logs. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /logs reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://api.slack.com/admins/audit-logs",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /logs. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /logs reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,76 +59,24 @@
           "kind": "object",
           "children": [
             {
-              "name": "action",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "actor",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "type",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "user",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "context",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "ip_address",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "location",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "session_id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "ua",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "date_create",
-              "kind": "integer"
-            },
-            {
-              "name": "entity",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "type",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "user",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
               "name": "entries",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "response_metadata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "next_cursor",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
             }
           ]
         }

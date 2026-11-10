@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /groups.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /groups. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /groups reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphGroups/Integrations/MicrosoftGraphGroups",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/group-list",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /groups. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /groups reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://learn.microsoft.com/en-us/graph/api/group-list",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /groups. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /groups reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,40 +59,18 @@
           "kind": "object",
           "children": [
             {
-              "name": "@odata",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "nextLink",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "credentials_certificate_thumbprint",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "creds_auth_code",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "creds_auth_id",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "creds_tenant_id",
+              "name": "@odata.nextLink",
               "kind": "string",
               "example": "lab"
             },
             {
               "name": "value",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }

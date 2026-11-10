@@ -7,9 +7,7 @@
   "curated": true,
   "summary": "Sample search and threat indicator context.",
   "notes": [
-    "The client posts /api/v1.0/samples/search and reads hits, then GETs /api/v1.0/tic. The pack is marked deprecated in XSOAR.",
-    "The search cookie poll at /samples/results/{cookie} is not modeled. This mock returns hits on the search call.",
-    "The AutoFocus API page was not reloaded. The apiKey header is the dummy key."
+    "Sample fields are the ones POST /api/v1.0/samples/search, GET /api/v1.0/tic reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AutoFocus/Integrations/AutofocusV2",
@@ -23,18 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.paloaltonetworks.com/autofocus/autofocus-api/about-the-autofocus-api",
       "notes": [
-        "The client posts /api/v1.0/samples/search and reads hits, then GETs /api/v1.0/tic. The pack is marked deprecated in XSOAR.",
-        "The search cookie poll at /samples/results/{cookie} is not modeled. This mock returns hits on the search call.",
-        "The AutoFocus API page was not reloaded. The apiKey header is the dummy key."
+        "Sample fields are the ones POST /api/v1.0/samples/search, GET /api/v1.0/tic reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.paloaltonetworks.com/autofocus/autofocus-api/about-the-autofocus-api",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client posts /api/v1.0/samples/search and reads hits, then GETs /api/v1.0/tic. The pack is marked deprecated in XSOAR.",
-          "The search cookie poll at /samples/results/{cookie} is not modeled. This mock returns hits on the search call.",
-          "The AutoFocus API page was not reloaded. The apiKey header is the dummy key."
+          "Sample fields are the ones POST /api/v1.0/samples/search, GET /api/v1.0/tic reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -54,41 +48,14 @@
           "kind": "object",
           "children": [
             {
-              "name": "autofocus_cookie",
-              "kind": "id"
+              "name": "af_cookie",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "total",
-              "kind": "integer"
-            },
-            {
-              "name": "hits",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "hit",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "_id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "sha256",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "verdict",
-                    "kind": "enum",
-                    "enumValues": [
-                      "malware",
-                      "benign",
-                      "grayware"
-                    ]
-                  }
-                ]
-              }
+              "name": "af_in_progress",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         },
@@ -119,35 +86,26 @@
           "kind": "object",
           "children": [
             {
-              "name": "indicator",
-              "kind": "string",
-              "example": "8.8.8.8"
-            },
-            {
-              "name": "indicatorType",
-              "kind": "const",
-              "constValue": "ipv4"
-            },
-            {
-              "name": "tags",
+              "name": "aliases",
               "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
               "item": {
-                "name": "tag",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "tag_name",
-                    "kind": "string",
-                    "example": "lab-malware"
-                  },
-                  {
-                    "name": "public_tag_name",
-                    "kind": "string",
-                    "example": "Malware"
-                  }
-                ]
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "bucket_info",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "tagGroups",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
               }
             }
           ]

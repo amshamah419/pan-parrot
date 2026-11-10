@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureCompute/Integrations/AzureCompute_v2",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /{resource_group}/providers/Microsoft.Compute/virtualMachines. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /{resource_group}/providers/Microsoft.Compute/virtualMachines reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureCompute/Integrations/AzureCompute_v2",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /{resource_group}/providers/Microsoft.Compute/virtualMachines. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /{resource_group}/providers/Microsoft.Compute/virtualMachines reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -55,60 +55,67 @@
           "kind": "object",
           "children": [
             {
+              "name": "nextLink",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
               "name": "value",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "etag",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "location",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "name",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "properties",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "PrivateIPAddress",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "code",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "diskSizeGB",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "displayName",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "displayStatus",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "location",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "properties",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "provisioningState",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "storageProfile",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "osDisk",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "diskSizeGB",
+                                "kind": "integer",
+                                "example": 1
+                              },
+                              {
+                                "name": "osType",
+                                "kind": "string",
+                                "example": "lab"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "vmId",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
             }
           ]
         }
@@ -139,6 +146,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureCompute/Integrations/AzureCompute_v2",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /{resource_group}/providers/Microsoft.Compute/virtualMachines. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /{resource_group}/providers/Microsoft.Compute/virtualMachines reads in the matched command. Lists the command iterates are arrays."
   ]
 }

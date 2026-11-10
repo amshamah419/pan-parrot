@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: POST /{index}/_search.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /{index}/_search. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones POST /{index}/_search reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Elasticsearch/Integrations/Elasticsearch_v2",
@@ -21,14 +21,14 @@
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /{index}/_search. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones POST /{index}/_search reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /{index}/_search. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones POST /{index}/_search reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,55 +59,123 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
+              "name": "_source",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "cases",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "updated_at",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "closeReason",
               "kind": "string",
               "example": "lab"
+            },
+            {
+              "name": "error",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "expires_in",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "fields",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
               "name": "hits",
               "kind": "object",
               "children": [
                 {
-                  "name": "events",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
                   "name": "hits",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "max_score",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "total",
-                  "kind": "string",
-                  "example": "lab"
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "_id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "_index",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "_source",
+                        "kind": "array",
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      }
+                    ]
+                  }
                 }
               ]
             },
             {
-              "name": "value",
+              "name": "message",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "ID",
+              "name": "owner",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "Tags",
+              "name": "severity",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "_id",
+              "name": "status",
               "kind": "string",
               "example": "lab"
+            },
+            {
+              "name": "version",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "number",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
             }
           ]
         }

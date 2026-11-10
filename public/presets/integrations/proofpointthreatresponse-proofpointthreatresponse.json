@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "The checker matched GET /api/incidents.",
   "notes": [
-    "The checker matched GET /api/incidents. The client concatenates the instance URL and api/incidents with no extra slash, so the route on the catch URL is /api/incidents."
+    "Sample fields are the ones GET /api/incidents reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ProofpointThreatResponse/Integrations/ProofpointThreatResponse",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://help.proofpoint.com/Threat_Response/API_Documentation",
       "notes": [
-        "The checker matched GET /api/incidents. The client concatenates the instance URL and api/incidents with no extra slash, so the route on the catch URL is /api/incidents."
+        "Sample fields are the ones GET /api/incidents reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://help.proofpoint.com/Threat_Response/API_Documentation",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The checker matched GET /api/incidents. The client concatenates the instance URL and api/incidents with no extra slash, so the route on the catch URL is /api/incidents."
+          "Sample fields are the ones GET /api/incidents reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -44,37 +44,99 @@
           "type": "array"
         },
         "record": {
-          "name": "incident",
+          "name": "body",
           "kind": "object",
           "children": [
             {
+              "name": "assignee",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created_at",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "emails",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "event_count",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "event_sources",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "events",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "failed_quarantines",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
               "name": "id",
-              "kind": "integer"
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "incident_field_values",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "pending_quarantines",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "quarantine_results",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "score",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "successful_quarantine",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "summary",
               "kind": "string",
-              "example": "Malicious attachment"
+              "example": "lab"
             },
             {
-              "name": "score",
-              "kind": "integer"
-            },
-            {
-              "name": "state",
-              "kind": "enum",
-              "enumValues": [
-                "open",
-                "closed"
-              ]
-            },
-            {
-              "name": "created_at",
-              "kind": "timestamp"
-            },
-            {
-              "name": "event_count",
-              "kind": "integer"
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         },

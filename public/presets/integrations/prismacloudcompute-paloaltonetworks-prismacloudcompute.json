@@ -7,9 +7,7 @@
   "curated": true,
   "summary": "Runtime file-integrity audits. The CWPP route returns a JSON array.",
   "notes": [
-    "GET /api/v1/audits/runtime/file-integrity returns an array. The client calls audits/runtime/file-integrity.",
-    "file_integrity_events.json is a longer event. This mock keeps time, hostname, file, and type.",
-    "Basic auth is the Console user. Defenders, images, and CVE routes are not modeled."
+    "Sample fields are the ones GET /api/v1/audits/runtime/file-integrity reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PrismaCloudCompute/Integrations/PaloAltoNetworks_PrismaCloudCompute",
@@ -23,18 +21,14 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://pan.dev/prisma-cloud/api/cwpp/get-audits-runtime-file-integrity/",
       "notes": [
-        "GET /api/v1/audits/runtime/file-integrity returns an array. The client calls audits/runtime/file-integrity.",
-        "file_integrity_events.json is a longer event. This mock keeps time, hostname, file, and type.",
-        "Basic auth is the Console user. Defenders, images, and CVE routes are not modeled."
+        "Sample fields are the ones GET /api/v1/audits/runtime/file-integrity reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://pan.dev/prisma-cloud/api/cwpp/get-audits-runtime-file-integrity/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "GET /api/v1/audits/runtime/file-integrity returns an array. The client calls audits/runtime/file-integrity.",
-          "file_integrity_events.json is a longer event. This mock keeps time, hostname, file, and type.",
-          "Basic auth is the Console user. Defenders, images, and CVE routes are not modeled."
+          "Sample fields are the ones GET /api/v1/audits/runtime/file-integrity reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -50,35 +44,82 @@
           "type": "array"
         },
         "record": {
-          "name": "event",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "time",
-              "kind": "timestamp"
-            },
-            {
-              "name": "hostname",
+              "name": "AccountID",
               "kind": "string",
-              "example": "lab-host"
+              "example": "lab"
             },
             {
-              "name": "type",
-              "kind": "enum",
-              "enumValues": [
-                "file",
-                "process"
-              ]
-            },
-            {
-              "name": "file",
+              "name": "Cluster",
               "kind": "string",
-              "example": "/etc/passwd"
+              "example": "lab"
             },
             {
-              "name": "user",
+              "name": "Collections",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "Description",
               "kind": "string",
-              "example": "root"
+              "example": "lab"
+            },
+            {
+              "name": "EventType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileType",
+              "kind": "integer",
+              "example": 1
+            },
+            {
+              "name": "Fqdn",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Hostname",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Path",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ProcessName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "RuleName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "User",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_Id",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         },

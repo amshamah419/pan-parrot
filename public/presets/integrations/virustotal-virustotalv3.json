@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /api/v3/files/{file}.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/v3/files/{file}, GET /api/v3/ip_addresses/{ip}. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /api/v3/files/{file}, GET /api/v3/ip_addresses/{ip} reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VirusTotal/Integrations/VirusTotalV3",
@@ -21,14 +21,14 @@
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs.virustotal.com/reference/file-info",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/v3/files/{file}, GET /api/v3/ip_addresses/{ip}. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /api/v3/files/{file}, GET /api/v3/ip_addresses/{ip} reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.virustotal.com/reference/file-info",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/v3/files/{file}, GET /api/v3/ip_addresses/{ip}. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /api/v3/files/{file}, GET /api/v3/ip_addresses/{ip} reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -84,7 +84,272 @@
               "example": "lab"
             },
             {
-              "name": "abuse",
+              "name": "attributes",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "authentihash",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "copyright",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "creation_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "attributes",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "authentihash",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "creation_date",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "exiftool",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "CompanyName",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "FileTypeExtension",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "MIMEType",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "OriginalFileName",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "ProductName",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "last_analysis_results",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "last_analysis_stats",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "malicious",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "last_modification_date",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "md5",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "sha1",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "sha256",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "signature_info",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "copyright",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "description",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "file version",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "internal name",
+                            "kind": "string",
+                            "example": "lab"
+                          },
+                          {
+                            "name": "original name",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "size",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "ssdeep",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "tags",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "relationships",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "type",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "error",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "code",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "exiftool",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "file version",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "internal name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_analysis_results",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_analysis_stats",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_modification_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "malicious",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "md5",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "original name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "relationships",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sha1",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "sha256",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "signature_info",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "size",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ssdeep",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "tags",
               "kind": "string",
               "example": "lab"
             }
@@ -117,32 +382,115 @@
           "kind": "object",
           "children": [
             {
-              "name": "CompanyName",
+              "name": "as_owner",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "FileTypeExtension",
+              "name": "asn",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "MIMEType",
+              "name": "attributes",
+              "kind": "object",
+              "children": []
+            },
+            {
+              "name": "country",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "OriginalFileName",
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "attributes",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "as_owner",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "asn",
+                        "kind": "integer",
+                        "example": 1
+                      },
+                      {
+                        "name": "country",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "last_analysis_results",
+                        "kind": "object",
+                        "children": []
+                      },
+                      {
+                        "name": "last_analysis_stats",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "malicious",
+                            "kind": "integer",
+                            "example": 1
+                          }
+                        ]
+                      },
+                      {
+                        "name": "last_modification_date",
+                        "kind": "integer",
+                        "example": 1
+                      }
+                    ]
+                  },
+                  {
+                    "name": "relationships",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "error",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "code",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "last_analysis_results",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "ProductName",
+              "name": "last_analysis_stats",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "abuse",
+              "name": "last_modification_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "malicious",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "relationships",
               "kind": "string",
               "example": "lab"
             }

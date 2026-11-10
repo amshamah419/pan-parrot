@@ -7,9 +7,7 @@
   "curated": true,
   "summary": "Process search job.",
   "notes": [
-    "POST /api/investigate/v2/orgs/{org}/processes/search_jobs returns { job_id }. Result rows are omitted.",
-    "The search guide was not reloaded. The path is the public Enterprise EDR investigate API.",
-    "X-Auth-Token is required."
+    "Sample fields are the ones POST /api/investigate/v2/orgs/{org}/processes/search_jobs reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CarbonBlackEnterpriseEDR/Integrations/CarbonBlackEnterpriseEDR",
@@ -23,18 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.carbonblack.com/reference/carbon-black-cloud/platform/latest/platform-search-api/",
       "notes": [
-        "POST /api/investigate/v2/orgs/{org}/processes/search_jobs returns { job_id }. Result rows are omitted.",
-        "The search guide was not reloaded. The path is the public Enterprise EDR investigate API.",
-        "X-Auth-Token is required."
+        "Sample fields are the ones POST /api/investigate/v2/orgs/{org}/processes/search_jobs reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developer.carbonblack.com/reference/carbon-black-cloud/platform/latest/platform-search-api/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "POST /api/investigate/v2/orgs/{org}/processes/search_jobs returns { job_id }. Result rows are omitted.",
-          "The search guide was not reloaded. The path is the public Enterprise EDR investigate API.",
-          "X-Auth-Token is required."
+          "Sample fields are the ones POST /api/investigate/v2/orgs/{org}/processes/search_jobs reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -50,17 +44,28 @@
           "type": "object"
         },
         "record": {
-          "name": "job",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "job_id",
-              "kind": "uuid"
+              "name": "completed",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "status",
-              "kind": "const",
-              "constValue": "ACTIVE"
+              "name": "contacted",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "job_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "results",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         },

@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /reports/v2/top-eventtypes.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /reports/v2/top-eventtypes, GET /reports/v2/activity. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /reports/v2/top-eventtypes, GET /reports/v2/activity reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoUmbrellaReporting",
@@ -21,14 +21,14 @@
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-api-reference-reports-reporting-api-activity-get-activity-dns/",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /reports/v2/top-eventtypes, GET /reports/v2/activity. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /reports/v2/top-eventtypes, GET /reports/v2/activity reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-api-reference-reports-reporting-api-activity-get-activity-dns/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /reports/v2/top-eventtypes, GET /reports/v2/activity. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /reports/v2/top-eventtypes, GET /reports/v2/activity reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -59,40 +59,170 @@
           "kind": "object",
           "children": [
             {
+              "name": "categories",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
               "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "error",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "all",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "all_application",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "allapplications",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "application_category",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "applications",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "applications",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "applicationsallowed",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "applicationsblocked",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "categories",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "category",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "label",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "type",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "count",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "counts",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "allowedrequests",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "blockedrequests",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "requests",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "domain",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "domains",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "eventtype",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "files",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "filetypes",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "identities",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "identity",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "label",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "identitytypes",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "policycategories",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "policyrequests",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "requests",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "requestsallowed",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "requestsblocked",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "threat",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "threattype",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -123,40 +253,295 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "error",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "all",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "all_application",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
               "name": "allapplications",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
               "name": "application_category",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             },
             {
-              "name": "applications",
-              "kind": "string",
-              "example": "lab"
+              "name": "categories",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "category",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "data",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "allapplications",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "category",
+                          "kind": "object",
+                          "children": [
+                            {
+                              "name": "label",
+                              "kind": "string",
+                              "example": "lab"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "label",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "applications",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "applicationsallowed",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "applicationsblocked",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "categories",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "category",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "label",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "type",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "count",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "counts",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "allowedrequests",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "blockedrequests",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "requests",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "domain",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "domains",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "externalip",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "files",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "filetypes",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "identities",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "identity",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "label",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "identitytypes",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "internalip",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "policycategories",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "policyrequests",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "querytype",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "requests",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "requestsallowed",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "requestsblocked",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "signature",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "cves",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "label",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "threat",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "threattype",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "verdict",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "identities",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "identity",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }

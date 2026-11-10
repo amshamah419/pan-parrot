@@ -7,9 +7,7 @@
   "curated": true,
   "summary": "Best-practice assessment request and job status.",
   "notes": [
-    "The client posts https://api.stratacloud.paloaltonetworks.com/aiops/bpa/v1/requests and GETs /aiops/bpa/v1/jobs/{id}. This mock returns a report id and status COMPLETED.",
-    "The report download route is not modeled. The uploaded config is not parsed.",
-    "The AIOps API page was not reloaded. A bearer token is required."
+    "Sample fields are the ones POST /aiops/bpa/v1/requests, GET /aiops/bpa/v1/jobs/{report_id} reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworksAIOps/Integrations/PaloAltoNetworksAIOps",
@@ -23,18 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://pan.dev/aiops/api/",
       "notes": [
-        "The client posts https://api.stratacloud.paloaltonetworks.com/aiops/bpa/v1/requests and GETs /aiops/bpa/v1/jobs/{id}. This mock returns a report id and status COMPLETED.",
-        "The report download route is not modeled. The uploaded config is not parsed.",
-        "The AIOps API page was not reloaded. A bearer token is required."
+        "Sample fields are the ones POST /aiops/bpa/v1/requests, GET /aiops/bpa/v1/jobs/{report_id} reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://pan.dev/aiops/api/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client posts https://api.stratacloud.paloaltonetworks.com/aiops/bpa/v1/requests and GETs /aiops/bpa/v1/jobs/{id}. This mock returns a report id and status COMPLETED.",
-          "The report download route is not modeled. The uploaded config is not parsed.",
-          "The AIOps API page was not reloaded. A bearer token is required."
+          "Sample fields are the ones POST /aiops/bpa/v1/requests, GET /aiops/bpa/v1/jobs/{report_id} reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -54,13 +48,29 @@
           "kind": "object",
           "children": [
             {
-              "name": "report_id",
-              "kind": "id"
+              "name": "best_practices",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "download-url",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "status",
-              "kind": "const",
-              "constValue": "IN_PROGRESS"
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "upload-url",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         },
@@ -91,13 +101,29 @@
           "kind": "object",
           "children": [
             {
-              "name": "report_id",
-              "kind": "id"
+              "name": "best_practices",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "download-url",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "status",
-              "kind": "const",
-              "constValue": "COMPLETED"
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "upload-url",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         },

@@ -17,14 +17,14 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PhishLabs/Integrations/PhishLabsIOC_DRP",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /v1/data/cases/{query_type}. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /v1/data/cases/{query_type} reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/PhishLabs/Integrations/PhishLabsIOC_DRP",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /v1/data/cases/{query_type}. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /v1/data/cases/{query_type} reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -56,87 +56,176 @@
           "children": [
             {
               "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "appDate",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "attachments",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "applicationDescripion",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "applicationName",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "associatedURLs",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "attachments",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": []
+                    }
+                  },
+                  {
+                    "name": "attackSources",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "brand",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "caseId",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "caseNumber",
+                    "kind": "integer",
+                    "example": 1
+                  },
+                  {
+                    "name": "caseStatus",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "caseType",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "createdBy",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "displayName",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "id",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "customer",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "dateClosed",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "dateCreated",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "dateModified",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "description",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "developer",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "developerWebsite",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "emailAddress",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "hardware",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "language",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "phoneNumber",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "platform",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "resolution",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "resolutionStatus",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "title",
                     "kind": "string",
                     "example": "lab"
                   }
-                },
-                {
-                  "name": "brandAbuseFlag",
-                  "kind": "boolean"
-                },
-                {
-                  "name": "caseId",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "caseNumber",
-                  "kind": "integer"
-                }
-              ]
-            },
-            {
-              "name": "applicationDescripion",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "applicationName",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "associatedURLs",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "attachments",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "dateAdded",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "description",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "fileName",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "fileURL",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "id",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "attackSources",
-              "kind": "string",
-              "example": "lab"
+                ]
+              }
             }
           ]
         }
@@ -167,6 +256,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PhishLabs/Integrations/PhishLabsIOC_DRP",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /v1/data/cases/{query_type}. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /v1/data/cases/{query_type} reads in the matched command. Lists the command iterates are arrays."
   ]
 }

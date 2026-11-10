@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "Rebuilt from the client: GET /v1beta1/alerts.",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /v1beta1/alerts. Fields are keys the client reads or test_data contains."
+    "Sample fields are the ones GET /v1beta1/alerts reads in the matched command. Lists the command iterates are arrays."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GSuiteSecurityAlertCenter",
@@ -21,14 +21,14 @@
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developers.google.com/workspace/admin/alertcenter/reference/rest/v1beta1/alerts/list",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /v1beta1/alerts. Fields are keys the client reads or test_data contains."
+        "Sample fields are the ones GET /v1beta1/alerts reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developers.google.com/workspace/admin/alertcenter/reference/rest/v1beta1/alerts/list",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /v1beta1/alerts. Fields are keys the client reads or test_data contains."
+          "Sample fields are the ones GET /v1beta1/alerts reads in the matched command. Lists the command iterates are arrays."
         ]
       }
     },
@@ -64,19 +64,55 @@
               "example": "lab"
             },
             {
-              "name": "alert_filter",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "alerts",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "code",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "alertId",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "createTime",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "metadata",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "severity",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "status",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "source",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "updateTime",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             },
             {
               "name": "createTime",
@@ -84,7 +120,47 @@
               "example": "lab"
             },
             {
-              "name": "email",
+              "name": "feedback",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "metadata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "severity",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "status",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "nextPageToken",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "source",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "updateTime",
               "kind": "string",
               "example": "lab"
             }
