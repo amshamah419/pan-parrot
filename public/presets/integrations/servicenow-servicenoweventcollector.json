@@ -3,9 +3,9 @@
   "name": "ServiceNow Event Collector",
   "pack": "ServiceNow",
   "vendor": "ServiceNow",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "The checker matched GET /api/now/table/sys_audit.",
+  "summary": "From vendor docs. The checker matched GET /api/now/table/sys_audit.",
   "notes": [
     "The checker matched GET /api/now/table/sys_audit. The client builds that path from the audit LogType base /api/now/ and endpoint table/sys_audit. Case and syslog tables are not modeled."
   ],
@@ -17,20 +17,79 @@
       "kind": "preset",
       "id": "servicenow-servicenoweventcollector",
       "name": "ServiceNow Event Collector",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
       "notes": [
         "The checker matched GET /api/now/table/sys_audit. The client builds that path from the audit LogType base /api/now/ and endpoint table/sys_audit. Case and syslog tables are not modeled."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
+        "status": "vendor",
+        "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The checker matched GET /api/now/table/sys_audit. The client builds that path from the audit LogType base /api/now/ and endpoint table/sys_audit. Case and syslog tables are not modeled."
+          "4 of 5 commands from vendor docs, 0 approximate, 1 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "service-now-get-audit-logs",
+          "calls": [
+            "GET /api/now/table/sys_audit"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "audit",
+            "get--api-now-table-sys-outbound-http-log",
+            "get--api-now-table-syslog-transaction"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "service-now-get-syslog-transactions",
+          "calls": [
+            "GET /api/now/table/sys_audit"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "audit",
+            "get--api-now-table-sys-outbound-http-log",
+            "get--api-now-table-syslog-transaction"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "service-now-get-case-logs",
+          "calls": [
+            "GET /api/now/table/sys_audit"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "audit",
+            "get--api-now-table-sys-outbound-http-log",
+            "get--api-now-table-syslog-transaction"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "service-now-get-outbound-http-logs",
+          "calls": [
+            "GET /api/now/table/sys_audit"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "audit",
+            "get--api-now-table-sys-outbound-http-log",
+            "get--api-now-table-syslog-transaction"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "service-now-oauth-login",
+          "calls": [],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -76,7 +135,7 @@
           ]
         },
         "headers": {},
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -85,7 +144,66 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "{\n  \"result\": [\n    {\n      \"parent\": \"\",\n      \"made_sla\": \"true\",\n      \"watch_list\": \"\",\n      \"upon_reject\": \"cancel\",\n      \"sys_updated_on\": \"2016-01-19 04:52:04\",\n      \"approval_history\": \"\",\n      \"number\": \"PRB0000050\",\n      \"sys_updated_by\": \"glide.maint\",\n      \"opened_by\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/glide.maint\",\n        \"value\": \"glide.maint\"\n      },\n      \"user_input\": \"\",\n      \"sys_created_on\": \"2016-01-19 04:51:19\",\n      \"sys_domain\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n        \"value\": \"global\"\n      },\n      \"state\": \"4\",\n      \"sys_created_by\": \"glide.maint\",\n      \"knowledge\": \"false\",\n      \"order\": \"\",\n      \"closed_at\": \"2016-01-19 04:52:04\",\n      \"cmdb_ci\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/55b35562c0a8010e01cff22378e0aea9\",\n        \"value\": \"55b35562c0a8010e01cff22378e0aea9\"\n      },\n      \"delivery_plan\": \"\",\n      \"impact\": \"3\",\n      \"active\": \"false\",\n      \"work_notes_list\": \"\",\n      \"business_service\": \"\",\n      \"priority\": \"4\",\n      \"sys_domain_path\": \"/\",\n      \"time_worked\": \"\",\n      \"expected_start\": \"\",\n      \"rejection_goto\": \"\",\n      \"opened_at\": \"2016-01-19 04:49:47\",\n      \"business_duration\": \"1970-01-01 00:00:00\",\n      \"group_list\": \"\",\n      \"work_end\": \"\",\n      \"approval_set\": \"\",\n      \"wf_activity\": \"\",\n      \"work_notes\": \"\",\n      \"short_description\": \"Switch occasionally drops connections\",\n      \"correlation_display\": \"\",\n      \"delivery_task\": \"\",\n      \"work_start\": \"\",\n      \"assignment_group\": \"\",\n      \"additional_assignee_list\": \"\",\n      \"description\": \"Switch occasionally drops connections\",\n      \"calendar_duration\": \"1970-01-01 00:02:17\",\n      \"close_notes\": \"updated firmware\",\n      \"sys_class_name\": \"problem\",\n      \"closed_by\": \"\",\n      \"follow_up\": \"\",\n      \"sys_id\": \"04ce72c9c0a8016600b5b7f75ac67b5b\",\n      \"contact_type\": \"phone\",\n      \"urgency\": \"3\",\n      \"company\": \"\",\n      \"reassignment_count\": \"\",\n      \"activity_due\": \"\",\n      \"assigned_to\": \"\",\n      \"comments\": \"\",\n      \"approval\": \"not requested\",\n      \"sla_due\": \"\",\n      \"comments_and_work_notes\": \"\",\n      \"due_date\": \"\",\n      \"sys_mod_count\": \"1\",\n      \"sys_tags\": \"\",\n      \"escalation\": \"0\",\n      \"upon_approval\": \"proceed\",\n      \"correlation_id\": \"\",\n      \"location\": \"\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--api-now-table-sys-outbound-http-log",
+        "summary": "GET /api/now/table/sys_outbound_http_log",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/now/table/sys_outbound_http_log",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": [\n    {\n      \"parent\": \"\",\n      \"made_sla\": \"true\",\n      \"watch_list\": \"\",\n      \"upon_reject\": \"cancel\",\n      \"sys_updated_on\": \"2016-01-19 04:52:04\",\n      \"approval_history\": \"\",\n      \"number\": \"PRB0000050\",\n      \"sys_updated_by\": \"glide.maint\",\n      \"opened_by\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/glide.maint\",\n        \"value\": \"glide.maint\"\n      },\n      \"user_input\": \"\",\n      \"sys_created_on\": \"2016-01-19 04:51:19\",\n      \"sys_domain\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n        \"value\": \"global\"\n      },\n      \"state\": \"4\",\n      \"sys_created_by\": \"glide.maint\",\n      \"knowledge\": \"false\",\n      \"order\": \"\",\n      \"closed_at\": \"2016-01-19 04:52:04\",\n      \"cmdb_ci\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/55b35562c0a8010e01cff22378e0aea9\",\n        \"value\": \"55b35562c0a8010e01cff22378e0aea9\"\n      },\n      \"delivery_plan\": \"\",\n      \"impact\": \"3\",\n      \"active\": \"false\",\n      \"work_notes_list\": \"\",\n      \"business_service\": \"\",\n      \"priority\": \"4\",\n      \"sys_domain_path\": \"/\",\n      \"time_worked\": \"\",\n      \"expected_start\": \"\",\n      \"rejection_goto\": \"\",\n      \"opened_at\": \"2016-01-19 04:49:47\",\n      \"business_duration\": \"1970-01-01 00:00:00\",\n      \"group_list\": \"\",\n      \"work_end\": \"\",\n      \"approval_set\": \"\",\n      \"wf_activity\": \"\",\n      \"work_notes\": \"\",\n      \"short_description\": \"Switch occasionally drops connections\",\n      \"correlation_display\": \"\",\n      \"delivery_task\": \"\",\n      \"work_start\": \"\",\n      \"assignment_group\": \"\",\n      \"additional_assignee_list\": \"\",\n      \"description\": \"Switch occasionally drops connections\",\n      \"calendar_duration\": \"1970-01-01 00:02:17\",\n      \"close_notes\": \"updated firmware\",\n      \"sys_class_name\": \"problem\",\n      \"closed_by\": \"\",\n      \"follow_up\": \"\",\n      \"sys_id\": \"04ce72c9c0a8016600b5b7f75ac67b5b\",\n      \"contact_type\": \"phone\",\n      \"urgency\": \"3\",\n      \"company\": \"\",\n      \"reassignment_count\": \"\",\n      \"activity_due\": \"\",\n      \"assigned_to\": \"\",\n      \"comments\": \"\",\n      \"approval\": \"not requested\",\n      \"sla_due\": \"\",\n      \"comments_and_work_notes\": \"\",\n      \"due_date\": \"\",\n      \"sys_mod_count\": \"1\",\n      \"sys_tags\": \"\",\n      \"escalation\": \"0\",\n      \"upon_approval\": \"proceed\",\n      \"correlation_id\": \"\",\n      \"location\": \"\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--api-now-table-syslog-transaction",
+        "summary": "GET /api/now/table/syslog_transaction",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/now/table/syslog_transaction",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": [\n    {\n      \"parent\": \"\",\n      \"made_sla\": \"true\",\n      \"watch_list\": \"\",\n      \"upon_reject\": \"cancel\",\n      \"sys_updated_on\": \"2016-01-19 04:52:04\",\n      \"approval_history\": \"\",\n      \"number\": \"PRB0000050\",\n      \"sys_updated_by\": \"glide.maint\",\n      \"opened_by\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/glide.maint\",\n        \"value\": \"glide.maint\"\n      },\n      \"user_input\": \"\",\n      \"sys_created_on\": \"2016-01-19 04:51:19\",\n      \"sys_domain\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n        \"value\": \"global\"\n      },\n      \"state\": \"4\",\n      \"sys_created_by\": \"glide.maint\",\n      \"knowledge\": \"false\",\n      \"order\": \"\",\n      \"closed_at\": \"2016-01-19 04:52:04\",\n      \"cmdb_ci\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/55b35562c0a8010e01cff22378e0aea9\",\n        \"value\": \"55b35562c0a8010e01cff22378e0aea9\"\n      },\n      \"delivery_plan\": \"\",\n      \"impact\": \"3\",\n      \"active\": \"false\",\n      \"work_notes_list\": \"\",\n      \"business_service\": \"\",\n      \"priority\": \"4\",\n      \"sys_domain_path\": \"/\",\n      \"time_worked\": \"\",\n      \"expected_start\": \"\",\n      \"rejection_goto\": \"\",\n      \"opened_at\": \"2016-01-19 04:49:47\",\n      \"business_duration\": \"1970-01-01 00:00:00\",\n      \"group_list\": \"\",\n      \"work_end\": \"\",\n      \"approval_set\": \"\",\n      \"wf_activity\": \"\",\n      \"work_notes\": \"\",\n      \"short_description\": \"Switch occasionally drops connections\",\n      \"correlation_display\": \"\",\n      \"delivery_task\": \"\",\n      \"work_start\": \"\",\n      \"assignment_group\": \"\",\n      \"additional_assignee_list\": \"\",\n      \"description\": \"Switch occasionally drops connections\",\n      \"calendar_duration\": \"1970-01-01 00:02:17\",\n      \"close_notes\": \"updated firmware\",\n      \"sys_class_name\": \"problem\",\n      \"closed_by\": \"\",\n      \"follow_up\": \"\",\n      \"sys_id\": \"04ce72c9c0a8016600b5b7f75ac67b5b\",\n      \"contact_type\": \"phone\",\n      \"urgency\": \"3\",\n      \"company\": \"\",\n      \"reassignment_count\": \"\",\n      \"activity_due\": \"\",\n      \"assigned_to\": \"\",\n      \"comments\": \"\",\n      \"approval\": \"not requested\",\n      \"sla_due\": \"\",\n      \"comments_and_work_notes\": \"\",\n      \"due_date\": \"\",\n      \"sys_mod_count\": \"1\",\n      \"sys_tags\": \"\",\n      \"escalation\": \"0\",\n      \"upon_approval\": \"proceed\",\n      \"correlation_id\": \"\",\n      \"location\": \"\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

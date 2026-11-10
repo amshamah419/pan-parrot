@@ -3,9 +3,9 @@
   "name": "ServiceNow IAM",
   "pack": "ServiceNow",
   "vendor": "ServiceNow",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "List sys_user records.",
+  "summary": "From vendor docs. List sys_user records.",
   "notes": [
     "The client GETs table/sys_user on an /api/now base. This mock is GET /api/now/table/sys_user.",
     "Create, update, and the dictionary call are not modeled. The query is ignored.",
@@ -19,7 +19,7 @@
       "kind": "preset",
       "id": "servicenow-servicenow-iam",
       "name": "ServiceNow IAM",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
       "notes": [
@@ -28,15 +28,90 @@
         "The Table API page was not reloaded. Basic auth is the lab user."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
+        "status": "vendor",
+        "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client GETs table/sys_user on an /api/now base. This mock is GET /table/sys_user.",
-          "Create, update, and the dictionary call are not modeled. The query is ignored.",
-          "The Table API page was not reloaded. Basic auth is the lab user."
+          "5 of 5 commands from vendor docs, 0 approximate, 0 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "iam-create-user",
+          "calls": [
+            "GET /api/now/table/sys_user",
+            "PATCH /api/now/table/sys_user/{sys_id}",
+            "POST /api/now/table/sys_user"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--api-now-table-sys-user",
+            "users",
+            "patch--api-now-table-sys-user-sys-id",
+            "patch--table-sys-user-sys-id",
+            "post--api-now-table-sys-user",
+            "post--table-sys-user"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "iam-update-user",
+          "calls": [
+            "GET /api/now/table/sys_user",
+            "PATCH /api/now/table/sys_user/{sys_id}",
+            "POST /api/now/table/sys_user"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--api-now-table-sys-user",
+            "users",
+            "patch--api-now-table-sys-user-sys-id",
+            "patch--table-sys-user-sys-id",
+            "post--api-now-table-sys-user",
+            "post--table-sys-user"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "iam-get-user",
+          "calls": [
+            "GET /api/now/table/sys_user"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--api-now-table-sys-user",
+            "users"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "iam-disable-user",
+          "calls": [
+            "GET /api/now/table/sys_user",
+            "PATCH /api/now/table/sys_user/{sys_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--api-now-table-sys-user",
+            "users",
+            "patch--api-now-table-sys-user-sys-id",
+            "patch--table-sys-user-sys-id"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "get-mapping-fields",
+          "calls": [
+            "GET /api/now/table/sys_dictionary"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--api-now-table-sys-dictionary",
+            "get--table-sys-dictionary"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        }
+      ]
     },
     "operations": [
       {
@@ -81,7 +156,7 @@
           ]
         },
         "headers": {},
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -90,7 +165,211 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "{\n  \"result\": [\n    {\n      \"parent\": \"\",\n      \"made_sla\": \"true\",\n      \"watch_list\": \"\",\n      \"upon_reject\": \"cancel\",\n      \"sys_updated_on\": \"2016-01-19 04:52:04\",\n      \"approval_history\": \"\",\n      \"number\": \"PRB0000050\",\n      \"sys_updated_by\": \"glide.maint\",\n      \"opened_by\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/glide.maint\",\n        \"value\": \"glide.maint\"\n      },\n      \"user_input\": \"\",\n      \"sys_created_on\": \"2016-01-19 04:51:19\",\n      \"sys_domain\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n        \"value\": \"global\"\n      },\n      \"state\": \"4\",\n      \"sys_created_by\": \"glide.maint\",\n      \"knowledge\": \"false\",\n      \"order\": \"\",\n      \"closed_at\": \"2016-01-19 04:52:04\",\n      \"cmdb_ci\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/55b35562c0a8010e01cff22378e0aea9\",\n        \"value\": \"55b35562c0a8010e01cff22378e0aea9\"\n      },\n      \"delivery_plan\": \"\",\n      \"impact\": \"3\",\n      \"active\": \"false\",\n      \"work_notes_list\": \"\",\n      \"business_service\": \"\",\n      \"priority\": \"4\",\n      \"sys_domain_path\": \"/\",\n      \"time_worked\": \"\",\n      \"expected_start\": \"\",\n      \"rejection_goto\": \"\",\n      \"opened_at\": \"2016-01-19 04:49:47\",\n      \"business_duration\": \"1970-01-01 00:00:00\",\n      \"group_list\": \"\",\n      \"work_end\": \"\",\n      \"approval_set\": \"\",\n      \"wf_activity\": \"\",\n      \"work_notes\": \"\",\n      \"short_description\": \"Switch occasionally drops connections\",\n      \"correlation_display\": \"\",\n      \"delivery_task\": \"\",\n      \"work_start\": \"\",\n      \"assignment_group\": \"\",\n      \"additional_assignee_list\": \"\",\n      \"description\": \"Switch occasionally drops connections\",\n      \"calendar_duration\": \"1970-01-01 00:02:17\",\n      \"close_notes\": \"updated firmware\",\n      \"sys_class_name\": \"problem\",\n      \"closed_by\": \"\",\n      \"follow_up\": \"\",\n      \"sys_id\": \"04ce72c9c0a8016600b5b7f75ac67b5b\",\n      \"contact_type\": \"phone\",\n      \"urgency\": \"3\",\n      \"company\": \"\",\n      \"reassignment_count\": \"\",\n      \"activity_due\": \"\",\n      \"assigned_to\": \"\",\n      \"comments\": \"\",\n      \"approval\": \"not requested\",\n      \"sla_due\": \"\",\n      \"comments_and_work_notes\": \"\",\n      \"due_date\": \"\",\n      \"sys_mod_count\": \"1\",\n      \"sys_tags\": \"\",\n      \"escalation\": \"0\",\n      \"upon_approval\": \"proceed\",\n      \"correlation_id\": \"\",\n      \"location\": \"\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--api-now-table-sys-user",
+        "summary": "GET /api/now/table/sys_user",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/now/table/sys_user",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": [\n    {\n      \"parent\": \"\",\n      \"made_sla\": \"true\",\n      \"watch_list\": \"\",\n      \"upon_reject\": \"cancel\",\n      \"sys_updated_on\": \"2016-01-19 04:52:04\",\n      \"approval_history\": \"\",\n      \"number\": \"PRB0000050\",\n      \"sys_updated_by\": \"glide.maint\",\n      \"opened_by\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/glide.maint\",\n        \"value\": \"glide.maint\"\n      },\n      \"user_input\": \"\",\n      \"sys_created_on\": \"2016-01-19 04:51:19\",\n      \"sys_domain\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n        \"value\": \"global\"\n      },\n      \"state\": \"4\",\n      \"sys_created_by\": \"glide.maint\",\n      \"knowledge\": \"false\",\n      \"order\": \"\",\n      \"closed_at\": \"2016-01-19 04:52:04\",\n      \"cmdb_ci\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/55b35562c0a8010e01cff22378e0aea9\",\n        \"value\": \"55b35562c0a8010e01cff22378e0aea9\"\n      },\n      \"delivery_plan\": \"\",\n      \"impact\": \"3\",\n      \"active\": \"false\",\n      \"work_notes_list\": \"\",\n      \"business_service\": \"\",\n      \"priority\": \"4\",\n      \"sys_domain_path\": \"/\",\n      \"time_worked\": \"\",\n      \"expected_start\": \"\",\n      \"rejection_goto\": \"\",\n      \"opened_at\": \"2016-01-19 04:49:47\",\n      \"business_duration\": \"1970-01-01 00:00:00\",\n      \"group_list\": \"\",\n      \"work_end\": \"\",\n      \"approval_set\": \"\",\n      \"wf_activity\": \"\",\n      \"work_notes\": \"\",\n      \"short_description\": \"Switch occasionally drops connections\",\n      \"correlation_display\": \"\",\n      \"delivery_task\": \"\",\n      \"work_start\": \"\",\n      \"assignment_group\": \"\",\n      \"additional_assignee_list\": \"\",\n      \"description\": \"Switch occasionally drops connections\",\n      \"calendar_duration\": \"1970-01-01 00:02:17\",\n      \"close_notes\": \"updated firmware\",\n      \"sys_class_name\": \"problem\",\n      \"closed_by\": \"\",\n      \"follow_up\": \"\",\n      \"sys_id\": \"04ce72c9c0a8016600b5b7f75ac67b5b\",\n      \"contact_type\": \"phone\",\n      \"urgency\": \"3\",\n      \"company\": \"\",\n      \"reassignment_count\": \"\",\n      \"activity_due\": \"\",\n      \"assigned_to\": \"\",\n      \"comments\": \"\",\n      \"approval\": \"not requested\",\n      \"sla_due\": \"\",\n      \"comments_and_work_notes\": \"\",\n      \"due_date\": \"\",\n      \"sys_mod_count\": \"1\",\n      \"sys_tags\": \"\",\n      \"escalation\": \"0\",\n      \"upon_approval\": \"proceed\",\n      \"correlation_id\": \"\",\n      \"location\": \"\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "patch--api-now-table-sys-user-sys-id",
+        "summary": "PATCH /api/now/table/sys_user/{sys_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "PATCH",
+        "pathTemplate": "/api/now/table/sys_user/{sys_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"upon_approval\": \"proceed\",\n    \"location\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/cmn_location/108752c8c611227501d4ab0e392ba97f\",\n      \"value\": \"108752c8c611227501d4ab0e392ba97f\"\n    },\n    \"expected_start\": \"\",\n    \"reopen_count\": \"\",\n    \"close_notes\": \"\",\n    \"additional_assignee_list\": \"\",\n    \"impact\": \"1\",\n    \"urgency\": \"1\",\n    \"correlation_id\": \"\",\n    \"sys_tags\": \"\",\n    \"sys_domain\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n      \"value\": \"global\"\n    },\n    \"description\": \"\",\n    \"group_list\": \"\",\n    \"priority\": \"1\",\n    \"delivery_plan\": \"\",\n    \"sys_mod_count\": \"7\",\n    \"work_notes_list\": \"\",\n    \"business_service\": \"\",\n    \"follow_up\": \"\",\n    \"closed_at\": \"\",\n    \"sla_due\": \"2017-07-05 05:58:24\",\n    \"delivery_task\": \"\",\n    \"sys_updated_on\": \"2016-01-22 14:12:37\",\n    \"parent\": \"\",\n    \"work_end\": \"\",\n    \"number\": \"INC0000050\",\n    \"closed_by\": \"\",\n    \"work_start\": \"\",\n    \"calendar_stc\": \"\",\n    \"category\": \"hardware\",\n    \"business_duration\": \"\",\n    \"incident_state\": \"2\",\n    \"activity_due\": \"2016-01-22 16:12:37\",\n    \"correlation_display\": \"\",\n    \"company\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/core_company/31bea3d53790200044e0bfc8bcbe5dec\",\n      \"value\": \"31bea3d53790200044e0bfc8bcbe5dec\"\n    },\n    \"active\": \"true\",\n    \"due_date\": \"\",\n    \"assignment_group\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/8a5055c9c61122780043563ef53438e3\",\n      \"value\": \"8a5055c9c61122780043563ef53438e3\"\n    },\n    \"caller_id\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/5b7c200d0a640069006b3845b5d0fa7c\",\n      \"value\": \"5b7c200d0a640069006b3845b5d0fa7c\"\n    },\n    \"knowledge\": \"false\",\n    \"made_sla\": \"true\",\n    \"comments_and_work_notes\": \"\",\n    \"parent_incident\": \"\",\n    \"state\": \"2\",\n    \"user_input\": \"\",\n    \"sys_created_on\": \"2015-11-02 18:05:40\",\n    \"approval_set\": \"\",\n    \"reassignment_count\": \"0\",\n    \"rfc\": \"\",\n    \"child_incidents\": \"\",\n    \"opened_at\": \"2015-11-02 21:58:24\",\n    \"short_description\": \"Can't access Exchange server - is it down?\",\n    \"order\": \"\",\n    \"sys_updated_by\": \"admin\",\n    \"resolved_by\": \"\",\n    \"notify\": \"1\",\n    \"upon_reject\": \"cancel\",\n    \"approval_history\": \"\",\n    \"problem_id\": \"\",\n    \"work_notes\": \"\",\n    \"calendar_duration\": \"\",\n    \"close_code\": \"\",\n    \"sys_id\": \"ef43c6d40a0a0b5700c77f9bf387afe3\",\n    \"approval\": \"not requested\",\n    \"caused_by\": \"\",\n    \"severity\": \"3\",\n    \"sys_created_by\": \"glide.maint\",\n    \"resolved_at\": \"\",\n    \"assigned_to\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/681b365ec0a80164000fb0b05854a0cd\",\n      \"value\": \"681b365ec0a80164000fb0b05854a0cd\"\n    },\n    \"business_stc\": \"\",\n    \"wf_activity\": \"\",\n    \"sys_domain_path\": \"/\",\n    \"cmdb_ci\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/281190e3c0a8000b003f593aa3f20ca6\",\n      \"value\": \"281190e3c0a8000b003f593aa3f20ca6\"\n    },\n    \"opened_by\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/glide.maint\",\n      \"value\": \"glide.maint\"\n    },\n    \"subcategory\": \"\",\n    \"rejection_goto\": \"\",\n    \"sys_class_name\": \"incident\",\n    \"watch_list\": \"\",\n    \"time_worked\": \"\",\n    \"contact_type\": \"phone\",\n    \"escalation\": \"3\",\n    \"comments\": \"\"\n  }\n}\n"
+      },
+      {
+        "id": "patch--table-sys-user-sys-id",
+        "summary": "PATCH /table/sys_user/{sys_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "PATCH",
+        "pathTemplate": "/table/sys_user/{sys_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"upon_approval\": \"proceed\",\n    \"location\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/cmn_location/108752c8c611227501d4ab0e392ba97f\",\n      \"value\": \"108752c8c611227501d4ab0e392ba97f\"\n    },\n    \"expected_start\": \"\",\n    \"reopen_count\": \"\",\n    \"close_notes\": \"\",\n    \"additional_assignee_list\": \"\",\n    \"impact\": \"1\",\n    \"urgency\": \"1\",\n    \"correlation_id\": \"\",\n    \"sys_tags\": \"\",\n    \"sys_domain\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n      \"value\": \"global\"\n    },\n    \"description\": \"\",\n    \"group_list\": \"\",\n    \"priority\": \"1\",\n    \"delivery_plan\": \"\",\n    \"sys_mod_count\": \"7\",\n    \"work_notes_list\": \"\",\n    \"business_service\": \"\",\n    \"follow_up\": \"\",\n    \"closed_at\": \"\",\n    \"sla_due\": \"2017-07-05 05:58:24\",\n    \"delivery_task\": \"\",\n    \"sys_updated_on\": \"2016-01-22 14:12:37\",\n    \"parent\": \"\",\n    \"work_end\": \"\",\n    \"number\": \"INC0000050\",\n    \"closed_by\": \"\",\n    \"work_start\": \"\",\n    \"calendar_stc\": \"\",\n    \"category\": \"hardware\",\n    \"business_duration\": \"\",\n    \"incident_state\": \"2\",\n    \"activity_due\": \"2016-01-22 16:12:37\",\n    \"correlation_display\": \"\",\n    \"company\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/core_company/31bea3d53790200044e0bfc8bcbe5dec\",\n      \"value\": \"31bea3d53790200044e0bfc8bcbe5dec\"\n    },\n    \"active\": \"true\",\n    \"due_date\": \"\",\n    \"assignment_group\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/8a5055c9c61122780043563ef53438e3\",\n      \"value\": \"8a5055c9c61122780043563ef53438e3\"\n    },\n    \"caller_id\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/5b7c200d0a640069006b3845b5d0fa7c\",\n      \"value\": \"5b7c200d0a640069006b3845b5d0fa7c\"\n    },\n    \"knowledge\": \"false\",\n    \"made_sla\": \"true\",\n    \"comments_and_work_notes\": \"\",\n    \"parent_incident\": \"\",\n    \"state\": \"2\",\n    \"user_input\": \"\",\n    \"sys_created_on\": \"2015-11-02 18:05:40\",\n    \"approval_set\": \"\",\n    \"reassignment_count\": \"0\",\n    \"rfc\": \"\",\n    \"child_incidents\": \"\",\n    \"opened_at\": \"2015-11-02 21:58:24\",\n    \"short_description\": \"Can't access Exchange server - is it down?\",\n    \"order\": \"\",\n    \"sys_updated_by\": \"admin\",\n    \"resolved_by\": \"\",\n    \"notify\": \"1\",\n    \"upon_reject\": \"cancel\",\n    \"approval_history\": \"\",\n    \"problem_id\": \"\",\n    \"work_notes\": \"\",\n    \"calendar_duration\": \"\",\n    \"close_code\": \"\",\n    \"sys_id\": \"ef43c6d40a0a0b5700c77f9bf387afe3\",\n    \"approval\": \"not requested\",\n    \"caused_by\": \"\",\n    \"severity\": \"3\",\n    \"sys_created_by\": \"glide.maint\",\n    \"resolved_at\": \"\",\n    \"assigned_to\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/681b365ec0a80164000fb0b05854a0cd\",\n      \"value\": \"681b365ec0a80164000fb0b05854a0cd\"\n    },\n    \"business_stc\": \"\",\n    \"wf_activity\": \"\",\n    \"sys_domain_path\": \"/\",\n    \"cmdb_ci\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/281190e3c0a8000b003f593aa3f20ca6\",\n      \"value\": \"281190e3c0a8000b003f593aa3f20ca6\"\n    },\n    \"opened_by\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/glide.maint\",\n      \"value\": \"glide.maint\"\n    },\n    \"subcategory\": \"\",\n    \"rejection_goto\": \"\",\n    \"sys_class_name\": \"incident\",\n    \"watch_list\": \"\",\n    \"time_worked\": \"\",\n    \"contact_type\": \"phone\",\n    \"escalation\": \"3\",\n    \"comments\": \"\"\n  }\n}\n"
+      },
+      {
+        "id": "post--api-now-table-sys-user",
+        "summary": "POST /api/now/table/sys_user",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/api/now/table/sys_user",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"upon_approval\": \"proceed\",\n    \"location\": \"\",\n    \"expected_start\": \"\",\n    \"reopen_count\": \"0\",\n    \"close_notes\": \"\",\n    \"additional_assignee_list\": \"\",\n    \"impact\": \"2\",\n    \"urgency\": \"2\",\n    \"correlation_id\": \"\",\n    \"sys_tags\": \"\",\n    \"sys_domain\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n      \"value\": \"global\"\n    },\n    \"description\": \"\",\n    \"group_list\": \"\",\n    \"priority\": \"3\",\n    \"delivery_plan\": \"\",\n    \"sys_mod_count\": \"0\",\n    \"work_notes_list\": \"\",\n    \"business_service\": \"\",\n    \"follow_up\": \"\",\n    \"closed_at\": \"\",\n    \"sla_due\": \"\",\n    \"delivery_task\": \"\",\n    \"sys_updated_on\": \"2016-01-22 14:28:24\",\n    \"parent\": \"\",\n    \"work_end\": \"\",\n    \"number\": \"INC0010002\",\n    \"closed_by\": \"\",\n    \"work_start\": \"\",\n    \"calendar_stc\": \"\",\n    \"category\": \"inquiry\",\n    \"business_duration\": \"\",\n    \"incident_state\": \"1\",\n    \"activity_due\": \"\",\n    \"correlation_display\": \"\",\n    \"company\": \"\",\n    \"active\": \"true\",\n    \"due_date\": \"\",\n    \"assignment_group\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/287ebd7da9fe198100f92cc8d1d2154e\",\n      \"value\": \"287ebd7da9fe198100f92cc8d1d2154e\"\n    },\n    \"caller_id\": \"\",\n    \"knowledge\": \"false\",\n    \"made_sla\": \"true\",\n    \"comments_and_work_notes\": \"\",\n    \"parent_incident\": \"\",\n    \"state\": \"1\",\n    \"user_input\": \"\",\n    \"sys_created_on\": \"2016-01-22 14:28:24\",\n    \"approval_set\": \"\",\n    \"reassignment_count\": \"0\",\n    \"rfc\": \"\",\n    \"child_incidents\": \"0\",\n    \"opened_at\": \"2016-01-22 14:28:24\",\n    \"short_description\": \"Unable to connect to office wifi\",\n    \"order\": \"\",\n    \"sys_updated_by\": \"admin\",\n    \"resolved_by\": \"\",\n    \"notify\": \"1\",\n    \"upon_reject\": \"cancel\",\n    \"approval_history\": \"\",\n    \"problem_id\": \"\",\n    \"work_notes\": \"\",\n    \"calendar_duration\": \"\",\n    \"close_code\": \"\",\n    \"sys_id\": \"c537bae64f411200adf9f8e18110c76e\",\n    \"approval\": \"not requested\",\n    \"caused_by\": \"\",\n    \"severity\": \"3\",\n    \"sys_created_by\": \"admin\",\n    \"resolved_at\": \"\",\n    \"assigned_to\": \"\",\n    \"business_stc\": \"\",\n    \"wf_activity\": \"\",\n    \"sys_domain_path\": \"/\",\n    \"cmdb_ci\": \"\",\n    \"opened_by\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/6816f79cc0a8016401c5a33be04be441\",\n      \"value\": \"6816f79cc0a8016401c5a33be04be441\"\n    },\n    \"subcategory\": \"\",\n    \"rejection_goto\": \"\",\n    \"sys_class_name\": \"incident\",\n    \"watch_list\": \"\",\n    \"time_worked\": \"\",\n    \"contact_type\": \"phone\",\n    \"escalation\": \"0\",\n    \"comments\": \"\"\n  }\n}\n"
+      },
+      {
+        "id": "post--table-sys-user",
+        "summary": "POST /table/sys_user",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/table/sys_user",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"upon_approval\": \"proceed\",\n    \"location\": \"\",\n    \"expected_start\": \"\",\n    \"reopen_count\": \"0\",\n    \"close_notes\": \"\",\n    \"additional_assignee_list\": \"\",\n    \"impact\": \"2\",\n    \"urgency\": \"2\",\n    \"correlation_id\": \"\",\n    \"sys_tags\": \"\",\n    \"sys_domain\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n      \"value\": \"global\"\n    },\n    \"description\": \"\",\n    \"group_list\": \"\",\n    \"priority\": \"3\",\n    \"delivery_plan\": \"\",\n    \"sys_mod_count\": \"0\",\n    \"work_notes_list\": \"\",\n    \"business_service\": \"\",\n    \"follow_up\": \"\",\n    \"closed_at\": \"\",\n    \"sla_due\": \"\",\n    \"delivery_task\": \"\",\n    \"sys_updated_on\": \"2016-01-22 14:28:24\",\n    \"parent\": \"\",\n    \"work_end\": \"\",\n    \"number\": \"INC0010002\",\n    \"closed_by\": \"\",\n    \"work_start\": \"\",\n    \"calendar_stc\": \"\",\n    \"category\": \"inquiry\",\n    \"business_duration\": \"\",\n    \"incident_state\": \"1\",\n    \"activity_due\": \"\",\n    \"correlation_display\": \"\",\n    \"company\": \"\",\n    \"active\": \"true\",\n    \"due_date\": \"\",\n    \"assignment_group\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/287ebd7da9fe198100f92cc8d1d2154e\",\n      \"value\": \"287ebd7da9fe198100f92cc8d1d2154e\"\n    },\n    \"caller_id\": \"\",\n    \"knowledge\": \"false\",\n    \"made_sla\": \"true\",\n    \"comments_and_work_notes\": \"\",\n    \"parent_incident\": \"\",\n    \"state\": \"1\",\n    \"user_input\": \"\",\n    \"sys_created_on\": \"2016-01-22 14:28:24\",\n    \"approval_set\": \"\",\n    \"reassignment_count\": \"0\",\n    \"rfc\": \"\",\n    \"child_incidents\": \"0\",\n    \"opened_at\": \"2016-01-22 14:28:24\",\n    \"short_description\": \"Unable to connect to office wifi\",\n    \"order\": \"\",\n    \"sys_updated_by\": \"admin\",\n    \"resolved_by\": \"\",\n    \"notify\": \"1\",\n    \"upon_reject\": \"cancel\",\n    \"approval_history\": \"\",\n    \"problem_id\": \"\",\n    \"work_notes\": \"\",\n    \"calendar_duration\": \"\",\n    \"close_code\": \"\",\n    \"sys_id\": \"c537bae64f411200adf9f8e18110c76e\",\n    \"approval\": \"not requested\",\n    \"caused_by\": \"\",\n    \"severity\": \"3\",\n    \"sys_created_by\": \"admin\",\n    \"resolved_at\": \"\",\n    \"assigned_to\": \"\",\n    \"business_stc\": \"\",\n    \"wf_activity\": \"\",\n    \"sys_domain_path\": \"/\",\n    \"cmdb_ci\": \"\",\n    \"opened_by\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/6816f79cc0a8016401c5a33be04be441\",\n      \"value\": \"6816f79cc0a8016401c5a33be04be441\"\n    },\n    \"subcategory\": \"\",\n    \"rejection_goto\": \"\",\n    \"sys_class_name\": \"incident\",\n    \"watch_list\": \"\",\n    \"time_worked\": \"\",\n    \"contact_type\": \"phone\",\n    \"escalation\": \"0\",\n    \"comments\": \"\"\n  }\n}\n"
+      },
+      {
+        "id": "get--api-now-table-sys-dictionary",
+        "summary": "GET /api/now/table/sys_dictionary",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/now/table/sys_dictionary",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": [\n    {\n      \"parent\": \"\",\n      \"made_sla\": \"true\",\n      \"watch_list\": \"\",\n      \"upon_reject\": \"cancel\",\n      \"sys_updated_on\": \"2016-01-19 04:52:04\",\n      \"approval_history\": \"\",\n      \"number\": \"PRB0000050\",\n      \"sys_updated_by\": \"glide.maint\",\n      \"opened_by\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/glide.maint\",\n        \"value\": \"glide.maint\"\n      },\n      \"user_input\": \"\",\n      \"sys_created_on\": \"2016-01-19 04:51:19\",\n      \"sys_domain\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n        \"value\": \"global\"\n      },\n      \"state\": \"4\",\n      \"sys_created_by\": \"glide.maint\",\n      \"knowledge\": \"false\",\n      \"order\": \"\",\n      \"closed_at\": \"2016-01-19 04:52:04\",\n      \"cmdb_ci\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/55b35562c0a8010e01cff22378e0aea9\",\n        \"value\": \"55b35562c0a8010e01cff22378e0aea9\"\n      },\n      \"delivery_plan\": \"\",\n      \"impact\": \"3\",\n      \"active\": \"false\",\n      \"work_notes_list\": \"\",\n      \"business_service\": \"\",\n      \"priority\": \"4\",\n      \"sys_domain_path\": \"/\",\n      \"time_worked\": \"\",\n      \"expected_start\": \"\",\n      \"rejection_goto\": \"\",\n      \"opened_at\": \"2016-01-19 04:49:47\",\n      \"business_duration\": \"1970-01-01 00:00:00\",\n      \"group_list\": \"\",\n      \"work_end\": \"\",\n      \"approval_set\": \"\",\n      \"wf_activity\": \"\",\n      \"work_notes\": \"\",\n      \"short_description\": \"Switch occasionally drops connections\",\n      \"correlation_display\": \"\",\n      \"delivery_task\": \"\",\n      \"work_start\": \"\",\n      \"assignment_group\": \"\",\n      \"additional_assignee_list\": \"\",\n      \"description\": \"Switch occasionally drops connections\",\n      \"calendar_duration\": \"1970-01-01 00:02:17\",\n      \"close_notes\": \"updated firmware\",\n      \"sys_class_name\": \"problem\",\n      \"closed_by\": \"\",\n      \"follow_up\": \"\",\n      \"sys_id\": \"04ce72c9c0a8016600b5b7f75ac67b5b\",\n      \"contact_type\": \"phone\",\n      \"urgency\": \"3\",\n      \"company\": \"\",\n      \"reassignment_count\": \"\",\n      \"activity_due\": \"\",\n      \"assigned_to\": \"\",\n      \"comments\": \"\",\n      \"approval\": \"not requested\",\n      \"sla_due\": \"\",\n      \"comments_and_work_notes\": \"\",\n      \"due_date\": \"\",\n      \"sys_mod_count\": \"1\",\n      \"sys_tags\": \"\",\n      \"escalation\": \"0\",\n      \"upon_approval\": \"proceed\",\n      \"correlation_id\": \"\",\n      \"location\": \"\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--table-sys-dictionary",
+        "summary": "GET /table/sys_dictionary",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/table/sys_dictionary",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": [\n    {\n      \"parent\": \"\",\n      \"made_sla\": \"true\",\n      \"watch_list\": \"\",\n      \"upon_reject\": \"cancel\",\n      \"sys_updated_on\": \"2016-01-19 04:52:04\",\n      \"approval_history\": \"\",\n      \"number\": \"PRB0000050\",\n      \"sys_updated_by\": \"glide.maint\",\n      \"opened_by\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/glide.maint\",\n        \"value\": \"glide.maint\"\n      },\n      \"user_input\": \"\",\n      \"sys_created_on\": \"2016-01-19 04:51:19\",\n      \"sys_domain\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n        \"value\": \"global\"\n      },\n      \"state\": \"4\",\n      \"sys_created_by\": \"glide.maint\",\n      \"knowledge\": \"false\",\n      \"order\": \"\",\n      \"closed_at\": \"2016-01-19 04:52:04\",\n      \"cmdb_ci\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/55b35562c0a8010e01cff22378e0aea9\",\n        \"value\": \"55b35562c0a8010e01cff22378e0aea9\"\n      },\n      \"delivery_plan\": \"\",\n      \"impact\": \"3\",\n      \"active\": \"false\",\n      \"work_notes_list\": \"\",\n      \"business_service\": \"\",\n      \"priority\": \"4\",\n      \"sys_domain_path\": \"/\",\n      \"time_worked\": \"\",\n      \"expected_start\": \"\",\n      \"rejection_goto\": \"\",\n      \"opened_at\": \"2016-01-19 04:49:47\",\n      \"business_duration\": \"1970-01-01 00:00:00\",\n      \"group_list\": \"\",\n      \"work_end\": \"\",\n      \"approval_set\": \"\",\n      \"wf_activity\": \"\",\n      \"work_notes\": \"\",\n      \"short_description\": \"Switch occasionally drops connections\",\n      \"correlation_display\": \"\",\n      \"delivery_task\": \"\",\n      \"work_start\": \"\",\n      \"assignment_group\": \"\",\n      \"additional_assignee_list\": \"\",\n      \"description\": \"Switch occasionally drops connections\",\n      \"calendar_duration\": \"1970-01-01 00:02:17\",\n      \"close_notes\": \"updated firmware\",\n      \"sys_class_name\": \"problem\",\n      \"closed_by\": \"\",\n      \"follow_up\": \"\",\n      \"sys_id\": \"04ce72c9c0a8016600b5b7f75ac67b5b\",\n      \"contact_type\": \"phone\",\n      \"urgency\": \"3\",\n      \"company\": \"\",\n      \"reassignment_count\": \"\",\n      \"activity_due\": \"\",\n      \"assigned_to\": \"\",\n      \"comments\": \"\",\n      \"approval\": \"not requested\",\n      \"sla_due\": \"\",\n      \"comments_and_work_notes\": \"\",\n      \"due_date\": \"\",\n      \"sys_mod_count\": \"1\",\n      \"sys_tags\": \"\",\n      \"escalation\": \"0\",\n      \"upon_approval\": \"proceed\",\n      \"correlation_id\": \"\",\n      \"location\": \"\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {
