@@ -1,6 +1,19 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { commandCoverageLabel, validateMockSpec } from "./mock-spec";
+import { commandCoverageLabel, sumCommandCoverage, validateMockSpec } from "./mock-spec";
+
+describe("catalog command coverage", () => {
+  it("states the scored total in the catalog readme and the repository readme", () => {
+    const index = JSON.parse(readFileSync("public/presets/index.json", "utf8")) as {
+      presets: Array<{ commandCoverage?: { total: number; vendor: number; approximate: number; missing: number } }>;
+    };
+    const summary = sumCommandCoverage(index.presets);
+    expect(summary).toEqual({ vendor: 952, approximate: 412, missing: 1936, total: 3300, scored: 129 });
+    const line = `Total coverage: ${commandCoverageLabel(summary)}.`;
+    expect(readFileSync("README.md", "utf8")).toContain(line);
+    expect(readFileSync("public/presets/COVERAGE.md", "utf8")).toContain(line);
+  });
+});
 
 describe("AWS command coverage", () => {
   it("states vendor, approximate, and missing counts", () => {

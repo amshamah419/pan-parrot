@@ -218,6 +218,7 @@ test("an admin can read health and send an invite", async ({ page }) => {
   await page.getByRole("button", { name: "Account menu for ashamah@paloaltonetworks.com" }).click();
   await page.getByRole("menuitem", { name: "Admin Panel" }).click();
   await expect(page.getByRole("heading", { name: "Admin" })).toBeVisible();
+  await expect(page.getByText("Total coverage: 952 of 3300 commands from vendor docs, 412 approximate, 1936 missing.")).toBeVisible();
   await expect(page.getByText("Database").first()).toBeVisible();
   await expect(page.getByText("Last 24 hours")).toBeVisible();
   await page.screenshot({ path: "test-results/admin-health.png", fullPage: true });

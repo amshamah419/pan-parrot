@@ -2,7 +2,7 @@ import { readdir, readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { parse as parseYaml } from "yaml";
 import { mockFromSample } from "../shared/infer";
-import { validateMockSpec, type FieldSpec, type MockOperation, type MockSpec } from "../shared/mock-spec";
+import { commandCoverageLabel, sumCommandCoverage, validateMockSpec, type FieldSpec, type MockOperation, type MockSpec } from "../shared/mock-spec";
 import { fieldsFromOutputs, sampleFromReadme, type OutputField } from "../shared/xsoar-shape";
 
 const contentRoot = process.argv.includes("--content")
@@ -14,6 +14,19 @@ const integrationDir = path.join(outDir, "integrations");
 if (!contentRoot) {
   console.error("Usage: npm run presets:import -- --content /path/to/demisto/content");
   process.exit(1);
+}
+
+let coverageNote = "";
+try {
+  const existing = JSON.parse(await readFile(path.join(outDir, "index.json"), "utf8")) as {
+    presets?: Array<{ commandCoverage?: { total: number; vendor: number; approximate: number; missing: number } }>;
+  };
+  const summary = sumCommandCoverage(existing.presets ?? []);
+  if (summary.total > 0) {
+    coverageNote = `Total coverage: ${commandCoverageLabel(summary)}. That is the sum across ${summary.scored} integrations whose presets record command coverage. Presets without command coverage are not in this total.\n\n`;
+  }
+} catch {
+  coverageNote = "";
 }
 
 const curatedIds = new Set([
@@ -320,7 +333,7 @@ console.log(`index presets: ${presets.length}`);
 function coverageMarkdown(): string {
   return `# Preset coverage
 
-Generated ${new Date().toISOString()} from a local checkout of [demisto/content](https://github.com/demisto/content) (MIT).
+${coverageNote}Generated ${new Date().toISOString()} from a local checkout of [demisto/content](https://github.com/demisto/content) (MIT).
 
 | | |
 | --- | --- |

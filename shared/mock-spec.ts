@@ -273,6 +273,22 @@ export function commandCoverageLabel(summary: CommandDocSummary): string {
   return `${summary.vendor} of ${summary.total} commands from vendor docs, ${summary.approximate} approximate, ${summary.missing} missing`;
 }
 
+export function sumCommandCoverage(
+  presets: Array<{ commandCoverage?: CommandDocSummary }>,
+): CommandDocSummary & { scored: number } {
+  const summary = { vendor: 0, approximate: 0, missing: 0, total: 0, scored: 0 };
+  for (const preset of presets) {
+    const row = preset.commandCoverage;
+    if (!row || row.total <= 0) continue;
+    summary.scored += 1;
+    summary.vendor += row.vendor;
+    summary.approximate += row.approximate;
+    summary.missing += row.missing;
+    summary.total += row.total;
+  }
+  return summary;
+}
+
 export interface MockSpec {
   version: 1;
   source: {

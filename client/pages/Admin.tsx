@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Logo } from "@/components/Logo";
 import { useAuth } from "@/hooks/use-auth";
+import { loadPresetCatalog } from "@/lib/preset-catalog";
+import { commandCoverageLabel, sumCommandCoverage } from "@shared/mock-spec";
 import type { AdminSignals, AdminUser } from "@shared/api";
 import {
   MoreHorizontal,
@@ -391,6 +393,7 @@ function HealthPanel() {
   }, []);
   return (
     <div className="space-y-4">
+      <CatalogCoverageCard />
       {problem && <p className="text-destructive">{problem}</p>}
       {health && (
         <>
@@ -482,6 +485,34 @@ function HealthPanel() {
         </Card>
       )}
     </div>
+  );
+}
+
+function CatalogCoverageCard() {
+  const [line, setLine] = useState("");
+  const [scored, setScored] = useState(0);
+  useEffect(() => {
+    void loadPresetCatalog()
+      .then((presets) => {
+        const summary = sumCommandCoverage(presets);
+        setScored(summary.scored);
+        setLine(summary.total > 0 ? commandCoverageLabel(summary) : "");
+      })
+      .catch(() => setLine(""));
+  }, []);
+  if (!line) return null;
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Catalog coverage</CardTitle>
+        <CardDescription>
+          {scored} integrations have command coverage. Presets without command coverage are not in this total.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm">Total coverage: {line}.</p>
+      </CardContent>
+    </Card>
   );
 }
 
