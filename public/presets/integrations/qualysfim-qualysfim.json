@@ -28,9 +28,62 @@
         "docUrl": "https://docs.qualys.com/en/fim/api/index.htm",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /fim/v3/incidents/search, POST /fim/v2/incidents/{incident_id}/events/search reads in the matched command. Lists the command iterates are arrays."
+          "Sample fields are the ones POST /fim/v3/incidents/search, POST /fim/v2/incidents/{incident_id}/events/search reads in the matched command. Lists the command iterates are arrays.",
+          "Command coverage is 0 from vendor docs, 3 approximate, and 4 missing, out of 7. Qualys FIM does not publish an OpenAPI document with response examples for these routes."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "qualys-fim-events-list",
+          "calls": [
+            "POST /fim/v2/events/search"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "qualys-fim-event-get",
+          "calls": [
+            "GET /fim/v2/events/{event_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "qualys-fim-incidents-list",
+          "calls": [
+            "POST /fim/v3/incidents/search"
+          ],
+          "status": "approximate"
+        },
+        {
+          "command": "qualys-fim-incidents-get-events",
+          "calls": [
+            "POST /fim/v2/incidents/{incident_id}/events/search"
+          ],
+          "status": "approximate"
+        },
+        {
+          "command": "qualys-fim-incident-create",
+          "calls": [
+            "POST /fim/v3/incidents/create",
+            "POST /fim/v3/incidents/search"
+          ],
+          "status": "approximate"
+        },
+        {
+          "command": "qualys-fim-incident-approve",
+          "calls": [
+            "POST /fim/v3/incidents/{incident_id}/approve"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "qualys-fim-assets-list",
+          "calls": [
+            "POST /fim/v3/assets/search"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {

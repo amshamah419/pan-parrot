@@ -25,9 +25,62 @@
         "docUrl": "https://docs.github.com/en/rest/enterprise-admin/scim",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file.",
+          "Command coverage is 1 from vendor docs, 3 approximate, and 1 missing, out of 5. The api.github.com OpenAPI description does not include the SCIM routes. The existing organization-user example stays."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "iam-create-user",
+          "calls": [
+            "GET /scim/v2/organizations/{org}/Users",
+            "PUT /scim/v2/organizations/{org}/Users/{id}",
+            "POST /scim/v2/organizations/{org}/Users"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "get-scim-v2-organizations-org-users-0"
+          ]
+        },
+        {
+          "command": "iam-update-user",
+          "calls": [
+            "GET /scim/v2/organizations/{org}/Users",
+            "PUT /scim/v2/organizations/{org}/Users/{id}",
+            "POST /scim/v2/organizations/{org}/Users"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "get-scim-v2-organizations-org-users-0"
+          ]
+        },
+        {
+          "command": "iam-get-user",
+          "calls": [
+            "GET /scim/v2/organizations/{org}/Users"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-scim-v2-organizations-org-users-0"
+          ]
+        },
+        {
+          "command": "iam-disable-user",
+          "calls": [
+            "GET /scim/v2/organizations/{org}/Users",
+            "DELETE /scim/v2/organizations/{org}/Users/{id}"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "get-scim-v2-organizations-org-users-0"
+          ]
+        },
+        {
+          "command": "get-mapping-fields",
+          "calls": [],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {

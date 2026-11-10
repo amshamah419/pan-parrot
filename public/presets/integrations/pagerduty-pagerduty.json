@@ -33,9 +33,116 @@
         "docUrl": "https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file.",
+          "Command coverage is 7 from vendor docs, 0 approximate, and 6 missing, out of 13. Response bodies are the examples in PagerDuty/api-schema."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "PagerDuty-get-all-schedules",
+          "calls": [
+            "GET /schedules"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--schedules"
+          ]
+        },
+        {
+          "command": "PagerDuty-get-users-on-call",
+          "calls": [
+            "GET /schedules/{0}/users"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--schedules-0-users"
+          ]
+        },
+        {
+          "command": "PagerDuty-get-users-on-call-now",
+          "calls": [
+            "GET /oncalls"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--oncalls"
+          ]
+        },
+        {
+          "command": "PagerDuty-incidents",
+          "calls": [
+            "GET /incidents"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "list-incidents"
+          ]
+        },
+        {
+          "command": "PagerDuty-submit-event",
+          "calls": [
+            "POST /v2/enqueue"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "PagerDuty-get-contact-methods",
+          "calls": [
+            "GET /users/{0}/contact_methods"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-0-contact-methods"
+          ]
+        },
+        {
+          "command": "PagerDuty-get-users-notification",
+          "calls": [
+            "GET /users/{0}/notification_rules"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--users-0-notification-rules"
+          ]
+        },
+        {
+          "command": "PagerDuty-resolve-event",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "PagerDuty-acknowledge-event",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "PagerDuty-get-incident-data",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "PagerDuty-get-service-keys",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "PagerDuty-add-responders",
+          "calls": [
+            "POST /incidents/{0}/responder_requests"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--incidents-0-responder-requests"
+          ]
+        },
+        {
+          "command": "PagerDuty-run-response-play",
+          "calls": [
+            "POST /response_plays/{0}/run"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -101,6 +208,186 @@
           "maxLimit": 500
         },
         "fixture": "{\n  \"incidents\": [\n    {\n      \"id\": \"PT4KHLK\",\n      \"type\": \"incident\",\n      \"summary\": \"[#1234] The server is on fire.\",\n      \"self\": \"https://api.pagerduty.com/incidents/PT4KHLK\",\n      \"html_url\": \"https://subdomain.pagerduty.com/incidents/PT4KHLK\",\n      \"incident_number\": 1234,\n      \"title\": \"The server is on fire.\",\n      \"created_at\": \"2015-10-06T21:30:42Z\",\n      \"updated_at\": \"2015-10-06T21:40:23Z\",\n      \"status\": \"resolved\",\n      \"incident_key\": \"baf7cf21b1da41b4b0221008339ff357\",\n      \"service\": {\n        \"id\": \"PIJ90N7\",\n        \"type\": \"service_reference\",\n        \"summary\": \"My Mail Service\",\n        \"self\": \"https://api.pagerduty.com/services/PIJ90N7\",\n        \"html_url\": \"https://subdomain.pagerduty.com/service-directory/PIJ90N7\"\n      },\n      \"assignments\": [],\n      \"assigned_via\": \"escalation_policy\",\n      \"last_status_change_at\": \"2015-10-06T21:38:23Z\",\n      \"resolved_at\": \"2015-10-06T21:38:23Z\",\n      \"first_trigger_log_entry\": {\n        \"id\": \"Q02JTSNZWHSEKV\",\n        \"type\": \"trigger_log_entry_reference\",\n        \"summary\": \"Triggered through the API\",\n        \"self\": \"https://api.pagerduty.com/log_entries/Q02JTSNZWHSEKV?incident_id=PT4KHLK\",\n        \"html_url\": \"https://subdomain.pagerduty.com/incidents/PT4KHLK/log_entries/Q02JTSNZWHSEKV\"\n      },\n      \"alert_counts\": {\n        \"all\": 2,\n        \"triggered\": 0,\n        \"resolved\": 2\n      },\n      \"is_mergeable\": true,\n      \"incident_type\": {\n        \"name\": \"incident_default\"\n      },\n      \"escalation_policy\": {\n        \"id\": \"PT20YPA\",\n        \"type\": \"escalation_policy_reference\",\n        \"summary\": \"Another Escalation Policy\",\n        \"self\": \"https://api.pagerduty.com/escalation_policies/PT20YPA\",\n        \"html_url\": \"https://subdomain.pagerduty.com/escalation_policies/PT20YPA\"\n      },\n      \"teams\": [\n        {\n          \"id\": \"PQ9K7I8\",\n          \"type\": \"team_reference\",\n          \"summary\": \"Engineering\",\n          \"self\": \"https://api.pagerduty.com/teams/PQ9K7I8\",\n          \"html_url\": \"https://subdomain.pagerduty.com/teams/PQ9K7I8\"\n        }\n      ],\n      \"pending_actions\": [],\n      \"acknowledgements\": [],\n      \"alert_grouping\": {\n        \"grouping_type\": \"advanced\",\n        \"started_at\": \"2015-10-06T21:30:42Z\",\n        \"ended_at\": null,\n        \"alert_grouping_active\": true\n      },\n      \"last_status_change_by\": {\n        \"id\": \"PXPGF42\",\n        \"type\": \"user_reference\",\n        \"summary\": \"Earline Greenholt\",\n        \"self\": \"https://api.pagerduty.com/users/PXPGF42\",\n        \"html_url\": \"https://subdomain.pagerduty.com/users/PXPGF42\"\n      },\n      \"priority\": {\n        \"id\": \"P53ZZH5\",\n        \"type\": \"priority_reference\",\n        \"summary\": \"P2\",\n        \"self\": \"https://api.pagerduty.com/priorities/P53ZZH5\"\n      },\n      \"resolve_reason\": null,\n      \"conference_bridge\": {\n        \"conference_number\": \"+1-415-555-1212,,,,1234#\",\n        \"conference_url\": \"https://example.com/acb-123\"\n      },\n      \"incidents_responders\": [],\n      \"responder_requests\": [],\n      \"urgency\": \"high\"\n    }\n  ],\n  \"limit\": 1,\n  \"offset\": 0,\n  \"more\": true\n}\n"
+      },
+      {
+        "id": "get--schedules",
+        "summary": "GET /schedules",
+        "method": "GET",
+        "pathTemplate": "/schedules",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "incidents"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"schedules\": [\n    {\n      \"id\": \"PI7DH85\",\n      \"type\": \"schedule\",\n      \"summary\": \"Daily Engineering Rotation\",\n      \"self\": \"https://api.pagerduty.com/schedules/PI7DH85\",\n      \"html_url\": \"https://subdomain.pagerduty.com/schedules/PI7DH85\",\n      \"name\": \"Daily Engineering Rotation\",\n      \"time_zone\": \"America/New_York\",\n      \"description\": \"Rotation schedule for engineering\",\n      \"escalation_policies\": [\n        {\n          \"id\": \"PT20YPA\",\n          \"type\": \"escalation_policy_reference\",\n          \"summary\": \"Another Escalation Policy\",\n          \"self\": \"https://api.pagerduty.com/escalation_policies/PT20YPA\",\n          \"html_url\": \"https://subdomain.pagerduty.com/escalation_policies/PT20YPA\"\n        }\n      ],\n      \"users\": [\n        {\n          \"id\": \"PEYSGVF\",\n          \"type\": \"user_reference\",\n          \"summary\": \"PagerDuty Admin\",\n          \"self\": \"https://api.pagerduty.com/users/PEYSGVF\",\n          \"html_url\": \"https://subdomain.pagerduty.com/users/PEYSGVF\"\n        }\n      ]\n    }\n  ],\n  \"limit\": 100,\n  \"offset\": 0,\n  \"more\": false,\n  \"total\": null\n}\n"
+      },
+      {
+        "id": "get--schedules-0-users",
+        "summary": "GET /schedules/{0}/users",
+        "method": "GET",
+        "pathTemplate": "/schedules/{0}/users",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "incidents"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"users\": [\n    {\n      \"id\": \"PAM4FGS\",\n      \"type\": \"user\",\n      \"summary\": \"Kyler Kuhn\",\n      \"self\": \"https://api.pagerduty.com/users/PAM4FGS\",\n      \"html_url\": \"https://subdomain.pagerduty.com/users/PAM4FGS\",\n      \"name\": \"Kyler Kuhn\",\n      \"email\": \"user2@example.invalid\",\n      \"time_zone\": \"Asia/Hong_Kong\",\n      \"color\": \"red\",\n      \"role\": \"admin\",\n      \"avatar_url\": \"https://pd-static-assets.pagerduty.com/users/blank-avatar.png\",\n      \"description\": \"Engineer based in HK\",\n      \"invitation_sent\": false,\n      \"contact_methods\": [\n        {\n          \"id\": \"PVMGSML\",\n          \"type\": \"email_contact_method_reference\",\n          \"summary\": \"Work\",\n          \"self\": \"https://api.pagerduty.com/users/PAM4FGS/contact_methods/PVMGSMLL\"\n        }\n      ],\n      \"notification_rules\": [\n        {\n          \"id\": \"P8GRWKZ\",\n          \"type\": \"assignment_notification_rule_reference\",\n          \"summary\": \"Default\",\n          \"self\": \"https://api.pagerduty.com/users/PAM4FGS/notification_rules/P8GRWKZ\",\n          \"html_url\": null\n        }\n      ],\n      \"job_title\": \"Senior Engineer\",\n      \"teams\": [\n        {\n          \"id\": \"PQ9K7I8\",\n          \"type\": \"team_reference\",\n          \"summary\": \"Engineering\",\n          \"self\": \"https://api.pagerduty.com/teams/PQ9K7I8\",\n          \"html_url\": \"https://subdomain.pagerduty.com/teams/PQ9K7I8\"\n        }\n      ]\n    },\n    {\n      \"id\": \"PXPGF42\",\n      \"type\": \"user\",\n      \"summary\": \"Earline Greenholt\",\n      \"self\": \"https://api.pagerduty.com/users/PXPGF42\",\n      \"html_url\": \"https://subdomain.pagerduty.com/users/PXPGF42\",\n      \"name\": \"Earline Greenholt\",\n      \"email\": \"user@example.invalid\",\n      \"time_zone\": \"America/Lima\",\n      \"color\": \"green\",\n      \"role\": \"admin\",\n      \"avatar_url\": \"https://pd-static-assets.pagerduty.com/users/blank-avatar.png\",\n      \"description\": \"I'm the boss\",\n      \"invitation_sent\": false,\n      \"contact_methods\": [\n        {\n          \"id\": \"PTDVERC\",\n          \"type\": \"email_contact_method_reference\",\n          \"summary\": \"Default\",\n          \"self\": \"https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC\"\n        }\n      ],\n      \"notification_rules\": [\n        {\n          \"id\": \"P8GRWKK\",\n          \"type\": \"assignment_notification_rule_reference\",\n          \"summary\": \"Default\",\n          \"self\": \"https://api.pagerduty.com/users/PXPGF42/notification_rules/P8GRWKK\",\n          \"html_url\": null\n        }\n      ],\n      \"job_title\": \"Director of Engineering\",\n      \"teams\": [\n        {\n          \"id\": \"PQ9K7I8\",\n          \"type\": \"team_reference\",\n          \"summary\": \"Engineering\",\n          \"self\": \"https://api.pagerduty.com/teams/PQ9K7I8\",\n          \"html_url\": \"https://subdomain.pagerduty.com/teams/PQ9K7I8\"\n        }\n      ]\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--oncalls",
+        "summary": "GET /oncalls",
+        "method": "GET",
+        "pathTemplate": "/oncalls",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "incidents"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"oncalls\": [\n    {\n      \"user\": {\n        \"id\": \"PT23IWX\",\n        \"type\": \"user_reference\",\n        \"summary\": \"Tim Wright\",\n        \"self\": \"https://api.pagerduty.com/users/PT23IWX\",\n        \"html_url\": \"https://subdomain.pagerduty.com/users/PT23IWX\"\n      },\n      \"schedule\": {\n        \"id\": \"PI7DH85\",\n        \"type\": \"schedule_reference\",\n        \"summary\": \"Daily Engineering Rotation\",\n        \"self\": \"https://api.pagerduty.com/schedules/PI7DH85\",\n        \"html_url\": \"https://subdomain.pagerduty.com/schedules/PI7DH85\"\n      },\n      \"escalation_policy\": {\n        \"id\": \"PT20YPA\",\n        \"type\": \"escalation_policy_reference\",\n        \"summary\": \"Engineering Escalation Policy\",\n        \"self\": \"https://api.pagerduty.com/escalation_policies/PT20YPA\",\n        \"html_url\": \"https://subdomain.pagerduty.com/escalation_policies/PT20YPA\"\n      },\n      \"escalation_level\": 2,\n      \"start\": \"2015-03-06T15:28:51-05:00\",\n      \"end\": \"2015-03-07T15:28:51-05:00\"\n    }\n  ],\n  \"limit\": 25,\n  \"offset\": 0,\n  \"more\": false,\n  \"total\": null\n}\n"
+      },
+      {
+        "id": "get--users-0-contact-methods",
+        "summary": "GET /users/{0}/contact_methods",
+        "method": "GET",
+        "pathTemplate": "/users/{0}/contact_methods",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "incidents"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"contact_methods\": [\n    {\n      \"id\": \"PXPGF42\",\n      \"type\": \"email_contact_method\",\n      \"summary\": \"Work\",\n      \"self\": \"https://api.pagerduty.com/users/PXPGF42/contact_method/PXPGF42\",\n      \"label\": \"Work\",\n      \"address\": \"user@example.invalid\",\n      \"send_short_email\": false\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--users-0-notification-rules",
+        "summary": "GET /users/{0}/notification_rules",
+        "method": "GET",
+        "pathTemplate": "/users/{0}/notification_rules",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "incidents"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"notification_rules\": [\n    {\n      \"id\": \"PXPGF42\",\n      \"type\": \"assignment_notification_rule\",\n      \"summary\": \"Work\",\n      \"self\": \"https://api.pagerduty.com/users/PXPGF42/notification_rules/PPSCXAN\",\n      \"start_delay_in_minutes\": 0,\n      \"contact_method\": {\n        \"id\": \"PXPGF42\",\n        \"type\": \"email_contact_method_reference\",\n        \"summary\": \"Work\",\n        \"self\": \"https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42\",\n        \"html_url\": null\n      },\n      \"created_at\": \"2016-02-01T16:06:27-05:00\",\n      \"urgency\": \"high\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "post--incidents-0-responder-requests",
+        "summary": "POST /incidents/{0}/responder_requests",
+        "method": "POST",
+        "pathTemplate": "/incidents/{0}/responder_requests",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "incidents"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"responder_request\": {\n    \"incident\": {\n      \"id\": \"PXP12GZ\",\n      \"type\": \"incident_reference\",\n      \"summary\": \"Ongoing Incident in Mailroom\",\n      \"self\": \"https://api.pagerduty.com/incidents/PXP12GZ\",\n      \"html_url\": \"https://subdomain.pagerduty.com/incidents/PXP12GZ\"\n    },\n    \"requester\": {\n      \"id\": \"P09TT3C\",\n      \"type\": \"user_reference\",\n      \"summary\": \"Jane Doe\",\n      \"self\": \"https://api.pagerduty.com/users/P09TT3C\",\n      \"html_url\": \"https://subdomain.pagerduty.com/users/P09TT3C\"\n    },\n    \"requested_at\": \"2018-08-16T14:55:17-07:00\",\n    \"message\": \"Please help with issue - join bridge at +1(234)-567-8910\",\n    \"responder_request_targets\": [\n      {\n        \"responder_request_target\": {\n          \"type\": \"user\",\n          \"id\": \"PL7A2O4\",\n          \"incidents_responders\": [\n            {\n              \"state\": \"pending\",\n              \"user\": {\n                \"id\": \"PL7A2O4\",\n                \"type\": \"user_reference\",\n                \"summary\": \"Lee Turner\",\n                \"self\": \"https://api.pagerduty.com/users/PL7A2O4\",\n                \"html_url\": \"https://subdomain.pagerduty.com/users/PL7A2O4\",\n                \"avatar_url\": \"https://pd-static-assets.pagerduty.com/users/blank-avatar.png\"\n              },\n              \"incident\": {\n                \"id\": \"PXP12GZ\",\n                \"type\": \"incident_reference\",\n                \"summary\": \"Ongoing Incident in Mailroom\",\n                \"self\": \"https://api.pagerduty.com/incidents/PXP12GZ\",\n                \"html_url\": \"https://subdomain.pagerduty.com/incidents/PXP12GZ\"\n              },\n              \"updated_at\": \"2018-08-09T14:40:48-07:00\",\n              \"message\": \"Please help with issue - join bridge at +1(234)-567-8910\",\n              \"requester\": {\n                \"id\": \"P09TT3C\",\n                \"type\": \"user_reference\",\n                \"summary\": \"Jane Doe\",\n                \"self\": \"https://api.pagerduty.com/users/P09TT3C\",\n                \"html_url\": \"https://subdomain.pagerduty.com/users/P09TT3C\",\n                \"avatar_url\": \"https://pd-static-assets.pagerduty.com/users/blank-avatar.png\"\n              },\n              \"requested_at\": \"2018-08-09T21:40:49Z\"\n            }\n          ]\n        }\n      }\n    ]\n  }\n}\n"
       }
     ],
     "chaos": {

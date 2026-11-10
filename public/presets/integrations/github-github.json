@@ -29,9 +29,806 @@
         "docUrl": "https://docs.github.com/en/rest/issues/issues#list-repository-issues",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file.",
+          "Command coverage is 33 from vendor docs, 0 approximate, and 64 missing, out of 97. Response bodies are the examples in github/rest-api-description for api.github.com."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "GitHub-create-issue",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-close-issue",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-update-issue",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-list-all-issues",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-search-code",
+          "calls": [
+            "GET /search/code"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-search-issues",
+          "calls": [
+            "GET /search/issues"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-get-download-count",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-get-stale-prs",
+          "calls": [
+            "GET /search/issues"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-get-branch",
+          "calls": [
+            "GET /{BASE_URL}{USER_SUFFIX}/branches/{branch_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--orgs-organization-teams"
+          ]
+        },
+        {
+          "command": "GitHub-create-branch",
+          "calls": [
+            "POST /{BASE_URL}{USER_SUFFIX}/git/refs"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-get-team-membership",
+          "calls": [
+            "GET /teams/{team_id}/memberships/{user_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--teams-team-id-memberships-user-name",
+            "get--base-url-teams-team-id-memberships-user-name"
+          ]
+        },
+        {
+          "command": "GitHub-request-review",
+          "calls": [
+            "POST /{BASE_URL}{PULLS_SUFFIX}/{pull_number}/requested_reviewers"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-create-comment",
+          "calls": [
+            "POST /{BASE_URL}{ISSUE_SUFFIX}/{issue_number}/comments"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-list-issue-comments",
+          "calls": [
+            "GET /{BASE_URL}{ISSUE_SUFFIX}/{issue_number}/comments"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-list-pr-files",
+          "calls": [
+            "GET /repos/{organization}/{repository}/pulls/{pull_number}/files"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-organization-repository-pulls-pull-number-files",
+            "get--base-url-repos-organization-repository-pulls-pull-number-files"
+          ]
+        },
+        {
+          "command": "GitHub-list-pr-reviews",
+          "calls": [
+            "GET /{BASE_URL}{PULLS_SUFFIX}/{pull_number}/reviews"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-get-commit",
+          "calls": [
+            "GET /{BASE_URL}{USER_SUFFIX}/git/commits/{commit_sha}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "list-issues",
+            "get--repos-organization-repo-releases"
+          ]
+        },
+        {
+          "command": "GitHub-add-label",
+          "calls": [
+            "POST /{BASE_URL}{ISSUE_SUFFIX}/{issue_number}/labels"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-get-pull-request",
+          "calls": [
+            "GET /repos/{organization}/{repository}/pulls/{pull_number}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-organization-repository-pulls-pull-number-files",
+            "get--repos-owner-repository-commits-commit-id-check-runs"
+          ]
+        },
+        {
+          "command": "GitHub-list-teams",
+          "calls": [
+            "GET /orgs/{organization}/teams"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--orgs-organization-teams",
+            "get--teams-team-id-memberships-user-name"
+          ]
+        },
+        {
+          "command": "GitHub-delete-branch",
+          "calls": [
+            "DELETE /{BASE_URL}{USER_SUFFIX}/git/refs/heads/{branch_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-list-pr-review-comments",
+          "calls": [
+            "GET /{BASE_URL}{PULLS_SUFFIX}/{pull_number}/comments"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-update-pull-request",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-is-pr-merged",
+          "calls": [
+            "GET /{BASE_URL}{PULLS_SUFFIX}/{pull_number}/merge"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-create-pull-request",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "Github-get-github-actions-usage",
+          "calls": [
+            "GET /orgs/{owner}/repos",
+            "GET /repos/{owner}/{repository_name}/actions/workflows",
+            "GET /repos/{owner}/{repository_name}/actions/workflows/{id}/timing"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--teams-team-id-memberships-user-name",
+            "get--repos-owner-repository-name-actions-workflows",
+            "get--base-url-repos-owner-repository-name-actions-workflows",
+            "get--repos-owner-repository-name-actions-workflows-id-timing",
+            "get--base-url-repos-owner-repository-name-actions-workflows-id-timing"
+          ]
+        },
+        {
+          "command": "Github-get-check-run",
+          "calls": [
+            "GET /repos/{owner}/{repository}/check-runs/{run_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-owner-repository-check-runs-run-id",
+            "get--repos-owner-repository-commits-commit-id-check-runs",
+            "get--repos-organization-repository-pulls-pull-number-files",
+            "get--base-url-repos-owner-repository-commits-commit-id-check-runs"
+          ]
+        },
+        {
+          "command": "GitHub-get-file-content",
+          "calls": [
+            "GET /repos/{organization}/{repository}/contents/{file_path}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-organization-repository-contents-file-path",
+            "get--repos-organization-repository-pulls-pull-number-files",
+            "get--repos-owner-repository-commits-commit-id-check-runs"
+          ]
+        },
+        {
+          "command": "Github-list-files",
+          "calls": [
+            "GET /repos/{organization}/{repository}/contents/{path}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-organization-repository-contents-file-path",
+            "get--repos-organization-repository-pulls-pull-number-files",
+            "get--repos-owner-repository-commits-commit-id-check-runs",
+            "get--orgs-organization-teams"
+          ]
+        },
+        {
+          "command": "GitHub-list-team-members",
+          "calls": [
+            "GET /orgs/{organization}/teams/{team_slug}/members"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--base-url-teams-team-id-memberships-user-name",
+            "get--base-url-orgs-organization-teams-team-slug-members"
+          ]
+        },
+        {
+          "command": "Github-commit-file",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-create-release",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-list-branch-pull-requests",
+          "calls": [
+            "GET /repos/{organization}/{repository}/pulls"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-owner-repository-check-runs-run-id",
+            "get--repos-organization-repository-contents-file-path"
+          ]
+        },
+        {
+          "command": "Github-list-issue-events",
+          "calls": [
+            "GET /{BASE_URL}{ISSUE_SUFFIX}/{issue_number}/events"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-list-all-projects",
+          "calls": [
+            "GET /columns_url",
+            "GET /cards_url"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-add-issue-to-project-board",
+          "calls": [
+            "POST /projects/columns/{column_id}/cards"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-get-path-data",
+          "calls": [
+            "GET /repos/{organization}/{repo}/contents/{relative_path}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-organization-repository-contents-file-path",
+            "get--repos-organization-repository-pulls-pull-number-files",
+            "get--repos-owner-repository-commits-commit-id-check-runs"
+          ]
+        },
+        {
+          "command": "GitHub-releases-list",
+          "calls": [
+            "GET /repos/{organization}/{repo}/releases"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-organization-repo-releases",
+            "get--repos-owner-repository-check-runs-run-id",
+            "get--repos-organization-repository-contents-file-path"
+          ]
+        },
+        {
+          "command": "GitHub-update-comment",
+          "calls": [
+            "PATCH /{BASE_URL}{ISSUE_SUFFIX}/comments/{comment_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-delete-comment",
+          "calls": [
+            "DELETE /{BASE_URL}{ISSUE_SUFFIX}/comments/{comment_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-add-assignee",
+          "calls": [
+            "POST /{BASE_URL}{USER_SUFFIX}/issues/{pull_request_number}/assignees"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-trigger-workflow",
+          "calls": [
+            "POST /repos/{owner}/{repository}/actions/workflows/{workflow}/dispatches"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--repos-owner-repository-actions-workflows-workflow-dispatches",
+            "post--base-url-repos-owner-repository-actions-workflows-workflow-dispa"
+          ]
+        },
+        {
+          "command": "GitHub-cancel-workflow",
+          "calls": [
+            "POST /repos/{owner}/{repository}/actions/runs/{workflow_id}/cancel"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-list-workflows",
+          "calls": [
+            "GET /repos/{owner}/{repository}/actions/workflows/{workflow}/runs"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "GitHub-delete-file",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "github-create-issue",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "github-close-issue",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "github-update-issue",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "github-list-all-issues",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "github-search-code",
+          "calls": [
+            "GET /search/code"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-search-issues",
+          "calls": [
+            "GET /search/issues"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-get-download-count",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "github-get-stale-prs",
+          "calls": [
+            "GET /search/issues"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-get-branch",
+          "calls": [
+            "GET /{BASE_URL}{USER_SUFFIX}/branches/{branch_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--orgs-organization-teams"
+          ]
+        },
+        {
+          "command": "github-create-branch",
+          "calls": [
+            "POST /{BASE_URL}{USER_SUFFIX}/git/refs"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-get-team-membership",
+          "calls": [
+            "GET /teams/{team_id}/memberships/{user_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--teams-team-id-memberships-user-name",
+            "get--base-url-teams-team-id-memberships-user-name"
+          ]
+        },
+        {
+          "command": "github-request-review",
+          "calls": [
+            "POST /{BASE_URL}{PULLS_SUFFIX}/{pull_number}/requested_reviewers"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-create-comment",
+          "calls": [
+            "POST /{BASE_URL}{ISSUE_SUFFIX}/{issue_number}/comments"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-list-issue-comments",
+          "calls": [
+            "GET /{BASE_URL}{ISSUE_SUFFIX}/{issue_number}/comments"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-list-pr-files",
+          "calls": [
+            "GET /repos/{organization}/{repository}/pulls/{pull_number}/files"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-organization-repository-pulls-pull-number-files",
+            "get--base-url-repos-organization-repository-pulls-pull-number-files"
+          ]
+        },
+        {
+          "command": "github-list-pr-reviews",
+          "calls": [
+            "GET /{BASE_URL}{PULLS_SUFFIX}/{pull_number}/reviews"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-get-commit",
+          "calls": [
+            "GET /{BASE_URL}{USER_SUFFIX}/git/commits/{commit_sha}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "list-issues",
+            "get--repos-organization-repo-releases"
+          ]
+        },
+        {
+          "command": "github-add-label",
+          "calls": [
+            "POST /{BASE_URL}{ISSUE_SUFFIX}/{issue_number}/labels"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-get-pull-request",
+          "calls": [
+            "GET /repos/{organization}/{repository}/pulls/{pull_number}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-organization-repository-pulls-pull-number-files",
+            "get--repos-owner-repository-commits-commit-id-check-runs"
+          ]
+        },
+        {
+          "command": "github-list-teams",
+          "calls": [
+            "GET /orgs/{organization}/teams"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--orgs-organization-teams",
+            "get--teams-team-id-memberships-user-name"
+          ]
+        },
+        {
+          "command": "github-delete-branch",
+          "calls": [
+            "DELETE /{BASE_URL}{USER_SUFFIX}/git/refs/heads/{branch_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-list-pr-review-comments",
+          "calls": [
+            "GET /{BASE_URL}{PULLS_SUFFIX}/{pull_number}/comments"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-update-pull-request",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "github-is-pr-merged",
+          "calls": [
+            "GET /{BASE_URL}{PULLS_SUFFIX}/{pull_number}/merge"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-create-pull-request",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "github-get-github-actions-usage",
+          "calls": [
+            "GET /orgs/{owner}/repos",
+            "GET /repos/{owner}/{repository_name}/actions/workflows",
+            "GET /repos/{owner}/{repository_name}/actions/workflows/{id}/timing"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--teams-team-id-memberships-user-name",
+            "get--repos-owner-repository-name-actions-workflows",
+            "get--base-url-repos-owner-repository-name-actions-workflows",
+            "get--repos-owner-repository-name-actions-workflows-id-timing",
+            "get--base-url-repos-owner-repository-name-actions-workflows-id-timing"
+          ]
+        },
+        {
+          "command": "github-get-check-run",
+          "calls": [
+            "GET /repos/{owner}/{repository}/check-runs/{run_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-owner-repository-check-runs-run-id",
+            "get--repos-owner-repository-commits-commit-id-check-runs",
+            "get--repos-organization-repository-pulls-pull-number-files",
+            "get--base-url-repos-owner-repository-commits-commit-id-check-runs"
+          ]
+        },
+        {
+          "command": "github-get-file-content",
+          "calls": [
+            "GET /repos/{organization}/{repository}/contents/{file_path}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-organization-repository-contents-file-path",
+            "get--repos-organization-repository-pulls-pull-number-files",
+            "get--repos-owner-repository-commits-commit-id-check-runs"
+          ]
+        },
+        {
+          "command": "github-list-files",
+          "calls": [
+            "GET /repos/{organization}/{repository}/contents/{path}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-organization-repository-contents-file-path",
+            "get--repos-organization-repository-pulls-pull-number-files",
+            "get--repos-owner-repository-commits-commit-id-check-runs",
+            "get--orgs-organization-teams"
+          ]
+        },
+        {
+          "command": "github-list-team-members",
+          "calls": [
+            "GET /orgs/{organization}/teams/{team_slug}/members"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--base-url-teams-team-id-memberships-user-name",
+            "get--base-url-orgs-organization-teams-team-slug-members"
+          ]
+        },
+        {
+          "command": "github-commit-file",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "github-create-release",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "github-list-branch-pull-requests",
+          "calls": [
+            "GET /repos/{organization}/{repository}/pulls"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-owner-repository-check-runs-run-id",
+            "get--repos-organization-repository-contents-file-path"
+          ]
+        },
+        {
+          "command": "github-list-issue-events",
+          "calls": [
+            "GET /{BASE_URL}{ISSUE_SUFFIX}/{issue_number}/events"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-list-all-projects",
+          "calls": [
+            "GET /columns_url",
+            "GET /cards_url"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-add-issue-to-project-board",
+          "calls": [
+            "POST /projects/columns/{column_id}/cards"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-get-path-data",
+          "calls": [
+            "GET /repos/{organization}/{repo}/contents/{relative_path}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-organization-repository-contents-file-path",
+            "get--repos-organization-repository-pulls-pull-number-files",
+            "get--repos-owner-repository-commits-commit-id-check-runs"
+          ]
+        },
+        {
+          "command": "github-releases-list",
+          "calls": [
+            "GET /repos/{organization}/{repo}/releases"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-organization-repo-releases",
+            "get--repos-owner-repository-check-runs-run-id",
+            "get--repos-organization-repository-contents-file-path"
+          ]
+        },
+        {
+          "command": "github-update-comment",
+          "calls": [
+            "PATCH /{BASE_URL}{ISSUE_SUFFIX}/comments/{comment_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-delete-comment",
+          "calls": [
+            "DELETE /{BASE_URL}{ISSUE_SUFFIX}/comments/{comment_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-add-assignee",
+          "calls": [
+            "POST /{BASE_URL}{USER_SUFFIX}/issues/{pull_request_number}/assignees"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-trigger-workflow",
+          "calls": [
+            "POST /repos/{owner}/{repository}/actions/workflows/{workflow}/dispatches"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--repos-owner-repository-actions-workflows-workflow-dispatches",
+            "post--base-url-repos-owner-repository-actions-workflows-workflow-dispa"
+          ]
+        },
+        {
+          "command": "github-cancel-workflow",
+          "calls": [
+            "POST /repos/{owner}/{repository}/actions/runs/{workflow_id}/cancel"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-list-workflows",
+          "calls": [
+            "GET /repos/{owner}/{repository}/actions/workflows/{workflow}/runs"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-get-workflow-run",
+          "calls": [
+            "GET /repos/{owner}/{repository}/actions/runs/{run_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-delete-file",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "github-revoke-credentials",
+          "calls": [
+            "POST /credentials/revoke"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-list-organization-repositories",
+          "calls": [
+            "GET /orgs/{organization}/repos"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--teams-team-id-memberships-user-name"
+          ]
+        },
+        {
+          "command": "github-list-actions-caches",
+          "calls": [
+            "GET /repos/{owner}/{repository}/actions/caches"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-owner-repository-actions-caches",
+            "get--base-url-repos-owner-repository-actions-caches"
+          ]
+        },
+        {
+          "command": "github-delete-actions-cache",
+          "calls": [
+            "DELETE /repos/{owner}/{repository}/actions/caches/{cache_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "github-list-actions-artifacts",
+          "calls": [
+            "GET /repos/{owner}/{repository}/actions/artifacts"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--repos-owner-repository-actions-artifacts",
+            "get--base-url-repos-owner-repository-actions-artifacts"
+          ]
+        },
+        {
+          "command": "github-delete-actions-artifact",
+          "calls": [
+            "DELETE /repos/{owner}/{repository}/actions/artifacts/{artifact_id}"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -160,6 +957,615 @@
           ]
         },
         "fixture": "[\n  {\n    \"id\": 1,\n    \"node_id\": \"MDU6SXNzdWUx\",\n    \"url\": \"https://api.github.com/repos/octocat/Hello-World/issues/1347\",\n    \"repository_url\": \"https://api.github.com/repos/octocat/Hello-World\",\n    \"labels_url\": \"https://api.github.com/repos/octocat/Hello-World/issues/1347/labels{/name}\",\n    \"comments_url\": \"https://api.github.com/repos/octocat/Hello-World/issues/1347/comments\",\n    \"events_url\": \"https://api.github.com/repos/octocat/Hello-World/issues/1347/events\",\n    \"html_url\": \"https://github.com/octocat/Hello-World/issues/1347\",\n    \"number\": 1347,\n    \"state\": \"open\",\n    \"title\": \"Found a bug\",\n    \"body\": \"I'm having a problem with this.\",\n    \"user\": {\n      \"login\": \"octocat\",\n      \"id\": 1,\n      \"node_id\": \"MDQ6VXNlcjE=\",\n      \"avatar_url\": \"https://github.com/images/error/octocat_happy.gif\",\n      \"gravatar_id\": \"\",\n      \"url\": \"https://api.github.com/users/octocat\",\n      \"html_url\": \"https://github.com/octocat\",\n      \"followers_url\": \"https://api.github.com/users/octocat/followers\",\n      \"following_url\": \"https://api.github.com/users/octocat/following{/other_user}\",\n      \"gists_url\": \"https://api.github.com/users/octocat/gists{/gist_id}\",\n      \"starred_url\": \"https://api.github.com/users/octocat/starred{/owner}{/repo}\",\n      \"subscriptions_url\": \"https://api.github.com/users/octocat/subscriptions\",\n      \"organizations_url\": \"https://api.github.com/users/octocat/orgs\",\n      \"repos_url\": \"https://api.github.com/users/octocat/repos\",\n      \"events_url\": \"https://api.github.com/users/octocat/events{/privacy}\",\n      \"received_events_url\": \"https://api.github.com/users/octocat/received_events\",\n      \"type\": \"User\",\n      \"site_admin\": false\n    },\n    \"pinned_comment\": null,\n    \"labels\": [\n      {\n        \"id\": 208045946,\n        \"node_id\": \"MDU6TGFiZWwyMDgwNDU5NDY=\",\n        \"url\": \"https://api.github.com/repos/octocat/Hello-World/labels/bug\",\n        \"name\": \"bug\",\n        \"description\": \"Something isn't working\",\n        \"color\": \"f29513\",\n        \"default\": true\n      }\n    ],\n    \"assignee\": {\n      \"login\": \"octocat\",\n      \"id\": 1,\n      \"node_id\": \"MDQ6VXNlcjE=\",\n      \"avatar_url\": \"https://github.com/images/error/octocat_happy.gif\",\n      \"gravatar_id\": \"\",\n      \"url\": \"https://api.github.com/users/octocat\",\n      \"html_url\": \"https://github.com/octocat\",\n      \"followers_url\": \"https://api.github.com/users/octocat/followers\",\n      \"following_url\": \"https://api.github.com/users/octocat/following{/other_user}\",\n      \"gists_url\": \"https://api.github.com/users/octocat/gists{/gist_id}\",\n      \"starred_url\": \"https://api.github.com/users/octocat/starred{/owner}{/repo}\",\n      \"subscriptions_url\": \"https://api.github.com/users/octocat/subscriptions\",\n      \"organizations_url\": \"https://api.github.com/users/octocat/orgs\",\n      \"repos_url\": \"https://api.github.com/users/octocat/repos\",\n      \"events_url\": \"https://api.github.com/users/octocat/events{/privacy}\",\n      \"received_events_url\": \"https://api.github.com/users/octocat/received_events\",\n      \"type\": \"User\",\n      \"site_admin\": false\n    },\n    \"assignees\": [\n      {\n        \"login\": \"octocat\",\n        \"id\": 1,\n        \"node_id\": \"MDQ6VXNlcjE=\",\n        \"avatar_url\": \"https://github.com/images/error/octocat_happy.gif\",\n        \"gravatar_id\": \"\",\n        \"url\": \"https://api.github.com/users/octocat\",\n        \"html_url\": \"https://github.com/octocat\",\n        \"followers_url\": \"https://api.github.com/users/octocat/followers\",\n        \"following_url\": \"https://api.github.com/users/octocat/following{/other_user}\",\n        \"gists_url\": \"https://api.github.com/users/octocat/gists{/gist_id}\",\n        \"starred_url\": \"https://api.github.com/users/octocat/starred{/owner}{/repo}\",\n        \"subscriptions_url\": \"https://api.github.com/users/octocat/subscriptions\",\n        \"organizations_url\": \"https://api.github.com/users/octocat/orgs\",\n        \"repos_url\": \"https://api.github.com/users/octocat/repos\",\n        \"events_url\": \"https://api.github.com/users/octocat/events{/privacy}\",\n        \"received_events_url\": \"https://api.github.com/users/octocat/received_events\",\n        \"type\": \"User\",\n        \"site_admin\": false\n      }\n    ],\n    \"milestone\": {\n      \"url\": \"https://api.github.com/repos/octocat/Hello-World/milestones/1\",\n      \"html_url\": \"https://github.com/octocat/Hello-World/milestones/v1.0\",\n      \"labels_url\": \"https://api.github.com/repos/octocat/Hello-World/milestones/1/labels\",\n      \"id\": 1002604,\n      \"node_id\": \"MDk6TWlsZXN0b25lMTAwMjYwNA==\",\n      \"number\": 1,\n      \"state\": \"open\",\n      \"title\": \"v1.0\",\n      \"description\": \"Tracking milestone for version 1.0\",\n      \"creator\": {\n        \"login\": \"octocat\",\n        \"id\": 1,\n        \"node_id\": \"MDQ6VXNlcjE=\",\n        \"avatar_url\": \"https://github.com/images/error/octocat_happy.gif\",\n        \"gravatar_id\": \"\",\n        \"url\": \"https://api.github.com/users/octocat\",\n        \"html_url\": \"https://github.com/octocat\",\n        \"followers_url\": \"https://api.github.com/users/octocat/followers\",\n        \"following_url\": \"https://api.github.com/users/octocat/following{/other_user}\",\n        \"gists_url\": \"https://api.github.com/users/octocat/gists{/gist_id}\",\n        \"starred_url\": \"https://api.github.com/users/octocat/starred{/owner}{/repo}\",\n        \"subscriptions_url\": \"https://api.github.com/users/octocat/subscriptions\",\n        \"organizations_url\": \"https://api.github.com/users/octocat/orgs\",\n        \"repos_url\": \"https://api.github.com/users/octocat/repos\",\n        \"events_url\": \"https://api.github.com/users/octocat/events{/privacy}\",\n        \"received_events_url\": \"https://api.github.com/users/octocat/received_events\",\n        \"type\": \"User\",\n        \"site_admin\": false\n      },\n      \"open_issues\": 4,\n      \"closed_issues\": 8,\n      \"created_at\": \"2011-04-10T20:09:31Z\",\n      \"updated_at\": \"2014-03-03T18:58:10Z\",\n      \"closed_at\": \"2013-02-12T13:22:01Z\",\n      \"due_on\": \"2012-10-09T23:39:01Z\"\n    },\n    \"locked\": true,\n    \"active_lock_reason\": \"too heated\",\n    \"comments\": 0,\n    \"pull_request\": {\n      \"url\": \"https://api.github.com/repos/octocat/Hello-World/pulls/1347\",\n      \"html_url\": \"https://github.com/octocat/Hello-World/pull/1347\",\n      \"diff_url\": \"https://github.com/octocat/Hello-World/pull/1347.diff\",\n      \"patch_url\": \"https://github.com/octocat/Hello-World/pull/1347.patch\"\n    },\n    \"closed_at\": null,\n    \"created_at\": \"2011-04-22T13:33:48Z\",\n    \"updated_at\": \"2011-04-22T13:33:48Z\",\n    \"closed_by\": {\n      \"login\": \"octocat\",\n      \"id\": 1,\n      \"node_id\": \"MDQ6VXNlcjE=\",\n      \"avatar_url\": \"https://github.com/images/error/octocat_happy.gif\",\n      \"gravatar_id\": \"\",\n      \"url\": \"https://api.github.com/users/octocat\",\n      \"html_url\": \"https://github.com/octocat\",\n      \"followers_url\": \"https://api.github.com/users/octocat/followers\",\n      \"following_url\": \"https://api.github.com/users/octocat/following{/other_user}\",\n      \"gists_url\": \"https://api.github.com/users/octocat/gists{/gist_id}\",\n      \"starred_url\": \"https://api.github.com/users/octocat/starred{/owner}{/repo}\",\n      \"subscriptions_url\": \"https://api.github.com/users/octocat/subscriptions\",\n      \"organizations_url\": \"https://api.github.com/users/octocat/orgs\",\n      \"repos_url\": \"https://api.github.com/users/octocat/repos\",\n      \"events_url\": \"https://api.github.com/users/octocat/events{/privacy}\",\n      \"received_events_url\": \"https://api.github.com/users/octocat/received_events\",\n      \"type\": \"User\",\n      \"site_admin\": false\n    },\n    \"author_association\": \"COLLABORATOR\",\n    \"state_reason\": \"completed\"\n  }\n]\n"
+      },
+      {
+        "id": "get--teams-team-id-memberships-user-name",
+        "summary": "GET /teams/{team_id}/memberships/{user_name}",
+        "method": "GET",
+        "pathTemplate": "/teams/{team_id}/memberships/{user_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"url\": \"https://api.github.com/teams/1/memberships/octocat\",\n  \"role\": \"maintainer\",\n  \"state\": \"active\"\n}\n"
+      },
+      {
+        "id": "get--base-url-teams-team-id-memberships-user-name",
+        "summary": "GET /{BASE_URL}/teams/{team_id}/memberships/{user_name}",
+        "method": "GET",
+        "pathTemplate": "/{BASE_URL}/teams/{team_id}/memberships/{user_name}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"url\": \"https://api.github.com/teams/1/memberships/octocat\",\n  \"role\": \"maintainer\",\n  \"state\": \"active\"\n}\n"
+      },
+      {
+        "id": "get--repos-organization-repository-pulls-pull-number-files",
+        "summary": "GET /repos/{organization}/{repository}/pulls/{pull_number}/files",
+        "method": "GET",
+        "pathTemplate": "/repos/{organization}/{repository}/pulls/{pull_number}/files",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "[\n  {\n    \"sha\": \"bbcd538c8e72b8c175046e27cc8f907076331401\",\n    \"filename\": \"file1.txt\",\n    \"status\": \"added\",\n    \"additions\": 103,\n    \"deletions\": 21,\n    \"changes\": 124,\n    \"blob_url\": \"https://github.com/octocat/Hello-World/blob/6dcb09b5b57875f334f61aebed695e2e4193db5e/file1.txt\",\n    \"raw_url\": \"https://github.com/octocat/Hello-World/raw/6dcb09b5b57875f334f61aebed695e2e4193db5e/file1.txt\",\n    \"contents_url\": \"https://api.github.com/repos/octocat/Hello-World/contents/file1.txt?ref=6dcb09b5b57875f334f61aebed695e2e4193db5e\",\n    \"patch\": \"@@ -132,7 +132,7 @@ module Test @@ -1000,7 +1000,7 @@ module Test\"\n  }\n]\n"
+      },
+      {
+        "id": "get--base-url-repos-organization-repository-pulls-pull-number-files",
+        "summary": "GET /{BASE_URL}/repos/{organization}/{repository}/pulls/{pull_number}/files",
+        "method": "GET",
+        "pathTemplate": "/{BASE_URL}/repos/{organization}/{repository}/pulls/{pull_number}/files",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "[\n  {\n    \"sha\": \"bbcd538c8e72b8c175046e27cc8f907076331401\",\n    \"filename\": \"file1.txt\",\n    \"status\": \"added\",\n    \"additions\": 103,\n    \"deletions\": 21,\n    \"changes\": 124,\n    \"blob_url\": \"https://github.com/octocat/Hello-World/blob/6dcb09b5b57875f334f61aebed695e2e4193db5e/file1.txt\",\n    \"raw_url\": \"https://github.com/octocat/Hello-World/raw/6dcb09b5b57875f334f61aebed695e2e4193db5e/file1.txt\",\n    \"contents_url\": \"https://api.github.com/repos/octocat/Hello-World/contents/file1.txt?ref=6dcb09b5b57875f334f61aebed695e2e4193db5e\",\n    \"patch\": \"@@ -132,7 +132,7 @@ module Test @@ -1000,7 +1000,7 @@ module Test\"\n  }\n]\n"
+      },
+      {
+        "id": "get--orgs-organization-teams",
+        "summary": "GET /orgs/{organization}/teams",
+        "method": "GET",
+        "pathTemplate": "/orgs/{organization}/teams",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "[\n  {\n    \"id\": 1,\n    \"node_id\": \"MDQ6VGVhbTE=\",\n    \"url\": \"https://api.github.com/teams/1\",\n    \"html_url\": \"https://github.com/orgs/github/teams/justice-league\",\n    \"name\": \"Justice League\",\n    \"slug\": \"justice-league\",\n    \"description\": \"A great team.\",\n    \"privacy\": \"closed\",\n    \"notification_setting\": \"notifications_enabled\",\n    \"permission\": \"admin\",\n    \"members_url\": \"https://api.github.com/teams/1/members{/member}\",\n    \"repositories_url\": \"https://api.github.com/teams/1/repos\",\n    \"parent\": null\n  }\n]\n"
+      },
+      {
+        "id": "get--repos-owner-repository-name-actions-workflows",
+        "summary": "GET /repos/{owner}/{repository_name}/actions/workflows",
+        "method": "GET",
+        "pathTemplate": "/repos/{owner}/{repository_name}/actions/workflows",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"total_count\": 2,\n  \"workflows\": [\n    {\n      \"id\": 161335,\n      \"node_id\": \"MDg6V29ya2Zsb3cxNjEzMzU=\",\n      \"name\": \"CI\",\n      \"path\": \".github/workflows/blank.yaml\",\n      \"state\": \"active\",\n      \"created_at\": \"2020-01-08T23:48:37.000-08:00\",\n      \"updated_at\": \"2020-01-08T23:50:21.000-08:00\",\n      \"url\": \"https://api.github.com/repos/octo-org/octo-repo/actions/workflows/161335\",\n      \"html_url\": \"https://github.com/octo-org/octo-repo/blob/master/.github/workflows/161335\",\n      \"badge_url\": \"https://github.com/octo-org/octo-repo/workflows/CI/badge.svg\"\n    },\n    {\n      \"id\": 269289,\n      \"node_id\": \"MDE4OldvcmtmbG93IFNlY29uZGFyeTI2OTI4OQ==\",\n      \"name\": \"Linter\",\n      \"path\": \".github/workflows/linter.yaml\",\n      \"state\": \"active\",\n      \"created_at\": \"2020-01-08T23:48:37.000-08:00\",\n      \"updated_at\": \"2020-01-08T23:50:21.000-08:00\",\n      \"url\": \"https://api.github.com/repos/octo-org/octo-repo/actions/workflows/269289\",\n      \"html_url\": \"https://github.com/octo-org/octo-repo/blob/master/.github/workflows/269289\",\n      \"badge_url\": \"https://github.com/octo-org/octo-repo/workflows/Linter/badge.svg\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--base-url-repos-owner-repository-name-actions-workflows",
+        "summary": "GET /{BASE_URL}/repos/{owner}/{repository_name}/actions/workflows",
+        "method": "GET",
+        "pathTemplate": "/{BASE_URL}/repos/{owner}/{repository_name}/actions/workflows",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"total_count\": 2,\n  \"workflows\": [\n    {\n      \"id\": 161335,\n      \"node_id\": \"MDg6V29ya2Zsb3cxNjEzMzU=\",\n      \"name\": \"CI\",\n      \"path\": \".github/workflows/blank.yaml\",\n      \"state\": \"active\",\n      \"created_at\": \"2020-01-08T23:48:37.000-08:00\",\n      \"updated_at\": \"2020-01-08T23:50:21.000-08:00\",\n      \"url\": \"https://api.github.com/repos/octo-org/octo-repo/actions/workflows/161335\",\n      \"html_url\": \"https://github.com/octo-org/octo-repo/blob/master/.github/workflows/161335\",\n      \"badge_url\": \"https://github.com/octo-org/octo-repo/workflows/CI/badge.svg\"\n    },\n    {\n      \"id\": 269289,\n      \"node_id\": \"MDE4OldvcmtmbG93IFNlY29uZGFyeTI2OTI4OQ==\",\n      \"name\": \"Linter\",\n      \"path\": \".github/workflows/linter.yaml\",\n      \"state\": \"active\",\n      \"created_at\": \"2020-01-08T23:48:37.000-08:00\",\n      \"updated_at\": \"2020-01-08T23:50:21.000-08:00\",\n      \"url\": \"https://api.github.com/repos/octo-org/octo-repo/actions/workflows/269289\",\n      \"html_url\": \"https://github.com/octo-org/octo-repo/blob/master/.github/workflows/269289\",\n      \"badge_url\": \"https://github.com/octo-org/octo-repo/workflows/Linter/badge.svg\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--repos-owner-repository-name-actions-workflows-id-timing",
+        "summary": "GET /repos/{owner}/{repository_name}/actions/workflows/{id}/timing",
+        "method": "GET",
+        "pathTemplate": "/repos/{owner}/{repository_name}/actions/workflows/{id}/timing",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"billable\": {\n    \"UBUNTU\": {\n      \"total_ms\": 180000\n    },\n    \"MACOS\": {\n      \"total_ms\": 240000\n    },\n    \"WINDOWS\": {\n      \"total_ms\": 300000\n    }\n  }\n}\n"
+      },
+      {
+        "id": "get--base-url-repos-owner-repository-name-actions-workflows-id-timing",
+        "summary": "GET /{BASE_URL}/repos/{owner}/{repository_name}/actions/workflows/{id}/timing",
+        "method": "GET",
+        "pathTemplate": "/{BASE_URL}/repos/{owner}/{repository_name}/actions/workflows/{id}/timing",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"billable\": {\n    \"UBUNTU\": {\n      \"total_ms\": 180000\n    },\n    \"MACOS\": {\n      \"total_ms\": 240000\n    },\n    \"WINDOWS\": {\n      \"total_ms\": 300000\n    }\n  }\n}\n"
+      },
+      {
+        "id": "get--repos-owner-repository-check-runs-run-id",
+        "summary": "GET /repos/{owner}/{repository}/check-runs/{run_id}",
+        "method": "GET",
+        "pathTemplate": "/repos/{owner}/{repository}/check-runs/{run_id}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"id\": 4,\n  \"head_sha\": \"ce587453ced02b1526dfb4cb910479d431683101\",\n  \"node_id\": \"MDg6Q2hlY2tSdW40\",\n  \"external_id\": \"\",\n  \"url\": \"https://api.github.com/repos/github/hello-world/check-runs/4\",\n  \"html_url\": \"https://github.com/github/hello-world/runs/4\",\n  \"details_url\": \"https://example.com\",\n  \"status\": \"completed\",\n  \"conclusion\": \"neutral\",\n  \"started_at\": \"2018-05-04T01:14:52Z\",\n  \"completed_at\": \"2018-05-04T01:14:52Z\",\n  \"output\": {\n    \"title\": \"Mighty Readme report\",\n    \"summary\": \"There are 0 failures, 2 warnings, and 1 notice.\",\n    \"text\": \"You may have some misspelled words on lines 2 and 4. You also may want to add a section in your README about how to install your app.\",\n    \"annotations_count\": 2,\n    \"annotations_url\": \"https://api.github.com/repos/github/hello-world/check-runs/4/annotations\"\n  },\n  \"name\": \"mighty_readme\",\n  \"check_suite\": {\n    \"id\": 5\n  },\n  \"app\": {\n    \"id\": 1,\n    \"slug\": \"octoapp\",\n    \"node_id\": \"MDExOkludGVncmF0aW9uMQ==\",\n    \"owner\": {\n      \"login\": \"github\",\n      \"id\": 1,\n      \"node_id\": \"MDEyOk9yZ2FuaXphdGlvbjE=\",\n      \"url\": \"https://api.github.com/orgs/github\",\n      \"repos_url\": \"https://api.github.com/orgs/github/repos\",\n      \"events_url\": \"https://api.github.com/orgs/github/events\",\n      \"avatar_url\": \"https://github.com/images/error/octocat_happy.gif\",\n      \"gravatar_id\": \"\",\n      \"html_url\": \"https://github.com/octocat\",\n      \"followers_url\": \"https://api.github.com/users/octocat/followers\",\n      \"following_url\": \"https://api.github.com/users/octocat/following{/other_user}\",\n      \"gists_url\": \"https://api.github.com/users/octocat/gists{/gist_id}\",\n      \"starred_url\": \"https://api.github.com/users/octocat/starred{/owner}{/repo}\",\n      \"subscriptions_url\": \"https://api.github.com/users/octocat/subscriptions\",\n      \"organizations_url\": \"https://api.github.com/users/octocat/orgs\",\n      \"received_events_url\": \"https://api.github.com/users/octocat/received_events\",\n      \"type\": \"User\",\n      \"site_admin\": true\n    },\n    \"name\": \"Octocat App\",\n    \"description\": \"\",\n    \"external_url\": \"https://example.com\",\n    \"html_url\": \"https://github.com/apps/octoapp\",\n    \"created_at\": \"2017-07-08T16:18:44-04:00\",\n    \"updated_at\": \"2017-07-08T16:18:44-04:00\",\n    \"permissions\": {\n      \"metadata\": \"read\",\n      \"contents\": \"read\",\n      \"issues\": \"write\",\n      \"single_file\": \"write\"\n    },\n    \"events\": [\n      \"push\",\n      \"pull_request\"\n    ]\n  },\n  \"pull_requests\": [\n    {\n      \"url\": \"https://api.github.com/repos/github/hello-world/pulls/1\",\n      \"id\": 1934,\n      \"number\": 3956,\n      \"head\": {\n        \"ref\": \"say-hello\",\n        \"sha\": \"3dca65fa3e8d4b3da3f3d056c59aee1c50f41390\",\n        \"repo\": {\n          \"id\": 526,\n          \"url\": \"https://api.github.com/repos/github/hello-world\",\n          \"name\": \"hello-world\"\n        }\n      },\n      \"base\": {\n        \"ref\": \"master\",\n        \"sha\": \"e7fdf7640066d71ad16a86fbcbb9c6a10a18af4f\",\n        \"repo\": {\n          \"id\": 526,\n          \"url\": \"https://api.github.com/repos/github/hello-world\",\n          \"name\": \"hello-world\"\n        }\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--repos-owner-repository-commits-commit-id-check-runs",
+        "summary": "GET /repos/{owner}/{repository}/commits/{commit_id}/check-runs",
+        "method": "GET",
+        "pathTemplate": "/repos/{owner}/{repository}/commits/{commit_id}/check-runs",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"total_count\": 1,\n  \"check_runs\": [\n    {\n      \"id\": 4,\n      \"head_sha\": \"ce587453ced02b1526dfb4cb910479d431683101\",\n      \"node_id\": \"MDg6Q2hlY2tSdW40\",\n      \"external_id\": \"\",\n      \"url\": \"https://api.github.com/repos/github/hello-world/check-runs/4\",\n      \"html_url\": \"https://github.com/github/hello-world/runs/4\",\n      \"details_url\": \"https://example.com\",\n      \"status\": \"completed\",\n      \"conclusion\": \"neutral\",\n      \"started_at\": \"2018-05-04T01:14:52Z\",\n      \"completed_at\": \"2018-05-04T01:14:52Z\",\n      \"output\": {\n        \"title\": \"Mighty Readme report\",\n        \"summary\": \"There are 0 failures, 2 warnings, and 1 notice.\",\n        \"text\": \"You may have some misspelled words on lines 2 and 4. You also may want to add a section in your README about how to install your app.\",\n        \"annotations_count\": 2,\n        \"annotations_url\": \"https://api.github.com/repos/github/hello-world/check-runs/4/annotations\"\n      },\n      \"name\": \"mighty_readme\",\n      \"check_suite\": {\n        \"id\": 5\n      },\n      \"app\": {\n        \"id\": 1,\n        \"slug\": \"octoapp\",\n        \"node_id\": \"MDExOkludGVncmF0aW9uMQ==\",\n        \"owner\": {\n          \"login\": \"github\",\n          \"id\": 1,\n          \"node_id\": \"MDEyOk9yZ2FuaXphdGlvbjE=\",\n          \"url\": \"https://api.github.com/orgs/github\",\n          \"repos_url\": \"https://api.github.com/orgs/github/repos\",\n          \"events_url\": \"https://api.github.com/orgs/github/events\",\n          \"avatar_url\": \"https://github.com/images/error/octocat_happy.gif\",\n          \"gravatar_id\": \"\",\n          \"html_url\": \"https://github.com/octocat\",\n          \"followers_url\": \"https://api.github.com/users/octocat/followers\",\n          \"following_url\": \"https://api.github.com/users/octocat/following{/other_user}\",\n          \"gists_url\": \"https://api.github.com/users/octocat/gists{/gist_id}\",\n          \"starred_url\": \"https://api.github.com/users/octocat/starred{/owner}{/repo}\",\n          \"subscriptions_url\": \"https://api.github.com/users/octocat/subscriptions\",\n          \"organizations_url\": \"https://api.github.com/users/octocat/orgs\",\n          \"received_events_url\": \"https://api.github.com/users/octocat/received_events\",\n          \"type\": \"User\",\n          \"site_admin\": true\n        },\n        \"name\": \"Octocat App\",\n        \"description\": \"\",\n        \"external_url\": \"https://example.com\",\n        \"html_url\": \"https://github.com/apps/octoapp\",\n        \"created_at\": \"2017-07-08T16:18:44-04:00\",\n        \"updated_at\": \"2017-07-08T16:18:44-04:00\",\n        \"permissions\": {\n          \"metadata\": \"read\",\n          \"contents\": \"read\",\n          \"issues\": \"write\",\n          \"single_file\": \"write\"\n        },\n        \"events\": [\n          \"push\",\n          \"pull_request\"\n        ]\n      },\n      \"pull_requests\": [\n        {\n          \"url\": \"https://api.github.com/repos/github/hello-world/pulls/1\",\n          \"id\": 1934,\n          \"number\": 3956,\n          \"head\": {\n            \"ref\": \"say-hello\",\n            \"sha\": \"3dca65fa3e8d4b3da3f3d056c59aee1c50f41390\",\n            \"repo\": {\n              \"id\": 526,\n              \"url\": \"https://api.github.com/repos/github/hello-world\",\n              \"name\": \"hello-world\"\n            }\n          },\n          \"base\": {\n            \"ref\": \"master\",\n            \"sha\": \"e7fdf7640066d71ad16a86fbcbb9c6a10a18af4f\",\n            \"repo\": {\n              \"id\": 526,\n              \"url\": \"https://api.github.com/repos/github/hello-world\",\n              \"name\": \"hello-world\"\n            }\n          }\n        }\n      ]\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--base-url-repos-owner-repository-commits-commit-id-check-runs",
+        "summary": "GET /{BASE_URL}/repos/{owner}/{repository}/commits/{commit_id}/check-runs",
+        "method": "GET",
+        "pathTemplate": "/{BASE_URL}/repos/{owner}/{repository}/commits/{commit_id}/check-runs",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"total_count\": 1,\n  \"check_runs\": [\n    {\n      \"id\": 4,\n      \"head_sha\": \"ce587453ced02b1526dfb4cb910479d431683101\",\n      \"node_id\": \"MDg6Q2hlY2tSdW40\",\n      \"external_id\": \"\",\n      \"url\": \"https://api.github.com/repos/github/hello-world/check-runs/4\",\n      \"html_url\": \"https://github.com/github/hello-world/runs/4\",\n      \"details_url\": \"https://example.com\",\n      \"status\": \"completed\",\n      \"conclusion\": \"neutral\",\n      \"started_at\": \"2018-05-04T01:14:52Z\",\n      \"completed_at\": \"2018-05-04T01:14:52Z\",\n      \"output\": {\n        \"title\": \"Mighty Readme report\",\n        \"summary\": \"There are 0 failures, 2 warnings, and 1 notice.\",\n        \"text\": \"You may have some misspelled words on lines 2 and 4. You also may want to add a section in your README about how to install your app.\",\n        \"annotations_count\": 2,\n        \"annotations_url\": \"https://api.github.com/repos/github/hello-world/check-runs/4/annotations\"\n      },\n      \"name\": \"mighty_readme\",\n      \"check_suite\": {\n        \"id\": 5\n      },\n      \"app\": {\n        \"id\": 1,\n        \"slug\": \"octoapp\",\n        \"node_id\": \"MDExOkludGVncmF0aW9uMQ==\",\n        \"owner\": {\n          \"login\": \"github\",\n          \"id\": 1,\n          \"node_id\": \"MDEyOk9yZ2FuaXphdGlvbjE=\",\n          \"url\": \"https://api.github.com/orgs/github\",\n          \"repos_url\": \"https://api.github.com/orgs/github/repos\",\n          \"events_url\": \"https://api.github.com/orgs/github/events\",\n          \"avatar_url\": \"https://github.com/images/error/octocat_happy.gif\",\n          \"gravatar_id\": \"\",\n          \"html_url\": \"https://github.com/octocat\",\n          \"followers_url\": \"https://api.github.com/users/octocat/followers\",\n          \"following_url\": \"https://api.github.com/users/octocat/following{/other_user}\",\n          \"gists_url\": \"https://api.github.com/users/octocat/gists{/gist_id}\",\n          \"starred_url\": \"https://api.github.com/users/octocat/starred{/owner}{/repo}\",\n          \"subscriptions_url\": \"https://api.github.com/users/octocat/subscriptions\",\n          \"organizations_url\": \"https://api.github.com/users/octocat/orgs\",\n          \"received_events_url\": \"https://api.github.com/users/octocat/received_events\",\n          \"type\": \"User\",\n          \"site_admin\": true\n        },\n        \"name\": \"Octocat App\",\n        \"description\": \"\",\n        \"external_url\": \"https://example.com\",\n        \"html_url\": \"https://github.com/apps/octoapp\",\n        \"created_at\": \"2017-07-08T16:18:44-04:00\",\n        \"updated_at\": \"2017-07-08T16:18:44-04:00\",\n        \"permissions\": {\n          \"metadata\": \"read\",\n          \"contents\": \"read\",\n          \"issues\": \"write\",\n          \"single_file\": \"write\"\n        },\n        \"events\": [\n          \"push\",\n          \"pull_request\"\n        ]\n      },\n      \"pull_requests\": [\n        {\n          \"url\": \"https://api.github.com/repos/github/hello-world/pulls/1\",\n          \"id\": 1934,\n          \"number\": 3956,\n          \"head\": {\n            \"ref\": \"say-hello\",\n            \"sha\": \"3dca65fa3e8d4b3da3f3d056c59aee1c50f41390\",\n            \"repo\": {\n              \"id\": 526,\n              \"url\": \"https://api.github.com/repos/github/hello-world\",\n              \"name\": \"hello-world\"\n            }\n          },\n          \"base\": {\n            \"ref\": \"master\",\n            \"sha\": \"e7fdf7640066d71ad16a86fbcbb9c6a10a18af4f\",\n            \"repo\": {\n              \"id\": 526,\n              \"url\": \"https://api.github.com/repos/github/hello-world\",\n              \"name\": \"hello-world\"\n            }\n          }\n        }\n      ]\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--repos-organization-repository-contents-file-path",
+        "summary": "GET /repos/{organization}/{repository}/contents/{file_path}",
+        "method": "GET",
+        "pathTemplate": "/repos/{organization}/{repository}/contents/{file_path}",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"type\": \"submodule\",\n  \"submodule_git_url\": \"git://github.com/jquery/qunit.git\",\n  \"size\": 0,\n  \"name\": \"qunit\",\n  \"path\": \"test/qunit\",\n  \"sha\": \"6ca3721222109997540bd6d9ccd396902e0ad2f9\",\n  \"url\": \"https://api.github.com/repos/jquery/jquery/contents/test/qunit?ref=master\",\n  \"git_url\": \"https://api.github.com/repos/jquery/qunit/git/trees/6ca3721222109997540bd6d9ccd396902e0ad2f9\",\n  \"html_url\": \"https://github.com/jquery/qunit/tree/6ca3721222109997540bd6d9ccd396902e0ad2f9\",\n  \"download_url\": null,\n  \"_links\": {\n    \"git\": \"https://api.github.com/repos/jquery/qunit/git/trees/6ca3721222109997540bd6d9ccd396902e0ad2f9\",\n    \"self\": \"https://api.github.com/repos/jquery/jquery/contents/test/qunit?ref=master\",\n    \"html\": \"https://github.com/jquery/qunit/tree/6ca3721222109997540bd6d9ccd396902e0ad2f9\"\n  }\n}\n"
+      },
+      {
+        "id": "get--base-url-orgs-organization-teams-team-slug-members",
+        "summary": "GET /{BASE_URL}/orgs/{organization}/teams/{team_slug}/members",
+        "method": "GET",
+        "pathTemplate": "/{BASE_URL}/orgs/{organization}/teams/{team_slug}/members",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "[\n  {\n    \"login\": \"octocat\",\n    \"id\": 1,\n    \"node_id\": \"MDQ6VXNlcjE=\",\n    \"avatar_url\": \"https://github.com/images/error/octocat_happy.gif\",\n    \"gravatar_id\": \"\",\n    \"url\": \"https://api.github.com/users/octocat\",\n    \"html_url\": \"https://github.com/octocat\",\n    \"followers_url\": \"https://api.github.com/users/octocat/followers\",\n    \"following_url\": \"https://api.github.com/users/octocat/following{/other_user}\",\n    \"gists_url\": \"https://api.github.com/users/octocat/gists{/gist_id}\",\n    \"starred_url\": \"https://api.github.com/users/octocat/starred{/owner}{/repo}\",\n    \"subscriptions_url\": \"https://api.github.com/users/octocat/subscriptions\",\n    \"organizations_url\": \"https://api.github.com/users/octocat/orgs\",\n    \"repos_url\": \"https://api.github.com/users/octocat/repos\",\n    \"events_url\": \"https://api.github.com/users/octocat/events{/privacy}\",\n    \"received_events_url\": \"https://api.github.com/users/octocat/received_events\",\n    \"type\": \"User\",\n    \"site_admin\": false,\n    \"role\": \"member\",\n    \"inherited\": false\n  }\n]\n"
+      },
+      {
+        "id": "get--repos-organization-repo-releases",
+        "summary": "GET /repos/{organization}/{repo}/releases",
+        "method": "GET",
+        "pathTemplate": "/repos/{organization}/{repo}/releases",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "[\n  {\n    \"url\": \"https://api.github.com/repos/octocat/Hello-World/releases/1\",\n    \"html_url\": \"https://github.com/octocat/Hello-World/releases/v1.0.0\",\n    \"assets_url\": \"https://api.github.com/repos/octocat/Hello-World/releases/1/assets\",\n    \"upload_url\": \"https://uploads.github.com/repos/octocat/Hello-World/releases/1/assets{?name,label}\",\n    \"tarball_url\": \"https://api.github.com/repos/octocat/Hello-World/tarball/v1.0.0\",\n    \"zipball_url\": \"https://api.github.com/repos/octocat/Hello-World/zipball/v1.0.0\",\n    \"id\": 1,\n    \"node_id\": \"MDc6UmVsZWFzZTE=\",\n    \"tag_name\": \"v1.0.0\",\n    \"target_commitish\": \"master\",\n    \"name\": \"v1.0.0\",\n    \"body\": \"Description of the release\",\n    \"draft\": false,\n    \"prerelease\": false,\n    \"immutable\": false,\n    \"created_at\": \"2013-02-27T19:35:32Z\",\n    \"published_at\": \"2013-02-27T19:35:32Z\",\n    \"author\": {\n      \"login\": \"octocat\",\n      \"id\": 1,\n      \"node_id\": \"MDQ6VXNlcjE=\",\n      \"avatar_url\": \"https://github.com/images/error/octocat_happy.gif\",\n      \"gravatar_id\": \"\",\n      \"url\": \"https://api.github.com/users/octocat\",\n      \"html_url\": \"https://github.com/octocat\",\n      \"followers_url\": \"https://api.github.com/users/octocat/followers\",\n      \"following_url\": \"https://api.github.com/users/octocat/following{/other_user}\",\n      \"gists_url\": \"https://api.github.com/users/octocat/gists{/gist_id}\",\n      \"starred_url\": \"https://api.github.com/users/octocat/starred{/owner}{/repo}\",\n      \"subscriptions_url\": \"https://api.github.com/users/octocat/subscriptions\",\n      \"organizations_url\": \"https://api.github.com/users/octocat/orgs\",\n      \"repos_url\": \"https://api.github.com/users/octocat/repos\",\n      \"events_url\": \"https://api.github.com/users/octocat/events{/privacy}\",\n      \"received_events_url\": \"https://api.github.com/users/octocat/received_events\",\n      \"type\": \"User\",\n      \"site_admin\": false\n    },\n    \"assets\": [\n      {\n        \"url\": \"https://api.github.com/repos/octocat/Hello-World/releases/assets/1\",\n        \"browser_download_url\": \"https://github.com/octocat/Hello-World/releases/download/v1.0.0/example.zip\",\n        \"id\": 1,\n        \"node_id\": \"MDEyOlJlbGVhc2VBc3NldDE=\",\n        \"name\": \"example.zip\",\n        \"label\": \"short description\",\n        \"state\": \"uploaded\",\n        \"content_type\": \"application/zip\",\n        \"size\": 1024,\n        \"digest\": \"sha256:2151b604e3429bff440b9fbc03eb3617bc2603cda96c95b9bb05277f9ddba255\",\n        \"download_count\": 42,\n        \"created_at\": \"2013-02-27T19:35:32Z\",\n        \"updated_at\": \"2013-02-27T19:35:32Z\",\n        \"uploader\": {\n          \"login\": \"octocat\",\n          \"id\": 1,\n          \"node_id\": \"MDQ6VXNlcjE=\",\n          \"avatar_url\": \"https://github.com/images/error/octocat_happy.gif\",\n          \"gravatar_id\": \"\",\n          \"url\": \"https://api.github.com/users/octocat\",\n          \"html_url\": \"https://github.com/octocat\",\n          \"followers_url\": \"https://api.github.com/users/octocat/followers\",\n          \"following_url\": \"https://api.github.com/users/octocat/following{/other_user}\",\n          \"gists_url\": \"https://api.github.com/users/octocat/gists{/gist_id}\",\n          \"starred_url\": \"https://api.github.com/users/octocat/starred{/owner}{/repo}\",\n          \"subscriptions_url\": \"https://api.github.com/users/octocat/subscriptions\",\n          \"organizations_url\": \"https://api.github.com/users/octocat/orgs\",\n          \"repos_url\": \"https://api.github.com/users/octocat/repos\",\n          \"events_url\": \"https://api.github.com/users/octocat/events{/privacy}\",\n          \"received_events_url\": \"https://api.github.com/users/octocat/received_events\",\n          \"type\": \"User\",\n          \"site_admin\": false\n        }\n      }\n    ]\n  }\n]\n"
+      },
+      {
+        "id": "post--repos-owner-repository-actions-workflows-workflow-dispatches",
+        "summary": "POST /repos/{owner}/{repository}/actions/workflows/{workflow}/dispatches",
+        "method": "POST",
+        "pathTemplate": "/repos/{owner}/{repository}/actions/workflows/{workflow}/dispatches",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"workflow_run_id\": 1,\n  \"run_url\": \"https://api.github.com/repos/octo-org/octo-repo/actions/runs/1\",\n  \"html_url\": \"https://github.com/octo-org/octo-repo/actions/runs/1\"\n}\n"
+      },
+      {
+        "id": "post--base-url-repos-owner-repository-actions-workflows-workflow-dispa",
+        "summary": "POST /{BASE_URL}/repos/{owner}/{repository}/actions/workflows/{workflow}/dispatches",
+        "method": "POST",
+        "pathTemplate": "/{BASE_URL}/repos/{owner}/{repository}/actions/workflows/{workflow}/dispatches",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"workflow_run_id\": 1,\n  \"run_url\": \"https://api.github.com/repos/octo-org/octo-repo/actions/runs/1\",\n  \"html_url\": \"https://github.com/octo-org/octo-repo/actions/runs/1\"\n}\n"
+      },
+      {
+        "id": "get--repos-owner-repository-actions-caches",
+        "summary": "GET /repos/{owner}/{repository}/actions/caches",
+        "method": "GET",
+        "pathTemplate": "/repos/{owner}/{repository}/actions/caches",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"total_count\": 1,\n  \"actions_caches\": [\n    {\n      \"id\": 505,\n      \"ref\": \"refs/heads/main\",\n      \"key\": \"Linux-node-958aff96db2d75d67787d1e634ae70b659de937b\",\n      \"version\": \"73885106f58cc52a7df9ec4d4a5622a5614813162cb516c759a30af6bf56e6f0\",\n      \"last_accessed_at\": \"2019-01-24T22:45:36.000Z\",\n      \"created_at\": \"2019-01-24T22:45:36.000Z\",\n      \"size_in_bytes\": 1024\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--base-url-repos-owner-repository-actions-caches",
+        "summary": "GET /{BASE_URL}/repos/{owner}/{repository}/actions/caches",
+        "method": "GET",
+        "pathTemplate": "/{BASE_URL}/repos/{owner}/{repository}/actions/caches",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"total_count\": 1,\n  \"actions_caches\": [\n    {\n      \"id\": 505,\n      \"ref\": \"refs/heads/main\",\n      \"key\": \"Linux-node-958aff96db2d75d67787d1e634ae70b659de937b\",\n      \"version\": \"73885106f58cc52a7df9ec4d4a5622a5614813162cb516c759a30af6bf56e6f0\",\n      \"last_accessed_at\": \"2019-01-24T22:45:36.000Z\",\n      \"created_at\": \"2019-01-24T22:45:36.000Z\",\n      \"size_in_bytes\": 1024\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--repos-owner-repository-actions-artifacts",
+        "summary": "GET /repos/{owner}/{repository}/actions/artifacts",
+        "method": "GET",
+        "pathTemplate": "/repos/{owner}/{repository}/actions/artifacts",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"total_count\": 2,\n  \"artifacts\": [\n    {\n      \"id\": 11,\n      \"node_id\": \"MDg6QXJ0aWZhY3QxMQ==\",\n      \"name\": \"Rails\",\n      \"size_in_bytes\": 556,\n      \"url\": \"https://api.github.com/repos/octo-org/octo-docs/actions/artifacts/11\",\n      \"archive_download_url\": \"https://api.github.com/repos/octo-org/octo-docs/actions/artifacts/11/zip\",\n      \"expired\": false,\n      \"created_at\": \"2020-01-10T14:59:22Z\",\n      \"expires_at\": \"2020-03-21T14:59:22Z\",\n      \"updated_at\": \"2020-02-21T14:59:22Z\",\n      \"digest\": \"sha256:cfc3236bdad15b5898bca8408945c9e19e1917da8704adc20eaa618444290a8c\",\n      \"workflow_run\": {\n        \"id\": 2332938,\n        \"repository_id\": 1296269,\n        \"head_repository_id\": 1296269,\n        \"head_branch\": \"main\",\n        \"head_sha\": \"328faa0536e6fef19753d9d91dc96a9931694ce3\"\n      }\n    },\n    {\n      \"id\": 13,\n      \"node_id\": \"MDg6QXJ0aWZhY3QxMw==\",\n      \"name\": \"Test output\",\n      \"size_in_bytes\": 453,\n      \"url\": \"https://api.github.com/repos/octo-org/octo-docs/actions/artifacts/13\",\n      \"archive_download_url\": \"https://api.github.com/repos/octo-org/octo-docs/actions/artifacts/13/zip\",\n      \"expired\": false,\n      \"created_at\": \"2020-01-10T14:59:22Z\",\n      \"expires_at\": \"2020-03-21T14:59:22Z\",\n      \"updated_at\": \"2020-02-21T14:59:22Z\",\n      \"digest\": \"sha256:cfc3236bdad15b5898bca8408945c9e19e1917da8704adc20eaa618444290a8c\",\n      \"workflow_run\": {\n        \"id\": 2332942,\n        \"repository_id\": 1296269,\n        \"head_repository_id\": 1296269,\n        \"head_branch\": \"main\",\n        \"head_sha\": \"178f4f6090b3fccad4a65b3e83d076a622d59652\"\n      }\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--base-url-repos-owner-repository-actions-artifacts",
+        "summary": "GET /{BASE_URL}/repos/{owner}/{repository}/actions/artifacts",
+        "method": "GET",
+        "pathTemplate": "/{BASE_URL}/repos/{owner}/{repository}/actions/artifacts",
+        "status": 200,
+        "headers": {},
+        "contentType": "application/json",
+        "list": false,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 30,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "fixture": "{\n  \"total_count\": 2,\n  \"artifacts\": [\n    {\n      \"id\": 11,\n      \"node_id\": \"MDg6QXJ0aWZhY3QxMQ==\",\n      \"name\": \"Rails\",\n      \"size_in_bytes\": 556,\n      \"url\": \"https://api.github.com/repos/octo-org/octo-docs/actions/artifacts/11\",\n      \"archive_download_url\": \"https://api.github.com/repos/octo-org/octo-docs/actions/artifacts/11/zip\",\n      \"expired\": false,\n      \"created_at\": \"2020-01-10T14:59:22Z\",\n      \"expires_at\": \"2020-03-21T14:59:22Z\",\n      \"updated_at\": \"2020-02-21T14:59:22Z\",\n      \"digest\": \"sha256:cfc3236bdad15b5898bca8408945c9e19e1917da8704adc20eaa618444290a8c\",\n      \"workflow_run\": {\n        \"id\": 2332938,\n        \"repository_id\": 1296269,\n        \"head_repository_id\": 1296269,\n        \"head_branch\": \"main\",\n        \"head_sha\": \"328faa0536e6fef19753d9d91dc96a9931694ce3\"\n      }\n    },\n    {\n      \"id\": 13,\n      \"node_id\": \"MDg6QXJ0aWZhY3QxMw==\",\n      \"name\": \"Test output\",\n      \"size_in_bytes\": 453,\n      \"url\": \"https://api.github.com/repos/octo-org/octo-docs/actions/artifacts/13\",\n      \"archive_download_url\": \"https://api.github.com/repos/octo-org/octo-docs/actions/artifacts/13/zip\",\n      \"expired\": false,\n      \"created_at\": \"2020-01-10T14:59:22Z\",\n      \"expires_at\": \"2020-03-21T14:59:22Z\",\n      \"updated_at\": \"2020-02-21T14:59:22Z\",\n      \"digest\": \"sha256:cfc3236bdad15b5898bca8408945c9e19e1917da8704adc20eaa618444290a8c\",\n      \"workflow_run\": {\n        \"id\": 2332942,\n        \"repository_id\": 1296269,\n        \"head_repository_id\": 1296269,\n        \"head_branch\": \"main\",\n        \"head_sha\": \"178f4f6090b3fccad4a65b3e83d076a622d59652\"\n      }\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {
