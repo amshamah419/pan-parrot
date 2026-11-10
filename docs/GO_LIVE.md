@@ -104,7 +104,7 @@ Netlify also provides `URL` and `DEPLOY_PRIME_URL`. The API allows those origins
 
 ## 4. Resend
 
-Sign-in codes go out through Resend. The app calls `https://api.resend.com/emails` with `RESEND_API_KEY`.
+Sign-in codes go out through Resend. The app calls `https://api.resend.com/emails` with `RESEND_API_KEY`. The optional first-call note uses the same key. It is off until the mock owner turns it on, and the message does not include the request.
 
 1. Create a Resend account at [resend.com](https://resend.com).
 2. **Domains → Add domain**. Use a domain you control. Do not use `paloaltonetworks.com`.

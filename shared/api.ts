@@ -48,6 +48,7 @@ export interface UserEndpoint {
   mockSpec?: unknown;
   locked?: boolean;
   lockToken?: string;
+  notifyFirstCatch?: boolean;
 }
 
 export interface CreateEndpointRequest {

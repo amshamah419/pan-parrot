@@ -72,6 +72,7 @@ import {
   resetEndpointRuntime,
   saveMockSpec,
   setEndpointLock,
+  setNotifyFirstCatch,
   updateUserAsAdmin,
 } from "./data";
 import { newMocksLocked, setNewMocksLocked } from "./site-settings";
@@ -599,6 +600,14 @@ export function createServer(options?: {
     if (!isRecord(body) || typeof body.enabled !== "boolean") throw new HttpError(400, "Invalid request");
     const cidrs = typeof body.cidrs === "string" ? body.cidrs : undefined;
     return c.json(await setEndpointLock(c.get("db"), user, c.req.param("endpointId"), { enabled: body.enabled, cidrs }));
+  });
+
+  app.post("/api/endpoints/:endpointId/notify", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    const body = await readJson(c.req.raw, POLICY.apiJsonBytes);
+    if (!isRecord(body) || typeof body.enabled !== "boolean") throw new HttpError(400, "Invalid request");
+    return c.json(await setNotifyFirstCatch(c.get("db"), user, c.req.param("endpointId"), body.enabled));
   });
 
   app.post("/api/endpoints/:endpointId/mock", async (c) => {

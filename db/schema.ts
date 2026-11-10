@@ -73,6 +73,8 @@ export const endpoints = pgTable(
     disabled: boolean("disabled").notNull().default(false),
     lockTokenHash: text("lock_token_hash"),
     lockCidrs: text("lock_cidrs"),
+    notifyFirstCatch: boolean("notify_first_catch").notNull().default(false),
+    firstCatchAt: timestamp("first_catch_at", { withTimezone: true, mode: "date" }),
     userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),

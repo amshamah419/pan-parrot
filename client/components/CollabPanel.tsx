@@ -27,7 +27,7 @@ export function CollabPanel({
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<"view" | "edit">("view");
   const [shares, setShares] = useState<Array<{ email: string; role: string }>>([]);
-  const [versions, setVersions] = useState<Array<{ id: string; summary: string; actorEmail: string; created: string }>>([]);
+  const [versions, setVersions] = useState<Array<{ id: string; summary: string; actorEmail: string; created: string; changes: string[] }>>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -106,13 +106,20 @@ export function CollabPanel({
           <h3 className="text-xs font-medium">Recent saves</h3>
           <ul className="mt-2 space-y-1 text-sm">
             {versions.map((version) => (
-              <li key={version.id} className="flex flex-wrap items-center justify-between gap-2">
-                <span>{version.summary} · {version.actorEmail}</span>
-                {access !== "view" && (
-                  <Button type="button" variant="outline" size="sm" onClick={() => void revertVersion(endpointId, version.id).then(onReverted).catch((err) => setError(err.message))}>
-                    Revert
-                  </Button>
-                )}
+              <li key={version.id} className="space-y-1 rounded border px-2 py-2">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span>{version.summary} · {version.actorEmail}</span>
+                  {access !== "view" && (
+                    <Button type="button" variant="outline" size="sm" onClick={() => void revertVersion(endpointId, version.id).then(onReverted).catch((err) => setError(err.message))}>
+                      Revert
+                    </Button>
+                  )}
+                </div>
+                <ul className="space-y-0.5 text-xs text-muted-foreground">
+                  {(version.changes || ["The spec would not change."]).map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ul>

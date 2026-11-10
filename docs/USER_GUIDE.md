@@ -4,7 +4,7 @@ Unofficial personal tool. It is not a Palo Alto Networks product and it does not
 
 Sign-in is an 8-digit code emailed to a `@paloaltonetworks.com` address. There is no password. Someone who is not signed in only sees that page. The catalog, docs, and app code are not sent until the sign-in cookie is valid.
 
-A generated catch path is 128 random bits. On the mock page, **Lock this catch URL** adds a token. Callers then send `x-pan-parrot-lock` or `?lock=`. Without it, the catch URL answers `404 Not found`, the same as a path that does not exist. Admins can turn on **New mocks are locked** so every new mock starts that way. The token is shown once.
+A generated catch path is 128 random bits. On the mock page, **Lock this catch URL** adds a token. Callers then send `x-pan-parrot-lock` or `?lock=`. Without it, the catch URL answers `404 Not found`, the same as a path that does not exist. Admins can turn on **New mocks are locked** so every new mock starts that way. The token is shown once. **Email me on the first call** is off until you turn it on. That note names the mock and does not include the request.
 
 ## First minute
 
@@ -71,7 +71,7 @@ The catch URL itself is open to anyone who has the link. Sharing changes who can
 
 - The owner can add up to 20 `@paloaltonetworks.com` addresses as view or edit, and can publish the mock to the shared catalog.
 - A published mock can be opened read-only and cloned by anyone signed in. Clone makes your own copy. The push signing secret is not copied.
-- Each save keeps the previous spec. **Revert** restores one of the last 15.
+- Each save keeps the previous spec. The list says what **Revert** would change before you click it. Revert restores one of the last 15.
 
 ## CLI
 

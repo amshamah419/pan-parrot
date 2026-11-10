@@ -300,3 +300,42 @@ test("dark mode follows the system and the request log can be searched", async (
   await page.keyboard.press("?");
   await expect(page.getByRole("heading", { name: "Keyboard shortcuts" })).toBeVisible();
 });
+
+test("the version list shows what revert would change", async ({ page }) => {
+  await signIn(page, `diff.${Date.now().toString(36)}@paloaltonetworks.com`);
+  const spec = (value: string) => ({
+    version: 1,
+    source: { kind: "manual", name: "Diff" },
+    operations: [
+      {
+        id: "rows",
+        method: "GET",
+        pathTemplate: "/rows",
+        status: 200,
+        contentType: "application/json",
+        list: true,
+        envelope: { type: "array" },
+        record: { name: "row", kind: "object", children: [{ name: "id", kind: "const", constValue: value }] },
+      },
+    ],
+    chaos: { enabled: false },
+    totalRecords: 1,
+  });
+  const created = await page.request.post("/api/endpoints", {
+    data: { name: "Diff rows", customPath: `diff${Date.now().toString(36)}`, mockSpec: spec("one") },
+  });
+  expect(created.ok()).toBeTruthy();
+  const endpoint = await created.json();
+  const saved = await page.request.put(`/api/endpoints/${endpoint.id}/spec`, { data: { mockSpec: spec("two") } });
+  expect(saved.ok()).toBeTruthy();
+  await page.goto(`/mock/${endpoint.id}`);
+  const toggle = page.getByRole("switch", { name: "Email me on the first call" });
+  await expect(toggle).toBeVisible();
+  await expect(toggle).not.toBeChecked();
+  await toggle.click();
+  await expect(toggle).toBeChecked();
+  await expect(page.getByText(/Revert would change/)).toBeVisible();
+  await expect(page.getByText("TOP-SECRET")).toHaveCount(0);
+  await page.getByRole("button", { name: "Revert" }).click();
+  await expect(page.getByRole("heading", { name: "Mocks" })).toHaveCount(0);
+});

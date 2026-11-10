@@ -166,7 +166,7 @@ export async function setPublished(endpointId: string, published: boolean): Prom
   return apiRequest(`/api/endpoints/${endpointId}/publish`, { method: "POST", body: JSON.stringify({ published }) });
 }
 
-export async function getVersions(endpointId: string): Promise<Array<{ id: string; summary: string; actorEmail: string; created: string }>> {
+export async function getVersions(endpointId: string): Promise<Array<{ id: string; summary: string; actorEmail: string; created: string; changes: string[] }>> {
   return apiRequest(`/api/endpoints/${endpointId}/versions`);
 }
 

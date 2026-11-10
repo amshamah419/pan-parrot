@@ -11,6 +11,7 @@ import {
   users,
 } from "../db/schema";
 import { normalizePanEmail } from "../shared/email";
+import { revertDiff } from "../shared/spec-diff";
 import type { PublicUser } from "./auth";
 import { HttpError } from "./http";
 
@@ -134,6 +135,7 @@ export async function snapshotSpec(
 
 export async function listVersions(db: AppDb, user: PublicUser, endpointId: string) {
   await requireAccess(db, user, endpointId);
+  const [endpoint] = await db.select().from(endpoints).where(eq(endpoints.id, endpointId)).limit(1);
   const rows = await db
     .select()
     .from(endpointVersions)
@@ -145,6 +147,7 @@ export async function listVersions(db: AppDb, user: PublicUser, endpointId: stri
     summary: row.summary,
     actorEmail: row.actorEmail,
     created: row.createdAt.toISOString(),
+    changes: revertDiff(endpoint?.mockSpec, row.mockSpec),
   }));
 }
 
