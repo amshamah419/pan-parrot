@@ -136,8 +136,13 @@ function fieldToElement(
   const record = value && typeof value === "object" ? (value as Record<string, unknown>) : {};
   const attributes: XmlAttribute[] = [];
   const children: XmlElement[] = [];
+  let text = "";
   for (const child of field.children) {
     if (record[child.name] == null && child.optional) continue;
+    if (child.xml?.text) {
+      text += record[child.name] == null ? "" : String(record[child.name]);
+      continue;
+    }
     if (child.xml?.attribute) {
       attributes.push({
         name: child.name,
@@ -160,7 +165,7 @@ function fieldToElement(
     namespace,
     attributes,
     children,
-    text: "",
+    text,
   };
 }
 

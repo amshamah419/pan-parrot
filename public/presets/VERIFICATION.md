@@ -389,6 +389,28 @@ The CI script `scripts/crosscheck_presets.py` parses each verified preset's XSOA
 
 20 presets were drawn from the 98 added in that batch with seed 20261111. Each one was compared with the client method, the path, and the keys the command reads from the response. 0 matched. 20 were fixed. 0 were downgraded. The error rate is 20 of 20, 100 percent. 18 of the 20 already had the right method and a real client path. Box events was `/api/2.0/events`; the client base is `/2.0` and the call is `GET /events`. FortiSIEM was the legacy `events/{queryId}/0/1000` URL; the command that reads events posts `/phoenix/rest/h5/report/resultByReport`. Every sample had the wrong body: fields were the union of keys read anywhere in the module, so other commands, credentials, and fetch state were mixed in, and lists were often a string or a bare object. The same credential and fetch-state fields were removed from CrowdStrike Falcon, Claroty, Nozomi, and the Workday event collector, which were outside the sample and failed the new check. The quiet edge function returns catch, API, and static responses directly. It does not copy those bodies.
 
+## Hand audit, seed 20261112
+
+15 presets were drawn at random from the 283 still verified. Each was checked against the command that owns the call: method, path, and whether every body key is one that command reads, with the list or object shape the code uses. 3 matched. 12 did not. The error rate is 12 of 15, 80 percent. Nothing new was added after that.
+
+| Preset | Result | What was wrong |
+| --- | --- | --- |
+| FireEye Endpoint Security (HX) v2 | correct | GET /hx/api/v3/hosts returns data.entries[]. The host command reads _id, hostname, agent_version, and containment_state. |
+| Cisco ISE | correct | GET /ers/config/endpoint returns SearchResult.total and SearchResult.resources[] of id and name. |
+| XM Cyber | correct | GET /api/systemReport/topAssetsAtRiskV2 returns data.entities[] with displayName and trend. |
+| TrendAI Cloud App Security | fixed | security_events[].id and severity are not read. message is an object. The command reads log_item_id, message, next_link, and traceId. |
+| Trellix Email Security - Cloud | fixed | Logs is a copy the command builds. The response is data keyed by the message id, and each value is a list of action_on_msg and display_msg. |
+| Palo Alto Networks AIOps | fixed | Both calls carried the same five keys. The request call returns upload-url and id. The job call returns status. |
+| G Suite Security Alert Center | fixed | GET /v1beta1/alerts is the list. Top-level alert fields and feedback belong to other calls. |
+| GreyNoise | fixed | metadata was an array and the nested objects were strings. client.ip reads internet_scanner_intelligence and business_service_intelligence. |
+| Recorded Future Playbook Alerts | fixed | return_error was a string. The search command reads result_actions[], each with CommandResults. |
+| OpenPhish v2 | fixed | The feed is text, one URL per line. integrationReliability, list, and timestamp are not the response. |
+| Darktrace | fixed | The formatter reads model.then.name and model.then.pid. model.name is the formatted copy. |
+| Sophos Firewall | fixed | Response is an XML element with Status code and text, not a JSON string. |
+| FireEye Helix | fixed | alert_type is an object with id and name. The list reads that, plus id, risk, and created_at. |
+| Gmail Single User | fixed | The list call reads messages[].id. threadId is read from the later messages.get call. |
+| Symantec Management Center | fixed | The call is GET /devices/{uuid}/status, not /devices/status. |
+
 ## Body scope, 2026-11-10
 
 The 20-of-20 audit showed that sample bodies were the union of keys read anywhere in the module. This pass rebuilt every verified preset the same way, from the matched call's own function chain and that command's test data. A top-level key the command does not read, and that is not in its test data, is rejected. A key the command iterates, or that test data stores as a list, has to be an array. `dict_safe_get(response, ["clicksBlocked"])` counts as a read of that key. Callers of a shared `http_request` do not inherit each other's fields.

@@ -1,15 +1,13 @@
 {
   "id": "trendmicrocas-trendmicrocas",
-  "name": "TrendAI\u2122 Cloud App Security",
+  "name": "TrendAI™ Cloud App Security",
   "pack": "TrendMicroCAS",
   "vendor": "Trend Micro",
   "fidelity": "verified",
   "curated": true,
-  "summary": "Security events for Cloud App Security.",
+  "summary": "GET /siem/security_events",
   "notes": [
-    "The client GETs siem/security_events. This mock is GET /v1/siem/security_events and returns one event.",
-    "Mail sweep, mitigation, and remediation are not modeled.",
-    "The API reference page was not reloaded. Authorization is the dummy key."
+    "GET /siem/security_events returns security_events[]. The command reads log_item_id, message (an object), next_link, and traceId. id and severity are not on this response."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/TrendMicroCAS/Integrations/TrendMicroCAS",
@@ -18,23 +16,19 @@
     "source": {
       "kind": "preset",
       "id": "trendmicrocas-trendmicrocas",
-      "name": "TrendAI\u2122 Cloud App Security",
+      "name": "TrendAI™ Cloud App Security",
       "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.trendmicro.com/en-us/documentation/article/trend-micro-cloud-app-security-online-help-api-reference",
       "notes": [
-        "The client GETs siem/security_events. This mock is GET /v1/siem/security_events and returns one event.",
-        "Mail sweep, mitigation, and remediation are not modeled.",
-        "The API reference page was not reloaded. Authorization is the dummy key."
+        "GET /siem/security_events returns security_events[]. The command reads log_item_id, message (an object), next_link, and traceId. id and severity are not on this response."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.trendmicro.com/en-us/documentation/article/trend-micro-cloud-app-security-online-help-api-reference",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client GETs siem/security_events. This mock is GET /siem/security_events and returns one event.",
-          "Mail sweep, mitigation, and remediation are not modeled.",
-          "The API reference page was not reloaded. Authorization is the dummy key."
+          "GET /siem/security_events returns security_events[]. The command reads log_item_id, message (an object), next_link, and traceId. id and severity are not on this response."
         ]
       }
     },
@@ -56,32 +50,63 @@
             {
               "name": "security_events",
               "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
               "item": {
-                "name": "event",
+                "name": "item",
                 "kind": "object",
                 "children": [
                   {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
+                    "name": "log_item_id",
+                    "kind": "string",
+                    "example": "a9e2990a-8d7c-45e9-84a8-84b59087b2dd"
                   },
                   {
                     "name": "message",
-                    "kind": "string",
-                    "example": "Malware detected"
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "action",
+                        "kind": "string",
+                        "example": "Quarantine"
+                      },
+                      {
+                        "name": "action_result",
+                        "kind": "string",
+                        "example": "success"
+                      },
+                      {
+                        "name": "affected_user",
+                        "kind": "string",
+                        "example": "user@example.com"
+                      },
+                      {
+                        "name": "detection_time",
+                        "kind": "string",
+                        "example": "2020-07-19T22:51:30.000Z"
+                      },
+                      {
+                        "name": "security_risk_name",
+                        "kind": "string",
+                        "example": "invoice.doc"
+                      },
+                      {
+                        "name": "log_item_id",
+                        "kind": "string",
+                        "example": "a9e2990a-8d7c-45e9-84a8-84b59087b2dd"
+                      }
+                    ]
                   }
                 ]
               }
+            },
+            {
+              "name": "next_link",
+              "kind": "string",
+              "example": ""
+            },
+            {
+              "name": "traceId",
+              "kind": "string",
+              "example": "634810de-341e-4f33-b94e-09fc356ab408"
             }
           ]
         },

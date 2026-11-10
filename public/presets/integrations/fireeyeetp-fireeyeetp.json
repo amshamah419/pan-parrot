@@ -5,9 +5,9 @@
   "vendor": "Trellix",
   "fidelity": "verified",
   "curated": true,
-  "summary": "Rebuilt from the client: GET /events/{message_id}.",
+  "summary": "GET /events/{message_id}",
   "notes": [
-    "Sample fields are the ones GET /events/{message_id} reads in the matched command. Lists the command iterates are arrays."
+    "GET /events/{message_id} returns data keyed by the message id. Each value is a list of logs. The command reads action_on_msg and display_msg. Logs is a copy the command builds, not a response key."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeETP/Integrations/FireEyeETP",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeETP/Integrations/FireEyeETP",
       "notes": [
-        "Sample fields are the ones GET /events/{message_id} reads in the matched command. Lists the command iterates are arrays."
+        "GET /events/{message_id} returns data keyed by the message id. Each value is a list of logs. The command reads action_on_msg and display_msg. Logs is a copy the command builds, not a response key."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeETP/Integrations/FireEyeETP",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /events/{message_id} reads in the matched command. Lists the command iterates are arrays."
+          "GET /events/{message_id} returns data keyed by the message id. Each value is a list of logs. The command reads action_on_msg and display_msg. Logs is a copy the command builds, not a response key."
         ]
       }
     },
@@ -59,28 +59,30 @@
           "kind": "object",
           "children": [
             {
-              "name": "Logs",
-              "kind": "array",
-              "item": {
-                "name": "item",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "display_msg",
-                    "kind": "string",
-                    "example": "lab"
-                  }
-                ]
-              }
-            },
-            {
               "name": "data",
-              "kind": "array",
-              "item": {
-                "name": "item",
-                "kind": "string",
-                "example": "lab"
-              }
+              "kind": "object",
+              "children": [
+                {
+                  "name": "{message_id}",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "action_on_msg",
+                        "kind": "string",
+                        "example": "MTA_RCPT_DELIVERED_OUTBOUND"
+                      },
+                      {
+                        "name": "display_msg",
+                        "kind": "string",
+                        "example": "Delivered <message@example.com>"
+                      }
+                    ]
+                  }
+                }
+              ]
             }
           ]
         }

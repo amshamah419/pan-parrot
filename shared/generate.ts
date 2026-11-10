@@ -487,6 +487,9 @@ function encodeBody(
     return envelope.type === "soap" ? soapEnvelope(envelope.version, inner) : xml;
   }
   if (!operation.list) {
+    if (String(operation.contentType || "").includes("text/plain") && typeof records[0] === "string") {
+      return records[0];
+    }
     return JSON.stringify(records[0] ?? {});
   }
   if (envelope.type === "ndjson" || operation.pagination.style === "akamai") {

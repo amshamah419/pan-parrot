@@ -847,6 +847,10 @@ def default_list_paths(node: ast.expr, env: dict[str, Val]) -> list[str]:
     return found
 
 
+def numeric_index(node: ast.expr) -> bool:
+    return isinstance(node, ast.Constant) and isinstance(node.value, int)
+
+
 def key_sequences(node: ast.expr, env: dict[str, Val]) -> list[list[str]]:
     """Alternative key paths passed to dict_safe_get, including both sides of a conditional."""
     if isinstance(node, ast.List):
@@ -1327,6 +1331,31 @@ def concrete_path(val: Val) -> str:
     return raw
 
 
+def concat_hole(val: Val, node: ast.expr) -> str:
+    if val.hole:
+        return val.hole
+    if isinstance(node, ast.Name):
+        return "{" + node.id + "}"
+    if isinstance(node, ast.Subscript):
+        key = literal_str(node.slice)
+        if key:
+            return "{" + key + "}"
+    if isinstance(node, ast.Attribute):
+        return "{" + node.attr + "}"
+    return ""
+
+
+def concat_text(left: Val, left_node: ast.expr, right: Val, right_node: ast.expr) -> str:
+    """Keep a parameter between two literals. An empty base URL stays dropped."""
+    if left.text and not right.text:
+        return left.text + concat_hole(right, right_node)
+    if right.text and not left.text:
+        return right.text
+    if not left.text and not right.text:
+        return concat_hole(left, left_node) + concat_hole(right, right_node)
+    return left.text + right.text
+
+
 def eval_expr(node: ast.expr | None, env: dict[str, Val] | None, mod: Mod | None, cls: str) -> Val:
     env = env or {}
     if node is None:
@@ -1412,9 +1441,23 @@ def eval_expr(node: ast.expr | None, env: dict[str, Val] | None, mod: Mod | None
     if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add):
         left = eval_expr(node.left, env, mod, cls)
         right = eval_expr(node.right, env, mod, cls)
-        text = f"{left.text}{right.text}"
+        texts: list[str] = []
+        for one in left.alts or [left]:
+            for two in right.alts or [right]:
+                for item in (f"{one.text}{two.text}", concat_text(one, node.left, two, node.right)):
+                    if item and item not in texts and ("/" in item or item.startswith("http")):
+                        texts.append(item)
+                    if len(texts) >= 8:
+                        break
+        text = next((item for item in texts if "{" in item), texts[-1] if texts else "")
         path = path_of(text) if text.startswith("http") else (text if "/" in text else "")
-        return Val(text=text, path=path, dynamic=left.dynamic and right.dynamic and not text)
+        alts = None
+        if len(texts) > 1:
+            alts = [
+                Val(text=item, path=path_of(item) if item.startswith("http") else (item if "/" in item else ""))
+                for item in texts
+            ]
+        return Val(text=text, path=path, dynamic=left.dynamic and right.dynamic and not text, alts=alts)
     if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Mod):
         return percent_format(node, env, mod, cls)
     if isinstance(node, ast.Call):
@@ -2082,7 +2125,7 @@ def indexed_lists(node: ast.expr, env: dict[str, Val]) -> list[str]:
 
     def walk(current: ast.expr) -> None:
         if isinstance(current, ast.Subscript):
-            if not literal_str(current.slice):
+            if numeric_index(current.slice):
                 path = prefix_of(current.value, env, "")
                 if path:
                     found.append(path)

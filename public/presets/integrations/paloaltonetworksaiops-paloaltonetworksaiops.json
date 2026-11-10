@@ -5,9 +5,9 @@
   "vendor": "Palo Alto Networks",
   "fidelity": "verified",
   "curated": true,
-  "summary": "Best-practice assessment request and job status.",
+  "summary": "POST /aiops/bpa/v1/requests",
   "notes": [
-    "Sample fields are the ones POST /aiops/bpa/v1/requests, GET /aiops/bpa/v1/jobs/{report_id} reads in the matched command. Lists the command iterates are arrays."
+    "POST /aiops/bpa/v1/requests returns upload-url and id. GET /aiops/bpa/v1/jobs/{report_id} returns status. download-url is the reports call, and best_practices is the downloaded report."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworksAIOps/Integrations/PaloAltoNetworksAIOps",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://pan.dev/aiops/api/",
       "notes": [
-        "Sample fields are the ones POST /aiops/bpa/v1/requests, GET /aiops/bpa/v1/jobs/{report_id} reads in the matched command. Lists the command iterates are arrays."
+        "POST /aiops/bpa/v1/requests returns upload-url and id. GET /aiops/bpa/v1/jobs/{report_id} returns status. download-url is the reports call, and best_practices is the downloaded report."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://pan.dev/aiops/api/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /aiops/bpa/v1/requests, GET /aiops/bpa/v1/jobs/{report_id} reads in the matched command. Lists the command iterates are arrays."
+          "POST /aiops/bpa/v1/requests returns upload-url and id. GET /aiops/bpa/v1/jobs/{report_id} returns status. download-url is the reports call, and best_practices is the downloaded report."
         ]
       }
     },
@@ -48,29 +48,14 @@
           "kind": "object",
           "children": [
             {
-              "name": "best_practices",
+              "name": "upload-url",
               "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "download-url",
-              "kind": "string",
-              "example": "lab"
+              "example": "https://upload.example/bpa"
             },
             {
               "name": "id",
               "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "status",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "upload-url",
-              "kind": "string",
-              "example": "lab"
+              "example": "report-1"
             }
           ]
         },
@@ -101,29 +86,9 @@
           "kind": "object",
           "children": [
             {
-              "name": "best_practices",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "download-url",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "id",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "status",
               "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "upload-url",
-              "kind": "string",
-              "example": "lab"
+              "example": "completed"
             }
           ]
         },

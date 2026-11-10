@@ -5,9 +5,9 @@
   "vendor": "Sophos",
   "fidelity": "verified",
   "curated": true,
-  "summary": "Rebuilt from the client: GET /webconsole/APIController.",
+  "summary": "GET /webconsole/APIController",
   "notes": [
-    "Sample fields are the ones GET /webconsole/APIController reads in the matched command. Lists the command iterates are arrays."
+    "GET /webconsole/APIController returns XML. The client reads Response.Status.@code and the Status text. Response is an element, not a string."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SophosXGFirewall/Integrations/SophosXGFirewall",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.sophos.com/nsg/sophos-firewall/19.5/API/",
       "notes": [
-        "Sample fields are the ones GET /webconsole/APIController reads in the matched command. Lists the command iterates are arrays."
+        "GET /webconsole/APIController returns XML. The client reads Response.Status.@code and the Status text. Response is an element, not a string."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.sophos.com/nsg/sophos-firewall/19.5/API/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /webconsole/APIController reads in the matched command. Lists the command iterates are arrays."
+          "GET /webconsole/APIController returns XML. The client reads Response.Status.@code and the Status text. Response is an element, not a string."
         ]
       }
     },
@@ -39,11 +39,11 @@
         "pathTemplate": "/webconsole/APIController",
         "summary": "GET /webconsole/APIController",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "text/xml; charset=utf-8",
         "headers": {},
         "list": false,
         "envelope": {
-          "type": "object"
+          "type": "xml"
         },
         "pagination": {
           "style": "none",
@@ -55,13 +55,30 @@
           "maxLimit": 100
         },
         "record": {
-          "name": "body",
+          "name": "Response",
           "kind": "object",
           "children": [
             {
-              "name": "Response",
-              "kind": "string",
-              "example": "lab"
+              "name": "Status",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "code",
+                  "kind": "string",
+                  "example": "200",
+                  "xml": {
+                    "attribute": true
+                  }
+                },
+                {
+                  "name": "message",
+                  "kind": "string",
+                  "example": "Successful",
+                  "xml": {
+                    "text": true
+                  }
+                }
+              ]
             }
           ]
         }

@@ -5,9 +5,9 @@
   "vendor": "Recorded Future",
   "fidelity": "verified",
   "curated": true,
-  "summary": "Rebuilt from the client: POST /v2/playbook_alert/search.",
+  "summary": "POST /v2/playbook_alert/search",
   "notes": [
-    "Sample fields are the ones POST /v2/playbook_alert/search reads in the matched command. Lists the command iterates are arrays."
+    "POST /v2/playbook_alert/search returns result_actions, a list of objects with CommandResults. return_error is the helper's error channel, not the search body."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/RecordedFuture/Integrations/RecordedFuturePlaybookAlerts",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
       "notes": [
-        "Sample fields are the ones POST /v2/playbook_alert/search reads in the matched command. Lists the command iterates are arrays."
+        "POST /v2/playbook_alert/search returns result_actions, a list of objects with CommandResults. return_error is the helper's error channel, not the search body."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /v2/playbook_alert/search reads in the matched command. Lists the command iterates are arrays."
+          "POST /v2/playbook_alert/search returns result_actions, a list of objects with CommandResults. return_error is the helper's error channel, not the search body."
         ]
       }
     },
@@ -63,14 +63,31 @@
               "kind": "array",
               "item": {
                 "name": "item",
-                "kind": "string",
-                "example": "lab"
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "CommandResults",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "outputs_prefix",
+                        "kind": "string",
+                        "example": "RecordedFuture.PlaybookAlert"
+                      },
+                      {
+                        "name": "readable_output",
+                        "kind": "string",
+                        "example": "Playbook alert"
+                      },
+                      {
+                        "name": "outputs_key_field",
+                        "kind": "string",
+                        "example": "id"
+                      }
+                    ]
+                  }
+                ]
               }
-            },
-            {
-              "name": "return_error",
-              "kind": "string",
-              "example": "lab"
             }
           ]
         }
