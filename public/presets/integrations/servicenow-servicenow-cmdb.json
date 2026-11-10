@@ -3,9 +3,9 @@
   "name": "ServiceNow CMDB",
   "pack": "ServiceNow",
   "vendor": "ServiceNow",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "List Linux server CIs.",
+  "summary": "From vendor docs. List Linux server CIs.",
   "notes": [
     "The client GETs /api/now/cmdb/instance/{class}. This mock answers cmdb_ci_linux_server with { result }.",
     "Create, patch, and relations are not modeled. Other classes do not match.",
@@ -19,7 +19,7 @@
       "kind": "preset",
       "id": "servicenow-servicenow-cmdb",
       "name": "ServiceNow CMDB",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_CMDBInstanceAPI.html",
       "notes": [
@@ -28,15 +28,85 @@
         "The CMDB Instance API page was not reloaded. Basic auth is the lab user. Incident tables stay on ServiceNow v2."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_CMDBInstanceAPI.html",
+        "status": "vendor",
+        "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/tvYRl8iXp~yTP6bw09k17w/content?target=DESIGNED_READER",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client GETs /api/now/cmdb/instance/{class}. This mock answers cmdb_ci_linux_server with { result }.",
-          "Create, patch, and relations are not modeled. Other classes do not match.",
-          "The CMDB Instance API page was not reloaded. Basic auth is the lab user. Incident tables stay on ServiceNow v2."
+          "4 of 8 commands from vendor docs, 2 approximate, 2 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "servicenow-cmdb-records-list",
+          "calls": [
+            "GET /api/now/cmdb/instance/{class}"
+          ],
+          "status": "approximate"
+        },
+        {
+          "command": "servicenow-cmdb-record-get-by-id",
+          "calls": [
+            "GET /api/now/cmdb/instance/{class}/{sys_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--api-now-cmdb-instance-class-sys-id"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/tvYRl8iXp~yTP6bw09k17w/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-cmdb-record-create",
+          "calls": [
+            "POST /api/now/cmdb/instance/{class}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--api-now-cmdb-instance-class"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/tvYRl8iXp~yTP6bw09k17w/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-cmdb-record-update",
+          "calls": [
+            "PATCH /api/now/cmdb/instance/{class}/{sys_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "patch--api-now-cmdb-instance-class-sys-id"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/tvYRl8iXp~yTP6bw09k17w/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-cmdb-record-add-relations",
+          "calls": [
+            "POST /api/now/cmdb/instance/{class}/{sys_id}/relation"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--api-now-cmdb-instance-class-sys-id-relation"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/tvYRl8iXp~yTP6bw09k17w/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-cmdb-record-delete-relations",
+          "calls": [
+            "DELETE /api/now/cmdb/instance/{class}/{sys_id}/relation/{relation_sys_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "servicenow-cmdb-oauth-login",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "servicenow-cmdb-oauth-test",
+          "calls": [
+            "GET /api/now/cmdb/instance/cmdb_ci_linux_server"
+          ],
+          "status": "approximate"
+        }
+      ]
     },
     "operations": [
       {
@@ -91,6 +161,122 @@
           "defaultLimit": 20,
           "maxLimit": 500
         }
+      },
+      {
+        "id": "get--api-now-cmdb-instance-class-sys-id",
+        "summary": "GET /api/now/cmdb/instance/{class}/{sys_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/now/cmdb/instance/{class}/{sys_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"outbound_relations\": [\n      {\n        \"sys_id\": \"3a62e64ac0a8ce0100aead1e3fd5439f\",\n        \"type\": {\n          \"display_value\": \"Depends on::Used by\",\n          \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_rel_type/1a9cb166f1571100a92eb60da2bce5c5\",\n          \"value\": \"1a9cb166f1571100a92eb60da2bce5c5\"\n        },\n        \"target\": {\n          \"display_value\": \"PS ORA01\",\n          \"link\": \"https://instance.servicenow.com/api/now/cmdb/instance/cmdb_ci/3a307c930a0a0bb400353965d0b8861f\",\n          \"value\": \"3a307c930a0a0bb400353965d0b8861f\"\n        }\n      },\n      {\n        \"sys_id\": \"3a67513fc0a8ce0100914a76cea11b02\",\n        \"type\": {\n          \"display_value\": \"Exchanges data with::Exchanges data with\",\n          \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_rel_type/607ad1b2c0a8010e01941856b365af90\",\n          \"value\": \"607ad1b2c0a8010e01941856b365af90\"\n        },\n        \"target\": {\n          \"display_value\": \"PS ORA01\",\n          \"link\": \"https://instance.servicenow.com/api/now/cmdb/instance/cmdb_ci/3a307c930a0a0bb400353965d0b8861f\",\n          \"value\": \"3a307c930a0a0bb400353965d0b8861f\"\n        }\n      }\n    ],\n    \"attributes\": {\n      \"firewall_status\": \"Intranet\",\n      \"os_address_width\": \"\",\n      \"attested_date\": \"\",\n      \"operational_status\": \"1\",\n      \"os_service_pack\": \"\",\n      \"cpu_core_thread\": \"\",\n      \"cpu_manufacturer\": \"\",\n      \"sys_updated_on\": \"2020-07-08 11:16:51\",\n      \"discovery_source\": \"\",\n      \"first_discovered\": \"\",\n      \"due_in\": \"\",\n      \"used_for\": \"Production\",\n      \"invoice_number\": \"\",\n      \"gl_account\": \"\",\n      \"sys_created_by\": \"glide.maint\",\n      \"warranty_expiration\": \"\",\n      \"ram\": \"2048\",\n      \"cpu_name\": \"\",\n      \"cpu_speed\": \"2800\",\n      \"owned_by\": \"\",\n      \"checked_out\": \"\",\n      \"kernel_release\": \"\",\n      \"sys_domain_path\": \"/\",\n      \"classification\": \"Production\",\n      \"disk_space\": \"40\",\n      \"object_id\": \"\",\n      \"maintenance_schedule\": \"\",\n      \"cost_center\": \"\",\n      \"attested_by\": \"\",\n      \"dns_domain\": \"\",\n      \"assigned\": \"2020-01-04 07:00:00\",\n      \"purchase_date\": \"\",\n      \"life_cycle_stage\": \"\",\n      \"short_description\": \"\",\n      \"cd_speed\": \"\",\n      \"floppy\": \"\",\n      \"managed_by\": {\n        \"display_value\": \"Lynda Caraway\",\n        \"link\": \"https://instance.service-now.com/api/now/table/sys_user/8a826bf03710200044e0bfc8bcbe5d72\",\n        \"value\": \"8a826bf03710200044e0bfc8bcbe5d72\"\n      },\n      \"os_domain\": \"\",\n      \"last_discovered\": \"\",\n      \"can_print\": \"false\",\n      \"sys_class_name\": \"cmdb_ci_linux_server\",\n      \"manufacturer\": {\n        \"display_value\": \"Iris\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/core_company/c115c2f737e3100044e0bfc8bcbe5d46\",\n        \"value\": \"c115c2f737e3100044e0bfc8bcbe5d46\"\n      },\n      \"cpu_count\": \"1\",\n      \"vendor\": {\n        \"display_value\": \"Cloudward Inc\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/core_company/3efe8c4c37423000158bbfc8bcbe5d7d\",\n        \"value\": \"3efe8c4c37423000158bbfc8bcbe5d7d\"\n      },\n      \"life_cycle_stage_status\": \"\",\n      \"model_number\": \"\",\n      \"assigned_to\": \"\",\n      \"start_date\": \"\",\n      \"os_version\": \"2.6.9-22.0.1.ELsmp\",\n      \"serial_number\": \"\",\n      \"cd_rom\": \"false\",\n      \"support_group\": \"\",\n      \"unverified\": \"false\",\n      \"correlation_id\": \"\",\n      \"attributes\": \"\",\n      \"asset\": {\n        \"display_value\": \"P1000091 - Iris 5875\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/alm_asset/0bc1ba8837f3100044e0bfc8bcbe5dbb\",\n        \"value\": \"0bc1ba8837f3100044e0bfc8bcbe5dbb\"\n      },\n      \"form_factor\": \"\",\n      \"cpu_core_count\": \"\",\n      \"skip_sync\": \"false\",\n      \"attestation_score\": \"\",\n      \"sys_updated_by\": \"system\",\n      \"sys_created_on\": \"2008-10-26 17:17:28\",\n      \"sys_domain\": {\n        \"display_value\": \"global\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n        \"value\": \"global\"\n      },\n      \"cpu_type\": \"Intel\",\n      \"install_date\": \"2019-08-18 08:00:00\",\n      \"asset_tag\": \"P1000091\",\n      \"dr_backup\": \"\",\n      \"hardware_substatus\": \"\",\n      \"fqdn\": \"\",\n      \"change_control\": \"\",\n      \"internet_facing\": \"false\",\n      \"delivery_date\": \"\",\n      \"hardware_status\": \"\",\n      \"install_status\": \"1\",\n      \"supported_by\": \"\",\n      \"name\": \"PS LinuxApp01\",\n      \"subcategory\": \"\",\n      \"default_gateway\": \"\",\n      \"chassis_type\": \"\",\n      \"virtual\": \"false\",\n      \"assignment_group\": \"\",\n      \"managed_by_group\": \"\",\n      \"sys_id\": \"3a290cc60a0a0bb400000bdb386af1cf\",\n      \"po_number\": \"\",\n      \"checked_in\": \"\",\n      \"sys_class_path\": \"/!!/!2/!(/!!/!0\",\n      \"mac_address\": \"\",\n      \"company\": {\n        \"display_value\": \"ACME Corporation\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/core_company/e7c1f3d53790200044e0bfc8bcbe5deb\",\n        \"value\": \"e7c1f3d53790200044e0bfc8bcbe5deb\"\n      },\n      \"justification\": \"\",\n      \"department\": \"\",\n      \"cost\": \"45557.5\",\n      \"comments\": \"\",\n      \"os\": \"Linux Red Hat\",\n      \"sys_mod_count\": \"24\",\n      \"monitor\": \"false\",\n      \"model_id\": {\n        \"display_value\": \"Iris 5875\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_model/5f5fbcc3c0a8010e00f3b27814f3b96b\",\n        \"value\": \"5f5fbcc3c0a8010e00f3b27814f3b96b\"\n      },\n      \"ip_address\": \"\",\n      \"duplicate_of\": \"\",\n      \"sys_tags\": \"\",\n      \"cost_cc\": \"USD\",\n      \"order_date\": \"\",\n      \"schedule\": \"\",\n      \"environment\": \"\",\n      \"due\": \"\",\n      \"attested\": \"false\",\n      \"location\": {\n        \"display_value\": \"322 West 52nd Street, New York,NY\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmn_location/25ab9f690a0a0bb3001c5fec1d0d7bcb\",\n        \"value\": \"25ab9f690a0a0bb3001c5fec1d0d7bcb\"\n      },\n      \"category\": \"Do not migrate to asset\",\n      \"fault_count\": \"0\",\n      \"host_name\": \"\",\n      \"lease_id\": \"\"\n    },\n    \"inbound_relations\": [\n      {\n        \"sys_id\": \"3a5e4d8ac0a8ce010005145afb730818\",\n        \"type\": {\n          \"display_value\": \"Depends on::Used by\",\n          \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_rel_type/1a9cb166f1571100a92eb60da2bce5c5\",\n          \"value\": \"1a9cb166f1571100a92eb60da2bce5c5\"\n        },\n        \"target\": {\n          \"display_value\": \"PS Apache01\",\n          \"link\": \"https://instance.servicenow.com/api/now/cmdb/instance/cmdb_ci/3a27d4370a0a0bb4006316812bf45439\",\n          \"value\": \"3a27d4370a0a0bb4006316812bf45439\"\n        }\n      },\n      {\n        \"sys_id\": \"3a5e4d9cc0a8ce010097f2f5c2f65fd8\",\n        \"type\": {\n          \"display_value\": \"Depends on::Used by\",\n          \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_rel_type/1a9cb166f1571100a92eb60da2bce5c5\",\n          \"value\": \"1a9cb166f1571100a92eb60da2bce5c5\"\n        },\n        \"target\": {\n          \"display_value\": \"PS Apache02\",\n          \"link\": \"https://instance.servicenow.com/api/now/cmdb/instance/cmdb_ci/3a27f1520a0a0bb400ecd6ff7afcf036\",\n          \"value\": \"3a27f1520a0a0bb400ecd6ff7afcf036\"\n        }\n      },\n      {\n        \"sys_id\": \"3a5e4d9fc0a8ce0100a3754fac26fe56\",\n        \"type\": {\n          \"display_value\": \"Depends on::Used by\",\n          \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_rel_type/1a9cb166f1571100a92eb60da2bce5c5\",\n          \"value\": \"1a9cb166f1571100a92eb60da2bce5c5\"\n        },\n        \"target\": {\n          \"display_value\": \"PS Apache03\",\n          \"link\": \"https://instance.servicenow.com/api/now/cmdb/instance/cmdb_ci/3a2810c20a0a0bb400268337d6e942ca\",\n          \"value\": \"3a2810c20a0a0bb400268337d6e942ca\"\n        }\n      }\n    ]\n  }\n}\n"
+      },
+      {
+        "id": "post--api-now-cmdb-instance-class",
+        "summary": "POST /api/now/cmdb/instance/{class}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/api/now/cmdb/instance/{class}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"error\": {\n    \"detail\": \"Exception while executing request: null Check logs for error trace or enable glide.rest.debug property to verify REST request processing\",\n    \"message\": \"Exception while executing request: null\"\n  },\n  \"status\": \"failure\"\n}\n"
+      },
+      {
+        "id": "patch--api-now-cmdb-instance-class-sys-id",
+        "summary": "PATCH /api/now/cmdb/instance/{class}/{sys_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "PATCH",
+        "pathTemplate": "/api/now/cmdb/instance/{class}/{sys_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"outbound_relations\": [\n      {\n        \"sys_id\": \"403ff2641b425010593876a61a4bcb4b\",\n        \"type\": {\n          \"display_value\": \"Depends on::Used by\",\n          \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_rel_type/1a9cb166f1571100a92eb60da2bce5c5\",\n          \"value\": \"1a9cb166f1571100a92eb60da2bce5c5\"\n        },\n        \"target\": {\n          \"display_value\": \"PS ORA01\",\n          \"link\": \"https://instance.servicenow.com/api/now/cmdb/instance/cmdb_ci/3a307c930a0a0bb400353965d0b8861f\",\n          \"value\": \"3a307c930a0a0bb400353965d0b8861f\"\n        }\n      },\n      {\n        \"sys_id\": \"443ff2641b425010593876a61a4bcb4c\",\n        \"type\": {\n          \"display_value\": \"Exchanges data with::Exchanges data with\",\n          \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_rel_type/607ad1b2c0a8010e01941856b365af90\",\n          \"value\": \"607ad1b2c0a8010e01941856b365af90\"\n        },\n        \"target\": {\n          \"display_value\": \"PS ORA01\",\n          \"link\": \"https://instance.servicenow.com/api/now/cmdb/instance/cmdb_ci/3a307c930a0a0bb400353965d0b8861f\",\n          \"value\": \"3a307c930a0a0bb400353965d0b8861f\"\n        }\n      }\n    ],\n    \"attributes\": {\n      \"firewall_status\": \"Active\",\n      \"os_address_width\": \"\",\n      \"attested_date\": \"\",\n      \"operational_status\": \"1\",\n      \"os_service_pack\": \"\",\n      \"cpu_core_thread\": \"\",\n      \"cpu_manufacturer\": \"\",\n      \"sys_updated_on\": \"2020-07-13 21:24:05\",\n      \"discovery_source\": \"ServiceNow\",\n      \"first_discovered\": \"2020-07-13 20:27:28\",\n      \"due_in\": \"\",\n      \"used_for\": \"Production\",\n      \"invoice_number\": \"\",\n      \"gl_account\": \"\",\n      \"sys_created_by\": \"dora.gray\",\n      \"warranty_expiration\": \"\",\n      \"ram\": \"\",\n      \"cpu_name\": \"\",\n      \"cpu_speed\": \"\",\n      \"owned_by\": \"\",\n      \"checked_out\": \"\",\n      \"kernel_release\": \"\",\n      \"sys_domain_path\": \"/\",\n      \"classification\": \"Production\",\n      \"disk_space\": \"\",\n      \"object_id\": \"\",\n      \"maintenance_schedule\": \"\",\n      \"cost_center\": \"\",\n      \"attested_by\": \"\",\n      \"dns_domain\": \"\",\n      \"assigned\": \"\",\n      \"purchase_date\": \"\",\n      \"life_cycle_stage\": \"\",\n      \"short_description\": \"\",\n      \"cd_speed\": \"\",\n      \"floppy\": \"\",\n      \"managed_by\": \"\",\n      \"os_domain\": \"\",\n      \"last_discovered\": \"2020-07-13 21:24:05\",\n      \"can_print\": \"false\",\n      \"sys_class_name\": \"cmdb_ci_linux_server\",\n      \"manufacturer\": \"\",\n      \"cpu_count\": \"\",\n      \"vendor\": \"\",\n      \"life_cycle_stage_status\": \"\",\n      \"model_number\": \"\",\n      \"assigned_to\": \"\",\n      \"start_date\": \"\",\n      \"os_version\": \"\",\n      \"serial_number\": \"\",\n      \"cd_rom\": \"false\",\n      \"support_group\": \"\",\n      \"unverified\": \"false\",\n      \"correlation_id\": \"\",\n      \"attributes\": \"\",\n      \"asset\": {\n        \"display_value\": \"Unknown\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/alm_asset/21cfba641b425010593876a61a4bcb52\",\n        \"value\": \"21cfba641b425010593876a61a4bcb52\"\n      },\n      \"form_factor\": \"\",\n      \"cpu_core_count\": \"\",\n      \"skip_sync\": \"false\",\n      \"attestation_score\": \"\",\n      \"sys_updated_by\": \"dora.gray\",\n      \"sys_created_on\": \"2020-07-13 20:27:28\",\n      \"sys_domain\": {\n        \"display_value\": \"global\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n        \"value\": \"global\"\n      },\n      \"cpu_type\": \"\",\n      \"install_date\": \"\",\n      \"asset_tag\": \"\",\n      \"dr_backup\": \"\",\n      \"hardware_substatus\": \"\",\n      \"fqdn\": \"\",\n      \"change_control\": \"\",\n      \"internet_facing\": \"true\",\n      \"delivery_date\": \"\",\n      \"hardware_status\": \"installed\",\n      \"install_status\": \"1\",\n      \"supported_by\": \"\",\n      \"name\": \"Linux299\",\n      \"subcategory\": \"Computer\",\n      \"default_gateway\": \"\",\n      \"chassis_type\": \"\",\n      \"virtual\": \"false\",\n      \"assignment_group\": \"\",\n      \"managed_by_group\": \"\",\n      \"sys_id\": \"0c3ff2641b425010593876a61a4bcb39\",\n      \"po_number\": \"\",\n      \"checked_in\": \"\",\n      \"sys_class_path\": \"/!!/!2/!(/!!/!0\",\n      \"mac_address\": \"\",\n      \"company\": \"\",\n      \"justification\": \"\",\n      \"department\": \"\",\n      \"cost\": \"\",\n      \"comments\": \"\",\n      \"os\": \"\",\n      \"sys_mod_count\": \"4\",\n      \"monitor\": \"false\",\n      \"model_id\": {\n        \"display_value\": \"Unknown\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_model/0ce0a2681b4e1010593876a61a4bcba6\",\n        \"value\": \"0ce0a2681b4e1010593876a61a4bcba6\"\n      },\n      \"ip_address\": \"\",\n      \"duplicate_of\": \"\",\n      \"sys_tags\": \"\",\n      \"cost_cc\": \"USD\",\n      \"order_date\": \"\",\n      \"schedule\": \"\",\n      \"environment\": \"\",\n      \"due\": \"\",\n      \"attested\": \"false\",\n      \"location\": \"\",\n      \"category\": \"Hardware\",\n      \"fault_count\": \"0\",\n      \"host_name\": \"\",\n      \"lease_id\": \"\"\n    },\n    \"inbound_relations\": [\n      {\n        \"sys_id\": \"c03ff2641b425010593876a61a4bcb49\",\n        \"type\": {\n          \"display_value\": \"Depends on::Used by\",\n          \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_rel_type/1a9cb166f1571100a92eb60da2bce5c5\",\n          \"value\": \"1a9cb166f1571100a92eb60da2bce5c5\"\n        },\n        \"target\": {\n          \"display_value\": \"PS Apache01\",\n          \"link\": \"https://instance.servicenow.com/api/now/cmdb/instance/cmdb_ci/3a27d4370a0a0bb4006316812bf45439\",\n          \"value\": \"3a27d4370a0a0bb4006316812bf45439\"\n        }\n      }\n    ]\n  }\n}\n"
+      },
+      {
+        "id": "post--api-now-cmdb-instance-class-sys-id-relation",
+        "summary": "POST /api/now/cmdb/instance/{class}/{sys_id}/relation",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/api/now/cmdb/instance/{class}/{sys_id}/relation",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"outbound_relations\": [\n      {\n        \"sys_id\": \"403ff2641b425010593876a61a4bcb4b\",\n        \"type\": {\n          \"display_value\": \"Depends on::Used by\",\n          \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_rel_type/1a9cb166f1571100a92eb60da2bce5c5\",\n          \"value\": \"1a9cb166f1571100a92eb60da2bce5c5\"\n        },\n        \"target\": {\n          \"display_value\": \"PS ORA01\",\n          \"link\": \"https://instance.servicenow.com/api/now/cmdb/instance/cmdb_ci/3a307c930a0a0bb400353965d0b8861f\",\n          \"value\": \"3a307c930a0a0bb400353965d0b8861f\"\n        }\n      },\n      {\n        \"sys_id\": \"443ff2641b425010593876a61a4bcb4c\",\n        \"type\": {\n          \"display_value\": \"Exchanges data with::Exchanges data with\",\n          \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_rel_type/607ad1b2c0a8010e01941856b365af90\",\n          \"value\": \"607ad1b2c0a8010e01941856b365af90\"\n        },\n        \"target\": {\n          \"display_value\": \"PS ORA01\",\n          \"link\": \"https://instance.servicenow.com/api/now/cmdb/instance/cmdb_ci/3a307c930a0a0bb400353965d0b8861f\",\n          \"value\": \"3a307c930a0a0bb400353965d0b8861f\"\n        }\n      }\n    ],\n    \"attributes\": {\n      \"firewall_status\": \"Active\",\n      \"os_address_width\": \"\",\n      \"attested_date\": \"\",\n      \"operational_status\": \"1\",\n      \"os_service_pack\": \"\",\n      \"cpu_core_thread\": \"\",\n      \"cpu_manufacturer\": \"\",\n      \"sys_updated_on\": \"2020-07-13 21:24:05\",\n      \"discovery_source\": \"ServiceNow\",\n      \"first_discovered\": \"2020-07-13 20:27:28\",\n      \"due_in\": \"\",\n      \"used_for\": \"Production\",\n      \"invoice_number\": \"\",\n      \"gl_account\": \"\",\n      \"sys_created_by\": \"dora.gray\",\n      \"warranty_expiration\": \"\",\n      \"ram\": \"\",\n      \"cpu_name\": \"\",\n      \"cpu_speed\": \"\",\n      \"owned_by\": \"\",\n      \"checked_out\": \"\",\n      \"kernel_release\": \"\",\n      \"sys_domain_path\": \"/\",\n      \"classification\": \"Production\",\n      \"disk_space\": \"\",\n      \"object_id\": \"\",\n      \"maintenance_schedule\": \"\",\n      \"cost_center\": \"\",\n      \"attested_by\": \"\",\n      \"dns_domain\": \"\",\n      \"assigned\": \"\",\n      \"purchase_date\": \"\",\n      \"life_cycle_stage\": \"\",\n      \"short_description\": \"\",\n      \"cd_speed\": \"\",\n      \"floppy\": \"\",\n      \"managed_by\": \"\",\n      \"os_domain\": \"\",\n      \"last_discovered\": \"2020-07-13 21:24:05\",\n      \"can_print\": \"false\",\n      \"sys_class_name\": \"cmdb_ci_linux_server\",\n      \"manufacturer\": \"\",\n      \"cpu_count\": \"\",\n      \"vendor\": \"\",\n      \"life_cycle_stage_status\": \"\",\n      \"model_number\": \"\",\n      \"assigned_to\": \"\",\n      \"start_date\": \"\",\n      \"os_version\": \"\",\n      \"serial_number\": \"\",\n      \"cd_rom\": \"false\",\n      \"support_group\": \"\",\n      \"unverified\": \"false\",\n      \"correlation_id\": \"\",\n      \"attributes\": \"\",\n      \"asset\": {\n        \"display_value\": \"Unknown\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/alm_asset/21cfba641b425010593876a61a4bcb52\",\n        \"value\": \"21cfba641b425010593876a61a4bcb52\"\n      },\n      \"form_factor\": \"\",\n      \"cpu_core_count\": \"\",\n      \"skip_sync\": \"false\",\n      \"attestation_score\": \"\",\n      \"sys_updated_by\": \"dora.gray\",\n      \"sys_created_on\": \"2020-07-13 20:27:28\",\n      \"sys_domain\": {\n        \"display_value\": \"global\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n        \"value\": \"global\"\n      },\n      \"cpu_type\": \"\",\n      \"install_date\": \"\",\n      \"asset_tag\": \"\",\n      \"dr_backup\": \"\",\n      \"hardware_substatus\": \"\",\n      \"fqdn\": \"\",\n      \"change_control\": \"\",\n      \"internet_facing\": \"true\",\n      \"delivery_date\": \"\",\n      \"hardware_status\": \"installed\",\n      \"install_status\": \"1\",\n      \"supported_by\": \"\",\n      \"name\": \"Linux299\",\n      \"subcategory\": \"Computer\",\n      \"default_gateway\": \"\",\n      \"chassis_type\": \"\",\n      \"virtual\": \"false\",\n      \"assignment_group\": \"\",\n      \"managed_by_group\": \"\",\n      \"sys_id\": \"0c3ff2641b425010593876a61a4bcb39\",\n      \"po_number\": \"\",\n      \"checked_in\": \"\",\n      \"sys_class_path\": \"/!!/!2/!(/!!/!0\",\n      \"mac_address\": \"\",\n      \"company\": \"\",\n      \"justification\": \"\",\n      \"department\": \"\",\n      \"cost\": \"\",\n      \"comments\": \"\",\n      \"os\": \"\",\n      \"sys_mod_count\": \"4\",\n      \"monitor\": \"false\",\n      \"model_id\": {\n        \"display_value\": \"Unknown\",\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_model/0ce0a2681b4e1010593876a61a4bcba6\",\n        \"value\": \"0ce0a2681b4e1010593876a61a4bcba6\"\n      },\n      \"ip_address\": \"\",\n      \"duplicate_of\": \"\",\n      \"sys_tags\": \"\",\n      \"cost_cc\": \"USD\",\n      \"order_date\": \"\",\n      \"schedule\": \"\",\n      \"environment\": \"\",\n      \"due\": \"\",\n      \"attested\": \"false\",\n      \"location\": \"\",\n      \"category\": \"Hardware\",\n      \"fault_count\": \"0\",\n      \"host_name\": \"\",\n      \"lease_id\": \"\"\n    },\n    \"inbound_relations\": [\n      {\n        \"sys_id\": \"c03ff2641b425010593876a61a4bcb49\",\n        \"type\": {\n          \"display_value\": \"Depends on::Used by\",\n          \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_rel_type/1a9cb166f1571100a92eb60da2bce5c5\",\n          \"value\": \"1a9cb166f1571100a92eb60da2bce5c5\"\n        },\n        \"target\": {\n          \"display_value\": \"PS Apache01\",\n          \"link\": \"https://instance.servicenow.com/api/now/cmdb/instance/cmdb_ci/3a27d4370a0a0bb4006316812bf45439\",\n          \"value\": \"3a27d4370a0a0bb4006316812bf45439\"\n        }\n      }\n    ]\n  }\n}\n"
       }
     ],
     "chaos": {

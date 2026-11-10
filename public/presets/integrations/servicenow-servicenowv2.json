@@ -3,9 +3,9 @@
   "name": "ServiceNow v2",
   "pack": "ServiceNow",
   "vendor": "ServiceNow",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: GET /table/{table_name}.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /table/{table_name}.",
   "notes": [
     "Rebuilt from the XSOAR client. The checker matched GET /table/{table_name}, GET /table/{ticket_type}. Fields are keys the client reads or test_data contains."
   ],
@@ -17,20 +17,393 @@
       "kind": "preset",
       "id": "servicenow-servicenowv2",
       "name": "ServiceNow v2",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
       "notes": [
         "Rebuilt from the XSOAR client. The checker matched GET /table/{table_name}, GET /table/{ticket_type}. Fields are keys the client reads or test_data contains."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
+        "status": "vendor",
+        "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /table/{table_name}, GET /table/{ticket_type}. Fields are keys the client reads or test_data contains."
+          "29 of 36 commands from vendor docs, 0 approximate, 7 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "servicenow-get-ticket",
+          "calls": [
+            "GET /table/{table_name}/{record_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--table-table-name-record-id",
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-create-ticket",
+          "calls": [
+            "POST /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--table-table-name"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-update-ticket",
+          "calls": [
+            "PATCH /table/{table_name}/{record_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "patch--table-table-name-record-id"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-delete-ticket",
+          "calls": [
+            "DELETE /table/{table_name}/{record_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "servicenow-delete-file",
+          "calls": [
+            "DELETE /attachment/{attachment_file_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "servicenow-query-tickets",
+          "calls": [
+            "GET /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-add-link",
+          "calls": [
+            "PATCH /table/{ticket_type}/{ticket_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "patch--table-table-name-record-id"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-add-comment",
+          "calls": [
+            "PATCH /table/{ticket_type}/{ticket_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "patch--table-table-name-record-id"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-upload-file",
+          "calls": [
+            "POST /attachment/upload"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--attachment-upload"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/Nie0vQSVeLA4mstWYdqkXA/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-get-record",
+          "calls": [
+            "GET /table/{table_name}/{record_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--table-table-name-record-id",
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-query-table",
+          "calls": [
+            "GET /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-create-record",
+          "calls": [
+            "POST /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--table-table-name"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-update-record",
+          "calls": [
+            "PATCH /table/{table_name}/{record_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "patch--table-table-name-record-id"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-delete-record",
+          "calls": [
+            "DELETE /table/{table_name}/{record_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "servicenow-list-table-fields",
+          "calls": [
+            "GET /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-query-computers",
+          "calls": [
+            "GET /table/{table_name}/{record_id}",
+            "GET /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--table-table-name-record-id",
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-query-groups",
+          "calls": [
+            "GET /table/{table_name}/{record_id}",
+            "GET /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--table-table-name-record-id",
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-query-users",
+          "calls": [
+            "GET /table/{table_name}/{record_id}",
+            "GET /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--table-table-name-record-id",
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-get-table-name",
+          "calls": [
+            "GET /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-get-ticket-notes",
+          "calls": [
+            "GET /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-add-tag",
+          "calls": [
+            "POST /table/label_entry"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--table-table-name"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-query-items",
+          "calls": [
+            "GET /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-get-item-details",
+          "calls": [
+            "GET /servicecatalog/items/{id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--servicecatalog-items-id"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/Yc3V6ucSla779Dwxy_e9Og/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-create-item-order",
+          "calls": [
+            "POST /servicecatalog/items/{id}/order_now"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--servicecatalog-items-id-order-now"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/Yc3V6ucSla779Dwxy_e9Og/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-document-route-to-queue",
+          "calls": [
+            "POST /awa/queues/{queue_id}/work_item"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--awa-queues-queue-id-work-item"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/oC5VjoUxRM~uMUMKDjeaMQ/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "get-mapping-fields",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "get-remote-data",
+          "calls": [
+            "GET /table/{table_name}/{record_id}",
+            "GET /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--table-table-name-record-id",
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "get-remote-data-preview",
+          "calls": [
+            "GET /table/{table_name}/{record_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--table-table-name-record-id",
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-oauth-login",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "servicenow-oauth-test",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "get-modified-remote-data",
+          "calls": [
+            "GET /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-table-ticket-type-1"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-create-co-from-template",
+          "calls": [
+            "POST /change/standard/{template}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--change-standard-template"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/_voVv_idCyG~lAKvMUam1g/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-get-tasks-for-co",
+          "calls": [
+            "GET /change/{sys_id}/task"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--change-sys-id-task"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/_voVv_idCyG~lAKvMUam1g/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-generic-api-call",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "servicenow-get-ticket-attachments",
+          "calls": [
+            "GET /attachment"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--attachment"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/Nie0vQSVeLA4mstWYdqkXA/content?target=DESIGNED_READER"
+        },
+        {
+          "command": "servicenow-create-ticket-quick-action",
+          "calls": [
+            "POST /table/{table_name}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--table-table-name"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/7w1JJoLZD0npie7B6i9GEw/content?target=DESIGNED_READER"
+        }
+      ]
     },
     "operations": [
       {
@@ -39,7 +412,7 @@
         "pathTemplate": "/table/{table_name}",
         "summary": "GET /table/{table_name}",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "headers": {},
         "list": false,
         "envelope": {
@@ -101,7 +474,8 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"result\": [\n    {\n      \"parent\": \"\",\n      \"made_sla\": \"true\",\n      \"watch_list\": \"\",\n      \"upon_reject\": \"cancel\",\n      \"sys_updated_on\": \"2016-01-19 04:52:04\",\n      \"approval_history\": \"\",\n      \"number\": \"PRB0000050\",\n      \"sys_updated_by\": \"glide.maint\",\n      \"opened_by\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/glide.maint\",\n        \"value\": \"glide.maint\"\n      },\n      \"user_input\": \"\",\n      \"sys_created_on\": \"2016-01-19 04:51:19\",\n      \"sys_domain\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n        \"value\": \"global\"\n      },\n      \"state\": \"4\",\n      \"sys_created_by\": \"glide.maint\",\n      \"knowledge\": \"false\",\n      \"order\": \"\",\n      \"closed_at\": \"2016-01-19 04:52:04\",\n      \"cmdb_ci\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/55b35562c0a8010e01cff22378e0aea9\",\n        \"value\": \"55b35562c0a8010e01cff22378e0aea9\"\n      },\n      \"delivery_plan\": \"\",\n      \"impact\": \"3\",\n      \"active\": \"false\",\n      \"work_notes_list\": \"\",\n      \"business_service\": \"\",\n      \"priority\": \"4\",\n      \"sys_domain_path\": \"/\",\n      \"time_worked\": \"\",\n      \"expected_start\": \"\",\n      \"rejection_goto\": \"\",\n      \"opened_at\": \"2016-01-19 04:49:47\",\n      \"business_duration\": \"1970-01-01 00:00:00\",\n      \"group_list\": \"\",\n      \"work_end\": \"\",\n      \"approval_set\": \"\",\n      \"wf_activity\": \"\",\n      \"work_notes\": \"\",\n      \"short_description\": \"Switch occasionally drops connections\",\n      \"correlation_display\": \"\",\n      \"delivery_task\": \"\",\n      \"work_start\": \"\",\n      \"assignment_group\": \"\",\n      \"additional_assignee_list\": \"\",\n      \"description\": \"Switch occasionally drops connections\",\n      \"calendar_duration\": \"1970-01-01 00:02:17\",\n      \"close_notes\": \"updated firmware\",\n      \"sys_class_name\": \"problem\",\n      \"closed_by\": \"\",\n      \"follow_up\": \"\",\n      \"sys_id\": \"04ce72c9c0a8016600b5b7f75ac67b5b\",\n      \"contact_type\": \"phone\",\n      \"urgency\": \"3\",\n      \"company\": \"\",\n      \"reassignment_count\": \"\",\n      \"activity_due\": \"\",\n      \"assigned_to\": \"\",\n      \"comments\": \"\",\n      \"approval\": \"not requested\",\n      \"sla_due\": \"\",\n      \"comments_and_work_notes\": \"\",\n      \"due_date\": \"\",\n      \"sys_mod_count\": \"1\",\n      \"sys_tags\": \"\",\n      \"escalation\": \"0\",\n      \"upon_approval\": \"proceed\",\n      \"correlation_id\": \"\",\n      \"location\": \"\"\n    }\n  ]\n}\n"
       },
       {
         "id": "get-table-ticket-type-1",
@@ -109,7 +483,7 @@
         "pathTemplate": "/table/{ticket_type}",
         "summary": "GET /table/{ticket_type}",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "headers": {},
         "list": false,
         "envelope": {
@@ -171,7 +545,298 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"result\": [\n    {\n      \"parent\": \"\",\n      \"made_sla\": \"true\",\n      \"watch_list\": \"\",\n      \"upon_reject\": \"cancel\",\n      \"sys_updated_on\": \"2016-01-19 04:52:04\",\n      \"approval_history\": \"\",\n      \"number\": \"PRB0000050\",\n      \"sys_updated_by\": \"glide.maint\",\n      \"opened_by\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/glide.maint\",\n        \"value\": \"glide.maint\"\n      },\n      \"user_input\": \"\",\n      \"sys_created_on\": \"2016-01-19 04:51:19\",\n      \"sys_domain\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n        \"value\": \"global\"\n      },\n      \"state\": \"4\",\n      \"sys_created_by\": \"glide.maint\",\n      \"knowledge\": \"false\",\n      \"order\": \"\",\n      \"closed_at\": \"2016-01-19 04:52:04\",\n      \"cmdb_ci\": {\n        \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/55b35562c0a8010e01cff22378e0aea9\",\n        \"value\": \"55b35562c0a8010e01cff22378e0aea9\"\n      },\n      \"delivery_plan\": \"\",\n      \"impact\": \"3\",\n      \"active\": \"false\",\n      \"work_notes_list\": \"\",\n      \"business_service\": \"\",\n      \"priority\": \"4\",\n      \"sys_domain_path\": \"/\",\n      \"time_worked\": \"\",\n      \"expected_start\": \"\",\n      \"rejection_goto\": \"\",\n      \"opened_at\": \"2016-01-19 04:49:47\",\n      \"business_duration\": \"1970-01-01 00:00:00\",\n      \"group_list\": \"\",\n      \"work_end\": \"\",\n      \"approval_set\": \"\",\n      \"wf_activity\": \"\",\n      \"work_notes\": \"\",\n      \"short_description\": \"Switch occasionally drops connections\",\n      \"correlation_display\": \"\",\n      \"delivery_task\": \"\",\n      \"work_start\": \"\",\n      \"assignment_group\": \"\",\n      \"additional_assignee_list\": \"\",\n      \"description\": \"Switch occasionally drops connections\",\n      \"calendar_duration\": \"1970-01-01 00:02:17\",\n      \"close_notes\": \"updated firmware\",\n      \"sys_class_name\": \"problem\",\n      \"closed_by\": \"\",\n      \"follow_up\": \"\",\n      \"sys_id\": \"04ce72c9c0a8016600b5b7f75ac67b5b\",\n      \"contact_type\": \"phone\",\n      \"urgency\": \"3\",\n      \"company\": \"\",\n      \"reassignment_count\": \"\",\n      \"activity_due\": \"\",\n      \"assigned_to\": \"\",\n      \"comments\": \"\",\n      \"approval\": \"not requested\",\n      \"sla_due\": \"\",\n      \"comments_and_work_notes\": \"\",\n      \"due_date\": \"\",\n      \"sys_mod_count\": \"1\",\n      \"sys_tags\": \"\",\n      \"escalation\": \"0\",\n      \"upon_approval\": \"proceed\",\n      \"correlation_id\": \"\",\n      \"location\": \"\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--table-table-name-record-id",
+        "summary": "GET /table/{table_name}/{record_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/table/{table_name}/{record_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"upon_approval\": \"\",\n    \"location\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/cmn_location/105cf7f3c611227501e75e08b14a38ba\",\n      \"value\": \"105cf7f3c611227501e75e08b14a38ba\"\n    },\n    \"expected_start\": \"\",\n    \"reopen_count\": \"\",\n    \"close_notes\": \"\",\n    \"additional_assignee_list\": \"\",\n    \"impact\": \"1\",\n    \"urgency\": \"3\",\n    \"correlation_id\": \"\",\n    \"sys_tags\": \"\",\n    \"sys_domain\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n      \"value\": \"global\"\n    },\n    \"description\": \"\",\n    \"group_list\": \"\",\n    \"priority\": \"3\",\n    \"delivery_plan\": \"\",\n    \"sys_mod_count\": \"4\",\n    \"work_notes_list\": \"\",\n    \"business_service\": \"\",\n    \"follow_up\": \"\",\n    \"closed_at\": \"\",\n    \"sla_due\": \"2015-11-11 22:04:15\",\n    \"delivery_task\": \"\",\n    \"sys_updated_on\": \"2015-11-01 22:37:27\",\n    \"parent\": \"\",\n    \"work_end\": \"\",\n    \"number\": \"INC0000046\",\n    \"closed_by\": \"\",\n    \"work_start\": \"\",\n    \"calendar_stc\": \"\",\n    \"category\": \"software\",\n    \"business_duration\": \"\",\n    \"incident_state\": \"1\",\n    \"activity_due\": \"\",\n    \"correlation_display\": \"\",\n    \"company\": \"\",\n    \"active\": \"true\",\n    \"due_date\": \"\",\n    \"assignment_group\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/8a4dde73c6112278017a6a4baf547aa7\",\n      \"value\": \"8a4dde73c6112278017a6a4baf547aa7\"\n    },\n    \"caller_id\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/46c6f9efa9fe198101ddf5eed9adf6e7\",\n      \"value\": \"46c6f9efa9fe198101ddf5eed9adf6e7\"\n    },\n    \"knowledge\": \"false\",\n    \"made_sla\": \"false\",\n    \"comments_and_work_notes\": \"\",\n    \"parent_incident\": \"\",\n    \"state\": \"1\",\n    \"user_input\": \"\",\n    \"sys_created_on\": \"2015-11-01 22:05:30\",\n    \"approval_set\": \"\",\n    \"reassignment_count\": \"1\",\n    \"rfc\": \"\",\n    \"child_incidents\": \"\",\n    \"opened_at\": \"2015-11-02 22:04:15\",\n    \"short_description\": \"Can't access SFA software\",\n    \"order\": \"\",\n    \"sys_updated_by\": \"glide.maint\",\n    \"resolved_by\": \"\",\n    \"notify\": \"1\",\n    \"upon_reject\": \"\",\n    \"approval_history\": \"\",\n    \"problem_id\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/problem/a9e4890bc6112276003d7a5a5c774a74\",\n      \"value\": \"a9e4890bc6112276003d7a5a5c774a74\"\n    },\n    \"work_notes\": \"\",\n    \"calendar_duration\": \"\",\n    \"close_code\": \"\",\n    \"sys_id\": \"a9e30c7dc61122760116894de7bcc7bd\",\n    \"approval\": \"not requested\",\n    \"caused_by\": \"\",\n    \"severity\": \"3\",\n    \"sys_created_by\": \"admin\",\n    \"resolved_at\": \"\",\n    \"assigned_to\": \"\",\n    \"business_stc\": \"\",\n    \"wf_activity\": \"\",\n    \"sys_domain_path\": \"/\",\n    \"cmdb_ci\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/a9c0c8d2c6112276018f7705562f9cb0\",\n      \"value\": \"a9c0c8d2c6112276018f7705562f9cb0\"\n    },\n    \"opened_by\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/46c6f9efa9fe198101ddf5eed9adf6e7\",\n      \"value\": \"46c6f9efa9fe198101ddf5eed9adf6e7\"\n    },\n    \"subcategory\": \"\",\n    \"rejection_goto\": \"\",\n    \"sys_class_name\": \"incident\",\n    \"watch_list\": \"\",\n    \"time_worked\": \"\",\n    \"contact_type\": \"phone\",\n    \"escalation\": \"0\",\n    \"comments\": \"\"\n  }\n}\n"
+      },
+      {
+        "id": "post--table-table-name",
+        "summary": "POST /table/{table_name}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/table/{table_name}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"upon_approval\": \"proceed\",\n    \"location\": \"\",\n    \"expected_start\": \"\",\n    \"reopen_count\": \"0\",\n    \"close_notes\": \"\",\n    \"additional_assignee_list\": \"\",\n    \"impact\": \"2\",\n    \"urgency\": \"2\",\n    \"correlation_id\": \"\",\n    \"sys_tags\": \"\",\n    \"sys_domain\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n      \"value\": \"global\"\n    },\n    \"description\": \"\",\n    \"group_list\": \"\",\n    \"priority\": \"3\",\n    \"delivery_plan\": \"\",\n    \"sys_mod_count\": \"0\",\n    \"work_notes_list\": \"\",\n    \"business_service\": \"\",\n    \"follow_up\": \"\",\n    \"closed_at\": \"\",\n    \"sla_due\": \"\",\n    \"delivery_task\": \"\",\n    \"sys_updated_on\": \"2016-01-22 14:28:24\",\n    \"parent\": \"\",\n    \"work_end\": \"\",\n    \"number\": \"INC0010002\",\n    \"closed_by\": \"\",\n    \"work_start\": \"\",\n    \"calendar_stc\": \"\",\n    \"category\": \"inquiry\",\n    \"business_duration\": \"\",\n    \"incident_state\": \"1\",\n    \"activity_due\": \"\",\n    \"correlation_display\": \"\",\n    \"company\": \"\",\n    \"active\": \"true\",\n    \"due_date\": \"\",\n    \"assignment_group\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/287ebd7da9fe198100f92cc8d1d2154e\",\n      \"value\": \"287ebd7da9fe198100f92cc8d1d2154e\"\n    },\n    \"caller_id\": \"\",\n    \"knowledge\": \"false\",\n    \"made_sla\": \"true\",\n    \"comments_and_work_notes\": \"\",\n    \"parent_incident\": \"\",\n    \"state\": \"1\",\n    \"user_input\": \"\",\n    \"sys_created_on\": \"2016-01-22 14:28:24\",\n    \"approval_set\": \"\",\n    \"reassignment_count\": \"0\",\n    \"rfc\": \"\",\n    \"child_incidents\": \"0\",\n    \"opened_at\": \"2016-01-22 14:28:24\",\n    \"short_description\": \"Unable to connect to office wifi\",\n    \"order\": \"\",\n    \"sys_updated_by\": \"admin\",\n    \"resolved_by\": \"\",\n    \"notify\": \"1\",\n    \"upon_reject\": \"cancel\",\n    \"approval_history\": \"\",\n    \"problem_id\": \"\",\n    \"work_notes\": \"\",\n    \"calendar_duration\": \"\",\n    \"close_code\": \"\",\n    \"sys_id\": \"c537bae64f411200adf9f8e18110c76e\",\n    \"approval\": \"not requested\",\n    \"caused_by\": \"\",\n    \"severity\": \"3\",\n    \"sys_created_by\": \"admin\",\n    \"resolved_at\": \"\",\n    \"assigned_to\": \"\",\n    \"business_stc\": \"\",\n    \"wf_activity\": \"\",\n    \"sys_domain_path\": \"/\",\n    \"cmdb_ci\": \"\",\n    \"opened_by\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/6816f79cc0a8016401c5a33be04be441\",\n      \"value\": \"6816f79cc0a8016401c5a33be04be441\"\n    },\n    \"subcategory\": \"\",\n    \"rejection_goto\": \"\",\n    \"sys_class_name\": \"incident\",\n    \"watch_list\": \"\",\n    \"time_worked\": \"\",\n    \"contact_type\": \"phone\",\n    \"escalation\": \"0\",\n    \"comments\": \"\"\n  }\n}\n"
+      },
+      {
+        "id": "patch--table-table-name-record-id",
+        "summary": "PATCH /table/{table_name}/{record_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "PATCH",
+        "pathTemplate": "/table/{table_name}/{record_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"upon_approval\": \"proceed\",\n    \"location\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/cmn_location/108752c8c611227501d4ab0e392ba97f\",\n      \"value\": \"108752c8c611227501d4ab0e392ba97f\"\n    },\n    \"expected_start\": \"\",\n    \"reopen_count\": \"\",\n    \"close_notes\": \"\",\n    \"additional_assignee_list\": \"\",\n    \"impact\": \"1\",\n    \"urgency\": \"1\",\n    \"correlation_id\": \"\",\n    \"sys_tags\": \"\",\n    \"sys_domain\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/global\",\n      \"value\": \"global\"\n    },\n    \"description\": \"\",\n    \"group_list\": \"\",\n    \"priority\": \"1\",\n    \"delivery_plan\": \"\",\n    \"sys_mod_count\": \"7\",\n    \"work_notes_list\": \"\",\n    \"business_service\": \"\",\n    \"follow_up\": \"\",\n    \"closed_at\": \"\",\n    \"sla_due\": \"2017-07-05 05:58:24\",\n    \"delivery_task\": \"\",\n    \"sys_updated_on\": \"2016-01-22 14:12:37\",\n    \"parent\": \"\",\n    \"work_end\": \"\",\n    \"number\": \"INC0000050\",\n    \"closed_by\": \"\",\n    \"work_start\": \"\",\n    \"calendar_stc\": \"\",\n    \"category\": \"hardware\",\n    \"business_duration\": \"\",\n    \"incident_state\": \"2\",\n    \"activity_due\": \"2016-01-22 16:12:37\",\n    \"correlation_display\": \"\",\n    \"company\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/core_company/31bea3d53790200044e0bfc8bcbe5dec\",\n      \"value\": \"31bea3d53790200044e0bfc8bcbe5dec\"\n    },\n    \"active\": \"true\",\n    \"due_date\": \"\",\n    \"assignment_group\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user_group/8a5055c9c61122780043563ef53438e3\",\n      \"value\": \"8a5055c9c61122780043563ef53438e3\"\n    },\n    \"caller_id\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/5b7c200d0a640069006b3845b5d0fa7c\",\n      \"value\": \"5b7c200d0a640069006b3845b5d0fa7c\"\n    },\n    \"knowledge\": \"false\",\n    \"made_sla\": \"true\",\n    \"comments_and_work_notes\": \"\",\n    \"parent_incident\": \"\",\n    \"state\": \"2\",\n    \"user_input\": \"\",\n    \"sys_created_on\": \"2015-11-02 18:05:40\",\n    \"approval_set\": \"\",\n    \"reassignment_count\": \"0\",\n    \"rfc\": \"\",\n    \"child_incidents\": \"\",\n    \"opened_at\": \"2015-11-02 21:58:24\",\n    \"short_description\": \"Can't access Exchange server - is it down?\",\n    \"order\": \"\",\n    \"sys_updated_by\": \"admin\",\n    \"resolved_by\": \"\",\n    \"notify\": \"1\",\n    \"upon_reject\": \"cancel\",\n    \"approval_history\": \"\",\n    \"problem_id\": \"\",\n    \"work_notes\": \"\",\n    \"calendar_duration\": \"\",\n    \"close_code\": \"\",\n    \"sys_id\": \"ef43c6d40a0a0b5700c77f9bf387afe3\",\n    \"approval\": \"not requested\",\n    \"caused_by\": \"\",\n    \"severity\": \"3\",\n    \"sys_created_by\": \"glide.maint\",\n    \"resolved_at\": \"\",\n    \"assigned_to\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/681b365ec0a80164000fb0b05854a0cd\",\n      \"value\": \"681b365ec0a80164000fb0b05854a0cd\"\n    },\n    \"business_stc\": \"\",\n    \"wf_activity\": \"\",\n    \"sys_domain_path\": \"/\",\n    \"cmdb_ci\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/cmdb_ci/281190e3c0a8000b003f593aa3f20ca6\",\n      \"value\": \"281190e3c0a8000b003f593aa3f20ca6\"\n    },\n    \"opened_by\": {\n      \"link\": \"https://instance.servicenow.com/api/now/table/sys_user/glide.maint\",\n      \"value\": \"glide.maint\"\n    },\n    \"subcategory\": \"\",\n    \"rejection_goto\": \"\",\n    \"sys_class_name\": \"incident\",\n    \"watch_list\": \"\",\n    \"time_worked\": \"\",\n    \"contact_type\": \"phone\",\n    \"escalation\": \"3\",\n    \"comments\": \"\"\n  }\n}\n"
+      },
+      {
+        "id": "post--attachment-upload",
+        "summary": "POST /attachment/upload",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/attachment/upload",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"table_sys_id\": \"d71f7935c0a8016700802b64c67c11c6\",\n    \"size_bytes\": \"36597\",\n    \"download_link\": \"https://instance.service-now.com/api/now/attachment/994adbc64f511200adf9f8e18110c796/file\",\n    \"sys_updated_on\": \"2016-02-02 14:00:21\",\n    \"sys_id\": \"994adbc64f511200adf9f8e18110c796\",\n    \"image_height\": \"\",\n    \"sys_created_on\": \"2016-02-02 14:00:21\",\n    \"file_name\": \"banner-CS0001345_v1_1.jpeg\",\n    \"sys_created_by\": \"admin\",\n    \"compressed\": \"true\",\n    \"average_image_color\": \"\",\n    \"sys_updated_by\": \"admin\",\n    \"sys_tags\": \"\",\n    \"table_name\": \"incident\",\n    \"image_width\": \"\",\n    \"sys_mod_count\": \"0\",\n    \"content_type\": \"image/jpeg\",\n    \"size_compressed\": \"25130\"\n  }\n}\n"
+      },
+      {
+        "id": "get--servicecatalog-items-id",
+        "summary": "GET /servicecatalog/items/{id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/servicecatalog/items/{id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"short_description\": \"Apple iPad 3\",\n    \"kb_article\": \"\",\n    \"icon\": \"e6b3bc0647311200e0ef563dbb9a71fc.iix\",\n    \"description\": \"\\n\\t\\t\\t<p>\\n\\t\\t\\t\\t<font size=\\\"3\\\">\\n\\t\\t\\t\\t\\t<span style=\\\"color: gray;\\\">\\n\\t\\t\\t\\t\\t\\tiPad with Retina display Wi-Fi 16GB - Black </span>\\n\\t\\t\\t\\t</font>\\n\\t\\t\\t</p>\\n\\t\\t\\t<p>\\n\\t\\t\\t\\t<span style=\\\"color: gray;\\\">Key Features:</span>\\n\\t\\t\\t</p>\\n\\t\\t\\t<ul><li style=\\\"color: gray;\\\">\\n\\t\\t\\t\\t\\t<span style=\\\"font-size: 10.0pt;\\\">Retina display (2048x1536 resolution)</span>\\n\\t\\t\\t\\t</li><li style=\\\"color: gray;\\\">\\n\\t\\t\\t\\t\\t<span style=\\\"font-size: 10.0pt;\\\">16GB storage</span>\\n\\t\\t\\t\\t</li><li style=\\\"color: gray;\\\">\\n\\t\\t\\t\\t\\t<span style=\\\"font-size: 10.0pt;\\\">Wi-Fi enabled</span>\\n\\t\\t\\t\\t</li><li style=\\\"color: gray;\\\">\\n\\t\\t\\t\\t\\t<span style=\\\"font-size: 10.0pt;\\\">Built-in speaker, microphone and camera</span>\\n\\t\\t\\t\\t</li><li style=\\\"color: gray;\\\">\\n\\t\\t\\t\\t\\t<span style=\\\"font-size: 10.0pt;\\\">Up to 10 hours battery life</span>\\n\\t\\t\\t\\t</li></ul>\",\n    \"show_price\": true,\n    \"recurring_price\": \"$0.00\",\n    \"type\": \"catalog_item\",\n    \"show_quantity\": true,\n    \"local_currency\": \"USD\",\n    \"sys_class_name\": \"pc_hardware_cat_item\",\n    \"picture\": \"5b977690cb921200f2de77a4634c9c6a.iix\",\n    \"url\": \"\",\n    \"sys_id\": \"060f3afa3731300054b6a3549dbe5d3e\",\n    \"recurring_price_currency\": \"USD\",\n    \"content_type\": \"\",\n    \"localized_price\": \"$600.00\",\n    \"price\": \"$600.00\",\n    \"catalogs\": [\n      {\n        \"sys_id\": \"e0d08b13c3330100c8b837659bba8fb4\",\n        \"title\": \"Service Catalog\"\n      }\n    ],\n    \"recurring_frequency\": null,\n    \"name\": \"Apple iPad 3\",\n    \"localized_recurring_price\": \"$0.00\",\n    \"category\": {\n      \"sys_id\": \"b06546f23731300054b6a3549dbe5dd8\",\n      \"title\": \"Tablets\"\n    },\n    \"price_currency\": \"USD\",\n    \"order\": 0,\n    \"categories\": [\n      {\n        \"sys_id\": \"d258b953c611227a0146101fb1be7c31\",\n        \"active\": true,\n        \"category\": {\n          \"sys_id\": \"b06546f23731300054b6a3549dbe5dd8\",\n          \"active\": true,\n          \"title\": \"Tablets\"\n        },\n        \"title\": \"Hardware\"\n      }\n    ],\n    \"variables\": [],\n    \"ui_policy\": [],\n    \"client_script\": {\n      \"onChange\": [],\n      \"onSubmit\": [],\n      \"onLoad\": []\n    },\n    \"data_lookup\": []\n  }\n}\n"
+      },
+      {
+        "id": "post--servicecatalog-items-id-order-now",
+        "summary": "POST /servicecatalog/items/{id}/order_now",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/servicecatalog/items/{id}/order_now",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"sys_id\": \"cf56a3fcdb3a2300e890f71fbf9619ac\",\n    \"number\": \"REQ0010012\",\n    \"request_number\": \"REQ0010012\",\n    \"request_id\": \"cf56a3fcdb3a2300e890f71fbf9619ac\",\n    \"table\": \"sc_request\"\n  }\n}\n"
+      },
+      {
+        "id": "post--awa-queues-queue-id-work-item",
+        "summary": "POST /awa/queues/{queue_id}/work_item",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/awa/queues/{queue_id}/work_item",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"sys_id\": \"cd57f90ddbb26300db2051735e9619f0\",\n    \"document_table\": \"incident\",\n    \"document_sys_id\": \"9c573169c611228700193229fff72400\",\n    \"queue_sys_id\": \"339eed3f3b892300a2bac9bb34efc4c3\",\n    \"display_name\": \"Incident: INC0000001\"\n  }\n}\n"
+      },
+      {
+        "id": "post--change-standard-template",
+        "summary": "POST /change/standard/{template}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/change/standard/{template}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"worker\": {\n      \"sysId\": \"f490f4c6dbac330084f07ffdbf961952\",\n      \"link\": \"instance.service-now.com/api/sn_chg_rest/change/worker/f490f4c6dbac330084f07ffdbf961952\"\n    },\n    \"request\": \"{\\\"cmdb_ci_sys_ids\\\":[\\\"caf043a3b7fb23000999e4f6ee11a9c0\\\",\\\"06f043a3b7fb23000999e4f6ee11a9c1\\\"],\\\"association_type\\\":\\\"affected\\\",\\\"task\\\":\\\"c286d61347c12200e0ef563dbb9a71df\\\"}\",\n    \"state\": {\n      \"value\": 1,\n      \"display_value\": \"Waiting\"\n    },\n    \"type\": \"affected\",\n    \"messages\": {\n      \"errorMessages\": [],\n      \"warningMessages\": [],\n      \"infoMessages\": []\n    }\n  }\n}\n"
+      },
+      {
+        "id": "get--change-sys-id-task",
+        "summary": "GET /change/{sys_id}/task",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/change/{sys_id}/task",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": {\n    \"worker\": {\n      \"sysId\": \"0644cd02dbec330084f07ffdbf9619c1\",\n      \"link\": \"https://instance.service-now.com/api/sn_chg_rest/change/worker/0644cd02dbec330084f07ffdbf9619c1\"\n    },\n    \"request\": \"{\\\"task\\\":\\\"c286d61347c12200e0ef563dbb9a71df\\\"}\",\n    \"state\": {\n      \"value\": 3,\n      \"display_value\": \"Complete\"\n    },\n    \"type\": \"impacted\",\n    \"messages\": {\n      \"errorMessages\": [],\n      \"warningMessages\": [],\n      \"infoMessages\": []\n    }\n  }\n}\n"
+      },
+      {
+        "id": "get--attachment",
+        "summary": "GET /attachment",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/attachment",
+        "contentType": "application/json",
+        "fixture": "{\n  \"result\": [\n    {\n      \"table_sys_id\": \"5054b6f8c0a800060056addcf551ecf8\",\n      \"size_bytes\": \"462\",\n      \"download_link\": \"https://instance.service-now.com/api/now/attachment/615ea769c0a80166001cf5f2367302f5/file\",\n      \"sys_updated_on\": \"2009-05-21 04:12:21\",\n      \"sys_id\": \"615ea769c0a80166001cf5f2367302f5\",\n      \"image_height\": \"\",\n      \"sys_created_on\": \"2009-05-21 04:12:21\",\n      \"file_name\": \"blocks.swf\",\n      \"sys_created_by\": \"glide.maint\",\n      \"compressed\": \"true\",\n      \"average_image_color\": \"\",\n      \"sys_updated_by\": \"glide.maint\",\n      \"sys_tags\": \"\",\n      \"table_name\": \"content_block_programmatic\",\n      \"image_width\": \"\",\n      \"sys_mod_count\": \"0\",\n      \"content_type\": \"application/x-shockwave-flash\",\n      \"size_compressed\": \"485\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

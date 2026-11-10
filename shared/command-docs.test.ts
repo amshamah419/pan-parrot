@@ -58,6 +58,14 @@ describe("AWS command coverage", () => {
       ),
     );
     expect(okta).toEqual({ vendor: 61, approximate: 26, missing: 8 });
+    const servicenow = sums(covered.filter((preset) => preset.id.startsWith("servicenow-")));
+    expect(servicenow).toEqual({ vendor: 42, approximate: 2, missing: 10 });
+    const jira = sums(covered.filter((preset) => preset.id.startsWith("jira-")));
+    expect(jira).toEqual({ vendor: 31, approximate: 5, missing: 14 });
+    const assets = sums(
+      covered.filter((preset) => preset.id.startsWith("atlassianjiraservicemanagement-")),
+    );
+    expect(assets).toEqual({ vendor: 7, approximate: 0, missing: 8 });
 
     const iam = JSON.parse(readFileSync("public/presets/integrations/aws-iam-aws-iam.json", "utf8")) as {
       spec: Parameters<typeof validateMockSpec>[0];
