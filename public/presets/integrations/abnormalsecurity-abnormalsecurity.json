@@ -1,1 +1,134 @@
-{"id":"abnormalsecurity-abnormalsecurity","name":"Abnormal Security","pack":"AbnormalSecurity","fidelity":"shape","curated":false,"summary":"Abnormal Security detects the whole spectrum of email attacks, from vendor email compromise and spear-phishing to unwanted email spam and graymail. To stop these advanced attacks, ","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"abnormalsecurity-abnormalsecurity","name":"Abnormal Security","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AbnormalSecurity/Integrations/AbnormalSecurity","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-template-items-json","method":"GET","pathTemplate":"/","summary":"test_data/template_items.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"threat","kind":"object","optional":false,"children":[{"name":"threatId","kind":"id","optional":false,"example":"template-threat"},{"name":"remediationTimestamp","kind":"timestamp","optional":false,"example":"2023-09-17T15:00:00Z","format":"iso"},{"name":"description","kind":"string","optional":false,"example":"Template threat description"},{"name":"subject","kind":"string","optional":false,"example":"Suspicious Email - Possible Phishing Attempt"}]},{"name":"threat_detail","kind":"object","optional":false,"children":[{"name":"threatId","kind":"id","optional":false,"example":"template-threat-detail"},{"name":"messages","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"abxMessageId","kind":"id","optional":false,"example":"abx-123456"},{"name":"abxPortalUrl","kind":"string","optional":false,"example":"https://portal.abnormal.com/threats/abx-123456"},{"name":"attachmentCount","kind":"integer","optional":false},{"name":"attachmentNames","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"invoice.pdf"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"attackStrategy","kind":"string","optional":false,"example":"Credential Theft"},{"name":"attackType","kind":"string","optional":false,"example":"Phishing"},{"name":"attackVector","kind":"string","optional":false,"example":"Email"},{"name":"attackedParty","kind":"string","optional":false,"example":"Corporate"},{"name":"autoRemediated","kind":"boolean","optional":false},{"name":"fromAddress","kind":"email","optional":false},{"name":"fromName","kind":"string","optional":false,"example":"John Smith"},{"name":"impersonatedParty","kind":"string","optional":false,"example":"Microsoft Office 365"},{"name":"internetMessageId","kind":"id","optional":false,"example":"<message-id@example.com>"},{"name":"isRead","kind":"boolean","optional":false},{"name":"postRemediated","kind":"boolean","optional":false},{"name":"receivedTime","kind":"timestamp","optional":false,"example":"2023-09-17T14:55:00Z","format":"iso"},{"name":"recipientAddress","kind":"email","optional":false},{"name":"remediationStatus","kind":"string","optional":false,"example":"Remediated"},{"name":"remediationTimestamp","kind":"timestamp","optional":false,"example":"2023-09-17T15:00:00Z","format":"iso"},{"name":"sentTime","kind":"timestamp","optional":false,"example":"2023-09-17T14:50:00Z","format":"iso"},{"name":"subject","kind":"string","optional":false,"example":"Suspicious Email - Possible Phishing Attempt"},{"name":"toAddresses","kind":"array","optional":false,"item":{"name":"item","kind":"email","optional":false},"minItems":0,"maxItems":2,"pageItems":false},{"name":"ccEmails","kind":"array","optional":false,"item":{"name":"item","kind":"email","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"replyToEmails","kind":"array","optional":false,"item":{"name":"item","kind":"email","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"returnPath","kind":"email","optional":false},{"name":"senderDomain","kind":"string","optional":false,"example":"malicious.com"},{"name":"senderIpAddress","kind":"ip","optional":false,"example":"192.168.1.100"},{"name":"summaryInsights","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Contains suspicious sender"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"urlCount","kind":"integer","optional":false},{"name":"urls","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"https://malicious-site.com/login"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"body","kind":"string","optional":false,"example":"Dear User, Your account has been compromised. Please login to secure your account: <a href='https://malicious-site.com/l"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"pageNumber","kind":"integer","optional":false},{"name":"nextPageNumber","kind":"string","optional":true}]},{"name":"case","kind":"object","optional":false,"children":[{"name":"caseId","kind":"id","optional":false,"example":"template-case"},{"name":"description","kind":"string","optional":false,"example":"Template account takeover case description"},{"name":"lastModifiedTime","kind":"timestamp","optional":false,"example":"2023-09-17T15:00:00Z","format":"iso"}]},{"name":"case_detail","kind":"object","optional":false,"children":[{"name":"caseId","kind":"id","optional":false,"example":"template-case-detail"},{"name":"severity","kind":"string","optional":false,"example":"High"},{"name":"affectedEmployee","kind":"email","optional":false},{"name":"firstObserved","kind":"timestamp","optional":false,"example":"2023-09-17T14:45:00Z","format":"iso"},{"name":"threatIds","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"threat-123"},"minItems":0,"maxItems":2,"pageItems":false}]}]}},{"id":"test-data-test-check-status-of-action-requested-on","method":"GET","pathTemplate":"/","summary":"test_data/test_check_status_of_action_requested_on_case.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"status","kind":"string","optional":false,"example":"acknowledged"},{"name":"description","kind":"string","optional":false,"example":"The request was completed successfully"}]}},{"id":"test-data-test-check-status-of-action-requested-on-2","method":"GET","pathTemplate":"/","summary":"test_data/test_check_status_of_action_requested_on_threat.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"status","kind":"string","optional":false,"example":"acknowledged"},{"name":"description","kind":"string","optional":false,"example":"The request was completed successfully"}]}},{"id":"test-data-test-get-a-list-of-unanalyzed-abuse-mail","method":"GET","pathTemplate":"/","summary":"test_data/test_get_a_list_of_unanalyzed_abuse_mailbox_messages.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"abx_message_id","kind":"integer","optional":false},{"name":"recipient","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"John Doe"},{"name":"email","kind":"email","optional":false}]},{"name":"reported_datetime","kind":"timestamp","optional":false,"example":"2023-06-15T00:17:31Z","format":"iso"},{"name":"reporter","kind":"object","optional":false,"children":[{"name":"email","kind":"email","optional":false},{"name":"name","kind":"string","optional":false,"example":"Support"}]},{"name":"subject","kind":"string","optional":false,"example":"URGENT"},{"name":"not_analyzed_reason","kind":"string","optional":false,"example":"INVALID_SUBMISSION"}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-test-get-a-list-of-vendor-cases-json","method":"GET","pathTemplate":"/","summary":"test_data/test_get_a_list_of_vendor_cases.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"vendorCases","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"vendorCaseId","kind":"integer","optional":false}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"pageNumber","kind":"integer","optional":false}]}},{"id":"test-data-test-get-a-list-of-vendors-json","method":"GET","pathTemplate":"/","summary":"test_data/test_get_a_list_of_vendors.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"vendors","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"vendorDomain","kind":"string","optional":false,"example":"test-domain-1.com"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"pageNumber","kind":"integer","optional":false},{"name":"nextPageNumber","kind":"integer","optional":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "abnormalsecurity-abnormalsecurity",
+  "name": "Abnormal Security",
+  "pack": "AbnormalSecurity",
+  "vendor": "Abnormal",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Threat list for fetch. GET /threats.",
+  "notes": [
+    "GET /threats returns { threats }. The client method get_a_list_of_threats_request calls that path with pageSize and pageNumber.",
+    "The readme page was not reloaded. Paging uses page and pageSize.",
+    "A bearer token is required. Threat actions and the CSV export are not modeled."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AbnormalSecurity/Integrations/AbnormalSecurity",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "abnormalsecurity-abnormalsecurity",
+      "name": "Abnormal Security",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://abnormalsecurity.readme.io/reference/get_threats",
+      "notes": [
+        "GET /threats returns { threats }. The client method get_a_list_of_threats_request calls that path with pageSize and pageNumber.",
+        "The readme page was not reloaded. Paging uses page and pageSize.",
+        "A bearer token is required. Threat actions and the CSV export are not modeled."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://abnormalsecurity.readme.io/reference/get_threats",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /threats returns { threats }. The client method get_a_list_of_threats_request calls that path with pageSize and pageNumber.",
+          "The readme page was not reloaded. Paging uses page and pageSize.",
+          "A bearer token is required. Threat actions and the CSV export are not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-threats",
+        "method": "GET",
+        "pathTemplate": "/threats",
+        "summary": "List threats",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "threats"
+        },
+        "record": {
+          "name": "threat",
+          "kind": "object",
+          "children": [
+            {
+              "name": "threatId",
+              "kind": "id"
+            },
+            {
+              "name": "subject",
+              "kind": "string",
+              "example": "Payment overdue"
+            },
+            {
+              "name": "fromAddress",
+              "kind": "email"
+            },
+            {
+              "name": "receivedTime",
+              "kind": "timestamp"
+            },
+            {
+              "name": "attackType",
+              "kind": "enum",
+              "enumValues": [
+                "Spam",
+                "Malware",
+                "Phishing"
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "page",
+          "limitParam": "pageSize",
+          "offsetParam": "offset",
+          "pageParam": "pageNumber",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "abnormalsecurity-abnormalsecurity",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

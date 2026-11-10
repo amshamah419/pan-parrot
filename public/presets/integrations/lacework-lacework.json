@@ -1,1 +1,139 @@
-{"id":"lacework-lacework","name":"Lacework","pack":"Lacework","fidelity":"shape","curated":false,"summary":"Lacework provides end-to-end cloud security automation for AWS, Azure, and GCP with a comprehensive view of risks across cloud workloads and containers.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"lacework-lacework","name":"Lacework","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Lacework/Integrations/Lacework","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"lw-get-alert-details","method":"GET","pathTemplate":"/","summary":"Fetch details for a specific Alert in Lacework.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Lacework","kind":"object","optional":false,"children":[{"name":"Alert","kind":"object","optional":false,"children":[{"name":"startTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"endTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"alertType","kind":"string","optional":false,"example":"alertType"},{"name":"alertName","kind":"string","optional":false,"example":"alertName"},{"name":"alertId","kind":"id","optional":false},{"name":"severity","kind":"string","optional":false,"example":"severity"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"alertInfo","kind":"object","optional":false,"children":[{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"subject","kind":"string","optional":false,"example":"subject"}]},{"name":"entityMap","kind":"string","optional":false,"example":"entityMap"}]}]}]}},{"id":"lw-get-aws-compliance-assessment","method":"GET","pathTemplate":"/","summary":"Fetch the latest AWS compliance data from Lacework.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Lacework","kind":"object","optional":false,"children":[{"name":"Compliance","kind":"object","optional":false,"children":[{"name":"reportType","kind":"string","optional":false,"example":"reportType"},{"name":"reportTitle","kind":"string","optional":false,"example":"reportTitle"},{"name":"recommendations","kind":"object","optional":false,"children":[{"name":"SUPPRESSIONS","kind":"string","optional":false,"example":"SUPPRESSIONS"},{"name":"INFO_LINK","kind":"string","optional":false,"example":"INFO_LINK"},{"name":"ASSESSED_RESOURCE_COUNT","kind":"number","optional":false},{"name":"STATUS","kind":"string","optional":false,"example":"STATUS"},{"name":"REC_ID","kind":"id","optional":false},{"name":"CATEGORY","kind":"string","optional":false,"example":"CATEGORY"},{"name":"SERVICE","kind":"string","optional":false,"example":"SERVICE"},{"name":"TITLE","kind":"string","optional":false,"example":"TITLE"},{"name":"VIOLATIONS","kind":"object","optional":false,"children":[{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"reasons","kind":"string","optional":false,"example":"reasons"},{"name":"resource","kind":"string","optional":false,"example":"resource"}]},{"name":"RESOURCE_COUNT","kind":"number","optional":false},{"name":"SEVERITY","kind":"number","optional":false}]},{"name":"summary","kind":"object","optional":false,"children":[{"name":"NUM_RECOMMENDATIONS","kind":"number","optional":false},{"name":"NUM_SEVERITY_2_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_SEVERITY_4_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_SEVERITY_1_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_COMPLIANT","kind":"number","optional":false},{"name":"NUM_SEVERITY_3_NON_COMPLIANCE","kind":"number","optional":false},{"name":"ASSESSED_RESOURCE_COUNT","kind":"number","optional":false},{"name":"NUM_SUPPRESSED","kind":"number","optional":false},{"name":"NUM_SEVERITY_5_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_NOT_COMPLIANT","kind":"number","optional":false},{"name":"VIOLATED_RESOURCE_COUNT","kind":"number","optional":false},{"name":"SUPPRESSED_RESOURCE_COUNT","kind":"number","optional":false}]},{"name":"accountId","kind":"id","optional":false},{"name":"accountAlias","kind":"string","optional":false,"example":"accountAlias"},{"name":"tenantId","kind":"id","optional":false},{"name":"tenantName","kind":"string","optional":false,"example":"tenantName"},{"name":"subscriptionId","kind":"id","optional":false},{"name":"subscriptionName","kind":"string","optional":false,"example":"subscriptionName"},{"name":"projectId","kind":"id","optional":false},{"name":"projectName","kind":"string","optional":false,"example":"projectName"},{"name":"organizationId","kind":"id","optional":false},{"name":"organizationName","kind":"string","optional":false,"example":"organizationName"},{"name":"reportTime","kind":"string","optional":false,"example":"reportTime"}]}]}]}},{"id":"lw-get-azure-compliance-assessment","method":"GET","pathTemplate":"/","summary":"Fetch the latest Azure compliance data from Lacework.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Lacework","kind":"object","optional":false,"children":[{"name":"Compliance","kind":"object","optional":false,"children":[{"name":"reportType","kind":"string","optional":false,"example":"reportType"},{"name":"reportTitle","kind":"string","optional":false,"example":"reportTitle"},{"name":"recommendations","kind":"object","optional":false,"children":[{"name":"SUPPRESSIONS","kind":"string","optional":false,"example":"SUPPRESSIONS"},{"name":"INFO_LINK","kind":"string","optional":false,"example":"INFO_LINK"},{"name":"ASSESSED_RESOURCE_COUNT","kind":"number","optional":false},{"name":"STATUS","kind":"string","optional":false,"example":"STATUS"},{"name":"REC_ID","kind":"id","optional":false},{"name":"CATEGORY","kind":"string","optional":false,"example":"CATEGORY"},{"name":"SERVICE","kind":"string","optional":false,"example":"SERVICE"},{"name":"TITLE","kind":"string","optional":false,"example":"TITLE"},{"name":"VIOLATIONS","kind":"object","optional":false,"children":[{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"reasons","kind":"string","optional":false,"example":"reasons"},{"name":"resource","kind":"string","optional":false,"example":"resource"}]},{"name":"RESOURCE_COUNT","kind":"number","optional":false},{"name":"SEVERITY","kind":"number","optional":false}]},{"name":"summary","kind":"object","optional":false,"children":[{"name":"NUM_RECOMMENDATIONS","kind":"number","optional":false},{"name":"NUM_SEVERITY_2_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_SEVERITY_4_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_SEVERITY_1_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_COMPLIANT","kind":"number","optional":false},{"name":"NUM_SEVERITY_3_NON_COMPLIANCE","kind":"number","optional":false},{"name":"ASSESSED_RESOURCE_COUNT","kind":"number","optional":false},{"name":"NUM_SUPPRESSED","kind":"number","optional":false},{"name":"NUM_SEVERITY_5_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_NOT_COMPLIANT","kind":"number","optional":false},{"name":"VIOLATED_RESOURCE_COUNT","kind":"number","optional":false},{"name":"SUPPRESSED_RESOURCE_COUNT","kind":"number","optional":false}]},{"name":"accountId","kind":"id","optional":false},{"name":"accountAlias","kind":"string","optional":false,"example":"accountAlias"},{"name":"tenantId","kind":"id","optional":false},{"name":"tenantName","kind":"string","optional":false,"example":"tenantName"},{"name":"subscriptionId","kind":"id","optional":false},{"name":"subscriptionName","kind":"string","optional":false,"example":"subscriptionName"},{"name":"projectId","kind":"id","optional":false},{"name":"projectName","kind":"string","optional":false,"example":"projectName"},{"name":"organizationId","kind":"id","optional":false},{"name":"organizationName","kind":"string","optional":false,"example":"organizationName"},{"name":"reportTime","kind":"string","optional":false,"example":"reportTime"}]}]}]}},{"id":"lw-get-gcp-compliance-assessment","method":"GET","pathTemplate":"/","summary":"Fetch the latest GCP compliance data from Lacework.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Lacework","kind":"object","optional":false,"children":[{"name":"Compliance","kind":"object","optional":false,"children":[{"name":"reportType","kind":"string","optional":false,"example":"reportType"},{"name":"reportTitle","kind":"string","optional":false,"example":"reportTitle"},{"name":"recommendations","kind":"object","optional":false,"children":[{"name":"SUPPRESSIONS","kind":"string","optional":false,"example":"SUPPRESSIONS"},{"name":"INFO_LINK","kind":"string","optional":false,"example":"INFO_LINK"},{"name":"ASSESSED_RESOURCE_COUNT","kind":"number","optional":false},{"name":"STATUS","kind":"string","optional":false,"example":"STATUS"},{"name":"REC_ID","kind":"id","optional":false},{"name":"CATEGORY","kind":"string","optional":false,"example":"CATEGORY"},{"name":"SERVICE","kind":"string","optional":false,"example":"SERVICE"},{"name":"TITLE","kind":"string","optional":false,"example":"TITLE"},{"name":"VIOLATIONS","kind":"object","optional":false,"children":[{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"reasons","kind":"string","optional":false,"example":"reasons"},{"name":"resource","kind":"string","optional":false,"example":"resource"}]},{"name":"RESOURCE_COUNT","kind":"number","optional":false},{"name":"SEVERITY","kind":"number","optional":false}]},{"name":"summary","kind":"object","optional":false,"children":[{"name":"NUM_RECOMMENDATIONS","kind":"number","optional":false},{"name":"NUM_SEVERITY_2_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_SEVERITY_4_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_SEVERITY_1_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_COMPLIANT","kind":"number","optional":false},{"name":"NUM_SEVERITY_3_NON_COMPLIANCE","kind":"number","optional":false},{"name":"ASSESSED_RESOURCE_COUNT","kind":"number","optional":false},{"name":"NUM_SUPPRESSED","kind":"number","optional":false},{"name":"NUM_SEVERITY_5_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_NOT_COMPLIANT","kind":"number","optional":false},{"name":"VIOLATED_RESOURCE_COUNT","kind":"number","optional":false},{"name":"SUPPRESSED_RESOURCE_COUNT","kind":"number","optional":false}]},{"name":"accountId","kind":"id","optional":false},{"name":"accountAlias","kind":"string","optional":false,"example":"accountAlias"},{"name":"tenantId","kind":"id","optional":false},{"name":"tenantName","kind":"string","optional":false,"example":"tenantName"},{"name":"subscriptionId","kind":"id","optional":false},{"name":"subscriptionName","kind":"string","optional":false,"example":"subscriptionName"},{"name":"projectId","kind":"id","optional":false},{"name":"projectName","kind":"string","optional":false,"example":"projectName"},{"name":"organizationId","kind":"id","optional":false},{"name":"organizationName","kind":"string","optional":false,"example":"organizationName"},{"name":"reportTime","kind":"string","optional":false,"example":"reportTime"}]}]}]}},{"id":"lw-get-gcp-projects-by-organization","method":"GET","pathTemplate":"/","summary":"Fetch a list of GCP projects that are under an organization.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Lacework","kind":"object","optional":false,"children":[{"name":"GCP","kind":"object","optional":false,"children":[{"name":"organization","kind":"string","optional":false,"example":"organization"},{"name":"projects","kind":"string","optional":false,"example":"projects"}]}]}]}},{"id":"lw-get-compliance-report","method":"GET","pathTemplate":"/","summary":"Fetch a specified compliance report from Lacework.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Lacework","kind":"object","optional":false,"children":[{"name":"Compliance","kind":"object","optional":false,"children":[{"name":"reportType","kind":"string","optional":false,"example":"reportType"},{"name":"reportTitle","kind":"string","optional":false,"example":"reportTitle"},{"name":"recommendations","kind":"object","optional":false,"children":[{"name":"SUPPRESSIONS","kind":"string","optional":false,"example":"SUPPRESSIONS"},{"name":"INFO_LINK","kind":"string","optional":false,"example":"INFO_LINK"},{"name":"ASSESSED_RESOURCE_COUNT","kind":"number","optional":false},{"name":"STATUS","kind":"string","optional":false,"example":"STATUS"},{"name":"REC_ID","kind":"id","optional":false},{"name":"CATEGORY","kind":"string","optional":false,"example":"CATEGORY"},{"name":"SERVICE","kind":"string","optional":false,"example":"SERVICE"},{"name":"TITLE","kind":"string","optional":false,"example":"TITLE"},{"name":"VIOLATIONS","kind":"object","optional":false,"children":[{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"reasons","kind":"string","optional":false,"example":"reasons"},{"name":"resource","kind":"string","optional":false,"example":"resource"}]},{"name":"RESOURCE_COUNT","kind":"number","optional":false},{"name":"SEVERITY","kind":"number","optional":false}]},{"name":"summary","kind":"object","optional":false,"children":[{"name":"NUM_RECOMMENDATIONS","kind":"number","optional":false},{"name":"NUM_SEVERITY_2_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_SEVERITY_4_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_SEVERITY_1_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_COMPLIANT","kind":"number","optional":false},{"name":"NUM_SEVERITY_3_NON_COMPLIANCE","kind":"number","optional":false},{"name":"ASSESSED_RESOURCE_COUNT","kind":"number","optional":false},{"name":"NUM_SUPPRESSED","kind":"number","optional":false},{"name":"NUM_SEVERITY_5_NON_COMPLIANCE","kind":"number","optional":false},{"name":"NUM_NOT_COMPLIANT","kind":"number","optional":false},{"name":"VIOLATED_RESOURCE_COUNT","kind":"number","optional":false},{"name":"SUPPRESSED_RESOURCE_COUNT","kind":"number","optional":false}]},{"name":"accountId","kind":"id","optional":false},{"name":"accountAlias","kind":"string","optional":false,"example":"accountAlias"},{"name":"tenantId","kind":"id","optional":false},{"name":"tenantName","kind":"string","optional":false,"example":"tenantName"},{"name":"subscriptionId","kind":"id","optional":false},{"name":"subscriptionName","kind":"string","optional":false,"example":"subscriptionName"},{"name":"projectId","kind":"id","optional":false},{"name":"projectName","kind":"string","optional":false,"example":"projectName"},{"name":"organizationId","kind":"id","optional":false},{"name":"organizationName","kind":"string","optional":false,"example":"organizationName"},{"name":"reportTime","kind":"string","optional":false,"example":"reportTime"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "lacework-lacework",
+  "name": "Lacework",
+  "pack": "Lacework",
+  "vendor": "Lacework",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Alerts search. data[] is the v2 Alerts page.",
+  "notes": [
+    "POST /api/v2/Alerts/search returns { data, paging }. The client links the v2 Alerts tag. This mock returns data.",
+    "paging.rows and paging.urls are omitted. limit and offset page the array.",
+    "A bearer token is required. Vulnerabilities are not modeled."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Lacework/Integrations/Lacework",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "lacework-lacework",
+      "name": "Lacework",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://docs.lacework.net/api/v2/docs/#tag/Alerts",
+      "notes": [
+        "POST /api/v2/Alerts/search returns { data, paging }. The client links the v2 Alerts tag. This mock returns data.",
+        "paging.rows and paging.urls are omitted. limit and offset page the array.",
+        "A bearer token is required. Vulnerabilities are not modeled."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.lacework.net/api/v2/docs/#tag/Alerts",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "POST /api/v2/Alerts/search returns { data, paging }. The client links the v2 Alerts tag. This mock returns data.",
+          "paging.rows and paging.urls are omitted. limit and offset page the array.",
+          "A bearer token is required. Vulnerabilities are not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "search-alerts",
+        "method": "POST",
+        "pathTemplate": "/api/v2/Alerts/search",
+        "summary": "Search alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "data"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "alertId",
+              "kind": "integer"
+            },
+            {
+              "name": "alertType",
+              "kind": "string",
+              "example": "SuspiciousLogin"
+            },
+            {
+              "name": "severity",
+              "kind": "enum",
+              "enumValues": [
+                "Low",
+                "Medium",
+                "High",
+                "Critical"
+              ]
+            },
+            {
+              "name": "startTime",
+              "kind": "timestamp"
+            },
+            {
+              "name": "status",
+              "kind": "enum",
+              "enumValues": [
+                "Open",
+                "Closed"
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "lacework-lacework",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

@@ -1,1 +1,152 @@
-{"id":"azuresecuritycenter-microsoftdefenderforcloudeventcollector","name":"Microsoft Defender for Cloud Event Collector","pack":"AzureSecurityCenter","fidelity":"shape","curated":false,"summary":"XSIAM collector for Microsoft Defender for Cloud alerts.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"azuresecuritycenter-microsoftdefenderforcloudeventcollector","name":"Microsoft Defender for Cloud Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AzureSecurityCenter/Integrations/MicrosoftDefenderForCloudEventCollector","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"ms-defender-for-cloud-get-events","method":"GET","pathTemplate":"/providers/Microsoft.Security/alerts","summary":"Lists alerts for the subscription according to the specified filters.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"MicrosoftDefenderForCloud","kind":"object","optional":false,"children":[{"name":"Alert","kind":"object","optional":false,"children":[{"name":"AlertDisplayName","kind":"string","optional":false,"example":"AlertDisplayName"},{"name":"CompromisedEntity","kind":"string","optional":false,"example":"CompromisedEntity"},{"name":"DetectedTimeUtc","kind":"timestamp","optional":false,"format":"iso"},{"name":"ReportedSeverity","kind":"string","optional":false,"example":"ReportedSeverity"},{"name":"ID","kind":"id","optional":false}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "azuresecuritycenter-microsoftdefenderforcloudeventcollector",
+  "name": "Microsoft Defender for Cloud Event Collector",
+  "pack": "AzureSecurityCenter",
+  "vendor": "Microsoft",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Defender for Cloud alerts as an Azure resource list.",
+  "notes": [
+    "GET /providers/Microsoft.Security/alerts returns { value }. ListAlerts.json is an array of { id, name, type, properties }. This mock uses the value envelope.",
+    "api-version is not required. The subscription scope is omitted from the path.",
+    "A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureSecurityCenter/Integrations/MicrosoftDefenderForCloudEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "azuresecuritycenter-microsoftdefenderforcloudeventcollector",
+      "name": "Microsoft Defender for Cloud Event Collector",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://learn.microsoft.com/en-us/rest/api/defenderforcloud/alerts/list",
+      "notes": [
+        "GET /providers/Microsoft.Security/alerts returns { value }. ListAlerts.json is an array of { id, name, type, properties }. This mock uses the value envelope.",
+        "api-version is not required. The subscription scope is omitted from the path.",
+        "A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/rest/api/defenderforcloud/alerts/list",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /providers/Microsoft.Security/alerts returns { value }. ListAlerts.json is an array of { id, name, type, properties }. This mock uses the value envelope.",
+          "api-version is not required. The subscription scope is omitted from the path.",
+          "A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-alerts",
+        "method": "GET",
+        "pathTemplate": "/providers/Microsoft.Security/alerts",
+        "summary": "List alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "azure"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "name",
+              "kind": "uuid"
+            },
+            {
+              "name": "type",
+              "kind": "const",
+              "constValue": "Microsoft.Security/alerts"
+            },
+            {
+              "name": "properties",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "alertDisplayName",
+                  "kind": "string",
+                  "example": "Suspicious process executed"
+                },
+                {
+                  "name": "severity",
+                  "kind": "enum",
+                  "enumValues": [
+                    "Low",
+                    "Medium",
+                    "High"
+                  ]
+                },
+                {
+                  "name": "status",
+                  "kind": "enum",
+                  "enumValues": [
+                    "Active",
+                    "Resolved"
+                  ]
+                },
+                {
+                  "name": "timeGeneratedUtc",
+                  "kind": "timestamp"
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "$top",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "skipToken",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "azuresecuritycenter-microsoftdefenderforcloudeventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

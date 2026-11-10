@@ -1,1 +1,148 @@
-{"id":"googlechroniclebackstory-googlechroniclebackstory","name":"Chronicle","pack":"GoogleChronicleBackstory","fidelity":"shape","curated":false,"summary":"Use the Chronicle integration to retrieve Asset alerts or IOC Domain matches as Incidents. Use it to fetch a list of infected assets based on the indicator accessed. This integrati","operations":3,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"googlechroniclebackstory-googlechroniclebackstory","name":"Chronicle","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/GoogleChronicleBackstory/Integrations/GoogleChronicleBackstory","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-asset-response-json","method":"GET","pathTemplate":"/","summary":"test_data/asset_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"assets","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"asset","kind":"object","optional":false,"children":[{"name":"assetIpAddress","kind":"ip","optional":false,"example":"10.0.9.117"}]},{"name":"firstSeenArtifactInfo","kind":"object","optional":false,"children":[{"name":"artifactIndicator","kind":"object","optional":false,"children":[{"name":"domainName","kind":"string","optional":false,"example":"www.google.com"}]},{"name":"seenTime","kind":"timestamp","optional":false,"example":"2020-01-22T07:08:39.930255Z","format":"iso"}]},{"name":"lastSeenArtifactInfo","kind":"object","optional":false,"children":[{"name":"artifactIndicator","kind":"object","optional":false,"children":[{"name":"domainName","kind":"string","optional":false,"example":"www.google.com"}]},{"name":"seenTime","kind":"timestamp","optional":false,"example":"2020-01-24T07:51:25.083668Z","format":"iso"}]}]},"minItems":0,"maxItems":3,"pageItems":false}]}},{"id":"test-data-asset-with-no-response-json","method":"GET","pathTemplate":"/","summary":"test_data/asset_with_no_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"uri","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"https://demodev.backstory.chronicle.security/domainResults?domain=www.xyz.com&selectedList=DomainViewDistinctAssets&whoI"},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-create-rule-400-response-json","method":"GET","pathTemplate":"/","summary":"test_data/create_rule_400_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"error","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"message","kind":"string","optional":false,"example":"generic::invalid_argument: compiling rule: parsing: error with token: \"events\"\nexpected meta\nline: 2 \ncolumn: 9-15"},{"name":"status","kind":"string","optional":false,"example":"INVALID_ARGUMENT"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "googlechroniclebackstory-googlechroniclebackstory",
+  "name": "Chronicle",
+  "pack": "GoogleChronicleBackstory",
+  "vendor": "Google",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Backstory v1 alert list. alerts[] is what listalerts returns.",
+  "notes": [
+    "The client calls GET {host}/v1/alert/listalerts and reads alerts. This mock is that path.",
+    "alerts_ec.json is the XSOAR context output, not the raw body. The raw alert keeps asset.hostname and alertInfos name, sourceProduct, and severity.",
+    "UDM search and curated detections are not modeled. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GoogleChronicleBackstory/Integrations/GoogleChronicleBackstory",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "googlechroniclebackstory-googlechroniclebackstory",
+      "name": "Chronicle",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://cloud.google.com/chronicle/docs/reference/search-api",
+      "notes": [
+        "The client calls GET {host}/v1/alert/listalerts and reads alerts. This mock is that path.",
+        "alerts_ec.json is the XSOAR context output, not the raw body. The raw alert keeps asset.hostname and alertInfos name, sourceProduct, and severity.",
+        "UDM search and curated detections are not modeled. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://cloud.google.com/chronicle/docs/reference/search-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client calls GET {host}/v1/alert/listalerts and reads alerts. This mock is that path.",
+          "alerts_ec.json is the XSOAR context output, not the raw body. The raw alert keeps asset.hostname and alertInfos name, sourceProduct, and severity.",
+          "UDM search and curated detections are not modeled. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-alerts",
+        "method": "GET",
+        "pathTemplate": "/v1/alert/listalerts",
+        "summary": "List alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "alerts"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "asset",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "hostname",
+                  "kind": "string",
+                  "example": "lab-host"
+                }
+              ]
+            },
+            {
+              "name": "alertTime",
+              "kind": "timestamp"
+            },
+            {
+              "name": "alertInfo",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "Suspicious PowerShell"
+                },
+                {
+                  "name": "sourceProduct",
+                  "kind": "string",
+                  "example": "Tanium"
+                },
+                {
+                  "name": "severity",
+                  "kind": "enum",
+                  "enumValues": [
+                    "Low",
+                    "Medium",
+                    "High"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "page_size",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "page_token",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "googlechroniclebackstory-googlechroniclebackstory",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}
