@@ -82,8 +82,8 @@ describe("akamai siem preset", () => {
   });
 });
 
-describe("verified vendor envelopes", () => {
-  it("pages Okta logs with a Link header and Graph alerts with nextLink", () => {
+describe("catalog response envelopes", () => {
+  it("pages Okta logs with a Link header and returns the Graph alerts vendor example", () => {
     const okta = validateMockSpec(
       JSON.parse(readFileSync("public/presets/integrations/okta-okta-v2.json", "utf8")).spec,
     );
@@ -116,9 +116,10 @@ describe("verified vendor envelopes", () => {
       requestIndex: 1,
       requestUrl: "https://parrot.example/catch/graph/v1.0/security/alerts_v2",
     });
+    expect(graphPage.body).toBe(alerts.operation.fixture);
     const body = JSON.parse(graphPage.body);
-    expect(body.value).toHaveLength(1);
-    expect(decodeURIComponent(body["@odata.nextLink"])).toContain("$skip=");
+    expect(Array.isArray(body.value)).toBe(true);
+    expect(body.value[0].providerAlertId).toBeTruthy();
   });
 });
 

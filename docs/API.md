@@ -26,7 +26,7 @@ At most 5 active tokens per user.
 | POST | `/api/specs/import` | session or token | Body `{ "text" }` or `{ "url" }`. OpenAPI, Swagger, Postman, WSDL, XML, or an XSOAR integration YAML. |
 | GET | `/api/endpoints/:id/export` | session or token | JSON files `test_pan_parrot.py` and `test_data.json`. `?format=zip` downloads both. |
 
-An integration YAML is recognized by `script.commands`. Each command becomes one operation. The path is `/command-name` unless the command description contains `METHOD /path`. Commands without outputs echo their argument names. The result is a shape, not a vendor-verified mock. At most 12 commands are imported.
+An integration YAML is recognized by `script.commands`. Each command becomes one operation. The path is `/command-name` unless the command description contains `METHOD /path`. Commands without outputs echo their argument names. The result is an approximate shape. At most 12 commands are imported.
 
 The pytest file registers those samples with `requests_mock` and does not call the catch URL. Dummy credentials configured on the mock are not copied into the export.
 

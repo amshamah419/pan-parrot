@@ -45,6 +45,8 @@ export const MOCK_LIMITS = {
   maxSeenIds: 2_000,
   maxScenarioSteps: 12,
   maxScenarioBodyBytes: 8_000,
+  /** A copied vendor example. Recorded scenario steps stay at maxScenarioBodyBytes. */
+  maxFixtureBytes: 64 * 1024,
   maxGraphqlSchemaChars: 100_000,
   maxGraphqlQueryChars: 20_000,
   maxGraphqlDepth: 8,

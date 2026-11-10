@@ -2,9 +2,9 @@
   "id": "microsoftgraphcalendar-microsoftgraphcalendar",
   "name": "O365 Outlook Calendar",
   "pack": "MicrosoftGraphCalendar",
-  "fidelity": "verified",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "GET /v1.0/users/{calendar_url}/events",
+  "summary": "From vendor docs. GET /v1.0/users/{calendar_url}/events",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "O365 Outlook Calendar",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphCalendar/Integrations/MicrosoftGraphCalendar",
-      "fidelity": "verified",
+      "fidelity": "vendor",
       "notes": [
-        "GET /v1.0/users/{calendar_url}/events returns value[] plus @odata.nextLink. Each event has subject, id, organizer, attendees, start, and end."
+        "GET /v1.0/users/{calendar_url}/events returns value[] plus @odata.nextLink. Each event has subject, id, organizer, attendees, start, and end.",
+        "Response body is the vendor's documented example, copied on 2026-11-10."
       ],
       "verification": {
-        "status": "verified",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphCalendar/Integrations/MicrosoftGraphCalendar",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-events?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "GET /v1.0/users/{calendar_url}/events returns value[] plus @odata.nextLink. Each event has subject, id, organizer, attendees, start, and end."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
         ]
       }
     },
@@ -140,7 +141,8 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"@odata.context\": \"https://graph.microsoft.com/v1.0/$metadata#users('cd209b0b-3f83-4c35-82d2-d88a61820480')/events(subject,body,bodyPreview,organizer,attendees,start,end,location)\",\n  \"value\": [\n    {\n      \"@odata.etag\": \"W/\\\"ZlnW4RIAV06KYYwlrfNZvQAAKGWwbw==\\\"\",\n      \"id\": \"AAMkAGIAAAoZDOFAAA=\",\n      \"subject\": \"Orientation \",\n      \"bodyPreview\": \"Dana, this is the time you selected for our orientation. Please bring the notes I sent you.\",\n      \"body\": {\n        \"contentType\": \"html\",\n        \"content\": \"<html><head></head><body><p>Dana, this is the time you selected for our orientation. Please bring the notes I sent you.</p></body></html>\"\n      },\n      \"start\": {\n        \"dateTime\": \"2017-04-21T10:00:00.0000000\",\n        \"timeZone\": \"Pacific Standard Time\"\n      },\n      \"end\": {\n        \"dateTime\": \"2017-04-21T12:00:00.0000000\",\n        \"timeZone\": \"Pacific Standard Time\"\n      },\n      \"location\": {\n        \"displayName\": \"Assembly Hall\",\n        \"locationType\": \"default\",\n        \"uniqueId\": \"Assembly Hall\",\n        \"uniqueIdType\": \"private\"\n      },\n      \"locations\": [\n        {\n          \"displayName\": \"Assembly Hall\",\n          \"locationType\": \"default\",\n          \"uniqueIdType\": \"unknown\"\n        }\n      ],\n      \"attendees\": [\n        {\n          \"type\": \"required\",\n          \"status\": {\n            \"response\": \"none\",\n            \"time\": \"0001-01-01T00:00:00Z\"\n          },\n          \"emailAddress\": {\n            \"name\": \"Samantha Booth\",\n            \"address\": \"user@example.invalid\"\n          }\n        },\n        {\n          \"type\": \"required\",\n          \"status\": {\n            \"response\": \"none\",\n            \"time\": \"0001-01-01T00:00:00Z\"\n          },\n          \"emailAddress\": {\n            \"name\": \"Dana Swope\",\n            \"address\": \"user2@example.invalid\"\n          }\n        }\n      ],\n      \"organizer\": {\n        \"emailAddress\": {\n          \"name\": \"Samantha Booth\",\n          \"address\": \"user@example.invalid\"\n        }\n      }\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

@@ -2,9 +2,9 @@
   "id": "azureriskyusers-azureriskyusers",
   "name": "Azure Risky Users",
   "pack": "AzureRiskyUsers",
-  "fidelity": "verified",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /v1.0/identityProtection/riskDetections.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /v1.0/identityProtection/riskDetections.",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "Azure Risky Users",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureRiskyUsers/Integrations/AzureRiskyUsers",
-      "fidelity": "verified",
+      "fidelity": "vendor",
       "notes": [
-        "Sample fields are the ones GET /v1.0/identityProtection/riskDetections reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /v1.0/identityProtection/riskDetections reads in the matched command. Lists the command iterates are arrays.",
+        "Response body is the vendor's documented example, copied on 2026-11-10."
       ],
       "verification": {
-        "status": "verified",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureRiskyUsers/Integrations/AzureRiskyUsers",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/riskdetection-list?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /v1.0/identityProtection/riskDetections reads in the matched command. Lists the command iterates are arrays."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
         ]
       }
     },
@@ -69,7 +70,8 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.riskDetection\",\n      \"id\": \"6a5874ca-abcd-9d82-5ad39bd71600\",\n      \"requestId\": \"6a5874ca-abcd-9d82-5ad39bd71600\",\n      \"correlationId\": \"abcd74ca-9823-4b1c-9d82-5ad39bd71600\",\n      \"riskEventType\": \"unfamiliarFeatures\",\n      \"riskState\": \"remediated\",\n      \"riskLevel\": \"medium\",\n      \"riskDetail\": \"userPerformedSecuredPasswordReset\",\n      \"source\": \"activeDirectory\",\n      \"detectionTimingType\": \"realtime\",\n      \"activity\": \"signin\",\n      \"tokenIssuerType\": \"Azure Active Directory\",\n      \"ipAddress\": \"123.456.7.89\",\n      \"location\": {\n        \"city\": \"Seattle\",\n        \"state\": \"Washington\",\n        \"countryOrRegion\": \"US\",\n        \"geoCoordinates\": null\n      },\n      \"activityDateTime\": \"2018-09-05T00:09:18.7822851Z\",\n      \"detectedDateTime\": \"2018-09-05T00:11:27.773602Z\",\n      \"lastUpdatedDateTime\": \"2018-09-05T00:11:27.773602Z\",\n      \"userId\": \"abcdefab-af90-4edf-ac4c-742ff06735d0\",\n      \"userDisplayName\": \"Olivia Lack\",\n      \"userPrincipalName\": \"user@example.invalid\",\n      \"additionalInfo\": \"[{\\\"Key\\\":\\\"userAgent\\\",\\\"Value\\\":\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36\\\"}]\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

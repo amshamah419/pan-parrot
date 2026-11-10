@@ -2,9 +2,9 @@
   "id": "netskope-netskopeapiv1",
   "name": "Netskope (API v1)",
   "pack": "Netskope",
-  "fidelity": "verified",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: POST /api/v1/alerts.",
+  "summary": "From vendor docs. Rebuilt from the client: POST /api/v1/alerts.",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "Netskope (API v1)",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Netskope/Integrations/NetskopeAPIv1",
-      "fidelity": "verified",
+      "fidelity": "vendor",
       "notes": [
-        "Sample fields are the ones POST /api/v1/alerts reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones POST /api/v1/alerts reads in the matched command. Lists the command iterates are arrays.",
+        "Response body is the vendor's documented example, copied on 2026-11-10."
       ],
       "verification": {
-        "status": "verified",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Netskope/Integrations/NetskopeAPIv1",
+        "status": "vendor",
+        "docUrl": "https://docs.netskope.com/en/get-alerts-data/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /api/v1/alerts reads in the matched command. Lists the command iterates are arrays."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
         ]
       }
     },
@@ -60,7 +61,8 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"msg\": \"\",\n  \"data\": [\n    {\n      \"app\": \"Amazon Web Services\",\n      \"alert_name\": \"CIS AWS Foundations Benchmark v1.2.0\",\n      \"instance_id\": \"aws61\",\n      \"device\": \"other\",\n      \"ccl\": \"excellent\",\n      \"browser\": \"unknown\",\n      \"organization_unit\": \"\",\n      \"access_method\": \"API Connector\",\n      \"_session_begin\": 1,\n      \"sa_profile_name\": \"CIS AWS Foundations Benchmark v1.2.0\",\n      \"acked\": \"false\",\n      \"_id\": \"1c248c457f5c2f2fb8b221f5\",\n      \"type\": \"nspolicy\",\n      \"account_name\": \"aws61\",\n      \"alert_type\": \"Security Assessment\",\n      \"timestamp\": 1551713762,\n      \"activity\": \"Introspection Scan\",\n      \"object_type\": \"Policy\",\n      \"compliance_standards\": [\n        {\n          \"control\": \"02\",\n          \"description\": \"Security Incident Management, E-Discovery, & Cloud Forensics\",\n          \"section\": \"SEF\",\n          \"standard\": \"CSA-CCM-3.0.1\",\n          \"reference_url\": \"https://cloudsecurityalliance.org/research/cloud-controls-matrix/\",\n          \"id\": -91402\n        }\n      ],\n      \"user\": \"user@example.invalid\",\n      \"alert\": \"yes\",\n      \"userkey\": \"user@example.invalid\",\n      \"sa_rule_remediation\": \"<html>n<body>n    <b>Using the Amazon unified command line interface:</b>n    <ol>n        <li>Create an IAM role for managing incidents with AWS:n            <ul style='list-style-type: circle;'>n                <li>Create a trust relationship policy document that allows &lt;iam_user&gt; to manage AWS incidents, and save it locally as /tmp/TrustPolicy.json:</li>n                <li>n                    <code>n                            {n                                'Version': '2012-10-17',n                                'Statement': [n                                                {n                                                    'Effect': 'Allow',n                                                    'Principal': { 'AWS': '&lt;iam_user&gt;'n                                                    },n                                                    'Action': 'sts:AssumeRole'n                                                }n                                            ]n                            }n                    </code>n                </li>n            </ul>n        </li>n        <li>n            <ul style='list-style-type: circle;'>n                <li>Create the IAM role using the above trust policy:</li>n                <li>aws iam create-role --role-name &lt;aws_support_iam_role&gt; --assume-role- policy-document file:///tmp/TrustPolicy.json</li>n            </ul>n        </li>n        <li>n            <ul style='list-style-type: circle;'>n                <li>Attach 'AWSSupportAccess' managed policy to the created IAM role:</li>n                <li>aws iam attach-role-policy --policy-arn &lt;iam_policy_arn&gt; --role-name &lt;aws_support_iam_role&gt;</li>n            </ul>n        </li>n    </ol>n    <p>n    <b>Impact</b><br>n        All AWS Support plans include an unlimited number of account and billing support cases,n        with no long-term contracts.<br>n        Support billing calculations are performed on a per-account basis for all plans. Enterprisen        Support plan customers have the option to include multiple enabled accounts in ann        aggregated monthly billing calculation.<br>n        Monthly charges for the Business and Enterprise support plans are based on each month'sn        AWS usage charges, subject to a monthly minimum, billed in advance<br>n   </p> n</body>n</html>n\",\n      \"sa_rule_id\": -1001017,\n      \"sa_rule_name\": \"CIS-AWSFND | 1.22 Ensure a support role has been created to manage incidents with AWS Support\",\n      \"os\": \"unknown\",\n      \"resource_category\": \"Identity\",\n      \"object\": \"arn:aws:iam::215406114230:policy/automation1551712932\",\n      \"policy\": \"aws61policy\",\n      \"traffic_type\": \"CloudApp\",\n      \"count\": 1,\n      \"region_id\": \"\",\n      \"policy_id\": 3,\n      \"action\": \"alert\",\n      \"sa_rule_severity\": \"2\",\n      \"cci\": 94,\n      \"account_id\": \"215406114230\",\n      \"sa_profile_id\": -1001000,\n      \"site\": \"Amazon Web Services\",\n      \"appcategory\": null,\n      \"_insertion_epoch_timestamp\": 1551713763,\n      \"category\": null\n    }\n  ],\n  \"status\": \"success\"\n}\n"
       }
     ],
     "chaos": {

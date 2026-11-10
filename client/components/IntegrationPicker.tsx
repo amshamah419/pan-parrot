@@ -30,7 +30,7 @@ export function IntegrationPicker({
   const [catalogState, setCatalogState] = useState<"idle" | "loading" | "ready" | "error">("idle");
   const [catalogAttempt, setCatalogAttempt] = useState(0);
   const [query, setQuery] = useState("");
-  const [verifiedOnly, setVerifiedOnly] = useState(false);
+  const [vendorOnly, setVendorOnly] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [sample, setSample] = useState("");
@@ -62,15 +62,15 @@ export function IntegrationPicker({
   const matches = useMemo(() => {
     const needle = query.trim().toLowerCase();
     const rank = (entry: PresetCatalogEntry) =>
-      entry.verification?.status === "verified" || entry.fidelity === "verified" ? 2 : entry.curated ? 1 : 0;
+      entry.verification?.status === "vendor" || entry.fidelity === "vendor" ? 2 : entry.curated ? 1 : 0;
     const ranked = [...catalog].sort((a, b) => rank(b) - rank(a) || a.name.localeCompare(b.name));
     return ranked
-      .filter((entry) => !verifiedOnly || rank(entry) === 2)
+      .filter((entry) => !vendorOnly || rank(entry) === 2)
       .filter((entry) =>
         !needle || `${entry.name} ${entry.pack} ${entry.summary || ""}`.toLowerCase().includes(needle),
       )
       .slice(0, 30);
-  }, [catalog, query, verifiedOnly]);
+  }, [catalog, query, vendorOnly]);
 
   const usePreset = async (id: string, name: string) => {
     setBusy(true);
@@ -183,10 +183,10 @@ export function IntegrationPicker({
               <label className="flex shrink-0 items-center gap-2 text-sm">
                 <input
                   type="checkbox"
-                  checked={verifiedOnly}
-                  onChange={(event) => setVerifiedOnly(event.target.checked)}
+                  checked={vendorOnly}
+                  onChange={(event) => setVendorOnly(event.target.checked)}
                 />
-                Verified only
+                From vendor docs
               </label>
             </div>
             <div className="max-h-80 overflow-y-auto rounded border">
@@ -205,7 +205,11 @@ export function IntegrationPicker({
                       {entry.summary ? entry.summary.slice(0, 140) : entry.pack}
                     </span>
                   </span>
-                  <TrustBadge status={entry.verification?.status} fidelity={entry.fidelity} />
+                  <TrustBadge
+                    status={entry.verification?.status}
+                    fidelity={entry.fidelity}
+                    docUrl={entry.verification?.docUrl}
+                  />
                 </button>
               ))}
               {catalogState === "loading" && (
@@ -228,7 +232,7 @@ export function IntegrationPicker({
               )}
               {catalogState === "ready" && matches.length === 0 && (
                 <p className="p-3 text-sm text-muted-foreground">
-                  No integrations match. Clear the search or turn off Verified only.
+                  No integrations match. Clear the search or turn off From vendor docs.
                 </p>
               )}
             </div>

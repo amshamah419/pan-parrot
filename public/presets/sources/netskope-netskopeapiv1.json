@@ -1,0 +1,78 @@
+{
+  "id": "netskope-netskopeapiv1",
+  "retrievedAt": "2026-11-10",
+  "sourceType": "vendor-example",
+  "docUrl": "https://docs.netskope.com/en/get-alerts-data/",
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/api/v1/alerts",
+      "docUrl": "https://docs.netskope.com/en/get-alerts-data/",
+      "excerpt": {
+        "msg": "",
+        "data": [
+          {
+            "app": "Amazon Web Services",
+            "alert_name": "CIS AWS Foundations Benchmark v1.2.0",
+            "instance_id": "aws61",
+            "device": "other",
+            "ccl": "excellent",
+            "browser": "unknown",
+            "organization_unit": "",
+            "access_method": "API Connector",
+            "_session_begin": 1,
+            "sa_profile_name": "CIS AWS Foundations Benchmark v1.2.0",
+            "acked": "false",
+            "_id": "1c248c457f5c2f2fb8b221f5",
+            "type": "nspolicy",
+            "account_name": "aws61",
+            "alert_type": "Security Assessment",
+            "timestamp": 1551713762,
+            "activity": "Introspection Scan",
+            "object_type": "Policy",
+            "compliance_standards": [
+              {
+                "control": "02",
+                "description": "Security Incident Management, E-Discovery, & Cloud Forensics",
+                "section": "SEF",
+                "standard": "CSA-CCM-3.0.1",
+                "reference_url": "https://cloudsecurityalliance.org/research/cloud-controls-matrix/",
+                "id": -91402
+              }
+            ],
+            "user": "meghana@netskope.com",
+            "alert": "yes",
+            "userkey": "meghana@netskope.com",
+            "sa_rule_remediation": "<html>n<body>n    <b>Using the Amazon unified command line interface:</b>n    <ol>n        <li>Create an IAM role for managing incidents with AWS:n            <ul style='list-style-type: circle;'>n                <li>Create a trust relationship policy document that allows &lt;iam_user&gt; to manage AWS incidents, and save it locally as /tmp/TrustPolicy.json:</li>n                <li>n                    <code>n                            {n                                'Version': '2012-10-17',n                                'Statement': [n                                                {n                                                    'Effect': 'Allow',n                                                    'Principal': { 'AWS': '&lt;iam_user&gt;'n                                                    },n                                                    'Action': 'sts:AssumeRole'n                                                }n                                            ]n                            }n                    </code>n                </li>n            </ul>n        </li>n        <li>n            <ul style='list-style-type: circle;'>n                <li>Create the IAM role using the above trust policy:</li>n                <li>aws iam create-role --role-name &lt;aws_support_iam_role&gt; --assume-role- policy-document file:///tmp/TrustPolicy.json</li>n            </ul>n        </li>n        <li>n            <ul style='list-style-type: circle;'>n                <li>Attach 'AWSSupportAccess' managed policy to the created IAM role:</li>n                <li>aws iam attach-role-policy --policy-arn &lt;iam_policy_arn&gt; --role-name &lt;aws_support_iam_role&gt;</li>n            </ul>n        </li>n    </ol>n    <p>n    <b>Impact</b><br>n        All AWS Support plans include an unlimited number of account and billing support cases,n        with no long-term contracts.<br>n        Support billing calculations are performed on a per-account basis for all plans. Enterprisen        Support plan customers have the option to include multiple enabled accounts in ann        aggregated monthly billing calculation.<br>n        Monthly charges for the Business and Enterprise support plans are based on each month'sn        AWS usage charges, subject to a monthly minimum, billed in advance<br>n   </p> n</body>n</html>n",
+            "sa_rule_id": -1001017,
+            "sa_rule_name": "CIS-AWSFND | 1.22 Ensure a support role has been created to manage incidents with AWS Support",
+            "os": "unknown",
+            "resource_category": "Identity",
+            "object": "arn:aws:iam::215406114230:policy/automation1551712932",
+            "policy": "aws61policy",
+            "traffic_type": "CloudApp",
+            "count": 1,
+            "region_id": "",
+            "policy_id": 3,
+            "action": "alert",
+            "sa_rule_severity": "2",
+            "cci": 94,
+            "account_id": "215406114230",
+            "sa_profile_id": -1001000,
+            "site": "Amazon Web Services",
+            "appcategory": null,
+            "_insertion_epoch_timestamp": 1551713763,
+            "category": null
+          }
+        ],
+        "status": "success"
+      },
+      "scrubs": [
+        {
+          "find": "meghana@netskope.com",
+          "replace": "user@example.invalid"
+        }
+      ]
+    }
+  ]
+}

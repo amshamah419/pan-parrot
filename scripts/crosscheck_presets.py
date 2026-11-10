@@ -238,7 +238,7 @@ def load_verified(directory: Path, only: set[str]) -> list[dict]:
     rows = []
     for path in sorted(directory.glob("*.json")):
         data = json.loads(path.read_text())
-        if data.get("fidelity") != "verified":
+        if data.get("fidelity") not in {"verified", "approximate", "vendor"}:
             continue
         if only and data.get("id") not in only:
             continue
@@ -304,8 +304,10 @@ def check_preset(preset: dict, content: Path) -> dict:
         findings.append("unparseable: client built requests without a readable method and path")
         return result(preset, "unparseable", findings)
     fixtures = [command_fixtures(item) for item in fixture_folders(folder, modules)]
+    # A vendor example includes fields the client never reads. Keep the method and path check.
+    skip_fields = preset.get("fidelity") == "vendor"
     for operation in preset["spec"]["operations"]:
-        findings.extend(check_operation(operation, calls, fixtures))
+        findings.extend(check_operation(operation, calls, fixtures, skip_fields=skip_fields))
     status = "mismatch" if findings else "match"
     return result(preset, status, findings, len(calls))
 
@@ -2419,6 +2421,7 @@ def check_operation(
     operation: dict,
     calls: list[HttpCall],
     fixtures: list[dict[str, tuple[set[str], dict[str, set[str]]]]],
+    skip_fields: bool = False,
 ) -> list[str]:
     method = str(operation.get("method", "")).upper()
     preset_path = norm_path(str(operation.get("pathTemplate", "/")))
@@ -2437,7 +2440,11 @@ def check_operation(
         findings.append(
             f"paging: {label} says {style} {paging_names(operation)} but the client sends {client_params or 'no paging params'}."
         )
-    if operation.get("envelope", {}).get("type") not in SKIP_FIELD_ENVELOPES and not all(call.boto3 for call in matched):
+    if (
+        not skip_fields
+        and operation.get("envelope", {}).get("type") not in SKIP_FIELD_ENVELOPES
+        and not all(call.boto3 for call in matched)
+    ):
         test_paths, test_types = fixture_scope(matched, fixtures)
         findings.extend(field_findings(label, operation, matched, test_paths, test_types))
     return findings

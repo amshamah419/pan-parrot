@@ -2,9 +2,9 @@
   "id": "azuredevops-azuredevops",
   "name": "AzureDevOps",
   "pack": "AzureDevOps",
-  "fidelity": "verified",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "GET /_apis/projects",
+  "summary": "From vendor docs. GET /_apis/projects",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "AzureDevOps",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureDevOps/Integrations/AzureDevOps",
-      "fidelity": "verified",
+      "fidelity": "vendor",
       "notes": [
-        "GET /_apis/projects returns value[] and pages with $skip and $top. The command reads name, id, state, revision, visibility, and lastUpdateTime."
+        "GET /_apis/projects returns value[] and pages with $skip and $top. The command reads name, id, state, revision, visibility, and lastUpdateTime.",
+        "Response body is the vendor's documented example, copied on 2026-11-10."
       ],
       "verification": {
-        "status": "verified",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureDevOps/Integrations/AzureDevOps",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/list?view=azure-devops-rest-7.1&tabs=HTTP",
         "checkedAt": "2026-11-10",
         "differences": [
-          "GET /_apis/projects returns value[] and pages with $skip and $top. The command reads name, id, state, revision, visibility, and lastUpdateTime."
+          "The response is the example published on the vendor's docs for this method and path. Emails in that example are replaced with example.invalid addresses, and those replacements are listed in the provenance file."
         ]
       }
     },
@@ -95,7 +96,8 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"count\": 3,\n  \"value\": [\n    {\n      \"id\": \"eb6e4656-77fc-42a1-9181-4c6d8e9da5d1\",\n      \"name\": \"Fabrikam-Fiber-TFVC\",\n      \"description\": \"Team Foundation Version Control projects.\",\n      \"url\": \"https://dev.azure.com/fabrikam/_apis/projects/eb6e4656-77fc-42a1-9181-4c6d8e9da5d1\",\n      \"state\": \"wellFormed\"\n    },\n    {\n      \"id\": \"6ce954b1-ce1f-45d1-b94d-e6bf2464ba2c\",\n      \"name\": \"Fabrikam-Fiber-Git\",\n      \"description\": \"Git projects\",\n      \"url\": \"https://dev.azure.com/fabrikam/_apis/projects/6ce954b1-ce1f-45d1-b94d-e6bf2464ba2c\",\n      \"state\": \"wellFormed\"\n    },\n    {\n      \"id\": \"281f9a5b-af0d-49b4-a1df-fe6f5e5f84d0\",\n      \"name\": \"TestGit\",\n      \"url\": \"https://dev.azure.com/fabrikam/_apis/projects/281f9a5b-af0d-49b4-a1df-fe6f5e5f84d0\",\n      \"state\": \"wellFormed\"\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

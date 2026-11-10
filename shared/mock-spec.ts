@@ -258,11 +258,11 @@ export interface MockSpec {
     name: string;
     attribution?: string;
     sourceUrl?: string;
-    fidelity?: "verified" | "guessed" | "high" | "sample" | "shape" | "generated";
+    fidelity?: "vendor" | "approximate" | "verified" | "guessed" | "high" | "sample" | "shape" | "generated";
     notes?: string[];
     unsupported?: string[];
     verification?: {
-      status: "verified" | "sample" | "shape";
+      status: "vendor" | "approximate" | "verified" | "sample" | "shape";
       docUrl?: string;
       checkedAt?: string;
       differences?: string[];
@@ -447,8 +447,11 @@ function normalizeOperation(
   const method = String(operation?.method || "GET").toUpperCase();
   if (!/^[A-Z]{3,8}$/.test(method)) throw new Error("Invalid HTTP method");
   const pathTemplate = String(operation?.pathTemplate || "/");
-  if (!pathTemplate.startsWith("/") || pathTemplate.length > 180) {
+  if (!pathTemplate.startsWith("/")) {
     throw new Error("Operation path must start with /");
+  }
+  if (pathTemplate.length > 300) {
+    throw new Error("Operation path is too long");
   }
   const status = Math.floor(Number(operation?.status ?? 200));
   if (status < 200 || status > 599 || status === 204) {
@@ -585,7 +588,7 @@ function normalizeRateLimit(value: RateQuota | undefined): RateQuota {
 function normalizeFixture(value: unknown): string | undefined {
   if (typeof value !== "string") return undefined;
   const trimmed = value.trim();
-  if (!trimmed || trimmed.length > MOCK_LIMITS.maxScenarioBodyBytes) return undefined;
+  if (!trimmed || trimmed.length > MOCK_LIMITS.maxFixtureBytes) return undefined;
   if (trimmed.includes("\0")) return undefined;
   if (!trimmed.startsWith("{") && !trimmed.startsWith("[")) return undefined;
   try {
@@ -651,7 +654,15 @@ function normalizeVerification(
 ): MockSpec["source"]["verification"] {
   if (!verification || typeof verification !== "object") return undefined;
   const status = verification.status;
-  if (status !== "verified" && status !== "sample" && status !== "shape") return undefined;
+  if (
+    status !== "vendor" &&
+    status !== "approximate" &&
+    status !== "verified" &&
+    status !== "sample" &&
+    status !== "shape"
+  ) {
+    return undefined;
+  }
   return {
     status,
     docUrl: cleanOptional(verification.docUrl, 300),
