@@ -1,1 +1,138 @@
-{"id":"aws-ec2-aws-ec2","name":"AWS - EC2","pack":"AWS-EC2","fidelity":"shape","curated":false,"summary":"Amazon Web Services Elastic Compute Cloud (EC2).","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-ec2-aws-ec2","name":"AWS - EC2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-EC2/Integrations/AWS-EC2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-ec2-describe-instances","method":"GET","pathTemplate":"/","summary":"Describes one or more of your instances.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"EC2","kind":"object","optional":false,"children":[{"name":"Instances","kind":"object","optional":false,"children":[{"name":"AmiLaunchIndex","kind":"number","optional":false},{"name":"ImageId","kind":"id","optional":false},{"name":"InstanceId","kind":"id","optional":false},{"name":"InstanceType","kind":"string","optional":false,"example":"InstanceType"},{"name":"KernelId","kind":"id","optional":false},{"name":"KeyName","kind":"string","optional":false,"example":"KeyName"},{"name":"LaunchTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"Monitoring","kind":"object","optional":false,"children":[{"name":"State","kind":"string","optional":false,"example":"State"}]},{"name":"Placement","kind":"object","optional":false,"children":[{"name":"AvailabilityZone","kind":"string","optional":false,"example":"AvailabilityZone"},{"name":"Affinity","kind":"string","optional":false,"example":"Affinity"},{"name":"GroupName","kind":"string","optional":false,"example":"GroupName"},{"name":"HostId","kind":"id","optional":false},{"name":"Tenancy","kind":"string","optional":false,"example":"Tenancy"}]},{"name":"Platform","kind":"string","optional":false,"example":"Platform"},{"name":"PrivateDnsName","kind":"string","optional":false,"example":"PrivateDnsName"},{"name":"PrivateIpAddress","kind":"string","optional":false,"example":"PrivateIpAddress"},{"name":"ProductCodes","kind":"object","optional":false,"children":[{"name":"ProductCodeId","kind":"id","optional":false},{"name":"ProductCodeType","kind":"string","optional":false,"example":"ProductCodeType"}]},{"name":"PublicDnsName","kind":"string","optional":false,"example":"PublicDnsName"},{"name":"PublicIpAddress","kind":"string","optional":false,"example":"PublicIpAddress"},{"name":"RamdiskId","kind":"id","optional":false},{"name":"State","kind":"object","optional":false,"children":[{"name":"Code","kind":"string","optional":false,"example":"Code"},{"name":"Name","kind":"string","optional":false,"example":"Name"}]},{"name":"StateTransitionReason","kind":"string","optional":false,"example":"StateTransitionReason"},{"name":"SubnetId","kind":"id","optional":false},{"name":"VpcId","kind":"id","optional":false},{"name":"Architecture","kind":"string","optional":false,"example":"Architecture"},{"name":"BlockDeviceMappings","kind":"object","optional":false,"children":[{"name":"DeviceName","kind":"string","optional":false,"example":"DeviceName"},{"name":"Ebs","kind":"object","optional":false,"children":[{"name":"AttachTime","kind":"string","optional":false,"example":"AttachTime"},{"name":"DeleteOnTermination","kind":"string","optional":false,"example":"DeleteOnTermination"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"VolumeId","kind":"id","optional":false}]}]},{"name":"ClientToken","kind":"string","optional":false,"example":"ClientToken"},{"name":"EbsOptimized","kind":"boolean","optional":false},{"name":"EnaSupport","kind":"boolean","optional":false},{"name":"Hypervisor","kind":"string","optional":false,"example":"Hypervisor"},{"name":"IamInstanceProfile","kind":"object","optional":false,"children":[{"name":"Arn","kind":"string","optional":false,"example":"Arn"},{"name":"Id","kind":"id","optional":false}]},{"name":"InstanceLifecycle","kind":"string","optional":false,"example":"InstanceLifecycle"},{"name":"ElasticGpuAssociations","kind":"object","optional":false,"children":[{"name":"ElasticGpuId","kind":"id","optional":false},{"name":"ElasticGpuAssociationId","kind":"id","optional":false},{"name":"ElasticGpuAssociationState","kind":"string","optional":false,"example":"ElasticGpuAssociationState"},{"name":"ElasticGpuAssociationTime","kind":"string","optional":false,"example":"ElasticGpuAssociationTime"}]},{"name":"NetworkInterfaces","kind":"object","optional":false,"children":[{"name":"Association","kind":"object","optional":false,"children":[{"name":"IpOwnerId","kind":"id","optional":false},{"name":"PublicDnsName","kind":"string","optional":false,"example":"PublicDnsName"},{"name":"PublicIp","kind":"string","optional":false,"example":"PublicIp"}]}]}]}]}]}]}},{"id":"aws-ec2-describe-iam-instance-profile-associations","method":"GET","pathTemplate":"/","summary":"Describes your IAM instance profile associations.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"EC2","kind":"object","optional":false,"children":[{"name":"IamInstanceProfileAssociations","kind":"object","optional":false,"children":[{"name":"IamInstanceProfile","kind":"object","optional":false,"children":[{"name":"Arn","kind":"string","optional":false,"example":"Arn"},{"name":"Id","kind":"id","optional":false}]},{"name":"State","kind":"string","optional":false,"example":"State"},{"name":"InstanceId","kind":"id","optional":false},{"name":"AssociationId","kind":"id","optional":false},{"name":"AccountId","kind":"id","optional":false}]}]}]}]}},{"id":"aws-ec2-describe-images","method":"GET","pathTemplate":"/","summary":"Describes one or more of the images (AMIs, AKIs, and ARIs) available to you. Images available to you include public images, private images that you own, and pri","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"EC2","kind":"object","optional":false,"children":[{"name":"Images","kind":"object","optional":false,"children":[{"name":"Architecture","kind":"string","optional":false,"example":"Architecture"},{"name":"CreationDate","kind":"timestamp","optional":false,"format":"iso"},{"name":"ImageId","kind":"id","optional":false},{"name":"ImageLocation","kind":"string","optional":false,"example":"ImageLocation"},{"name":"ImageType","kind":"string","optional":false,"example":"ImageType"},{"name":"Public","kind":"boolean","optional":false},{"name":"KernelId","kind":"id","optional":false},{"name":"OwnerId","kind":"id","optional":false},{"name":"Platform","kind":"string","optional":false,"example":"Platform"},{"name":"ProductCodes","kind":"object","optional":false,"children":[{"name":"ProductCodeId","kind":"id","optional":false},{"name":"ProductCodeType","kind":"string","optional":false,"example":"ProductCodeType"}]},{"name":"RamdiskId","kind":"id","optional":false},{"name":"State","kind":"string","optional":false,"example":"State"},{"name":"BlockDeviceMappings","kind":"object","optional":false,"children":[{"name":"DeviceName","kind":"string","optional":false,"example":"DeviceName"},{"name":"VirtualName","kind":"string","optional":false,"example":"VirtualName"},{"name":"Ebs","kind":"object","optional":false,"children":[{"name":"Encrypted","kind":"boolean","optional":false},{"name":"DeleteOnTermination","kind":"boolean","optional":false},{"name":"Iops","kind":"number","optional":false},{"name":"KmsKeyId","kind":"id","optional":false},{"name":"SnapshotId","kind":"id","optional":false},{"name":"VolumeSize","kind":"number","optional":false},{"name":"VolumeType","kind":"string","optional":false,"example":"VolumeType"}]},{"name":"NoDevice","kind":"string","optional":false,"example":"NoDevice"}]},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"EnaSupport","kind":"boolean","optional":false},{"name":"Hypervisor","kind":"string","optional":false,"example":"Hypervisor"},{"name":"ImageOwnerAlias","kind":"string","optional":false,"example":"ImageOwnerAlias"},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"RootDeviceName","kind":"string","optional":false,"example":"RootDeviceName"},{"name":"RootDeviceType","kind":"string","optional":false,"example":"RootDeviceType"},{"name":"SriovNetSupport","kind":"string","optional":false,"example":"SriovNetSupport"},{"name":"StateReason","kind":"object","optional":false,"children":[{"name":"Code","kind":"string","optional":false,"example":"Code"},{"name":"Message","kind":"string","optional":false,"example":"Message"}]},{"name":"Tags","kind":"object","optional":false,"children":[{"name":"Key","kind":"string","optional":false,"example":"Key"},{"name":"Value","kind":"string","optional":false,"example":"Value"}]},{"name":"VirtualizationType","kind":"string","optional":false,"example":"VirtualizationType"},{"name":"AccountId","kind":"id","optional":false}]}]}]}]}},{"id":"aws-ec2-describe-regions","method":"GET","pathTemplate":"/","summary":"Describes one or more regions that are currently available to you.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"Regions","kind":"object","optional":false,"children":[{"name":"Endpoint","kind":"string","optional":false,"example":"Endpoint"},{"name":"RegionName","kind":"string","optional":false,"example":"RegionName"},{"name":"AccountId","kind":"id","optional":false}]}]}]}},{"id":"aws-ec2-describe-addresses","method":"GET","pathTemplate":"/","summary":"Describes one or more of your Elastic IP addresses.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"EC2","kind":"object","optional":false,"children":[{"name":"ElasticIPs","kind":"object","optional":false,"children":[{"name":"InstanceId","kind":"id","optional":false},{"name":"PublicIp","kind":"string","optional":false,"example":"PublicIp"},{"name":"AllocationId","kind":"id","optional":false},{"name":"AssociationId","kind":"id","optional":false},{"name":"Domain","kind":"string","optional":false,"example":"Domain"},{"name":"NetworkInterfaceId","kind":"id","optional":false},{"name":"NetworkInterfaceOwnerId","kind":"id","optional":false},{"name":"PrivateIpAddress","kind":"string","optional":false,"example":"PrivateIpAddress"},{"name":"Region","kind":"string","optional":false,"example":"Region"},{"name":"Tags","kind":"object","optional":false,"children":[{"name":"Key","kind":"string","optional":false,"example":"Key"},{"name":"Value","kind":"string","optional":false,"example":"Value"}]},{"name":"AccountId","kind":"id","optional":false}]}]}]}]}},{"id":"aws-ec2-describe-snapshots","method":"GET","pathTemplate":"/","summary":"Describes one or more of the EBS snapshots available to you.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"EC2","kind":"object","optional":false,"children":[{"name":"Snapshots","kind":"object","optional":false,"children":[{"name":"DataEncryptionKeyId","kind":"id","optional":false},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Encrypted","kind":"boolean","optional":false},{"name":"KmsKeyId","kind":"id","optional":false},{"name":"OwnerId","kind":"id","optional":false},{"name":"Progress","kind":"string","optional":false,"example":"Progress"},{"name":"SnapshotId","kind":"id","optional":false},{"name":"StartTime","kind":"string","optional":false,"example":"StartTime"},{"name":"State","kind":"string","optional":false,"example":"State"},{"name":"StateMessage","kind":"string","optional":false,"example":"StateMessage"},{"name":"VolumeId","kind":"id","optional":false},{"name":"VolumeSize","kind":"number","optional":false},{"name":"OwnerAlias","kind":"string","optional":false,"example":"OwnerAlias"},{"name":"Region","kind":"string","optional":false,"example":"Region"},{"name":"Tags","kind":"object","optional":false,"children":[{"name":"Key","kind":"string","optional":false,"example":"Key"},{"name":"Value","kind":"string","optional":false,"example":"Value"}]},{"name":"AccountId","kind":"id","optional":false}]}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-ec2-aws-ec2",
+  "name": "AWS - EC2",
+  "pack": "AWS-EC2",
+  "vendor": "Amazon Web Services",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "DescribeInstances. Reservations and Instances.",
+  "notes": [
+    "boto3 uses the EC2 query protocol, which is XML. This mock is POST / with X-Amz-Target AmazonEC2.DescribeInstances and returns JSON { Reservations: [{ Instances }] }.",
+    "Network interfaces, tags, and block devices are omitted.",
+    "SigV4 is not checked."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-EC2/Integrations/AWS-EC2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-ec2-aws-ec2",
+      "name": "AWS - EC2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html",
+      "notes": [
+        "boto3 uses the EC2 query protocol, which is XML. This mock is POST / with X-Amz-Target AmazonEC2.DescribeInstances and returns JSON { Reservations: [{ Instances }] }.",
+        "Network interfaces, tags, and block devices are omitted.",
+        "SigV4 is not checked."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "boto3 uses the EC2 query protocol, which is XML. This mock is POST / with X-Amz-Target AmazonEC2.DescribeInstances and returns JSON { Reservations: [{ Instances }] }.",
+          "Network interfaces, tags, and block devices are omitted.",
+          "SigV4 is not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "describe-instances",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Describe instances",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "Reservations"
+        },
+        "headerMatch": {
+          "x-amz-target": "AmazonEC2.DescribeInstances"
+        },
+        "record": {
+          "name": "reservation",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ReservationId",
+              "kind": "id"
+            },
+            {
+              "name": "Instances",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "instance",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "InstanceId",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "InstanceType",
+                    "kind": "const",
+                    "constValue": "t3.micro"
+                  },
+                  {
+                    "name": "State",
+                    "kind": "const",
+                    "constValue": "running"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "aws-ec2-aws-ec2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

@@ -1,1 +1,131 @@
-{"id":"aws-cloudtrail-aws-cloudtrail","name":"AWS - CloudTrail","pack":"AWS-CloudTrail","fidelity":"shape","curated":false,"summary":"Amazon Web Services CloudTrail.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-cloudtrail-aws-cloudtrail","name":"AWS - CloudTrail","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-CloudTrail/Integrations/AWS-CloudTrail","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-cloudtrail-create-trail","method":"GET","pathTemplate":"/","summary":"Creates a trail that specifies the settings for delivery of log data to an Amazon S3 bucket. A maximum of five trails can exist in a region, irrespective of the","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"CloudTrail","kind":"object","optional":false,"children":[{"name":"Trails","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"S3BucketName","kind":"string","optional":false,"example":"S3BucketName"},{"name":"IncludeGlobalServiceEvents","kind":"boolean","optional":false},{"name":"IsMultiRegionTrail","kind":"boolean","optional":false},{"name":"TrailARN","kind":"string","optional":false,"example":"TrailARN"},{"name":"LogFileValidationEnabled","kind":"boolean","optional":false},{"name":"SnsTopicARN","kind":"string","optional":false,"example":"SnsTopicARN"},{"name":"S3KeyPrefix","kind":"string","optional":false,"example":"S3KeyPrefix"},{"name":"CloudWatchLogsLogGroupArn","kind":"string","optional":false,"example":"CloudWatchLogsLogGroupArn"},{"name":"CloudWatchLogsRoleArn","kind":"string","optional":false,"example":"CloudWatchLogsRoleArn"},{"name":"KmsKeyId","kind":"id","optional":false},{"name":"HomeRegion","kind":"string","optional":false,"example":"HomeRegion"}]}]}]}]}},{"id":"aws-cloudtrail-delete-trail","method":"GET","pathTemplate":"/","summary":"Deletes a trail. This operation must be called from the region in which the trail was created. DeleteTrail cannot be called on the shadow trails (replicated tra","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"}]}},{"id":"aws-cloudtrail-describe-trails","method":"GET","pathTemplate":"/","summary":"Retrieves settings for the trail associated with the current region for your account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"CloudTrail","kind":"object","optional":false,"children":[{"name":"Trails","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"S3BucketName","kind":"string","optional":false,"example":"S3BucketName"},{"name":"S3KeyPrefix","kind":"string","optional":false,"example":"S3KeyPrefix"},{"name":"SnsTopicARN","kind":"string","optional":false,"example":"SnsTopicARN"},{"name":"IncludeGlobalServiceEvents","kind":"boolean","optional":false},{"name":"IsMultiRegionTrail","kind":"boolean","optional":false},{"name":"HomeRegion","kind":"string","optional":false,"example":"HomeRegion"},{"name":"TrailARN","kind":"string","optional":false,"example":"TrailARN"},{"name":"LogFileValidationEnabled","kind":"boolean","optional":false},{"name":"CloudWatchLogsLogGroupArn","kind":"string","optional":false,"example":"CloudWatchLogsLogGroupArn"},{"name":"CloudWatchLogsRoleArn","kind":"string","optional":false,"example":"CloudWatchLogsRoleArn"}]},{"name":"KmsKeyId","kind":"id","optional":false},{"name":"HasCustomEventSelectors","kind":"boolean","optional":false}]}]}]}},{"id":"aws-cloudtrail-update-trail","method":"GET","pathTemplate":"/","summary":"Updates the settings that specify delivery of log files. Changes to a trail do not require stopping the CloudTrail service.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"CloudTrail","kind":"object","optional":false,"children":[{"name":"Trails","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"S3BucketName","kind":"string","optional":false,"example":"S3BucketName"},{"name":"IncludeGlobalServiceEvents","kind":"boolean","optional":false},{"name":"IsMultiRegionTrail","kind":"boolean","optional":false},{"name":"TrailARN","kind":"string","optional":false,"example":"TrailARN"},{"name":"LogFileValidationEnabled","kind":"boolean","optional":false},{"name":"SnsTopicARN","kind":"string","optional":false,"example":"SnsTopicARN"},{"name":"S3KeyPrefix","kind":"string","optional":false,"example":"S3KeyPrefix"},{"name":"CloudWatchLogsLogGroupArn","kind":"string","optional":false,"example":"CloudWatchLogsLogGroupArn"},{"name":"CloudWatchLogsRoleArn","kind":"string","optional":false,"example":"CloudWatchLogsRoleArn"},{"name":"KmsKeyId","kind":"id","optional":false},{"name":"HomeRegion","kind":"string","optional":false,"example":"HomeRegion"}]}]}]}]}},{"id":"aws-cloudtrail-start-logging","method":"GET","pathTemplate":"/","summary":"Starts the recording of AWS API calls and log file delivery for a trail. For a trail that is enabled in all regions, this operation must be called from the regi","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}},{"id":"aws-cloudtrail-stop-logging","method":"GET","pathTemplate":"/","summary":"Suspends the recording of AWS API calls and log file delivery for the specified trail. Under most circumstances, there is no need to use this action. You can up","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-cloudtrail-aws-cloudtrail",
+  "name": "AWS - CloudTrail",
+  "pack": "AWS-CloudTrail",
+  "vendor": "Amazon Web Services",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "LookupEvents. Events with EventId and EventName.",
+  "notes": [
+    "POST / with X-Amz-Target CloudTrail_20131101.LookupEvents returns { Events }.",
+    "CloudTrailEvent is a shortened JSON string, not the full record.",
+    "SigV4 is not checked."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-CloudTrail/Integrations/AWS-CloudTrail",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-cloudtrail-aws-cloudtrail",
+      "name": "AWS - CloudTrail",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_LookupEvents.html",
+      "notes": [
+        "POST / with X-Amz-Target CloudTrail_20131101.LookupEvents returns { Events }.",
+        "CloudTrailEvent is a shortened JSON string, not the full record.",
+        "SigV4 is not checked."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_LookupEvents.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "POST / with X-Amz-Target CloudTrail_20131101.LookupEvents returns { Events }.",
+          "CloudTrailEvent is a shortened JSON string, not the full record.",
+          "SigV4 is not checked."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "lookup-events",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Lookup events",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "Events"
+        },
+        "headerMatch": {
+          "x-amz-target": "CloudTrail_20131101.LookupEvents"
+        },
+        "record": {
+          "name": "event",
+          "kind": "object",
+          "children": [
+            {
+              "name": "EventId",
+              "kind": "uuid"
+            },
+            {
+              "name": "EventName",
+              "kind": "const",
+              "constValue": "ConsoleLogin"
+            },
+            {
+              "name": "EventTime",
+              "kind": "timestamp"
+            },
+            {
+              "name": "Username",
+              "kind": "string",
+              "example": "jsmith"
+            },
+            {
+              "name": "EventSource",
+              "kind": "const",
+              "constValue": "signin.amazonaws.com"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "MaxResults",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "NextToken",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "aws-cloudtrail-aws-cloudtrail",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

@@ -1,1 +1,106 @@
-{"id":"crowdstrikeintel-crowdstrikefalconintel-v2","name":"CrowdStrike Falcon Intel v2","pack":"CrowdStrikeIntel","fidelity":"sample","curated":false,"summary":"CrowdStrike Threat intelligence service integration helps organizations defend themselves against adversary activity by investigating incidents, and accelerating alert triage and r","operations":2,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"crowdstrikeintel-crowdstrikefalconintel-v2","name":"CrowdStrike Falcon Intel v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CrowdStrikeIntel/Integrations/CrowdStrikeFalconIntel_v2","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-indicator-output-json","method":"GET","pathTemplate":"/intel/combined/indicators/v1","summary":"test_data/indicator_output.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false,"example":"hash_sha1_id"},{"name":"Type","kind":"string","optional":false,"example":"hash_sha1"},{"name":"Value","kind":"string","optional":false,"example":"hash_sha1_value"},{"name":"MaliciousConfidence","kind":"string","optional":false,"example":"high"},{"name":"Reports","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"CSIT-18125"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"MalwareFamilies","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"SendSafe"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"Relations","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"hash_md5: hash_md5_value"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"Labels","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"ThreatType/Criminal"},"minItems":0,"maxItems":3,"pageItems":false}]}},{"id":"test-data-indicator-resource-json","method":"GET","pathTemplate":"/","summary":"test_data/indicator_resource.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"_marker","kind":"string","optional":false,"example":"1600081765f9d74900f63c77b0b570a38c42244b8a"},{"name":"actors","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"deleted","kind":"boolean","optional":false},{"name":"domain_types","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"id","kind":"id","optional":false,"example":"hash_sha1_id"},{"name":"indicator","kind":"string","optional":false,"example":"hash_sha1_value"},{"name":"ip_address_types","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"kill_chains","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"labels","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"created_on","kind":"integer","optional":false},{"name":"last_valid_on","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"ThreatType/Criminal"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"last_updated","kind":"integer","optional":false},{"name":"malicious_confidence","kind":"string","optional":false,"example":"high"},{"name":"malware_families","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"SendSafe"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"published_date","kind":"integer","optional":false},{"name":"relations","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"created_date","kind":"integer","optional":false},{"name":"id","kind":"id","optional":false,"example":"hash_md5_id"},{"name":"indicator","kind":"string","optional":false,"example":"hash_md5_value"},{"name":"last_valid_date","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"hash_md5"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"reports","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"CSIT-18125"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"targets","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"threat_types","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Criminal"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"type","kind":"string","optional":false,"example":"hash_sha1"},{"name":"vulnerabilities","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "crowdstrikeintel-crowdstrikefalconintel-v2",
+  "name": "CrowdStrike Falcon Intel v2",
+  "pack": "CrowdStrikeIntel",
+  "vendor": "CrowdStrike",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Indicator id query for Falcon Intelligence.",
+  "notes": [
+    "GET /intel/queries/indicators/v1 returns { resources } of indicator ids. Actor and report entities are omitted.",
+    "Intel API pages were not reloaded. The path is the public Falcon Intel query used by the client.",
+    "A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeIntel/Integrations/CrowdStrikeFalconIntel_v2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "crowdstrikeintel-crowdstrikefalconintel-v2",
+      "name": "CrowdStrike Falcon Intel v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeIntel/Integrations/CrowdStrikeFalconIntel_v2",
+      "notes": [
+        "GET /intel/queries/indicators/v1 returns { resources } of indicator ids. Actor and report entities are omitted.",
+        "Intel API pages were not reloaded. The path is the public Falcon Intel query used by the client.",
+        "A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeIntel/Integrations/CrowdStrikeFalconIntel_v2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /intel/queries/indicators/v1 returns { resources } of indicator ids. Actor and report entities are omitted.",
+          "Intel API pages were not reloaded. The path is the public Falcon Intel query used by the client.",
+          "A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "query-indicators",
+        "method": "GET",
+        "pathTemplate": "/intel/queries/indicators/v1",
+        "summary": "Query indicator ids",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "resources"
+        },
+        "record": {
+          "name": "resource",
+          "kind": "id"
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "crowdstrikeintel-crowdstrikefalconintel-v2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

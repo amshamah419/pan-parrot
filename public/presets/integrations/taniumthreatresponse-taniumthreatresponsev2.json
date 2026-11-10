@@ -1,1 +1,138 @@
-{"id":"taniumthreatresponse-taniumthreatresponsev2","name":"Tanium Threat Response v2","pack":"TaniumThreatResponse","fidelity":"sample","curated":false,"summary":"Use the Tanium Threat Response integration to manage endpoint processes, evidence, alerts, files, snapshots, and connections. This integration works with Tanium Threat Response ver","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"taniumthreatresponse-taniumthreatresponsev2","name":"Tanium Threat Response v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/TaniumThreatResponse/Integrations/TaniumThreatResponseV2","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-add-intel-docs-labels-raw-response-json","method":"GET","pathTemplate":"/api/v2/session/current","summary":"test_data/add_intel_docs_labels_raw_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"test1"},{"name":"description","kind":"string","optional":false,"example":"test1 description"},{"name":"indicatorCount","kind":"integer","optional":false},{"name":"signalCount","kind":"integer","optional":false},{"name":"createdAt","kind":"timestamp","optional":false,"example":"2019-07-31T18:46:28.629Z","format":"iso"},{"name":"updatedAt","kind":"timestamp","optional":false,"example":"2019-07-31T18:46:28.629Z","format":"iso"}]}},{"id":"test-data-create-evidence-json","method":"POST","pathTemplate":"/api/v2/session/login","summary":"test_data/create_evidence.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"create_time","kind":"string","optional":false,"example":"2021-06-16 07:20:07.130"},{"name":"end_time","kind":"string","optional":false,"example":"2021-06-16 07:21:07.204"},{"name":"exit_code","kind":"integer","optional":false},{"name":"pid","kind":"integer","optional":false},{"name":"process_path","kind":"string","optional":false,"example":"C:\\File.exe"},{"name":"id","kind":"id","optional":false,"example":"2"},{"name":"process_table_id","kind":"id","optional":false,"example":"2"},{"name":"parent_process_table_id","kind":"id","optional":false,"example":"1"},{"name":"parent_pid","kind":"integer","optional":false},{"name":"user_name","kind":"string","optional":false,"example":"ADMIN"},{"name":"group_name","kind":"string","optional":false,"example":"ADMIN"},{"name":"hash_type_name","kind":"string","optional":false,"example":"MD5"},{"name":"hash","kind":"string","optional":false,"example":"1234567890"},{"name":"process_command_line","kind":"string","optional":true},{"name":"parent_path","kind":"string","optional":false,"example":"<Pruned Process>"},{"name":"parent_command_line","kind":"string","optional":false,"example":"<Pruned Process>"},{"name":"parent_hash","kind":"string","optional":true},{"name":"create_time_raw","kind":"integer","optional":false},{"name":"end_time_raw","kind":"integer","optional":false}]}},{"id":"test-data-create-intel-docs-raw-response-json","method":"DELETE","pathTemplate":"/plugin/products","summary":"test_data/create_intel_docs_raw_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"revisionId","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"openioc"},{"name":"typeVersion","kind":"string","optional":false,"example":"1.0"},{"name":"isSchemaValid","kind":"boolean","optional":false},{"name":"intrinsicId","kind":"id","optional":false,"example":"test1"},{"name":"md5","kind":"string","optional":false,"example":"12345678test"},{"name":"name","kind":"string","optional":false,"example":"VIRUS TEST"},{"name":"description","kind":"string","optional":false,"example":"Generic indicator for the virus test."},{"name":"size","kind":"integer","optional":false},{"name":"alertCount","kind":"integer","optional":false},{"name":"compiled","kind":"string","optional":true},{"name":"unresolvedAlertCount","kind":"integer","optional":false},{"name":"labelIds","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"sourceId","kind":"integer","optional":false},{"name":"mitreAttack","kind":"string","optional":true},{"name":"platforms","kind":"string","optional":true},{"name":"createdAt","kind":"timestamp","optional":false,"example":"2021-04-14T16:45:57.316Z","format":"iso"},{"name":"updatedAt","kind":"timestamp","optional":false,"example":"2021-04-18T11:36:56.448Z","format":"iso"}]}},{"id":"test-data-create-snapshot-json","method":"POST","pathTemplate":"/plugin/products/threat-response/api/v1/intel/deploy","summary":"test_data/create_snapshot.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"taskInfo","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"status","kind":"string","optional":false,"example":"STARTED"},{"name":"metadata","kind":"object","optional":false,"children":[{"name":"connection","kind":"string","optional":false,"example":"remote:host:123:"}]},{"name":"startTime","kind":"timestamp","optional":false,"example":"2021-09-13T11:32:41.050Z","format":"iso"}]},{"name":"status","kind":"string","optional":false,"example":"ACCEPTED"}]}},{"id":"test-data-event-evidence-get-properties-json","method":"GET","pathTemplate":"/plugin/products/threat-response/api/v1/intel/status","summary":"test_data/event_evidence_get_properties.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"ProcessId"},{"name":"value","kind":"integer","optional":false}]}},{"id":"test-data-fetch-incidents-json","method":"PUT","pathTemplate":"/plugin/products/threat-response/api/v1/alerts","summary":"test_data/fetch_incidents.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"state","kind":"string","optional":false,"example":"unresolved"},{"name":"type","kind":"string","optional":false,"example":"detect.match"},{"name":"guid","kind":"id","optional":false,"example":"12345678b"},{"name":"priority","kind":"string","optional":false,"example":"high"},{"name":"severity","kind":"string","optional":false,"example":"info"},{"name":"intelDocId","kind":"integer","optional":false},{"name":"intelDocRevisionId","kind":"string","optional":true},{"name":"scanConfigId","kind":"integer","optional":false},{"name":"scanConfigRevisionId","kind":"integer","optional":false},{"name":"computerName","kind":"string","optional":false,"example":"hostname"},{"name":"computerIpAddress","kind":"ip","optional":false,"example":"1.1.1.1"},{"name":"eid","kind":"string","optional":true},{"name":"details","kind":"string","optional":false,"example":"{\"details\":\"123\"}"},{"name":"alertedAt","kind":"timestamp","optional":false,"example":"2021-09-26T14:01:31.000Z","format":"iso"},{"name":"createdAt","kind":"timestamp","optional":false,"example":"2021-09-26T14:02:59.000Z","format":"iso"},{"name":"updatedAt","kind":"timestamp","optional":false,"example":"2021-09-26T16:45:08.804Z","format":"iso"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "taniumthreatresponse-taniumthreatresponsev2",
+  "name": "Tanium Threat Response v2",
+  "pack": "TaniumThreatResponse",
+  "vendor": "Tanium",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Alert list for Threat Response.",
+  "notes": [
+    "Threat Response API docs require a Tanium login. GET /plugin/products/threat-response/api/v1/alerts returns { data }.",
+    "Intel docs and live connections are not modeled.",
+    "Session is a bearer token."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/TaniumThreatResponse/Integrations/TaniumThreatResponseV2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "taniumthreatresponse-taniumthreatresponsev2",
+      "name": "Tanium Threat Response v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/TaniumThreatResponse/Integrations/TaniumThreatResponseV2",
+      "notes": [
+        "Threat Response API docs require a Tanium login. GET /plugin/products/threat-response/api/v1/alerts returns { data }.",
+        "Intel docs and live connections are not modeled.",
+        "Session is a bearer token."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/TaniumThreatResponse/Integrations/TaniumThreatResponseV2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Threat Response API docs require a Tanium login. GET /plugin/products/threat-response/api/v1/alerts returns { data }.",
+          "Intel docs and live connections are not modeled.",
+          "Session is a bearer token."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "alerts",
+        "method": "GET",
+        "pathTemplate": "/plugin/products/threat-response/api/v1/alerts",
+        "summary": "List alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "data"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "state",
+              "kind": "enum",
+              "enumValues": [
+                "unresolved",
+                "resolved"
+              ]
+            },
+            {
+              "name": "priority",
+              "kind": "enum",
+              "enumValues": [
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            {
+              "name": "computerName",
+              "kind": "string",
+              "example": "lab-host"
+            },
+            {
+              "name": "createdAt",
+              "kind": "timestamp"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "taniumthreatresponse-taniumthreatresponsev2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

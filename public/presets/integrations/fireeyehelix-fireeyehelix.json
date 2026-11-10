@@ -1,1 +1,133 @@
-{"id":"fireeyehelix-fireeyehelix","name":"FireEye Helix","pack":"FireEyeHelix","fidelity":"shape","curated":false,"summary":"FireEye Helix is a security operations platform. FireEye Helix integrates security tools and augments them with next-generation SIEM, orchestration and threat intelligence tools su","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"fireeyehelix-fireeyehelix","name":"FireEye Helix","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/FireEyeHelix/Integrations/FireEyeHelix","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"fireeye-helix-list-alerts","method":"GET","pathTemplate":"/api/v1/search/archive/{search_id}/results","summary":"Returns all alerts.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FireEyeHelix","kind":"object","optional":false,"children":[{"name":"Alert","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"AlertTypeID","kind":"number","optional":false},{"name":"AlertTypeName","kind":"string","optional":false,"example":"AlertTypeName"},{"name":"AssigneeID","kind":"id","optional":false},{"name":"AssigneeName","kind":"string","optional":false,"example":"AssigneeName"},{"name":"CreatorID","kind":"id","optional":false},{"name":"CreatorName","kind":"string","optional":false,"example":"CreatorName"},{"name":"UpdaterID","kind":"id","optional":false},{"name":"UpdaterName","kind":"string","optional":false,"example":"UpdaterName"},{"name":"CreatedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"ModifiedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"ProcessPath","kind":"string","optional":false,"example":"ProcessPath"},{"name":"Confidence","kind":"string","optional":false,"example":"Confidence"},{"name":"SHA1","kind":"string","optional":false,"example":"SHA1"},{"name":"MD5","kind":"string","optional":false,"example":"MD5"},{"name":"Hostname","kind":"string","optional":false,"example":"Hostname"},{"name":"PID","kind":"number","optional":false},{"name":"Size","kind":"number","optional":false},{"name":"Virues","kind":"string","optional":false,"example":"Virues"},{"name":"Result","kind":"string","optional":false,"example":"Result"},{"name":"MalwareType","kind":"string","optional":false,"example":"MalwareType"},{"name":"Filename","kind":"string","optional":false,"example":"Filename"},{"name":"RegPath","kind":"string","optional":false,"example":"RegPath"},{"name":"EventTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"IOCNames","kind":"string","optional":false,"example":"IOCNames"},{"name":"Process","kind":"string","optional":false,"example":"Process"},{"name":"ParentProcess","kind":"string","optional":false,"example":"ParentProcess"},{"name":"SourceIPv4","kind":"string","optional":false,"example":"SourceIPv4"},{"name":"SourceIPv6","kind":"string","optional":false,"example":"SourceIPv6"},{"name":"DestinationIPv4","kind":"string","optional":false,"example":"DestinationIPv4"},{"name":"DestinationIPv6","kind":"string","optional":false,"example":"DestinationIPv6"},{"name":"DestinationPort","kind":"string","optional":false,"example":"DestinationPort"},{"name":"URI","kind":"string","optional":false,"example":"URI"},{"name":"HttpMethod","kind":"string","optional":false,"example":"HttpMethod"},{"name":"Domain","kind":"string","optional":false,"example":"Domain"},{"name":"UserAgent","kind":"string","optional":false,"example":"UserAgent"},{"name":"EventsCount","kind":"number","optional":false},{"name":"NotesCount","kind":"number","optional":false},{"name":"ClosedState","kind":"string","optional":false,"example":"ClosedState"},{"name":"ClosedReason","kind":"string","optional":false,"example":"ClosedReason"}]}]}]}},{"id":"fireeye-helix-get-alert-by-id","method":"GET","pathTemplate":"/api/v3/alerts/{alert_id}/notes/{note_id}","summary":"Returns alert details, by alert ID.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FireEyeHelix","kind":"object","optional":false,"children":[{"name":"Alert","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"AlertTypeID","kind":"number","optional":false},{"name":"AlertTypeName","kind":"string","optional":false,"example":"AlertTypeName"},{"name":"AssigneeID","kind":"id","optional":false},{"name":"AssigneeName","kind":"string","optional":false,"example":"AssigneeName"},{"name":"CreatorID","kind":"id","optional":false},{"name":"CreatorName","kind":"string","optional":false,"example":"CreatorName"},{"name":"UpdaterID","kind":"id","optional":false},{"name":"UpdaterName","kind":"string","optional":false,"example":"UpdaterName"},{"name":"CreatedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"ModifiedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"ProcessPath","kind":"string","optional":false,"example":"ProcessPath"},{"name":"Confidence","kind":"string","optional":false,"example":"Confidence"},{"name":"SHA1","kind":"string","optional":false,"example":"SHA1"},{"name":"MD5","kind":"string","optional":false,"example":"MD5"},{"name":"Hostname","kind":"string","optional":false,"example":"Hostname"},{"name":"PID","kind":"number","optional":false},{"name":"Size","kind":"number","optional":false},{"name":"Virus","kind":"string","optional":false,"example":"Virus"},{"name":"Result","kind":"string","optional":false,"example":"Result"},{"name":"MalwareType","kind":"string","optional":false,"example":"MalwareType"},{"name":"Filename","kind":"string","optional":false,"example":"Filename"},{"name":"RegPath","kind":"string","optional":false,"example":"RegPath"},{"name":"EventTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"IOCNames","kind":"string","optional":false,"example":"IOCNames"},{"name":"Process","kind":"string","optional":false,"example":"Process"},{"name":"ParentProcess","kind":"string","optional":false,"example":"ParentProcess"},{"name":"SourceIPv4","kind":"string","optional":false,"example":"SourceIPv4"},{"name":"SourceIPv6","kind":"string","optional":false,"example":"SourceIPv6"},{"name":"DestinationIPv4","kind":"string","optional":false,"example":"DestinationIPv4"},{"name":"DestinationIPv6","kind":"string","optional":false,"example":"DestinationIPv6"},{"name":"DestinationPort","kind":"string","optional":false,"example":"DestinationPort"},{"name":"URI","kind":"string","optional":false,"example":"URI"},{"name":"HttpMethod","kind":"string","optional":false,"example":"HttpMethod"},{"name":"Domain","kind":"string","optional":false,"example":"Domain"},{"name":"UserAgent","kind":"string","optional":false,"example":"UserAgent"},{"name":"EventsCount","kind":"number","optional":false},{"name":"NotesCount","kind":"number","optional":false},{"name":"ClosedState","kind":"string","optional":false,"example":"ClosedState"},{"name":"ClosedReason","kind":"string","optional":false,"example":"ClosedReason"}]}]}]}},{"id":"fireeye-helix-alert-create-note","method":"GET","pathTemplate":"/api/v3/lists/{list_id}/items/{item_id}","summary":"Creates an alert note.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FireEyeHelix","kind":"object","optional":false,"children":[{"name":"Note","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"CreatedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"UpdatedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"Message","kind":"string","optional":false,"example":"Message"},{"name":"CreatorID","kind":"id","optional":false},{"name":"CreatorName","kind":"string","optional":false,"example":"CreatorName"},{"name":"AlertID","kind":"number","optional":false}]}]}]}},{"id":"fireeye-helix-get-events-by-alert","method":"GET","pathTemplate":"/api/v3/alerts/{alert_id}/endpoints","summary":"Lists alert events for a specific alert.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FireEyeHelix","kind":"object","optional":false,"children":[{"name":"Event","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Result","kind":"string","optional":false,"example":"Result"},{"name":"MatchedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"Confidence","kind":"string","optional":false,"example":"Confidence"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"EventTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"DetectedRuleID","kind":"id","optional":false},{"name":"PID","kind":"id","optional":false},{"name":"Process","kind":"string","optional":false,"example":"Process"},{"name":"ProcessPath","kind":"string","optional":false,"example":"ProcessPath"},{"name":"FileName","kind":"string","optional":false,"example":"FileName"},{"name":"FilePath","kind":"string","optional":false,"example":"FilePath"},{"name":"DeviceName","kind":"string","optional":false,"example":"DeviceName"},{"name":"Size","kind":"string","optional":false,"example":"Size"},{"name":"Virus","kind":"string","optional":false,"example":"Virus"},{"name":"MalwareType","kind":"string","optional":false,"example":"MalwareType"},{"name":"CreatedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"Class","kind":"string","optional":false,"example":"Class"},{"name":"MD5","kind":"string","optional":false,"example":"MD5"},{"name":"SHA1","kind":"string","optional":false,"example":"SHA1"},{"name":"Protocol","kind":"string","optional":false,"example":"Protocol"},{"name":"SourceIPv4","kind":"string","optional":false,"example":"SourceIPv4"},{"name":"SourceIPv6","kind":"string","optional":false,"example":"SourceIPv6"},{"name":"SourcePort","kind":"string","optional":false,"example":"SourcePort"},{"name":"SourceLongitude","kind":"string","optional":false,"example":"SourceLongitude"},{"name":"SourceLatitude","kind":"string","optional":false,"example":"SourceLatitude"},{"name":"DestinationIPv4","kind":"string","optional":false,"example":"DestinationIPv4"},{"name":"DestinationIPv6","kind":"string","optional":false,"example":"DestinationIPv6"},{"name":"DestinationPort","kind":"string","optional":false,"example":"DestinationPort"},{"name":"ReportTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"FalsePositive","kind":"string","optional":false,"example":"FalsePositive"},{"name":"Domain","kind":"string","optional":false,"example":"Domain"},{"name":"From","kind":"string","optional":false,"example":"From"},{"name":"SourceDomain","kind":"string","optional":false,"example":"SourceDomain"},{"name":"SourceISP","kind":"string","optional":false,"example":"SourceISP"},{"name":"DestinationISP","kind":"string","optional":false,"example":"DestinationISP"},{"name":"To","kind":"string","optional":false,"example":"To"},{"name":"Attachment","kind":"string","optional":false,"example":"Attachment"},{"name":"Count","kind":"number","optional":false}]}]}]}},{"id":"fireeye-helix-get-endpoints-by-alert","method":"GET","pathTemplate":"/api/v1/search/archive/{search_id}","summary":"Retrieves a specific alert from an helix endpoint.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FireEyeHelix","kind":"object","optional":false,"children":[{"name":"Endpoint","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"CustomerID","kind":"id","optional":false},{"name":"DeviceID","kind":"id","optional":false},{"name":"Domain","kind":"string","optional":false,"example":"Domain"},{"name":"Hostname","kind":"string","optional":false,"example":"Hostname"},{"name":"MACAddress","kind":"string","optional":false,"example":"MACAddress"},{"name":"OS","kind":"string","optional":false,"example":"OS"},{"name":"IP","kind":"string","optional":false,"example":"IP"},{"name":"UpdatedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"ContainmentState","kind":"string","optional":false,"example":"ContainmentState"},{"name":"Count","kind":"number","optional":false}]}]}]}},{"id":"fireeye-helix-get-cases-by-alert","method":"GET","pathTemplate":"/api/v3/alerts/{alert_id}/events","summary":"Returns cases of an alert.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FireEyeHelix","kind":"object","optional":false,"children":[{"name":"Case","kind":"object","optional":false,"children":[{"name":"AlertsCount","kind":"number","optional":false},{"name":"AssigneeID","kind":"id","optional":false},{"name":"AssigneeName","kind":"string","optional":false,"example":"AssigneeName"},{"name":"CreatorID","kind":"id","optional":false},{"name":"CreatorName","kind":"string","optional":false,"example":"CreatorName"},{"name":"UpdaterID","kind":"id","optional":false},{"name":"UpdaterName","kind":"string","optional":false,"example":"UpdaterName"},{"name":"CreatedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"ModifiedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"EventsCount","kind":"number","optional":false},{"name":"ID","kind":"number","optional":false},{"name":"InfoLinks","kind":"string","optional":false,"example":"InfoLinks"},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"NotesCount","kind":"number","optional":false},{"name":"Priority","kind":"string","optional":false,"example":"Priority"},{"name":"PriorityOrder","kind":"number","optional":false},{"name":"Severity","kind":"number","optional":false},{"name":"State","kind":"string","optional":false,"example":"State"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"Tags","kind":"string","optional":false,"example":"Tags"},{"name":"TotalDaysUnresolved","kind":"number","optional":false},{"name":"Count","kind":"number","optional":false}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "fireeyehelix-fireeyehelix",
+  "name": "FireEye Helix",
+  "pack": "FireEyeHelix",
+  "vendor": "Trellix",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Alert search for Helix.",
+  "notes": [
+    "Helix API docs are customer-gated. GET /helix/id/api/v3/alerts returns { results }.",
+    "Each alert keeps id, alert_type, and risk.",
+    "x-fireeye-api-key is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeHelix/Integrations/FireEyeHelix",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "fireeyehelix-fireeyehelix",
+      "name": "FireEye Helix",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeHelix/Integrations/FireEyeHelix",
+      "notes": [
+        "Helix API docs are customer-gated. GET /helix/id/api/v3/alerts returns { results }.",
+        "Each alert keeps id, alert_type, and risk.",
+        "x-fireeye-api-key is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeHelix/Integrations/FireEyeHelix",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Helix API docs are customer-gated. GET /helix/id/api/v3/alerts returns { results }.",
+          "Each alert keeps id, alert_type, and risk.",
+          "x-fireeye-api-key is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "alerts",
+        "method": "GET",
+        "pathTemplate": "/helix/id/api/v3/alerts",
+        "summary": "List alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "results"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "alert_type",
+              "kind": "string",
+              "example": "malware"
+            },
+            {
+              "name": "risk",
+              "kind": "enum",
+              "enumValues": [
+                "Low",
+                "Medium",
+                "High",
+                "Critical"
+              ]
+            },
+            {
+              "name": "created_at",
+              "kind": "timestamp"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "fireeyehelix-fireeyehelix",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "x-fireeye-api-key",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

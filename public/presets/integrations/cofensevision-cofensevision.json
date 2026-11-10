@@ -1,1 +1,129 @@
-{"id":"cofensevision-cofensevision","name":"Cofense Vision","pack":"CofenseVision","fidelity":"sample","curated":false,"summary":"The Cofense Vision integration provides commands to initiate advanced search jobs to hunt suspicious emails matching IOCs. It also contains commands to quarantine emails, download ","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"cofensevision-cofensevision","name":"Cofense Vision","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CofenseVision/Integrations/CofenseVision","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-create-message-search-response-success-j","method":"GET","pathTemplate":"/iocrepository/v1/iocs/last","summary":"test_data/create_message_search_response_success.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"createdBy","kind":"string","optional":false,"example":"test_user"},{"name":"createdDate","kind":"timestamp","optional":false,"example":"2022-07-25T05:08:11.036864677","format":"iso"},{"name":"modifiedBy","kind":"string","optional":false,"example":"test_user"},{"name":"modifiedDate","kind":"timestamp","optional":false,"example":"2022-07-25T05:08:11.036864677","format":"iso"},{"name":"subjects","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"test1"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"senders","kind":"array","optional":false,"item":{"name":"item","kind":"email","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"recipient","kind":"string","optional":true},{"name":"attachmentNames","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"attachmentHashCriteria","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"ANY"},{"name":"attachmentHashes","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"domainCriteria","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"ANY"},{"name":"domains","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"whiteListUrls","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"attachmentMimeTypes","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"attachmentExcludeMimeTypes","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"image"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"receivedAfterDate","kind":"timestamp","optional":false,"example":"2022-07-15T00:00:00","format":"iso"},{"name":"receivedBeforeDate","kind":"timestamp","optional":false,"example":"2022-07-20T00:00:00","format":"iso"},{"name":"url","kind":"string","optional":true},{"name":"internetMessageId","kind":"string","optional":true},{"name":"headers","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"partialIngest","kind":"string","optional":true}]}},{"id":"test-data-create-quarantine-job-response-success-j","method":"GET","pathTemplate":"/quarantineJobs/{}/restore","summary":"test_data/create_quarantine_job_response_success.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"raw_response","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"createdBy","kind":"string","optional":false,"example":"test"},{"name":"createdDate","kind":"timestamp","optional":false,"example":"2020-12-07T06:32:53.188006","format":"iso"},{"name":"modifiedBy","kind":"string","optional":false,"example":"test"},{"name":"modifiedDate","kind":"timestamp","optional":false,"example":"2020-12-07T06:32:53.188006","format":"iso"},{"name":"stopRequested","kind":"boolean","optional":false},{"name":"emailcount","kind":"integer","optional":false},{"name":"quarantineEmails","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"recipientAddress","kind":"email","optional":false},{"name":"internetMessageId","kind":"id","optional":false,"example":"<test_id>"},{"name":"ewsMessageId","kind":"string","optional":true},{"name":"status","kind":"string","optional":false,"example":"NEW"},{"name":"errorMessage","kind":"string","optional":true},{"name":"createdDate","kind":"timestamp","optional":false,"example":"2020-12-07T06:32:53.193743","format":"iso"},{"name":"quarantinedDate","kind":"string","optional":true},{"name":"originalFolderId","kind":"string","optional":true}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"quarantineJobRuns","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"jobRunType","kind":"string","optional":false,"example":"QUARANTINE"},{"name":"status","kind":"string","optional":false,"example":"FAILED"},{"name":"startedDate","kind":"timestamp","optional":false,"example":"2020-12-07T06:33:01.465045","format":"iso"},{"name":"completedDate","kind":"timestamp","optional":false,"example":"2020-12-07T06:33:01.489754","format":"iso"},{"name":"total","kind":"integer","optional":false},{"name":"error","kind":"integer","optional":false}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"autoQuarantine","kind":"boolean","optional":false},{"name":"matchingIOCs","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"0102030405060708090a0b0c0d0e0f"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"matchingSources","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Triage-1"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"matchingIocInfo","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"searchId","kind":"integer","optional":false}]},{"name":"outputs","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"createdBy","kind":"string","optional":false,"example":"test"},{"name":"createdDate","kind":"timestamp","optional":false,"example":"2020-12-07T06:32:53.188006","format":"iso"},{"name":"modifiedBy","kind":"string","optional":false,"example":"test"},{"name":"modifiedDate","kind":"timestamp","optional":false,"example":"2020-12-07T06:32:53.188006","format":"iso"},{"name":"stopRequested","kind":"boolean","optional":false},{"name":"emailcount","kind":"integer","optional":false},{"name":"quarantineEmails","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"recipientAddress","kind":"email","optional":false},{"name":"internetMessageId","kind":"id","optional":false,"example":"<test_id>"},{"name":"status","kind":"string","optional":false,"example":"NEW"},{"name":"createdDate","kind":"timestamp","optional":false,"example":"2020-12-07T06:32:53.193743","format":"iso"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"quarantineJobRuns","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"jobRunType","kind":"string","optional":false,"example":"QUARANTINE"},{"name":"status","kind":"string","optional":false,"example":"FAILED"},{"name":"startedDate","kind":"timestamp","optional":false,"example":"2020-12-07T06:33:01.465045","format":"iso"},{"name":"completedDate","kind":"timestamp","optional":false,"example":"2020-12-07T06:33:01.489754","format":"iso"},{"name":"total","kind":"integer","optional":false}]},"minItems":0,"maxItems":2,"pageItems":false}]}]}},{"id":"test-data-delete-ioc-response-success-json","method":"GET","pathTemplate":"/quarantineJobs/{}/approve","summary":"test_data/delete_ioc_response_success.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"a2fc0f"},{"name":"type","kind":"string","optional":false,"example":"ioc"},{"name":"attributes","kind":"object","optional":false,"children":[{"name":"threat_type","kind":"string","optional":false,"example":"SUBJECT"},{"name":"threat_value","kind":"string","optional":false,"example":"TEST"}]},{"name":"metadata","kind":"object","optional":false,"children":[{"name":"source","kind":"object","optional":false,"children":[{"name":"threat_level","kind":"string","optional":false,"example":"High"},{"name":"id","kind":"id","optional":false},{"name":"created_at","kind":"timestamp","optional":false,"example":"2022-07-25T12:53:42.285+00:00","format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"example":"2022-07-25T12:53:42.285+00:00","format":"iso"},{"name":"requested_expiration","kind":"timestamp","optional":false,"example":"2022-08-08T18:29:59.999+00:00","format":"iso"}]},{"name":"quarantine","kind":"object","optional":false,"children":[{"name":"source_names","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Vision-UI"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"expires_at","kind":"timestamp","optional":false,"example":"2022-08-08T18:29:59.999+00:00","format":"iso"},{"name":"created_at","kind":"timestamp","optional":false,"example":"2022-07-25T12:45:18.344+00:00","format":"iso"},{"name":"first_quarantined_at","kind":"string","optional":true},{"name":"last_quarantined_at","kind":"string","optional":true},{"name":"match_count","kind":"integer","optional":false},{"name":"quarantine_count","kind":"integer","optional":false},{"name":"expired","kind":"boolean","optional":false},{"name":"wildcard","kind":"boolean","optional":false}]}]}]}]}},{"id":"test-data-delete-quarantine-job-response-success-j","method":"GET","pathTemplate":"/config/searchableHeaders","summary":"test_data/delete_quarantine_job_response_success.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"265"},{"name":"isDeleted","kind":"boolean","optional":false}]}},{"id":"test-data-get-ioc-response-success-json","method":"GET","pathTemplate":"/quarantineJobs/{}/stop","summary":"test_data/get_ioc_response_success.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"0c7aff000d37b4a600eb676a473fa5b1"},{"name":"type","kind":"string","optional":false,"example":"ioc"},{"name":"attributes","kind":"object","optional":false,"children":[{"name":"threat_type","kind":"string","optional":false,"example":"DOMAIN"},{"name":"threat_value","kind":"string","optional":false,"example":"test"}]},{"name":"metadata","kind":"object","optional":false,"children":[{"name":"source","kind":"object","optional":false,"children":[{"name":"threat_level","kind":"string","optional":false,"example":"minor"},{"name":"id","kind":"id","optional":false,"example":"test"},{"name":"created_at","kind":"timestamp","optional":false,"example":"2022-12-09T00:00:00.000+00:00","format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"example":"2022-09-12T06:55:56.000+00:00","format":"iso"},{"name":"requested_expiration","kind":"timestamp","optional":false,"example":"2022-09-26T06:55:57.305+00:00","format":"iso"}]},{"name":"quarantine","kind":"object","optional":false,"children":[{"name":"source_names","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Vision-UI"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"expires_at","kind":"timestamp","optional":false,"example":"2022-09-26T06:55:57.305+00:00","format":"iso"},{"name":"created_at","kind":"timestamp","optional":false,"example":"2022-09-12T06:55:57.305+00:00","format":"iso"},{"name":"first_quarantined_at","kind":"string","optional":true},{"name":"last_quarantined_at","kind":"string","optional":true},{"name":"match_count","kind":"integer","optional":false},{"name":"quarantine_count","kind":"integer","optional":false},{"name":"expired","kind":"boolean","optional":false},{"name":"wildcard","kind":"boolean","optional":false}]}]}]}]}},{"id":"test-data-get-last-ioc-response-success-json","method":"GET","pathTemplate":"/quarantineJobs/filter","summary":"test_data/get_last_ioc_response_success.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"1db1468c0d7166ab43fd8a9ec4b920b0"},{"name":"type","kind":"string","optional":false,"example":"ioc"},{"name":"attributes","kind":"object","optional":false,"children":[{"name":"threat_type","kind":"string","optional":false,"example":"URL"},{"name":"threat_value","kind":"string","optional":false,"example":"https://example.com"}]},{"name":"metadata","kind":"object","optional":false,"children":[{"name":"source","kind":"object","optional":false,"children":[{"name":"threat_level","kind":"string","optional":false,"example":"Critical"},{"name":"id","kind":"id","optional":false,"example":"test1234"},{"name":"created_at","kind":"timestamp","optional":false,"example":"2022-09-08T06:15:41.386+00:00","format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"example":"2022-10-25T06:15:41.174+00:00","format":"iso"},{"name":"requested_expiration","kind":"timestamp","optional":false,"example":"2022-08-08T06:15:40.386+00:00","format":"iso"}]},{"name":"quarantine","kind":"object","optional":false,"children":[{"name":"source_names","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Vision-UI"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"expires_at","kind":"timestamp","optional":false,"example":"2022-08-08T06:15:41.386+00:00","format":"iso"},{"name":"created_at","kind":"timestamp","optional":false,"example":"2022-07-25T06:15:41.386+00:00","format":"iso"},{"name":"first_quarantined_at","kind":"timestamp","optional":false,"example":"2022-08-01T06:15:41.386+00:00","format":"iso"},{"name":"last_quarantined_at","kind":"timestamp","optional":false,"example":"2022-08-01T06:15:41.386+00:00","format":"iso"},{"name":"match_count","kind":"integer","optional":false},{"name":"quarantine_count","kind":"integer","optional":false},{"name":"expired","kind":"boolean","optional":false},{"name":"wildcard","kind":"boolean","optional":false}]}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "cofensevision-cofensevision",
+  "name": "Cofense Vision",
+  "pack": "CofenseVision",
+  "vendor": "Cofense",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Quarantine job list.",
+  "notes": [
+    "The client calls /quarantineJobs, /messages, and /searches. This mock is GET /quarantineJobs and returns { data }.",
+    "Vision API docs were not reloaded.",
+    "A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseVision/Integrations/CofenseVision",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "cofensevision-cofensevision",
+      "name": "Cofense Vision",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseVision/Integrations/CofenseVision",
+      "notes": [
+        "The client calls /quarantineJobs, /messages, and /searches. This mock is GET /quarantineJobs and returns { data }.",
+        "Vision API docs were not reloaded.",
+        "A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseVision/Integrations/CofenseVision",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client calls /quarantineJobs, /messages, and /searches. This mock is GET /quarantineJobs and returns { data }.",
+          "Vision API docs were not reloaded.",
+          "A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "quarantine-jobs",
+        "method": "GET",
+        "pathTemplate": "/quarantineJobs",
+        "summary": "List quarantine jobs",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "data"
+        },
+        "record": {
+          "name": "job",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "status",
+              "kind": "enum",
+              "enumValues": [
+                "PENDING",
+                "RUNNING",
+                "COMPLETED"
+              ]
+            },
+            {
+              "name": "createdAt",
+              "kind": "timestamp"
+            },
+            {
+              "name": "messageCount",
+              "kind": "integer"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "cofensevision-cofensevision",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

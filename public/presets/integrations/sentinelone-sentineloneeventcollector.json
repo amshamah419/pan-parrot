@@ -1,1 +1,131 @@
-{"id":"sentinelone-sentineloneeventcollector","name":"SentinelOne Activity and Alerts","pack":"SentinelOne","fidelity":"sample","curated":false,"summary":"This integration fetches activities, threats, and alerts from SentinelOne.","operations":4,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"sentinelone-sentineloneeventcollector","name":"SentinelOne Activity and Alerts","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/SentinelOne/Integrations/SentinelOneEventCollector","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-activities-json","method":"GET","pathTemplate":"/cloud-detection/alerts","summary":"test_data/activities.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"accountId","kind":"id","optional":false,"example":"123456"},{"name":"accountName","kind":"string","optional":false,"example":"Palo Alto Networks"},{"name":"activityType","kind":"integer","optional":false},{"name":"activityUuid","kind":"id","optional":false,"example":"123-456"},{"name":"agentId","kind":"string","optional":true},{"name":"agentUpdatedVersion","kind":"string","optional":true},{"name":"comments","kind":"string","optional":true},{"name":"createdAt","kind":"timestamp","optional":false,"example":"2022-09-06T20:37:10.895199Z","format":"iso"},{"name":"data","kind":"object","optional":false,"children":[{"name":"accountId","kind":"integer","optional":false},{"name":"accountName","kind":"string","optional":false,"example":"Palo Alto Networks"},{"name":"expiration","kind":"string","optional":true},{"name":"fullScopeDetails","kind":"string","optional":false,"example":"Account Palo Alto Networks"},{"name":"fullScopeDetailsPath","kind":"string","optional":false,"example":"Global / Palo Alto Networks"},{"name":"groupName","kind":"string","optional":true},{"name":"licensesDescription","kind":"string","optional":false},{"name":"scopeLevel","kind":"string","optional":false,"example":"Account"},{"name":"scopeName","kind":"string","optional":false,"example":"Palo Alto Networks"},{"name":"siteName","kind":"string","optional":true},{"name":"username","kind":"string","optional":false,"example":"SentinelOne"}]},{"name":"description","kind":"string","optional":true},{"name":"groupId","kind":"string","optional":true},{"name":"groupName","kind":"string","optional":true},{"name":"hash","kind":"string","optional":true},{"name":"id","kind":"id","optional":false,"example":"123456"},{"name":"osFamily","kind":"string","optional":true},{"name":"primaryDescription","kind":"string","optional":false},{"name":"secondaryDescription","kind":"string","optional":true},{"name":"siteId","kind":"string","optional":true},{"name":"siteName","kind":"string","optional":true},{"name":"threatId","kind":"string","optional":true},{"name":"updatedAt","kind":"timestamp","optional":false,"example":"2022-09-06T20:37:10.867305Z","format":"iso"},{"name":"userId","kind":"id","optional":false,"example":"123456"}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"pagination","kind":"object","optional":false,"children":[{"name":"nextCursor","kind":"string","optional":false,"example":"null"},{"name":"totalItems","kind":"integer","optional":false}]}]}},{"id":"test-data-activities-second-fetch-json","method":"GET","pathTemplate":"/activities","summary":"test_data/activities_second_fetch.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"accountId","kind":"id","optional":false,"example":"123456"},{"name":"accountName","kind":"string","optional":false,"example":"Palo Alto Networks"},{"name":"activityType","kind":"integer","optional":false},{"name":"activityUuid","kind":"id","optional":false,"example":"123-456"},{"name":"agentId","kind":"string","optional":true},{"name":"agentUpdatedVersion","kind":"string","optional":true},{"name":"comments","kind":"string","optional":true},{"name":"createdAt","kind":"timestamp","optional":false,"example":"2022-09-06T20:37:55.913780Z","format":"iso"},{"name":"data","kind":"object","optional":false,"children":[{"name":"accountId","kind":"integer","optional":false},{"name":"accountName","kind":"string","optional":false,"example":"Palo Alto Networks"},{"name":"expiration","kind":"string","optional":true},{"name":"fullScopeDetails","kind":"string","optional":false,"example":"Account Palo Alto Networks"},{"name":"fullScopeDetailsPath","kind":"string","optional":false,"example":"Global / Palo Alto Networks"},{"name":"groupName","kind":"string","optional":true},{"name":"licensesDescription","kind":"string","optional":false},{"name":"scopeLevel","kind":"string","optional":false,"example":"Account"},{"name":"scopeName","kind":"string","optional":false,"example":"Palo Alto Networks"},{"name":"siteName","kind":"string","optional":true},{"name":"username","kind":"string","optional":false,"example":"SentinelOne"}]},{"name":"description","kind":"string","optional":true},{"name":"groupId","kind":"string","optional":true},{"name":"groupName","kind":"string","optional":true},{"name":"hash","kind":"string","optional":true},{"name":"id","kind":"id","optional":false,"example":"123456"},{"name":"osFamily","kind":"string","optional":true},{"name":"primaryDescription","kind":"string","optional":false},{"name":"secondaryDescription","kind":"string","optional":true},{"name":"siteId","kind":"string","optional":true},{"name":"siteName","kind":"string","optional":true},{"name":"threatId","kind":"string","optional":true},{"name":"updatedAt","kind":"timestamp","optional":false,"example":"2022-09-06T20:37:10.867305Z","format":"iso"},{"name":"userId","kind":"id","optional":false,"example":"123456"}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"pagination","kind":"object","optional":false,"children":[{"name":"nextCursor","kind":"string","optional":false,"example":"null"},{"name":"totalItems","kind":"integer","optional":false}]}]}},{"id":"test-data-alerts-json","method":"GET","pathTemplate":"/threats","summary":"test_data/alerts.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"agentDetectionInfo","kind":"object","optional":false,"children":[{"name":"machineType","kind":"string","optional":false,"example":"desktop"},{"name":"name","kind":"string","optional":false,"example":"DESKTOP"},{"name":"osFamily","kind":"string","optional":false,"example":"windows"},{"name":"osName","kind":"string","optional":false,"example":"Windows 10 Pro"},{"name":"osRevision","kind":"string","optional":false,"example":"123456"},{"name":"siteId","kind":"id","optional":false,"example":"123456"},{"name":"uuid","kind":"id","optional":false,"example":"123456"},{"name":"version","kind":"ip","optional":false,"example":"1.1.1.1"}]},{"name":"agentRealtimeInfo","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"123456"},{"name":"infected","kind":"boolean","optional":false},{"name":"isActive","kind":"boolean","optional":false},{"name":"isDecommissioned","kind":"boolean","optional":false},{"name":"machineType","kind":"string","optional":false,"example":"desktop"},{"name":"name","kind":"string","optional":false,"example":"DESKTOP"},{"name":"os","kind":"string","optional":false,"example":"windows"},{"name":"uuid","kind":"id","optional":false,"example":"123456"}]},{"name":"alertInfo","kind":"object","optional":false,"children":[{"name":"alertId","kind":"id","optional":false,"example":"123456"},{"name":"analystVerdict","kind":"string","optional":false,"example":"Undefined"},{"name":"createdAt","kind":"timestamp","optional":false,"example":"2022-12-20T13:54:43.040000Z","format":"iso"},{"name":"dnsRequest","kind":"string","optional":true},{"name":"dnsResponse","kind":"string","optional":true},{"name":"dstIp","kind":"string","optional":true},{"name":"dstPort","kind":"string","optional":true},{"name":"dvEventId","kind":"id","optional":false,"example":"123456"},{"name":"eventType","kind":"string","optional":false,"example":"REGVALUEMODIFIED"},{"name":"hitType","kind":"string","optional":false,"example":"Events"},{"name":"incidentStatus","kind":"string","optional":false,"example":"Unresolved"},{"name":"indicatorCategory","kind":"string","optional":true},{"name":"indicatorDescription","kind":"string","optional":true},{"name":"indicatorName","kind":"string","optional":true},{"name":"isEdr","kind":"boolean","optional":false},{"name":"loginAccountDomain","kind":"string","optional":true},{"name":"loginAccountSid","kind":"string","optional":true},{"name":"loginIsAdministratorEquivalent","kind":"string","optional":true},{"name":"loginIsSuccessful","kind":"string","optional":true},{"name":"loginType","kind":"string","optional":true},{"name":"loginsUserName","kind":"string","optional":true},{"name":"modulePath","kind":"string","optional":true},{"name":"moduleSha1","kind":"string","optional":true},{"name":"netEventDirection","kind":"string","optional":true},{"name":"registryKeyPath","kind":"string","optional":false},{"name":"registryOldValue","kind":"string","optional":false},{"name":"registryOldValueType","kind":"string","optional":false,"example":"BINARY"},{"name":"registryPath","kind":"string","optional":false},{"name":"registryValue","kind":"string","optional":false},{"name":"reportedAt","kind":"timestamp","optional":false,"example":"2022-12-20T13:54:47.350882Z","format":"iso"},{"name":"source","kind":"string","optional":false,"example":"STAR"},{"name":"srcIp","kind":"string","optional":true},{"name":"srcMachineIp","kind":"string","optional":true},{"name":"srcPort","kind":"string","optional":true},{"name":"tiIndicatorComparisonMethod","kind":"string","optional":true},{"name":"tiIndicatorSource","kind":"string","optional":true},{"name":"tiIndicatorType","kind":"string","optional":true},{"name":"tiIndicatorValue","kind":"string","optional":true}]}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-threats-json","method":"GET","pathTemplate":"/","summary":"test_data/threats.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"agentDetectionInfo","kind":"object","optional":false,"children":[{"name":"accountId","kind":"id","optional":false,"example":"123456"},{"name":"accountName","kind":"string","optional":false,"example":"Palo Alto Networks"},{"name":"agentDetectionState","kind":"string","optional":false,"example":"full_mode"},{"name":"agentDomain","kind":"string","optional":false,"example":"TRUSTNET-LABS"},{"name":"agentIpV4","kind":"ip","optional":false,"example":"1.1.1.1"},{"name":"agentIpV6","kind":"string","optional":false,"example":"123:123:123:123"},{"name":"agentLastLoggedInUpn","kind":"string","optional":true},{"name":"agentLastLoggedInUserMail","kind":"string","optional":true},{"name":"agentLastLoggedInUserName","kind":"string","optional":false,"example":"Win10-Regression"},{"name":"agentMitigationMode","kind":"string","optional":false,"example":"protect"},{"name":"agentOsName","kind":"string","optional":false,"example":"Windows 10 Pro"},{"name":"agentOsRevision","kind":"string","optional":false,"example":"123"},{"name":"agentRegisteredAt","kind":"timestamp","optional":false,"example":"2022-11-22T11:35:03.992434Z","format":"iso"},{"name":"agentUuid","kind":"id","optional":false,"example":"123abc"},{"name":"agentVersion","kind":"ip","optional":false,"example":"2.2.2.2"},{"name":"cloudProviders","kind":"object","optional":false,"children":[]},{"name":"externalIp","kind":"ip","optional":false,"example":"3.3.3.3"},{"name":"groupId","kind":"id","optional":false,"example":"123456"},{"name":"groupName","kind":"string","optional":false,"example":"Default Group"},{"name":"siteId","kind":"id","optional":false,"example":"123456"},{"name":"siteName","kind":"string","optional":false,"example":"Default site"}]},{"name":"agentRealtimeInfo","kind":"object","optional":false,"children":[{"name":"accountId","kind":"id","optional":false,"example":"123456"},{"name":"accountName","kind":"string","optional":false,"example":"Palo Alto Networks"},{"name":"activeThreats","kind":"integer","optional":false},{"name":"agentComputerName","kind":"string","optional":false,"example":"DESKTOP-8CME2KF"},{"name":"agentDecommissionedAt","kind":"string","optional":true},{"name":"agentDomain","kind":"string","optional":false,"example":"TRUSTNET-LABS"},{"name":"agentId","kind":"id","optional":false,"example":"123456"},{"name":"agentInfected","kind":"boolean","optional":false},{"name":"agentIsActive","kind":"boolean","optional":false},{"name":"agentIsDecommissioned","kind":"boolean","optional":false},{"name":"agentMachineType","kind":"string","optional":false,"example":"desktop"},{"name":"agentMitigationMode","kind":"string","optional":false,"example":"protect"},{"name":"agentNetworkStatus","kind":"string","optional":false,"example":"disconnected"},{"name":"agentOsName","kind":"string","optional":false,"example":"Windows 10 Pro"},{"name":"agentOsRevision","kind":"string","optional":false,"example":"123"},{"name":"agentOsType","kind":"string","optional":false,"example":"windows"},{"name":"agentUuid","kind":"id","optional":false,"example":"123abc"},{"name":"agentVersion","kind":"ip","optional":false,"example":"2.2.2.2"},{"name":"groupId","kind":"id","optional":false,"example":"123456"},{"name":"groupName","kind":"string","optional":false,"example":"Default Group"},{"name":"networkInterfaces","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"string","optional":false,"example":"nested"},{"name":"inet","kind":"string","optional":false,"example":"nested"},{"name":"inet6","kind":"string","optional":false,"example":"nested"},{"name":"name","kind":"string","optional":false,"example":"nested"},{"name":"physical","kind":"string","optional":false,"example":"nested"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"operationalState","kind":"string","optional":false,"example":"na"},{"name":"rebootRequired","kind":"boolean","optional":false},{"name":"scanAbortedAt","kind":"string","optional":true},{"name":"scanFinishedAt","kind":"timestamp","optional":false,"example":"2022-11-22T16:27:01.845833Z","format":"iso"},{"name":"scanStartedAt","kind":"timestamp","optional":false,"example":"2022-11-22T11:35:22.872034Z","format":"iso"},{"name":"scanStatus","kind":"string","optional":false,"example":"finished"},{"name":"siteId","kind":"id","optional":false,"example":"123456"}]}]},"minItems":0,"maxItems":2,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "sentinelone-sentineloneeventcollector",
+  "name": "SentinelOne Activity and Alerts",
+  "pack": "SentinelOne",
+  "vendor": "SentinelOne",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Activities feed. data[] from /web/api/v2.1/activities.",
+  "notes": [
+    "The client calls /activities and /threats. This mock is GET /web/api/v2.1/activities and returns { data }.",
+    "The management API reference is console-hosted. Activity type, createdAt, and agentId are the fields the collector keeps.",
+    "Authorization is ApiToken dummy-key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SentinelOne/Integrations/SentinelOneEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "sentinelone-sentineloneeventcollector",
+      "name": "SentinelOne Activity and Alerts",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SentinelOne/Integrations/SentinelOneEventCollector",
+      "notes": [
+        "The client calls /activities and /threats. This mock is GET /web/api/v2.1/activities and returns { data }.",
+        "The management API reference is console-hosted. Activity type, createdAt, and agentId are the fields the collector keeps.",
+        "Authorization is ApiToken dummy-key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/SentinelOne/Integrations/SentinelOneEventCollector",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client calls /activities and /threats. This mock is GET /web/api/v2.1/activities and returns { data }.",
+          "The management API reference is console-hosted. Activity type, createdAt, and agentId are the fields the collector keeps.",
+          "Authorization is ApiToken dummy-key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "activities",
+        "method": "GET",
+        "pathTemplate": "/web/api/v2.1/activities",
+        "summary": "List activities",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "data"
+        },
+        "record": {
+          "name": "activity",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "activityType",
+              "kind": "integer"
+            },
+            {
+              "name": "createdAt",
+              "kind": "timestamp"
+            },
+            {
+              "name": "agentId",
+              "kind": "id"
+            },
+            {
+              "name": "primaryDescription",
+              "kind": "string",
+              "example": "Agent threat mitigated"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "sentinelone-sentineloneeventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "Authorization",
+        "value": "ApiToken dummy-key"
+      }
+    }
+  }
+}
