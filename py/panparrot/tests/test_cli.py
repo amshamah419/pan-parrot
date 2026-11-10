@@ -356,6 +356,59 @@ def test_mock_state_sends_the_id_field(tmp_path, monkeypatch, capsys):
     assert bad == 1
 
 
+def test_mock_scenario_sends_ordered_steps(tmp_path, monkeypatch, capsys):
+    config = tmp_path / "credentials.json"
+    config.write_text(json.dumps({"url": "https://panparrot.example", "token": "pp_abc"}))
+    os.chmod(config, 0o600)
+    monkeypatch.setenv("PANPARROT_CONFIG", str(config))
+    seen = {}
+
+    class Response:
+        status = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return json.dumps({
+                "id": "m1",
+                "scenario": {
+                    "enabled": True,
+                    "repeat": "loop",
+                    "steps": [{"name": "Call 1", "status": 202}, {"name": "Call 2", "status": 200, "body": "{\"job\":\"done\"}"}],
+                },
+                "reset": True,
+            }).encode()
+
+    def urlopen(request, timeout=0):
+        seen["method"] = request.get_method()
+        seen["body"] = json.loads(request.data.decode())
+        return Response()
+
+    monkeypatch.setattr("panparrot.cli.urllib.request.urlopen", urlopen)
+    code = main([
+        "--json", "mock", "scenario", "--mock", "m1",
+        "--step", "202", "--step", '200:{"job":"done"}', "--loop", "--reset",
+    ])
+    assert code == 0
+    assert seen["method"] == "PUT"
+    assert seen["body"] == {
+        "scenario": {
+            "enabled": True,
+            "repeat": "loop",
+            "steps": [{"status": 202}, {"status": 200, "body": "{\"job\":\"done\"}"}],
+        },
+        "reset": True,
+    }
+    body = json.loads(capsys.readouterr().out)
+    assert "sequence starts again" in body["text"]
+    bad = main(["mock", "scenario", "--mock", "m1", "--step", "99"])
+    assert bad == 1
+
+
 def test_payload_matches_the_sdk_credential_shape():
     metadata = {
         "name": "HelloWorld",

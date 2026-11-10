@@ -424,6 +424,63 @@ script:
     expect(revoked.status).toBe(200);
   });
 
+  it("plays scenario steps in order and then loops", async () => {
+    const issued = await mint(["mocks:read", "mocks:write"], "scenario");
+    const created = await app.request("/api/v1/mocks", {
+      method: "POST",
+      headers: { authorization: `Bearer ${issued.token}`, "content-type": "application/json" },
+      body: JSON.stringify({
+        yaml: YAML.replace(/HelloWorld/g, "ScenarioWorld").replace("hello-world", "scenario-world"),
+        integrationId: "ScenarioWorld",
+        version: "1",
+      }),
+    });
+    expect(created.status).toBe(201);
+    const mock = await created.json();
+    const turned = await app.request(`/api/v1/mocks/${mock.id}`, {
+      method: "PUT",
+      headers: { authorization: `Bearer ${issued.token}`, "content-type": "application/json" },
+      body: JSON.stringify({
+        scenario: {
+          enabled: true,
+          repeat: "loop",
+          steps: [
+            { status: 202, body: "{\"job\":\"pending\"}" },
+            { status: 200, body: "{\"job\":\"done\"}" },
+          ],
+        },
+        reset: true,
+      }),
+    });
+    expect(turned.status).toBe(200);
+    const settings = await turned.json();
+    expect(settings.scenario.repeat).toBe("loop");
+    expect(settings.scenario.steps).toHaveLength(2);
+    expect(settings.reset).toBe(true);
+
+    const path = new URL(mock.url).pathname;
+    const statuses = [];
+    for (const effect of ["scenario-1", "scenario-2", "scenario-1"]) {
+      const response = await app.request(`${path}/hello`);
+      statuses.push(response.status);
+      expect(response.headers.get("x-pan-parrot-effects")).toContain(effect);
+    }
+    expect(statuses).toEqual([202, 200, 202]);
+    expect(await (await app.request(`${path}/hello`)).json()).toEqual({ job: "done" });
+
+    const rejected = await app.request(`/api/v1/mocks/${mock.id}`, {
+      method: "PUT",
+      headers: { authorization: `Bearer ${issued.token}`, "content-type": "application/json" },
+      body: JSON.stringify({ scenario: { enabled: true, steps: [] } }),
+    });
+    expect(rejected.status).toBe(400);
+    const revoked = await app.request(`/api/tokens/${issued.id}`, {
+      method: "DELETE",
+      headers: { cookie, origin: "http://localhost:8080" },
+    });
+    expect(revoked.status).toBe(200);
+  });
+
   it("returns query and body on captured logs and leaves headers off", async () => {
     const issued = await mint(["mocks:read", "mocks:write"], "assert-logs");
     const created = await app.request("/api/v1/mocks", {

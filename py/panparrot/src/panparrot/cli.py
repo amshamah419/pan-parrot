@@ -67,6 +67,8 @@ def dispatch(args: list[str]) -> dict:
         return mock_fetch(args[2:])
     if args[0] == "mock" and len(args) > 1 and args[1] == "state":
         return mock_state(args[2:])
+    if args[0] == "mock" and len(args) > 1 and args[1] == "scenario":
+        return mock_scenario(args[2:])
     if args[0] == "mocks":
         return mocks(args[1:])
     if args[0] == "assert":
@@ -226,6 +228,78 @@ def mock_state(args: list[str]) -> dict:
     if saved.get("reset"):
         text += "\nSaved calls were cleared."
     return {"id": saved.get("id"), "url": saved.get("url"), "state": state, "reset": bool(saved.get("reset")), "text": text}
+
+
+def mock_scenario(args: list[str]) -> dict:
+    mock_id = flag(args, "--mock")
+    body: dict = {"scenario": scenario_patch(args)}
+    if "--reset" in args:
+        body["reset"] = True
+    saved = api("PUT", "/api/v1/mocks/" + quote(mock_id), body)
+    scenario = saved.get("scenario") or {}
+    steps = scenario.get("steps") or []
+    if scenario.get("enabled"):
+        repeat = "the sequence starts again" if scenario.get("repeat") == "loop" else "the last response repeats"
+        text = f"Call sequence is on. {len(steps)} steps, then {repeat}."
+    else:
+        text = "Call sequence is off."
+    if saved.get("reset"):
+        text += "\nSaved calls were cleared."
+    return {"id": saved.get("id"), "url": saved.get("url"), "scenario": scenario, "reset": bool(saved.get("reset")), "text": text}
+
+
+def scenario_patch(args: list[str]) -> dict:
+    patch: dict = {"enabled": "--off" not in args}
+    if "--loop" in args and "--last" in args:
+        raise SystemExit("Use --loop or --last, not both")
+    if "--loop" in args:
+        patch["repeat"] = "loop"
+    elif "--last" in args:
+        patch["repeat"] = "last"
+    file_name = optional(args, "--file")
+    raw_steps = repeated(args, "--step")
+    if file_name and raw_steps:
+        raise SystemExit("Use --file or --step, not both")
+    if file_name:
+        try:
+            loaded = json.loads(Path(file_name).read_text())
+        except (OSError, json.JSONDecodeError) as error:
+            raise SystemExit(f"Could not read scenario steps: {error}") from error
+        if not isinstance(loaded, list):
+            raise SystemExit("Scenario file must be a list of steps")
+        patch["steps"] = loaded
+    elif raw_steps:
+        patch["steps"] = [parse_step(value) for value in raw_steps]
+    return patch
+
+
+def parse_step(value: str) -> dict:
+    if len(value) >= 3 and value[:3].isdigit() and (len(value) == 3 or value[3] == ":"):
+        status = int(value[:3])
+        if status < 100 or status > 599:
+            raise SystemExit("Step status must be from 100 to 599")
+        step: dict = {"status": status}
+        body = value[4:] if len(value) > 3 else ""
+        if body:
+            if len(body) > 8_000:
+                raise SystemExit("Step body is too large")
+            step["body"] = body
+        return step
+    raise SystemExit('Step must look like 202 or 200:{"job":"done"}')
+
+
+def repeated(args: list[str], name: str) -> list[str]:
+    values = []
+    index = 0
+    while index < len(args):
+        if args[index] == name:
+            if index + 1 >= len(args):
+                raise SystemExit(f"Missing value for {name}")
+            values.append(args[index + 1])
+            index += 2
+            continue
+        index += 1
+    return values
 
 
 def state_patch(args: list[str]) -> dict:
@@ -446,6 +520,7 @@ HELP = """panparrot [--json] <command>
   mock from-integration <integration.yml> [--python file] [--test-data dir]
   mock fetch --mock <id> [--since name] [--first-fetch name] [--time-field name] [--window seconds] [--per-poll n] [--no-dedup] [--reset] [--off]
   mock state --mock <id> [--id-field name] [--reset] [--off]
+  mock scenario --mock <id> [--step 202] [--step 200:{"job":"done"}] [--file steps.json] [--loop|--last] [--reset] [--off]
   mocks list
   mocks create --from-yml Integration.yml [--python file] [--test-data dir]
   mocks create --from-yml Integration.yml [--test-data dir]

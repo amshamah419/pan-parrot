@@ -22,6 +22,8 @@ You are testing the XSOAR integration in this directory against PAN Parrot. Do t
 4. Run, with that mock id:
    panparrot --json mock fetch --mock <mock.id> --reset
    panparrot --json mock state --mock <mock.id> --reset
+   panparrot --json mock scenario --mock <mock.id> --step 202 --step 200:{"job":"done"} --loop --reset
+   Use scenario when a command polls: the first call is accepted, the next call is done, then it repeats. Skip this command when the integration does not poll.
    Stop if either ok is not true. Fetch answers since and first_fetch polls with one time window each. State stores a POST and serves that copy on GET, PUT, and DELETE. Leave the XSOAR Fetch incidents checkbox off.
 
 5. Check that DEMISTO_BASE_URL, DEMISTO_API_KEY, and XSIAM_AUTH_ID are already exported. If one is missing, stop and ask the user to export it. Do not print the API key. Do not pass those values to panparrot.
@@ -81,6 +83,7 @@ panparrot --json presets --q github
 panparrot --json mock from-integration Integrations/HelloWorld/HelloWorld.yml
 panparrot --json mock fetch --mock <id> --window 300 --per-poll 3 --reset
 panparrot --json mock state --mock <id> --reset
+panparrot --json mock scenario --mock <id> --step 202 --step 200:{"job":"done"} --loop --reset
 panparrot --json assert --mock <id> --method GET --path /hello --query since=2020-01-01T00:00:00Z
 panparrot --json mocks list
 panparrot --json mocks create --from-yml Integrations/HelloWorld/HelloWorld.yml --test-data Integrations/HelloWorld/test_data
