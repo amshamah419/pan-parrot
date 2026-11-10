@@ -9,9 +9,7 @@ Follow this block in order. Do not add steps. Do not send `DEMISTO_BASE_URL`, `D
 ```
 You are testing the XSOAR integration in this directory against PAN Parrot. Do these steps in order. Stop at the first failure and show the command and its output. Do not invent a token, a tenant URL, or an API path. Do not write secrets into the repo. Do not install panparrot from git. The repository is private and the package is not on public PyPI.
 
-1. Ask the user for the PAN Parrot site URL and a personal API token. The token starts with pp_ and needs scopes mocks:read and mocks:write. Do not invent one. On that site, the dashboard API tokens page shows the install command. Run it with the token they gave:
-   pipx install "https://<token>@<site-host>/api/v1/cli/panparrot-<version>-py3-none-any.whl"
-   Use the filename from the tokens page. Then run panparrot version. Stop if it does not print a version.
+1. Ask the user for the PAN Parrot site URL and a personal API token. The token starts with pp_ and needs scopes mocks:read and mocks:write. Do not invent one. Do not put that token in a pipx URL. On the dashboard API tokens page, copy the install command. That command uses a separate cli:download token that lasts 1 hour and can only download the wheel. Run that command, then panparrot version. Stop if it does not print a version.
 
 2. Run:
    panparrot --json login --url <the URL they gave> --token <the token they gave>
@@ -64,17 +62,17 @@ You are testing the XSOAR integration in this directory against PAN Parrot. Do t
 
 On the dashboard, name the token, set the expiry (default 90 days, maximum 365), and choose `mocks:read` and `mocks:write`. The secret is shown once and stored as a SHA-256 hash. A disabled @paloaltonetworks.com user cannot use it. Admins can see and revoke every token.
 
-`/api/v1/*` is a quiet 404 without a live credential. API calls use `Authorization: Bearer pp_…`. The CLI wheel at `/api/v1/cli` also accepts that token as HTTP Basic, which is how `pipx` sends the userinfo in the install URL, or the signed-in browser session. Anything else is the same plain `404 Not found`, including `/api/v1/openapi.json`.
+`/api/v1/*` is a quiet 404 without a live credential. API calls use `Authorization: Bearer pp_…` with `mocks:read` or `mocks:write`. The install URL uses a separate `cli:download` token as HTTP Basic. That scope can download `/api/v1/cli` and nothing else. A signed-in browser session can also download the wheel. A missing or rejected credential is the same plain `404 Not found`, including `/api/v1/openapi.json`. A download token that calls a mock route is `403`.
 
 ## CLI
 
-The package is not on public PyPI, and the git repo is private. On the dashboard API tokens page, copy:
+The package is not on public PyPI, and the git repo is private. The dashboard API tokens page mints a `cli:download` token that lasts 1 hour and puts it in:
 
 ```bash
-pipx install "https://<pp_ token>@<your-site>/api/v1/cli/panparrot-0.1.0-py3-none-any.whl"
+pipx install "https://<download token>@<your-site>/api/v1/cli/panparrot-0.1.0-py3-none-any.whl"
 ```
 
-The page fills in the site and the wheel name. Put the token in place of `<pp_ token>` while it is on screen. `panparrot version` prints the installed version and, after `login`, says when a newer wheel is available. The token is not printed in that check.
+That token can only download the wheel. It cannot read or change mocks. Do not paste a `mocks:read` / `mocks:write` token into the URL. `panparrot version` uses the login token to check for a newer wheel and does not print either token.
 
 ```bash
 panparrot version

@@ -123,6 +123,88 @@ describe("agent API", () => {
     expect(revoked.status).toBe(200);
   });
 
+  it("lets an install link download the wheel and nothing else", async () => {
+    const ids: string[] = [];
+    try {
+      const download = await app.request("/api/tokens", {
+        method: "POST",
+        headers: { cookie, "content-type": "application/json", origin: "http://localhost:8080" },
+        body: JSON.stringify({ name: "CLI install", scopes: ["cli:download"] }),
+      });
+      expect(download.status).toBe(200);
+      const issued = await download.json();
+      ids.push(issued.id);
+      expect(issued.scopes).toEqual(["cli:download"]);
+      const ttl = new Date(issued.expires).getTime() - Date.now();
+      expect(ttl).toBeGreaterThan(50 * 60 * 1000);
+      expect(ttl).toBeLessThan(70 * 60 * 1000);
+
+      const basic = Buffer.from(`${issued.token}:`).toString("base64");
+      const wheel = await app.request("/api/v1/cli/panparrot-0.1.0-py3-none-any.whl", {
+        headers: { authorization: `Basic ${basic}` },
+      });
+      expect(wheel.status).toBe(200);
+      const mocks = await app.request("/api/v1/mocks", { headers: { authorization: `Bearer ${issued.token}` } });
+      expect(mocks.status).toBe(403);
+      const write = await app.request("/api/v1/mocks", {
+        method: "POST",
+        headers: { authorization: `Bearer ${issued.token}`, "content-type": "application/json" },
+        body: JSON.stringify({ name: "Nope", yaml: "name: Nope\n", integrationId: "Nope", version: "1" }),
+      });
+      expect(write.status).toBe(403);
+
+      const mixed = await app.request("/api/tokens", {
+        method: "POST",
+        headers: { cookie, "content-type": "application/json", origin: "http://localhost:8080" },
+        body: JSON.stringify({ name: "mixed", scopes: ["cli:download", "mocks:write"] }),
+      });
+      expect(mixed.status).toBe(400);
+
+      const reader = await mint(["mocks:read"], "still-reads");
+      ids.push(reader.id);
+      const presets = await app.request("/api/v1/presets?q=github", { headers: { authorization: `Bearer ${reader.token}` } });
+      expect(presets.status).toBe(200);
+      const withFullToken = await app.request("/api/v1/cli/panparrot-0.1.0-py3-none-any.whl", {
+        headers: { authorization: `Bearer ${reader.token}` },
+      });
+      expect(withFullToken.status).toBe(200);
+      for (let index = 0; index < 4; index += 1) {
+        const filler = await mint(["mocks:read"], `fill-${index}`);
+        ids.push(filler.id);
+      }
+      const blocked = await app.request("/api/tokens", {
+        method: "POST",
+        headers: { cookie, "content-type": "application/json", origin: "http://localhost:8080" },
+        body: JSON.stringify({ name: "sixth", scopes: ["mocks:read"] }),
+      });
+      expect(blocked.status).toBe(400);
+      const another = await app.request("/api/tokens", {
+        method: "POST",
+        headers: { cookie, "content-type": "application/json", origin: "http://localhost:8080" },
+        body: JSON.stringify({ name: "CLI install", scopes: ["cli:download"] }),
+      });
+      expect(another.status).toBe(200);
+      const second = await another.json();
+      ids.push(second.id);
+      const secondWheel = await app.request("/api/v1/cli", { headers: { authorization: `Bearer ${second.token}` } });
+      expect(secondWheel.status).toBe(200);
+
+      const listed = await app.request("/api/tokens", { headers: { cookie } });
+      const rows = (await listed.json()) as Array<{ id: string; scopes: string[] }>;
+      const mockCount = rows.filter((row) => !row.scopes.includes("cli:download")).length;
+      expect(mockCount).toBeLessThanOrEqual(5);
+
+      await db.update(schema.apiTokens).set({ expiresAt: new Date(Date.now() - 1000) }).where(eq(schema.apiTokens.id, issued.id));
+      const expired = await app.request("/api/v1/cli", { headers: { authorization: `Bearer ${issued.token}` } });
+      expect(expired.status).toBe(404);
+      expect(await expired.text()).toBe("Not found");
+    } finally {
+      for (const id of ids) {
+        await app.request(`/api/tokens/${id}`, { method: "DELETE", headers: { cookie, origin: "http://localhost:8080" } });
+      }
+    }
+  });
+
   it("hides /api/v1 until a real token is presented", async () => {
     const hidden = await app.request("/api/v1/openapi.json");
     expect(hidden.status).toBe(404);

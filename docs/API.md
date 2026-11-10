@@ -12,7 +12,7 @@ Creating, listing, and revoking tokens requires the browser session. A token can
 | GET | `/api/tokens` | session | Active tokens: name, prefix, created, last used. |
 | DELETE | `/api/tokens/:id` | session | Revoke. |
 
-At most 5 active tokens per user.
+At most 5 active `mocks:read` / `mocks:write` tokens per user. `POST /api/tokens` with `{ "name": "CLI install", "scopes": ["cli:download"] }` mints a separate token that expires in 1 hour and can only download the CLI wheel. It does not count toward those 5. `cli:download` cannot be combined with another scope.
 
 ## Mocks
 

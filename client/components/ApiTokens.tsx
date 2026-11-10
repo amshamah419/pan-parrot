@@ -13,6 +13,15 @@ interface TokenRow {
   lastUsed: string | null;
 }
 
+function expiryLabel(iso: string): string {
+  const remaining = new Date(iso).getTime() - Date.now();
+  if (remaining < 24 * 60 * 60 * 1000) {
+    const minutes = Math.max(1, Math.round(remaining / 60000));
+    return minutes < 90 ? `expires in ${minutes} min` : "expires in 1 hour";
+  }
+  return `expires ${new Date(iso).toLocaleDateString()}`;
+}
+
 export function ApiTokens() {
   const [rows, setRows] = useState<TokenRow[]>([]);
   const [name, setName] = useState("");
@@ -23,10 +32,11 @@ export function ApiTokens() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [release, setRelease] = useState<{ version: string; filename: string } | null>(null);
+  const [installToken, setInstallToken] = useState("");
   const [copied, setCopied] = useState(false);
 
-  const installCommand = release
-    ? `pipx install "https://${revealed || "<pp_ token>"}@${window.location.host}/api/v1/cli/${release.filename}"`
+  const installCommand = release && installToken
+    ? `pipx install "https://${installToken}@${window.location.host}/api/v1/cli/${release.filename}"`
     : "";
 
   const load = () => {
@@ -41,6 +51,12 @@ export function ApiTokens() {
         if (body?.filename && body?.version) setRelease({ version: body.version, filename: body.filename });
       })
       .catch(() => setError("Could not load the CLI release"));
+    void createApiToken({ name: "CLI install", scopes: ["cli:download"] })
+      .then((created) => {
+        setInstallToken(created.token);
+        load();
+      })
+      .catch((err) => setError(err instanceof Error ? err.message : "Could not prepare the install link"));
   }, []);
 
   const create = async () => {
@@ -101,14 +117,15 @@ export function ApiTokens() {
       {release && (
         <div className="mt-3 rounded bg-muted px-3 py-2">
           <p className="text-xs text-muted-foreground">
-            Install panparrot {release.version}. It is not on public PyPI. The download uses this signed-in session. The command uses the token, which pip sends as Basic auth.
+            Install panparrot {release.version}. The command carries a <code>cli:download</code> token that lasts 1 hour and can only download the wheel. It cannot read or change mocks. Do not paste a login token into this URL. The package is not on public PyPI. The download button uses this signed-in session.
           </p>
-          <pre className="mt-2 overflow-auto font-mono text-xs text-foreground">{installCommand}</pre>
+          <pre className="mt-2 overflow-auto font-mono text-xs text-foreground">{installCommand || "Preparing an install link…"}</pre>
           <div className="mt-2 flex flex-wrap gap-2">
             <Button
               type="button"
               variant="outline"
               size="sm"
+              disabled={!installCommand}
               onClick={() => {
                 void navigator.clipboard.writeText(installCommand).then(() => {
                   setCopied(true);
@@ -139,9 +156,7 @@ export function ApiTokens() {
               Download wheel
             </Button>
           </div>
-          {!revealed && (
-            <p className="mt-2 text-xs text-muted-foreground">Create a token and replace &lt;pp_ token&gt; before you run the command. The token is shown once.</p>
-          )}
+          <p className="mt-2 text-xs text-muted-foreground">Reloading this page mints a new install link. The login token, shown once when you create it, is a different credential.</p>
         </div>
       )}
       {error && <p className="mt-2 text-sm text-destructive">{error}</p>}
@@ -151,7 +166,7 @@ export function ApiTokens() {
             <span>
               {row.name} <code className="text-xs text-muted-foreground">{row.prefix}…</code>
               <span className="ml-2 text-xs text-muted-foreground">
-                {row.scopes.join(" ")} · expires {new Date(row.expires).toLocaleDateString()}
+                {row.scopes.join(" ")} · {expiryLabel(row.expires)}
               </span>
             </span>
             <Button

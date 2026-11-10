@@ -1,5 +1,5 @@
 import { createHash, randomBytes, randomUUID } from "node:crypto";
-import { and, desc, eq, gt, isNull } from "drizzle-orm";
+import { and, asc, desc, eq, gt, inArray, isNull } from "drizzle-orm";
 import { apiTokens, users } from "../db/schema";
 import type { AppDb } from "../db/client";
 import type { PublicUser } from "./auth";
@@ -7,7 +7,7 @@ import { HttpError } from "./http";
 
 const MAX_ACTIVE = 5;
 const DAY_MS = 24 * 60 * 60 * 1000;
-export const TOKEN_SCOPES = ["mocks:read", "mocks:write"] as const;
+export const TOKEN_SCOPES = ["mocks:read", "mocks:write", "cli:download"] as const;
 export type TokenScope = (typeof TOKEN_SCOPES)[number];
 
 export interface ResolvedToken {
@@ -27,11 +27,13 @@ export function hashToken(token: string): string {
 
 function parseScopes(value: string | null | undefined): TokenScope[] {
   const parts = (value || "mocks:read,mocks:write").split(",").map((part) => part.trim());
-  return parts.filter((part): part is TokenScope => part === "mocks:read" || part === "mocks:write");
+  return parts.filter((part): part is TokenScope => part === "mocks:read" || part === "mocks:write" || part === "cli:download");
 }
 
 function normalizeScopes(scopes: string[] | undefined): TokenScope[] {
   const picked = scopes?.length ? [...new Set(scopes)] : ["mocks:read", "mocks:write"];
+  if (picked.length === 1 && picked[0] === "cli:download") return ["cli:download"];
+  if (picked.includes("cli:download")) throw new HttpError(400, "cli:download cannot be combined with other scopes");
   if (!picked.length || picked.some((scope) => scope !== "mocks:read" && scope !== "mocks:write")) {
     throw new HttpError(400, "Scopes must be mocks:read, mocks:write, or both");
   }
@@ -146,16 +148,33 @@ export async function createToken(
 ) {
   const trimmed = name.trim().slice(0, 40);
   if (!trimmed) throw new HttpError(400, "Token name is required");
-  const days = normalizeDays(options.days);
   const scopes = normalizeScopes(options.scopes);
-  const active = await db
-    .select({ id: apiTokens.id })
-    .from(apiTokens)
-    .where(and(eq(apiTokens.userId, userId), isNull(apiTokens.revokedAt), gt(apiTokens.expiresAt, new Date())));
-  if (active.length >= MAX_ACTIVE) throw new HttpError(400, "At most 5 active tokens");
+  const downloadOnly = scopes.length === 1 && scopes[0] === "cli:download";
+  const now = new Date();
+  let expiresAt: Date;
+  if (downloadOnly) {
+    const existing = await db
+      .select({ id: apiTokens.id })
+      .from(apiTokens)
+      .where(and(eq(apiTokens.userId, userId), isNull(apiTokens.revokedAt), gt(apiTokens.expiresAt, now), eq(apiTokens.scopes, "cli:download")))
+      .orderBy(asc(apiTokens.createdAt));
+    const oldest = existing.slice(0, Math.max(0, existing.length - 4));
+    if (oldest.length) {
+      await db.update(apiTokens).set({ revokedAt: now }).where(inArray(apiTokens.id, oldest.map((row) => row.id)));
+    }
+    expiresAt = new Date(now.getTime() + 60 * 60 * 1000);
+  } else {
+    const days = normalizeDays(options.days);
+    const mockTokens = await db
+      .select({ scopes: apiTokens.scopes })
+      .from(apiTokens)
+      .where(and(eq(apiTokens.userId, userId), isNull(apiTokens.revokedAt), gt(apiTokens.expiresAt, now)));
+    const counted = mockTokens.filter((row) => row.scopes !== "cli:download");
+    if (counted.length >= MAX_ACTIVE) throw new HttpError(400, "At most 5 active tokens");
+    expiresAt = new Date(now.getTime() + days * DAY_MS);
+  }
   const issued = issueToken();
   const id = randomUUID();
-  const expiresAt = new Date(Date.now() + days * DAY_MS);
   await db.insert(apiTokens).values({
     id,
     userId,
