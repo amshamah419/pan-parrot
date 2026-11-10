@@ -52,6 +52,12 @@ describe("AWS command coverage", () => {
     expect(falcon).toEqual({ vendor: 0, approximate: 14, missing: 102 });
     const xdr = sums(covered.filter((preset) => preset.id.startsWith("cortexxdr-")));
     expect(xdr).toEqual({ vendor: 35, approximate: 13, missing: 84 });
+    const okta = sums(
+      covered.filter(
+        (preset) => preset.id.startsWith("okta-") || preset.id.startsWith("oktastandardconnector-"),
+      ),
+    );
+    expect(okta).toEqual({ vendor: 61, approximate: 26, missing: 8 });
 
     const iam = JSON.parse(readFileSync("public/presets/integrations/aws-iam-aws-iam.json", "utf8")) as {
       spec: Parameters<typeof validateMockSpec>[0];

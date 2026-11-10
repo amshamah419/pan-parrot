@@ -172,14 +172,20 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
   }
 
   if (operation.fixture && !chaosOn) {
+    const params = requestParams(input.query, input.body);
+    const page = resolvePage(operation.pagination, params, spec.totalRecords, null);
+    const headers: Record<string, string> = {
+      ...operation.headers,
+      "content-type": operation.contentType || "application/json; charset=utf-8",
+      "x-pan-parrot-request": String(input.requestIndex),
+      "x-pan-parrot-seed": spec.chaos.seed,
+      "x-pan-parrot-records": "1",
+    };
+    const link = nextLinkHeader(operation, page, input.requestUrl, input.query);
+    if (link) headers.link = link;
     return {
       status: operation.status,
-      headers: {
-        "content-type": operation.contentType || "application/json; charset=utf-8",
-        "x-pan-parrot-request": String(input.requestIndex),
-        "x-pan-parrot-seed": spec.chaos.seed,
-        "x-pan-parrot-records": "1",
-      },
+      headers,
       body: operation.fixture,
       recordCount: 1,
       chaosEffects: [],

@@ -3,9 +3,9 @@
   "name": "Okta Event Collector",
   "pack": "Okta",
   "vendor": "Okta",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "The checker matched GET /api/v1/logs.",
+  "summary": "From vendor docs. The checker matched GET /api/v1/logs.",
   "notes": [
     "Sample fields are the ones GET /api/v1/logs reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,20 +17,33 @@
       "kind": "preset",
       "id": "okta-oktaeventcollector",
       "name": "Okta Event Collector",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.okta.com/docs/reference/api/system-log/",
       "notes": [
         "Sample fields are the ones GET /api/v1/logs reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://developer.okta.com/docs/reference/api/system-log/",
+        "status": "vendor",
+        "docUrl": "https://raw.githubusercontent.com/okta/okta-management-openapi-spec/master/dist/2025.08.0/management-minimal.yaml",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /api/v1/logs reads in the matched command. Lists the command iterates are arrays."
+          "1 of 1 commands from vendor docs, 0 approximate, 0 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "okta-get-events",
+          "calls": [
+            "GET /api/v1/logs"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "logs"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/okta/okta-management-openapi-spec/master/dist/2025.08.0/management-minimal.yaml"
+        }
+      ]
     },
     "operations": [
       {
@@ -60,7 +73,7 @@
           ]
         },
         "headers": {},
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -69,7 +82,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "[\n  {\n    \"actor\": {\n      \"id\": \"00uttidj01jqL21aM1d6\",\n      \"type\": \"User\",\n      \"alternateId\": \"john.doe@example.com\",\n      \"displayName\": \"John Doe\",\n      \"detailEntry\": null\n    },\n    \"client\": {\n      \"userAgent\": {\n        \"rawUserAgent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36\",\n        \"os\": \"Mac OS X\",\n        \"browser\": \"CHROME\"\n      },\n      \"zone\": null,\n      \"device\": \"Computer\",\n      \"id\": null,\n      \"ipAddress\": \"10.0.0.1\",\n      \"geographicalContext\": {\n        \"city\": \"New York\",\n        \"state\": \"New York\",\n        \"country\": \"United States\",\n        \"postalCode\": 10013,\n        \"geolocation\": {\n          \"lat\": 40.3157,\n          \"lon\": -74.01\n        }\n      }\n    },\n    \"device\": {\n      \"id\": \"guofdhyjex1feOgbN1d9\",\n      \"name\": \"Mac15,6\",\n      \"os_platform\": \"OSX\",\n      \"os_version\": \"14.6.0\",\n      \"managed\": false,\n      \"registered\": true,\n      \"device_integrator\": null,\n      \"disk_encryption_type\": \"ALL_INTERNAL_VOLUMES\",\n      \"screen_lock_type\": \"BIOMETRIC\",\n      \"jailbreak\": null,\n      \"secure_hardware_present\": true\n    },\n    \"authenticationContext\": {\n      \"authenticationProvider\": null,\n      \"credentialProvider\": null,\n      \"credentialType\": null,\n      \"issuer\": null,\n      \"interface\": null,\n      \"authenticationStep\": 0,\n      \"rootSessionId\": \"idxBager62CSveUkTxvgRtonA\",\n      \"externalSessionId\": \"idxBager62CSveUkTxvgRtonA\"\n    },\n    \"displayMessage\": \"User login to Okta\",\n    \"eventType\": \"user.session.start\",\n    \"outcome\": {\n      \"result\": \"SUCCESS\",\n      \"reason\": null\n    },\n    \"published\": \"2024-08-13T15:58:20.353Z\",\n    \"securityContext\": {\n      \"asNumber\": 394089,\n      \"asOrg\": \"ASN 0000\",\n      \"isp\": \"google\",\n      \"domain\": null,\n      \"isProxy\": false\n    },\n    \"severity\": \"INFO\",\n    \"debugContext\": {\n      \"debugData\": {\n        \"requestId\": \"ab609228fe84ce59cdcbfa690bcce016\",\n        \"requestUri\": \"/idp/idx/authenticators/poll\",\n        \"url\": \"/idp/idx/authenticators/poll\"\n      }\n    },\n    \"legacyEventType\": \"core.user_auth.login_success\",\n    \"transaction\": {\n      \"type\": \"WEB\",\n      \"id\": \"ab609228fe84ce59cdcbfa690bgce016\",\n      \"detail\": null\n    },\n    \"uuid\": \"dc9fd3c0-598c-11ef-8478-2b7584bf8d5a\",\n    \"version\": 0,\n    \"request\": {\n      \"ipChain\": [\n        {\n          \"ip\": \"10.0.0.1\",\n          \"geographicalContext\": {\n            \"city\": \"New York\",\n            \"state\": \"New York\",\n            \"country\": \"United States\",\n            \"postalCode\": 10013,\n            \"geolocation\": {\n              \"lat\": 40.3157,\n              \"lon\": -74.01\n            }\n          },\n          \"version\": \"V4\",\n          \"source\": null\n        }\n      ]\n    },\n    \"target\": [\n      {\n        \"id\": \"pfdfdhyjf0HMbkP2e1d7\",\n        \"type\": \"AuthenticatorEnrollment\",\n        \"alternateId\": \"unknown\",\n        \"displayName\": \"Okta Verify\",\n        \"detailEntry\": null\n      },\n      {\n        \"id\": \"0oatxlef9sQvvqInq5d6\",\n        \"type\": \"AppInstance\",\n        \"alternateId\": \"Okta Admin Console\",\n        \"displayName\": \"Okta Admin Console\",\n        \"detailEntry\": null\n      }\n    ]\n  }\n]\n"
       }
     ],
     "chaos": {
