@@ -1,1 +1,118 @@
-{"id":"mcafee-esm-mcafee-esm-v2","name":"McAfee ESM v2","pack":"McAfee_ESM","fidelity":"shape","curated":false,"summary":"Runs queries and receives alarms from McAfee Enterprise Security Manager (ESM). Supports version 11.6 and later.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"mcafee-esm-mcafee-esm-v2","name":"McAfee ESM v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/McAfee_ESM/Integrations/McAfee_ESM_v2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"esm-search","method":"POST","pathTemplate":"/login","summary":"Perform a query against McAfee ESM SIEM.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"timeRange","kind":"string","optional":false,"example":"timeRange"},{"name":"filters","kind":"string","optional":false,"example":"filters"},{"name":"queryType","kind":"string","optional":false,"example":"queryType"},{"name":"timeOut","kind":"string","optional":false,"example":"timeOut"},{"name":"customStart","kind":"string","optional":false,"example":"customStart"},{"name":"customEnd","kind":"string","optional":false,"example":"customEnd"},{"name":"fields","kind":"string","optional":false,"example":"fields"},{"name":"limit","kind":"string","optional":false,"example":"limit"}]}},{"id":"esm-fetch-alarms","method":"GET","pathTemplate":"/","summary":"Retrieves a list of triggered alarms.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"McAfeeESM","kind":"object","optional":false,"children":[{"name":"Alarm","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"summary","kind":"string","optional":false,"example":"summary"},{"name":"assignee","kind":"string","optional":false,"example":"assignee"},{"name":"severity","kind":"number","optional":false},{"name":"triggeredDate","kind":"timestamp","optional":false,"format":"iso"},{"name":"acknowledgedDate","kind":"timestamp","optional":false,"format":"iso"},{"name":"acknowledgedUsername","kind":"string","optional":false,"example":"acknowledgedUsername"},{"name":"alarmName","kind":"string","optional":false,"example":"alarmName"},{"name":"conditionType","kind":"number","optional":false}]}]}]}},{"id":"esm-get-case-list","method":"GET","pathTemplate":"/","summary":"Returns a list of cases from McAfee ESM.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"McAfeeESM","kind":"object","optional":false,"children":[{"name":"Case","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Summary","kind":"string","optional":false,"example":"Summary"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"OpenTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"Severity","kind":"number","optional":false}]}]}]}},{"id":"esm-add-case","method":"GET","pathTemplate":"/","summary":"Adds a case to the system.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"McAfeeESM","kind":"object","optional":false,"children":[{"name":"Case","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Summary","kind":"string","optional":false,"example":"Summary"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"OpenTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"Severity","kind":"number","optional":false},{"name":"Assignee","kind":"string","optional":false,"example":"Assignee"},{"name":"Organization","kind":"string","optional":false,"example":"Organization"},{"name":"EventList","kind":"string","optional":false,"example":"EventList"},{"name":"Notes","kind":"string","optional":false,"example":"Notes"}]}]}]}},{"id":"esm-edit-case","method":"GET","pathTemplate":"/","summary":"Edit the details of an existing case.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"McAfeeESM","kind":"object","optional":false,"children":[{"name":"Case","kind":"object","optional":false,"children":[{"name":"ID","kind":"number","optional":false},{"name":"Summary","kind":"string","optional":false,"example":"Summary"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"OpenTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"Severity","kind":"number","optional":false},{"name":"Assignee","kind":"string","optional":false,"example":"Assignee"},{"name":"Organization","kind":"string","optional":false,"example":"Organization"},{"name":"EventList","kind":"string","optional":false,"example":"EventList"},{"name":"Notes","kind":"string","optional":false,"example":"Notes"}]}]}]}},{"id":"esm-edit-case-status","method":"GET","pathTemplate":"/","summary":"Edits the status of a case.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"original_name","kind":"string","optional":false,"example":"original_name"},{"name":"new_name","kind":"string","optional":false,"example":"new_name"},{"name":"show_in_case_pane","kind":"string","optional":false,"example":"show_in_case_pane"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "mcafee-esm-mcafee-esm-v2",
+  "name": "McAfee ESM v2",
+  "pack": "McAfee_ESM",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: POST /rs/esm/v2/caseGetCaseEventsDetail.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "mcafee-esm-mcafee-esm-v2",
+      "name": "McAfee ESM v2",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/McAfee_ESM/Integrations/McAfee_ESM_v2",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched POST /rs/esm/v2/caseGetCaseEventsDetail. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/McAfee_ESM/Integrations/McAfee_ESM_v2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /rs/esm/v2/caseGetCaseEventsDetail. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "post-rs-esm-v2-casegetcaseeventsdetail-0",
+        "method": "POST",
+        "pathTemplate": "/rs/esm/v2/caseGetCaseEventsDetail",
+        "summary": "POST /rs/esm/v2/caseGetCaseEventsDetail",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "columns",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "rows",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Cookie",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "JWTToken",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/McAfee_ESM/Integrations/McAfee_ESM_v2",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched POST /rs/esm/v2/caseGetCaseEventsDetail. Fields are keys the client reads or test_data contains."
+  ]
+}

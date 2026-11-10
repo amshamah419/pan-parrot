@@ -1,1 +1,118 @@
-{"id":"box-boxv2","name":"Box v2","pack":"Box","fidelity":"sample","curated":false,"summary":"Manage Box users.","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"box-boxv2","name":"Box v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Box/Integrations/BoxV2","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-create-update-file-share-link-json","method":"GET","pathTemplate":"/folders/{folder_share_link.folder_id}","summary":"test_data/create_update_file_share_link.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"file"},{"name":"id","kind":"id","optional":false,"example":"742246263170"},{"name":"etag","kind":"string","optional":false,"example":"5"},{"name":"shared_link","kind":"object","optional":false,"children":[{"name":"url","kind":"string","optional":false,"example":"https://app.box.com/s/o62qyp8shjy24rw0l1zdqfoisw4mryas"},{"name":"download_url","kind":"string","optional":false,"example":"https://app.box.com/shared/static/o62qyp8shjy24rw0l1zdqfoisw4mryas.jpeg"},{"name":"effective_access","kind":"string","optional":false,"example":"open"},{"name":"effective_permission","kind":"string","optional":false,"example":"can_preview"},{"name":"is_password_enabled","kind":"boolean","optional":false},{"name":"download_count","kind":"integer","optional":false},{"name":"preview_count","kind":"integer","optional":false},{"name":"access","kind":"string","optional":false,"example":"open"},{"name":"permissions","kind":"object","optional":false,"children":[{"name":"can_preview","kind":"boolean","optional":false},{"name":"can_download","kind":"boolean","optional":false}]}]}]}},{"id":"test-data-create-user-json","method":"GET","pathTemplate":"/files/upload_sessions/{session_id}","summary":"test_data/create_user.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"address","kind":"string","optional":false,"example":"3000 Tannery Way, Santa Clara, CA 95054"},{"name":"avatar_url","kind":"string","optional":false,"example":"https://www.box.com/api/avatar/large/1234567"},{"name":"created_at","kind":"string","optional":false,"example":"2020-12-1T10:53:43-08:00"},{"name":"job_title","kind":"string","optional":false,"example":"CEO"},{"name":"language","kind":"string","optional":false,"example":"en"},{"name":"login","kind":"email","optional":false},{"name":"max_upload_size","kind":"integer","optional":false},{"name":"modified_at","kind":"timestamp","optional":false,"example":"2012-12-12T10:53:43-08:00","format":"iso"},{"name":"name","kind":"string","optional":false,"example":"D Bot"},{"name":"notification_email","kind":"object","optional":false,"children":[{"name":"email","kind":"email","optional":false},{"name":"is_confirmed","kind":"boolean","optional":false}]},{"name":"phone","kind":"integer","optional":false},{"name":"space_amount","kind":"integer","optional":false},{"name":"space_used","kind":"integer","optional":false},{"name":"status","kind":"string","optional":false,"example":"active"},{"name":"timezone","kind":"string","optional":false,"example":"US/Western"}]}},{"id":"test-data-events-json","method":"GET","pathTemplate":"/files/{file_share_link.file_id}","summary":"test_data/events.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"chunk_size","kind":"integer","optional":false},{"name":"entries","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"event"},{"name":"event_id","kind":"id","optional":false,"example":"f82c3ba03e41f7e8a7608363cc6c0390183c3f83"},{"name":"created_by","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"name","kind":"string","optional":false,"example":"Aaron Levie"},{"name":"login","kind":"email","optional":false}]},{"name":"event_type","kind":"string","optional":false,"example":"FILE_MARKED_MALICIOUS"},{"name":"session_id","kind":"id","optional":false,"example":"70090280850c8d2a1933c1"},{"name":"source","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"name","kind":"string","optional":false,"example":"Aaron Levie"},{"name":"login","kind":"email","optional":false},{"name":"created_at","kind":"timestamp","optional":false,"example":"2012-12-12T10:53:43-08:00","format":"iso"},{"name":"modified_at","kind":"timestamp","optional":false,"example":"2012-12-12T10:53:43-08:00","format":"iso"},{"name":"language","kind":"string","optional":false,"example":"en"},{"name":"timezone","kind":"string","optional":false,"example":"Africa/Bujumbura"},{"name":"space_amount","kind":"integer","optional":false},{"name":"space_used","kind":"integer","optional":false},{"name":"max_upload_size","kind":"integer","optional":false},{"name":"status","kind":"string","optional":false,"example":"active"},{"name":"job_title","kind":"string","optional":false,"example":"CEO"},{"name":"phone","kind":"integer","optional":false},{"name":"address","kind":"string","optional":false,"example":"900 Jefferson Ave, Redwood City, CA 94063"},{"name":"avatar_url","kind":"string","optional":false,"example":"https://www.box.com/api/avatar/large/181216415"},{"name":"notification_email","kind":"object","optional":false,"children":[{"name":"email","kind":"email","optional":false},{"name":"is_confirmed","kind":"boolean","optional":false}]}]},{"name":"additional_details","kind":"object","optional":false,"children":[{"name":"key","kind":"string","optional":false,"example":"value"}]}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"next_stream_position","kind":"integer","optional":false}]}},{"id":"test-data-events2-json","method":"GET","pathTemplate":"/users/{from_user_id}/folders/0","summary":"test_data/events2.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"chunk_size","kind":"integer","optional":false},{"name":"entries","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"event"},{"name":"event_id","kind":"id","optional":false,"example":"2222222222222222222222222222222222222222"},{"name":"created_by","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"name","kind":"string","optional":false,"example":"User Name"},{"name":"login","kind":"email","optional":false}]},{"name":"event_type","kind":"string","optional":false,"example":"FILE_MARKED_MALICIOUS"},{"name":"session_id","kind":"id","optional":false,"example":"70090280850c8d2a1933c1"},{"name":"source","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"name","kind":"string","optional":false,"example":"User Name"},{"name":"login","kind":"email","optional":false},{"name":"created_at","kind":"timestamp","optional":false,"example":"2012-12-12T10:53:43-08:00","format":"iso"},{"name":"modified_at","kind":"timestamp","optional":false,"example":"2012-12-12T10:53:43-08:00","format":"iso"},{"name":"language","kind":"string","optional":false,"example":"en"},{"name":"timezone","kind":"string","optional":false,"example":"Africa/Bujumbura"},{"name":"space_amount","kind":"integer","optional":false},{"name":"space_used","kind":"integer","optional":false},{"name":"max_upload_size","kind":"integer","optional":false},{"name":"status","kind":"string","optional":false,"example":"active"},{"name":"job_title","kind":"string","optional":false,"example":"CEO"},{"name":"phone","kind":"integer","optional":false},{"name":"address","kind":"string","optional":false,"example":"address"},{"name":"avatar_url","kind":"string","optional":false,"example":"https://www.box.com/api/avatar/large/222222222"},{"name":"notification_email","kind":"object","optional":false,"children":[{"name":"email","kind":"email","optional":false},{"name":"is_confirmed","kind":"boolean","optional":false}]}]},{"name":"additional_details","kind":"object","optional":false,"children":[{"name":"key","kind":"string","optional":false,"example":"value"}]}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"next_stream_position","kind":"integer","optional":false}]}},{"id":"test-data-find-file-by-share-link-json","method":"GET","pathTemplate":"/files/{file_id}/content","summary":"test_data/find_file_by_share_link.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"file"},{"name":"content_created_at","kind":"timestamp","optional":false,"example":"2012-12-12T10:53:43-08:00","format":"iso"},{"name":"content_modified_at","kind":"timestamp","optional":false,"example":"2012-12-12T10:53:43-08:00","format":"iso"},{"name":"created_at","kind":"timestamp","optional":false,"example":"2012-12-12T10:53:43-08:00","format":"iso"},{"name":"created_by","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"login","kind":"email","optional":false},{"name":"name","kind":"string","optional":false,"example":"Aaron Levie"}]},{"name":"description","kind":"string","optional":false,"example":"Contract for Q1 renewal"},{"name":"etag","kind":"integer","optional":false},{"name":"file_version","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"file_version"},{"name":"sha1","kind":"string","optional":false,"example":"134b65991ed521fcfe4724b7d814ab8ded5185dc"}]},{"name":"item_status","kind":"string","optional":false,"example":"active"},{"name":"modified_at","kind":"timestamp","optional":false,"example":"2012-12-12T10:53:43-08:00","format":"iso"},{"name":"modified_by","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"login","kind":"email","optional":false},{"name":"name","kind":"string","optional":false,"example":"Aaron Levie"}]},{"name":"name","kind":"string","optional":false,"example":"Contract.pdf"},{"name":"owned_by","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"login","kind":"email","optional":false},{"name":"name","kind":"string","optional":false,"example":"Aaron Levie"}]},{"name":"parent","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"folder"},{"name":"etag","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"Contracts"},{"name":"sequence_id","kind":"integer","optional":false}]},{"name":"path_collection","kind":"object","optional":false,"children":[{"name":"entries","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"etag","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"folder"},{"name":"sequence_id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"Contracts"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"total_count","kind":"integer","optional":false}]},{"name":"purged_at","kind":"timestamp","optional":false,"example":"2012-12-12T10:53:43-08:00","format":"iso"},{"name":"sequence_id","kind":"integer","optional":false},{"name":"sha1","kind":"string","optional":false,"example":"85136C79CBF9FE36BB9D05D0639C70C265C18D37"},{"name":"shared_link","kind":"object","optional":false,"children":[{"name":"access","kind":"string","optional":false,"example":"open"},{"name":"download_count","kind":"integer","optional":false},{"name":"download_url","kind":"string","optional":false,"example":"https://www.box.com/shared/static/rh935iit6ewrmw0unyul.jpeg"},{"name":"effective_access","kind":"string","optional":false,"example":"company"},{"name":"effective_permission","kind":"string","optional":false,"example":"can_download"},{"name":"is_password_enabled","kind":"boolean","optional":false},{"name":"permissions","kind":"object","optional":false,"children":[{"name":"can_download","kind":"boolean","optional":false},{"name":"can_preview","kind":"boolean","optional":false}]},{"name":"preview_count","kind":"integer","optional":false},{"name":"unshared_at","kind":"timestamp","optional":false,"example":"2018-04-13T13:53:23-07:00","format":"iso"}]}]}},{"id":"test-data-find-file-folder-by-share-link-json","method":"GET","pathTemplate":"/files/upload_sessions","summary":"test_data/find_file_folder_by_share_link.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"file"},{"name":"id","kind":"id","optional":false,"example":"745868717302"},{"name":"file_version","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"file_version"},{"name":"id","kind":"id","optional":false,"example":"794731944502"},{"name":"sha1","kind":"string","optional":false,"example":"1ff8be1766d9e16b0b651f89001e8e7375c9e71f"}]},{"name":"sequence_id","kind":"id","optional":false,"example":"2"},{"name":"etag","kind":"string","optional":false,"example":"2"},{"name":"sha1","kind":"string","optional":false,"example":"1ff8be1766d9e16b0b651f89001e8e7375c9e71f"},{"name":"name","kind":"string","optional":false,"example":"55555.gif"},{"name":"description","kind":"string","optional":false},{"name":"size","kind":"integer","optional":false},{"name":"path_collection","kind":"object","optional":false,"children":[{"name":"total_count","kind":"integer","optional":false},{"name":"entries","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"created_at","kind":"timestamp","optional":false,"example":"2020-11-25T05:20:56-08:00","format":"iso"},{"name":"modified_at","kind":"timestamp","optional":false,"example":"2020-12-01T06:28:21-08:00","format":"iso"},{"name":"trashed_at","kind":"string","optional":false,"example":"None"},{"name":"purged_at","kind":"string","optional":false,"example":"None"},{"name":"content_created_at","kind":"timestamp","optional":false,"example":"2020-11-25T05:20:55-08:00","format":"iso"},{"name":"content_modified_at","kind":"timestamp","optional":false,"example":"2020-11-25T05:20:55-08:00","format":"iso"},{"name":"created_by","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"id","kind":"id","optional":false,"example":"14342567114"},{"name":"name","kind":"string","optional":false,"example":"Andrew Shamah"},{"name":"login","kind":"email","optional":false}]},{"name":"modified_by","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"id","kind":"id","optional":false,"example":"14342567114"},{"name":"name","kind":"string","optional":false,"example":"Andrew Shamah"},{"name":"login","kind":"email","optional":false}]},{"name":"owned_by","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"id","kind":"id","optional":false,"example":"14342567114"},{"name":"name","kind":"string","optional":false,"example":"Andrew Shamah"},{"name":"login","kind":"email","optional":false}]},{"name":"shared_link","kind":"string","optional":false,"example":"None"},{"name":"parent","kind":"string","optional":false,"example":"None"},{"name":"item_status","kind":"string","optional":false,"example":"active"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "box-boxv2",
+  "name": "Box v2",
+  "pack": "Box",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /api/2.0/events.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "box-boxv2",
+      "name": "Box v2",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Box/Integrations/BoxV2",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /api/2.0/events. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Box/Integrations/BoxV2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/2.0/events. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-api-2-0-events-0",
+        "method": "GET",
+        "pathTemplate": "/api/2.0/events",
+        "summary": "GET /api/2.0/events",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Authorization",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "appAuth",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "as_user",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "boxAppSettings",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "clientID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "content-disposition",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Box/Integrations/BoxV2",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /api/2.0/events. Fields are keys the client reads or test_data contains."
+  ]
+}

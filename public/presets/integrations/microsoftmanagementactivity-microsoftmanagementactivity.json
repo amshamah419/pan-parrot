@@ -1,1 +1,118 @@
-{"id":"microsoftmanagementactivity-microsoftmanagementactivity","name":"Microsoft Management Activity API (O365 Azure Events)","pack":"MicrosoftManagementActivity","fidelity":"sample","curated":false,"summary":"The Microsoft Management Activity API integration enables you to subscribe or unsubscribe to different audits, receive their content, and fetch new content as incidents.","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"microsoftmanagementactivity-microsoftmanagementactivity","name":"Microsoft Management Activity API (O365 Azure Events)","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MicrosoftManagementActivity/Integrations/MicrosoftManagementActivity","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-incidents-mocked-json","method":"GET","pathTemplate":"/reference/articles/microsoft-integrations---authentication","summary":"test_data/incidents_mocked.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false,"example":"EVENT_001"},{"name":"CreationTime","kind":"timestamp","optional":false,"example":"2025-12-05T04:00:00","format":"iso"},{"name":"Operation","kind":"string","optional":false,"example":"UserLoggedIn"},{"name":"UserId","kind":"id","optional":false,"example":"admin@example.com"},{"name":"Note","kind":"string","optional":true,"example":"This is an internal duplicate of the previous record"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "microsoftmanagementactivity-microsoftmanagementactivity",
+  "name": "Microsoft Management Activity API (O365 Azure Events)",
+  "pack": "MicrosoftManagementActivity",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /api/v1.0/{tenant_id}/activity/feed/subscriptions/list.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "microsoftmanagementactivity-microsoftmanagementactivity",
+      "name": "Microsoft Management Activity API (O365 Azure Events)",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftManagementActivity/Integrations/MicrosoftManagementActivity",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v1.0/{tenant_id}/activity/feed/subscriptions/list. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftManagementActivity/Integrations/MicrosoftManagementActivity",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v1.0/{tenant_id}/activity/feed/subscriptions/list. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-api-v1-0-tenant-id-activity-feed-subscri-0",
+        "method": "GET",
+        "pathTemplate": "/api/v1.0/{tenant_id}/activity/feed/subscriptions/list",
+        "summary": "GET /api/v1.0/{tenant_id}/activity/feed/subscriptions/list",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ClientIP",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CreationTime",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ObjectId",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Operation",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "OrganizationId",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftManagementActivity/Integrations/MicrosoftManagementActivity",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v1.0/{tenant_id}/activity/feed/subscriptions/list. Fields are keys the client reads or test_data contains."
+  ]
+}

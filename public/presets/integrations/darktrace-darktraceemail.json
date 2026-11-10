@@ -1,1 +1,117 @@
-{"id":"darktrace-darktraceemail","name":"DarktraceEmail","pack":"Darktrace","fidelity":"sample","curated":false,"summary":"This pack includes configurations to combine the world-class threat detection of Darktrace with the synchrony and automation abilities of XSOAR, allowing security teams to investig","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"darktrace-darktraceemail","name":"DarktraceEmail","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceEmail","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-fetch-incidents-json","method":"GET","pathTemplate":"/agemail/api/v1.0","summary":"test_data/fetch_incidents.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"74AADFDC-33A9-4065-ACFC-B2493E8722BF.1"},{"name":"direction","kind":"string","optional":false,"example":"inbound"},{"name":"dtime","kind":"timestamp","optional":false,"example":"2025-04-10T15:55:27.341Z","format":"iso"},{"name":"dtime_unix","kind":"integer","optional":false},{"name":"header_from","kind":"email","optional":false},{"name":"header_from_email","kind":"email","optional":false},{"name":"header_from_personal","kind":"string","optional":false,"example":"gov.uk email"},{"name":"header_subject","kind":"string","optional":false,"example":"Update from GOV.UK for: More detail announced on the Neighbourhood Policing Guarantee"},{"name":"in_progress","kind":"boolean","optional":false},{"name":"n_links","kind":"integer","optional":false},{"name":"n_attachments","kind":"integer","optional":false},{"name":"model_score","kind":"integer","optional":false},{"name":"rcpts","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"rcpt_to","kind":"email","optional":false},{"name":"rcpt_status","kind":"string","optional":false,"example":"held"},{"name":"is_read","kind":"boolean","optional":false},{"name":"is_group_email","kind":"boolean","optional":false},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Forged Address"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"rcpt_actions_taken","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Hold message"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"action_status","kind":"boolean","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"restricted_recipients","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-formatted-fetch-incidents-json","method":"GET","pathTemplate":"/emails/search","summary":"test_data/formatted_fetch_incidents.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"name","kind":"email","optional":false},{"name":"occurred","kind":"timestamp","optional":false,"example":"2025-04-10T15:53:54.000Z","format":"iso"},{"name":"rawJSON","kind":"email","optional":false},{"name":"severity","kind":"integer","optional":false}]}},{"id":"test-data-formatted-get-email-json","method":"GET","pathTemplate":"/","summary":"test_data/formatted_get_email.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"BA13B274-03F3-46D6-8698-244DFF1037A0.1"},{"name":"direction","kind":"string","optional":false,"example":"Inbound"},{"name":"time","kind":"timestamp","optional":false,"example":"2025-04-10T13:02:48.021Z","format":"iso"},{"name":"timestamp","kind":"integer","optional":false},{"name":"sender","kind":"email","optional":false},{"name":"subject","kind":"string","optional":false,"example":"Update from GOV.UK for: UK sanctions Georgian officials responsible for allowing brutal police violence"},{"name":"links","kind":"integer","optional":false},{"name":"attachments","kind":"integer","optional":false},{"name":"score","kind":"integer","optional":false},{"name":"darktrace_url","kind":"string","optional":false,"example":"/agemail/?uuid=BA13B274-03F3-46D6-8698-244DFF1037A0.1"},{"name":"recipient","kind":"email","optional":false},{"name":"receipt_status","kind":"string","optional":false,"example":"Held"},{"name":"read_status","kind":"string","optional":false,"example":"False"},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Forged Address"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"tags_critical","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Forged Address"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"tags_warning","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"No Association"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"tags_informational","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Mailer"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"summary","kind":"email","optional":false},{"name":"actions","kind":"string","optional":false,"example":"Hold message"},{"name":"action_status","kind":"string","optional":false,"example":"True"},{"name":"release_requested","kind":"boolean","optional":false}]}},{"id":"test-data-formatted-hold-email-json","method":"GET","pathTemplate":"/","summary":"test_data/formatted_hold_email.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"resp","kind":"string","optional":false,"example":"Held Email"},{"name":"previous_status","kind":"string","optional":false,"example":"held"}]}},{"id":"test-data-formatted-release-email-json","method":"GET","pathTemplate":"/","summary":"test_data/formatted_release_email.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"resp","kind":"string","optional":false,"example":"Email added to queue"},{"name":"previous_status","kind":"string","optional":false}]}},{"id":"test-data-get-email-json","method":"GET","pathTemplate":"/","summary":"test_data/get_email.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"BA13B274-03F3-46D6-8698-244DFF1037A0.1"},{"name":"direction","kind":"string","optional":false,"example":"inbound"},{"name":"dtime","kind":"timestamp","optional":false,"example":"2025-04-10T13:02:48.021Z","format":"iso"},{"name":"dtime_unix","kind":"integer","optional":false},{"name":"header_from","kind":"email","optional":false},{"name":"header_from_personal","kind":"string","optional":false,"example":"gov.uk email"},{"name":"header_from_email","kind":"email","optional":false},{"name":"header_subject","kind":"string","optional":false,"example":"Update from GOV.UK for: UK sanctions Georgian officials responsible for allowing brutal police violence"},{"name":"in_progress","kind":"boolean","optional":false},{"name":"n_links","kind":"integer","optional":false},{"name":"n_attachments","kind":"integer","optional":false},{"name":"model_score","kind":"integer","optional":false},{"name":"campaign_id","kind":"string","optional":true},{"name":"rcpts","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"rcpt_to","kind":"email","optional":false},{"name":"rcpt_status","kind":"string","optional":false,"example":"held"},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Forged Address"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"is_read","kind":"boolean","optional":false},{"name":"summary","kind":"array","optional":false,"item":{"name":"item","kind":"email","optional":false},"minItems":0,"maxItems":3,"pageItems":false},{"name":"rcpt_actions_taken","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Hold message"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"action_status","kind":"boolean","optional":false},{"name":"is_group_email","kind":"boolean","optional":false},{"name":"requestedRelease","kind":"string","optional":true}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"restricted_recipients","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "darktrace-darktraceemail",
+  "name": "DarktraceEmail",
+  "pack": "Darktrace",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /agemail/api/v1.0/resources/tags.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "darktrace-darktraceemail",
+      "name": "DarktraceEmail",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceEmail",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /agemail/api/v1.0/resources/tags. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceEmail",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /agemail/api/v1.0/resources/tags. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-agemail-api-v1-0-resources-tags-0",
+        "method": "GET",
+        "pathTemplate": "/agemail/api/v1.0/resources/tags",
+        "summary": "GET /agemail/api/v1.0/resources/tags",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "action_status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "actioned",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "actions",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "direction",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "dtime",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "dtime_unix",
+              "kind": "integer"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceEmail",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /agemail/api/v1.0/resources/tags. Fields are keys the client reads or test_data contains."
+  ]
+}

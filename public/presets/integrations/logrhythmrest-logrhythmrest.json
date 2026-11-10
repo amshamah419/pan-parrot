@@ -1,1 +1,136 @@
-{"id":"logrhythmrest-logrhythmrest","name":"LogRhythmRest","pack":"LogRhythmRest","fidelity":"shape","curated":false,"summary":"LogRhythm security intelligence.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"logrhythmrest-logrhythmrest","name":"LogRhythmRest","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/LogRhythmRest/Integrations/LogRhythmRest","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"lr-execute-query","method":"GET","pathTemplate":"/lr-admin-api/hosts","summary":"Executes a query for logs that match the query parameters.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Logrhythm","kind":"object","optional":false,"children":[{"name":"Log","kind":"object","optional":false,"children":[{"name":"Channel","kind":"string","optional":false,"example":"Channel"},{"name":"Computer","kind":"string","optional":false,"example":"Computer"},{"name":"EventData","kind":"string","optional":false,"example":"EventData"},{"name":"EventID","kind":"id","optional":false},{"name":"Keywords","kind":"string","optional":false,"example":"Keywords"},{"name":"Level","kind":"string","optional":false,"example":"Level"},{"name":"Opcode","kind":"string","optional":false,"example":"Opcode"},{"name":"Task","kind":"string","optional":false,"example":"Task"}]}]}]}},{"id":"lr-get-hosts-by-entity","method":"POST","pathTemplate":"/lr-admin-api/hosts","summary":"Retrieves a list of hosts for a given entity, or an empty list if none is found.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Logrhythm","kind":"object","optional":false,"children":[{"name":"Host","kind":"object","optional":false,"children":[{"name":"EntityId","kind":"id","optional":false},{"name":"EntityName","kind":"string","optional":false,"example":"EntityName"},{"name":"OS","kind":"string","optional":false,"example":"OS"},{"name":"ThreatLevel","kind":"string","optional":false,"example":"ThreatLevel"},{"name":"UseEventlogCredentials","kind":"string","optional":false,"example":"UseEventlogCredentials"},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"DateUpdated","kind":"string","optional":false,"example":"DateUpdated"},{"name":"HostZone","kind":"string","optional":false,"example":"HostZone"},{"name":"RiskLevel","kind":"string","optional":false,"example":"RiskLevel"},{"name":"Location","kind":"string","optional":false,"example":"Location"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"ID","kind":"id","optional":false},{"name":"OSType","kind":"string","optional":false,"example":"OSType"}]}]}]}},{"id":"lr-add-host","method":"PUT","pathTemplate":"/lr-admin-api/hosts/status","summary":"Add a new host to an entity.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Logrhythm","kind":"object","optional":false,"children":[{"name":"Host","kind":"object","optional":false,"children":[{"name":"EntityId","kind":"id","optional":false},{"name":"EntityName","kind":"string","optional":false,"example":"EntityName"},{"name":"OS","kind":"string","optional":false,"example":"OS"},{"name":"ThreatLevel","kind":"string","optional":false,"example":"ThreatLevel"},{"name":"UseEventlogCredentials","kind":"string","optional":false,"example":"UseEventlogCredentials"},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"DateUpdated","kind":"string","optional":false,"example":"DateUpdated"},{"name":"HostZone","kind":"string","optional":false,"example":"HostZone"},{"name":"RiskLevel","kind":"string","optional":false,"example":"RiskLevel"},{"name":"Location","kind":"string","optional":false,"example":"Location"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"ID","kind":"id","optional":false},{"name":"OSType","kind":"string","optional":false,"example":"OSType"}]}]}]}},{"id":"lr-update-host-status","method":"POST","pathTemplate":"/lr-legacy-search-api/esquery","summary":"Updates a host status.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Logrhythm","kind":"object","optional":false,"children":[{"name":"Host","kind":"object","optional":false,"children":[{"name":"EntityId","kind":"id","optional":false},{"name":"EntityName","kind":"string","optional":false,"example":"EntityName"},{"name":"OS","kind":"string","optional":false,"example":"OS"},{"name":"ThreatLevel","kind":"string","optional":false,"example":"ThreatLevel"},{"name":"UseEventlogCredentials","kind":"string","optional":false,"example":"UseEventlogCredentials"},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"DateUpdated","kind":"string","optional":false,"example":"DateUpdated"},{"name":"HostZone","kind":"string","optional":false,"example":"HostZone"},{"name":"RiskLevel","kind":"string","optional":false,"example":"RiskLevel"},{"name":"Location","kind":"string","optional":false,"example":"Location"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"ID","kind":"id","optional":false},{"name":"OSType","kind":"string","optional":false,"example":"OSType"}]}]}]}},{"id":"lr-get-persons","method":"GET","pathTemplate":"/lr-admin-api/persons","summary":"Retrieves a list of LogRhythm persons.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Logrhythm","kind":"object","optional":false,"children":[{"name":"Person","kind":"object","optional":false,"children":[{"name":"DateUpdated","kind":"string","optional":false,"example":"DateUpdated"},{"name":"FirstName","kind":"string","optional":false,"example":"FirstName"},{"name":"LastName","kind":"string","optional":false,"example":"LastName"},{"name":"HostStatus","kind":"string","optional":false,"example":"HostStatus"},{"name":"ID","kind":"id","optional":false},{"name":"IsAPIPerson","kind":"boolean","optional":false},{"name":"UserID","kind":"id","optional":false},{"name":"UserLogin","kind":"string","optional":false,"example":"UserLogin"}]}]}]}},{"id":"lr-get-networks","method":"GET","pathTemplate":"/lr-admin-api/users","summary":"Retrieves a list of networks.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Logrhythm","kind":"object","optional":false,"children":[{"name":"Network","kind":"object","optional":false,"children":[{"name":"BIP","kind":"string","optional":false,"example":"BIP"},{"name":"ThreatLevel","kind":"string","optional":false,"example":"ThreatLevel"},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"EIP","kind":"string","optional":false,"example":"EIP"},{"name":"DateUpdated","kind":"string","optional":false,"example":"DateUpdated"},{"name":"EntityName","kind":"string","optional":false,"example":"EntityName"},{"name":"HostZone","kind":"string","optional":false,"example":"HostZone"},{"name":"RiskLevel","kind":"string","optional":false,"example":"RiskLevel"},{"name":"Location","kind":"string","optional":false,"example":"Location"},{"name":"HostStatus","kind":"string","optional":false,"example":"HostStatus"},{"name":"ID","kind":"id","optional":false},{"name":"EntityId","kind":"id","optional":false}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "logrhythmrest-logrhythmrest",
+  "name": "LogRhythmRest",
+  "pack": "LogRhythmRest",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /lr-drilldown-cache-api/drilldown/{alarm-id}.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "logrhythmrest-logrhythmrest",
+      "name": "LogRhythmRest",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/LogRhythmRest/Integrations/LogRhythmRest",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /lr-drilldown-cache-api/drilldown/{alarm-id}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/LogRhythmRest/Integrations/LogRhythmRest",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /lr-drilldown-cache-api/drilldown/{alarm-id}. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-lr-drilldown-cache-api-drilldown-alarm-i-0",
+        "method": "GET",
+        "pathTemplate": "/lr-drilldown-cache-api/drilldown/{alarm-id}",
+        "summary": "GET /lr-drilldown-cache-api/drilldown/{alarm-id}",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "hits",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "hits",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "AIEMsgXml",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "AlarmID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "DDSummaries",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "DrillDownResults",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "RuleBlocks",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "DrillDownLogs",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/LogRhythmRest/Integrations/LogRhythmRest",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /lr-drilldown-cache-api/drilldown/{alarm-id}. Fields are keys the client reads or test_data contains."
+  ]
+}

@@ -1,1 +1,118 @@
-{"id":"carbonblackdefense-carbonblackendpointstandard","name":"Carbon Black Endpoint Standard v2","pack":"CarbonBlackDefense","fidelity":"shape","curated":false,"summary":"Endpoint Standard is an industry-leading next-generation antivirus (NGAV) and behavioral endpoint detection and response (EDR) solution. Endpoint Standard is delivered through the ","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"carbonblackdefense-carbonblackendpointstandard","name":"Carbon Black Endpoint Standard v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CarbonBlackDefense/Integrations/CarbonBlackEndpointStandard","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"cbd-get-alert-details","method":"GET","pathTemplate":"/appservices/v6/orgs/{self.organization_key}/devices/_search","summary":"Get details about the events that led to an alert by its ID. This includes retrieving metadata around the alert as well as a list of all the events associated w","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CarbonBlackDefense","kind":"object","optional":false,"children":[{"name":"Alert","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"legacy_alert_id","kind":"id","optional":false},{"name":"org_key","kind":"string","optional":false,"example":"org_key"},{"name":"create_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"last_update_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"first_event_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"last_event_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"threat_id","kind":"id","optional":false},{"name":"severity","kind":"number","optional":false},{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"device_id","kind":"number","optional":false},{"name":"device_os","kind":"string","optional":false,"example":"device_os"},{"name":"device_os_version","kind":"string","optional":false,"example":"device_os_version"},{"name":"device_name","kind":"string","optional":false,"example":"device_name"},{"name":"device_username","kind":"string","optional":false,"example":"device_username"},{"name":"policy_id","kind":"number","optional":false},{"name":"policy_name","kind":"string","optional":false,"example":"policy_name"},{"name":"target_value","kind":"string","optional":false,"example":"target_value"},{"name":"workflow","kind":"object","optional":false,"children":[{"name":"state","kind":"string","optional":false,"example":"state"},{"name":"remediation","kind":"string","optional":false,"example":"remediation"},{"name":"last_update_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"comment","kind":"string","optional":false,"example":"comment"},{"name":"changed_by","kind":"string","optional":false,"example":"changed_by"}]},{"name":"notes_present","kind":"boolean","optional":false},{"name":"tags","kind":"string","optional":false,"example":"tags"},{"name":"reason","kind":"string","optional":false,"example":"reason"},{"name":"count","kind":"number","optional":false},{"name":"report_id","kind":"id","optional":false},{"name":"report_name","kind":"string","optional":false,"example":"report_name"},{"name":"ioc_id","kind":"id","optional":false},{"name":"ioc_field","kind":"string","optional":false,"example":"ioc_field"},{"name":"ioc_hit","kind":"string","optional":false,"example":"ioc_hit"},{"name":"watchlists","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"name","kind":"string","optional":false,"example":"name"}]},{"name":"process_guid","kind":"id","optional":false},{"name":"process_name","kind":"string","optional":false,"example":"process_name"},{"name":"run_state","kind":"string","optional":false,"example":"run_state"},{"name":"threat_indicators","kind":"object","optional":false,"children":[{"name":"process_name","kind":"string","optional":false,"example":"process_name"},{"name":"sha256","kind":"string","optional":false,"example":"sha256"},{"name":"ttps","kind":"string","optional":false,"example":"ttps"}]},{"name":"threat_cause_actor_sha256","kind":"string","optional":false,"example":"threat_cause_actor_sha256"},{"name":"threat_cause_actor_md5","kind":"string","optional":false,"example":"threat_cause_actor_md5"},{"name":"threat_cause_actor_name","kind":"string","optional":false,"example":"threat_cause_actor_name"},{"name":"threat_cause_reputation","kind":"string","optional":false,"example":"threat_cause_reputation"},{"name":"threat_cause_threat_category","kind":"string","optional":false,"example":"threat_cause_threat_category"},{"name":"threat_cause_vector","kind":"string","optional":false,"example":"threat_cause_vector"},{"name":"document_guid","kind":"id","optional":false}]}]}]}},{"id":"cbd-device-search","method":"GET","pathTemplate":"/appservices/v6/orgs/{org_key}/alerts/_search","summary":"Searches devices in your organization.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CarbonBlackDefense","kind":"object","optional":false,"children":[{"name":"Device","kind":"object","optional":false,"children":[{"name":"activation_code","kind":"string","optional":false,"example":"activation_code"},{"name":"activation_code_expiry_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"ad_group_id","kind":"number","optional":false},{"name":"appliance_name","kind":"string","optional":false,"example":"appliance_name"},{"name":"appliance_uuid","kind":"id","optional":false},{"name":"av_ave_version","kind":"string","optional":false,"example":"av_ave_version"},{"name":"av_engine","kind":"string","optional":false,"example":"av_engine"},{"name":"av_last_scan_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"av_master","kind":"boolean","optional":false},{"name":"av_pack_version","kind":"string","optional":false,"example":"av_pack_version"},{"name":"av_product_version","kind":"string","optional":false,"example":"av_product_version"},{"name":"av_status","kind":"string","optional":false,"example":"av_status"},{"name":"av_update_servers","kind":"string","optional":false,"example":"av_update_servers"},{"name":"av_vdf_version","kind":"string","optional":false,"example":"av_vdf_version"},{"name":"cluster_name","kind":"string","optional":false,"example":"cluster_name"},{"name":"current_sensor_policy_name","kind":"string","optional":false,"example":"current_sensor_policy_name"},{"name":"datacenter_name","kind":"string","optional":false,"example":"datacenter_name"},{"name":"deployment_type","kind":"string","optional":false,"example":"deployment_type"},{"name":"deregistered_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"device_meta_data_item_list","kind":"object","optional":false,"children":[{"name":"key_name","kind":"string","optional":false,"example":"key_name"},{"name":"key_value","kind":"string","optional":false,"example":"key_value"},{"name":"position","kind":"number","optional":false}]},{"name":"device_owner_id","kind":"number","optional":false},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"encoded_activation_code","kind":"string","optional":false,"example":"encoded_activation_code"},{"name":"esx_host_name","kind":"string","optional":false,"example":"esx_host_name"},{"name":"esx_host_uuid","kind":"id","optional":false},{"name":"first_name","kind":"string","optional":false,"example":"first_name"},{"name":"id","kind":"id","optional":false},{"name":"last_contact_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"last_device_policy_changed_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"last_device_policy_requested_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"last_external_ip_address","kind":"string","optional":false,"example":"last_external_ip_address"},{"name":"last_internal_ip_address","kind":"string","optional":false,"example":"last_internal_ip_address"},{"name":"last_location","kind":"string","optional":false,"example":"last_location"},{"name":"last_name","kind":"string","optional":false,"example":"last_name"},{"name":"last_policy_updated_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"last_reported_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"last_reset_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"last_shutdown_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"linux_kernel_version","kind":"string","optional":false,"example":"linux_kernel_version"},{"name":"login_user_name","kind":"string","optional":false,"example":"login_user_name"}]}]}]}},{"id":"cbd-find-processes","method":"GET","pathTemplate":"/","summary":"Creates a process search job. The results for the search job may be requested using the returned job ID. At least one of the arguments (not including: rows, sta","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CarbonBlackDefense","kind":"object","optional":false,"children":[{"name":"Process","kind":"object","optional":false,"children":[{"name":"Search","kind":"object","optional":false,"children":[{"name":"job_id","kind":"id","optional":false}]}]}]}]}},{"id":"cbd-find-events","method":"GET","pathTemplate":"/","summary":"Creates an enriched events search job. The results for the search job may be requested using the returned job ID. At least one of the arguments (not including:","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CarbonBlackDefense","kind":"object","optional":false,"children":[{"name":"Events","kind":"object","optional":false,"children":[{"name":"Search","kind":"object","optional":false,"children":[{"name":"job_id","kind":"id","optional":false}]}]}]}]}},{"id":"cbd-find-processes-results","method":"GET","pathTemplate":"/","summary":"Retrieves the results of a process search identified by the job ID.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CarbonBlackDefense","kind":"object","optional":false,"children":[{"name":"Process","kind":"object","optional":false,"children":[{"name":"Results","kind":"object","optional":false,"children":[{"name":"job_id","kind":"id","optional":false},{"name":"approximate_unaggregated","kind":"number","optional":false},{"name":"completed","kind":"number","optional":false},{"name":"contacted","kind":"number","optional":false},{"name":"num_aggregated","kind":"number","optional":false},{"name":"num_available","kind":"number","optional":false},{"name":"num_found","kind":"number","optional":false},{"name":"results","kind":"string","optional":false,"example":"results"}]}]}]}]}},{"id":"cbd-get-policies","method":"GET","pathTemplate":"/","summary":"Gets the list of policies available in your organization.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CarbonBlackDefense","kind":"object","optional":false,"children":[{"name":"Policy","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"priorityLevel","kind":"string","optional":false,"example":"priorityLevel"},{"name":"systemPolicy","kind":"boolean","optional":false},{"name":"latestRevision","kind":"number","optional":false},{"name":"policy","kind":"string","optional":false,"example":"policy"},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"version","kind":"number","optional":false}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "carbonblackdefense-carbonblackendpointstandard",
+  "name": "Carbon Black Endpoint Standard v2",
+  "pack": "CarbonBlackDefense",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /api/investigate/v2/orgs/{organization_key}/enriched_events/search_jobs/{job_id}/results.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "carbonblackdefense-carbonblackendpointstandard",
+      "name": "Carbon Black Endpoint Standard v2",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CarbonBlackDefense/Integrations/CarbonBlackEndpointStandard",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /api/investigate/v2/orgs/{organization_key}/enriched_events/search_jobs/{job_id}/results. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CarbonBlackDefense/Integrations/CarbonBlackEndpointStandard",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/investigate/v2/orgs/{organization_key}/enriched_events/search_jobs/{job_id}/results. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-api-investigate-v2-orgs-organization-key-0",
+        "method": "GET",
+        "pathTemplate": "/api/investigate/v2/orgs/{organization_key}/enriched_events/search_jobs/{job_id}/results",
+        "summary": "GET /api/investigate/v2/orgs/{organization_key}/enriched_events/search_jobs/{job_id}/results",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "results",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "create_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "device_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "device_username",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CarbonBlackDefense/Integrations/CarbonBlackEndpointStandard",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /api/investigate/v2/orgs/{organization_key}/enriched_events/search_jobs/{job_id}/results. Fields are keys the client reads or test_data contains."
+  ]
+}

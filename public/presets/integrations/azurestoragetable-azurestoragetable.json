@@ -1,1 +1,144 @@
-{"id":"azurestoragetable-azurestoragetable","name":"Azure Storage Table","pack":"AzureStorageTable","fidelity":"shape","curated":false,"summary":"Create and Manage Azure Storage Tables and Entities.","operations":4,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"azurestoragetable-azurestoragetable","name":"Azure Storage Table","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AzureStorageTable/Integrations/AzureStorageTable","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-create-table-json","method":"GET","pathTemplate":"/","summary":"test_data/create_table.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"TableName","kind":"string","optional":false,"example":"xsoar"}]}},{"id":"test-data-insert-entity-json","method":"GET","pathTemplate":"/","summary":"test_data/insert_entity.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PartitionKey","kind":"string","optional":false,"example":"xsoar-partition"},{"name":"RowKey","kind":"string","optional":false,"example":"xsoar-row"},{"name":"Timestamp","kind":"timestamp","optional":false,"example":"2021-08-16T14:52:20.7422729Z","format":"iso"},{"name":"Age","kind":"integer","optional":false}]}},{"id":"test-data-query-entity-json","method":"GET","pathTemplate":"/","summary":"test_data/query_entity.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"value","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"PartitionKey","kind":"string","optional":false,"example":"xsoar-partition"},{"name":"RowKey","kind":"string","optional":false,"example":"xsoar-row"},{"name":"Timestamp","kind":"timestamp","optional":false,"example":"2021-08-16T15:03:57.522943Z","format":"iso"},{"name":"Address","kind":"string","optional":false,"example":"New York"}]},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-query-table-json","method":"GET","pathTemplate":"/","summary":"test_data/query_table.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"value","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"TableName","kind":"string","optional":false,"example":"xsoar1"}]},"minItems":0,"maxItems":2,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "azurestoragetable-azurestoragetable",
+  "name": "Azure Storage Table",
+  "pack": "AzureStorageTable",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /Tables.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "azurestoragetable-azurestoragetable",
+      "name": "Azure Storage Table",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureStorageTable/Integrations/AzureStorageTable",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /Tables. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureStorageTable/Integrations/AzureStorageTable",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /Tables. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-tables-0",
+        "method": "GET",
+        "pathTemplate": "/Tables",
+        "summary": "GET /Tables",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "Address",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "PartitionKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "RowKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "TableName",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Timestamp",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "Entity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "TableName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "x-ms-continuation-NextPartitionKey",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "x-ms-continuation-NextRowKey",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "x-ms-continuation-NextTableName",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureStorageTable/Integrations/AzureStorageTable",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /Tables. Fields are keys the client reads or test_data contains."
+  ]
+}

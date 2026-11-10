@@ -1,1 +1,118 @@
-{"id":"mandiantadvantagethreatintelligence-feedmandiantthreatintelligence","name":"Mandiant Feed","pack":"MandiantAdvantageThreatIntelligence","fidelity":"shape","curated":false,"summary":"Fetch indicators from Mandiant Advantage.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"mandiantadvantagethreatintelligence-feedmandiantthreatintelligence","name":"Mandiant Feed","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MandiantAdvantageThreatIntelligence/Integrations/FeedMandiantThreatIntelligence","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"mandiant-get-indicators","method":"GET","pathTemplate":"/v4/entitlements","summary":"Fetch indicators.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"limit","kind":"string","optional":false,"example":"limit"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "mandiantadvantagethreatintelligence-feedmandiantthreatintelligence",
+  "name": "Mandiant Feed",
+  "pack": "MandiantAdvantageThreatIntelligence",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /v4/indicator.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "mandiantadvantagethreatintelligence-feedmandiantthreatintelligence",
+      "name": "Mandiant Feed",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MandiantAdvantageThreatIntelligence/Integrations/FeedMandiantThreatIntelligence",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /v4/indicator. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/MandiantAdvantageThreatIntelligence/Integrations/FeedMandiantThreatIntelligence",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v4/indicator. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-v4-indicator-0",
+        "method": "GET",
+        "pathTemplate": "/v4/indicator",
+        "summary": "GET /v4/indicator",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Tags",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "associated_hashes",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "attributed_associations",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "campaigns",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "category",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MandiantAdvantageThreatIntelligence/Integrations/FeedMandiantThreatIntelligence",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /v4/indicator. Fields are keys the client reads or test_data contains."
+  ]
+}

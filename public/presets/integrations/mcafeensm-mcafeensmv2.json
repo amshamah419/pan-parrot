@@ -1,1 +1,130 @@
-{"id":"mcafeensm-mcafeensmv2","name":"McAfee NSM v2","pack":"McAfeeNSM","fidelity":"sample","curated":false,"summary":"McAfee Network Security Manager gives you real-time visibility and control over all McAfee intrusion prevention systems deployed across your network.","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"mcafeensm-mcafeensmv2","name":"McAfee NSM v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/McAfeeNSM/Integrations/McAfeeNSMv2","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-commands-test-data-json","method":"GET","pathTemplate":"/url_suffix","summary":"test_data/commands_test_data.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"get_alerts_output","kind":"object","optional":false,"children":[{"name":"totalAlertsCount","kind":"integer","optional":false},{"name":"retrievedAlertsCount","kind":"integer","optional":false},{"name":"alertsList","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"Name 1"},{"name":"uniqueAlertId","kind":"id","optional":false,"example":"1111111111111111111"},{"name":"alertState","kind":"string","optional":false,"example":"UnAcknowledged"},{"name":"assignTo","kind":"string","optional":false},{"name":"attackSeverity","kind":"string","optional":false,"example":"High"},{"name":"event","kind":"object","optional":false,"children":[{"name":"time","kind":"string","optional":false,"example":"Dec 10, 2022 00:00:0"},{"name":"direction","kind":"string","optional":false,"example":"Outbound"},{"name":"result","kind":"string","optional":false,"example":"n/a"},{"name":"attackCount","kind":"integer","optional":false},{"name":"relevance","kind":"string","optional":false,"example":"Unknown"},{"name":"alertId","kind":"id","optional":false,"example":"2222222222222222222"}]},{"name":"attack","kind":"object","optional":false,"children":[{"name":"nspId","kind":"id","optional":false,"example":"0x00000000"},{"name":"btp","kind":"string","optional":false},{"name":"attackCategory","kind":"string","optional":false,"example":"Volume DoS"}]},{"name":"attacker","kind":"object","optional":false,"children":[{"name":"ipAddrs","kind":"string","optional":false},{"name":"port","kind":"integer","optional":false},{"name":"hostName","kind":"string","optional":false},{"name":"country","kind":"string","optional":false},{"name":"os","kind":"string","optional":true},{"name":"vmName","kind":"string","optional":true},{"name":"proxyIP","kind":"string","optional":false},{"name":"user","kind":"string","optional":true},{"name":"risk","kind":"string","optional":false,"example":"Disabled"},{"name":"networkObject","kind":"string","optional":true}]},{"name":"target","kind":"object","optional":false,"children":[{"name":"ipAddrs","kind":"string","optional":false},{"name":"port","kind":"integer","optional":false},{"name":"hostName","kind":"string","optional":false},{"name":"country","kind":"string","optional":false},{"name":"os","kind":"string","optional":true},{"name":"vmName","kind":"string","optional":true},{"name":"proxyIP","kind":"string","optional":false},{"name":"user","kind":"string","optional":true},{"name":"risk","kind":"string","optional":false,"example":"Disabled"},{"name":"networkObject","kind":"string","optional":true}]},{"name":"malwareFile","kind":"object","optional":false,"children":[{"name":"fileName","kind":"string","optional":false},{"name":"fileHash","kind":"string","optional":false},{"name":"fileSHA1Hash","kind":"string","optional":false},{"name":"fileSHA256Hash","kind":"string","optional":true},{"name":"malwareName","kind":"string","optional":false},{"name":"malwareConfidence","kind":"string","optional":false},{"name":"engine","kind":"string","optional":false},{"name":"engineId","kind":"integer","optional":false},{"name":"size","kind":"string","optional":true},{"name":"description","kind":"string","optional":true},{"name":"additionalReference","kind":"string","optional":true},{"name":"cveId","kind":"string","optional":true}]},{"name":"endpointExcutable","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false},{"name":"hash","kind":"string","optional":false}]}]},"minItems":0,"maxItems":3,"pageItems":false}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "mcafeensm-mcafeensmv2",
+  "name": "McAfee NSM v2",
+  "pack": "McAfeeNSM",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /alerts.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "mcafeensm-mcafeensmv2",
+      "name": "McAfee NSM v2",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/McAfeeNSM/Integrations/McAfeeNSMv2",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /alerts. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/McAfeeNSM/Integrations/McAfeeNSMv2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /alerts. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-alerts-0",
+        "method": "GET",
+        "pathTemplate": "/alerts",
+        "summary": "GET /alerts",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "AttackCategory",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "ExpolitAttackList",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "AttackDescriptor",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "AttackDescriptorDetailsList",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "AttackSeverity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Attacker",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "ipAddrs",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/McAfeeNSM/Integrations/McAfeeNSMv2",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /alerts. Fields are keys the client reads or test_data contains."
+  ]
+}

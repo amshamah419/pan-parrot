@@ -1,1 +1,110 @@
-{"id":"darktrace-darktraceeventcollector","name":"Darktrace Event Collector","pack":"Darktrace","fidelity":"sample","curated":false,"summary":"Use this integration to fetch model breaches from Darktrace as events in XSIAM.","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"darktrace-darktraceeventcollector","name":"Darktrace Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceEventCollector","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-mocked-get-events-json","method":"GET","pathTemplate":"/modelbreaches","summary":"test_data/mocked_get_events.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"acknowledged","kind":"boolean","optional":false},{"name":"commentCount","kind":"integer","optional":false},{"name":"pbid","kind":"integer","optional":false},{"name":"time","kind":"integer","optional":false},{"name":"creationTime","kind":"integer","optional":false},{"name":"model","kind":"object","optional":false,"children":[{"name":"then","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"example::example"},{"name":"pid","kind":"integer","optional":false},{"name":"phid","kind":"integer","optional":false},{"name":"uuid","kind":"id","optional":false,"example":"11111111-1111-1111-1111-111111111111"},{"name":"logic","kind":"object","optional":false,"children":[{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"cid","kind":"string","optional":false,"example":"nested"},{"name":"weight","kind":"string","optional":false,"example":"nested"}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"targetScore","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"example"},{"name":"version","kind":"integer","optional":false}]},{"name":"throttle","kind":"integer","optional":false},{"name":"sharedEndpoints","kind":"boolean","optional":false},{"name":"actions","kind":"object","optional":false,"children":[{"name":"alert","kind":"boolean","optional":false},{"name":"antigena","kind":"object","optional":false,"children":[]},{"name":"breach","kind":"boolean","optional":false},{"name":"model","kind":"boolean","optional":false},{"name":"setPriority","kind":"boolean","optional":false},{"name":"setTag","kind":"boolean","optional":false},{"name":"setType","kind":"boolean","optional":false}]},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":2,"pageItems":false},{"name":"interval","kind":"integer","optional":false},{"name":"delay","kind":"integer","optional":false},{"name":"sequenced","kind":"boolean","optional":false},{"name":"active","kind":"boolean","optional":false},{"name":"modified","kind":"string","optional":false,"example":"2023-06-19 15:56:27"},{"name":"activeTimes","kind":"object","optional":false,"children":[{"name":"devices","kind":"object","optional":false,"children":[]},{"name":"tags","kind":"object","optional":false,"children":[]},{"name":"type","kind":"string","optional":false,"example":"exclusions"},{"name":"version","kind":"integer","optional":false}]},{"name":"autoUpdatable","kind":"boolean","optional":false},{"name":"autoUpdate","kind":"boolean","optional":false},{"name":"autoSuppress","kind":"boolean","optional":false},{"name":"description","kind":"string","optional":false,"example":"An example description."},{"name":"behaviour","kind":"string","optional":false,"example":"decreasing"},{"name":"defeats","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"created","kind":"object","optional":false,"children":[{"name":"by","kind":"string","optional":false,"example":"System"}]},{"name":"edited","kind":"object","optional":false,"children":[{"name":"by","kind":"string","optional":false,"example":"System"}]},{"name":"version","kind":"integer","optional":false},{"name":"priority","kind":"integer","optional":false},{"name":"category","kind":"string","optional":false,"example":"Critical"},{"name":"compliance","kind":"boolean","optional":false}]},{"name":"now","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"example::example"},{"name":"pid","kind":"integer","optional":false}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "darktrace-darktraceeventcollector",
+  "name": "Darktrace Event Collector",
+  "pack": "Darktrace",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /modelbreaches.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "darktrace-darktraceeventcollector",
+      "name": "Darktrace Event Collector",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceEventCollector",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /modelbreaches. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceEventCollector",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /modelbreaches. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-modelbreaches-0",
+        "method": "GET",
+        "pathTemplate": "/modelbreaches",
+        "summary": "GET /modelbreaches",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "creationTime",
+              "kind": "integer"
+            },
+            {
+              "name": "last_fetch_pid",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_fetch_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "pbid",
+              "kind": "integer"
+            },
+            {
+              "name": "time",
+              "kind": "integer"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceEventCollector",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /modelbreaches. Fields are keys the client reads or test_data contains."
+  ]
+}

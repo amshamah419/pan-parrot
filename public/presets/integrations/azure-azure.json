@@ -1,1 +1,176 @@
-{"id":"azure-azure","name":"Azure","pack":"Azure","fidelity":"sample","curated":false,"summary":"Cloud integrations are installed from the **Data Sources** page. To configure a cloud integration, go to Settings > Data Sources and click \"Add Data Source\", select Azure, then in ","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"azure-azure","name":"Azure","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Azure/Integrations/Azure","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-aks-clusters-list-response-json","method":"GET","pathTemplate":"/subscriptions/sub-id/resourceGroups/test-rg/providers/Microsoft.DBforPostgreSQL/flexibleServers/test-postgres-flex","summary":"test_data/aks_clusters_list_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"value","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"/subscriptions/mock_subid/resourceGroups/mock_rg/providers/Microsoft.ContainerSe"},{"name":"location","kind":"string","optional":false,"example":"eastus"},{"name":"name","kind":"string","optional":false,"example":"mock_cluster_name"},{"name":"tags","kind":"object","optional":false,"children":[{"name":"archv2","kind":"string","optional":false},{"name":"tier","kind":"string","optional":false,"example":"production"}]},{"name":"type","kind":"string","optional":false,"example":"Microsoft.ContainerService/ManagedClusters"},{"name":"properties","kind":"object","optional":false,"children":[{"name":"provisioningState","kind":"string","optional":false,"example":"Succeeded"},{"name":"kubernetesVersion","kind":"string","optional":false,"example":"1.9.6"},{"name":"maxAgentPools","kind":"integer","optional":false},{"name":"dnsPrefix","kind":"string","optional":false,"example":"dnsprefix1"},{"name":"fqdn","kind":"string","optional":false,"example":"dnsprefix1-abcd1234.hcp.eastus.azmk8s.io"},{"name":"agentPoolProfiles","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"nested"},{"name":"count","kind":"string","optional":false,"example":"nested"},{"name":"vmSize","kind":"string","optional":false,"example":"nested"},{"name":"maxPods","kind":"string","optional":false,"example":"nested"},{"name":"osType","kind":"string","optional":false,"example":"nested"},{"name":"provisioningState","kind":"string","optional":false,"example":"nested"},{"name":"orchestratorVersion","kind":"string","optional":false,"example":"nested"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"linuxProfile","kind":"object","optional":false,"children":[{"name":"adminUsername","kind":"string","optional":false,"example":"azureuser"},{"name":"ssh","kind":"object","optional":false,"children":[{"name":"publicKeys","kind":"string","optional":false,"example":"nested"}]}]},{"name":"servicePrincipalProfile","kind":"object","optional":false,"children":[{"name":"clientId","kind":"id","optional":false,"example":"mock_client_id"}]},{"name":"nodeResourceGroup","kind":"string","optional":false,"example":"MC_rg1_clustername1_location1"},{"name":"enableRBAC","kind":"boolean","optional":false},{"name":"diskEncryptionSetID","kind":"id","optional":false,"example":"/subscriptions/mock_subid/resourceGroups/mock_rg/providers/Microsoft.Compute/dis"},{"name":"networkProfile","kind":"object","optional":false,"children":[{"name":"networkPlugin","kind":"string","optional":false,"example":"kubenet"},{"name":"podCidr","kind":"string","optional":false,"example":"mock_pod_cidr"},{"name":"serviceCidr","kind":"string","optional":false,"example":"mock_service_cidr"},{"name":"dnsServiceIP","kind":"string","optional":false,"example":"mock_dns_service_ip"}]},{"name":"addonProfiles","kind":"object","optional":false,"children":[{"name":"omsagent","kind":"object","optional":false,"children":[{"name":"enabled","kind":"string","optional":false,"example":"nested"},{"name":"config","kind":"string","optional":false,"example":"nested"}]},{"name":"httpApplicationRouting","kind":"object","optional":false,"children":[{"name":"enabled","kind":"string","optional":false,"example":"nested"},{"name":"config","kind":"string","optional":false,"example":"nested"}]}]}]}]},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-blob-containers-list-response-json","method":"GET","pathTemplate":"/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Web/sites/{name}/config","summary":"test_data/blob_containers_list_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"value","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"/subscriptions/mock_subscription_id/resourceGroups/mock_resource_group/providers"},{"name":"name","kind":"string","optional":false,"example":"test"},{"name":"type","kind":"string","optional":false,"example":"Microsoft.Storage/storageAccounts/blobServices/containers"},{"name":"properties","kind":"object","optional":false,"children":[{"name":"deleted","kind":"boolean","optional":false},{"name":"publicAccess","kind":"string","optional":false,"example":"None"},{"name":"leaseStatus","kind":"string","optional":false,"example":"Unlocked"},{"name":"leaseState","kind":"string","optional":false,"example":"Available"},{"name":"lastModifiedTime","kind":"timestamp","optional":false,"example":"2020-02-20T20:20:20.0000000Z","format":"iso"},{"name":"hasImmutabilityPolicy","kind":"boolean","optional":false},{"name":"hasLegalHold","kind":"boolean","optional":false}]}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-blob-containers-single-response-json","method":"GET","pathTemplate":"/subscriptions/sub-id/resourceGroups/test-rg/providers/Microsoft.Storage/storageAccounts/teststorage/blobServices","summary":"test_data/blob_containers_single_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"/subscriptions/mock_subscription_id/resourceGroups/mock_resource_group/providers"},{"name":"name","kind":"string","optional":false,"example":"test"},{"name":"type","kind":"string","optional":false,"example":"Microsoft.Storage/storageAccounts/blobServices/containers"},{"name":"properties","kind":"object","optional":false,"children":[{"name":"deleted","kind":"boolean","optional":false},{"name":"publicAccess","kind":"string","optional":false,"example":"None"},{"name":"leaseStatus","kind":"string","optional":false,"example":"Unlocked"},{"name":"leaseState","kind":"string","optional":false,"example":"Available"},{"name":"lastModifiedTime","kind":"timestamp","optional":false,"example":"2020-02-20T20:20:20.0000000Z","format":"iso"},{"name":"hasImmutabilityPolicy","kind":"boolean","optional":false},{"name":"hasLegalHold","kind":"boolean","optional":false}]}]}},{"id":"test-data-create-or-update-rule-response-json","method":"GET","pathTemplate":"/subscriptions/sub-id/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-webapp/config/authsettings","summary":"test_data/create_or_update_rule_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"rule1"},{"name":"id","kind":"id","optional":false,"example":"/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/networkSecur"},{"name":"etag","kind":"string","optional":false,"example":"123etag3"},{"name":"properties","kind":"object","optional":false,"children":[{"name":"provisioningState","kind":"string","optional":false,"example":"Succeeded"},{"name":"protocol","kind":"string","optional":false,"example":"*"},{"name":"sourcePortRange","kind":"string","optional":false,"example":"*"},{"name":"destinationPortRange","kind":"string","optional":false,"example":"8080"},{"name":"sourceAddressPrefix","kind":"string","optional":false,"example":"0.0.0.0/0"},{"name":"destinationAddressPrefix","kind":"string","optional":false,"example":"1.1.1.1/1"},{"name":"access","kind":"string","optional":false,"example":"Deny"},{"name":"priority","kind":"integer","optional":false},{"name":"direction","kind":"string","optional":false,"example":"Outbound"}]}]}},{"id":"test-data-create-storage-container-response-json","method":"GET","pathTemplate":"/subscriptions/sub-id/resourceGroups/test-rg/providers/Microsoft.ContainerRegistry/registries/testregistry","summary":"test_data/create_storage_container_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"testcontainer"},{"name":"id","kind":"id","optional":false,"example":"/subscriptions/subscription-id/resourceGroups/res-group/providers/Microsoft.Stor"},{"name":"type","kind":"string","optional":false,"example":"Microsoft.Storage/storageAccounts/blobServices/containers"},{"name":"etag","kind":"string","optional":false,"example":"\"0x8DB7F5589F2DC4A\""},{"name":"properties","kind":"object","optional":false,"children":[{"name":"publicAccess","kind":"string","optional":false,"example":"None"},{"name":"leaseStatus","kind":"string","optional":false,"example":"unlocked"},{"name":"leaseState","kind":"string","optional":false,"example":"available"},{"name":"lastModifiedTime","kind":"timestamp","optional":false,"example":"2024-08-14T10:00:00Z","format":"iso"},{"name":"hasImmutabilityPolicy","kind":"boolean","optional":false},{"name":"hasLegalHold","kind":"boolean","optional":false}]}]}},{"id":"test-data-get-blob-service-properties-json","method":"GET","pathTemplate":"/subscriptions/sub-id/resourceGroups/test-rg/providers/Microsoft.Sql/servers/test-server/databases/test-db","summary":"test_data/get_blob_service_properties.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"/subscriptions/subscription-id/resourceGroups/res4410/providers/Microsoft.Storag"},{"name":"name","kind":"string","optional":false,"example":"default"},{"name":"type","kind":"string","optional":false,"example":"Microsoft.Storage/storageAccounts/blobServices"},{"name":"properties","kind":"object","optional":false,"children":[{"name":"cors","kind":"object","optional":false,"children":[{"name":"corsRules","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"allowedOrigins","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"allowedMethods","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"maxAgeInSeconds","kind":"integer","optional":false},{"name":"exposedHeaders","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"allowedHeaders","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":3,"pageItems":false}]},"minItems":0,"maxItems":3,"pageItems":false}]},{"name":"defaultServiceVersion","kind":"string","optional":false,"example":"2017-07-29"},{"name":"deleteRetentionPolicy","kind":"object","optional":false,"children":[{"name":"enabled","kind":"boolean","optional":false},{"name":"days","kind":"integer","optional":false}]},{"name":"isVersioningEnabled","kind":"boolean","optional":false},{"name":"changeFeed","kind":"object","optional":false,"children":[{"name":"enabled","kind":"boolean","optional":false},{"name":"retentionInDays","kind":"integer","optional":false}]}]},{"name":"sku","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"Standard_GRS"},{"name":"tier","kind":"string","optional":false,"example":"Standard"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "azure-azure",
+  "name": "Azure",
+  "pack": "Azure",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPo",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "azure-azure",
+      "name": "Azure",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Azure/Integrations/Azure",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPolicies/default. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Azure/Integrations/Azure",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPolicies/default. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-subscriptions-subscription-id-resourcegr-0",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPolicies/default",
+        "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPolicies/default",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "columns",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "location",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "tags",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "rows",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "Address",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "PartitionKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "RowKey",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "TableName",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Timestamp",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "$skipToken",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Blob",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "Property",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Tag",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Azure/Integrations/Azure",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPolicies/default. Fields are keys the client reads or test_data contains."
+  ]
+}

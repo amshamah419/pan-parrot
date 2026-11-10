@@ -1,1 +1,124 @@
-{"id":"mandiantadvantageattacksurfacemanagement-attacksurfacemanagement","name":"Mandiant Attack Surface Management","pack":"MandiantAdvantageAttackSurfaceManagement","fidelity":"sample","curated":false,"summary":"Integrate with Mandiant Advantage Attack Surface Management to import \"issues\" as Incidents.","operations":3,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"mandiantadvantageattacksurfacemanagement-attacksurfacemanagement","name":"Mandiant Attack Surface Management","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MandiantAdvantageAttackSurfaceManagement/Integrations/AttackSurfaceManagement","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-mock-fetch-incidents-response-json","method":"GET","pathTemplate":"/issues/{indicator_id}/status","summary":"test_data/mock_fetch_incidents_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"success","kind":"boolean","optional":false},{"name":"message","kind":"string","optional":false,"example":"Search completed!"},{"name":"result","kind":"object","optional":false,"children":[{"name":"more","kind":"boolean","optional":false},{"name":"page","kind":"integer","optional":false},{"name":"page_size","kind":"integer","optional":false},{"name":"total_pages","kind":"integer","optional":false},{"name":"hits","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"2e0134b5b346a5d0a9d5ee0efe7dfb69dfcc5c1cf65a6df63568f85dc587a120"},{"name":"alias_group","kind":"string","optional":false,"example":"86373"},{"name":"dynamic_id","kind":"integer","optional":false},{"name":"name","kind":"string","optional":false,"example":"inferred_cve_2019_10081"},{"name":"first_seen","kind":"timestamp","optional":false,"example":"2022-10-07T17:36:37.000Z","format":"iso"},{"name":"last_seen","kind":"timestamp","optional":false,"example":"2022-10-07T17:36:37.000Z","format":"iso"},{"name":"collection","kind":"string","optional":false,"example":"collectionname_a6mz56o"},{"name":"collection_type","kind":"string","optional":false,"example":"user_collection"},{"name":"collection_uuid","kind":"id","optional":false,"example":"f12c71db-bbbb-aaaa-a19e-b8742ed7eb70"},{"name":"organization_uuid","kind":"id","optional":false,"example":"075892c8-aaaa-454e-bbbb-34a7342c16a3"},{"name":"entity_type","kind":"string","optional":false,"example":"Intrigue::Entity::Uri"},{"name":"entity_name","kind":"string","optional":false,"example":"https://www.some-website.eu:443"},{"name":"entity_uid","kind":"id","optional":false,"example":"2a7cdfb23b2253a9ea4cc88962e0b7cd9b1622f7d44e56f675a8700b934d1f51"},{"name":"upstream","kind":"string","optional":false,"example":"intrigue"},{"name":"summary","kind":"object","optional":false,"children":[{"name":"pretty_name","kind":"string","optional":false,"example":"Inferred CVE Pretty Name"},{"name":"severity","kind":"integer","optional":false},{"name":"scoped","kind":"boolean","optional":false},{"name":"confidence","kind":"string","optional":false,"example":"potential"},{"name":"status","kind":"string","optional":false,"example":"open_new"},{"name":"category","kind":"string","optional":false,"example":"unknown"},{"name":"identifiers","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"status_new","kind":"string","optional":false,"example":"open"},{"name":"status_new_detailed","kind":"string","optional":false,"example":"new"},{"name":"ticket_list","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":1,"pageItems":false}]}]}},{"id":"test-data-mock-get-remote-data-issue-details-respo","method":"GET","pathTemplate":"/branding/icons/org.png","summary":"test_data/mock_get_remote_data_issue_details_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"success","kind":"boolean","optional":false},{"name":"message","kind":"string","optional":false,"example":"successfully returned issue"},{"name":"result","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"9fc77fef-6362-4aef-a154-0ab4a058d5de"},{"name":"dynamic_id","kind":"integer","optional":false},{"name":"entity_uid","kind":"id","optional":false,"example":"a4cfa1f3c7864d343f8b9568248ad7550400598ddf10ea18959c860ca6253a01"},{"name":"alias_group","kind":"string","optional":false,"example":"1156748"},{"name":"category","kind":"string","optional":false,"example":"misconfiguration"},{"name":"confidence","kind":"string","optional":false,"example":"confirmed"},{"name":"description","kind":"string","optional":false,"example":"This server is configured to allow a deprecated ssl / tls protocol."},{"name":"details","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"deprecated_ssl_protocol_detected"},{"name":"added","kind":"string","optional":false,"example":"2020-01-01"},{"name":"proof","kind":"object","optional":false,"children":[{"name":"details","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"tls"},{"name":"enabled","kind":"string","optional":false,"example":"1"},{"name":"version","kind":"string","optional":false,"example":"1.1"}]},{"name":"description","kind":"string","optional":false,"example":"Target supports deprecated protocol tls with version 1.1"}]},{"name":"source","kind":"string","optional":false,"example":"tls:1.1"},{"name":"category","kind":"string","optional":false,"example":"misconfiguration"},{"name":"severity","kind":"string","optional":false,"example":"5"},{"name":"references","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"description","kind":"string","optional":false,"example":"This server is configured to allow a deprecated ssl / tls protocol."},{"name":"pretty_name","kind":"string","optional":false,"example":"Deprecated SSL/TLS Protocol Detected"},{"name":"remediation","kind":"string","optional":false,"example":"Disable the weak protocol according the the instructions for your web server."}]},{"name":"first_seen","kind":"timestamp","optional":false,"example":"2022-08-18T17:12:20.000Z","format":"iso"},{"name":"identifiers","kind":"string","optional":true},{"name":"last_seen","kind":"timestamp","optional":false,"example":"2022-08-23T20:05:56.000Z","format":"iso"},{"name":"name","kind":"string","optional":false,"example":"deprecated_ssl_protocol_detected"},{"name":"pretty_name","kind":"string","optional":false,"example":"Deprecated SSL/TLS Protocol Detected"},{"name":"scoped","kind":"boolean","optional":false},{"name":"severity","kind":"integer","optional":false},{"name":"source","kind":"string","optional":true},{"name":"status","kind":"string","optional":false,"example":"open_triaged"},{"name":"ticket_list","kind":"string","optional":true},{"name":"type","kind":"string","optional":false,"example":"standard"},{"name":"uid","kind":"id","optional":false,"example":"8e02af6c136f297aa8fece36726a6d659bf59f512ca8a90350d93038215a19d7"},{"name":"upstream","kind":"string","optional":false,"example":"tls:1.1"},{"name":"created_at","kind":"timestamp","optional":false,"example":"2022-09-25T05:21:20.000Z","format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"example":"2023-02-11T17:39:17.810Z","format":"iso"},{"name":"entity_id","kind":"integer","optional":false},{"name":"collection_id","kind":"integer","optional":false},{"name":"elasticsearch_mappings_hash","kind":"string","optional":true},{"name":"collection","kind":"string","optional":false,"example":"collectionname_mw3tdwq"},{"name":"collection_type","kind":"string","optional":false,"example":"user_collection"},{"name":"collection_uuid","kind":"id","optional":false,"example":"cb502f1e-10a8-4520-a620-e02614526ee9"},{"name":"organization_uuid","kind":"id","optional":false,"example":"092c7588-fe6f-454e-a071-34a7342c16a3"},{"name":"entity_name","kind":"string","optional":false,"example":"https://domain.app:443"},{"name":"entity_type","kind":"string","optional":false,"example":"Intrigue::Entity::Uri"},{"name":"summary","kind":"object","optional":false,"children":[{"name":"pretty_name","kind":"string","optional":false,"example":"Deprecated SSL/TLS Protocol Detected"},{"name":"severity","kind":"integer","optional":false},{"name":"scoped","kind":"boolean","optional":false},{"name":"confidence","kind":"string","optional":false,"example":"confirmed"},{"name":"status","kind":"string","optional":false,"example":"open_triaged"},{"name":"category","kind":"string","optional":false,"example":"misconfiguration"},{"name":"identifiers","kind":"string","optional":true}]}]}]}},{"id":"test-data-mock-get-remote-data-notes-response-json","method":"GET","pathTemplate":"/api/v1","summary":"test_data/mock_get_remote_data_notes_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"success","kind":"boolean","optional":false},{"name":"message","kind":"string","optional":false,"example":"Notes for issue 6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459"},{"name":"result","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"created_at","kind":"string","optional":false,"example":"2022-09-09 16:45:52 UTC"},{"name":"collection","kind":"string","optional":false,"example":"collectionname_mw3tdwq"},{"name":"created_by","kind":"string","optional":false,"example":"c1ac6a07-fda8-4568-90c3-ea2ba6ec2535"},{"name":"uid","kind":"id","optional":false,"example":"ee74ee7d3c06791bf984480810169ab123d97541b39afd623bd08b3981450d93"},{"name":"item_type","kind":"string","optional":false,"example":"issue"},{"name":"updated_at","kind":"timestamp","optional":false,"example":"2022-09-09T16:45:52Z","format":"iso"},{"name":"item_name","kind":"string","optional":false,"example":"weak_ssl_ciphers_enabled"},{"name":"note","kind":"string","optional":false,"example":"- testing a note that supports markdown\n- and has some neat new features"},{"name":"note_type","kind":"string","optional":false,"example":"issue"},{"name":"organization_uuid","kind":"id","optional":false},{"name":"item_uid","kind":"id","optional":false,"example":"6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459"},{"name":"id","kind":"id","optional":false,"example":"issue#issue#weak_ssl_ciphers_enabled#c1ac6a07-fda8-4568-90c3-ea2ba6ec2535#2022-0"},{"name":"entity_uid","kind":"id","optional":false,"example":"73084b532388540a4dc9fd951eb9369fd03ae312d20e45b553f670c84e8340c8"}]},"minItems":0,"maxItems":1,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "mandiantadvantageattacksurfacemanagement-attacksurfacemanagement",
+  "name": "Mandiant Attack Surface Management",
+  "pack": "MandiantAdvantageAttackSurfaceManagement",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /api/v1/search/issues.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "mandiantadvantageattacksurfacemanagement-attacksurfacemanagement",
+      "name": "Mandiant Attack Surface Management",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MandiantAdvantageAttackSurfaceManagement/Integrations/AttackSurfaceManagement",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v1/search/issues. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/MandiantAdvantageAttackSurfaceManagement/Integrations/AttackSurfaceManagement",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v1/search/issues. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-api-v1-search-issues-0",
+        "method": "GET",
+        "pathTemplate": "/api/v1/search/issues",
+        "summary": "GET /api/v1/search/issues",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "collection",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created_at",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created_by_user",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "printable_name",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "dbotMirrorLastSync",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "entity_name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "first_seen",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MandiantAdvantageAttackSurfaceManagement/Integrations/AttackSurfaceManagement",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v1/search/issues. Fields are keys the client reads or test_data contains."
+  ]
+}

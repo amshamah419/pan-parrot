@@ -1,1 +1,118 @@
-{"id":"carbonblackprotect-carbonblackprotect","name":"VMware Carbon Black App Control v2","pack":"CarbonBlackProtect","fidelity":"shape","curated":false,"summary":"VMware Carbon Black App Control (formerly known as Carbon Black Enterprise Protection) is a next-generation endpoint threat prevention solution to deliver a portfolio of protection","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"carbonblackprotect-carbonblackprotect","name":"VMware Carbon Black App Control v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CarbonBlackProtect/Integrations/CarbonBlackProtect","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"cbp-filecatalog-search","method":"GET","pathTemplate":"/fileCatalog","summary":"Search for file catalogs. See more: https://developer.carbonblack.com/reference/enterprise-protection/8.0/rest-api/#filecatalog","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"File","kind":"object","optional":false,"children":[{"name":"Size","kind":"string","optional":false,"example":"Size"},{"name":"Path","kind":"string","optional":false,"example":"Path"},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"ProductName","kind":"string","optional":false,"example":"ProductName"},{"name":"ID","kind":"id","optional":false},{"name":"Publisher","kind":"string","optional":false,"example":"Publisher"},{"name":"Company","kind":"string","optional":false,"example":"Company"},{"name":"Extension","kind":"string","optional":false,"example":"Extension"}]}]}},{"id":"cbp-computer-search","method":"GET","pathTemplate":"/Computer","summary":"Search for computers. For more information, see the Carbon Black documentation: https://developer.carbonblack.com/reference/enterprise-protection/8.0/rest-api/#","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Endpoint","kind":"object","optional":false,"children":[{"name":"OS","kind":"string","optional":false,"example":"OS"}]},{"name":"Memory","kind":"number","optional":false}]}},{"id":"cbp-computer-update","method":"POST","pathTemplate":"/computer","summary":"Updates computer objects. Note that some computer properties can be changed only if specific boolean parameters are set. For more information, see the Carbon Bl","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Endpoint","kind":"object","optional":false,"children":[{"name":"Processors","kind":"number","optional":false},{"name":"OS","kind":"string","optional":false,"example":"OS"},{"name":"MACAddress","kind":"string","optional":false,"example":"MACAddress"},{"name":"Model","kind":"string","optional":false,"example":"Model"},{"name":"IPAddress","kind":"string","optional":false,"example":"IPAddress"},{"name":"Processor","kind":"string","optional":false,"example":"Processor"},{"name":"Hostname","kind":"string","optional":false,"example":"Hostname"},{"name":"OSVersion","kind":"string","optional":false,"example":"OSVersion"},{"name":"ID","kind":"id","optional":false}]}]}},{"id":"cbp-computer-get","method":"GET","pathTemplate":"/fileInstance","summary":"Returns information for a computer. For more information, see the Carbon Black documentation: https://developer.carbonblack.com/reference/enterprise-protection/","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Endpoint","kind":"object","optional":false,"children":[{"name":"Processors","kind":"number","optional":false},{"name":"OS","kind":"string","optional":false,"example":"OS"},{"name":"MACAddress","kind":"string","optional":false,"example":"MACAddress"},{"name":"Model","kind":"string","optional":false,"example":"Model"},{"name":"IPAddress","kind":"string","optional":false,"example":"IPAddress"},{"name":"Processor","kind":"string","optional":false,"example":"Processor"},{"name":"Hostname","kind":"string","optional":false,"example":"Hostname"},{"name":"OSVersion","kind":"string","optional":false,"example":"OSVersion"},{"name":"ID","kind":"id","optional":false}]}]}},{"id":"cbp-fileinstance-search","method":"GET","pathTemplate":"/event","summary":"Search for file instances. For more information, see the Carbon Black documentation: https://developer.carbonblack.com/reference/enterprise-protection/8.0/rest-","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CBP","kind":"object","optional":false,"children":[{"name":"FileInstance","kind":"object","optional":false,"children":[{"name":"CatalogID","kind":"id","optional":false},{"name":"ComputerID","kind":"id","optional":false},{"name":"ID","kind":"id","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Path","kind":"string","optional":false,"example":"Path"}]}]}]}},{"id":"cbp-event-search","method":"GET","pathTemplate":"/approvalRequest","summary":"Search for events. For more information, see the Carbon Black documentation: https://developer.carbonblack.com/reference/enterprise-protection/8.0/rest-api/#eve","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CBP","kind":"object","optional":false,"children":[{"name":"Event","kind":"object","optional":false,"children":[{"name":"FilePath","kind":"string","optional":false,"example":"FilePath"},{"name":"Param1","kind":"string","optional":false,"example":"Param1"},{"name":"Param2","kind":"string","optional":false,"example":"Param2"},{"name":"Param3","kind":"string","optional":false,"example":"Param3"},{"name":"SubTypeName","kind":"string","optional":false,"example":"SubTypeName"},{"name":"ComputerName","kind":"string","optional":false,"example":"ComputerName"},{"name":"FileName","kind":"string","optional":false,"example":"FileName"},{"name":"RuleName","kind":"string","optional":false,"example":"RuleName"},{"name":"ProcessFileCatalogID","kind":"id","optional":false},{"name":"StringID","kind":"id","optional":false},{"name":"IPAddress","kind":"string","optional":false,"example":"IPAddress"},{"name":"PolicyID","kind":"id","optional":false},{"name":"Timestamp","kind":"timestamp","optional":false,"format":"iso"},{"name":"Username","kind":"string","optional":false,"example":"Username"},{"name":"ComputerID","kind":"id","optional":false},{"name":"ProcessFileName","kind":"string","optional":false,"example":"ProcessFileName"},{"name":"FileCatalogID","kind":"id","optional":false},{"name":"IndicatorName","kind":"string","optional":false,"example":"IndicatorName"},{"name":"SubType","kind":"number","optional":false},{"name":"Type","kind":"number","optional":false},{"name":"ID","kind":"number","optional":false},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Severity","kind":"string","optional":false,"example":"Severity"},{"name":"CommandLine","kind":"string","optional":false,"example":"CommandLine"},{"name":"ProcessPathName","kind":"string","optional":false,"example":"ProcessPathName"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "carbonblackprotect-carbonblackprotect",
+  "name": "VMware Carbon Black App Control v2",
+  "pack": "CarbonBlackProtect",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /api/bit9platform/v1/event.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "carbonblackprotect-carbonblackprotect",
+      "name": "VMware Carbon Black App Control v2",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CarbonBlackProtect/Integrations/CarbonBlackProtect",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /api/bit9platform/v1/event. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CarbonBlackProtect/Integrations/CarbonBlackProtect",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/bit9platform/v1/event. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-api-bit9platform-v1-event-0",
+        "method": "GET",
+        "pathTemplate": "/api/bit9platform/v1/event",
+        "summary": "GET /api/bit9platform/v1/event",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "EnforcementLevel",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileState",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Reputation",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Resolution",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Severity",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CarbonBlackProtect/Integrations/CarbonBlackProtect",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /api/bit9platform/v1/event. Fields are keys the client reads or test_data contains."
+  ]
+}

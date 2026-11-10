@@ -1,1 +1,118 @@
-{"id":"paloaltonetworks-prisma-airs-prismaairsredteam","name":"Palo Alto Networks Prisma AIRS - AI Red Teaming","pack":"PaloAltoNetworks_Prisma_AIRs","fidelity":"sample","curated":false,"summary":"Discover and remediate AI application vulnerabilities with Palo Alto Networks Prisma AIRS AI Red Teaming: targets, adapters, scans, attack reports, prompt sets, and custom attacks.","operations":1,"origin":"readme","spec":{"version":1,"source":{"kind":"preset","id":"paloaltonetworks-prisma-airs-prismaairsredteam","name":"Palo Alto Networks Prisma AIRS - AI Red Teaming","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Prisma_AIRs/Integrations/PrismaAIRsRedTeam","fidelity":"sample","notes":["The response shape comes from a JSON example in the integration README.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"readme","method":"GET","pathTemplate":"/v1/custom-attacks/report/job-1/prompt-set/ps-1/prompts","summary":"README","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"api_endpoint_type","kind":"string","optional":false,"example":"PRIVATE"},{"name":"auth_type","kind":"string","optional":true},{"name":"connection_type","kind":"string","optional":false,"example":"CUSTOM"},{"name":"created_at","kind":"timestamp","optional":false,"example":"2026-05-29T14:45:35.612826Z","format":"iso"},{"name":"created_by_user_id","kind":"id","optional":false,"example":"59087f43-bd63-4d7d-940d-2ff5dd9382b3"},{"name":"description","kind":"string","optional":false},{"name":"name","kind":"string","optional":false,"example":"example-app-3"},{"name":"response_mode","kind":"string","optional":false,"example":"REST"},{"name":"session_supported","kind":"boolean","optional":false},{"name":"status","kind":"string","optional":false,"example":"ACTIVE"},{"name":"target_type","kind":"string","optional":false,"example":"APPLICATION"},{"name":"tsg_id","kind":"id","optional":false,"example":"1234567"},{"name":"updated_at","kind":"timestamp","optional":false,"example":"2026-06-18T08:48:37.181752Z","format":"iso"},{"name":"updated_by_user_id","kind":"id","optional":false,"example":"59087f43-bd63-4d7d-940d-2ff5dd9382b3"},{"name":"uuid","kind":"id","optional":false,"example":"c5503ac6-321c-4ae0-bf0b-3dc81907972a"},{"name":"validated","kind":"boolean","optional":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "paloaltonetworks-prisma-airs-prismaairsredteam",
+  "name": "Palo Alto Networks Prisma AIRS - AI Red Teaming",
+  "pack": "PaloAltoNetworks_Prisma_AIRs",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /v1/error-log/target-profile/{target_id}.",
+  "operations": 1,
+  "origin": "readme",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "paloaltonetworks-prisma-airs-prismaairsredteam",
+      "name": "Palo Alto Networks Prisma AIRS - AI Red Teaming",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Prisma_AIRs/Integrations/PrismaAIRsRedTeam",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /v1/error-log/target-profile/{target_id}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Prisma_AIRs/Integrations/PrismaAIRsRedTeam",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v1/error-log/target-profile/{target_id}. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-v1-error-log-target-profile-target-id-0",
+        "method": "GET",
+        "pathTemplate": "/v1/error-log/target-profile/{target_id}",
+        "summary": "GET /v1/error-log/target-profile/{target_id}",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Content-Disposition",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "aborted_at",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "accepted_at",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "accepted_by_user_id",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Prisma_AIRs/Integrations/PrismaAIRsRedTeam",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /v1/error-log/target-profile/{target_id}. Fields are keys the client reads or test_data contains."
+  ]
+}

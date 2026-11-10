@@ -1,1 +1,118 @@
-{"id":"symantecendpointsecurity-symantecendpointsecurity","name":"Symantec Endpoint Security","pack":"SymantecEndpointSecurity","fidelity":"shape","curated":false,"summary":"Symantec Endpoint Security Event Collector for Cortex XSIAM.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"symantecendpointsecurity-symantecendpointsecurity","name":"Symantec Endpoint Security","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/SymantecEndpointSecurity/Integrations/SymantecEndpointSecurity","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"symantec-ses-reset-integration-context","method":"GET","pathTemplate":"/v1/event-export/stream/{self.stream_id}/{self.channel_id}","summary":"Reset Integration context. By default, resetting the integration context only resets the `next_fetch` field in the integration context.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"delete_all","kind":"string","optional":false,"example":"delete_all"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "symantecendpointsecurity-symantecendpointsecurity",
+  "name": "Symantec Endpoint Security",
+  "pack": "SymantecEndpointSecurity",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: POST /v1/event-export/stream/{stream_id}/{channel_id}.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "symantecendpointsecurity-symantecendpointsecurity",
+      "name": "Symantec Endpoint Security",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecEndpointSecurity/Integrations/SymantecEndpointSecurity",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched POST /v1/event-export/stream/{stream_id}/{channel_id}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecEndpointSecurity/Integrations/SymantecEndpointSecurity",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /v1/event-export/stream/{stream_id}/{channel_id}. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "post-v1-event-export-stream-stream-id-channel-0",
+        "method": "POST",
+        "pathTemplate": "/v1/event-export/stream/{stream_id}/{channel_id}",
+        "summary": "POST /v1/event-export/stream/{stream_id}/{channel_id}",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "events",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "events_suspected_duplicates",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_fetch_events",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "latest_event_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "log_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "next",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecEndpointSecurity/Integrations/SymantecEndpointSecurity",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched POST /v1/event-export/stream/{stream_id}/{channel_id}. Fields are keys the client reads or test_data contains."
+  ]
+}

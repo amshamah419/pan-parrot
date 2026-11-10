@@ -1,1 +1,118 @@
-{"id":"cyberarkpas-cyberarkisp","name":"CyberArk Identity Security Platform","pack":"CyberArkPAS","fidelity":"shape","curated":false,"summary":"CyberArk Identity Security Platform secures human and machine identities across hybrid/multi-cloud environments with intelligent privilege controls, AI-driven threat detection, and","operations":5,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"cyberarkpas-cyberarkisp","name":"CyberArk Identity Security Platform","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CyberArkPAS/Integrations/CyberArkISP","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"cyberark-isp-get-users","method":"GET","pathTemplate":"/test","summary":"Manually fetches CyberArk Cloud Directory user snapshots via the Redrock Query API. For developing/debugging only. Use with caution if 'should_push_assets' is s","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CyberArkISP","kind":"object","optional":false,"children":[{"name":"User","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false},{"name":"Username","kind":"string","optional":false,"example":"Username"},{"name":"DisplayName","kind":"string","optional":false,"example":"DisplayName"},{"name":"Email","kind":"string","optional":false,"example":"Email"},{"name":"LastLogin","kind":"timestamp","optional":false,"format":"iso"}]}]}]}},{"id":"cyberark-isp-get-groups","method":"GET","pathTemplate":"/","summary":"Manually fetches CyberArk Cloud Directory group snapshots via the Redrock Query API. For developing/debugging only.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CyberArkISP","kind":"object","optional":false,"children":[{"name":"Group","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"}]}]}]}},{"id":"cyberark-isp-get-roles","method":"GET","pathTemplate":"/","summary":"Manually fetches CyberArk Cloud Directory role snapshots via the Redrock Query API. For developing/debugging only.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CyberArkISP","kind":"object","optional":false,"children":[{"name":"Role","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]}]}},{"id":"cyberark-isp-get-applications","method":"GET","pathTemplate":"/","summary":"Manually fetches CyberArk Cloud Directory application snapshots via the Redrock Query API. For developing/debugging only.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CyberArkISP","kind":"object","optional":false,"children":[{"name":"Application","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"AppType","kind":"string","optional":false,"example":"AppType"}]}]}]}},{"id":"cyberark-isp-get-events","method":"GET","pathTemplate":"/","summary":"Gets audit events from CyberArk Identity Security Platform. This command is used for developing/debugging and is to be used with caution, as it can create event","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"CyberArkISP","kind":"object","optional":false,"children":[{"name":"Event","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false},{"name":"tenantId","kind":"id","optional":false},{"name":"timestamp","kind":"number","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"},{"name":"applicationCode","kind":"string","optional":false,"example":"applicationCode"},{"name":"auditCode","kind":"string","optional":false,"example":"auditCode"},{"name":"auditType","kind":"string","optional":false,"example":"auditType"},{"name":"action","kind":"string","optional":false,"example":"action"},{"name":"userId","kind":"id","optional":false},{"name":"source","kind":"string","optional":false,"example":"source"},{"name":"actionType","kind":"string","optional":false,"example":"actionType"},{"name":"component","kind":"string","optional":false,"example":"component"},{"name":"serviceName","kind":"string","optional":false,"example":"serviceName"},{"name":"message","kind":"string","optional":false,"example":"message"},{"name":"customData","kind":"string","optional":false,"example":"customData"},{"name":"cloudProvider","kind":"string","optional":false,"example":"cloudProvider"},{"name":"identityType","kind":"string","optional":false,"example":"identityType"},{"name":"originRegion","kind":"string","optional":false,"example":"originRegion"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "cyberarkpas-cyberarkisp",
+  "name": "CyberArk Identity Security Platform",
+  "pack": "CyberArkPAS",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: POST /Redrock/Query.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "cyberarkpas-cyberarkisp",
+      "name": "CyberArk Identity Security Platform",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CyberArkPAS/Integrations/CyberArkISP",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched POST /Redrock/Query. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CyberArkPAS/Integrations/CyberArkISP",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /Redrock/Query. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "post-redrock-query-0",
+        "method": "POST",
+        "pathTemplate": "/Redrock/Query",
+        "summary": "POST /Redrock/Query",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Count",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FullCount",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Message",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "MessageID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Result",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Results",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CyberArkPAS/Integrations/CyberArkISP",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched POST /Redrock/Query. Fields are keys the client reads or test_data contains."
+  ]
+}

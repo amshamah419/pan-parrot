@@ -1,1 +1,126 @@
-{"id":"checkpointsandblast-checkpointsandblast","name":"Check Point Threat Emulation (SandBlast)","pack":"CheckPointSandBlast","fidelity":"sample","curated":false,"summary":"Uploads files using polling. The service supports Microsoft Office files, as well as PDF, SWF, archives, and executables. Active content will be cleaned from any documents that you","operations":3,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"checkpointsandblast-checkpointsandblast","name":"Check Point Threat Emulation (SandBlast)","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CheckPointSandBlast/Integrations/CheckPointSandBlast","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-query-response-json","method":"GET","pathTemplate":"/download","summary":"test_data/query_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"response","kind":"object","optional":false,"children":[{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"label","kind":"string","optional":false,"example":"FOUND"},{"name":"message","kind":"string","optional":false,"example":"The requested data has been found."}]},{"name":"md5","kind":"string","optional":false,"example":"da855ff838250f45d528a5a05692f14e"},{"name":"features","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"av"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"te","kind":"object","optional":false,"children":[{"name":"combined_verdict","kind":"string","optional":false,"example":"malicious"},{"name":"severity","kind":"integer","optional":false},{"name":"confidence","kind":"integer","optional":false},{"name":"summary_report","kind":"string","optional":false,"example":"8cf485d8-d095-4487-ba36-a887d20fc83a"},{"name":"images","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"report","kind":"object","optional":false,"children":[{"name":"verdict","kind":"string","optional":false,"example":"nested"},{"name":"xml_report","kind":"string","optional":false,"example":"nested"}]},{"name":"status","kind":"string","optional":false,"example":"found"},{"name":"id","kind":"id","optional":false,"example":"5e5de275-a103-4f67-b55b-47532918fa59"},{"name":"revision","kind":"integer","optional":false}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"label","kind":"string","optional":false,"example":"FOUND"},{"name":"message","kind":"string","optional":false,"example":"The requested data has been found"}]}]},{"name":"av","kind":"object","optional":false,"children":[{"name":"malware_info","kind":"object","optional":false,"children":[{"name":"signature_name","kind":"string","optional":false,"example":"Exploit.JS.Pdfka.fma.W.ygrku"},{"name":"malware_family","kind":"integer","optional":false},{"name":"malware_type","kind":"integer","optional":false},{"name":"sevirity","kind":"integer","optional":false},{"name":"confidence","kind":"integer","optional":false}]},{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"label","kind":"string","optional":false,"example":"FOUND"},{"name":"message","kind":"string","optional":false,"example":"The requested data has been found"}]}]},{"name":"extraction","kind":"object","optional":false,"children":[{"name":"method","kind":"string","optional":false,"example":"pdf"},{"name":"extract_result","kind":"string","optional":false,"example":"CP_EXTRACT_RESULT_SUCCESS"},{"name":"extracted_file_download_id","kind":"id","optional":false,"example":"82f67772-2116-4d29-a5be-245a434af2ae"},{"name":"output_file_name","kind":"string","optional":false,"example":"MyFile.docx.pdf"},{"name":"time","kind":"string","optional":false,"example":"1.374"},{"name":"extract_content","kind":"string","optional":false,"example":"Database Queries"},{"name":"extraction_data","kind":"object","optional":false,"children":[{"name":"input_extension","kind":"string","optional":false,"example":"docx"},{"name":"input_real_extension","kind":"string","optional":false,"example":"xls"},{"name":"message","kind":"string","optional":false,"example":"OK"},{"name":"orig_file_url","kind":"string","optional":false},{"name":"output_file_name","kind":"string","optional":false,"example":"MyFile.cleaned.xls.pdf"},{"name":"protection_name","kind":"string","optional":false,"example":"Potential malicious content extracted"},{"name":"protection_type","kind":"string","optional":false,"example":"Conversion to PDF"},{"name":"risk","kind":"integer","optional":false},{"name":"scrub_activity","kind":"string","optional":false,"example":"Active content was found - XLS file was converted to PDF"},{"name":"scrub_method","kind":"string","optional":false,"example":"Convert to PDF"},{"name":"scrub_result","kind":"integer","optional":false},{"name":"scrub_time","kind":"string","optional":false,"example":"1.374"},{"name":"scrubbed_content","kind":"string","optional":false,"example":"Database Queries"}]},{"name":"tex_product","kind":"boolean","optional":false},{"name":"status","kind":"object","optional":false,"children":[]}]}]}]}},{"id":"test-data-quota-response-json","method":"GET","pathTemplate":"/upload","summary":"test_data/quota_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"response","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"remain_quota_hour","kind":"integer","optional":false},{"name":"remain_quota_month","kind":"integer","optional":false},{"name":"assigned_quota_hour","kind":"integer","optional":false},{"name":"assigned_quota_month","kind":"integer","optional":false},{"name":"hourly_quota_next_reset","kind":"string","optional":false,"example":"1656403200"},{"name":"monthly_quota_next_reset","kind":"string","optional":false,"example":"1656633600"},{"name":"quota_id","kind":"id","optional":false,"example":"ID"},{"name":"cloud_monthly_quota_period_start","kind":"timestamp","optional":false,"example":"1654041600","format":"unix-string"},{"name":"cloud_monthly_quota_usage_for_this_gw","kind":"integer","optional":false},{"name":"cloud_hourly_quota_usage_for_this_gw","kind":"integer","optional":false},{"name":"cloud_monthly_quota_usage_for_quota_id","kind":"integer","optional":false},{"name":"cloud_hourly_quota_usage_for_quota_id","kind":"integer","optional":false},{"name":"monthly_exceeded_quota","kind":"integer","optional":false},{"name":"hourly_exceeded_quota","kind":"integer","optional":false},{"name":"cloud_quota_max_allow_to_exceed_percentage","kind":"integer","optional":false},{"name":"pod_time_gmt","kind":"timestamp","optional":false,"example":"1656403028","format":"unix-string"},{"name":"quota_expiration","kind":"string","optional":false,"example":"1657238400"},{"name":"action","kind":"string","optional":false,"example":"ALLOW"}]},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-upload-response-json","method":"GET","pathTemplate":"/query","summary":"test_data/upload_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"response","kind":"object","optional":false,"children":[{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"label","kind":"string","optional":false,"example":"UPLOAD_SUCCESS"},{"name":"message","kind":"string","optional":false,"example":"The file was uploaded successfully."}]},{"name":"sha1","kind":"string","optional":false,"example":"a4436b403327a736f4fa8415ebe0f0f276d7bcc1"},{"name":"md5","kind":"string","optional":false,"example":"dd16b4a9a76e8cd640777c08fbfdf582"},{"name":"sha256","kind":"string","optional":false,"example":"2ae67c5fb0eefe07e5f2b867373a630614cc8fe423b309bd2134664adbfe7960"},{"name":"file_type","kind":"string","optional":false,"example":"pdf"},{"name":"file_name","kind":"string","optional":false,"example":"upload_file.pdf"},{"name":"features","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"te"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"te","kind":"object","optional":false,"children":[{"name":"trust","kind":"integer","optional":false},{"name":"images","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"report","kind":"object","optional":false,"children":[{"name":"verdict","kind":"string","optional":false,"example":"nested"}]},{"name":"status","kind":"string","optional":false,"example":"not_found"},{"name":"id","kind":"id","optional":false,"example":"3ff3ddae-e7fd-4969-818c-d5f1a2be336d"},{"name":"revision","kind":"integer","optional":false}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"score","kind":"integer","optional":false},{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"label","kind":"string","optional":false,"example":"UPLOAD_SUCCESS"},{"name":"message","kind":"string","optional":false,"example":"The file was uploaded successfully."}]}]},{"name":"extraction","kind":"object","optional":false,"children":[{"name":"method","kind":"string","optional":false,"example":"pdf"},{"name":"tex_product","kind":"boolean","optional":false},{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"label","kind":"string","optional":false,"example":"UPLOAD_SUCCESS"},{"name":"message","kind":"string","optional":false,"example":"The file was uploaded successfully."}]}]},{"name":"av","kind":"object","optional":false,"children":[{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"label","kind":"string","optional":false,"example":"UPLOAD_SUCCESS"},{"name":"message","kind":"string","optional":false,"example":"The file was uploaded successfully."}]}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "checkpointsandblast-checkpointsandblast",
+  "name": "Check Point Threat Emulation (SandBlast)",
+  "pack": "CheckPointSandBlast",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /download.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "checkpointsandblast-checkpointsandblast",
+      "name": "Check Point Threat Emulation (SandBlast)",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointSandBlast/Integrations/CheckPointSandBlast",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /download. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointSandBlast/Integrations/CheckPointSandBlast",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /download. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-download-0",
+        "method": "GET",
+        "pathTemplate": "/download",
+        "summary": "GET /download",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Content-Disposition",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "response",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "action",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "assigned_quota_hour",
+                  "kind": "integer"
+                },
+                {
+                  "name": "assigned_quota_month",
+                  "kind": "integer"
+                },
+                {
+                  "name": "av",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "cloud_hourly_quota_usage_for_quota_id",
+                  "kind": "integer"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointSandBlast/Integrations/CheckPointSandBlast",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /download. Fields are keys the client reads or test_data contains."
+  ]
+}

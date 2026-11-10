@@ -1,1 +1,119 @@
-{"id":"microsoftgraphsearch-microsoftgraphsearch","name":"Microsoft Graph Search","pack":"MicrosoftGraphSearch","fidelity":"shape","curated":false,"summary":"Use the Microsoft Search API in Microsoft Graph to search content stored in OneDrive or SharePoint: files, folders, lists, list items, or sites.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"microsoftgraphsearch-microsoftgraphsearch","name":"Microsoft Graph Search","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSearch/Integrations/MicrosoftGraphSearch","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"msgraph-search-content","method":"POST","pathTemplate":"/search/query","summary":"Use the Microsoft Search API in Microsoft Graph to search content stored in OneDrive or SharePoint: files, folders, lists, list items, or sites.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"SearchContent","kind":"string","optional":false,"example":"SearchContent"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "microsoftgraphsearch-microsoftgraphsearch",
+  "name": "Microsoft Graph Search",
+  "pack": "MicrosoftGraphSearch",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: POST /v1.0/search/query.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "microsoftgraphsearch-microsoftgraphsearch",
+      "name": "Microsoft Graph Search",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSearch/Integrations/MicrosoftGraphSearch",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched POST /v1.0/search/query. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSearch/Integrations/MicrosoftGraphSearch",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /v1.0/search/query. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "post-v1-0-search-query-0",
+        "method": "POST",
+        "pathTemplate": "/v1.0/search/query",
+        "summary": "POST /v1.0/search/query",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "hits",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "resource",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "displayName",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "webUrl",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "summary",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSearch/Integrations/MicrosoftGraphSearch",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched POST /v1.0/search/query. Fields are keys the client reads or test_data contains."
+  ]
+}
