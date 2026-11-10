@@ -282,6 +282,8 @@ export interface MockSpec {
     attribution?: string;
     sourceUrl?: string;
     fidelity?: "vendor" | "approximate" | "verified" | "guessed" | "high" | "sample" | "shape" | "generated";
+    /** True when a vendor example needed a recorded mechanical formatting repair. */
+    formattingFixed?: boolean;
     notes?: string[];
     unsupported?: string[];
     verification?: {
@@ -448,6 +450,7 @@ export function validateMockSpec(input: unknown): MockSpec {
       attribution: cleanOptional(raw.source.attribution, 500),
       sourceUrl: cleanOptional(raw.source.sourceUrl, 300),
       fidelity: raw.source.fidelity,
+      formattingFixed: raw.source.formattingFixed === true ? true : undefined,
       notes: cleanList(raw.source.notes, 12, 500),
       unsupported: cleanList(raw.source.unsupported, 20, 300),
       verification: normalizeVerification(raw.source.verification),

@@ -4,6 +4,24 @@ import { validateMockSpec } from "./mock-spec";
 import { defaultChaos } from "./mock-spec";
 
 type Scrub = { find: string; replace: string };
+type Repair = { type: string; location?: number | string; before: string; after: string };
+
+function applyRepairs(text: string, repairs: Repair[]): string {
+  for (const repair of repairs) {
+    if (typeof repair.location === "number") {
+      const end = repair.location + repair.before.length;
+      if (text.slice(repair.location, end) !== repair.before) {
+        throw new Error(`${repair.type} does not match at ${repair.location}`);
+      }
+      text = text.slice(0, repair.location) + repair.after + text.slice(end);
+      continue;
+    }
+    const count = text.split(repair.before).length - 1;
+    if (count !== 1) throw new Error(`${repair.type} before-text must occur once`);
+    text = text.replace(repair.before, repair.after);
+  }
+  return text;
+}
 
 function scrub(value: unknown, scrubs: Scrub[]): unknown {
   if (typeof value === "string") {
@@ -38,7 +56,15 @@ describe("vendor doc provenance", () => {
         id: string;
         sourceType: string;
         docUrl: string;
-        operations: Array<{ method: string; path: string; operationId?: string; excerpt: unknown; scrubs: Scrub[] }>;
+        label?: string;
+        operations: Array<{
+          method: string;
+          path: string;
+          operationId?: string;
+          excerpt: unknown;
+          scrubs?: Scrub[];
+          repairs?: Repair[];
+        }>;
       };
       expect(["vendor-example", "vendor-schema"]).toContain(source.sourceType);
       expect(source.docUrl.startsWith("https://")).toBe(true);
@@ -56,18 +82,29 @@ describe("vendor doc provenance", () => {
         const operation = matches[0];
         covered.add(operation.id || "");
         expect(operation.fixture, `${name} ${entry.method} ${entry.path}`).toBeTruthy();
-        const expected = scrub(entry.excerpt, entry.scrubs || []);
-        if (typeof entry.excerpt === "string") {
-          expect(operation.fixture?.trim()).toBe(String(expected).trim());
-        } else {
-          expect(JSON.parse(operation.fixture || "")).toEqual(expected);
-        }
+        const repairs = entry.repairs || [];
+        const repaired = repairs.length
+          ? scrub(applyRepairs(String(entry.excerpt), repairs), entry.scrubs || [])
+          : scrub(entry.excerpt, entry.scrubs || []);
+        const expectBody = (fixture: string | undefined) => {
+          if (repairs.length || (typeof entry.excerpt !== "string" && String(fixture || "").trim().startsWith("{"))) {
+            expect(JSON.parse(fixture || "")).toEqual(
+              typeof repaired === "string" ? JSON.parse(repaired) : repaired,
+            );
+            return;
+          }
+          if (typeof entry.excerpt === "string") {
+            expect(fixture?.trim()).toBe(String(repaired).trim());
+            return;
+          }
+          expect(JSON.parse(fixture || "")).toEqual(repaired);
+        };
+        expectBody(operation.fixture);
         const kept = validated.operations.find((item) => item.id === operation.id);
-        if (typeof entry.excerpt === "string") {
-          expect(kept?.fixture?.trim()).toBe(String(expected).trim());
-        } else {
-          expect(JSON.parse(kept?.fixture || "")).toEqual(expected);
-        }
+        expectBody(kept?.fixture);
+      }
+      if (source.operations.some((entry) => entry.repairs?.length)) {
+        expect(source.label).toBe("From vendor docs (formatting fixed)");
       }
       for (const operation of preset.spec.operations) {
         if (operation.fixture) expect(covered.has(operation.id || "")).toBe(true);

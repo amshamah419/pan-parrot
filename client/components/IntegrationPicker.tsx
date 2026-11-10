@@ -215,6 +215,7 @@ export function IntegrationPicker({
                     status={entry.verification?.status}
                     fidelity={entry.fidelity}
                     docUrl={entry.verification?.docUrl}
+                    formattingFixed={entry.formattingFixed}
                   />
                 </button>
               ))}

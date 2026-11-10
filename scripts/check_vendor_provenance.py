@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Every vendor-doc preset must match its committed excerpt, after the listed scrubs."""
+"""Every vendor-doc preset must match its committed excerpt, after the listed scrubs and repairs."""
 
 from __future__ import annotations
 
@@ -12,6 +12,62 @@ PRESETS = ROOT / "public" / "presets" / "integrations"
 SOURCES = ROOT / "public" / "presets" / "sources"
 INDEX = ROOT / "public" / "presets" / "index.json"
 EMAIL_HOSTS = {"example.com", "example.invalid"}
+FORMATTING_FIXED = "From vendor docs (formatting fixed)"
+REPAIR_TYPES = {
+    "missing-comma",
+    "extra-comma",
+    "trailing-comma",
+    "whitespace",
+    "smart-quote",
+    "outer-brace",
+    "outer-bracket",
+}
+
+
+def repair_allowed(kind: str, before: str, after: str) -> bool:
+    """A repair may only change commas, whitespace, smart quotes, or outer brackets."""
+    if not isinstance(before, str) or not isinstance(after, str) or before == after:
+        return False
+    if kind in {"missing-comma", "extra-comma", "trailing-comma"}:
+        return before.replace(",", "") == after.replace(",", "")
+    if kind == "whitespace":
+        def core(text: str) -> str:
+            return "".join(ch for ch in text if not (ch.isspace() or ch in "\u00a0\u200b\ufeff\u2009\u202f"))
+        return core(before) == core(after)
+    if kind == "smart-quote":
+        table = str.maketrans({"\u201c": '"', "\u201d": '"', "\u2018": "'", "\u2019": "'", "\u00ab": '"', "\u00bb": '"'})
+        return before.translate(table) == after
+    if kind in {"outer-brace", "outer-bracket"}:
+        short, long = (before, after) if len(before) <= len(after) else (after, before)
+        stripped = short.strip()
+        if stripped not in long:
+            return False
+        index = long.find(stripped)
+        extra = long[:index] + long[index + len(stripped) :]
+        return bool(extra) and all(ch in "{}[] \n\t\r" for ch in extra)
+    return False
+
+
+def apply_repairs(text: str, repairs: list[dict]) -> str:
+    for item in repairs:
+        if not isinstance(item, dict):
+            raise ValueError("repair must be an object")
+        kind = item.get("type")
+        before = item.get("before")
+        after = item.get("after")
+        if kind not in REPAIR_TYPES or not repair_allowed(str(kind), before, after):
+            raise ValueError(f"repair {kind} is not a mechanical formatting edit")
+        location = item.get("location")
+        if isinstance(location, int) and not isinstance(location, bool):
+            end = location + len(before)
+            if text[location:end] != before:
+                raise ValueError(f"repair {kind} does not match at {location}")
+            text = text[:location] + after + text[end:]
+            continue
+        if text.count(before) != 1:
+            raise ValueError(f"repair {kind} before-text must occur once")
+        text = text.replace(before, after, 1)
+    return text
 
 
 def scrub(value, scrubs: list[dict]):
@@ -112,6 +168,13 @@ def check() -> list[str]:
                 errors.append(f"{path.stem}: scrubs must be a list")
                 continue
             excerpt = entry.get("excerpt")
+            repairs = entry.get("repairs") or []
+            if repairs and not isinstance(repairs, list):
+                errors.append(f"{path.stem}: repairs must be a list")
+                continue
+            if repairs and not isinstance(excerpt, str):
+                errors.append(f"{path.stem}: a repaired excerpt must be the original text")
+                continue
             blob = json.dumps(excerpt)
             for item in scrubs:
                 if not isinstance(item, dict) or "find" not in item or "replace" not in item:
@@ -119,17 +182,38 @@ def check() -> list[str]:
                     continue
                 if item["find"] not in blob:
                     errors.append(f"{path.stem}: scrub {item['find']!r} is not in the excerpt")
-            expected = scrub(excerpt, scrubs)
             raw = operation.get("fixture")
             label = f"{entry.get('method')} {entry.get('path')}"
             if not isinstance(raw, str) or not raw.strip():
                 errors.append(f"{path.stem}: {label} has no fixture")
                 continue
-            if isinstance(excerpt, str):
+            if repairs:
+                try:
+                    repaired = apply_repairs(excerpt, repairs)
+                except ValueError as exc:
+                    errors.append(f"{path.stem}: {label} {exc}")
+                    continue
+                repaired = scrub(repaired, scrubs)
+                if raw.strip().startswith("<"):
+                    if raw.strip() != str(repaired).strip():
+                        errors.append(f"{path.stem}: fixture does not match the repaired excerpt for {label}")
+                    got = raw
+                else:
+                    try:
+                        got = json.loads(raw)
+                        expected_obj = json.loads(repaired)
+                    except json.JSONDecodeError as exc:
+                        errors.append(f"{path.stem}: repaired fixture is not JSON ({exc})")
+                        continue
+                    if got != expected_obj:
+                        errors.append(f"{path.stem}: fixture does not deep-equal the repaired excerpt for {label}")
+            elif isinstance(excerpt, str):
+                expected = scrub(excerpt, scrubs)
                 if raw.strip() != str(expected).strip():
                     errors.append(f"{path.stem}: fixture does not match the scrubbed excerpt for {label}")
                 got = raw
             else:
+                expected = scrub(excerpt, scrubs)
                 try:
                     got = json.loads(raw)
                 except json.JSONDecodeError as exc:
@@ -141,6 +225,17 @@ def check() -> list[str]:
                 host = address.rsplit("@", 1)[-1].lower()
                 if host not in EMAIL_HOSTS:
                     errors.append(f"{path.stem}: fixture still contains {address}")
+        repaired_any = any(entry.get("repairs") for entry in (source.get("operations") or []))
+        spec_source = preset.get("spec", {}).get("source", {})
+        if repaired_any:
+            if source.get("label") != FORMATTING_FIXED:
+                errors.append(f"{path.stem}: provenance label must be {FORMATTING_FIXED}")
+            if spec_source.get("formattingFixed") is not True:
+                errors.append(f"{path.stem}: spec.source.formattingFixed must be true")
+            if catalog.get("formattingFixed") is not True:
+                errors.append(f"{path.stem}: index formattingFixed must be true")
+        elif source.get("label") == FORMATTING_FIXED or spec_source.get("formattingFixed") or catalog.get("formattingFixed"):
+            errors.append(f"{path.stem}: formatting-fixed label without a recorded repair")
         for operation in operations:
             if operation.get("fixture") and operation.get("id") not in seen_ids:
                 errors.append(f"{path.stem}: {operation.get('id')} has a fixture without an excerpt")
@@ -157,6 +252,19 @@ def self_test() -> int:
     assert scrub([excerpt], scrubs)[0]["user"] == "user@example.invalid"
     assert emails({"calendar@odata.associationLink": "ok"}) == []
     assert emails({"mail": "a@contoso.com"}) == ["a@contoso.com"]
+    broken = '{ "a" : 1 "b": 2 }'
+    fixed = apply_repairs(broken, [{"type": "missing-comma", "location": "between a and b", "before": '1 "b"', "after": '1, "b"'}])
+    assert json.loads(fixed) == {"a": 1, "b": 2}
+    try:
+        apply_repairs('{"a": "string"}', [{"type": "missing-comma", "before": '"string"', "after": '"real"'}])
+    except ValueError:
+        pass
+    else:
+        raise SystemExit("a repair must not replace a value")
+    nbsp = '{"init_offset"\u00a0: 0}'
+    assert json.loads(apply_repairs(nbsp, [{"type": "whitespace", "location": 0, "before": nbsp, "after": '{"init_offset" : 0}'}])) == {"init_offset": 0}
+    wrapped = apply_repairs('"result": []', [{"type": "outer-brace", "before": '"result": []', "after": '{"result": []}'}])
+    assert json.loads(wrapped) == {"result": []}
     return 0
 
 

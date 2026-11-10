@@ -3,9 +3,9 @@
   "name": "Proofpoint TAP v2",
   "pack": "ProofpointTAP",
   "vendor": "Proofpoint",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "SIEM clicks and messages are blocked and permitted arrays for an interval.",
+  "summary": "SIEM all is the Proofpoint example with the missing comma, trailing commas, and closing brackets repaired. From vendor docs (formatting fixed).",
   "notes": [
     "Sample fields are the ones GET /{api_version}/siem/clicks/blocked, GET /{api_version}/siem/clicks/permitted reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,18 +17,18 @@
       "kind": "preset",
       "id": "proofpointtap-proofpointtap-v2",
       "name": "Proofpoint TAP v2",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API",
       "notes": [
         "Sample fields are the ones GET /{api_version}/siem/clicks/blocked, GET /{api_version}/siem/clicks/permitted reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
-        "status": "approximate",
+        "status": "vendor",
         "docUrl": "https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /{api_version}/siem/clicks/blocked, GET /{api_version}/siem/clicks/permitted reads in the matched command. Lists the command iterates are arrays."
+          "SIEM all is the Proofpoint example with the missing comma, trailing commas, and closing brackets repaired. From vendor docs (formatting fixed)."
         ]
       },
       "commandDocs": [
@@ -112,7 +112,8 @@
           ],
           "status": "missing"
         }
-      ]
+      ],
+      "formattingFixed": true
     },
     "operations": [
       {
@@ -187,6 +188,40 @@
           "kind": "object",
           "children": []
         }
+      },
+      {
+        "id": "siem-all",
+        "method": "GET",
+        "pathTemplate": "/{api_version}/siem/all",
+        "summary": "SIEM events",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ok",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        },
+        "fixture": "{\n  \"clicksPermitted\": [\n    {\n      \"campaignId\": \"46e01b8a-c899-404d-bcd9-189bb393d1a7\",\n      \"classification\": \"MALWARE\",\n      \"clickIP\": \"192.0.2.1\",\n      \"clickTime\": \"2016-06-24T19:17:44.000Z\",\n      \"GUID\": \"b27dbea0-87d5-463b-b93c-4e8b708289ce\",\n      \"id\": \"8c8b4895-a277-449f-r797-547e3c89b25a\",\n      \"messageID\": \"8c6cfedd-3050-4d65-8c09-c5f65c38da81\",\n      \"recipient\": \"user@example.invalid\",\n      \"sender\": \"user2@example.invalid\",\n      \"senderIP\": \"192.0.2.255\",\n      \"threatID\": \"61f7622167144dba5e3ae4480eeee78b23d66f7dfed970cfc3d086cc0dabdf50\",\n      \"threatTime\": \"2016-06-24T19:17:46.000Z\",\n      \"threatURL\": \"https://threatinsight.proofpoint.com/#/73aa0499-dfc8-75eb-1de8-a471b24a2e75/threat/u/61f7622167144dba5e3ae4480eeee78b23d66f7dfed970cfc3d086cc0dabdf50\",\n      \"threatStatus\": \"active\",\n      \"url\": \"http://badguy.zz/\",\n      \"userAgent\": \"Mozilla/5.0(WindowsNT6.1;WOW64;rv:27.0)Gecko/20100101Firefox/27.0\"\n    }\n  ],\n  \"messagesBlocked\": [\n    {\n      \"GUID\": \"c26dbea0-80d5-463b-b93c-4e8b708219ce\",\n      \"QID\": \"r2FNwRHF004109\",\n      \"ccAddresses\": [\n        \"user3@example.invalid\"\n      ],\n      \"clusterId\": \"pharmtech_hosted\",\n      \"completelyRewritten\": \"true\",\n      \"fromAddress\": \"user4@example.invalid\",\n      \"headerCC\": \"\\\"Bruce Wayne\\\" \",\n      \"headerFrom\": \"\\\"A. Badguy\\\" \",\n      \"headerReplyTo\": null,\n      \"headerTo\": \"\\\"Clark Kent\\\" ; \\\"Diana Prince\\\" \",\n      \"impostorScore\": 0,\n      \"malwareScore\": 100,\n      \"messageID\": \"user5@example.invalid\",\n      \"messageParts\": [\n        {\n          \"contentType\": \"text/plain\",\n          \"disposition\": \"inline\",\n          \"filename\": \"text.txt\",\n          \"md5\": \"008c5926ca861023c1d2a36653fd88e2\",\n          \"oContentType\": \"text/plain\",\n          \"sandboxStatus\": \"unsupported\",\n          \"sha256\": \"85738f8f9a7f1b04b5329c590ebcb9e425925c6d0984089c43a022de4f19c281\"\n        },\n        {\n          \"contentType\": \"application/pdf\",\n          \"disposition\": \"attached\",\n          \"filename\": \"Invoice for Pharmtech.pdf\",\n          \"md5\": \"5873c7d37608e0d49bcaa6f32b6c731f\",\n          \"oContentType\": \"application/pdf\",\n          \"sandboxStatus\": \"threat\",\n          \"sha256\": \"2fab740f143fc1aa4c1cd0146d334c5593b1428f6d062b2c406e5efe8abe95ca\"\n        }\n      ],\n      \"messageTime\": \"2016-06-24T21:18:38.000Z\",\n      \"modulesRun\": [\n        \"pdr\",\n        \"sandbox\",\n        \"spam\",\n        \"urldefense\"\n      ],\n      \"phishScore\": 46,\n      \"policyRoutes\": [\n        \"default_inbound\",\n        \"executives\"\n      ],\n      \"quarantineFolder\": \"Attachment Defense\",\n      \"quarantineRule\": \"module.sandbox.threat\",\n      \"recipient\": [\n        \"user6@example.invalid\",\n        \"user7@example.invalid\"\n      ],\n      \"replyToAddress\": null,\n      \"sender\": \"user8@example.invalid\",\n      \"senderIP\": \"192.0.2.255\",\n      \"spamScore\": 4,\n      \"subject\": \"Please find a totally safe invoice attached.\",\n      \"threatsInfoMap\": [\n        {\n          \"campaignId\": \"46e01b8a-c899-404d-bcd9-189bb393d1a7\",\n          \"classification\": \"MALWARE\",\n          \"threat\": \"2fab740f143fc1aa4c1cd0146d334c5593b1428f6d062b2c406e5efe8abe95ca\",\n          \"threatId\": \"2fab740f143fc1aa4c1cd0146d334c5593b1428f6d062b2c406e5efe8abe95ca\",\n          \"threatStatus\": \"active\",\n          \"threatTime\": \"2016-06-24T21:18:38.000Z\",\n          \"threatType\": \"ATTACHMENT\",\n          \"threatUrl\": \"https://threatinsight.proofpoint.com/#/73aa0499-dfc8-75eb-1de8-a471b24a2e75/threat/u/2fab740f143fc1aa4c1cd0146d334c5593b1428f6d062b2c406e5efe8abe95ca\",\n          \"actors\": [\n            {\n              \"id\": \"000090ac-71c4-4060-9154-c590664b6739\",\n              \"name\": \"dash_actor_05cbc5\",\n              \"type\": \"ACTOR\"\n            }\n          ]\n        },\n        {\n          \"threatID\": \"d57d32f7ad46db1c233eb586da7fa39bafba67ec0f8d1a4eae03b3df65e2c60e\",\n          \"threatStatus\": \"active\",\n          \"classification\": \"malware\",\n          \"detectionType\": \"NONE\",\n          \"threatUrl\": \"https://tap-dashboard-staging.lab.ppops.net/73aa0499-dfc8-75eb-1de8-a471b24a2e75/threat/email/d57d32f7ad46db1c233eb586da7fa39bafba67ec0f8d1a4eae03b3df65e2c60e\",\n          \"threatTime\": \"2024-11-20T12:01:07.000Z\",\n          \"threat\": \"http://rohan.org/willis\",\n          \"campaignID\": null,\n          \"actors\": [\n            {\n              \"id\": \"000090ac-71c4-4060-9154-c590664b6739\",\n              \"name\": \"dash_actor_05cbc5\",\n              \"type\": \"ACTOR\"\n            }\n          ],\n          \"threatType\": \"url\"\n        }\n      ]\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

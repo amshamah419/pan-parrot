@@ -154,6 +154,7 @@ export default function MockStudio() {
             status={verification?.status}
             fidelity={spec.source.fidelity}
             docUrl={spec.source.fidelity === "vendor" ? verification?.docUrl : undefined}
+            formattingFixed={spec.source.formattingFixed}
           />
           <Button variant="outline" asChild>
             <a href={`/api/endpoints/${endpointId}/export?format=zip`}>Export pytest</a>

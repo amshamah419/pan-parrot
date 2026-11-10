@@ -32,7 +32,8 @@
         "docUrl": "https://www.servicenow.com/docs/api/khub/maps/ooCZhg2g6YDYvKp3oBwAxA/topics/tvYRl8iXp~yTP6bw09k17w/content?target=DESIGNED_READER",
         "checkedAt": "2026-11-10",
         "differences": [
-          "4 of 8 commands from vendor docs, 2 approximate, 2 missing."
+          "4 of 8 commands from vendor docs, 2 approximate, 2 missing.",
+          "The class list example was missing its outer braces. From vendor docs (formatting fixed)."
         ]
       },
       "commandDocs": [
@@ -41,7 +42,11 @@
           "calls": [
             "GET /api/now/cmdb/instance/{class}"
           ],
-          "status": "approximate"
+          "status": "vendor",
+          "operationIds": [
+            "cis"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/r/ooCZhg2g6YDYvKp3oBwAxA/tvYRl8iXp~yTP6bw09k17w"
         },
         {
           "command": "servicenow-cmdb-record-get-by-id",
@@ -104,9 +109,14 @@
           "calls": [
             "GET /api/now/cmdb/instance/cmdb_ci_linux_server"
           ],
-          "status": "approximate"
+          "status": "vendor",
+          "operationIds": [
+            "cis"
+          ],
+          "docUrl": "https://www.servicenow.com/docs/r/ooCZhg2g6YDYvKp3oBwAxA/tvYRl8iXp~yTP6bw09k17w"
         }
-      ]
+      ],
+      "formattingFixed": true
     },
     "operations": [
       {
@@ -160,7 +170,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "{\n  \"result\": [\n    {\n      \"sys_id\": \"3a290cc60a0a0bb400000bdb386af1cf\",\n      \"name\": \"PS LinuxApp01\"\n    },\n    {\n      \"sys_id\": \"3a5dd3dbc0a8ce0100655f1ec66ed42c\",\n      \"name\": \"PS LinuxApp02\"\n    }\n  ]\n}\n"
       },
       {
         "id": "get--api-now-cmdb-instance-class-sys-id",
