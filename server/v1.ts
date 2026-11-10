@@ -166,6 +166,7 @@ export function registerV1(app: Hono<AppEnv>) {
       let spec = validateMockSpec(endpoint.mockSpec);
       if (body.fetch != null) spec = applyFetchPatch(spec, body.fetch);
       if (body.state != null) spec = applyStatePatch(spec, body.state);
+      if (body.scenario != null) spec = applyScenarioPatch(spec, body.scenario);
       await saveMockSpec(c.get("db"), user.id, id, spec);
       if (body.reset === true) await resetRuntime(c.get("db"), id);
       const view = await getEndpointForUser(c.get("db"), user.id, id);
@@ -176,6 +177,7 @@ export function registerV1(app: Hono<AppEnv>) {
         url: view.url,
         ...(body.fetch != null ? { fetch: saved.behavior.fetch } : {}),
         ...(body.state != null ? { state: saved.behavior.state } : {}),
+        ...(body.scenario != null ? { scenario: saved.behavior.scenario } : {}),
         reset: body.reset === true,
       });
     }
@@ -335,10 +337,12 @@ interface Built {
 const FETCH_KEYS = new Set(["enabled", "sinceParam", "firstFetchParam", "timeField", "windowSeconds", "dedup", "perPoll"]);
 
 const STATE_KEYS = new Set(["enabled", "idField"]);
+const SCENARIO_KEYS = new Set(["enabled", "repeat", "steps"]);
+const STEP_KEYS = new Set(["name", "status", "body"]);
 
 function isBehaviorPatch(body: Record<string, unknown>): boolean {
   const kinds = ["preset", "openapi", "yaml", "mockSpec"].filter((key) => body[key] != null && body[key] !== "");
-  return kinds.length === 0 && (body.fetch != null || body.state != null);
+  return kinds.length === 0 && (body.fetch != null || body.state != null || body.scenario != null);
 }
 
 function applyFetchPatch(current: unknown, patch: unknown): MockSpec {
@@ -392,6 +396,53 @@ function applyStatePatch(current: unknown, patch: unknown): MockSpec {
   return validateMockSpec({ ...spec, behavior: { ...spec.behavior, state } });
 }
 
+function applyScenarioPatch(current: unknown, patch: unknown): MockSpec {
+  if (!patch || typeof patch !== "object" || Array.isArray(patch)) throw new HttpError(400, "scenario must be an object");
+  const raw = patch as Record<string, unknown>;
+  for (const key of Object.keys(raw)) {
+    if (!SCENARIO_KEYS.has(key)) throw new HttpError(400, "Unknown scenario setting");
+  }
+  const spec = validateMockSpec(current);
+  const scenario = { ...spec.behavior.scenario, steps: spec.behavior.scenario.steps.map((step) => ({ ...step })) };
+  if ("enabled" in raw) {
+    if (typeof raw.enabled !== "boolean") throw new HttpError(400, "enabled must be true or false");
+    scenario.enabled = raw.enabled;
+  }
+  if ("repeat" in raw) {
+    if (raw.repeat !== "last" && raw.repeat !== "loop") throw new HttpError(400, "repeat must be last or loop");
+    scenario.repeat = raw.repeat;
+  }
+  if ("steps" in raw) scenario.steps = parseScenarioSteps(raw.steps);
+  if (scenario.enabled && scenario.steps.length === 0) throw new HttpError(400, "Add at least one scenario step");
+  return validateMockSpec({ ...spec, behavior: { ...spec.behavior, scenario } });
+}
+
+function parseScenarioSteps(value: unknown): Array<{ name?: string; status?: number; body?: string }> {
+  if (!Array.isArray(value)) throw new HttpError(400, "steps must be a list");
+  if (value.length > 12) throw new HttpError(400, "At most 12 scenario steps");
+  return value.map((step, index) => {
+    if (!step || typeof step !== "object" || Array.isArray(step)) throw new HttpError(400, "Each step must be an object");
+    const row = step as Record<string, unknown>;
+    for (const key of Object.keys(row)) {
+      if (!STEP_KEYS.has(key)) throw new HttpError(400, "Unknown step setting");
+    }
+    const parsed: { name?: string; status?: number; body?: string } = {};
+    if ("name" in row && row.name != null) {
+      if (typeof row.name !== "string" || !row.name.trim() || row.name.length > 80) throw new HttpError(400, "Step name must be a short string");
+      parsed.name = row.name.trim();
+    } else {
+      parsed.name = `Call ${index + 1}`;
+    }
+    if ("status" in row && row.status != null) parsed.status = integerSetting(row.status, "status", 100, 599);
+    if ("body" in row && row.body != null) {
+      if (typeof row.body !== "string") throw new HttpError(400, "Step body must be text");
+      if (row.body.length > 8_000) throw new HttpError(400, "Step body is too large");
+      parsed.body = row.body;
+    }
+    return parsed;
+  });
+}
+
 function integerSetting(value: unknown, name: string, min: number, max: number): number {
   if (typeof value !== "number" || !Number.isInteger(value) || value < min || value > max) {
     throw new HttpError(400, `${name} must be an integer from ${min} to ${max}`);
@@ -400,7 +451,7 @@ function integerSetting(value: unknown, name: string, min: number, max: number):
 }
 
 async function specFromUpload(body: Record<string, unknown>): Promise<Built> {
-  if (body.fetch != null || body.state != null) throw new HttpError(400, "Send fetch or state by itself to update an existing mock");
+  if (body.fetch != null || body.state != null || body.scenario != null) throw new HttpError(400, "Send fetch, state, or scenario by itself to update an existing mock");
   const kinds = ["preset", "openapi", "yaml", "mockSpec"].filter((key) => body[key] != null && body[key] !== "");
   if (kinds.length !== 1) throw new HttpError(400, "Provide one of preset, openapi, yaml, or mockSpec");
   const version = cleanVersion(body.version);
@@ -591,7 +642,7 @@ function openApiDocument() {
       },
       "/api/v1/mocks/{id}": {
         get: { summary: "Read a mock", security: [{ bearer: ["mocks:read"] }], responses: { "200": { description: "Mock", content: json } } },
-        put: { summary: "Replace a mock definition, or send fetch or state to turn on windows or saved records", security: [{ bearer: ["mocks:write"] }], responses: { "200": { description: "Updated", content: json } } },
+        put: { summary: "Replace a mock definition, or send fetch, state, or scenario to update Flow behavior", security: [{ bearer: ["mocks:write"] }], responses: { "200": { description: "Updated", content: json } } },
         delete: { summary: "Delete a mock", security: [{ bearer: ["mocks:write"] }], responses: { "200": { description: "Deleted", content: json } } },
       },
       "/api/v1/mocks/{id}/logs": { get: { summary: "Read captured requests", security: [{ bearer: ["mocks:read"] }], responses: { "200": { description: "Logs", content: json } } } },

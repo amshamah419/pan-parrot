@@ -103,6 +103,36 @@ describe("stateful and fetch behavior", () => {
     expect(statuses).toEqual([200, 503, 503]);
   });
 
+  it("loops scenario steps after the last one", () => {
+    const behavior = defaultBehavior();
+    behavior.scenario = {
+      enabled: true,
+      repeat: "loop",
+      steps: [
+        { name: "ok", status: 200, body: '{"ok":1}' },
+        { name: "down", status: 503, body: '{"ok":0}' },
+      ],
+    };
+    let state = emptyRuntime();
+    const statuses: number[] = [];
+    for (let index = 0; index < 3; index += 1) {
+      const next = applyBehavior({
+        spec: spec(behavior),
+        operation: spec(behavior).operations[0],
+        method: "GET",
+        pathParams: {},
+        query: {},
+        bodyText: "",
+        requestIndex: index + 1,
+        generated: generated("[]"),
+        state,
+      });
+      statuses.push(next.result.status);
+      state = next.state;
+    }
+    expect(statuses).toEqual([200, 503, 200]);
+  });
+
   it("reveals a new fetch window and dedups a replay of the same since", () => {
     const behavior = defaultBehavior();
     behavior.fetch.enabled = true;

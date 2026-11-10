@@ -52,7 +52,10 @@ export function FlowPanel({
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-sm font-medium">Call sequence</p>
-            <p className="text-xs text-muted-foreground">Call 1 returns the first step, call 2 the next. After the last step, that response repeats.</p>
+            <p className="text-xs text-muted-foreground">
+              Call 1 returns the first step, call 2 the next.
+              {flow.scenario.repeat === "loop" ? " After the last step, the sequence starts again." : " After the last step, that response repeats."}
+            </p>
           </div>
           <Switch
             aria-label="Call sequence"
@@ -72,6 +75,30 @@ export function FlowPanel({
             }
           />
         </div>
+        {flow.scenario.enabled && (
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Switch
+                aria-label="Loop the sequence"
+                checked={flow.scenario.repeat === "loop"}
+                onCheckedChange={(loop) => onChange({ ...flow, scenario: { ...flow.scenario, repeat: loop ? "loop" : "last" } })}
+              />
+              <span className="text-xs">Loop</span>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={flow.scenario.steps.length >= MOCK_LIMITS.maxScenarioSteps}
+              onClick={() => {
+                const steps = [...flow.scenario.steps, { name: `Call ${flow.scenario.steps.length + 1}`, status: 200 }];
+                onChange({ ...flow, scenario: { ...flow.scenario, steps } });
+              }}
+            >
+              Add step
+            </Button>
+          </div>
+        )}
         {flow.scenario.enabled && flow.scenario.steps.map((step, index) => (
           <div key={`${step.name}-${index}`} className="grid gap-2 rounded bg-muted/40 p-2 sm:grid-cols-[1fr_6rem]">
             <Label className="text-xs">{step.name || `Call ${index + 1}`}

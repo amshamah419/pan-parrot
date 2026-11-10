@@ -90,6 +90,7 @@ panparrot --json presets --q github
 panparrot --json mock from-integration HelloWorld.yml
 panparrot --json mock fetch --mock <id> --reset
 panparrot --json mock state --mock <id> --reset
+panparrot --json mock scenario --mock <id> --step 202 --step 200:{"job":"done"} --loop --reset
 panparrot --json assert --mock <id> --method GET --path /hello
 panparrot --json mocks create --from-yml HelloWorld.yml --test-data ./test_data
 panparrot --json instance-config --mock <id>
