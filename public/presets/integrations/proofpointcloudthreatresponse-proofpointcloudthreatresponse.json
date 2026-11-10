@@ -4,7 +4,7 @@
   "pack": "ProofpointCloudThreatResponse",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /api/v1/tric/incidents/{incident_id}.",
+  "summary": "GET /api/v1/tric/incidents/{incident_id}",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -17,20 +17,20 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ProofpointCloudThreatResponse/Integrations/ProofpointCloudThreatResponse",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/v1/tric/incidents/{incident_id}. Fields are keys the client reads or test_data contains."
+        "GET /api/v1/tric/incidents/{incident_id} returns summary, activities, and comments. The command flattens summary.id, createdAt, state, messageCount, assignedTeamName, and title."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/ProofpointCloudThreatResponse/Integrations/ProofpointCloudThreatResponse",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/v1/tric/incidents/{incident_id}. Fields are keys the client reads or test_data contains."
+          "GET /api/v1/tric/incidents/{incident_id} returns summary, activities, and comments. The command flattens summary.id, createdAt, state, messageCount, assignedTeamName, and title."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-api-v1-tric-incidents-incident-id-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/api/v1/tric/incidents/{incident_id}",
         "summary": "GET /api/v1/tric/incidents/{incident_id}",
@@ -55,64 +55,74 @@
           "kind": "object",
           "children": [
             {
-              "name": "activities",
+              "name": "summary",
               "kind": "object",
               "children": [
                 {
-                  "name": "activity_details",
+                  "name": "id",
                   "kind": "string",
                   "example": "lab"
                 },
                 {
-                  "name": "activity_type",
+                  "name": "createdAt",
                   "kind": "string",
                   "example": "lab"
                 },
                 {
-                  "name": "cause_type",
+                  "name": "state",
                   "kind": "string",
                   "example": "lab"
                 },
                 {
-                  "name": "causing_api_key",
+                  "name": "messageCount",
+                  "kind": "integer"
+                },
+                {
+                  "name": "assignedTeamName",
                   "kind": "string",
                   "example": "lab"
                 },
                 {
-                  "name": "causing_user_name",
+                  "name": "title",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "displayId",
                   "kind": "string",
                   "example": "lab"
                 }
               ]
             },
             {
-              "name": "assignedTeamName",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "assignedUserName",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "closedAt",
-              "kind": "string",
-              "example": "lab"
+              "name": "activities",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "activity_type",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             },
             {
               "name": "comments",
               "kind": "array",
               "item": {
                 "name": "item",
-                "kind": "string",
-                "example": "lab"
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "comment",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
               }
-            },
-            {
-              "name": "createdAt",
-              "kind": "string",
-              "example": "lab"
             }
           ]
         }
@@ -143,6 +153,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ProofpointCloudThreatResponse/Integrations/ProofpointCloudThreatResponse",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/v1/tric/incidents/{incident_id}. Fields are keys the client reads or test_data contains."
+    "GET /api/v1/tric/incidents/{incident_id} returns summary, activities, and comments. The command flattens summary.id, createdAt, state, messageCount, assignedTeamName, and title."
   ]
 }

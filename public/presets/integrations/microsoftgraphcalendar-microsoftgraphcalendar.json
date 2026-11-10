@@ -4,7 +4,7 @@
   "pack": "MicrosoftGraphCalendar",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /v1.0/users/{calendar_url}/events.",
+  "summary": "GET /v1.0/users/{calendar_url}/events",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -17,27 +17,27 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphCalendar/Integrations/MicrosoftGraphCalendar",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /v1.0/users/{calendar_url}/events. Fields are keys the client reads or test_data contains."
+        "GET /v1.0/users/{calendar_url}/events returns value[] plus @odata.nextLink. Each event has subject, id, organizer, attendees, start, and end."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphCalendar/Integrations/MicrosoftGraphCalendar",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /v1.0/users/{calendar_url}/events. Fields are keys the client reads or test_data contains."
+          "GET /v1.0/users/{calendar_url}/events returns value[] plus @odata.nextLink. Each event has subject, id, organizer, attendees, start, and end."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-v1-0-users-calendar-url-events-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/v1.0/users/{calendar_url}/events",
         "summary": "GET /v1.0/users/{calendar_url}/events",
         "status": 200,
         "contentType": "application/json; charset=utf-8",
         "headers": {},
-        "list": false,
+        "list": true,
         "envelope": {
           "type": "object"
         },
@@ -56,43 +56,86 @@
           "children": [
             {
               "name": "value",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "subject",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "organizer",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "emailAddress",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "name",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "attendees",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "emailAddress",
+                          "kind": "object",
+                          "children": [
+                            {
+                              "name": "name",
+                              "kind": "string",
+                              "example": "lab"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "start",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "dateTime",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "end",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "dateTime",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  }
+                ]
+              }
             },
             {
-              "name": "@odata",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "nextLink",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "Attendees",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "End",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "dateTime",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "ID",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "Name",
+              "name": "@odata.nextLink",
               "kind": "string",
               "example": "lab"
             }
@@ -125,6 +168,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphCalendar/Integrations/MicrosoftGraphCalendar",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /v1.0/users/{calendar_url}/events. Fields are keys the client reads or test_data contains."
+    "GET /v1.0/users/{calendar_url}/events returns value[] plus @odata.nextLink. Each event has subject, id, organizer, attendees, start, and end."
   ]
 }

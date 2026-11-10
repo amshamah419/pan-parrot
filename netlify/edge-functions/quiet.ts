@@ -24,18 +24,17 @@ export default async (request: Request, context: { ip: string; next: () => Promi
   }
   if (isAdminSurface(path) && !adminAllowed(context.ip)) return notFound();
   if (path.startsWith("/api/") || path.startsWith("/catch/") || PUBLIC.has(path)) {
-    return passThrough(context);
+    return context.next();
   }
   const gate = await verifyGate(readCookie(request, "pp_gate"), secret);
   if (!gate) {
     if (path === "/") return Response.redirect(new URL("/login", url), 302);
     return notFound();
   }
-  // Presets and the SPA bundle are static files. Copying context.next()'s body
-  // into a new Response makes the production edge runtime return 503 for the
-  // catalog (public/presets/index.json is about 433 KB). The gate check above
-  // is enough; the origin file is not buffered here.
-  return passThrough(context);
+  // Catch URLs, API responses, and static files are returned as the origin
+  // sent them. Copying the body into a new Response is what made the 433 KB
+  // catalog 503 on the production edge.
+  return context.next();
 };
 
 export const config = { path: "/*" };
@@ -65,18 +64,6 @@ function notFound(): Response {
       "x-content-type-options": "nosniff",
     },
   });
-}
-
-async function passThrough(context: { next: () => Promise<Response> }): Promise<Response> {
-  const response = await context.next();
-  try {
-    response.headers.delete("x-powered-by");
-    response.headers.set("x-robots-tag", "noindex, nofollow, noarchive");
-  } catch {
-    // Static-file headers can be immutable. Returning the original response
-    // still avoids copying the body.
-  }
-  return response;
 }
 
 declare const Netlify: { env: { get(name: string): string | undefined } };

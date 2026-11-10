@@ -4,7 +4,7 @@
   "pack": "MicrosoftGraphTeamsStandardConnector",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /chats/{chat_id}/messages.",
+  "summary": "GET /chats/{chat_id}/messages",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -17,27 +17,27 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphTeamsStandardConnector/Integrations/MicrosoftGraphTeamsStandardConnector",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /chats/{chat_id}/messages. Fields are keys the client reads or test_data contains."
+        "GET /chats/{chat_id}/messages returns value[] and @odata.nextLink. The command reads id, createdDateTime, messageType, body.content, and from.user.displayName."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphTeamsStandardConnector/Integrations/MicrosoftGraphTeamsStandardConnector",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /chats/{chat_id}/messages. Fields are keys the client reads or test_data contains."
+          "GET /chats/{chat_id}/messages returns value[] and @odata.nextLink. The command reads id, createdDateTime, messageType, body.content, and from.user.displayName."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-chats-chat-id-messages-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/chats/{chat_id}/messages",
         "summary": "GET /chats/{chat_id}/messages",
         "status": 200,
         "contentType": "application/json; charset=utf-8",
         "headers": {},
-        "list": false,
+        "list": true,
         "envelope": {
           "type": "object"
         },
@@ -56,43 +56,59 @@
           "children": [
             {
               "name": "value",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "createdDateTime",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "messageType",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "body",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "content",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "from",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "user",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "displayName",
+                            "kind": "string",
+                            "example": "lab"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
             },
             {
-              "name": "@odata",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "nextLink",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "Subject",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "body",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "content",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "content",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "delegated_user",
+              "name": "@odata.nextLink",
               "kind": "string",
               "example": "lab"
             }
@@ -125,6 +141,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphTeamsStandardConnector/Integrations/MicrosoftGraphTeamsStandardConnector",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /chats/{chat_id}/messages. Fields are keys the client reads or test_data contains."
+    "GET /chats/{chat_id}/messages returns value[] and @odata.nextLink. The command reads id, createdDateTime, messageType, body.content, and from.user.displayName."
   ]
 }

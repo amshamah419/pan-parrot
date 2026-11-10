@@ -4,7 +4,7 @@
   "pack": "GoogleChronicleBackstory",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /legacy:legacySearchArtifactIoCDetails.",
+  "summary": "GET /legacy:legacySearchArtifactIoCDetails",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -17,20 +17,20 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GoogleChronicleBackstory/Integrations/GoogleSecOps",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /legacy:legacySearchArtifactIoCDetails. Fields are keys the client reads or test_data contains."
+        "GET /legacy:legacySearchArtifactIoCDetails returns feeds[]. The command reads artifactIndicator, timestamps, sources, confidenceScore, and categories."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/GoogleChronicleBackstory/Integrations/GoogleSecOps",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /legacy:legacySearchArtifactIoCDetails. Fields are keys the client reads or test_data contains."
+          "GET /legacy:legacySearchArtifactIoCDetails returns feeds[]. The command reads artifactIndicator, timestamps, sources, confidenceScore, and categories."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-legacy-legacysearchartifactiocdetails-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/legacy:legacySearchArtifactIoCDetails",
         "summary": "GET /legacy:legacySearchArtifactIoCDetails",
@@ -55,34 +55,67 @@
           "kind": "object",
           "children": [
             {
-              "name": "value",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "Artifact",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "CuratedRuleDetections",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "CuratedRules",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "DataTable",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "DataTableRows",
-              "kind": "string",
-              "example": "lab"
+              "name": "feeds",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "artifactIndicator",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "domain",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "destinationIpAddress",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "iocIngestTimestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "firstSeenTimestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "lastSeenTimestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "sources",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "confidenceScore",
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "categories",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  }
+                ]
+              }
             }
           ]
         }
@@ -113,6 +146,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GoogleChronicleBackstory/Integrations/GoogleSecOps",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /legacy:legacySearchArtifactIoCDetails. Fields are keys the client reads or test_data contains."
+    "GET /legacy:legacySearchArtifactIoCDetails returns feeds[]. The command reads artifactIndicator, timestamps, sources, confidenceScore, and categories."
   ]
 }

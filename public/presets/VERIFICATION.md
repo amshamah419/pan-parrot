@@ -385,3 +385,30 @@ The CI script `scripts/crosscheck_presets.py` parses each verified preset's XSOA
 | Preset | Source checked | Result | Fix |
 | --- | --- | --- | --- |
 
+## Audit of the popularity batch, 2026-11-10
+
+20 presets were drawn from the 98 added in that batch with seed 20261111. Each one was compared with the client method, the path, and the keys the command reads from the response. 0 matched. 20 were fixed. 0 were downgraded. The error rate is 20 of 20, 100 percent. 18 of the 20 already had the right method and a real client path. Box events was `/api/2.0/events`; the client base is `/2.0` and the call is `GET /events`. FortiSIEM was the legacy `events/{queryId}/0/1000` URL; the command that reads events posts `/phoenix/rest/h5/report/resultByReport`. Every sample had the wrong body: fields were the union of keys read anywhere in the module, so other commands, credentials, and fetch state were mixed in, and lists were often a string or a bare object. The same credential and fetch-state fields were removed from CrowdStrike Falcon, Claroty, Nozomi, and the Workday event collector, which were outside the sample and failed the new check. The quiet edge function returns catch, API, and static responses directly. It does not copy those bodies.
+
+| Preset | Source checked | Result | Fix |
+| --- | --- | --- | --- |
+| O365 Outlook Calendar | MicrosoftGraphCalendar.py list_events | fixed | value[] of events plus @odata.nextLink. |
+| Darktrace Event Collector | DarktraceEventCollector.py get_events | fixed | A list of pbid, creationTime, and time. last_fetch_* removed. |
+| Google SecOps v1 Alpha | GoogleSecOps.py legacySearchArtifactIoCDetails | fixed | feeds[] with artifactIndicator, timestamps, sources, confidenceScore, and categories. |
+| Box v2 | BoxV2.py list_events | fixed | GET /2.0/events returns entries[] and next_stream_position. |
+| O365 File Management | MicrosoftGraphFilesApiModule.py list_sharepoint_sites | fixed | value[] of id, name, displayName, and webUrl. |
+| FortiSIEM | FortiSIEM.py getEventsByQuery | fixed | POST /phoenix/rest/h5/report/resultByReport reads headerData and lightValueObjects. |
+| Symantec Endpoint Protection v2 | SymantecEndpointProtection_V2.py get_endpoints_info | fixed | content[] with computerName, ipAddresses, and group.name. |
+| Proofpoint Cloud Threat Response | ProofpointCloudThreatResponse.py proofpoint_ctr_incident_get_command | fixed | summary, activities, and comments. |
+| Azure Storage Management | AzureStorage.py storage_blob_service_properties_get | fixed | One blobServices/default resource. id, name, and properties. |
+| Check Point Dome9 | CheckPointDome9.py finding_get_command | fixed | The finding object: id, alertType, severity, region, status, action, cloudAccountId, description. |
+| XM Cyber | XMCyberIntegration.py top_assets_at_risk | fixed | data.entities[] with displayName and trend. |
+| Azure Network Security Groups | AzureNetworkSecurityGroups.py list_groups_command | fixed | value[] of groups. Rule properties stay on the rules command. |
+| AzureDevOps | AzureDevOps.py project_list_command | fixed | value[] paged with $skip and $top. |
+| Microsoft Graph Search | MicrosoftGraphSearch.py search_content_command | fixed | value[].hitsContainers[].hits[] with summary and resource. |
+| Microsoft Graph Teams | MicrosoftGraphTeamsApiModule.py list_messages_command | fixed | value[] plus @odata.nextLink. |
+| Darktrace AI Analyst | DarktraceAIA.py get_ai_analyst_incident_event | fixed | A list of id, createdAt, title, aiaScore, category, and breachDevices. |
+| BeyondTrust Privilege Management Cloud | BeyondTrustPrivilegeManagementCloud.py get_events_command | fixed | events[] with id, created, @timestamp, and source_log_type. |
+| Datadog Cloud SIEM | DatadogCloudSIEM.py list_risk_scores_command | fixed | data[] with id, type, and attributes.riskScore. |
+| Ironscales | Ironscales.py get_open_incidents_command | fixed | incident_ids. jwt removed. |
+| Symantec Managed Security Services | SymantecMSS.py get_incidents_list | fixed | XML with IncidentNumber, Classification, TimeCreated, Severity, Category, and SourceIPString. |
+

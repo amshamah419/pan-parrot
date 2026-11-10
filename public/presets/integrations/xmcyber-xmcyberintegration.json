@@ -4,7 +4,7 @@
   "pack": "XMCyber",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /api/systemReport/topAssetsAtRiskV2.",
+  "summary": "GET /api/systemReport/topAssetsAtRiskV2",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -17,20 +17,20 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/XMCyber/Integrations/XMCyberIntegration",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/systemReport/topAssetsAtRiskV2. Fields are keys the client reads or test_data contains."
+        "GET /api/systemReport/topAssetsAtRiskV2 returns data.entities[]. The fetch reads displayName and trend."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/XMCyber/Integrations/XMCyberIntegration",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/systemReport/topAssetsAtRiskV2. Fields are keys the client reads or test_data contains."
+          "GET /api/systemReport/topAssetsAtRiskV2 returns data.entities[]. The fetch reads displayName and trend."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-api-systemreport-topassetsatriskv2-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/api/systemReport/topAssetsAtRiskV2",
         "summary": "GET /api/systemReport/topAssetsAtRiskV2",
@@ -59,119 +59,23 @@
               "kind": "object",
               "children": [
                 {
-                  "name": "_id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "activeWorkingSetLastPick",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "affectedAssets",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "affectedEntities",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "affectedUniqueAssets",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
                   "name": "entities",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "stats",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "adviceTypeDisplayName",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "affectedUniqueAssets",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "count",
-                  "kind": "object",
-                  "children": [
-                    {
-                      "name": "level",
-                      "kind": "string",
-                      "example": "lab"
-                    },
-                    {
-                      "name": "value",
-                      "kind": "string",
-                      "example": "lab"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "affectedUniqueEntities",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "count",
-                  "kind": "object",
-                  "children": [
-                    {
-                      "name": "value",
-                      "kind": "string",
-                      "example": "lab"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "asset",
-              "kind": "boolean"
-            },
-            {
-              "name": "attackComplexity",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "avg",
-                  "kind": "object",
-                  "children": [
-                    {
-                      "name": "value",
-                      "kind": "string",
-                      "example": "lab"
-                    }
-                  ]
-                },
-                {
-                  "name": "count",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "max",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "min",
-                  "kind": "string",
-                  "example": "lab"
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "displayName",
+                        "kind": "string",
+                        "example": "lab"
+                      },
+                      {
+                        "name": "trend",
+                        "kind": "integer"
+                      }
+                    ]
+                  }
                 }
               ]
             }
@@ -204,6 +108,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/XMCyber/Integrations/XMCyberIntegration",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/systemReport/topAssetsAtRiskV2. Fields are keys the client reads or test_data contains."
+    "GET /api/systemReport/topAssetsAtRiskV2 returns data.entities[]. The fetch reads displayName and trend."
   ]
 }

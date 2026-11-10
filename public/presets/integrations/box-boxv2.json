@@ -4,7 +4,7 @@
   "pack": "Box",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /api/2.0/events.",
+  "summary": "GET /2.0/events",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -17,27 +17,27 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Box/Integrations/BoxV2",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /api/2.0/events. Fields are keys the client reads or test_data contains."
+        "The client base is /2.0 and GET /events returns entries[] plus next_stream_position. Authorization and the JWT app settings are not the event body."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Box/Integrations/BoxV2",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /api/2.0/events. Fields are keys the client reads or test_data contains."
+          "The client base is /2.0 and GET /events returns entries[] plus next_stream_position. Authorization and the JWT app settings are not the event body."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-api-2-0-events-0",
+        "id": "audited-call",
         "method": "GET",
-        "pathTemplate": "/api/2.0/events",
-        "summary": "GET /api/2.0/events",
+        "pathTemplate": "/2.0/events",
+        "summary": "GET /2.0/events",
         "status": 200,
         "contentType": "application/json; charset=utf-8",
         "headers": {},
-        "list": false,
+        "list": true,
         "envelope": {
           "type": "object"
         },
@@ -55,32 +55,32 @@
           "kind": "object",
           "children": [
             {
-              "name": "Authorization",
-              "kind": "string",
-              "example": "lab"
+              "name": "entries",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "event_id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "event_type",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "created_at",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             },
             {
-              "name": "appAuth",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "as_user",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "boxAppSettings",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "clientID",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "content-disposition",
+              "name": "next_stream_position",
               "kind": "string",
               "example": "lab"
             }
@@ -113,6 +113,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Box/Integrations/BoxV2",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /api/2.0/events. Fields are keys the client reads or test_data contains."
+    "The client base is /2.0 and GET /events returns entries[] plus next_stream_position. Authorization and the JWT app settings are not the event body."
   ]
 }

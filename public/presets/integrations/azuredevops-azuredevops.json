@@ -4,7 +4,7 @@
   "pack": "AzureDevOps",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /_apis/projects.",
+  "summary": "GET /_apis/projects",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -17,34 +17,34 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureDevOps/Integrations/AzureDevOps",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /_apis/projects. Fields are keys the client reads or test_data contains."
+        "GET /_apis/projects returns value[] and pages with $skip and $top. The command reads name, id, state, revision, visibility, and lastUpdateTime."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureDevOps/Integrations/AzureDevOps",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /_apis/projects. Fields are keys the client reads or test_data contains."
+          "GET /_apis/projects returns value[] and pages with $skip and $top. The command reads name, id, state, revision, visibility, and lastUpdateTime."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-apis-projects-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/_apis/projects",
         "summary": "GET /_apis/projects",
         "status": 200,
         "contentType": "application/json; charset=utf-8",
         "headers": {},
-        "list": false,
+        "list": true,
         "envelope": {
           "type": "object"
         },
         "pagination": {
-          "style": "none",
-          "limitParam": "limit",
-          "offsetParam": "offset",
+          "style": "offset",
+          "limitParam": "$top",
+          "offsetParam": "$skip",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
@@ -55,140 +55,44 @@
           "kind": "object",
           "children": [
             {
-              "name": "results",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "identities",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
-                    "kind": "string",
-                    "example": "lab"
-                  }
-                },
-                {
-                  "name": "pagingToken",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "queryToken",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
               "name": "value",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "_links",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "author",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "changeCounts",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "codeReviewId",
-                  "kind": "integer"
-                },
-                {
-                  "name": "comment",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "author",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "displayName",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "comment",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "comments",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "_links",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "author",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "commentType",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "content",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "id",
-                  "kind": "integer"
-                }
-              ]
-            },
-            {
-              "name": "commits",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "author",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "comment",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "commitId",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "committer",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "parents",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "state",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "revision",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "visibility",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "lastUpdateTime",
                     "kind": "string",
                     "example": "lab"
                   }
-                }
-              ]
+                ]
+              }
             }
           ]
         }
@@ -219,6 +123,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureDevOps/Integrations/AzureDevOps",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /_apis/projects. Fields are keys the client reads or test_data contains."
+    "GET /_apis/projects returns value[] and pages with $skip and $top. The command reads name, id, state, revision, visibility, and lastUpdateTime."
   ]
 }
