@@ -119,6 +119,37 @@ describe("agent API", () => {
     expect(denied.status).toBe(403);
   });
 
+  it("builds routes from the integration Python and returns instance params", async () => {
+    const issued = await mint(["mocks:read", "mocks:write"], "from-integration");
+    const created = await app.request("/api/v1/mocks", {
+      method: "POST",
+      headers: { authorization: `Bearer ${issued.token}`, "content-type": "application/json" },
+      body: JSON.stringify({
+        yaml: YAML.replace("HelloWorld", "RouteWorld").replace("hello-world", "route-world"),
+        clientSource: `
+def route_world_command(client, args):
+    return client.fetch()
+
+class Client:
+    def fetch(self):
+        return self._http_request("GET", "/v1/routes/{id}")
+`,
+      }),
+    });
+    expect(created.status).toBe(201);
+    const mock = await created.json();
+    expect(mock.routes).toEqual([
+      expect.objectContaining({ command: "route-world", method: "GET", path: "/v1/routes/{id}", pathFrom: "client" }),
+    ]);
+    const config = await app.request(`/api/v1/mocks/${mock.id}/instance-config`, {
+      headers: { authorization: `Bearer ${issued.token}` },
+    });
+    expect(config.status).toBe(200);
+    const guide = await config.json();
+    expect(guide.baseUrl).toBe(mock.url);
+    expect(guide.params.find((row: { name: string }) => row.name === "url").value).toBe(mock.url);
+  });
+
   it("upserts a YAML mock, returns instance config, and dies when revoked or the user is disabled", async () => {
     const issued = await mint(["mocks:read", "mocks:write"], "writer");
     const first = await app.request("/api/v1/mocks", {

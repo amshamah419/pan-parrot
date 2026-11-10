@@ -87,6 +87,61 @@ def test_presets_search_sends_the_query(tmp_path, monkeypatch, capsys):
     assert "33 vendor" in text
 
 
+def test_from_integration_sends_the_python_and_reads_instance_params(tmp_path, monkeypatch, capsys):
+    folder = tmp_path / "HelloWorld"
+    folder.mkdir()
+    (folder / "HelloWorld.yml").write_text("name: HelloWorld\n")
+    (folder / "HelloWorld.py").write_text("def hello_world_command():\n    return client._http_request('GET', '/hello')\n")
+    (folder / "test_data").mkdir()
+    (folder / "test_data" / "hello_world.json").write_text('{"Message": "hi"}')
+    config = tmp_path / "credentials.json"
+    config.write_text(json.dumps({"url": "https://panparrot.example", "token": "pp_abc"}))
+    os.chmod(config, 0o600)
+    monkeypatch.setenv("PANPARROT_CONFIG", str(config))
+    seen = []
+
+    class Response:
+        status = 200
+
+        def __init__(self, payload):
+            self.payload = payload
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return json.dumps(self.payload).encode()
+
+    def urlopen(request, timeout=0):
+        body = json.loads(request.data.decode()) if request.data else None
+        seen.append((request.full_url, body))
+        if request.full_url.endswith("/instance-config"):
+            return Response({"baseUrl": "https://panparrot.example/catch/abc", "params": [{"name": "url", "value": "https://panparrot.example/catch/abc"}]})
+        return Response({
+            "id": "m1",
+            "name": "Hello World",
+            "url": "https://panparrot.example/catch/abc",
+            "created": True,
+            "routes": [{"command": "hello-world", "method": "GET", "path": "/hello", "pathFrom": "client"}],
+            "warnings": [],
+        })
+
+    monkeypatch.setattr("panparrot.cli.urllib.request.urlopen", urlopen)
+    code = main(["--json", "mock", "from-integration", str(folder / "HelloWorld.yml")])
+    assert code == 0
+    posted = seen[0][1]
+    assert posted["yaml"].startswith("name: HelloWorld")
+    assert "clientSource" in posted and "/hello" in posted["clientSource"]
+    assert posted["testData"][0]["name"] == "hello_world.json"
+    assert seen[1][0] == "https://panparrot.example/api/v1/mocks/m1/instance-config"
+    body = json.loads(capsys.readouterr().out)
+    assert body["routes"][0]["path"] == "/hello"
+    assert body["instanceConfig"]["params"][0]["value"].endswith("/catch/abc")
+
+
 def test_dry_run_builds_the_demisto_sdk_payload(monkeypatch, capsys, tmp_path):
     config = tmp_path / "credentials.json"
     config.write_text(json.dumps({"url": "https://panparrot.example", "token": "pp_abc"}))

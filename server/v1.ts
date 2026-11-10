@@ -88,7 +88,7 @@ export function registerV1(app: Hono<AppEnv>) {
         await c.get("db").update(endpoints).set({ name: String(body.name).trim().slice(0, 80), updatedAt: new Date() }).where(eq(endpoints.id, existing.id));
       }
       const endpoint = await getEndpointForUser(c.get("db"), user.id, existing.id);
-      return c.json({ ...mockView(endpoint, built), created: false, warnings: built.warnings });
+      return c.json({ ...mockView(endpoint, built), created: false, warnings: built.warnings, routes: routesOf(built.spec) });
     }
     const created = await createEndpointForUser(c.get("db"), user, {
       name: built.name,
@@ -100,7 +100,7 @@ export function registerV1(app: Hono<AppEnv>) {
         integrationVersion: built.version,
       }).where(eq(endpoints.id, created.id));
     }
-    return c.json({ ...mockView(created, built), created: true, warnings: built.warnings }, 201);
+    return c.json({ ...mockView(created, built), created: true, warnings: built.warnings, routes: routesOf(built.spec) }, 201);
   });
 
   app.get("/api/v1/mocks/:id", async (c) => {
@@ -133,7 +133,7 @@ export function registerV1(app: Hono<AppEnv>) {
       }).where(and(eq(endpoints.id, id), eq(endpoints.userId, user.id)));
     }
     const endpoint = await getEndpointForUser(c.get("db"), user.id, id);
-    return c.json({ ...mockView(endpoint, built), created: false, warnings: built.warnings });
+    return c.json({ ...mockView(endpoint, built), created: false, warnings: built.warnings, routes: routesOf(built.spec) });
   });
 
   app.delete("/api/v1/mocks/:id", async (c) => {
@@ -277,7 +277,7 @@ async function specFromUpload(body: Record<string, unknown>): Promise<Built> {
     const parsed = parseDocument(body.yaml);
     const identity = yamlIdentity(parsed);
     integrationId = integrationId || identity.id;
-    const built = buildIntegrationMock({ yaml: body.yaml, testData });
+    const built = buildIntegrationMock({ yaml: body.yaml, testData, clientSource: clientSourceOf(body) });
     spec = built.spec;
     warnings = built.warnings;
     name = name || spec.source.name;
@@ -314,6 +314,28 @@ function parseDocument(text: string): unknown {
   } catch {
     throw new HttpError(400, "Spec is not valid JSON or YAML");
   }
+}
+
+function clientSourceOf(body: Record<string, unknown>): string | undefined {
+  const source = body.clientSource;
+  if (typeof source !== "string" || !source.trim()) return undefined;
+  if (source.length > 200_000) throw new HttpError(413, "Python client is too large");
+  if (source.includes("\0")) throw new HttpError(400, "Python client is not text");
+  return source;
+}
+
+function routesOf(spec: MockSpec) {
+  const operations = new Map(spec.operations.map((operation) => [operation.id, operation]));
+  return (spec.source.coverage || []).map((row) => {
+    const operation = row.operationId ? operations.get(row.operationId) : undefined;
+    return {
+      command: row.command,
+      method: operation?.method,
+      path: operation?.pathTemplate,
+      pathFrom: row.pathFrom,
+      response: row.response,
+    };
+  });
 }
 
 function yamlIdentity(document: unknown): { id?: string } {

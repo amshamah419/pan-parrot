@@ -45,6 +45,8 @@ def dispatch(args: list[str]) -> dict:
         return login(args[1:])
     if args[0] == "presets":
         return presets(args[1:])
+    if args[0] == "mock" and len(args) > 1 and args[1] == "from-integration":
+        return from_integration(args[2:])
     if args[0] == "mocks":
         return mocks(args[1:])
     if args[0] == "instance-config":
@@ -82,6 +84,76 @@ def presets(args: list[str]) -> dict:
     return {"presets": rows, "text": "\n".join(lines) if lines else "No presets matched."}
 
 
+CLIENT_MAX = 200_000
+
+
+def from_integration(args: list[str]) -> dict:
+    yml = Path(args[0] if args and not args[0].startswith("-") else flag(args, "--yaml"))
+    if not yml.is_file():
+        raise SystemExit(f"Integration YAML not found: {yml}")
+    python = integration_python(yml, optional(args, "--python"))
+    client = python.read_text(errors="replace")
+    if len(client) > CLIENT_MAX:
+        raise SystemExit("Python client is too large")
+    body = mock_body_from(yml, optional(args, "--test-data"), client)
+    created = api("POST", "/api/v1/mocks", body)
+    mock_id = str(created.get("id") or "")
+    if not mock_id:
+        raise SystemExit("PAN Parrot did not return a mock id")
+    config = api("GET", "/api/v1/mocks/" + quote(mock_id) + "/instance-config")
+    routes = created.get("routes") or []
+    lines = [str(created.get("url") or ""), ""]
+    for route in routes:
+        if route.get("method") and route.get("path"):
+            lines.append(f"{route.get('command')}  {route.get('method')} {route.get('path')}  {route.get('pathFrom')}")
+    lines.append("")
+    for param in config.get("params") or []:
+        lines.append(f"{param.get('name')} = {param.get('value')}")
+    return {
+        "mock": {key: created.get(key) for key in ("id", "name", "url", "integrationId", "version", "created")},
+        "routes": routes,
+        "instanceConfig": config,
+        "warnings": created.get("warnings") or [],
+        "text": "\n".join(lines).strip(),
+    }
+
+
+def integration_python(yml: Path, override: str | None) -> Path:
+    if override:
+        path = Path(override)
+        if not path.is_file():
+            raise SystemExit(f"Python client not found: {override}")
+        return path
+    sibling = yml.with_suffix(".py")
+    if sibling.is_file():
+        return sibling
+    candidates = [
+        path
+        for path in sorted(yml.parent.glob("*.py"))
+        if path.is_file() and "test" not in path.name.lower() and not path.name.startswith("_")
+    ]
+    if len(candidates) == 1:
+        return candidates[0]
+    if not candidates:
+        raise SystemExit(f"No Python client next to {yml.name}. Pass --python.")
+    raise SystemExit("More than one Python file next to the YAML. Pass --python.")
+
+
+def mock_body_from(yml: Path, test_data: str | None, client: str | None) -> dict:
+    body: dict = {"yaml": yml.read_text()}
+    if client:
+        body["clientSource"] = client
+    folder = Path(test_data) if test_data else yml.parent / "test_data"
+    if folder.is_dir():
+        files = []
+        for path in sorted(folder.glob("*")):
+            if path.is_file() and len(files) < 20 and path.stat().st_size <= 100_000:
+                files.append({"name": path.name, "text": path.read_text(errors="replace")})
+        if files:
+            body["testData"] = files
+    return body
+
+
 def mocks(args: list[str]) -> dict:
     if not args or args[0] == "list":
         return {"mocks": api("GET", "/api/v1/mocks").get("mocks", [])}
@@ -115,16 +187,16 @@ def mock_body(args: list[str]) -> dict:
         return {"mockSpec": json.loads(Path(spec).read_text())}
     if not yml:
         raise SystemExit("mocks create and push need --from-yml or --spec")
-    text = Path(yml).read_text()
-    body: dict = {"yaml": text}
-    folder = optional(args, "--test-data")
-    if folder:
-        files = []
-        for path in sorted(Path(folder).glob("*")):
-            if path.is_file() and len(files) < 20 and path.stat().st_size <= 100_000:
-                files.append({"name": path.name, "text": path.read_text(errors="replace")})
-        body["testData"] = files
-    return body
+    python = optional(args, "--python")
+    client = None
+    if python:
+        source = Path(python)
+        if not source.is_file():
+            raise SystemExit(f"Python client not found: {python}")
+        client = source.read_text(errors="replace")
+        if len(client) > CLIENT_MAX:
+            raise SystemExit("Python client is too large")
+    return mock_body_from(Path(yml), optional(args, "--test-data"), client)
 
 
 def api(method: str, path: str, body: dict | None = None) -> dict:
@@ -175,7 +247,9 @@ HELP = """panparrot [--json] <command>
 
   login --url https://your-site --token pp_...
   presets [--q text]
+  mock from-integration <integration.yml> [--python file] [--test-data dir]
   mocks list
+  mocks create --from-yml Integration.yml [--python file] [--test-data dir]
   mocks create --from-yml Integration.yml [--test-data dir]
   mocks push --from-yml Integration.yml [--test-data dir]
   mocks push --mock <id> --spec mock.json

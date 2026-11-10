@@ -17,6 +17,7 @@ Status: **done**, **in progress**, **todo**.
 | 9 | Collaboration and enterprise polish | done | Owners can share a mock view or edit with other @paloaltonetworks.com addresses, publish it to a shared catalog, and let someone clone a copy. Saves keep 15 versions and can be reverted. Admins see usage, an audit log, and can disable a user or purge captured data. The empty dashboard explains the first three steps. No new vendors. |
 | 10 | Ops readiness | done | `docs/GO_LIVE.md` is the Netlify, Netlify Database, Resend, env var, secret-rotation, and smoke-test checklist. `GET /api/health` checks the database. `/admin` Health shows email, the session secret, catch latency and errors, sign-in, storage, and the app version. `npm run smoke` runs against the deployed site. `docs/USER_GUIDE.md` includes the admin page. Playwright runs the studio journey and the admin page in CI. Production deploy, Resend, and the first sign-in are still Andrew's steps below. A database backup product is not planned. |
 | 11 | Agent catalog search | done | `panparrot presets --q` calls `GET /api/v1/presets` and prints fidelity plus command coverage (`vendor`, `approximate`, `missing`, `total`) when the preset has been scored. The same fields are on the JSON response. |
+| 12 | Mock from a local integration | done | `panparrot mock from-integration <integration.yml>` reads the YAML, the Python file beside it, and `test_data` when present. Routes come from the client. The command returns the catch URL and the instance parameters. The Python is parsed for paths only. It is not executed and is not stored. |
 
 ## Defaults chosen without waiting
 
@@ -47,6 +48,8 @@ Status: **done**, **in progress**, **todo**.
 - The request log searches method, status, path, headers, and body, copies a call as cURL or Python, replays it through the same public-https checks as Push, and diffs two calls side by side. `?` lists the shortcuts. Color theme follows the system until a Light or Dark choice is saved in the browser.
 
 ## Done through this PR
+
+`panparrot mock from-integration <integration.yml>` builds a mock from a local XSOAR integration. It sends the YAML, the Python file next to it (or `--python`), and a sibling `test_data` directory. `POST /api/v1/mocks` accepts `clientSource` and uses it only to choose each command's method and path. The response lists those routes. The command then reads instance config and prints the catch URL and parameter values. Fetch-incident windows and stateful create/get/delete were already on the Flow tab.
 
 `panparrot presets --q github` searches the catalog. The JSON and the text line include command coverage when the preset has been scored. `GET /api/v1/presets` returns that `commandCoverage` object. The agent recipe in `docs/agent-usage.md` searches before it creates a mock.
 
