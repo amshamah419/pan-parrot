@@ -40,6 +40,7 @@ Status: **done**, **in progress**, **todo**.
 - OAuth2 client-credentials responses include `expires_in`. Generic and Microsoft shapes also return a `refresh_token` that lasts 24 hours. `grant_type=refresh_token` issues a new pair. The previous refresh token keeps working until that 24 hours ends, because the check is stateless. CrowdStrike does not get a refresh token. An expired access token on a later call is `401` with `invalid_token`. Other grant types are `400 unsupported_grant_type`.
 - Pagination is per operation. Offset/limit, page number, cursor/next token, and Link `rel=next` walk the virtual catalog (`totalRecords`, up to 20,000). Akamai style is NDJSON with a last-line `{ total, offset, limit }`, and a `from` time ignores `offset`. The studio Pagination control switches the envelope to match. Fetch backoff is off until enabled. When it is on, each authenticated data call counts in a window (default 5 calls, 60 seconds, Retry-After 2). Call N+1 is `429` with `Retry-After` and `X-RateLimit-Limit`, `X-RateLimit-Remaining`, and `X-RateLimit-Reset` (unix seconds when the window ends). Successful calls send the same X-RateLimit headers. The 429 counts, so the window stays full until it rolls. Token issuance does not count. The random chaos 429 is unchanged.
 - An XSOAR instance helper is shown for presets and for mocks imported from integration YAML. Server URL is the catch URL. Dummy secrets are placed in the YAML's own parameter names. Trust any certificate is on, Use system proxy is off, and Fetch incidents is off until a manual command works. The downloadable JSON uses `data: [{ name, value }]`, with type 9 credentials as `{ identifier, password, vaultInstanceId }`. Integrations that append `:port/api/` (Panorama) are called out on the port row because that client drops the `/catch` path.
+- The home page is written for a content developer. On a mock, Chaos and load test, Auth, Flow, Push, Export fixtures, and Share jump to that part of the page. Virtual records is the catalog size. One response still stops at 500. Playwright runs `e2e/journey.spec.ts` against `npm run dev` in CI, with Postgres and `AUTH_DEV_EXPOSE_CODE` only in that job.
 
 ## Next ideas
 
@@ -53,4 +54,4 @@ Things a content developer would still have to work around:
 - XSIAM dataset and correlation samples, in addition to XSOAR integration packs.
 - Dark mode.
 - Richer JSONPath and XPath in the Match tab. The current subset is documented in the defaults above.
-- Playwright against a Netlify preview inside CI. That needs a Netlify token in GitHub, which this pass does not add.
+- Playwright against a Netlify preview. CI already runs the journey against the local dev server. A preview run would need a Netlify token in GitHub.

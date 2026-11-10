@@ -11,6 +11,7 @@ import { MockAuthPanel } from "@/components/MockAuthPanel";
 import { FlowPanel } from "@/components/FlowPanel";
 import { PushPanel } from "@/components/PushPanel";
 import { getEndpoint, resetRuntime, saveMockSpec } from "@/lib/api";
+import { sampleHeaders } from "@/lib/sample-call";
 import { CollabPanel } from "@/components/CollabPanel";
 import { InstanceGuidePanel } from "@/components/InstanceGuide";
 import { FixturePanel } from "@/components/FixturePanel";
@@ -43,6 +44,8 @@ export default function MockStudio() {
   const [error, setError] = useState("");
   const [saved, setSaved] = useState("");
   const [previewChaos, setPreviewChaos] = useState(false);
+  const [studioTab, setStudioTab] = useState("preview");
+  const [sampleNote, setSampleNote] = useState("");
 
   useEffect(() => {
     getEndpoint(endpointId)
@@ -124,14 +127,14 @@ export default function MockStudio() {
   const copy = async (value: string) => {
     try {
       await navigator.clipboard.writeText(value);
-      setSaved("Copied.");
+      setSaved(value === url ? "Copied the catch URL." : "Copied the try URL.");
     } catch {
       setSaved("Select the URL and copy it.");
     }
   };
 
   return (
-    <div className="container space-y-6 py-6">
+    <div className="container min-w-0 space-y-6 overflow-x-hidden py-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-sm text-muted-foreground">
@@ -170,7 +173,92 @@ export default function MockStudio() {
         <div className="mt-2 flex flex-col gap-2 sm:flex-row">
           <code className="flex-1 break-all rounded bg-muted px-3 py-2 text-xs">{tryUrl}</code>
           <Button variant="outline" onClick={() => copy(tryUrl)}>Copy try URL</Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => {
+              setSampleNote("");
+              const target = new URL(tryUrl, window.location.origin);
+              const sameOrigin = `${target.pathname}${target.search}`;
+              void fetch(sameOrigin, { headers: sampleHeaders(spec.auth) })
+                .then(async (response) => {
+                  const count = response.headers.get("x-pan-parrot-records");
+                  setSampleNote(
+                    `${response.status}${count ? ` · ${count} records` : ""}${response.ok ? "" : ". The call was rejected."}`,
+                  );
+                })
+                .catch(() => setSampleNote("The sample call did not reach the catch URL."));
+            }}
+          >
+            Send a sample call
+          </Button>
         </div>
+        {spec.auth.mode === "edgegrid" && spec.auth.edgegrid?.verify !== "format-only" && (
+          <div className="mt-3 rounded border border-amber-300 bg-amber-50 p-3 text-sm text-amber-950">
+            <p>
+              A plain visit is rejected. This mock checks an EdgeGrid signature, which changes every request. Accept the header shape to curl it while you page through records. Turn the signature check back on from the Auth tab when the integration should sign for real.
+            </p>
+            <Button
+              type="button"
+              size="sm"
+              className="mt-2"
+              onClick={() =>
+                setSpec({
+                  ...spec,
+                  auth: {
+                    ...spec.auth,
+                    edgegrid: { ...spec.auth.edgegrid!, verify: "format-only" },
+                  },
+                })
+              }
+            >
+              Accept the header shape for local curls
+            </Button>
+          </div>
+        )}
+        {sampleNote && <p className="mt-2 text-sm">{sampleNote}</p>}
+        {saved.startsWith("Copied") && (
+          <p className="mt-2 text-sm text-green-700" role="status">{saved}</p>
+        )}
+        <nav aria-label="On this mock" className="mt-4 flex flex-wrap gap-2">
+          {(
+            [
+              ["chaos", "Chaos and load test"],
+              ["auth", "Auth"],
+              ["flow", "Flow"],
+              ["push", "Push"],
+            ] as const
+          ).map(([id, label]) => (
+            <Button
+              key={id}
+              type="button"
+              size="sm"
+              variant="outline"
+              onClick={() => {
+                setStudioTab(id);
+                document.getElementById("mock-work")?.scrollIntoView({ block: "start" });
+              }}
+            >
+              {label}
+            </Button>
+          ))}
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            onClick={() => document.getElementById("fixtures-heading")?.scrollIntoView({ block: "start" })}
+          >
+            Export fixtures
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            onClick={() => document.getElementById("collab-heading")?.scrollIntoView({ block: "start" })}
+          >
+            Share
+          </Button>
+        </nav>
         <p className="mt-3 text-xs text-muted-foreground">
           A page holds at most {MOCK_LIMITS.maxRecordsPerResponse} records and{" "}
           {Math.round(MOCK_LIMITS.maxResponseBytes / 1_000_000)} MB. Streamed NDJSON and file downloads can grow to{" "}
@@ -251,8 +339,8 @@ export default function MockStudio() {
         </Label>
       </div>
 
-      <Tabs defaultValue="preview">
-        <TabsList className="flex h-auto flex-wrap">
+      <Tabs value={studioTab} onValueChange={setStudioTab}>
+        <TabsList id="mock-work" className="flex h-auto flex-wrap">
           <TabsTrigger value="preview">Preview</TabsTrigger>
           <TabsTrigger value="shape">Shape</TabsTrigger>
           <TabsTrigger value="chaos">Chaos</TabsTrigger>
@@ -442,7 +530,9 @@ export default function MockStudio() {
         </TabsContent>
       </Tabs>
       {error && <p className="text-sm text-destructive">{error}</p>}
-      {saved && <p className="text-sm text-green-700">{saved}</p>}
+      {saved && !saved.startsWith("Copied") && (
+        <p className="text-sm text-green-700" role="status">{saved}</p>
+      )}
     </div>
   );
 }
@@ -707,10 +797,10 @@ function ChaosEditor({
   return (
     <div className="space-y-3 rounded border p-3">
       <div className="flex items-center justify-between">
-        <Label>Flaky behavior</Label>
-        <Switch checked={chaos.enabled} onCheckedChange={(value) => toggle("enabled", value)} />
+        <Label htmlFor="flaky-behavior">Flaky behavior</Label>
+        <Switch id="flaky-behavior" aria-label="Flaky behavior" checked={chaos.enabled} onCheckedChange={(value) => toggle("enabled", value)} />
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <Label className="text-xs">
           Seed
           <Input
@@ -722,11 +812,15 @@ function ChaosEditor({
           Virtual records
           <Input
             type="number"
+            aria-label="Virtual records"
             value={totalRecords}
             onChange={(event) => onChange(chaos, Number(event.target.value) || 1)}
           />
         </Label>
       </div>
+      <p className="text-xs text-muted-foreground">
+        This is the catalog a load test walks, up to 20,000. One response still returns at most 500 records. Use the pagination control to page through the rest.
+      </p>
       <div className="flex gap-2 text-sm">
         <button
           type="button"
@@ -794,8 +888,8 @@ function ChaosEditor({
         ] as const
       ).map(([key, label]) => (
         <div key={key} className="flex items-center justify-between text-sm">
-          <span>{label}</span>
-          <Switch checked={Boolean(chaos[key])} onCheckedChange={(value) => toggle(key, value)} />
+          <span id={`chaos-${key}`}>{label}</span>
+          <Switch aria-labelledby={`chaos-${key}`} checked={Boolean(chaos[key])} onCheckedChange={(value) => toggle(key, value)} />
         </div>
       ))}
       <Label className="text-xs">

@@ -37,6 +37,7 @@ export function FlowPanel({
             <p className="text-xs text-muted-foreground">POST stores a record. GET, PUT, and DELETE use that copy.</p>
           </div>
           <Switch
+            aria-label="Saved records"
             checked={flow.state.enabled}
             onCheckedChange={(enabled) => onChange({ ...flow, state: { ...flow.state, enabled } })}
           />
@@ -54,6 +55,7 @@ export function FlowPanel({
             <p className="text-xs text-muted-foreground">Call 1 returns the first step, call 2 the next. After the last step, that response repeats.</p>
           </div>
           <Switch
+            aria-label="Call sequence"
             checked={flow.scenario.enabled}
             onCheckedChange={(enabled) =>
               onChange({
@@ -106,6 +108,7 @@ export function FlowPanel({
             <p className="text-xs text-muted-foreground">Each poll after `since` or `first_fetch` reveals a new time window. The same since returns nothing once those ids were sent.</p>
           </div>
           <Switch
+            aria-label="Fetch over time"
             checked={flow.fetch.enabled}
             onCheckedChange={(enabled) => onChange({ ...flow, fetch: { ...flow.fetch, enabled } })}
           />

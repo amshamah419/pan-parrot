@@ -83,10 +83,13 @@ export function CollabPanel({
             </select>
             <Button type="submit">Share</Button>
           </form>
+          {shares.length === 0 && (
+            <p className="text-sm text-muted-foreground">No one else can open this mock yet.</p>
+          )}
           <ul className="space-y-1 text-sm">
             {shares.map((share) => (
-              <li key={share.email} className="flex items-center justify-between gap-2">
-                <span>{share.email} · {share.role}</span>
+              <li key={share.email} className="flex flex-wrap items-center justify-between gap-2">
+                <span className="min-w-0 break-all">{share.email} · {share.role}</span>
                 <Button type="button" variant="ghost" size="sm" onClick={() => void unshareEndpoint(endpointId, share.email).then(() => setShares((rows) => rows.filter((row) => row.email !== share.email)))}>
                   Remove
                 </Button>
@@ -94,6 +97,9 @@ export function CollabPanel({
             ))}
           </ul>
         </div>
+      )}
+      {versions.length === 0 && (
+        <p className="mt-3 text-sm text-muted-foreground">Saves show up here after you click Save.</p>
       )}
       {versions.length > 0 && (
         <div className="mt-4">

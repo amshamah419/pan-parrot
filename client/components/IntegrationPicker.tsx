@@ -37,6 +37,7 @@ export function IntegrationPicker({
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [catalog, setCatalog] = useState<CatalogEntry[]>([]);
+  const [catalogState, setCatalogState] = useState<"idle" | "loading" | "ready" | "error">("idle");
   const [query, setQuery] = useState("");
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [error, setError] = useState("");
@@ -46,12 +47,19 @@ export function IntegrationPicker({
   const [specUrl, setSpecUrl] = useState("");
 
   useEffect(() => {
-    if (!open || catalog.length) return;
+    if (!open || catalogState === "loading" || catalogState === "ready") return;
+    setCatalogState("loading");
     fetch("/presets/index.json")
       .then((response) => response.json())
-      .then((data) => setCatalog(data.presets || []))
-      .catch(() => setError("Could not load the integration catalog"));
-  }, [open, catalog.length]);
+      .then((data) => {
+        setCatalog(data.presets || []);
+        setCatalogState("ready");
+      })
+      .catch(() => {
+        setCatalogState("error");
+        setError("Could not load the integration catalog");
+      });
+  }, [open, catalogState]);
 
   const matches = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -124,7 +132,7 @@ export function IntegrationPicker({
           </DialogDescription>
         </DialogHeader>
         <Tabs defaultValue="catalog">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="flex h-auto w-full flex-wrap">
             <TabsTrigger value="catalog">Catalog</TabsTrigger>
             <TabsTrigger value="sample">Sample JSON</TabsTrigger>
             <TabsTrigger value="spec">API spec</TabsTrigger>
@@ -137,12 +145,14 @@ export function IntegrationPicker({
             >
               Start with Akamai WAF SIEM
             </Button>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
+              <Label htmlFor="preset-search" className="sr-only">Search integrations</Label>
               <Input
                 id="preset-search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search Okta, CrowdStrike, Sentinel..."
+                className="min-w-0 flex-1"
               />
               <label className="flex shrink-0 items-center gap-2 text-sm">
                 <input
@@ -150,7 +160,7 @@ export function IntegrationPicker({
                   checked={verifiedOnly}
                   onChange={(event) => setVerifiedOnly(event.target.checked)}
                 />
-                Verified
+                Verified only
               </label>
             </div>
             <div className="max-h-80 overflow-y-auto rounded border">
@@ -160,6 +170,7 @@ export function IntegrationPicker({
                   type="button"
                   className="flex w-full items-start justify-between gap-3 border-b px-3 py-2 text-left hover:bg-muted"
                   disabled={busy}
+                  aria-label={`Use ${entry.name}`}
                   onClick={() => usePreset(entry.id, entry.name)}
                 >
                   <span>
@@ -171,8 +182,13 @@ export function IntegrationPicker({
                   <TrustBadge status={entry.verification?.status} fidelity={entry.fidelity} />
                 </button>
               ))}
-              {matches.length === 0 && (
-                <p className="p-3 text-sm text-muted-foreground">No matches.</p>
+              {catalogState === "loading" && (
+                <p className="p-3 text-sm text-muted-foreground">Loading the catalog…</p>
+              )}
+              {catalogState !== "loading" && matches.length === 0 && (
+                <p className="p-3 text-sm text-muted-foreground">
+                  No integrations match. Clear the search or turn off Verified only.
+                </p>
               )}
             </div>
           </TabsContent>
@@ -194,6 +210,7 @@ export function IntegrationPicker({
             <p className="text-sm text-muted-foreground">
               OpenAPI 3, Swagger 2, a Postman v2 collection, a WSDL, a sample XML document, or an XSOAR integration YAML. An integration YAML becomes one operation per command. URLs must be public https. A zip is read for its first text file and then mocked as a zip download.
             </p>
+            <Label htmlFor="spec-text">Paste OpenAPI, WSDL, XML, or YAML</Label>
             <Textarea
               id="spec-text"
               value={specText}
@@ -202,7 +219,9 @@ export function IntegrationPicker({
               className="font-mono text-xs"
               placeholder="Paste JSON, YAML, WSDL, or XML"
             />
+            <Label htmlFor="spec-url">Or a public https URL</Label>
             <Input
+              id="spec-url"
               value={specUrl}
               onChange={(event) => setSpecUrl(event.target.value)}
               placeholder="https://example.com/openapi.yaml"
@@ -214,11 +233,12 @@ export function IntegrationPicker({
               <Button variant="outline" disabled={busy || !specUrl.trim()} onClick={() => importText("spec", "", specUrl)}>
                 Import from URL
               </Button>
-              <label className="inline-flex items-center">
+              <label className="flex max-w-full flex-col gap-1 text-sm">
+                Upload a file
                 <input
                   type="file"
                   accept=".json,.yaml,.yml,.xml,.wsdl,.zip,application/json,text/yaml,application/zip"
-                  className="text-sm"
+                  className="max-w-full text-sm"
                   onChange={async (event) => {
                     const file = event.target.files?.[0];
                     if (!file) return;

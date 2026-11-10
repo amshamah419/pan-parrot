@@ -73,7 +73,7 @@ export function PushPanel({
       </p>
       <div className="flex items-center justify-between rounded border px-3 py-2">
         <span className="text-sm">Send on the schedule</span>
-        <Switch checked={push.enabled} onCheckedChange={(enabled) => update({ enabled })} />
+        <Switch aria-label="Send on the schedule" checked={push.enabled} onCheckedChange={(enabled) => update({ enabled })} />
       </div>
       <Label className="text-xs">Target URL
         <Input value={push.url} placeholder="https://collector.example.com/webhook" onChange={(event) => update({ url: event.target.value })} />
@@ -108,8 +108,11 @@ export function PushPanel({
       <Button type="button" onClick={send} disabled={busy || !push.url.trim()}>
         {busy ? "Pushing…" : "Push now"}
       </Button>
-      {status && <p className="text-sm text-green-700">{status}</p>}
-      {error && <p className="text-sm text-destructive">{error}</p>}
+      {status && <p className="text-sm text-green-700" role="status">{status}</p>}
+      {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
+      {deliveries.length === 0 && (
+        <p className="text-sm text-muted-foreground">No pushes yet. A private or non-https URL is rejected before anything is sent.</p>
+      )}
       {deliveries.length > 0 && (
         <ul className="space-y-1 text-xs text-muted-foreground">
           {deliveries.map((row) => (

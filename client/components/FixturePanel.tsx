@@ -81,11 +81,14 @@ export function FixturePanel({
             ))}
           </select>
         </label>
+        {calls.length === 0 && (
+          <p className="text-xs text-muted-foreground">No captured calls for this catch URL yet. Hit the try URL, then come back to compare a real body.</p>
+        )}
         {calls.length > 0 && (
-          <label className="block text-xs">
+          <label className="grid min-w-0 text-xs">
             Captured response
             <select
-              className="mt-1 block rounded border bg-background px-2 py-2 text-sm"
+              className="mt-1 w-full min-w-0 max-w-full rounded border bg-background px-2 py-2 text-sm"
               aria-label="Captured response to compare"
               defaultValue=""
               onChange={(event) => {

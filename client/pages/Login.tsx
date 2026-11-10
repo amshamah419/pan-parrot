@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,6 +39,10 @@ export default function Login() {
   const [error, setError] = useState("");
   const [info, setInfo] = useState("");
   const [devCode, setDevCode] = useState("");
+
+  useEffect(() => {
+    if (step === "code") document.getElementById("code")?.focus();
+  }, [step]);
 
   const finish = async (response: Response) => {
     const data = (await response.json()) as {
@@ -224,7 +228,7 @@ export default function Login() {
 
             {error && (
               <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
+                <AlertDescription role="alert">{error}</AlertDescription>
               </Alert>
             )}
           </CardContent>
