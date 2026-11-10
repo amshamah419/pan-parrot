@@ -30,7 +30,51 @@
         "differences": [
           "GET /v1beta1/alerts is the list command. It reads alerts[] (alertId, createTime, updateTime, type, source, metadata.severity, metadata.status) and nextPageToken. A single alert and feedback are other calls."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "gsac-alert-list",
+          "calls": [
+            "GET /v1beta1/alerts"
+          ],
+          "status": "approximate"
+        },
+        {
+          "command": "gsac-alert-get",
+          "calls": [
+            "GET /v1beta1/alerts/{alert_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsac-alert-feedback-create",
+          "calls": [
+            "POST /v1beta1/alerts/{0}/feedback"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsac-alert-feedback-list",
+          "calls": [
+            "GET /v1beta1/alerts/{0}/feedback"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsac-alert-delete",
+          "calls": [
+            "POST /v1beta1/alerts:batchDelete"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsac-alert-recover",
+          "calls": [
+            "POST /v1beta1/alerts:batchUndelete"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {

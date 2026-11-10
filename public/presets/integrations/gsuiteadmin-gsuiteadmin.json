@@ -3,9 +3,9 @@
   "name": "Google Workspace Admin",
   "pack": "GSuiteAdmin",
   "vendor": "Google",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: POST /admin/directory/v1/users.",
+  "summary": "From vendor docs. Rebuilt from the client: POST /admin/directory/v1/users.",
   "notes": [
     "Sample fields are the ones POST /admin/directory/v1/users reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,20 +17,208 @@
       "kind": "preset",
       "id": "gsuiteadmin-gsuiteadmin",
       "name": "Google Workspace Admin",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list",
       "notes": [
         "Sample fields are the ones POST /admin/directory/v1/users reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list",
+        "status": "vendor",
+        "docUrl": "https://developers.google.com/workspace/admin/directory/v1/guides/manage-users",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /admin/directory/v1/users reads in the matched command. Lists the command iterates are arrays."
+          "1 of 28 commands from vendor docs, 1 approximate, 26 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "gsuite-mobiledevice-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-chromeosdevice-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-chromeosdevice-action",
+          "calls": [
+            "POST /admin/directory/v1/customer/{arg}/devices/chromeos/{arg}/action"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-mobile-update",
+          "calls": [
+            "POST /admin/directory/v1/customer/{arg}/devices/mobile/{resource_id}/action"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-mobile-delete",
+          "calls": [
+            "DELETE /admin/directory/v1/customer/{arg}/devices/mobile/{resource_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-user-alias-add",
+          "calls": [
+            "POST /admin/directory/v1/users/{user_key}/aliases"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-user-create",
+          "calls": [
+            "POST /admin/directory/v1/users"
+          ],
+          "status": "approximate"
+        },
+        {
+          "command": "gsuite-group-create",
+          "calls": [
+            "POST /admin/directory/v1/groups"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-role-assignment-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-role-assignment-create",
+          "calls": [
+            "POST /admin/directory/v1/customer/{arg}/roleassignments"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-role-create",
+          "calls": [
+            "POST /admin/directory/v1/customer/{arg}/roles"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-token-revoke",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-user-signout",
+          "calls": [
+            "POST /admin/directory/v1/users/{user_key}/signOut"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-datatransfer-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-custom-user-schema-create",
+          "calls": [
+            "POST /admin/directory/v1/customer/{arg}/schemas"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-custom-user-schema-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-datatransfer-request-create",
+          "calls": [
+            "POST /admin/datatransfer/v1/transfers"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-user-delete",
+          "calls": [
+            "DELETE /admin/directory/v1/users/{expr}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-user-update",
+          "calls": [
+            "PUT /admin/directory/v1/users/{expr}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-user-get",
+          "calls": [
+            "GET /admin/directory/v1/users/{user_key}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--admin-directory-v1-users-user-key"
+          ],
+          "docUrl": "https://developers.google.com/workspace/admin/directory/v1/guides/manage-users"
+        },
+        {
+          "command": "gsuite-group-get",
+          "calls": [
+            "GET /admin/directory/v1/groups/{arg}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-user-reset-password",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-chromebrowserdevice-move-ou",
+          "calls": [
+            "POST /admin/directory/v1.1beta1/customer/{customer_id}/devices/chromebrowsers/moveChromeBrowsersToOu"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-chromebrowserdevice-list",
+          "calls": [
+            "GET /admin/directory/v1.1beta1/customer/{customer_id}/devices/chromebrowsers/{device_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-policy-modify",
+          "calls": [
+            "POST /v1/customers/{customer_id}/policies/orgunits:batchModify"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-policy-schemas-list",
+          "calls": [
+            "GET /v1/customers/{customer_id}/policySchemas/{schema_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-policy-resolve",
+          "calls": [
+            "POST /v1/customers/{customer_id}/policies:resolve"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "gsuite-policy-groups-delete",
+          "calls": [
+            "POST /v1/customers/{customer_id}/policies/groups:batchDelete"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -297,6 +485,35 @@
             }
           ]
         }
+      },
+      {
+        "id": "get--admin-directory-v1-users-user-key",
+        "summary": "GET /admin/directory/v1/users/{user_key}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "contentType": "application/json",
+        "fixture": "{\n  \"kind\": \"directory#user\",\n  \"id\": \"the unique user id\",\n  \"primaryEmail\": \"liz@example.com\",\n  \"name\": {\n    \"givenName\": \"Liz\",\n    \"familyName\": \"Smith\",\n    \"fullName\": \"Liz Smith\"\n  },\n  \"isAdmin\": true,\n  \"isDelegatedAdmin\": false,\n  \"lastLoginTime\": \"2013-02-05T10:30:03.325Z\",\n  \"creationTime\": \"2010-04-05T17:30:04.325Z\",\n  \"agreedToTerms\": true,\n  \"hashFunction\": \"SHA-1\",\n  \"suspended\": false,\n  \"changePasswordAtNextLogin\": false,\n  \"ipWhitelisted\": false,\n  \"ims\": [\n    {\n      \"type\": \"work\",\n      \"protocol\": \"gtalk\",\n      \"im\": \"user@example.invalid\",\n      \"primary\": true\n    }\n  ],\n  \"emails\": [\n    {\n      \"address\": \"liz@example.com\",\n      \"type\": \"home\",\n      \"customType\": \"\",\n      \"primary\": true\n    }\n  ],\n  \"addresses\": [\n    {\n      \"type\": \"work\",\n      \"customType\": \"\",\n      \"streetAddress\": \"1600 Amphitheatre Parkway\",\n      \"locality\": \"Mountain View\",\n      \"region\": \"CA\",\n      \"postalCode\": \"94043\"\n    }\n  ],\n  \"externalIds\": [\n    {\n      \"value\": \"employee number\",\n      \"type\": \"custom\",\n      \"customType\": \"office\"\n    }\n  ],\n  \"organizations\": [\n    {\n      \"name\": \"Google Inc.\",\n      \"title\": \"SWE\",\n      \"primary\": true,\n      \"customType\": \"\",\n      \"description\": \"Software engineer\"\n    }\n  ],\n  \"phones\": [\n    {\n      \"value\": \"+1 nnn nnn nnnn\",\n      \"type\": \"work\"\n    }\n  ],\n  \"aliases\": [\n    \"lizsmith@example.com\",\n    \"lsmith@example.com\"\n  ],\n  \"nonEditableAliases\": [\n    \"user2@example.invalid\"\n  ],\n  \"customerId\": \"C03az79cb\",\n  \"orgUnitPath\": \"corp/engineering\",\n  \"isMailboxSetup\": true,\n  \"includeInGlobalAddressList\": true\n}\n",
+        "pathTemplate": "/admin/directory/v1/users/{user_key}",
+        "method": "GET"
       }
     ],
     "chaos": {
