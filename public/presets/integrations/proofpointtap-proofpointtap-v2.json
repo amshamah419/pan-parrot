@@ -28,7 +28,7 @@
         "docUrl": "https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API",
         "checkedAt": "2026-11-09",
         "differences": [
-          "http_request joins api_version and then a suffix that starts with /. urljoin drops the version, so the call is GET /siem/clicks/blocked or /siem/clicks/permitted.",
+          "CommonServerPython.urljoin keeps api_version, so the call is GET /{api_version}/siem/clicks/blocked or /{api_version}/siem/clicks/permitted.",
           "The blocked call reads clicksBlocked. The permitted call reads clicksPermitted. The earlier mock used /v2/siem/clicks and only clicksPermitted.",
           "interval is required by the client and is not applied here. Messages are not modeled."
         ]
@@ -49,7 +49,7 @@
         },
         "id": "clicks-blocked",
         "method": "GET",
-        "pathTemplate": "/siem/clicks/blocked",
+        "pathTemplate": "/{api_version}/siem/clicks/blocked",
         "summary": "Blocked clicks",
         "status": 200,
         "list": false,
@@ -125,7 +125,7 @@
         },
         "id": "clicks-permitted",
         "method": "GET",
-        "pathTemplate": "/siem/clicks/permitted",
+        "pathTemplate": "/{api_version}/siem/clicks/permitted",
         "summary": "Permitted clicks",
         "status": 200,
         "list": false,

@@ -3,13 +3,11 @@
   "name": "Palo Alto Networks Cortex XDR - Investigation and Response",
   "pack": "CortexXDR",
   "vendor": "Palo Alto Networks",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Incidents, alerts, endpoints, and isolate as reply JSON.",
   "notes": [
-    "The XSOAR client POSTs to /public_api/v1/incidents/get_incidents, /alerts/get_alerts/, and /endpoints/get_endpoint/. Each body is { reply: { total_count, result_count, ... } }.",
-    "The real API takes search_from and search_to inside request_data. This mock reads those names from the query string.",
-    "POST /public_api/v1/endpoints/isolate and /unisolate return reply.action_id. API key headers are not checked. Extra-data and script runs are not modeled."
+    "Cross-check: path: POST /public_api/v1/alerts/get_alerts is not a client call. Closest: /public_api/v1/incidents/get_incidents (0)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CortexXDR/Integrations/CortexXDRIR",
@@ -19,20 +17,12 @@
       "kind": "preset",
       "id": "cortexxdr-cortexxdrir",
       "name": "Palo Alto Networks Cortex XDR - Investigation and Response",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Get-Incidents",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Get-Incidents",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "The XSOAR client POSTs to /public_api/v1/incidents/get_incidents, /alerts/get_alerts/, and /endpoints/get_endpoint/. Each body is { reply: { total_count, result_count, ... } }.",
-          "The real API takes search_from and search_to inside request_data. This mock reads those names from the query string.",
-          "POST /public_api/v1/endpoints/isolate and /unisolate return reply.action_id. API key headers are not checked. Extra-data and script runs are not modeled."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: POST /public_api/v1/alerts/get_alerts is not a client call. Closest: /public_api/v1/incidents/get_incidents (0)."
+      ]
     },
     "operations": [
       {

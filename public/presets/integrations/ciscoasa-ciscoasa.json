@@ -3,13 +3,11 @@
   "name": "Cisco ASA",
   "pack": "CiscoASA",
   "vendor": "Cisco",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Token service and global access rules.",
   "notes": [
-    "The client POSTs /api/tokenservices and GETs /api/access/global/rules. The token is returned in X-Auth-Token and in the body.",
-    "Interface-specific access/in and access/out rules are not modeled. The rules body is { items }.",
-    "The ASA REST guide was not reloaded. Token creation uses basic auth. Later calls are not checked again."
+    "Cross-check: field: POST /api/tokenservices root keys ['token'] are not read by the client or present in test_data ['Location', 'MSCHAPauthenticated', 'active', 'permit', 'remarks', 'selfLink', 'sourceAddress', 'x-auth-token']."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoASA/Integrations/CiscoASA",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "ciscoasa-ciscoasa",
       "name": "Cisco ASA",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.cisco.com/docs/cisco-asa-rest-api/",
       "notes": [
-        "The client POSTs /api/tokenservices and GETs /api/access/global/rules. The token is returned in X-Auth-Token and in the body.",
-        "Interface-specific access/in and access/out rules are not modeled. The rules body is { items }.",
-        "The ASA REST guide was not reloaded. Token creation uses basic auth. Later calls are not checked again."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://developer.cisco.com/docs/cisco-asa-rest-api/",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The client POSTs /api/tokenservices and GETs /api/access/global/rules. The token is returned in X-Auth-Token and in the body.",
-          "Interface-specific access/in and access/out rules are not modeled. The rules body is { items }.",
-          "The ASA REST guide was not reloaded. Token creation uses basic auth. Later calls are not checked again."
-        ]
-      }
+        "Cross-check: field: POST /api/tokenservices root keys ['token'] are not read by the client or present in test_data ['Location', 'MSCHAPauthenticated', 'active', 'permit', 'remarks', 'selfLink', 'sourceAddress', 'x-auth-token']."
+      ]
     },
     "operations": [
       {

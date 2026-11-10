@@ -3,14 +3,11 @@
   "name": "Mimecast v2",
   "pack": "Mimecast",
   "vendor": "Mimecast",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "SIEM logs as a zip plus an mc-siem-token header.",
   "notes": [
-    "POST /api/audit/get-siem-logs returns application/octet-stream with Content-Disposition filename ending in .zip, which is what the XSOAR event collector accepts.",
-    "The zip contains one JSON file with type MTA and a data array. The next page token is the mc-siem-token response header. Send it back as data[0].token.",
-    "Production signs the request. This mock only checks that Authorization, x-mc-date, x-mc-req-id, and x-mc-app-id are present. The signature is not verified.",
-    "A JSON body meaning there are no further logs is not the default. Stop paging when the catalog ends and the header is absent."
+    "Cross-check: unparseable: no HTTP calls and no test_data"
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Mimecast/Integrations/MimecastEventCollector",
@@ -20,21 +17,12 @@
       "kind": "preset",
       "id": "mimecast-mimecastv2",
       "name": "Mimecast v2",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://integrations.mimecast.com/documentation/endpoint-reference/logs-and-statistics/get-siem-logs/",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "POST /api/audit/get-siem-logs returns application/octet-stream with Content-Disposition filename ending in .zip, which is what the XSOAR event collector accepts.",
-          "The zip contains one JSON file with type MTA and a data array. The next page token is the mc-siem-token response header. Send it back as data[0].token.",
-          "Production signs the request. This mock only checks that Authorization, x-mc-date, x-mc-req-id, and x-mc-app-id are present. The signature is not verified.",
-          "A JSON body meaning there are no further logs is not the default. Stop paging when the catalog ends and the header is absent."
-        ]
-      }
+      "notes": [
+        "Cross-check: unparseable: no HTTP calls and no test_data"
+      ]
     },
     "operations": [
       {

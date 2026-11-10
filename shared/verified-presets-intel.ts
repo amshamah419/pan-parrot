@@ -343,7 +343,7 @@ export const intelVerifiedPresets = [
     docUrl: "https://github.com/demisto/content/tree/master/Packs/Anomali_ThreatStream/Integrations/AnomaliThreatStreamv3",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Anomali_ThreatStream/Integrations/AnomaliThreatStreamv3",
     differences: [
-      "ThreatStream API docs sit behind a customer login. GET /api/v2/intelligence is the public client path and returns { objects }.",
+      "ThreatStream API docs sit behind a customer login. GET /v2/intelligence is the public client path and returns { objects }.",
       "Each object keeps id, value, itype, confidence, and status.",
       "username and api_key query parameters are not checked.",
     ],
@@ -351,7 +351,7 @@ export const intelVerifiedPresets = [
       op({
         id: "intelligence",
         method: "GET",
-        pathTemplate: "/api/v2/intelligence",
+        pathTemplate: "/v2/intelligence",
         summary: "Search intelligence",
         status: 200,
         list: true,

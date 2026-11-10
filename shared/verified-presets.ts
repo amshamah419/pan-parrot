@@ -1,4 +1,5 @@
 import { defaultChaos, defaultPagination, type FieldSpec, type MockAuth, type MockSpec } from "./mock-spec";
+import { presetDowngrades } from "./preset-downgrades";
 import { WIZ_EXAMPLE_QUERY, WIZ_SDL } from "./wiz-schema";
 import { fetchVerifiedPresets } from "./verified-presets-fetch";
 import { intelVerifiedPresets } from "./verified-presets-intel";
@@ -50,7 +51,7 @@ export interface VerifiedPresetFile {
   name: string;
   pack: string;
   vendor: string;
-  fidelity: "verified";
+  fidelity: "verified" | "guessed";
   curated: true;
   summary: string;
   notes: string[];
@@ -547,7 +548,7 @@ const baseVerifiedPresets: VerifiedPresetFile[] = [
     docUrl: "https://help.proofpoint.com/Threat_Insight_Dashboard/API_Documentation/SIEM_API",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/ProofpointTAP/Integrations/ProofpointTAP_v2",
     differences: [
-      "http_request joins api_version and then a suffix that starts with /. urljoin drops the version, so the call is GET /siem/clicks/blocked or /siem/clicks/permitted.",
+      "CommonServerPython.urljoin keeps api_version, so the call is GET /{api_version}/siem/clicks/blocked or /{api_version}/siem/clicks/permitted.",
       "The blocked call reads clicksBlocked. The permitted call reads clicksPermitted. The earlier mock used /v2/siem/clicks and only clicksPermitted.",
       "interval is required by the client and is not applied here. Messages are not modeled.",
     ],
@@ -555,7 +556,7 @@ const baseVerifiedPresets: VerifiedPresetFile[] = [
       op({
         id: "clicks-blocked",
         method: "GET",
-        pathTemplate: "/siem/clicks/blocked",
+        pathTemplate: "/{api_version}/siem/clicks/blocked",
         summary: "Blocked clicks",
         status: 200,
         list: false,
@@ -580,7 +581,7 @@ const baseVerifiedPresets: VerifiedPresetFile[] = [
       op({
         id: "clicks-permitted",
         method: "GET",
-        pathTemplate: "/siem/clicks/permitted",
+        pathTemplate: "/{api_version}/siem/clicks/permitted",
         summary: "Permitted clicks",
         status: 200,
         list: false,
@@ -1415,7 +1416,26 @@ const wizPreset = preset({
   ],
 });
 
-export const verifiedPresets: VerifiedPresetFile[] = [
+function applyCrosscheck(preset: VerifiedPresetFile): VerifiedPresetFile {
+  const reason = presetDowngrades[preset.id];
+  if (!reason) return preset;
+  return {
+    ...preset,
+    fidelity: "guessed",
+    notes: [reason],
+    spec: {
+      ...preset.spec,
+      source: {
+        ...preset.spec.source,
+        fidelity: "guessed",
+        notes: [reason],
+        verification: undefined,
+      },
+    },
+  };
+}
+
+const authoredPresets: VerifiedPresetFile[] = [
   ...baseVerifiedPresets,
   ...moreVerifiedPresets,
   wizPreset,
@@ -1426,7 +1446,9 @@ export const verifiedPresets: VerifiedPresetFile[] = [
   ...panSiemVerifiedPresets,
   ...usageVerifiedPresets,
   ...identityVerifiedPresets,
-];
+].map(applyCrosscheck);
+
+export const verifiedPresets: VerifiedPresetFile[] = authoredPresets.filter((preset) => preset.fidelity === "verified");
 
 export const checkedNotUpgraded: Array<{
   id: string;

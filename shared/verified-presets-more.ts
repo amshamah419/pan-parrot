@@ -120,7 +120,7 @@ export const moreVerifiedPresets = [
     auth: { mode: "api-key", apiKey: { in: "header", name: "SEC", value: "dummy-qradar-token" } },
     differences: [
       "QRadar returns a JSON array and pages with the Range header items=0-49. This mock uses limit and offset query parameters and does not read Range.",
-      "POST /ariel/searches returns { search_id, status }. GET /ariel/searches/{search_id}/results returns { events }. The cursor and the completed-search wait are not modeled.",
+      "POST /api/ariel/searches returns { search_id, status }. GET /api/ariel/searches/{search_id}/results returns { events }. The cursor and the completed-search wait are not modeled.",
       "The SEC header must be the dummy token. Version header is not checked.",
     ],
     operations: [
@@ -138,7 +138,7 @@ export const moreVerifiedPresets = [
       op({
         id: "create-search",
         method: "POST",
-        pathTemplate: "/ariel/searches",
+        pathTemplate: "/api/ariel/searches",
         summary: "Create an Ariel search",
         status: 201,
         list: false,
@@ -152,7 +152,7 @@ export const moreVerifiedPresets = [
       op({
         id: "search-results",
         method: "GET",
-        pathTemplate: "/ariel/searches/{search_id}/results",
+        pathTemplate: "/api/ariel/searches/{search_id}/results",
         summary: "Get Ariel search results",
         status: 200,
         list: false,

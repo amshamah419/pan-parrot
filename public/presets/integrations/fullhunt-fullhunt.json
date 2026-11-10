@@ -3,13 +3,11 @@
   "name": "FullHunt",
   "pack": "FullHunt",
   "vendor": "FullHunt",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Domain details.",
   "notes": [
-    "The client base is /api/v1 and GETs /domain/{domain}/details. This mock answers lab.example.",
-    "Host lookup, subdomains, and /auth/status are not modeled.",
-    "The API docs page was not reloaded. X-API-KEY is the dummy key."
+    "Cross-check: field: GET /domain/lab.example/details root keys ['domain', 'hosts'] are not read by the client or present in test_data ['credentials', 'http', 'user', 'user_credits']."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FullHunt/Integrations/FullHunt",
@@ -19,30 +17,18 @@
       "kind": "preset",
       "id": "fullhunt-fullhunt",
       "name": "FullHunt",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://api-docs.fullhunt.io/",
       "notes": [
-        "The client base is /api/v1 and GETs /domain/{domain}/details. This mock answers lab.example.",
-        "Host lookup, subdomains, and /auth/status are not modeled.",
-        "The API docs page was not reloaded. X-API-KEY is the dummy key."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://api-docs.fullhunt.io/",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The client base is /api/v1 and GETs /domain/{domain}/details. This mock answers lab.example.",
-          "Host lookup, subdomains, and /auth/status are not modeled.",
-          "The API docs page was not reloaded. X-API-KEY is the dummy key."
-        ]
-      }
+        "Cross-check: field: GET /domain/lab.example/details root keys ['domain', 'hosts'] are not read by the client or present in test_data ['credentials', 'http', 'user', 'user_credits']."
+      ]
     },
     "operations": [
       {
         "id": "details",
         "method": "GET",
-        "pathTemplate": "/api/v1/domain/lab.example/details",
+        "pathTemplate": "/domain/lab.example/details",
         "summary": "Get domain details",
         "status": 200,
         "list": false,

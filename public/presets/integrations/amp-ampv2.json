@@ -3,13 +3,11 @@
   "name": "Cisco AMP v2",
   "pack": "AMP",
   "vendor": "Cisco",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Secure Endpoint events. The public events route returns data plus metadata.",
   "notes": [
-    "GET /v1/events returns { data, metadata }. The client calls /events. Trajectory fixtures use the same version, metadata, and data envelope.",
-    "Cisco pages with offset inside metadata. This mock uses limit and offset query parameters.",
-    "Basic auth is the API client id and key. Computers and isolation are not modeled."
+    "Cross-check: path: GET /v1/events is not a client call. Closest: /events (1)."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AMP/Integrations/AMPv2",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "amp-ampv2",
       "name": "Cisco AMP v2",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://developer.cisco.com/docs/secure-endpoint/v1-api-reference-events/",
       "notes": [
-        "GET /v1/events returns { data, metadata }. The client calls /events. Trajectory fixtures use the same version, metadata, and data envelope.",
-        "Cisco pages with offset inside metadata. This mock uses limit and offset query parameters.",
-        "Basic auth is the API client id and key. Computers and isolation are not modeled."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://developer.cisco.com/docs/secure-endpoint/v1-api-reference-events/",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "GET /v1/events returns { data, metadata }. The client calls /events. Trajectory fixtures use the same version, metadata, and data envelope.",
-          "Cisco pages with offset inside metadata. This mock uses limit and offset query parameters.",
-          "Basic auth is the API client id and key. Computers and isolation are not modeled."
-        ]
-      }
+        "Cross-check: path: GET /v1/events is not a client call. Closest: /events (1)."
+      ]
     },
     "operations": [
       {

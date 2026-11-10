@@ -337,11 +337,11 @@ export const panSiemVerifiedPresets = [
     id: "palo-alto-networks-wildfire-wildfirereports",
     name: "Palo Alto Networks WildFire Reports",
     pack: "Palo_Alto_Networks_WildFire",
-    summary: "POST /publicapi/get/report returns XML file_info.",
+    summary: "POST /get/report returns XML file_info.",
     docUrl: "https://docs.paloaltonetworks.com/wildfire/u-v/wildfire-api/get-wildfire-information-through-the-wildfire-api/get-a-wildfire-report-wildfire-api",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Palo_Alto_Networks_WildFire/Integrations/WildFireReports",
     differences: [
-      "WildFireReports.py posts /publicapi/get/report. The client appends /publicapi when the base URL does not already end with it.",
+      "WildFireReports.py posts /get/report. The client appends /publicapi when the base URL does not already end with it.",
       "This mock returns XML file_info. PDF and MAEC reports are not modeled. Verdict and URL submit live on the WildFire v2 preset.",
       "The report page was not reloaded. The apikey form field must be the dummy key.",
     ],
@@ -350,7 +350,7 @@ export const panSiemVerifiedPresets = [
       op({
         id: "report",
         method: "POST",
-        pathTemplate: "/publicapi/get/report",
+        pathTemplate: "/get/report",
         summary: "Get a WildFire report",
         status: 200,
         list: false,
@@ -536,7 +536,7 @@ export const panSiemVerifiedPresets = [
       jsonOp(
         "alerts",
         "GET",
-        "/alert/list",
+        "/iot/pub/v1/alert/list",
         "List alerts",
         object("body", [
           {
@@ -713,7 +713,7 @@ export const panSiemVerifiedPresets = [
       jsonOp(
         "devices",
         "GET",
-        "/device/list",
+        "/pub/v4.0/device/list",
         "List devices",
         object("body", [
           {
@@ -732,7 +732,7 @@ export const panSiemVerifiedPresets = [
       jsonOp(
         "alerts",
         "GET",
-        "/alert/list",
+        "/pub/v4.0/alert/list",
         "List alerts",
         object("body", [
           {
@@ -1266,7 +1266,7 @@ export const panSiemVerifiedPresets = [
       op({
         id: "networks",
         method: "GET",
-        pathTemplate: "/api/v1/organizations/lab-org/networks",
+        pathTemplate: "/organizations/lab-org/networks",
         summary: "List networks",
         status: 200,
         list: true,

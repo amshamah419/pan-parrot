@@ -3,13 +3,11 @@
   "name": "Palo Alto Networks IoT",
   "pack": "PaloAltoNetworks_IoT",
   "vendor": "Palo Alto Networks",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "GET /device/list and /alert/list.",
   "notes": [
-    "The client GETs /device/list and /alert/list with customerid. This mock returns devices and alerts. Single-device lookup is not a separate route.",
-    "customerid is not checked. A bearer token is required.",
-    "The IoT Security API page was not reloaded. Alert and vulnerability updates are not modeled."
+    "Cross-check: field: GET /pub/v4.0/alert/list root keys ['alerts'] are not read by the client or present in test_data ['access_key_id', 'devices', 'first_fetch', 'insecure', 'ip', 'max_fetch', 'secret_access_key', 'zb_ticketid']."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_IoT/Integrations/PaloAltoNetworks_IoT",
@@ -19,30 +17,18 @@
       "kind": "preset",
       "id": "paloaltonetworks-iot-paloaltonetworks-iot",
       "name": "Palo Alto Networks IoT",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
       "notes": [
-        "The client GETs /device/list and /alert/list with customerid. This mock returns devices and alerts. Single-device lookup is not a separate route.",
-        "customerid is not checked. A bearer token is required.",
-        "The IoT Security API page was not reloaded. Alert and vulnerability updates are not modeled."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://docs.paloaltonetworks.com/iot/iot-security-api/iot-security-api",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The client GETs /device/list and /alert/list with customerid. This mock returns devices and alerts. Single-device lookup is not a separate route.",
-          "customerid is not checked. A bearer token is required.",
-          "The IoT Security API page was not reloaded. Alert and vulnerability updates are not modeled."
-        ]
-      }
+        "Cross-check: field: GET /pub/v4.0/alert/list root keys ['alerts'] are not read by the client or present in test_data ['access_key_id', 'devices', 'first_fetch', 'insecure', 'ip', 'max_fetch', 'secret_access_key', 'zb_ticketid']."
+      ]
     },
     "operations": [
       {
         "id": "devices",
         "method": "GET",
-        "pathTemplate": "/device/list",
+        "pathTemplate": "/pub/v4.0/device/list",
         "summary": "List devices",
         "status": 200,
         "list": false,
@@ -95,7 +81,7 @@
       {
         "id": "alerts",
         "method": "GET",
-        "pathTemplate": "/alert/list",
+        "pathTemplate": "/pub/v4.0/alert/list",
         "summary": "List alerts",
         "status": 200,
         "list": false,

@@ -3,13 +3,11 @@
   "name": "Cloudflare WAF",
   "pack": "CloudflareWAF",
   "vendor": "Cloudflare",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Zones and firewall rules.",
   "notes": [
-    "The client base defaults to https://api.cloudflare.com/client/v4/. This mock lists zones and firewall rules for zone lab-zone.",
-    "Create, update, and filters are not modeled. The result array is one item.",
-    "The firewall rules page was not reloaded. Authorization is the dummy bearer."
+    "Cross-check: path: GET /client/v4/zones is not a client call. Closest: /zones (1)."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CloudflareWAF/Integrations/CloudflareWAF",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "cloudflarewaf-cloudflarewaf",
       "name": "Cloudflare WAF",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developers.cloudflare.com/api/resources/firewall/subresources/rules/methods/list/",
       "notes": [
-        "The client base defaults to https://api.cloudflare.com/client/v4/. This mock lists zones and firewall rules for zone lab-zone.",
-        "Create, update, and filters are not modeled. The result array is one item.",
-        "The firewall rules page was not reloaded. Authorization is the dummy bearer."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://developers.cloudflare.com/api/resources/firewall/subresources/rules/methods/list/",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The client base defaults to https://api.cloudflare.com/client/v4/. This mock lists zones and firewall rules for zone lab-zone.",
-          "Create, update, and filters are not modeled. The result array is one item.",
-          "The firewall rules page was not reloaded. Authorization is the dummy bearer."
-        ]
-      }
+        "Cross-check: path: GET /client/v4/zones is not a client call. Closest: /zones (1)."
+      ]
     },
     "operations": [
       {
@@ -96,7 +82,7 @@
       {
         "id": "rules",
         "method": "GET",
-        "pathTemplate": "/client/v4/zones/lab-zone/firewall/rules",
+        "pathTemplate": "/zones/lab-zone/firewall/rules",
         "summary": "List firewall rules",
         "status": 200,
         "list": false,

@@ -8,6 +8,7 @@ export function trustLabel(status?: string, fidelity?: string): string {
   if (fidelity === "high") return "Hand-built";
   if (fidelity === "generated") return "From spec";
   if (fidelity === "sample") return "From sample";
+  if (fidelity === "guessed" || fidelity === "shape") return "Guessed shape";
   return "Guessed shape";
 }
 

@@ -1065,7 +1065,7 @@ export const responseVerifiedPresets = [
     docUrl: "https://learn.microsoft.com/en-us/rest/api/defenderforcloud/alerts/list",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/AzureSecurityCenter/Integrations/AzureSecurityCenter_v2",
     differences: [
-      "GET /subscriptions/{subscriptionId}/providers/Microsoft.Security/alerts returns { value }.",
+      "GET /providers/Microsoft.Security/alerts returns { value }.",
       "This is the full integration, not the event collector. Secure score and regulatory compliance are omitted.",
       "A bearer token is required.",
     ],
@@ -1074,7 +1074,7 @@ export const responseVerifiedPresets = [
       op({
         id: "list-alerts",
         method: "GET",
-        pathTemplate: "/subscriptions/{subscriptionId}/providers/Microsoft.Security/alerts",
+        pathTemplate: "/providers/Microsoft.Security/alerts",
         summary: "List alerts",
         status: 200,
         list: true,
@@ -1233,7 +1233,7 @@ export const responseVerifiedPresets = [
     docUrl: "https://github.com/demisto/content/tree/master/Packs/FireEyeHelix/Integrations/FireEyeHelix",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/FireEyeHelix/Integrations/FireEyeHelix",
     differences: [
-      "Helix API docs are customer-gated. GET /helix/id/api/v3/alerts returns { results }.",
+      "Helix API docs are customer-gated. GET /api/v3/alerts returns { results }.",
       "Each alert keeps id, alert_type, and risk.",
       "x-fireeye-api-key is required.",
     ],
@@ -1242,7 +1242,7 @@ export const responseVerifiedPresets = [
       op({
         id: "alerts",
         method: "GET",
-        pathTemplate: "/helix/id/api/v3/alerts",
+        pathTemplate: "/api/v3/alerts",
         summary: "List alerts",
         status: 200,
         list: true,

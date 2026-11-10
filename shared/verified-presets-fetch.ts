@@ -117,7 +117,7 @@ export const fetchVerifiedPresets = [
         status: 200,
         list: true,
         envelope: { type: "wrapped", arrayKey: "items" },
-        pagination: { style: "cursor", cursorParam: "cursor", limitParam: "pageSize" },
+        pagination: { style: "offset", limitParam: "pageSize" },
         record: object("alert", [
           field("id", "uuid"),
           field("category", "enum", { enumValues: ["malware", "policy", "protection"] }),
@@ -522,7 +522,7 @@ export const fetchVerifiedPresets = [
     docUrl: "https://github.com/demisto/content/blob/master/Packs/Zimperium/Integrations/ZimperiumV2/test_data/app_version_list.json",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Zimperium/Integrations/ZimperiumV2",
     differences: [
-      "The public Zimperium console docs were not loaded. GET /threats/public/v1/threats uses the Spring page in app_version_list.json: content, totalElements, totalPages, last.",
+      "The public Zimperium console docs were not loaded. GET /api/threats/public/v1/threats uses the Spring page in app_version_list.json: content, totalElements, totalPages, last.",
       "This mock returns content and pages with page and size. totalElements is the catalog size only when the page is built; the generator writes the page, not the page metadata object.",
       "Login at /auth/v1/api_keys/login is not modeled. A bearer token is required.",
     ],
@@ -531,7 +531,7 @@ export const fetchVerifiedPresets = [
       op({
         id: "list-threats",
         method: "GET",
-        pathTemplate: "/threats/public/v1/threats",
+        pathTemplate: "/api/threats/public/v1/threats",
         summary: "List threats",
         status: 200,
         list: true,
@@ -675,7 +675,7 @@ export const fetchVerifiedPresets = [
         status: 200,
         list: true,
         envelope: { type: "wrapped", arrayKey: "results" },
-        pagination: { style: "cursor", cursorParam: "cursor", limitParam: "page_size" },
+        pagination: { style: "page", pageParam: "page", limitParam: "page_size" },
         record: object("detection", [
           field("id", "integer"),
           field("type", "string", { example: "Hidden HTTPS Tunnel" }),

@@ -3,12 +3,11 @@
   "name": "Atlassian Jira v3",
   "pack": "Jira",
   "vendor": "Atlassian",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "GET /rest/api/3/search/jql returns issues and nextPageToken. The older /search path is included for on-prem clients.",
   "notes": [
-    "XSOAR calls GET /rest/api/3/search/jql and reads issues plus nextPageToken. The older GET /rest/api/3/search is also mocked.",
-    "Issue fields are a subset of the official issue schema. names and renderedFields are omitted."
+    "Cross-check: path: GET /rest/api/3/search is not a client call. Closest: /rest/api/3/project/search (1)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Jira/Integrations/JiraV3",
@@ -18,19 +17,12 @@
       "kind": "preset",
       "id": "jira-jirav3",
       "name": "Atlassian Jira v3",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "XSOAR calls GET /rest/api/3/search/jql and reads issues plus nextPageToken. The older GET /rest/api/3/search is also mocked.",
-          "Issue fields are a subset of the official issue schema. names and renderedFields are omitted."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: GET /rest/api/3/search is not a client call. Closest: /rest/api/3/project/search (1)."
+      ]
     },
     "operations": [
       {

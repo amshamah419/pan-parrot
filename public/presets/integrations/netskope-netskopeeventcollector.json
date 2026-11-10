@@ -3,13 +3,11 @@
   "name": "Netskope Event Collector",
   "pack": "Netskope",
   "vendor": "Netskope",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "v2 event iterator. ok and result match events_raw.json.",
   "notes": [
-    "GET /api/v2/events/data/alert returns { ok, result }. events_raw.json uses that envelope and fields such as _id, domain, and dstip.",
-    "The iterator operation name is the path suffix. Other event types share this shape.",
-    "Netskope-Api-Token is required. v1 /api/v1 is not modeled."
+    "Cross-check: path: GET /api/v2/events/data/alert is not a client call. Closest: /api/v2/events/dataexport/{endpoint}/{_type} (0)."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Netskope/Integrations/NetskopeEventCollector",
@@ -19,24 +17,12 @@
       "kind": "preset",
       "id": "netskope-netskopeeventcollector",
       "name": "Netskope Event Collector",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.netskope.com/en/rest-api-v2-overview-312207/",
       "notes": [
-        "GET /api/v2/events/data/alert returns { ok, result }. events_raw.json uses that envelope and fields such as _id, domain, and dstip.",
-        "The iterator operation name is the path suffix. Other event types share this shape.",
-        "Netskope-Api-Token is required. v1 /api/v1 is not modeled."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://docs.netskope.com/en/rest-api-v2-overview-312207/",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "GET /api/v2/events/data/alert returns { ok, result }. events_raw.json uses that envelope and fields such as _id, domain, and dstip.",
-          "The iterator operation name is the path suffix. Other event types share this shape.",
-          "Netskope-Api-Token is required. v1 /api/v1 is not modeled."
-        ]
-      }
+        "Cross-check: path: GET /api/v2/events/data/alert is not a client call. Closest: /api/v2/events/dataexport/{endpoint}/{_type} (0)."
+      ]
     },
     "operations": [
       {

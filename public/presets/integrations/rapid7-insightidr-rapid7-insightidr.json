@@ -3,13 +3,11 @@
   "name": "Rapid7 InsightIDR",
   "pack": "Rapid7_InsightIDR",
   "vendor": "Rapid7",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "GET /idr/v2/investigations returns the data array the v2 client reads.",
   "notes": [
-    "The v2 list is { data: [...], metadata }. This mock returns data and does not include the metadata object.",
-    "The v1 investigations route is not mocked. The pack still has a v1 code path.",
-    "X-Api-Key must be the dummy key. The regional host is whatever you put in the server URL."
+    "Cross-check: path: GET /idr/v2/investigations is not a client call. Closest: /idr/v1/investigations (1)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Rapid7_InsightIDR/Integrations/Rapid7_InsightIDR",
@@ -19,20 +17,12 @@
       "kind": "preset",
       "id": "rapid7-insightidr-rapid7-insightidr",
       "name": "Rapid7 InsightIDR",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://help.rapid7.com/insightidr/en-us/api/v2/index.html",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://help.rapid7.com/insightidr/en-us/api/v2/index.html",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "The v2 list is { data: [...], metadata }. This mock returns data and does not include the metadata object.",
-          "The v1 investigations route is not mocked. The pack still has a v1 code path.",
-          "X-Api-Key must be the dummy key. The regional host is whatever you put in the server URL."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: GET /idr/v2/investigations is not a client call. Closest: /idr/v1/investigations (1)."
+      ]
     },
     "operations": [
       {

@@ -3,13 +3,11 @@
   "name": "VMRay",
   "pack": "VMRay",
   "vendor": "VMRay",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Submit a sample and read it back.",
   "notes": [
-    "The client base ends in /rest/. sample/submit creates a sample. GET sample/{id} reads it. This mock uses those suffixes.",
-    "Jobs, IOCs, and the PDF report are not modeled. The sample id in the path is lab-sample.",
-    "The Analyzer API page was not reloaded. Authorization is the dummy key."
+    "Cross-check: path: GET /rest/sample/lab-sample is not a client call. Closest: /analysis/sample/{sample} (1)."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VMRay/Integrations/VMRay",
@@ -19,30 +17,18 @@
       "kind": "preset",
       "id": "vmray-vmray",
       "name": "VMRay",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://www.vmray.com/cyber-security-blog/vmray-analyzer-api/",
       "notes": [
-        "The client base ends in /rest/. sample/submit creates a sample. GET sample/{id} reads it. This mock uses those suffixes.",
-        "Jobs, IOCs, and the PDF report are not modeled. The sample id in the path is lab-sample.",
-        "The Analyzer API page was not reloaded. Authorization is the dummy key."
-      ],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://www.vmray.com/cyber-security-blog/vmray-analyzer-api/",
-        "checkedAt": "2026-11-10",
-        "differences": [
-          "The client base ends in /rest/. sample/submit creates a sample. GET sample/{id} reads it. This mock uses those suffixes.",
-          "Jobs, IOCs, and the PDF report are not modeled. The sample id in the path is lab-sample.",
-          "The Analyzer API page was not reloaded. Authorization is the dummy key."
-        ]
-      }
+        "Cross-check: path: GET /rest/sample/lab-sample is not a client call. Closest: /analysis/sample/{sample} (1)."
+      ]
     },
     "operations": [
       {
         "id": "submit",
         "method": "POST",
-        "pathTemplate": "/rest/sample/submit",
+        "pathTemplate": "/sample/submit",
         "summary": "Submit a sample",
         "status": 200,
         "list": false,

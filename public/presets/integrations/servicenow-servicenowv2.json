@@ -3,12 +3,11 @@
   "name": "ServiceNow v2",
   "pack": "ServiceNow",
   "vendor": "ServiceNow",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "Table API GET /api/now/table/{table} with a result array.",
   "notes": [
-    "ServiceNow pages with sysparm_limit and sysparm_offset and returns X-Total-Count. Those headers are set. Link headers are not.",
-    "Only the incident table shape is modeled. Other table names still match {table} and return the same incident-shaped rows."
+    "Cross-check: path: GET /api/now/table/{table} is not a client call. Closest: /oauth_token.do (0)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ServiceNow/Integrations/ServiceNowv2",
@@ -18,19 +17,12 @@
       "kind": "preset",
       "id": "servicenow-servicenowv2",
       "name": "ServiceNow v2",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "ServiceNow pages with sysparm_limit and sysparm_offset and returns X-Total-Count. Those headers are set. Link headers are not.",
-          "Only the incident table shape is modeled. Other table names still match {table} and return the same incident-shaped rows."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: GET /api/now/table/{table} is not a client call. Closest: /oauth_token.do (0)."
+      ]
     },
     "operations": [
       {

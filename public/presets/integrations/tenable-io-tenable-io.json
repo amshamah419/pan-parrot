@@ -3,13 +3,11 @@
   "name": "Tenable Vulnerability Management (formerly Tenable.io)",
   "pack": "Tenable_io",
   "vendor": "Tenable",
-  "fidelity": "verified",
+  "fidelity": "guessed",
   "curated": true,
   "summary": "GET /workbenches/assets and POST /vulns/export, which the XSOAR client calls.",
   "notes": [
-    "workbenches/assets returns { assets: [...] }. The documented pagination uses limit and offset.",
-    "POST /vulns/export returns { export_uuid }. Chunk download of the finished export is not modeled.",
-    "X-ApiKeys must be the dummy accessKey and secretKey pair."
+    "Cross-check: path: GET /workbenches/assets is not a client call. Closest: /{BASE_URL}workbenches/assets (1)."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Tenable_io/Integrations/Tenable_io",
@@ -19,20 +17,12 @@
       "kind": "preset",
       "id": "tenable-io-tenable-io",
       "name": "Tenable Vulnerability Management (formerly Tenable.io)",
-      "fidelity": "verified",
+      "fidelity": "guessed",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.tenable.com/reference/workbenches-assets",
-      "notes": [],
-      "verification": {
-        "status": "verified",
-        "docUrl": "https://developer.tenable.com/reference/workbenches-assets",
-        "checkedAt": "2026-11-09",
-        "differences": [
-          "workbenches/assets returns { assets: [...] }. The documented pagination uses limit and offset.",
-          "POST /vulns/export returns { export_uuid }. Chunk download of the finished export is not modeled.",
-          "X-ApiKeys must be the dummy accessKey and secretKey pair."
-        ]
-      }
+      "notes": [
+        "Cross-check: path: GET /workbenches/assets is not a client call. Closest: /{BASE_URL}workbenches/assets (1)."
+      ]
     },
     "operations": [
       {

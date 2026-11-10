@@ -257,7 +257,7 @@ export const usageVerifiedPresets = [
     ],
     auth: headerKey("Authorization", "api_key dummy-vmray-key"),
     operations: [
-      jsonOp("submit", "POST", "/rest/sample/submit", "Submit a sample", object("body", [
+      jsonOp("submit", "POST", "/sample/submit", "Submit a sample", object("body", [
         object("data", [field("sample_id", "id"), field("sample_webif_url", "string", { example: "https://lab.vmray.example/sample" })]),
       ])),
       jsonOp("sample", "GET", "/rest/sample/lab-sample", "Get a sample", object("body", [
@@ -408,7 +408,7 @@ export const usageVerifiedPresets = [
     ],
     auth: bearer,
     operations: [
-      jsonOp("schemas", "GET", "/rest/assets/1.0/objectschema/list", "List object schemas", object("body", [
+      jsonOp("schemas", "GET", "/objectschema/list", "List object schemas", object("body", [
         listField("objectschemas", "schema", [field("id", "id"), field("name", "string", { example: "Lab assets" })]),
       ])),
     ],
@@ -489,7 +489,7 @@ export const usageVerifiedPresets = [
     ],
     auth: basic,
     operations: [
-      jsonOp("users", "GET", "/api/now/table/sys_user", "List users", object("body", [
+      jsonOp("users", "GET", "/table/sys_user", "List users", object("body", [
         listField("result", "user", [field("sys_id", "id"), field("user_name", "string", { example: "ada" }), field("email", "email")]),
       ])),
     ],
@@ -630,7 +630,7 @@ export const usageVerifiedPresets = [
     ],
     auth: bearer,
     operations: [
-      jsonOp("incidents", "POST", "/shnapi/rest/external/api/v1/queryIncidents", "Query incidents", object("body", [
+      jsonOp("incidents", "POST", "/external/api/v1/queryIncidents", "Query incidents", object("body", [
         listField("incidents", "incident", [field("id", "id"), field("severity", "enum", { enumValues: ["low", "medium", "high"] }), field("status", "const", { constValue: "open" })]),
       ])),
     ],
@@ -754,7 +754,7 @@ export const usageVerifiedPresets = [
     ],
     auth: headerKey("Authorization", "Bearer dummy-trend-key"),
     operations: [
-      jsonOp("events", "GET", "/v1/siem/security_events", "List security events", object("body", [
+      jsonOp("events", "GET", "/siem/security_events", "List security events", object("body", [
         listField("security_events", "event", [field("id", "id"), field("severity", "enum", { enumValues: ["low", "medium", "high"] }), field("message", "string", { example: "Malware detected" })]),
       ])),
     ],
