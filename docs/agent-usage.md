@@ -16,8 +16,10 @@ You are testing the XSOAR integration in this directory against PAN Parrot. Do t
    Stop if ok is not true.
 
 3. Find the integration YAML in this directory, the file that contains commonfields.id. Run:
+   panparrot --json coverage <that file>
+   Then:
    panparrot --json mock from-integration <that file>
-   Keep mock.id, mock.url, and routes from the JSON. Each route has command, method, and path. Stop if ok is not true.
+   Keep mock.id, mock.url, and routes from the JSON. Each route has command, method, and path. The output also lists vendor, approximate, or missing for each command. Stop if ok is not true.
 
 4. Run, with that mock id:
    panparrot --json mock fetch --mock <mock.id> --reset
@@ -80,6 +82,7 @@ That token can only download the wheel. It cannot read or change mocks. Do not p
 panparrot version
 panparrot --json login --url https://<site> --token pp_...
 panparrot --json presets --q github
+panparrot --json coverage Integrations/GitHub/GitHub.yml
 panparrot --json mock from-integration Integrations/HelloWorld/HelloWorld.yml
 panparrot --json mock fetch --mock <id> --window 300 --per-poll 3 --reset
 panparrot --json mock state --mock <id> --reset

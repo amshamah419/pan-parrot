@@ -24,6 +24,7 @@ Status: **done**, **in progress**, **todo**.
 | 16 | Install the CLI without the repo | done | A versioned wheel is served from `/api/v1/cli`. A signed-in session can download it, and `pipx` can install it with the personal token as HTTP Basic. It is not on public PyPI. The API tokens page shows the install command. `panparrot version` prints the installed version and, after login, says when a newer wheel is available without printing the token. |
 | 17 | Download-only install token | done | The API tokens page mints a `cli:download` token that expires in 1 hour and puts that token in the `pipx` URL. The token can download the wheel and cannot read or change mocks. It does not count toward the 5 active mock tokens. Existing `mocks:read` and `mocks:write` tokens keep working, including a wheel download. A missing or expired token is still a quiet 404. |
 | 18 | Scenario steps from the CLI | done | `panparrot mock scenario --mock <id> --step 202 --step 200:{"job":"done"}` sets an ordered response list. `--loop` starts again after the last step. Without `--loop`, the last response repeats. `--reset` clears the call index. The Flow tab exposes the same sequence, an Add step button, and a Loop switch. |
+| 19 | Coverage for a local integration | done | `panparrot coverage <integration.yml>` and `panparrot mock from-integration` print vendor, approximate, or missing for each command. The match is the scored catalog preset for that integration. A command the catalog does not list is missing. An integration that is not scored is labeled unscored instead of missing. |
 
 ## Defaults chosen without waiting
 
@@ -54,6 +55,8 @@ Status: **done**, **in progress**, **todo**.
 - The request log searches method, status, path, headers, and body, copies a call as cURL or Python, replays it through the same public-https checks as Push, and diffs two calls side by side. `?` lists the shortcuts. Color theme follows the system until a Light or Dark choice is saved in the browser.
 
 ## Done through this PR
+
+`panparrot coverage <integration.yml>` scores the commands in a local integration YAML. `POST /api/v1/coverage` returns vendor, approximate, or missing for each command, using the scored catalog preset that matches the integration. A command that preset does not list is missing. An integration that is not in the scored catalog is unscored, not missing. `panparrot mock from-integration` prints the same lines. The catalog totals stay 952 vendor, 412 approximate, and 1936 missing.
 
 `panparrot mock scenario --mock <id>` sets the ordered responses that were already on the Flow tab. Each `--step` is a status, or a status and a body (`200:{"job":"done"}`). `--loop` returns to the first step after the last one. Without it, the last response repeats. `--reset` clears the saved call index. `PUT /api/v1/mocks/{id}` accepts `{scenario}` by itself and leaves the routes in place. The Flow form has a Loop switch and an Add step button.
 
