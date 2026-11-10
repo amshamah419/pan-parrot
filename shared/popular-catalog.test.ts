@@ -7,7 +7,7 @@ const pins: Record<string, string> = {
   "azureriskyusers-azureriskyusers": "/v1.0/identityProtection/riskDetections",
   "azurecompute-azurecompute-v2": "/{resource_group}/providers/Microsoft.Compute/virtualMachines",
   "oktastandardconnector-oktastandardconnector": "/api/v1/logs",
-  "box-boxv2": "/api/2.0/events",
+  "box-boxv2": "/2.0/events",
   "salesforcev2-salesforcev2": "/services/data/v39.0/sobjects/Case/describe",
   "darktrace-darktraceeventcollector": "/modelbreaches",
   "vectra-ai-vectradetect": "/api/v2.5/search/detections",
