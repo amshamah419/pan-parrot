@@ -105,10 +105,10 @@ export async function revokeInvite(db: AppDb, actorEmail: string, inviteId: stri
 }
 
 export async function consumeInviteToken(db: AppDb, token: string): Promise<string> {
-  if (!token || token.length > 200) throw new HttpError(401, "Invalid or expired invite");
+  if (!token || token.length > 200) throw new HttpError(401, "Invalid or expired code");
   const [row] = await db.select().from(invites).where(eq(invites.tokenHash, mac(token))).limit(1);
-  if (!row || row.status !== "pending") throw new HttpError(401, "Invalid or expired invite");
-  if (row.expiresAt.getTime() <= Date.now()) throw new HttpError(401, "Invalid or expired invite");
+  if (!row || row.status !== "pending") throw new HttpError(401, "Invalid or expired code");
+  if (row.expiresAt.getTime() <= Date.now()) throw new HttpError(401, "Invalid or expired code");
   await db
     .update(invites)
     .set({ status: "accepted", acceptedAt: new Date() })

@@ -56,7 +56,10 @@ describe("sign-in, sessions, and capture", () => {
         },
         body: JSON.stringify({ email }),
       });
-      expect(response.status, email).toBe(400);
+      expect(response.status, email).toBe(200);
+      const body = await response.json();
+      expect(body.message).toMatch(/Check your email/);
+      expect(body.devCode).toBeUndefined();
     }
     const rows = await db.select().from(schema.users);
     expect(rows).toHaveLength(0);

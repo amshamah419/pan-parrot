@@ -47,11 +47,14 @@ export default function MockStudio() {
   const [previewChaos, setPreviewChaos] = useState(false);
   const [studioTab, setStudioTab] = useState("preview");
   const [sampleNote, setSampleNote] = useState("");
+  const [locked, setLocked] = useState(false);
+  const [lockToken, setLockToken] = useState("");
 
   useEffect(() => {
     getEndpoint(endpointId)
       .then((endpoint) => {
         setUrl(endpoint.url);
+        setLocked(Boolean(endpoint.locked));
         setAccess(endpoint.access || "owner");
         setPublishedFlag(Boolean(endpoint.published));
         if (!endpoint.mockSpec) {
@@ -171,6 +174,34 @@ export default function MockStudio() {
           <code className="flex-1 break-all rounded bg-muted px-3 py-2 text-sm">{url}</code>
           <Button variant="outline" onClick={() => copy(url)}>Copy URL</Button>
         </div>
+        {access !== "view" && (
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+            <span>{locked ? "Catch URL is locked." : "Catch URL is open to anyone who has the path."}</span>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                void fetch(`/api/endpoints/${endpointId}/lock`, {
+                  method: "POST",
+                  credentials: "include",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ enabled: !locked }),
+                })
+                  .then(async (response) => {
+                    const data = (await response.json()) as { lockToken?: string; error?: string };
+                    if (!response.ok) throw new Error(data.error || "Could not update the lock");
+                    setLocked(!locked);
+                    setLockToken(data.lockToken || "");
+                  })
+                  .catch((err) => setError(err instanceof Error ? err.message : "Could not update the lock"));
+              }}
+            >
+              {locked ? "Remove lock" : "Lock this catch URL"}
+            </Button>
+            {lockToken && <code className="break-all">Lock token, shown once: {lockToken}</code>}
+          </div>
+        )}
         <p className="mt-4 text-sm font-medium">2. Hit it once to see a page of records</p>
         <div className="mt-2 flex flex-col gap-2 sm:flex-row">
           <code className="flex-1 break-all rounded bg-muted px-3 py-2 text-xs">{tryUrl}</code>

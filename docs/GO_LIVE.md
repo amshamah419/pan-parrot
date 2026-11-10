@@ -168,6 +168,43 @@ A database backup product is not planned. Netlify Database is the only copy of a
 
 Do not connect to production with `NETLIFY_DB_URL` to take an ad-hoc dump or to change schema. Schema changes ship as migration files and the deploy applies them.
 
+## Public site
+
+Do not turn on the Netlify site password or Basic Auth. The sign-in page is the public face of the site. The rest of the app is sent only to a browser with a valid `pp_gate` cookie. Catch URLs stay reachable without that cookie.
+
+### Custom domain
+
+In Netlify, add the domain you control. For an apex name, use the ALIAS or A record Netlify shows (often the load-balancer address). For `www`, use a CNAME to the Netlify site hostname. Wait until the certificate is issued before you send anyone the name. `SITE_URL` must be that origin, with `https` and no path.
+
+### Cloudflare in front, optional
+
+You can put the free Cloudflare proxy (the orange cloud) in front of Netlify and use the free WAF managed rules. Set SSL/TLS to Full (strict) so Cloudflare talks to Netlify over HTTPS. Do not cache `/api/*` or `/catch/*` (cache rule: bypass). Do not enable Cloudflare's email obfuscation or rocket loader. They rewrite HTML and break the sign-in page. If you use Cloudflare, keep Netlify as the origin and do not also turn on the Netlify site password.
+
+### HSTS
+
+`netlify.toml` sends `Strict-Transport-Security: max-age=31536000; includeSubDomains` on HTTPS. That does **not** include `preload`. Preload is a one-way submission to the browser list: every subdomain of the name must stay on HTTPS forever, including ones you have not created yet. Do not add `preload`, and do not submit the domain, until that is true.
+
+### Sign-in check (Turnstile or hCaptcha)
+
+Off by default. To require a check after failed attempts, set:
+
+| Variable | Notes |
+| --- | --- |
+| `CAPTCHA_PROVIDER` | `turnstile` or `hcaptcha` |
+| `CAPTCHA_SITE_KEY` | Site key from the provider |
+| `CAPTCHA_SECRET_KEY` | Secret key. Mark it secret in Netlify. |
+| `CAPTCHA_AFTER_FAILURES` | Default 3 strikes on that IP. `CAPTCHA_ALWAYS=true` asks every time. |
+
+The login page CSP already allows `challenges.cloudflare.com` and `js.hcaptcha.com`. The check is not shown until the provider and both keys are set.
+
+### Edge and scanner traffic
+
+`netlify/edge-functions/quiet.ts` rejects scanner paths and known crawler user agents before the app runs, and strips `X-Powered-By` and `Server`. `netlify.toml` also 404s `/.env`, `/.git/*`, `/wp-admin/*`, and `*.php` at the CDN. `X-Robots-Tag: noindex, nofollow, noarchive` is on every response, including catch URLs. `robots.txt` disallows `/`.
+
+Netlify's rate limiting rules are a Firewall feature, not a `netlify.toml` key. If the plan includes them, add them under Project → Firewall → Rate limiting, keyed by IP: `/api/auth/*` 30 per minute, `/login` 60 per minute, `/catch/*` 300 per minute. The app still enforces its own database limits if those rules are not available.
+
+`ADMIN_IP_ALLOWLIST` is an optional comma-separated list of IPv4 addresses or CIDR blocks. When it is set, `/admin` and `/api/admin` from any other IP are a generic 404.
+
 ## 8. Monitoring, without a new service
 
 Three places, and nothing else:

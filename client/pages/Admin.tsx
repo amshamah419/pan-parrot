@@ -189,6 +189,7 @@ export default function Admin() {
             Health, people, mocks, and invites. Counts come from this database. There is no separate monitoring service.
           </p>
         </div>
+        <NewMocksCard />
         {error && (
           <Alert variant="destructive" className="mb-6">
             <AlertDescription role="alert">{error}</AlertDescription>
@@ -326,6 +327,44 @@ export default function Admin() {
         </Tabs>
       </div>
     </div>
+  );
+}
+
+function NewMocksCard() {
+  const [locked, setLocked] = useState(false);
+  useEffect(() => {
+    void fetch("/api/admin/settings", { credentials: "include" })
+      .then(async (response) => {
+        if (response.ok) setLocked(Boolean((await response.json()).newMocksLocked));
+      })
+      .catch(() => undefined);
+  }, []);
+  return (
+    <Card className="mb-6">
+      <CardHeader>
+        <CardTitle>New mocks</CardTitle>
+        <CardDescription>
+          When this is on, a new catch URL is created with a lock token. Callers without the token or the allowlist get a generic 404.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex items-center justify-between gap-3">
+        <label htmlFor="new-mocks-locked">New mocks are locked</label>
+        <input
+          id="new-mocks-locked"
+          type="checkbox"
+          checked={locked}
+          onChange={(event) => {
+            const next = event.target.checked;
+            void fetch("/api/admin/settings", {
+              method: "PUT",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ newMocksLocked: next }),
+            }).then(() => setLocked(next));
+          }}
+        />
+      </CardContent>
+    </Card>
   );
 }
 

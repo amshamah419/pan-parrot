@@ -57,7 +57,12 @@ export async function runSmoke(
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ email: "person@gmail.com" }),
     },
-    (response) => (response.status === 400 ? null : `status ${response.status}`),
+    (response, text) => {
+      if (response.status !== 200) return `status ${response.status}`;
+      if (!text.includes("Check your email")) return "sign-in response was not the generic message";
+      if (text.includes("devCode")) return "rejected address received a sign-in code";
+      return null;
+    },
   );
   await record("studio requires sign-in", "/api/endpoints", undefined, (response) =>
     response.status === 401 ? null : `status ${response.status}`,
