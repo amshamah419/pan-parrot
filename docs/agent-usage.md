@@ -19,6 +19,8 @@ You are configuring a PAN Parrot mock for the integration in this directory.
 7. panparrot --json xsiam configure-instance --mock <id> --integration <integration id> --instance-name <n> --dry-run
 8. Show the payload. After the user agrees, run the same command without --dry-run.
    XSIAM must be able to reach the catch URL.
+9. After the integration calls the catch URL, panparrot --json assert --mock <id> --file expectations.json
+   A failed assertion exits 1. expectations.json is a list of {method, path, query, status, bodyIncludes, min, max}.
 ```
 
 ## Token
@@ -39,6 +41,7 @@ pipx install "git+https://github.com/amshamah419/pan-parrot.git#subdirectory=py/
 panparrot --json login --url https://<site> --token pp_...
 panparrot --json presets --q github
 panparrot --json mock from-integration Integrations/HelloWorld/HelloWorld.yml
+panparrot --json assert --mock <id> --method GET --path /hello --query since=2020-01-01T00:00:00Z
 panparrot --json mocks list
 panparrot --json mocks create --from-yml Integrations/HelloWorld/HelloWorld.yml --test-data Integrations/HelloWorld/test_data
 panparrot --json mocks push --from-yml Integrations/HelloWorld/HelloWorld.yml

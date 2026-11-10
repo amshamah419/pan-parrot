@@ -2,6 +2,7 @@ import json
 import os
 
 from panparrot.cli import main
+from panparrot.expect import check_expectations
 from panparrot.xsiam import build_instance_body
 
 
@@ -85,6 +86,51 @@ def test_presets_search_sends_the_query(tmp_path, monkeypatch, capsys):
     text = capsys.readouterr().out
     assert "github-github" in text
     assert "33 vendor" in text
+
+
+def test_assertions_match_the_call_after_the_catch_prefix():
+    logs = [
+        {"method": "GET", "path": "abc123/hello", "status": 200, "query": {"since": "2020-01-01T00:00:00Z"}, "body": ""},
+        {"method": "POST", "path": "abc123/v1/incidents", "status": 201, "query": {}, "body": "{\"title\":\"lab\"}"},
+    ]
+    results = check_expectations(
+        logs,
+        [
+            {"method": "GET", "path": "/hello", "query": {"since": "2020-01-01T00:00:00Z"}},
+            {"method": "POST", "path": "/v1/incidents", "bodyIncludes": "lab", "status": 201},
+            {"method": "DELETE", "path": "/hello", "max": 0},
+        ],
+    )
+    assert [row["pass"] for row in results] == [True, True, True]
+    missed = check_expectations(logs, [{"method": "GET", "path": "/missing"}])
+    assert missed[0]["pass"] is False
+    assert missed[0]["found"] == 0
+
+
+def test_assert_command_fails_when_the_call_is_missing(tmp_path, monkeypatch, capsys):
+    config = tmp_path / "credentials.json"
+    config.write_text(json.dumps({"url": "https://panparrot.example", "token": "pp_abc"}))
+    os.chmod(config, 0o600)
+    monkeypatch.setenv("PANPARROT_CONFIG", str(config))
+
+    class Response:
+        status = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return b'{"logs":[]}'
+
+    monkeypatch.setattr("panparrot.cli.urllib.request.urlopen", lambda request, timeout=0: Response())
+    code = main(["--json", "assert", "--mock", "m1", "--method", "GET", "--path", "/hello"])
+    assert code == 1
+    body = json.loads(capsys.readouterr().out)
+    assert body["ok"] is False
+    assert body["assertions"][0]["found"] == 0
 
 
 def test_from_integration_sends_the_python_and_reads_instance_params(tmp_path, monkeypatch, capsys):

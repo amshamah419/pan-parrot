@@ -86,6 +86,7 @@ export default function Docs() {
               <pre className="overflow-auto rounded bg-muted p-3 text-xs text-foreground">{`panparrot --json login --url https://your-site --token pp_...
 panparrot --json presets --q github
 panparrot --json mock from-integration HelloWorld.yml
+panparrot --json assert --mock <id> --method GET --path /hello
 panparrot --json mocks create --from-yml HelloWorld.yml --test-data ./test_data
 panparrot --json instance-config --mock <id>
 panparrot --json xsiam configure-instance --mock <id> --integration HelloWorld --instance-name lab --dry-run`}</pre>

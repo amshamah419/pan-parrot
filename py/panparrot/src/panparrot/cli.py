@@ -6,7 +6,13 @@ import urllib.request
 from pathlib import Path
 
 from panparrot.config import load_credentials, save_credentials
+from panparrot.expect import check_expectations, load_expectations
 from panparrot.xsiam import configure_instance
+
+
+class FailedAssertions(Exception):
+    def __init__(self, payload: dict):
+        self.payload = payload
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -22,6 +28,13 @@ def main(argv: list[str] | None = None) -> int:
         elif payload:
             print(json.dumps(payload, default=str))
         return 0
+    except FailedAssertions as error:
+        payload = error.payload
+        if as_json:
+            print(json.dumps({"ok": False, **payload}, default=str))
+        else:
+            print(payload.get("text") or "Assertions failed", file=sys.stderr)
+        return 1
     except SystemExit as error:
         message = str(error)
         if as_json:
@@ -49,6 +62,8 @@ def dispatch(args: list[str]) -> dict:
         return from_integration(args[2:])
     if args[0] == "mocks":
         return mocks(args[1:])
+    if args[0] == "assert":
+        return assertions(args[1:])
     if args[0] == "instance-config":
         return {"instanceConfig": api("GET", "/api/v1/mocks/" + quote(flag(args[1:], "--mock")) + "/instance-config")}
     if args[0] == "xsiam" and len(args) > 1 and args[1] == "configure-instance":
@@ -171,6 +186,46 @@ def mocks(args: list[str]) -> dict:
     raise SystemExit("Unknown mocks command\n" + HELP)
 
 
+def assertions(args: list[str]) -> dict:
+    mock_id = flag(args, "--mock")
+    expectations = expectation_list(args)
+    logs = api("GET", "/api/v1/mocks/" + quote(mock_id) + "/logs?limit=200").get("logs", [])
+    results = check_expectations(logs, expectations)
+    passed = all(row.get("pass") for row in results) and bool(results)
+    lines = []
+    for row in results:
+        mark = "PASS" if row.get("pass") else "FAIL"
+        if row.get("error"):
+            lines.append(f"{mark} {row['error']}")
+            continue
+        lines.append(
+            f"{mark} {row.get('method')} {row.get('path')} expected {row.get('expectedMin')}, found {row.get('found')}"
+        )
+    payload = {"assertions": results, "passed": passed, "text": "\n".join(lines) or "No assertions"}
+    if not passed:
+        raise FailedAssertions(payload)
+    return payload
+
+
+def expectation_list(args: list[str]) -> list[dict]:
+    file_name = optional(args, "--file")
+    if file_name:
+        try:
+            return load_expectations(json.loads(Path(file_name).read_text()))
+        except (OSError, ValueError, json.JSONDecodeError) as error:
+            raise SystemExit(f"Could not read expectations: {error}") from error
+    method = flag(args, "--method")
+    path = flag(args, "--path")
+    one: dict = {"method": method, "path": path}
+    query = optional(args, "--query")
+    if query:
+        if "=" not in query:
+            raise SystemExit("--query must be name=value")
+        name, value = query.split("=", 1)
+        one["query"] = {name: value}
+    return [one]
+
+
 def xsiam(args: list[str]) -> dict:
     mock_id = flag(args, "--mock")
     integration = flag(args, "--integration")
@@ -254,6 +309,8 @@ HELP = """panparrot [--json] <command>
   mocks push --from-yml Integration.yml [--test-data dir]
   mocks push --mock <id> --spec mock.json
   mocks logs --mock <id>
+  assert --mock <id> --file expectations.json
+  assert --mock <id> --method GET --path /hello [--query name=value]
   instance-config --mock <id>
   xsiam configure-instance --mock <id> --integration <id> --instance-name <n> [--dry-run]
 
