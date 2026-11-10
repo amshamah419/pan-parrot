@@ -66,6 +66,26 @@ describe("AWS command coverage", () => {
       covered.filter((preset) => preset.id.startsWith("atlassianjiraservicemanagement-")),
     );
     expect(assets).toEqual({ vendor: 7, approximate: 0, missing: 8 });
+    const gsuite = sums(covered.filter((preset) => preset.id.startsWith("gsuite")));
+    expect(gsuite).toEqual({ vendor: 1, approximate: 2, missing: 31 });
+    const splunk = sums(covered.filter((preset) => preset.id.startsWith("splunkpy-")));
+    expect(splunk).toEqual({ vendor: 0, approximate: 6, missing: 52 });
+    const qradar = sums(covered.filter((preset) => preset.id === "qradar-qradar-v3"));
+    expect(qradar).toEqual({ vendor: 0, approximate: 3, missing: 68 });
+    const proofpoint = sums(covered.filter((preset) => preset.id.startsWith("proofpoint")));
+    expect(proofpoint).toEqual({ vendor: 0, approximate: 8, missing: 41 });
+    const mimecast = sums(covered.filter((preset) => preset.id.startsWith("mimecast-")));
+    expect(mimecast).toEqual({ vendor: 0, approximate: 1, missing: 47 });
+    const sentinelone = sums(covered.filter((preset) => preset.id.startsWith("sentinelone-")));
+    expect(sentinelone).toEqual({ vendor: 0, approximate: 3, missing: 80 });
+    const zscaler = sums(covered.filter((preset) => preset.id.startsWith("zscaler-")));
+    expect(zscaler).toEqual({ vendor: 0, approximate: 6, missing: 45 });
+    const panos = sums(covered.filter((preset) => preset.id === "pan-os-panorama"));
+    expect(panos).toEqual({ vendor: 0, approximate: 0, missing: 289 });
+    const prisma = sums(covered.filter((preset) => preset.id.startsWith("prismacloud")));
+    expect(prisma).toEqual({ vendor: 0, approximate: 4, missing: 81 });
+    const virustotal = sums(covered.filter((preset) => preset.id.startsWith("virustotal-")));
+    expect(virustotal).toEqual({ vendor: 0, approximate: 4, missing: 43 });
 
     const iam = JSON.parse(readFileSync("public/presets/integrations/aws-iam-aws-iam.json", "utf8")) as {
       spec: Parameters<typeof validateMockSpec>[0];
