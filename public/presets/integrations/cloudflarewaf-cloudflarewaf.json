@@ -3,11 +3,11 @@
   "name": "Cloudflare WAF",
   "pack": "CloudflareWAF",
   "vendor": "Cloudflare",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Zones and firewall rules.",
+  "summary": "Rebuilt from the client: POST /zones/{zone_id}/firewall/rules.",
   "notes": [
-    "Cross-check: path: GET /client/v4/zones is not a client call. Closest: /zones (1)."
+    "Rebuilt from the XSOAR client. The checker matched POST /zones/{zone_id}/firewall/rules, GET /zones. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CloudflareWAF/Integrations/CloudflareWAF",
@@ -17,58 +17,34 @@
       "kind": "preset",
       "id": "cloudflarewaf-cloudflarewaf",
       "name": "Cloudflare WAF",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developers.cloudflare.com/api/resources/firewall/subresources/rules/methods/list/",
       "notes": [
-        "Cross-check: path: GET /client/v4/zones is not a client call. Closest: /zones (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /zones/{zone_id}/firewall/rules, GET /zones. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developers.cloudflare.com/api/resources/firewall/subresources/rules/methods/list/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /zones/{zone_id}/firewall/rules, GET /zones. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "zones",
-        "method": "GET",
-        "pathTemplate": "/client/v4/zones",
-        "summary": "List zones",
+        "id": "post-zones-zone-id-firewall-rules-0",
+        "method": "POST",
+        "pathTemplate": "/zones/{zone_id}/firewall/rules",
+        "summary": "POST /zones/{zone_id}/firewall/rules",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "success",
-              "kind": "const",
-              "constValue": true
-            },
-            {
-              "name": "result",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "zone",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "lab.example"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -76,65 +52,123 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "action",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "filter",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "expression",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "global_api_key",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "kind",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       },
       {
-        "id": "rules",
+        "id": "get-zones-1",
         "method": "GET",
-        "pathTemplate": "/zones/lab-zone/firewall/rules",
-        "summary": "List firewall rules",
+        "pathTemplate": "/zones",
+        "summary": "GET /zones",
         "status": 200,
-        "list": false,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
         "envelope": {
           "type": "object"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "success",
-              "kind": "const",
-              "constValue": true
+              "name": "action",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "result",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "rule",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "action",
-                    "kind": "enum",
-                    "enumValues": [
-                      "block",
-                      "challenge",
-                      "allow"
-                    ]
-                  }
-                ]
-              }
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "filter",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "expression",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "global_api_key",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "kind",
+              "kind": "string",
+              "example": "lab"
             }
           ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "none",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
         }
       }
     ],

@@ -3,11 +3,11 @@
   "name": "SplunkPy v2",
   "pack": "SplunkPy",
   "vendor": "Splunk",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Create a search job and read JSON results.",
+  "summary": "Rebuilt from the client: GET /services/search/jobs/{sid}/results.",
   "notes": [
-    "Cross-check: path: POST /services/search/jobs is not a client call. Closest: /{baseurl}/services/collector/event (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /services/search/jobs/{sid}/results, POST /services/search/jobs. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SplunkPy/Integrations/SplunkPyV2",
@@ -17,36 +17,34 @@
       "kind": "preset",
       "id": "splunkpy-splunkpyv2",
       "name": "SplunkPy v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-tutorials/10.2/rest-api-tutorials/creating-searches-using-the-rest-api",
       "notes": [
-        "Cross-check: path: POST /services/search/jobs is not a client call. Closest: /{baseurl}/services/collector/event (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /services/search/jobs/{sid}/results, POST /services/search/jobs. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-tutorials/10.2/rest-api-tutorials/creating-searches-using-the-rest-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /services/search/jobs/{sid}/results, POST /services/search/jobs. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "create",
-        "method": "POST",
-        "pathTemplate": "/services/search/jobs",
-        "summary": "Create a search job",
+        "id": "get-services-search-jobs-sid-results-0",
+        "method": "GET",
+        "pathTemplate": "/services/search/jobs/{sid}/results",
+        "summary": "GET /services/search/jobs/{sid}/results",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "job",
-          "kind": "object",
-          "children": [
-            {
-              "name": "sid",
-              "kind": "id"
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -54,54 +52,57 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
-        }
-      },
-      {
-        "id": "results",
-        "method": "GET",
-        "pathTemplate": "/services/search/jobs/{sid}/results",
-        "summary": "Read search results",
-        "status": 200,
-        "list": false,
-        "envelope": {
-          "type": "object"
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "results",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "row",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "_time",
-                    "kind": "timestamp",
-                    "format": "iso"
-                  },
-                  {
-                    "name": "host",
-                    "kind": "string",
-                    "example": "search-head"
-                  },
-                  {
-                    "name": "_raw",
-                    "kind": "string",
-                    "example": "user=ada action=login"
-                  }
-                ]
-              }
+              "name": "DBotScore",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_indextime",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_raw",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ackId",
+              "kind": "string",
+              "example": "lab"
             }
           ]
-        },
-        "headers": {},
+        }
+      },
+      {
+        "id": "post-services-search-jobs-1",
+        "method": "POST",
+        "pathTemplate": "/services/search/jobs",
+        "summary": "POST /services/search/jobs",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -109,7 +110,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "DBotScore",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_indextime",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_raw",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ackId",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

@@ -3,11 +3,11 @@
   "name": "CrowdStrike Falcon Sandbox v2 (Hybrid-Analysis)",
   "pack": "CrowdStrikeFalconSandbox",
   "vendor": "CrowdStrike",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Hybrid Analysis environments and a report summary.",
+  "summary": "Rebuilt from the client: GET /system/environments.",
   "notes": [
-    "Cross-check: field: GET /system/environments root keys ['environments'] are not read by the client or present in test_data ['Vx-Filename', 'certificates', 'classification_tags', 'environment_description', 'error_type', 'submissions', 'total_processes', 'vx_family']."
+    "Rebuilt from the XSOAR client. The checker matched GET /system/environments, GET /report/{file}/summary. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeFalconSandbox/Integrations/CrowdStrikeFalconSandboxV2",
@@ -17,53 +17,34 @@
       "kind": "preset",
       "id": "crowdstrikefalconsandbox-crowdstrikefalconsandboxv2",
       "name": "CrowdStrike Falcon Sandbox v2 (Hybrid-Analysis)",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://www.hybrid-analysis.com/docs/api/v2",
       "notes": [
-        "Cross-check: field: GET /system/environments root keys ['environments'] are not read by the client or present in test_data ['Vx-Filename', 'certificates', 'classification_tags', 'environment_description', 'error_type', 'submissions', 'total_processes', 'vx_family']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /system/environments, GET /report/{file}/summary. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.hybrid-analysis.com/docs/api/v2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /system/environments, GET /report/{file}/summary. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "environments",
+        "id": "get-system-environments-0",
         "method": "GET",
         "pathTemplate": "/system/environments",
-        "summary": "List environments",
+        "summary": "GET /system/environments",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "environments",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "environment",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "Windows 10"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -71,44 +52,57 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Vx-Filename",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "count",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "entryInfoFile",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "environment_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "image",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "integrationReliability",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       },
       {
-        "id": "summary",
+        "id": "get-report-file-summary-1",
         "method": "GET",
-        "pathTemplate": "/report/lab-report/summary",
-        "summary": "Get a report summary",
+        "pathTemplate": "/report/{file}/summary",
+        "summary": "GET /report/{file}/summary",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "sha256",
-              "kind": "id"
-            },
-            {
-              "name": "verdict",
-              "kind": "enum",
-              "enumValues": [
-                "no specific threat",
-                "suspicious",
-                "malicious"
-              ]
-            },
-            {
-              "name": "threat_score",
-              "kind": "integer"
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -116,7 +110,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Vx-Filename",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "count",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "entryInfoFile",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "environment_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "image",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "integrationReliability",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

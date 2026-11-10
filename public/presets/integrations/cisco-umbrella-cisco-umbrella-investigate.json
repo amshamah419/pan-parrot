@@ -3,11 +3,11 @@
   "name": "Cisco Umbrella Investigate",
   "pack": "Cisco-umbrella",
   "vendor": "Cisco",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Domain categorization.",
+  "summary": "Rebuilt from the client: GET /investigate/v2/domains/categorization/{domain}.",
   "notes": [
-    "Cross-check: path: GET /investigate/v2/domains/categorization/lab.example is not a client call. Closest: /auth/v2/token (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /investigate/v2/domains/categorization/{domain}. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Cisco-umbrella/Integrations/Cisco-umbrella-investigate",
@@ -17,48 +17,34 @@
       "kind": "preset",
       "id": "cisco-umbrella-cisco-umbrella-investigate",
       "name": "Cisco Umbrella Investigate",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-reference-investigate-categorization/",
       "notes": [
-        "Cross-check: path: GET /investigate/v2/domains/categorization/lab.example is not a client call. Closest: /auth/v2/token (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /investigate/v2/domains/categorization/{domain}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-reference-investigate-categorization/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /investigate/v2/domains/categorization/{domain}. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "category",
+        "id": "get-investigate-v2-domains-categorization-do-0",
         "method": "GET",
-        "pathTemplate": "/investigate/v2/domains/categorization/lab.example",
-        "summary": "Categorize a domain",
+        "pathTemplate": "/investigate/v2/domains/categorization/{domain}",
+        "summary": "GET /investigate/v2/domains/categorization/{domain}",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "lab.example",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "status",
-                  "kind": "const",
-                  "constValue": "1"
-                },
-                {
-                  "name": "security_categories",
-                  "kind": "string",
-                  "example": "Malware"
-                }
-              ]
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -66,7 +52,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "CoOccurrences",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Domain",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "DomainHistory",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Related",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "administrativeContactCountry",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

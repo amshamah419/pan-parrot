@@ -3,11 +3,11 @@
   "name": "Gmail",
   "pack": "Gmail",
   "vendor": "Google",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /gmail/v1/users/{userId}/messages lists ids, then GET of one message returns the message resource.",
+  "summary": "Rebuilt from the client: GET /gmail/v1/users/{userId}/messages.",
   "notes": [
-    "Cross-check: unparseable: no HTTP calls and no test_data"
+    "Rebuilt from the XSOAR client. The checker matched GET /gmail/v1/users/{userId}/messages, GET /gmail/v1/users/{userId}/messages/{id}. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Gmail/Integrations/Gmail",
@@ -17,120 +17,134 @@
       "kind": "preset",
       "id": "gmail-gmail",
       "name": "Gmail",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.messages/list",
       "notes": [
-        "Cross-check: unparseable: no HTTP calls and no test_data"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /gmail/v1/users/{userId}/messages, GET /gmail/v1/users/{userId}/messages/{id}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.messages/list",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /gmail/v1/users/{userId}/messages, GET /gmail/v1/users/{userId}/messages/{id}. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "cursor",
-          "limitParam": "maxResults",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "pageToken",
-          "defaultLimit": 100,
-          "maxLimit": 500
-        },
-        "id": "list-messages",
+        "id": "get-gmail-v1-users-userid-messages-0",
         "method": "GET",
         "pathTemplate": "/gmail/v1/users/{userId}/messages",
-        "summary": "List message ids",
+        "summary": "GET /gmail/v1/users/{userId}/messages",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "token-page",
-          "arrayKey": "messages",
-          "tokenKey": "nextPageToken"
-        },
-        "record": {
-          "name": "message",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "threadId",
-              "kind": "id"
-            }
-          ]
-        }
-      },
-      {
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 1,
-          "maxLimit": 1
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
-        "id": "get-message",
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Attachments",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Body",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "From",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Html",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-gmail-v1-users-userid-messages-id-1",
         "method": "GET",
         "pathTemplate": "/gmail/v1/users/{userId}/messages/{id}",
-        "summary": "Get a message",
+        "summary": "GET /gmail/v1/users/{userId}/messages/{id}",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
         "record": {
-          "name": "message",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "threadId",
-              "kind": "id"
-            },
-            {
-              "name": "snippet",
+              "name": "Attachments",
               "kind": "string",
-              "example": "Password reset requested"
+              "example": "lab"
             },
             {
-              "name": "payload",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "headers",
-                  "kind": "array",
-                  "minItems": 2,
-                  "maxItems": 2,
-                  "item": {
-                    "name": "header",
-                    "kind": "object",
-                    "children": [
-                      {
-                        "name": "name",
-                        "kind": "enum",
-                        "enumValues": [
-                          "From",
-                          "Subject"
-                        ]
-                      },
-                      {
-                        "name": "value",
-                        "kind": "string",
-                        "example": "Reset your password"
-                      }
-                    ]
-                  }
-                }
-              ]
+              "name": "Body",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "From",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Html",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

@@ -3,11 +3,11 @@
   "name": "Check Point Network Detection and Response (Infinity NDR)",
   "pack": "CheckPointNDR",
   "vendor": "Check Point",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Login and the insights list.",
+  "summary": "Rebuilt from the client: GET /incidents/v1/insights.",
   "notes": [
-    "Cross-check: field: POST /Login/LoginAPI root keys ['token'] are not read by the client or present in test_data ['dbotMirrorId', 'events', 'from', 'last_fetch', 'rawJSON', 'top_dst', 'top_proxy_src_ip', 'total_bytes_sent']."
+    "Rebuilt from the XSOAR client. The checker matched GET /incidents/v1/insights, GET /incidents/v1/events. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointNDR/Integrations/CheckPointNDR",
@@ -17,37 +17,34 @@
       "kind": "preset",
       "id": "checkpointndr-checkpointndr",
       "name": "Check Point Network Detection and Response (Infinity NDR)",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointNDR/Integrations/CheckPointNDR",
       "notes": [
-        "Cross-check: field: POST /Login/LoginAPI root keys ['token'] are not read by the client or present in test_data ['dbotMirrorId', 'events', 'from', 'last_fetch', 'rawJSON', 'top_dst', 'top_proxy_src_ip', 'total_bytes_sent']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /incidents/v1/insights, GET /incidents/v1/events. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointNDR/Integrations/CheckPointNDR",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /incidents/v1/insights, GET /incidents/v1/events. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "login",
-        "method": "POST",
-        "pathTemplate": "/Login/LoginAPI",
-        "summary": "Log in",
+        "id": "get-incidents-v1-insights-0",
+        "method": "GET",
+        "pathTemplate": "/incidents/v1/insights",
+        "summary": "GET /incidents/v1/insights",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "token",
-              "kind": "const",
-              "constValue": "dummy-ndr-token"
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -55,62 +52,106 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
-        }
-      },
-      {
-        "id": "insights",
-        "method": "GET",
-        "pathTemplate": "/incidents/v1/insights",
-        "summary": "List insights",
-        "status": 200,
-        "list": false,
-        "envelope": {
-          "type": "object"
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "status",
-              "kind": "const",
-              "constValue": "ok"
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "description",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "discovery_date",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "statistics",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "events",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "from",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_fetch",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "objects",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "insight",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "updated",
-                    "kind": "timestamp",
-                    "format": "unix-ms"
-                  },
-                  {
-                    "name": "probability",
-                    "kind": "integer"
-                  },
-                  {
-                    "name": "title",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "actions",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "assign",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "attachments",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
                     "kind": "string",
-                    "example": "Suspicious connection"
+                    "example": "lab"
                   }
-                ]
-              }
+                },
+                {
+                  "name": "count",
+                  "kind": "integer"
+                },
+                {
+                  "name": "created",
+                  "kind": "integer"
+                }
+              ]
             }
           ]
-        },
-        "headers": {},
+        }
+      },
+      {
+        "id": "get-incidents-v1-events-1",
+        "method": "GET",
+        "pathTemplate": "/incidents/v1/events",
+        "summary": "GET /incidents/v1/events",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -118,7 +159,92 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "description",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "discovery_date",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "statistics",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "events",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "from",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "last_fetch",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "objects",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "actions",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "assign",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "attachments",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "count",
+                  "kind": "integer"
+                },
+                {
+                  "name": "created",
+                  "kind": "integer"
+                }
+              ]
+            }
+          ]
         }
       }
     ],

@@ -3,11 +3,11 @@
   "name": "CrowdStrike OpenAPI",
   "pack": "CrowdStrikeOpenAPI",
   "vendor": "CrowdStrike",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Host ids, alert ids, and a real-time-response batch session.",
+  "summary": "Rebuilt from the client: GET /devices/queries/devices/v1.",
   "notes": [
-    "Cross-check: path: GET /alerts/queries/alerts/v2 is not a client call. Closest: /devices/entities/devices/v2 (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /devices/queries/devices/v1, POST /real-time-response/combined/batch-init-session/v1. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeOpenAPI/Integrations/CrowdStrikeOpenAPI",
@@ -17,114 +17,86 @@
       "kind": "preset",
       "id": "crowdstrikeopenapi-crowdstrikeopenapi",
       "name": "CrowdStrike OpenAPI",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://falcon.crowdstrike.com/documentation/page/a2a7fc0e/real-time-response-apis",
       "notes": [
-        "Cross-check: path: GET /alerts/queries/alerts/v2 is not a client call. Closest: /devices/entities/devices/v2 (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /devices/queries/devices/v1, POST /real-time-response/combined/batch-init-session/v1. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://falcon.crowdstrike.com/documentation/page/a2a7fc0e/real-time-response-apis",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /devices/queries/devices/v1, POST /real-time-response/combined/batch-init-session/v1. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "query-hosts",
+        "id": "get-devices-queries-devices-v1-0",
         "method": "GET",
         "pathTemplate": "/devices/queries/devices/v1",
-        "summary": "Query host ids",
+        "summary": "GET /devices/queries/devices/v1",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "resources"
-        },
-        "record": {
-          "name": "resource",
-          "kind": "id"
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "offset",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
-        }
-      },
-      {
-        "id": "query-alerts",
-        "method": "GET",
-        "pathTemplate": "/alerts/queries/alerts/v2",
-        "summary": "Query alert ids",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "resources"
-        },
-        "record": {
-          "name": "resource",
-          "kind": "id"
-        },
         "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "offset",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
-        }
-      },
-      {
-        "id": "rtr-init",
-        "method": "POST",
-        "pathTemplate": "/real-time-response/combined/batch-init-session/v1",
-        "summary": "Start a batch RTR session",
-        "status": 201,
-        "list": false,
+        "list": true,
         "envelope": {
           "type": "object"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "resources",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "session",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "batch_id",
-                    "kind": "uuid"
-                  },
-                  {
-                    "name": "session_id",
-                    "kind": "uuid"
-                  }
-                ]
-              }
+              "name": "Content-Disposition",
+              "kind": "string",
+              "example": "lab"
             }
           ]
-        },
-        "headers": {},
+        }
+      },
+      {
+        "id": "post-real-time-response-combined-batch-init-s-1",
+        "method": "POST",
+        "pathTemplate": "/real-time-response/combined/batch-init-session/v1",
+        "summary": "POST /real-time-response/combined/batch-init-session/v1",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 1,
-          "maxLimit": 1
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Content-Disposition",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

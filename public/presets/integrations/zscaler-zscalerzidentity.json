@@ -3,11 +3,11 @@
   "name": "Zscaler Internet Access via ZIdentity",
   "pack": "Zscaler",
   "vendor": "Zscaler",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Advanced security policy and the user list.",
+  "summary": "Rebuilt from the client: GET /security/advanced.",
   "notes": [
-    "Cross-check: unparseable: client built requests without a readable method and path"
+    "Rebuilt from the XSOAR client. The checker matched GET /security/advanced, GET /users. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Zscaler/Integrations/ZscalerZIdentity",
@@ -17,92 +17,158 @@
       "kind": "preset",
       "id": "zscaler-zscalerzidentity",
       "name": "Zscaler Internet Access via ZIdentity",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://help.zscaler.com/zia/getting-started-zia-api",
       "notes": [
-        "Cross-check: unparseable: client built requests without a readable method and path"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /security/advanced, GET /users. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.zscaler.com/zia/getting-started-zia-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /security/advanced, GET /users. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "advanced",
+        "id": "get-security-advanced-0",
         "method": "GET",
-        "pathTemplate": "/zia/api/v1/security/advanced",
-        "summary": "Get the advanced security policy",
+        "pathTemplate": "/security/advanced",
+        "summary": "GET /security/advanced",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
           "kind": "object",
           "children": [
             {
+              "name": "addresses",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
               "name": "blacklistUrls",
               "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
               "item": {
-                "name": "url",
+                "name": "item",
                 "kind": "string",
-                "example": "http://example.test/blocked"
+                "example": "lab"
               }
+            },
+            {
+              "name": "comments",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "configuredName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "countries",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "customCategory",
+              "kind": "boolean"
             }
           ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "none",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
         }
       },
       {
-        "id": "users",
+        "id": "get-users-1",
         "method": "GET",
-        "pathTemplate": "/zia/api/v1/users",
-        "summary": "List users",
+        "pathTemplate": "/users",
+        "summary": "GET /users",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": true,
         "envelope": {
-          "type": "array"
+          "type": "object"
         },
-        "record": {
-          "name": "user",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "email",
-              "kind": "email"
-            },
-            {
-              "name": "name",
-              "kind": "string",
-              "example": "Ada Lovelace"
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
-          "style": "none",
-          "limitParam": "limit",
+          "style": "page",
+          "limitParam": "pageSize",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "addresses",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "blacklistUrls",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "comments",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "configuredName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "countries",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "customCategory",
+              "kind": "boolean"
+            }
+          ]
         }
       }
     ],

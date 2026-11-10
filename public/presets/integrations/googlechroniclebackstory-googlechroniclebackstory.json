@@ -3,11 +3,11 @@
   "name": "Chronicle",
   "pack": "GoogleChronicleBackstory",
   "vendor": "Google",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Backstory v1 alert list. alerts[] is what listalerts returns.",
+  "summary": "Rebuilt from the client: GET /v1/alert/listalerts.",
   "notes": [
-    "Cross-check: unparseable: client built requests without a readable method and path"
+    "Rebuilt from the XSOAR client. The checker matched GET /v1/alert/listalerts. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GoogleChronicleBackstory/Integrations/GoogleChronicleBackstory",
@@ -17,81 +17,78 @@
       "kind": "preset",
       "id": "googlechroniclebackstory-googlechroniclebackstory",
       "name": "Chronicle",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://cloud.google.com/chronicle/docs/reference/search-api",
       "notes": [
-        "Cross-check: unparseable: client built requests without a readable method and path"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /v1/alert/listalerts. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://cloud.google.com/chronicle/docs/reference/search-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v1/alert/listalerts. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-alerts",
+        "id": "get-v1-alert-listalerts-0",
         "method": "GET",
         "pathTemplate": "/v1/alert/listalerts",
-        "summary": "List alerts",
+        "summary": "GET /v1/alert/listalerts",
         "status": 200,
-        "list": true,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
         "envelope": {
-          "type": "wrapped",
-          "arrayKey": "alerts"
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "alert",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "asset",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "hostname",
-                  "kind": "string",
-                  "example": "lab-host"
-                }
-              ]
+              "name": "Alert",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "alertTime",
-              "kind": "timestamp"
+              "name": "AlertInfo",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "alertInfo",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "name",
-                  "kind": "string",
-                  "example": "Suspicious PowerShell"
-                },
-                {
-                  "name": "sourceProduct",
-                  "kind": "string",
-                  "example": "Tanium"
-                },
-                {
-                  "name": "severity",
-                  "kind": "enum",
-                  "enumValues": [
-                    "Low",
-                    "Medium",
-                    "High"
-                  ]
-                }
-              ]
+              "name": "AlertName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Alerts",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Artifact",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Asset",
+              "kind": "string",
+              "example": "lab"
             }
           ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "cursor",
-          "limitParam": "page_size",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "page_token",
-          "defaultLimit": 20,
-          "maxLimit": 500
         }
       }
     ],

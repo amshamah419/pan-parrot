@@ -2,9 +2,10 @@
 """Cross-check verified presets against demisto/content clients.
 
 For each verified preset the script parses the integration Python (and one
-imported ApiModule). It follows one client-method hop, so a command that calls
-``client.get_logs`` is checked through ``get_logs`` and the HTTP wrapper that
-function calls. ``_http_request`` joins with CommonServerPython.urljoin, which
+imported ApiModule). It depths up to three client-method hops, so a command that
+calls ``generic_request`` still reaches the ``requests`` call inside the next
+helper. Auth, login, and logout calls stay in the call list, and the data-call
+picker skips them. ``_http_request`` joins with CommonServerPython.urljoin, which
 keeps the base path and only strips one leading slash. A file that imports
 ``urljoin`` from ``urllib.parse`` uses the stdlib rule instead, and an absolute
 suffix replaces the base path. That is the Proofpoint-style quirk: which
@@ -24,6 +25,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+MAX_HOP = 3
 VERBS = {"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"}
 SINK_ATTRS = {"_http_request", "generic_http_request", "http_request", "request"}
 NAV_KEYS = {
@@ -57,6 +59,7 @@ class Val:
     items: dict[str, "Val"] | None = None
     dyn_keys: bool = False
     seq: list["Val"] | None = None
+    alts: list["Val"] | None = None
     boto3: bool = False
 
     def copy(self) -> "Val":
@@ -68,6 +71,7 @@ class Val:
             None if self.items is None else dict(self.items),
             self.dyn_keys,
             None if self.seq is None else list(self.seq),
+            None if self.alts is None else list(self.alts),
         )
 
 
@@ -102,6 +106,8 @@ class Mod:
     class_attrs: dict[str, dict[str, Val]]
     base_paths: list[str]
     env: dict[str, Val]
+    sdks: set[str] = field(default_factory=set)
+    stack: list[str] = field(default_factory=list)
 
 
 def main() -> int:
@@ -362,17 +368,23 @@ def parse_file(path: Path) -> Mod | None:
                 if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
                     add_func(funcs, by_short, item.name, node.name, item)
     mod = Mod(path, urljoin_style(tree), funcs, by_short, class_attrs, [], {})
+    if "splunklib" in source:
+        mod.sdks.add("splunk")
+    if "slack_sdk" in source:
+        mod.sdks.add("slack")
+    if "googleapiclient" in source or "google.auth" in source or "google.oauth2" in source:
+        mod.sdks.add("google")
     seed_module(mod, tree)
     inits = [func for func in funcs.values() if func.name == "__init__"]
     for func in inits:
-        run_func(mod, func, {}, follow=True)
+        run_func(mod, func, {}, MAX_HOP)
     main = funcs.get("main")
     if main:
-        run_func(mod, main, {}, follow=True)
+        run_func(mod, main, {}, MAX_HOP)
     for func in funcs.values():
         if func.name == "__init__" or func.qual == "main":
             continue
-        run_func(mod, func, {}, follow=True)
+        run_func(mod, func, {}, MAX_HOP)
     return mod
 
 
@@ -463,12 +475,12 @@ def resolve_funcs(mod: Mod, name: str, cls: str) -> list[Func]:
     return list(mod.by_short.get(name, []))
 
 
-def run_func(mod: Mod, func: Func, bound: dict[str, Val], follow: bool) -> None:
+def run_func(mod: Mod, func: Func, bound: dict[str, Val], depth: int) -> None:
     env = dict(mod.env)
     env.update(bound)
     apply_signature(func.node, env)
     env.update(bound)
-    walk_body(func.node.body, env, mod, func, follow)  # type: ignore[attr-defined]
+    walk_body(func.node.body, env, mod, func, depth)  # type: ignore[attr-defined]
 
 
 def apply_signature(node: ast.AST, env: dict[str, Val]) -> None:
@@ -484,58 +496,58 @@ def apply_signature(node: ast.AST, env: dict[str, Val]) -> None:
             env[name] = eval_expr(default, env, None, "")
 
 
-def walk_body(body: list[ast.stmt], env: dict[str, Val], mod: Mod, func: Func, follow: bool) -> None:
+def walk_body(body: list[ast.stmt], env: dict[str, Val], mod: Mod, func: Func, depth: int) -> None:
     for stmt in body:
-        walk_stmt(stmt, env, mod, func, follow)
+        walk_stmt(stmt, env, mod, func, depth)
 
 
-def walk_stmt(stmt: ast.stmt, env: dict[str, Val], mod: Mod, func: Func, follow: bool) -> None:
+def walk_stmt(stmt: ast.stmt, env: dict[str, Val], mod: Mod, func: Func, depth: int) -> None:
     if isinstance(stmt, (ast.FunctionDef, ast.AsyncFunctionDef)):
-        walk_body(stmt.body, env, mod, func, False)
+        walk_body(stmt.body, env, mod, func, depth)
         return
     if isinstance(stmt, ast.ClassDef):
         return
     if isinstance(stmt, ast.Assign):
-        value = visit_calls(stmt.value, env, mod, func, follow)
+        value = visit_calls(stmt.value, env, mod, func, depth)
         for target in stmt.targets:
             assign(target, value, env, mod, func)
         return
     if isinstance(stmt, ast.AnnAssign):
         if stmt.value:
-            assign(stmt.target, visit_calls(stmt.value, env, mod, func, follow), env, mod, func)
+            assign(stmt.target, visit_calls(stmt.value, env, mod, func, depth), env, mod, func)
         return
     if isinstance(stmt, ast.Expr):
-        visit_calls(stmt.value, env, mod, func, follow)
+        visit_calls(stmt.value, env, mod, func, depth)
         return
     if isinstance(stmt, ast.Return):
         if stmt.value:
-            visit_calls(stmt.value, env, mod, func, follow)
+            visit_calls(stmt.value, env, mod, func, depth)
         return
     if isinstance(stmt, ast.If):
-        walk_body(stmt.body, env, mod, func, follow)
-        walk_body(stmt.orelse, env, mod, func, follow)
+        walk_body(stmt.body, env, mod, func, depth)
+        walk_body(stmt.orelse, env, mod, func, depth)
         return
     if isinstance(stmt, (ast.For, ast.AsyncFor)):
         iter_val = eval_expr(stmt.iter, env, mod, func.cls)
-        remember_reads(stmt.iter, env, func, follow)
+        remember_reads(stmt.iter, env, func, depth)
         if isinstance(stmt.target, ast.Name):
             env[stmt.target.id] = iter_val
         elif isinstance(stmt.target, ast.Tuple) and iter_val.dyn_keys:
             mark_dyn_items(env)
         if iter_items_loop(stmt):
             mark_dyn_items(env)
-        walk_body(stmt.body, env, mod, func, follow)
-        walk_body(stmt.orelse, env, mod, func, follow)
+        walk_body(stmt.body, env, mod, func, depth)
+        walk_body(stmt.orelse, env, mod, func, depth)
         return
     if isinstance(stmt, (ast.While, ast.With, ast.AsyncWith)):
-        walk_body(stmt.body, env, mod, func, follow)
+        walk_body(stmt.body, env, mod, func, depth)
         return
     if isinstance(stmt, ast.Try):
-        walk_body(stmt.body, env, mod, func, follow)
+        walk_body(stmt.body, env, mod, func, depth)
         for handler in stmt.handlers:
-            walk_body(handler.body, env, mod, func, follow)
-        walk_body(stmt.orelse, env, mod, func, follow)
-        walk_body(stmt.finalbody, env, mod, func, follow)
+            walk_body(handler.body, env, mod, func, depth)
+        walk_body(stmt.orelse, env, mod, func, depth)
+        walk_body(stmt.finalbody, env, mod, func, depth)
         return
     if isinstance(stmt, (ast.Raise, ast.Delete, ast.Assert, ast.Pass, ast.Break, ast.Continue, ast.Global, ast.Nonlocal)):
         return
@@ -556,6 +568,10 @@ def mark_dyn_items(env: dict[str, Val]) -> None:
 
 def assign(target: ast.expr, value: Val, env: dict[str, Val], mod: Mod, func: Func) -> None:
     if isinstance(target, ast.Name):
+        previous = env.get(target.id)
+        if previous and (previous.text or previous.path) and (value.text or value.path) and (previous.text or previous.path) != (value.text or value.path):
+            value = value.copy()
+            value.alts = [*(previous.alts or [previous]), value.copy()]
         env[target.id] = value
         return
     if isinstance(target, ast.Attribute) and isinstance(target.value, ast.Name) and target.value.id == "self":
@@ -577,28 +593,28 @@ def note_call(node: ast.expr, func: Func) -> None:
             func.calls.append((name, node))
 
 
-def remember_reads(node: ast.expr, env: dict[str, Val], func: Func, follow: bool) -> None:
-    if follow:
+def remember_reads(node: ast.expr, env: dict[str, Val], func: Func, depth: bool) -> None:
+    if depth:
         for path in read_paths(node, env):
             if path:
                 func.reads.add(path)
 
 
-def visit_calls(node: ast.expr, env: dict[str, Val], mod: Mod, func: Func, follow: bool) -> Val:
+def visit_calls(node: ast.expr, env: dict[str, Val], mod: Mod, func: Func, depth: bool) -> Val:
     for child in ast.walk(node):
         if isinstance(child, ast.Call) and child is not node:
-            handle_call(child, env, mod, func, follow)
-    remember_reads(node, env, func, follow)
+            handle_call(child, env, mod, func, depth)
+    remember_reads(node, env, func, depth)
     if isinstance(node, ast.Call):
-        return handle_call(node, env, mod, func, follow)
+        return handle_call(node, env, mod, func, depth)
     return eval_expr(node, env, mod, func.cls)
 
 
-def handle_call(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func, follow: bool) -> Val:
+def handle_call(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func, depth: bool) -> Val:
     name = call_name(call)
     if name:
         func.calls.append((name, call))
-    remember_reads(call, env, func, follow)
+    remember_reads(call, env, func, depth)
     if isinstance(call.func, ast.Attribute):
         owner = eval_expr(call.func.value, env, mod, func.cls)
         if owner.text.startswith("boto3:"):
@@ -614,21 +630,28 @@ def handle_call(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func, follo
                 },
             )
             return owner
+    if emit_sdk(call, env, mod, func):
+        return Val(dynamic=True)
     if is_super_init(call):
         remember_base(call, env, mod, func)
         return Val(dynamic=True)
     if is_sink(call, mod, func) and not local_wrapper(call, mod, func):
         emit_sink(call, env, mod, func)
         return Val(dynamic=True, path="")
-    if follow and name and name in mod.class_attrs:
-        init = mod.funcs.get(f"{name}.__init__")
-        if init and init.qual != func.qual:
-            run_func(mod, init, bind_args(init, call, env, mod, name), follow=False)
-    if follow and name and name not in {"urljoin", "assign_params"}:
-        for target in resolve_funcs(mod, name, func.cls)[:4]:
-            if target.qual == func.qual:
-                continue
-            run_func(mod, target, bind_args(target, call, env, mod, func.cls), follow=False)
+    if depth > 0 and len(mod.stack) < 12:
+        if name and name in mod.class_attrs:
+            init = mod.funcs.get(f"{name}.__init__")
+            if init and init.qual != func.qual and init.qual not in mod.stack:
+                mod.stack.append(init.qual)
+                run_func(mod, init, bind_args(init, call, env, mod, name), depth - 1)
+                mod.stack.pop()
+        if name and name not in {"urljoin", "assign_params", "format"}:
+            for target in resolve_funcs(mod, name, func.cls)[:4]:
+                if target.qual == func.qual or target.qual in mod.stack:
+                    continue
+                mod.stack.append(target.qual)
+                run_func(mod, target, bind_args(target, call, env, mod, func.cls), depth - 1)
+                mod.stack.pop()
     return eval_call_value(call, env, mod, func.cls)
 
 
@@ -661,7 +684,8 @@ def is_sink(call: ast.Call, mod: Mod, func: Func) -> bool:
         return not local_wrapper(call, mod, func)
     if attr == "request":
         owner = owner_name(call.func.value)
-        return owner in {"requests", "session"}
+        names = {keyword.arg for keyword in call.keywords}
+        return owner in {"requests", "session", "http_client"} or "url" in names or "full_url" in names
     if attr in {"get", "post", "put", "patch", "delete"}:
         owner = owner_name(call.func.value)
         return owner in {"requests", "session"}
@@ -738,8 +762,8 @@ def sink_facts(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> tup
             method = positional[0].text.upper()
     params, dynamic = param_keys(keywords.get("params") or keywords.get("query_params"))
     owner = owner_name(call.func.value) if isinstance(call.func, ast.Attribute) else ""
-    if attr in {"get", "post", "put", "patch", "delete"} or (attr == "request" and owner in {"requests", "session"}):
-        url = url_argument(call, env, mod, func.cls, attr)
+    if attr in {"get", "post", "put", "patch", "delete"} or attr == "request":
+        url = keywords.get("url") or url_argument(call, env, mod, func.cls, attr)
         if url and (url.path or url.text):
             raw = url.path or url.text
             if raw.startswith("http"):
@@ -750,12 +774,16 @@ def sink_facts(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> tup
     if full and (full.path or full.text.startswith("http")):
         raw = full.path or path_of(full.text)
         return method, [norm_path(raw)], params, dynamic
-    suffix = keywords.get("url_suffix")
+    suffix = keywords.get("url_suffix") or keywords.get("url")
     if suffix is None and len(positional) >= 2 and attr in {"_http_request", "http_request", "generic_http_request"}:
+        suffix = positional[1]
+    if suffix is None and len(positional) >= 2 and attr == "request":
         suffix = positional[1]
     if suffix is None:
         return method, [], params, dynamic
-    paths = join_suffix(suffix, keywords.get("server_url"), mod)
+    paths: list[str] = []
+    for option in suffix.alts or [suffix]:
+        paths.extend(join_suffix(option, keywords.get("server_url"), mod))
     return method, paths, params, dynamic
 
 
@@ -790,13 +818,13 @@ def join_suffix(suffix: Val, server: Val | None, mod: Mod) -> list[str]:
     bases = list(mod.base_paths)
     if server and server.path:
         bases.append(server.path)
+    bare = norm_path(raw if raw.startswith("/") else "/" + raw)
     if not bases:
-        text = raw if raw.startswith("/") else "/" + raw
-        return [norm_path(text)]
-    joined = []
+        return [bare]
+    joined = [bare]
     for base in bases:
         if mod.style == "stdlib" and (raw.startswith("/") or (suffix.path or "").startswith("/")):
-            joined.append(norm_path(raw if raw.startswith("/") else "/" + raw))
+            joined.append(bare)
         else:
             joined.append(xsoar_join_paths(base, raw))
     return joined
@@ -885,7 +913,7 @@ def eval_expr(node: ast.expr | None, env: dict[str, Val] | None, mod: Mod | None
                 path_parts.append(str(part.value))
             elif isinstance(part, ast.FormattedValue) and isinstance(part.value, ast.Name):
                 known = env.get(part.value.id) if env else None
-                if known and known.text and not known.dynamic and "{" not in known.text:
+                if known and known.text and not known.dynamic:
                     parts.append(known.text)
                     path_parts.append(known.path or known.text)
                 else:
@@ -910,6 +938,8 @@ def eval_expr(node: ast.expr | None, env: dict[str, Val] | None, mod: Mod | None
         text = f"{left.text}{right.text}"
         path = path_of(text) if text.startswith("http") else (text if "/" in text else "")
         return Val(text=text, path=path, dynamic=left.dynamic and right.dynamic and not text)
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Mod):
+        return percent_format(node, env, mod, cls)
     if isinstance(node, ast.Call):
         return eval_call_value(node, env, mod, cls)
     if isinstance(node, ast.Dict):
@@ -954,6 +984,14 @@ def eval_call_value(node: ast.Call, env: dict[str, Val], mod: Mod | None, cls: s
         service = literal_str(node.args[0])
         if service and owner_name(func.value) in {"boto3", "session"}:
             return Val(text="boto3:" + service)
+    if isinstance(func, ast.Attribute) and func.attr == "_construct_url" and len(node.args) >= 4:
+        path_val = eval_expr(node.args[3], env, mod, cls)
+        suffix = path_val.path or path_val.text or path_val.hole
+        if suffix and not suffix.startswith("/"):
+            suffix = "/" + suffix
+        return Val(text=suffix, path=norm_path(suffix) if suffix.startswith("/") else suffix)
+    if isinstance(func, ast.Attribute) and func.attr == "format":
+        return apply_format(eval_expr(func.value, env, mod, cls), node, env, mod, cls)
     if isinstance(func, ast.Attribute) and func.attr in {"removesuffix", "rstrip", "strip"}:
         return eval_expr(func.value, env, mod, cls)
     if isinstance(func, ast.Attribute) and func.attr == "get":
@@ -967,6 +1005,187 @@ def eval_call_value(node: ast.Call, env: dict[str, Val], mod: Mod | None, cls: s
     if isinstance(func, ast.Attribute) and func.attr == "json" and node.args == []:
         return eval_expr(func.value, env, mod, cls)
     return Val(dynamic=True)
+
+
+def percent_format(node: ast.BinOp, env: dict[str, Val] | None, mod: Mod | None, cls: str) -> Val:
+    """Turn ``"table/%s" % name`` and ``"%(path)s" % values`` into a path template.
+
+    The conversion specifiers become ``{name}`` holes so they match preset path params.
+    """
+    left = eval_expr(node.left, env, mod, cls)
+    text = left.text or left.path
+    holes: list[str] = []
+    if isinstance(node.right, ast.Tuple):
+        for elt in node.right.elts:
+            holes.append(hole_from(eval_expr(elt, env, mod, cls), elt))
+    elif isinstance(node.right, ast.Name):
+        holes.append("{" + node.right.id + "}")
+    elif isinstance(node.right, ast.Dict):
+        mapping = {}
+        for key, value in zip(node.right.keys, node.right.values):
+            if key is None or value is None:
+                continue
+            name = literal_str(key)
+            if name:
+                mapping[name] = hole_from(eval_expr(value, env, mod, cls), value)
+        text = re.sub(r"%\(([^)]+)\)[-+0-9.]*[sdifr]", lambda match: mapping.get(match.group(1), "{arg}"), text)
+    if holes:
+        for hole in holes:
+            text = re.sub(r"%[-+0-9.]*[sdifr]", hole, text, count=1)
+    path = path_of(text) if text.startswith("http") else (text if text.startswith("/") or "/" in text else "")
+    return Val(text=text, path=norm_path(path) if path.startswith("/") else path)
+
+
+def apply_format(base: Val, node: ast.Call, env: dict[str, Val] | None, mod: Mod | None, cls: str) -> Val:
+    """Replace ``{}`` holes from ``url.format(region)`` and leave the path."""
+    text = base.text or base.path
+    for arg in node.args:
+        text = text.replace("{}", hole_from(eval_expr(arg, env, mod, cls), arg), 1)
+    path = path_of(text) if text.startswith("http") else (text if "/" in text else "")
+    return Val(text=text, path=norm_path(path) if path.startswith("/") else path)
+
+
+def hole_from(value: Val, node: ast.expr) -> str:
+    if value.hole:
+        return value.hole
+    if isinstance(node, ast.Name):
+        return "{" + node.id + "}"
+    if isinstance(node, ast.Attribute):
+        return "{" + node.attr + "}"
+    if value.text and "{" in value.text:
+        return value.text
+    return "{arg}"
+
+
+def emit_sdk(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func) -> bool:
+    """Map SDK calls onto the REST endpoints those libraries send.
+
+    Splunk: splunklib JobCollection.create/oneshot and Job.results
+    (https://github.com/splunk/splunk-sdk-python/blob/master/splunklib/client.py).
+    Slack: slack_sdk WebClient posts to https://slack.com/api/{family.method},
+    with GET for the read methods that pass http_verb=\"GET\"
+    (https://github.com/slackapi/python-slack-sdk/blob/main/slack_sdk/web/client.py).
+    Google: googleapiclient discovery chains such as users().messages().list().execute()
+    (https://developers.google.com/gmail/api/reference/rest/v1/users.messages/list and
+    https://developers.google.com/admin-sdk/directory/reference/rest/v1/users/list).
+    """
+    found: tuple[str, str] | None = None
+    if "splunk" in mod.sdks:
+        found = splunk_endpoint(call)
+    if found is None and "slack" in mod.sdks:
+        found = slack_endpoint(call, env, mod, func.cls)
+    if found is None and "google" in mod.sdks:
+        found = google_endpoint(call)
+    if found is None:
+        return False
+    method, path = found
+    store_call(
+        mod,
+        {"method": method, "paths": [path], "params": [], "dynamic": False, "func": func.qual, "boto3": False},
+    )
+    return True
+
+
+def splunk_endpoint(call: ast.Call) -> tuple[str, str] | None:
+    func = call.func
+    if not isinstance(func, ast.Attribute):
+        return None
+    if func.attr in {"create", "oneshot"} and isinstance(func.value, ast.Attribute) and func.value.attr == "jobs":
+        if func.attr == "oneshot":
+            return ("POST", "/services/search/jobs/oneshot")
+        return ("POST", "/services/search/jobs")
+    if func.attr == "results":
+        return ("GET", "/services/search/jobs/{sid}/results")
+    return None
+
+
+SLACK_GET = {
+    "conversations_history",
+    "conversations_list",
+    "conversations_replies",
+    "conversations_info",
+    "users_info",
+    "users_list",
+    "users_lookupByEmail",
+    "files_info",
+}
+
+
+def slack_endpoint(call: ast.Call, env: dict[str, Val], mod: Mod, cls: str) -> tuple[str, str] | None:
+    name = call_name(call)
+    if name in {"api_call", "send_slack_request_sync"}:
+        explicit = slack_explicit_method(call, env, mod, cls)
+        if explicit:
+            return explicit
+    func = call.func
+    if not isinstance(func, ast.Attribute):
+        return None
+    if func.attr.startswith("_") or func.attr in {"api_call", "session"}:
+        return None
+    owner = func.value.id if isinstance(func.value, ast.Name) else ""
+    if owner not in {"CLIENT", "USER_CLIENT", "ASYNC_CLIENT", "client"}:
+        return None
+    head, _, tail = func.attr.partition("_")
+    if head not in {"chat", "conversations", "users", "files", "auth", "reactions", "views", "pins"}:
+        return None
+    api = f"{head}.{tail}" if tail else head
+    method = "GET" if func.attr in SLACK_GET else "POST"
+    return (method, f"/api/{api}")
+
+
+def slack_explicit_method(call: ast.Call, env: dict[str, Val], mod: Mod, cls: str) -> tuple[str, str] | None:
+    """send_slack_request_sync(client, \"conversations.history\", http_verb=\"GET\") and api_call(method)."""
+    verb = "POST"
+    method_name = ""
+    for keyword in call.keywords:
+        if keyword.arg == "http_verb":
+            text = literal_str(keyword.value) or eval_expr(keyword.value, env, mod, cls).text
+            if text:
+                verb = text.upper()
+        if keyword.arg == "method":
+            method_name = literal_str(keyword.value) or eval_expr(keyword.value, env, mod, cls).text
+    if call_name(call) == "send_slack_request_sync" and len(call.args) >= 2:
+        method_name = literal_str(call.args[1]) or eval_expr(call.args[1], env, mod, cls).text
+    if call_name(call) == "api_call" and call.args and not method_name:
+        method_name = literal_str(call.args[0]) or eval_expr(call.args[0], env, mod, cls).text
+    if not method_name or " " in method_name or method_name.startswith("{"):
+        return None
+    return (verb, "/api/" + method_name.lstrip("/"))
+
+
+GMAIL_METHODS = {
+    ("users", "messages", "list"): ("GET", "/gmail/v1/users/{userId}/messages"),
+    ("users", "messages", "get"): ("GET", "/gmail/v1/users/{userId}/messages/{id}"),
+    ("users", "messages", "attachments", "get"): ("GET", "/gmail/v1/users/{userId}/messages/{messageId}/attachments/{id}"),
+    ("users", "getProfile"): ("GET", "/gmail/v1/users/{userId}/profile"),
+}
+DIRECTORY_METHODS = {
+    ("users", "list"): ("GET", "/admin/directory/v1/users"),
+    ("users", "get"): ("GET", "/admin/directory/v1/users/{userKey}"),
+    ("users", "update"): ("PUT", "/admin/directory/v1/users/{userKey}"),
+}
+
+
+def google_endpoint(call: ast.Call) -> tuple[str, str] | None:
+    if not isinstance(call.func, ast.Attribute) or call.func.attr != "execute":
+        return None
+    attrs = chain_attrs(call)
+    if attrs and attrs[-1] == "execute":
+        attrs = attrs[:-1]
+    key = tuple(attrs)
+    if "messages" in key or "getProfile" in key:
+        return GMAIL_METHODS.get(key)
+    return DIRECTORY_METHODS.get(key)
+
+
+def chain_attrs(node: ast.AST) -> list[str]:
+    attrs: list[str] = []
+    current: ast.AST | None = node
+    while isinstance(current, ast.Call) and isinstance(current.func, ast.Attribute):
+        attrs.append(current.func.attr)
+        current = current.func.value
+    attrs.reverse()
+    return attrs
 
 
 def apply_urljoin(base: Val, suffix: Val, style: str) -> Val:
@@ -1215,6 +1434,8 @@ def best_aligned(preset: str, calls: list[HttpCall]) -> tuple[str, int]:
     score = -1
     for call in calls:
         for path in call.paths:
+            if re.search(r"oauth|/token|login|logout|whoami|authorize", path, re.I):
+                continue
             current = suffix_score(preset, path)
             if current > score:
                 score = current

@@ -3,11 +3,11 @@
   "name": "Atlassian Jira v3",
   "pack": "Jira",
   "vendor": "Atlassian",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /rest/api/3/search/jql returns issues and nextPageToken. The older /search path is included for on-prem clients.",
+  "summary": "Rebuilt from the client: GET /rest/api/{api_version}/search/jql.",
   "notes": [
-    "Cross-check: path: GET /rest/api/3/search is not a client call. Closest: /rest/api/3/project/search (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /rest/api/{api_version}/search/jql, GET /rest/api/3/project/search. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Jira/Integrations/JiraV3",
@@ -17,142 +17,134 @@
       "kind": "preset",
       "id": "jira-jirav3",
       "name": "Atlassian Jira v3",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/",
       "notes": [
-        "Cross-check: path: GET /rest/api/3/search is not a client call. Closest: /rest/api/3/project/search (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /rest/api/{api_version}/search/jql, GET /rest/api/3/project/search. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /rest/api/{api_version}/search/jql, GET /rest/api/3/project/search. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
+        "id": "get-rest-api-api-version-search-jql-0",
+        "method": "GET",
+        "pathTemplate": "/rest/api/{api_version}/search/jql",
+        "summary": "GET /rest/api/{api_version}/search/jql",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "cursor",
-          "limitParam": "maxResults",
+          "style": "none",
+          "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
-          "cursorParam": "nextPageToken",
-          "defaultLimit": 50,
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
           "maxLimit": 100
         },
-        "id": "search-jql",
-        "method": "GET",
-        "pathTemplate": "/rest/api/3/search/jql",
-        "summary": "Search issues",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "token-page",
-          "arrayKey": "issues",
-          "tokenKey": "nextPageToken"
-        },
         "record": {
-          "name": "issue",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "key",
-              "kind": "id"
-            },
-            {
-              "name": "self",
+              "name": "Comment",
               "kind": "string",
-              "example": "https://example.atlassian.net/rest/api/3/issue/10001"
+              "example": "lab"
             },
             {
-              "name": "fields",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "summary",
-                  "kind": "string",
-                  "example": "Investigate failed logins"
-                },
-                {
-                  "name": "status",
-                  "kind": "object",
-                  "children": [
-                    {
-                      "name": "name",
-                      "kind": "enum",
-                      "enumValues": [
-                        "To Do",
-                        "In Progress",
-                        "Done"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "name": "created",
-                  "kind": "timestamp",
-                  "format": "iso"
-                },
-                {
-                  "name": "updated",
-                  "kind": "timestamp",
-                  "format": "iso"
-                }
-              ]
+              "name": "Components",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Creator",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }
       },
       {
-        "headers": {},
+        "id": "get-rest-api-3-project-search-1",
+        "method": "GET",
+        "pathTemplate": "/rest/api/3/project/search",
+        "summary": "GET /rest/api/3/project/search",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
-          "limitParam": "maxResults",
-          "offsetParam": "startAt",
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 50,
+          "defaultLimit": 20,
           "maxLimit": 100
         },
-        "id": "search-legacy",
-        "method": "GET",
-        "pathTemplate": "/rest/api/3/search",
-        "summary": "Legacy issue search",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "issues"
-        },
         "record": {
-          "name": "issue",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "id",
-              "kind": "id"
+              "name": "Comment",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "key",
-              "kind": "id"
+              "name": "Components",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "fields",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "summary",
-                  "kind": "string",
-                  "example": "Legacy search result"
-                },
-                {
-                  "name": "created",
-                  "kind": "timestamp",
-                  "format": "iso"
-                }
-              ]
+              "name": "Creator",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

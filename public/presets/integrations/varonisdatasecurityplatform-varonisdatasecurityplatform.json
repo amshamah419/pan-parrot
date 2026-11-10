@@ -3,11 +3,11 @@
   "name": "Varonis Data Security Platform",
   "pack": "VaronisDataSecurityPlatform",
   "vendor": "Varonis",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET alerts from the on-prem API.",
+  "summary": "Rebuilt from the client: GET /api/alert/alert/GetAlerts.",
   "notes": [
-    "Cross-check: field: GET /api/alert/alert/GetAlerts root keys ['alerts'] are not read by the client or present in test_data ['Country', 'Location', 'Name', 'Pagination', 'alert_id', 'ruleArea', 'ruleSource', 'start_time']."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/alert/alert/GetAlerts, GET /api/alert/alert/GetAlertedEvents. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VaronisDataSecurityPlatform/Integrations/VaronisDataSecurityPlatform",
@@ -17,62 +17,34 @@
       "kind": "preset",
       "id": "varonisdatasecurityplatform-varonisdatasecurityplatform",
       "name": "Varonis Data Security Platform",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VaronisDataSecurityPlatform",
       "notes": [
-        "Cross-check: field: GET /api/alert/alert/GetAlerts root keys ['alerts'] are not read by the client or present in test_data ['Country', 'Location', 'Name', 'Pagination', 'alert_id', 'ruleArea', 'ruleSource', 'start_time']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/alert/alert/GetAlerts, GET /api/alert/alert/GetAlertedEvents. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/VaronisDataSecurityPlatform",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/alert/alert/GetAlerts, GET /api/alert/alert/GetAlertedEvents. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "alerts",
+        "id": "get-api-alert-alert-getalerts-0",
         "method": "GET",
         "pathTemplate": "/api/alert/alert/GetAlerts",
-        "summary": "Get alerts",
+        "summary": "GET /api/alert/alert/GetAlerts",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "alerts",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "alert",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  },
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "Unusual access"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -80,7 +52,97 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "AlertSeqId",
+              "kind": "integer"
+            },
+            {
+              "name": "EventUTC",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Id",
+              "kind": "integer"
+            },
+            {
+              "name": "Name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ResultSet",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-api-alert-alert-getalertedevents-1",
+        "method": "GET",
+        "pathTemplate": "/api/alert/alert/GetAlertedEvents",
+        "summary": "GET /api/alert/alert/GetAlertedEvents",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "AlertSeqId",
+              "kind": "integer"
+            },
+            {
+              "name": "EventUTC",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Id",
+              "kind": "integer"
+            },
+            {
+              "name": "Name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ResultSet",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

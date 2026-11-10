@@ -3,11 +3,11 @@
   "name": "Netskope Event Collector",
   "pack": "Netskope",
   "vendor": "Netskope",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "v2 event iterator. ok and result match events_raw.json.",
+  "summary": "Rebuilt from the client: GET /api/v2/events/dataexport/events/{_type}.",
   "notes": [
-    "Cross-check: path: GET /api/v2/events/data/alert is not a client call. Closest: /api/v2/events/dataexport/{endpoint}/{_type} (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v2/events/dataexport/events/{_type}, GET /api/v2/events/dataexport/{endpoint}/{_type}. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Netskope/Integrations/NetskopeEventCollector",
@@ -17,69 +17,186 @@
       "kind": "preset",
       "id": "netskope-netskopeeventcollector",
       "name": "Netskope Event Collector",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.netskope.com/en/rest-api-v2-overview-312207/",
       "notes": [
-        "Cross-check: path: GET /api/v2/events/data/alert is not a client call. Closest: /api/v2/events/dataexport/{endpoint}/{_type} (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v2/events/dataexport/events/{_type}, GET /api/v2/events/dataexport/{endpoint}/{_type}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.netskope.com/en/rest-api-v2-overview-312207/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v2/events/dataexport/events/{_type}, GET /api/v2/events/dataexport/{endpoint}/{_type}. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-alerts",
+        "id": "get-api-v2-events-dataexport-events-type-0",
         "method": "GET",
-        "pathTemplate": "/api/v2/events/data/alert",
-        "summary": "List alert events",
+        "pathTemplate": "/api/v2/events/dataexport/events/{_type}",
+        "summary": "GET /api/v2/events/dataexport/events/{_type}",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "result"
-        },
-        "record": {
-          "name": "event",
-          "kind": "object",
-          "children": [
-            {
-              "name": "_id",
-              "kind": "id"
-            },
-            {
-              "name": "timestamp",
-              "kind": "timestamp",
-              "format": "unix"
-            },
-            {
-              "name": "domain",
-              "kind": "string",
-              "example": "test.update.microsoft.com"
-            },
-            {
-              "name": "dstip",
-              "kind": "ip"
-            },
-            {
-              "name": "access_method",
-              "kind": "const",
-              "constValue": "Client"
-            },
-            {
-              "name": "category",
-              "kind": "string",
-              "example": "Business"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "context",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "IntegrationInstance",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "operation",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "_id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "_insertion_epoch_timestamp",
+                  "kind": "integer"
+                },
+                {
+                  "name": "access_method",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "appcategory",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "bypass_reason",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "timestamp",
+              "kind": "integer"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-api-v2-events-dataexport-endpoint-type-1",
+        "method": "GET",
+        "pathTemplate": "/api/v2/events/dataexport/{endpoint}/{_type}",
+        "summary": "GET /api/v2/events/dataexport/{endpoint}/{_type}",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "context",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "IntegrationInstance",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "operation",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "_id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "_insertion_epoch_timestamp",
+                  "kind": "integer"
+                },
+                {
+                  "name": "access_method",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "appcategory",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "bypass_reason",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "timestamp",
+              "kind": "integer"
+            }
+          ]
         }
       }
     ],

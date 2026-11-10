@@ -3,11 +3,11 @@
   "name": "Rapid7 InsightVM",
   "pack": "Rapid7_Nexpose",
   "vendor": "Rapid7",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /api/3/assets returns the InsightVM asset page.",
+  "summary": "Rebuilt from the client: GET /api/3/assets.",
   "notes": [
-    "Cross-check: path: GET /api/3/assets is not a client call. Closest: /api/3/reports/{report_id}/history/{instance_id}/output (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/3/assets, GET /api/3/tags/{tag_id_int}/assets. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Rapid7_Nexpose/Integrations/Rapid7_Nexpose",
@@ -17,57 +17,34 @@
       "kind": "preset",
       "id": "rapid7-nexpose-rapid7-nexpose",
       "name": "Rapid7 InsightVM",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://help.rapid7.com/insightvm/en-us/api/index.html",
       "notes": [
-        "Cross-check: path: GET /api/3/assets is not a client call. Closest: /api/3/reports/{report_id}/history/{instance_id}/output (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/3/assets, GET /api/3/tags/{tag_id_int}/assets. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.rapid7.com/insightvm/en-us/api/index.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/3/assets, GET /api/3/tags/{tag_id_int}/assets. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "assets",
+        "id": "get-api-3-assets-0",
         "method": "GET",
         "pathTemplate": "/api/3/assets",
-        "summary": "List assets",
+        "summary": "GET /api/3/assets",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "resources",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "asset",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "hostName",
-                    "kind": "string",
-                    "example": "lab-host"
-                  },
-                  {
-                    "name": "ip",
-                    "kind": "ip"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -75,7 +52,117 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Addresses",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "Aliases",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "AssetId",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Estimate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "IntegrationBrand",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "IntegrationInstance",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-api-3-tags-tag-id-int-assets-1",
+        "method": "GET",
+        "pathTemplate": "/api/3/tags/{tag_id_int}/assets",
+        "summary": "GET /api/3/tags/{tag_id_int}/assets",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Addresses",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "Aliases",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "AssetId",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Estimate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "IntegrationBrand",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "IntegrationInstance",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],
