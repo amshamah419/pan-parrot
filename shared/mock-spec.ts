@@ -108,7 +108,7 @@ export interface MockOperation {
   queryMatch?: Record<string, string>;
   /** Header name to exact value. A blank value means the header only has to be present. */
   headerMatch?: Record<string, string>;
-  /** JSONPath (`$.a.b`) or XPath (`/a/b`, `/a/@attr`, `//name`). */
+  /** JSONPath (`$.a.b`, `$.items[*].id`, `$..status`, `$.items[?(@.status=="closed")]`) or XPath (`/a/b`, `/a/b[2]`, `/a/b[@id="x"]`, `//name`). */
   bodyMatch?: { path: string; equals?: string };
   /** When set, the GraphQL operation name in the request must match. */
   graphqlOperation?: string;
@@ -1018,13 +1018,20 @@ function normalizeHeaderMatch(match: Record<string, string> | undefined): Record
   return Object.keys(out).length ? out : undefined;
 }
 
+function parensAreSafe(path: string): boolean {
+  const stripped = path
+    .replace(/\[\?\(@\.[A-Za-z_][A-Za-z0-9_]*==(?:"[^"]*"|'[^']*'|-?\d+|true|false)\)\]/g, "")
+    .replace(/\[text\(\)=(?:"[^"]*"|'[^']*')\]/g, "");
+  return !/[()]/.test(stripped);
+}
+
 function normalizeBodyMatch(
   match: { path?: string; equals?: string } | undefined,
 ): { path: string; equals?: string } | undefined {
   if (!match || typeof match.path !== "string") return undefined;
-  const path = match.path.trim().slice(0, 120);
+  const path = match.path.trim().slice(0, 160);
   if (!path.startsWith("$") && !path.startsWith("/")) return undefined;
-  if (/[()<>]/.test(path)) return undefined;
+  if (/[<>]/.test(path) || !parensAreSafe(path)) return undefined;
   const equals = cleanOptional(match.equals, 80);
   return equals ? { path, equals } : { path };
 }

@@ -11,6 +11,14 @@ describe("body matchers", () => {
     expect(bodyMatches('<response status="success"><result>ok</result></response>', { path: "/response/@status", equals: "success" })).toBe(true);
     expect(bodyMatches('<response><result>ok</result></response>', { path: "//result", equals: "ok" })).toBe(true);
     expect(bodyMatches("<!DOCTYPE foo [<!ENTITY x SYSTEM \"file:///etc/passwd\">]><foo/>", { path: "//foo" })).toBe(false);
+    expect(bodyMatches('{"items":[{"id":"a","status":"open"},{"id":"b","status":"closed"}]}', { path: "$.items[*].id", equals: "b" })).toBe(true);
+    expect(bodyMatches('{"items":[{"id":"a","status":"open"},{"id":"b","status":"closed"}]}', { path: '$.items[?(@.status=="closed")].id', equals: "b" })).toBe(true);
+    expect(bodyMatches('{"page":{"items":[{"status":"closed"}]}}', { path: "$..status", equals: "closed" })).toBe(true);
+    expect(bodyMatches('{"items":[{"status":"open"}]}', { path: '$.items[?(@.status=="closed" && @.id=="a")]' })).toBe(false);
+    expect(bodyMatches('<response><item id="a">one</item><item id="b">two</item></response>', { path: "/response/item[2]", equals: "two" })).toBe(true);
+    expect(bodyMatches('<response><item id="a">one</item><item id="b">two</item></response>', { path: '/response/item[@id="b"]', equals: "two" })).toBe(true);
+    expect(bodyMatches('<response><item>one</item><item>ok</item></response>', { path: "/response/item[text()='ok']" })).toBe(true);
+    expect(bodyMatches('<response><item id="a">one</item></response>', { path: "/response/item[@id='missing']" })).toBe(false);
   });
 });
 

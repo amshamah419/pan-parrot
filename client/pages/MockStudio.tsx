@@ -587,9 +587,10 @@ export default function MockStudio() {
             />
           </Label>
           <div className="grid gap-3 sm:grid-cols-2">
-            <Label className="text-xs">Body path, JSONPath or XPath
+            <Label className="text-xs">Body path. JSONPath can use [*], ..name, and one [?(@.field=="value")]. XPath can use [2], [@attr="value"], and [text()="value"].
               <Input
-                placeholder="$.status or /response/@status"
+                aria-label="Body path"
+                placeholder='$.items[*].id or /response/item[@id="a"]'
                 value={operation.bodyMatch?.path || ""}
                 onChange={(event) =>
                   updateOperation({
