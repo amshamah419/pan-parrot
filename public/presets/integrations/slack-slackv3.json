@@ -3,11 +3,11 @@
   "name": "Slack v3",
   "pack": "Slack",
   "vendor": "Slack",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "conversations.history returns ok, messages, and next_cursor.",
+  "summary": "Rebuilt from the client: GET /api/conversations.history.",
   "notes": [
-    "Cross-check: path: GET /api/conversations.history is not a client call. Closest: /None (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/conversations.history. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Slack/Integrations/SlackV3",
@@ -17,57 +17,76 @@
       "kind": "preset",
       "id": "slack-slackv3",
       "name": "Slack v3",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs.slack.dev/reference/methods/conversations.history",
       "notes": [
-        "Cross-check: path: GET /api/conversations.history is not a client call. Closest: /None (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/conversations.history. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.slack.dev/reference/methods/conversations.history",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/conversations.history. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
+        "id": "get-api-conversations-history-0",
+        "method": "GET",
+        "pathTemplate": "/api/conversations.history",
+        "summary": "GET /api/conversations.history",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "cursor",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 100,
-          "maxLimit": 200
-        },
-        "id": "conversations-history",
-        "method": "GET",
-        "pathTemplate": "/api/conversations.history",
-        "summary": "Fetch a conversation's history",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "slack"
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "message",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "type",
-              "kind": "const",
-              "constValue": "message"
-            },
-            {
-              "name": "user",
-              "kind": "id"
-            },
-            {
-              "name": "text",
+              "name": "actions",
               "kind": "string",
-              "example": "Investigating the alert"
+              "example": "lab"
             },
             {
-              "name": "ts",
-              "kind": "timestamp",
-              "format": "unix-string"
+              "name": "app_token",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "auto_close",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "blocks",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "bot_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "bot_token",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

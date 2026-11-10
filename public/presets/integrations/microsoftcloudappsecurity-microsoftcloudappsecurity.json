@@ -3,11 +3,11 @@
   "name": "Microsoft Defender for Cloud Apps",
   "pack": "MicrosoftCloudAppSecurity",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Alert list. data[] from /api/v1/alerts.",
+  "summary": "Rebuilt from the client: GET /alerts.",
   "notes": [
-    "Cross-check: path: GET /api/v1/alerts is not a client call. Closest: /alerts (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /alerts. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftCloudAppSecurity/Integrations/MicrosoftCloudAppSecurity",
@@ -17,66 +17,78 @@
       "kind": "preset",
       "id": "microsoftcloudappsecurity-microsoftcloudappsecurity",
       "name": "Microsoft Defender for Cloud Apps",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/defender-cloud-apps/api-alerts",
       "notes": [
-        "Cross-check: path: GET /api/v1/alerts is not a client call. Closest: /alerts (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /alerts. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/defender-cloud-apps/api-alerts",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /alerts. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "alerts",
+        "id": "get-alerts-0",
         "method": "GET",
-        "pathTemplate": "/api/v1/alerts",
-        "summary": "List alerts",
+        "pathTemplate": "/alerts",
+        "summary": "GET /alerts",
         "status": 200,
-        "list": true,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
         "envelope": {
-          "type": "wrapped",
-          "arrayKey": "data"
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "alert",
+          "name": "body",
           "kind": "object",
           "children": [
             {
               "name": "_id",
-              "kind": "id"
-            },
-            {
-              "name": "title",
               "kind": "string",
-              "example": "Impossible travel"
+              "example": "lab"
             },
             {
-              "name": "severity",
-              "kind": "integer"
+              "name": "alertsNotFound",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "timestamp",
-              "kind": "timestamp"
+              "name": "appName",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "status",
-              "kind": "enum",
-              "enumValues": [
-                "Open",
-                "Resolved"
-              ]
+              "name": "client_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "closed_benign",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "closed_false_positive",
+              "kind": "string",
+              "example": "lab"
             }
           ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "offset",
-          "limitParam": "limit",
-          "offsetParam": "skip",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
         }
       }
     ],

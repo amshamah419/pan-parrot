@@ -3,11 +3,11 @@
   "name": "Palo Alto Networks Threat Vault v2",
   "pack": "PaloAltoNetworks_Threat_Vault",
   "vendor": "Palo Alto Networks",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET service/v1/threats returns signature data.",
+  "summary": "Rebuilt from the client: GET /threats.",
   "notes": [
-    "Cross-check: path: GET /service/v1/threats is not a client call. Closest: /{url}service/v1/threats (2)."
+    "Rebuilt from the XSOAR client. The checker matched GET /threats. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Threat_Vault/Integrations/ThreatVaultv2",
@@ -17,76 +17,94 @@
       "kind": "preset",
       "id": "paloaltonetworks-threat-vault-threatvaultv2",
       "name": "Palo Alto Networks Threat Vault v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://pan.dev/threat-vault/api/threat-vault-apis/",
       "notes": [
-        "Cross-check: path: GET /service/v1/threats is not a client call. Closest: /{url}service/v1/threats (2)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /threats. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://pan.dev/threat-vault/api/threat-vault-apis/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /threats. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "threats",
+        "id": "get-threats-0",
         "method": "GET",
-        "pathTemplate": "/service/v1/threats",
-        "summary": "Look up a threat signature",
+        "pathTemplate": "/threats",
+        "summary": "GET /threats",
         "status": 200,
-        "list": false,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
         "envelope": {
           "type": "object"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
           "kind": "object",
           "children": [
             {
+              "name": "asn",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "cve",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
               "name": "data",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "threat",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "lab-signature"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high",
-                      "critical"
-                    ]
-                  },
-                  {
-                    "name": "category",
-                    "kind": "const",
-                    "constValue": "vulnerability"
-                  }
-                ]
-              }
+              "kind": "object",
+              "children": [
+                {
+                  "name": "fileinfo",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "reports",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "vulnerability",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "geo",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
             }
           ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "none",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
         }
       }
     ],

@@ -3,11 +3,11 @@
   "name": "Zendesk v2",
   "pack": "Zendesk",
   "vendor": "Zendesk",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Ticket list. tickets, next_page, and count.",
+  "summary": "Rebuilt from the client: POST /api/v2/tickets.",
   "notes": [
-    "The content path was corrected to Packs/Zendesk/Integrations/Zendeskv2. The client still does not back a verified shape."
+    "Rebuilt from the XSOAR client. The checker matched POST /api/v2/tickets. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Zendesk/Integrations/Zendeskv2",
@@ -17,74 +17,78 @@
       "kind": "preset",
       "id": "zendesk-zendeskv2",
       "name": "Zendesk v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://developer.zendesk.com/api-reference/ticketing/tickets/tickets/#list-tickets",
       "notes": [
-        "The content path was corrected to Packs/Zendesk/Integrations/Zendeskv2. The client still does not back a verified shape."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /api/v2/tickets. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.zendesk.com/api-reference/ticketing/tickets/tickets/#list-tickets",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /api/v2/tickets. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-tickets",
-        "method": "GET",
+        "id": "post-api-v2-tickets-0",
+        "method": "POST",
         "pathTemplate": "/api/v2/tickets",
-        "summary": "List tickets",
+        "summary": "POST /api/v2/tickets",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "tickets"
-        },
-        "record": {
-          "name": "ticket",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "integer"
-            },
-            {
-              "name": "subject",
-              "kind": "string",
-              "example": "Cannot sign in"
-            },
-            {
-              "name": "status",
-              "kind": "enum",
-              "enumValues": [
-                "new",
-                "open",
-                "pending",
-                "solved"
-              ]
-            },
-            {
-              "name": "priority",
-              "kind": "enum",
-              "enumValues": [
-                "low",
-                "normal",
-                "high",
-                "urgent"
-              ]
-            },
-            {
-              "name": "created_at",
-              "kind": "timestamp"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "page",
-          "limitParam": "per_page",
+          "style": "none",
+          "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "after_cursor",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "article",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "attachment",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "attachments",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "body",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

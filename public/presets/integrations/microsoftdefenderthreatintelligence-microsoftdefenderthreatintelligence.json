@@ -3,11 +3,11 @@
   "name": "Microsoft Defender Threat Intelligence",
   "pack": "MicrosoftDefenderThreatIntelligence",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Threat intelligence articles.",
+  "summary": "Rebuilt from the client: GET /v1.0/security/threatIntelligence/articles.",
   "notes": [
-    "Cross-check: path: GET /v1.0/security/threatIntelligence/articles is not a client call. Closest: /v1.0/security/threatIntelligence/articles{odata_query} (3)."
+    "Rebuilt from the XSOAR client. The checker matched GET /v1.0/security/threatIntelligence/articles, GET /v1.0/security/threatIntelligence/articles/{article_id}/indicators. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftDefenderThreatIntelligence/Integrations/MicrosoftDefenderThreatIntelligence",
@@ -17,58 +17,34 @@
       "kind": "preset",
       "id": "microsoftdefenderthreatintelligence-microsoftdefenderthreatintelligence",
       "name": "Microsoft Defender Threat Intelligence",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/security-threatintelligence-list-articles",
       "notes": [
-        "Cross-check: path: GET /v1.0/security/threatIntelligence/articles is not a client call. Closest: /v1.0/security/threatIntelligence/articles{odata_query} (3)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /v1.0/security/threatIntelligence/articles, GET /v1.0/security/threatIntelligence/articles/{article_id}/indicators. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/security-threatintelligence-list-articles",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v1.0/security/threatIntelligence/articles, GET /v1.0/security/threatIntelligence/articles/{article_id}/indicators. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "articles",
+        "id": "get-v1-0-security-threatintelligence-article-0",
         "method": "GET",
         "pathTemplate": "/v1.0/security/threatIntelligence/articles",
-        "summary": "List articles",
+        "summary": "GET /v1.0/security/threatIntelligence/articles",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "value",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "article",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "title",
-                    "kind": "string",
-                    "example": "Lab threat article"
-                  },
-                  {
-                    "name": "createdDateTime",
-                    "kind": "timestamp",
-                    "format": "iso"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -76,7 +52,187 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "artifact",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "@odata",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "classification",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "creds_certificate",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "identifier",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "domainStatus",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "registrant",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "address",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "email",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "fax",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "organization",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-v1-0-security-threatintelligence-article-1",
+        "method": "GET",
+        "pathTemplate": "/v1.0/security/threatIntelligence/articles/{article_id}/indicators",
+        "summary": "GET /v1.0/security/threatIntelligence/articles/{article_id}/indicators",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "artifact",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "@odata",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "classification",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "creds_certificate",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "identifier",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "domainStatus",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "registrant",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "address",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "email",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "fax",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "organization",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
         }
       }
     ],

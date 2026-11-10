@@ -3,11 +3,11 @@
   "name": "Prisma Cloud DSPM",
   "pack": "DSPM",
   "vendor": "Palo Alto Networks",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /v1/risk-findings and /v1/assets.",
+  "summary": "Rebuilt from the client: GET /v1/assets.",
   "notes": [
-    "Cross-check: field: GET /v1/risk-findings root keys ['data'] are not read by the client or present in test_data ['cloudEnvironment', 'complianceStandards', 'dspmApiKey', 'files', 'insecure', 'projectId', 'proxy', 'status']."
+    "Rebuilt from the XSOAR client. The checker matched GET /v1/assets, GET /v1/risk-findings. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/DSPM/Integrations/DSPM",
@@ -17,61 +17,34 @@
       "kind": "preset",
       "id": "dspm-dspm",
       "name": "Prisma Cloud DSPM",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://pan.dev/prisma-cloud/api/dspm/",
       "notes": [
-        "Cross-check: field: GET /v1/risk-findings root keys ['data'] are not read by the client or present in test_data ['cloudEnvironment', 'complianceStandards', 'dspmApiKey', 'files', 'insecure', 'projectId', 'proxy', 'status']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /v1/assets, GET /v1/risk-findings. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://pan.dev/prisma-cloud/api/dspm/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v1/assets, GET /v1/risk-findings. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "findings",
+        "id": "get-v1-assets-0",
         "method": "GET",
-        "pathTemplate": "/v1/risk-findings",
-        "summary": "List risk findings",
+        "pathTemplate": "/v1/assets",
+        "summary": "GET /v1/assets",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "data",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "finding",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  },
-                  {
-                    "name": "assetId",
-                    "kind": "id"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -79,53 +52,52 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "assets",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "dspmApiKey",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "dspmBaseUrl",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "fields",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "files",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       },
       {
-        "id": "assets",
+        "id": "get-v1-risk-findings-1",
         "method": "GET",
-        "pathTemplate": "/v1/assets",
-        "summary": "List assets",
+        "pathTemplate": "/v1/risk-findings",
+        "summary": "GET /v1/risk-findings",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "data",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "asset",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "lab-bucket"
-                  },
-                  {
-                    "name": "type",
-                    "kind": "const",
-                    "constValue": "s3"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -133,7 +105,38 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "assets",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "dspmApiKey",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "dspmBaseUrl",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "fields",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "files",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

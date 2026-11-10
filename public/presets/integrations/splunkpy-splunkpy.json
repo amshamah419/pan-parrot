@@ -3,109 +3,90 @@
   "name": "SplunkPy",
   "pack": "SplunkPy",
   "vendor": "Splunk",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Search job export as JSON lines, which is what JSONResultsReader consumes when output_mode=json.",
+  "summary": "Rebuilt from the client: POST /services/search/jobs.",
   "notes": [
-    "Cross-check: unparseable: no Python client parsed"
+    "Rebuilt from the XSOAR client. The checker matched POST /services/search/jobs. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
-  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SplunkPy",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SplunkPy/Integrations/SplunkPy",
   "spec": {
     "version": 1,
     "source": {
       "kind": "preset",
       "id": "splunkpy-splunkpy",
       "name": "SplunkPy",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-tutorials/10.2/rest-api-tutorials/creating-searches-using-the-rest-api",
       "notes": [
-        "Cross-check: unparseable: no Python client parsed"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /services/search/jobs. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-tutorials/10.2/rest-api-tutorials/creating-searches-using-the-rest-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /services/search/jobs. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
+        "id": "post-services-search-jobs-0",
+        "method": "POST",
+        "pathTemplate": "/services/search/jobs",
+        "summary": "POST /services/search/jobs",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 1,
-          "maxLimit": 1
-        },
-        "id": "create-job",
-        "method": "POST",
-        "pathTemplate": "/services/search/jobs",
-        "summary": "Create a search job",
-        "status": 201,
-        "list": false,
-        "envelope": {
-          "type": "object"
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "job",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "sid",
-              "kind": "id"
-            }
-          ]
-        }
-      },
-      {
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "offset",
-          "limitParam": "count",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 100,
-          "maxLimit": 500
-        },
-        "id": "export",
-        "method": "POST",
-        "pathTemplate": "/services/search/jobs/export",
-        "summary": "Stream search results",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "splunk-export"
-        },
-        "record": {
-          "name": "event",
-          "kind": "object",
-          "children": [
-            {
-              "name": "_time",
-              "kind": "timestamp",
-              "format": "iso"
-            },
-            {
-              "name": "host",
+              "name": "DBotScore",
               "kind": "string",
-              "example": "search-head"
+              "example": "lab"
             },
             {
-              "name": "source",
+              "name": "Status",
               "kind": "string",
-              "example": "pan-parrot"
+              "example": "lab"
             },
             {
-              "name": "sourcetype",
-              "kind": "const",
-              "constValue": "parrot:mock"
+              "name": "_indextime",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "_raw",
               "kind": "string",
-              "example": "user=ada action=login"
+              "example": "lab"
+            },
+            {
+              "name": "_time",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ackId",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

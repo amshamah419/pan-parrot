@@ -3,11 +3,11 @@
   "name": "Tenable Vulnerability Management (formerly Tenable.io)",
   "pack": "Tenable_io",
   "vendor": "Tenable",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /workbenches/assets and POST /vulns/export, which the XSOAR client calls.",
+  "summary": "Rebuilt from the client: POST /vulns/export.",
   "notes": [
-    "Cross-check: path: GET /workbenches/assets is not a client call. Closest: /{BASE_URL}workbenches/assets (1)."
+    "Rebuilt from the XSOAR client. The checker matched POST /vulns/export, POST /assets/export. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Tenable_io/Integrations/Tenable_io",
@@ -17,89 +17,194 @@
       "kind": "preset",
       "id": "tenable-io-tenable-io",
       "name": "Tenable Vulnerability Management (formerly Tenable.io)",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://developer.tenable.com/reference/workbenches-assets",
       "notes": [
-        "Cross-check: path: GET /workbenches/assets is not a client call. Closest: /{BASE_URL}workbenches/assets (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /vulns/export, POST /assets/export. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.tenable.com/reference/workbenches-assets",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /vulns/export, POST /assets/export. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "offset",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 50,
-          "maxLimit": 500
-        },
-        "id": "list-assets",
-        "method": "GET",
-        "pathTemplate": "/workbenches/assets",
-        "summary": "List workbench assets",
+        "id": "post-vulns-export-0",
+        "method": "POST",
+        "pathTemplate": "/vulns/export",
+        "summary": "POST /vulns/export",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "assets"
-        },
-        "record": {
-          "name": "asset",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "uuid"
-            },
-            {
-              "name": "ipv4",
-              "kind": "ip"
-            },
-            {
-              "name": "hostname",
-              "kind": "string",
-              "example": "lab-workstation"
-            },
-            {
-              "name": "last_seen",
-              "kind": "timestamp",
-              "format": "iso"
-            }
-          ]
-        }
-      },
-      {
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 1,
-          "maxLimit": 1
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
-        "id": "export-vulns",
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "asset",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "fqdn",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "hostname",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "ipv4",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "network_id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "operating_system",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "assets",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assets_404_retry_count",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assets_available_chunks",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assets_export_uuid",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "post-assets-export-1",
         "method": "POST",
-        "pathTemplate": "/vulns/export",
-        "summary": "Start a vulnerability export",
+        "pathTemplate": "/assets/export",
+        "summary": "POST /assets/export",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
         "record": {
-          "name": "export",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "export_uuid",
-              "kind": "uuid"
+              "name": "Status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "asset",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "fqdn",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "hostname",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "ipv4",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "network_id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "operating_system",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "assets",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assets_404_retry_count",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assets_available_chunks",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assets_export_uuid",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

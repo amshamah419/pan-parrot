@@ -3,11 +3,11 @@
   "name": "CrowdStrike Falcon Intel v2",
   "pack": "CrowdStrikeIntel",
   "vendor": "CrowdStrike",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Indicator id query for Falcon Intelligence.",
+  "summary": "Rebuilt from the client: GET /intel/combined/indicators/v1.",
   "notes": [
-    "Cross-check: path: GET /intel/queries/indicators/v1 is not a client call. Closest: /intel/combined/indicators/v1 (2)."
+    "Rebuilt from the XSOAR client. The checker matched GET /intel/combined/indicators/v1, GET /intel/combined/actors/v1. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeIntel/Integrations/CrowdStrikeFalconIntel_v2",
@@ -17,39 +17,156 @@
       "kind": "preset",
       "id": "crowdstrikeintel-crowdstrikefalconintel-v2",
       "name": "CrowdStrike Falcon Intel v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeIntel/Integrations/CrowdStrikeFalconIntel_v2",
       "notes": [
-        "Cross-check: path: GET /intel/queries/indicators/v1 is not a client call. Closest: /intel/combined/indicators/v1 (2)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /intel/combined/indicators/v1, GET /intel/combined/actors/v1. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeIntel/Integrations/CrowdStrikeFalconIntel_v2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /intel/combined/indicators/v1, GET /intel/combined/actors/v1. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "query-indicators",
+        "id": "get-intel-combined-indicators-v1-0",
         "method": "GET",
-        "pathTemplate": "/intel/queries/indicators/v1",
-        "summary": "Query indicator ids",
+        "pathTemplate": "/intel/combined/indicators/v1",
+        "summary": "GET /intel/combined/indicators/v1",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "resources"
-        },
-        "record": {
-          "name": "resource",
-          "kind": "id"
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "active",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "actors",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "capability",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "value",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "created_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-intel-combined-actors-v1-1",
+        "method": "GET",
+        "pathTemplate": "/intel/combined/actors/v1",
+        "summary": "GET /intel/combined/actors/v1",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "active",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "actors",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "capability",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "value",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "created_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

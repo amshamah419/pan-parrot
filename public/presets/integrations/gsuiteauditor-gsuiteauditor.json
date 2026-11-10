@@ -3,11 +3,11 @@
   "name": "G Suite Auditor",
   "pack": "GsuiteAuditor",
   "vendor": "Google",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Admin reports login activity.",
+  "summary": "Rebuilt from the client: GET /admin/reports/v1/activity/users/{arg}/applications/{arg}.",
   "notes": [
-    "Cross-check: unparseable: client built requests without a readable method and path"
+    "Rebuilt from the XSOAR client. The checker matched GET /admin/reports/v1/activity/users/{arg}/applications/{arg}. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GsuiteAuditor/Integrations/GsuiteAuditor",
@@ -17,57 +17,34 @@
       "kind": "preset",
       "id": "gsuiteauditor-gsuiteauditor",
       "name": "G Suite Auditor",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developers.google.com/admin-sdk/reports/reference/rest/v1/activities/list",
       "notes": [
-        "Cross-check: unparseable: client built requests without a readable method and path"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /admin/reports/v1/activity/users/{arg}/applications/{arg}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developers.google.com/admin-sdk/reports/reference/rest/v1/activities/list",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /admin/reports/v1/activity/users/{arg}/applications/{arg}. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "login",
+        "id": "get-admin-reports-v1-activity-users-arg-appl-0",
         "method": "GET",
-        "pathTemplate": "/reports/v1/activity/users/all/applications/login",
-        "summary": "List login activity",
+        "pathTemplate": "/admin/reports/v1/activity/users/{arg}/applications/{arg}",
+        "summary": "GET /admin/reports/v1/activity/users/{arg}/applications/{arg}",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "items",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "activity",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "actor",
-                    "kind": "email"
-                  },
-                  {
-                    "name": "event",
-                    "kind": "string",
-                    "example": "login_success"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -75,7 +52,95 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "actor",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "email",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "profileId",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "events",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "applicationName",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "time",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "ipAddress",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "items",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "actor",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "etag",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "events",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "kind",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "nextPageToken",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

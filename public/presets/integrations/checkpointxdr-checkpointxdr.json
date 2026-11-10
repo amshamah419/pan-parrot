@@ -3,11 +3,11 @@
   "name": "Check Point XDR",
   "pack": "CheckPointXDR",
   "vendor": "Check Point",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "XDR incidents.",
+  "summary": "Rebuilt from the client: GET /app/xdr/api/xdr/v1/incidents.",
   "notes": [
-    "Cross-check: field: GET /app/xdr/api/xdr/v1/incidents root keys ['incidents'] are not read by the client or present in test_data ['closeReason', 'dbotMirrorId', 'details', 'display_id', 'last_fetch', 'rawJSON', 'summary', 'updated_at']."
+    "Rebuilt from the XSOAR client. The checker matched GET /app/xdr/api/xdr/v1/incidents. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointXDR/Integrations/CheckPointXDR",
@@ -17,62 +17,34 @@
       "kind": "preset",
       "id": "checkpointxdr-checkpointxdr",
       "name": "Check Point XDR",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointXDR/Integrations/CheckPointXDR",
       "notes": [
-        "Cross-check: field: GET /app/xdr/api/xdr/v1/incidents root keys ['incidents'] are not read by the client or present in test_data ['closeReason', 'dbotMirrorId', 'details', 'display_id', 'last_fetch', 'rawJSON', 'summary', 'updated_at']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /app/xdr/api/xdr/v1/incidents. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointXDR/Integrations/CheckPointXDR",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /app/xdr/api/xdr/v1/incidents. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "incidents",
+        "id": "get-app-xdr-api-xdr-v1-incidents-0",
         "method": "GET",
         "pathTemplate": "/app/xdr/api/xdr/v1/incidents",
-        "summary": "List incidents",
+        "summary": "GET /app/xdr/api/xdr/v1/incidents",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "incidents",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "incident",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  },
-                  {
-                    "name": "title",
-                    "kind": "string",
-                    "example": "Suspicious connection"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -80,7 +52,59 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Outgoing",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "closeReason",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created_at",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "incident_id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "incidents",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "status",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "display_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

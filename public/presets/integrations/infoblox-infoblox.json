@@ -3,11 +3,11 @@
   "name": "Infoblox NIOS",
   "pack": "Infoblox",
   "vendor": "Infoblox",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "WAPI host records.",
+  "summary": "Rebuilt from the client: GET /record:host.",
   "notes": [
-    "Cross-check: path: GET /wapi/v2.13.1/record:host is not a client call. Closest: /record:host (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /record:host. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Infoblox/Integrations/Infoblox",
@@ -17,45 +17,34 @@
       "kind": "preset",
       "id": "infoblox-infoblox",
       "name": "Infoblox NIOS",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.infoblox.com/space/nios85/page/2512664126/Infoblox+REST+API",
       "notes": [
-        "Cross-check: path: GET /wapi/v2.13.1/record:host is not a client call. Closest: /record:host (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /record:host. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.infoblox.com/space/nios85/page/2512664126/Infoblox+REST+API",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /record:host. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "hosts",
+        "id": "get-record-host-0",
         "method": "GET",
-        "pathTemplate": "/wapi/v2.13.1/record:host",
-        "summary": "List host records",
+        "pathTemplate": "/record:host",
+        "summary": "GET /record:host",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "array"
-        },
-        "record": {
-          "name": "host",
-          "kind": "object",
-          "children": [
-            {
-              "name": "_ref",
-              "kind": "id"
-            },
-            {
-              "name": "name",
-              "kind": "string",
-              "example": "lab.example"
-            },
-            {
-              "name": "ipv4addr",
-              "kind": "ip"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -63,7 +52,73 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "next_page_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "_ref",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "address",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "aliases",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "binding_state",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "canonical",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "text",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

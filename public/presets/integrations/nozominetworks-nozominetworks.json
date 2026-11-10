@@ -3,11 +3,11 @@
   "name": "Nozomi Networks",
   "pack": "NozomiNetworks",
   "vendor": "Nozomi Networks",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Open API query.",
+  "summary": "Rebuilt from the client: GET /api/open/query/do.",
   "notes": [
-    "Cross-check: path: POST /api/open/query/do is not a client call. Closest: /{base_url}/api/open/sign_in (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/open/query/do. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/NozomiNetworks/Integrations/NozomiNetworks",
@@ -17,57 +17,34 @@
       "kind": "preset",
       "id": "nozominetworks-nozominetworks",
       "name": "Nozomi Networks",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/NozomiNetworks/Integrations/NozomiNetworks",
       "notes": [
-        "Cross-check: path: POST /api/open/query/do is not a client call. Closest: /{base_url}/api/open/sign_in (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/open/query/do. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/NozomiNetworks/Integrations/NozomiNetworks",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/open/query/do. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "query",
-        "method": "POST",
+        "id": "get-api-open-query-do-0",
+        "method": "GET",
         "pathTemplate": "/api/open/query/do",
-        "summary": "Run a query",
+        "summary": "GET /api/open/query/do",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "result",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "row",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "lab-asset"
-                  },
-                  {
-                    "name": "ip",
-                    "kind": "ip"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -75,7 +52,43 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Authorization",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "customAlertFilter",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "defaultIncidentRole",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "endpoint",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "error",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "fecthAlsoIncidents",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

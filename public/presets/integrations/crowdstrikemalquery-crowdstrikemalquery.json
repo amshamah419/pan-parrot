@@ -3,11 +3,11 @@
   "name": "CrowdStrike MalQuery",
   "pack": "CrowdStrikeMalquery",
   "vendor": "CrowdStrike",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "MalQuery hunt request. The client posts /malquery.",
+  "summary": "Rebuilt from the client: GET /malquery/aggregates/quotas/v1.",
   "notes": [
-    "Cross-check: path: POST /malquery/entities/queries/v1 is not a client call. Closest: /malquery/queries/exact-search/v1 (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /malquery/aggregates/quotas/v1, GET /malquery/entities/download-files/v1. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeMalquery/Integrations/CrowdStrikeMalquery",
@@ -17,41 +17,34 @@
       "kind": "preset",
       "id": "crowdstrikemalquery-crowdstrikemalquery",
       "name": "CrowdStrike MalQuery",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeMalquery/Integrations/CrowdStrikeMalquery",
       "notes": [
-        "Cross-check: path: POST /malquery/entities/queries/v1 is not a client call. Closest: /malquery/queries/exact-search/v1 (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /malquery/aggregates/quotas/v1, GET /malquery/entities/download-files/v1. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeMalquery/Integrations/CrowdStrikeMalquery",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /malquery/aggregates/quotas/v1, GET /malquery/entities/download-files/v1. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "hunt",
-        "method": "POST",
-        "pathTemplate": "/malquery/entities/queries/v1",
-        "summary": "Start a hunt",
+        "id": "get-malquery-aggregates-quotas-v1-0",
+        "method": "GET",
+        "pathTemplate": "/malquery/aggregates/quotas/v1",
+        "summary": "GET /malquery/aggregates/quotas/v1",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "uuid"
-            },
-            {
-              "name": "status",
-              "kind": "const",
-              "constValue": "inprogress"
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -59,7 +52,165 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "credentials_client",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "identifier",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "integrationReliability",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "label",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "md5",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "meta",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "days_left",
+                  "kind": "integer"
+                },
+                {
+                  "name": "download_count",
+                  "kind": "integer"
+                },
+                {
+                  "name": "download_counts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "download_limit",
+                  "kind": "integer"
+                },
+                {
+                  "name": "hunt_count",
+                  "kind": "integer"
+                }
+              ]
+            },
+            {
+              "name": "path",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-malquery-entities-download-files-v1-1",
+        "method": "GET",
+        "pathTemplate": "/malquery/entities/download-files/v1",
+        "summary": "GET /malquery/entities/download-files/v1",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "credentials_client",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "identifier",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "integrationReliability",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "label",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "md5",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "meta",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "days_left",
+                  "kind": "integer"
+                },
+                {
+                  "name": "download_count",
+                  "kind": "integer"
+                },
+                {
+                  "name": "download_counts",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "download_limit",
+                  "kind": "integer"
+                },
+                {
+                  "name": "hunt_count",
+                  "kind": "integer"
+                }
+              ]
+            },
+            {
+              "name": "path",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

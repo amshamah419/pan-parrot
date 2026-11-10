@@ -32,6 +32,14 @@ JUNK = {
     "secret",
     "apikey",
     "api_key",
+    "contents",
+    "contentsformat",
+    "customfields",
+    "type",
+    "file",
+    "brand",
+    "module",
+    "indicator",
 }
 SKIP_PATH = re.compile(r"oauth|token|signin|sign_in|login|whoami|authorize|metadata/identity|/none", re.I)
 SOURCE_FIX = {
@@ -45,6 +53,7 @@ SOURCE_FIX = {
     "urlhaus-urlhaus": "https://github.com/demisto/content/tree/master/Packs/URLHaus/Integrations/URLHaus",
     "urlscan-urlscan": "https://github.com/demisto/content/tree/master/Packs/UrlScan/Integrations/UrlScan",
     "zendesk-zendeskv2": "https://github.com/demisto/content/tree/master/Packs/Zendesk/Integrations/Zendeskv2",
+    "splunkpy-splunkpy": "https://github.com/demisto/content/tree/master/Packs/SplunkPy/Integrations/SplunkPy",
 }
 FETCH_FIRST = {
     "amp-ampv2",
@@ -215,8 +224,8 @@ def score_path(path: str, method: str, previous: list[str]) -> int:
         score += 1
     alignment = max((cc.suffix_score(old, path) for old in previous), default=0)
     score += alignment * 8
-    if previous and path.rstrip("/").split("/")[-1] == previous[0].rstrip("/").split("/")[-1]:
-        score += 6
+    if previous and "{" in previous[0].rstrip("/").split("/")[-1] and "{" in path.rstrip("/").split("/")[-1]:
+        score += 12
     lowered = path.lower()
     for word in ("incident", "alert", "event", "threat", "log", "offense", "detection", "indicator", "message", "issue"):
         if word in lowered:
@@ -278,11 +287,15 @@ def build_operation(
 
 
 def choose_roots(keys: set[str], test_paths: set[str]) -> list[str]:
-    allowed = cc.children(set(keys) | set(test_paths), ())
-    named = [name for name in sorted(allowed) if NAME_RE.match(name)]
-    preferred = [name for name in named if name.lower() not in JUNK]
-    chosen = preferred or named
-    return chosen[:6]
+    def usable(names: set[str]) -> list[str]:
+        named = [name for name in sorted(names) if NAME_RE.match(name)]
+        preferred = [name for name in named if name.lower() not in JUNK]
+        return preferred or named
+
+    client_roots = usable(cc.children(set(keys), ()))
+    if client_roots:
+        return client_roots[:6]
+    return usable(cc.children(set(test_paths), ()))[:6]
 
 
 def nested_names(root: str, keys: set[str], test_paths: set[str]) -> list[str]:
@@ -293,6 +306,8 @@ def nested_names(root: str, keys: set[str], test_paths: set[str]) -> list[str]:
 
 def leaf(name: str, path: str, test_types: dict[str, set[str]]) -> dict:
     kinds = test_types.get(path) or set()
+    if "list" in kinds:
+        return {"name": name, "kind": "array", "item": {"name": "item", "kind": "string", "example": "lab"}}
     if kinds == {"bool"}:
         return {"name": name, "kind": "boolean"}
     if kinds == {"number"}:

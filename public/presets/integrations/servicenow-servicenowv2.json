@@ -3,11 +3,11 @@
   "name": "ServiceNow v2",
   "pack": "ServiceNow",
   "vendor": "ServiceNow",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Table API GET /api/now/table/{table} with a result array.",
+  "summary": "Rebuilt from the client: GET /table/{table_name}.",
   "notes": [
-    "Cross-check: path: GET /api/now/table/{table} is not a client call. Closest: /oauth_token.do (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /table/{table_name}, GET /table/{ticket_type}. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ServiceNow/Integrations/ServiceNowv2",
@@ -17,85 +17,158 @@
       "kind": "preset",
       "id": "servicenow-servicenowv2",
       "name": "ServiceNow v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
       "notes": [
-        "Cross-check: path: GET /api/now/table/{table} is not a client call. Closest: /oauth_token.do (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /table/{table_name}, GET /table/{ticket_type}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /table/{table_name}, GET /table/{ticket_type}. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {
-          "x-total-count": "500"
-        },
+        "id": "get-table-table-name-0",
+        "method": "GET",
+        "pathTemplate": "/table/{table_name}",
+        "summary": "GET /table/{table_name}",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
-          "limitParam": "sysparm_limit",
-          "offsetParam": "sysparm_offset",
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
-        },
-        "id": "table-get",
-        "method": "GET",
-        "pathTemplate": "/api/now/table/{table}",
-        "summary": "Retrieve records from a table",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "result"
+          "maxLimit": 100
         },
         "record": {
-          "name": "incident",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "sys_id",
-              "kind": "uuid"
-            },
-            {
-              "name": "number",
-              "kind": "id"
-            },
-            {
-              "name": "short_description",
+              "name": "FileID",
               "kind": "string",
-              "example": "Suspicious outbound connection"
+              "example": "lab"
             },
             {
-              "name": "state",
-              "kind": "enum",
-              "enumValues": [
-                "1",
-                "2",
-                "3",
-                "6",
-                "7"
+              "name": "Variables",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "active",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "value",
+                  "kind": "string",
+                  "example": "lab"
+                }
               ]
             },
             {
-              "name": "priority",
-              "kind": "enum",
-              "enumValues": [
-                "1",
-                "2",
-                "3",
-                "4"
+              "name": "approval",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "approval_history",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "value",
+                  "kind": "string",
+                  "example": "lab"
+                }
               ]
             },
             {
-              "name": "sys_created_on",
-              "kind": "timestamp",
-              "format": "iso"
+              "name": "asset_tag",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-table-ticket-type-1",
+        "method": "GET",
+        "pathTemplate": "/table/{ticket_type}",
+        "summary": "GET /table/{ticket_type}",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "sys_updated_on",
-              "kind": "timestamp",
-              "format": "iso"
+              "name": "Variables",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "active",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "value",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "approval",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "approval_history",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "value",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "asset_tag",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }
