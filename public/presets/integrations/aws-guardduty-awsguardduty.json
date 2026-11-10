@@ -21,25 +21,219 @@
       "name": "AWS - GuardDuty",
       "fidelity": "approximate",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
-      "sourceUrl": "https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListFindings.html",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-GuardDuty/Integrations/AWSGuardDuty",
       "notes": [],
       "verification": {
         "status": "approximate",
-        "docUrl": "https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListFindings.html",
-        "checkedAt": "2026-11-09",
+        "checkedAt": "2026-11-10",
         "differences": [
+          "10 of 28 commands from vendor docs, 1 approximate, 17 missing.",
           "The XSOAR pack uses boto3. GuardDuty's JSON protocol is POST / with X-Amz-Target GuardDuty_20171201.ListFindings or GetFindings.",
           "ListFindings returns FindingIds. GetFindings returns Findings with Id, Type, Severity, and Title. Service.Action and resource details are omitted.",
           "SigV4 is not checked. A call without X-Amz-Target does not match either operation."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "aws-gd-create-detector",
+          "calls": [
+            "guardduty:CreateDetector"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-delete-detector",
+          "calls": [
+            "guardduty:DeleteDetector"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-get-detector",
+          "calls": [
+            "guardduty:GetDetector"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-update-detector",
+          "calls": [
+            "guardduty:UpdateDetector"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-create-ip-set",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-delete-ip-set",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-list-detectors",
+          "calls": [
+            "guardduty:ListDetectors"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-update-ip-set",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-get-ip-set",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-list-ip-sets",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-create-threatintel-set",
+          "calls": [
+            "guardduty:CreateThreatIntelSet"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-delete-threatintel-set",
+          "calls": [
+            "guardduty:DeleteThreatIntelSet"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-get-threatintel-set",
+          "calls": [
+            "guardduty:GetThreatIntelSet"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-list-threatintel-sets",
+          "calls": [
+            "guardduty:ListThreatIntelSets"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-update-threatintel-set",
+          "calls": [
+            "guardduty:UpdateThreatIntelSet"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-create-threat-entity-set",
+          "calls": [
+            "guardduty:CreateThreatEntitySet"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-update-threat-entity-set",
+          "calls": [
+            "guardduty:UpdateThreatEntitySet"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-get-threat-entity-set",
+          "calls": [
+            "guardduty:GetThreatEntitySet"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-delete-threat-entity-set",
+          "calls": [
+            "guardduty:DeleteThreatEntitySet"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-list-threat-entity-sets",
+          "calls": [
+            "guardduty:ListThreatEntitySets"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-list-findings",
+          "calls": [
+            "guardduty:ListFindings"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "list-findings"
+          ]
+        },
+        {
+          "command": "aws-gd-get-findings",
+          "calls": [
+            "guardduty:GetFindings"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "get-findings"
+          ]
+        },
+        {
+          "command": "aws-gd-create-sample-findings",
+          "calls": [
+            "guardduty:CreateSampleFindings"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-archive-findings",
+          "calls": [
+            "guardduty:ArchiveFindings"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-unarchive-findings",
+          "calls": [
+            "guardduty:UnarchiveFindings"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-update-findings-feedback",
+          "calls": [
+            "guardduty:UpdateFindingsFeedback"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-list-members",
+          "calls": [
+            "guardduty:ListMembers"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-gd-get-members",
+          "calls": [
+            "guardduty:GetMembers"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
         "headers": {},
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "pagination": {
-          "style": "cursor",
+          "style": "none",
           "limitParam": "MaxResults",
           "offsetParam": "offset",
           "pageParam": "page",
@@ -49,7 +243,7 @@
         },
         "id": "list-findings",
         "method": "POST",
-        "pathTemplate": "/",
+        "pathTemplate": "/detector/{DetectorId}/findings",
         "summary": "List finding ids",
         "status": 200,
         "list": true,
@@ -63,7 +257,8 @@
         },
         "headerMatch": {
           "x-amz-target": "GuardDuty_20171201.ListFindings"
-        }
+        },
+        "awsAction": "ListFindings"
       },
       {
         "headers": {},

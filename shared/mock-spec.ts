@@ -110,6 +110,8 @@ export interface MockOperation {
   queryMatch?: Record<string, string>;
   /** Header name to exact value. A blank value means the header only has to be present. */
   headerMatch?: Record<string, string>;
+  /** AWS API action this operation answers, such as DescribeInstances. */
+  awsAction?: string;
   /** JSONPath (`$.a.b`, `$.items[*].id`, `$..status`, `$.items[?(@.status=="closed")]`) or XPath (`/a/b`, `/a/b[2]`, `/a/b[@id="x"]`, `//name`). */
   bodyMatch?: { path: string; equals?: string };
   /** When set, the GraphQL operation name in the request must match. */
@@ -250,6 +252,27 @@ export interface CommandCoverage {
   fixture?: string;
 }
 
+/** One YAML command and how much of its API call is backed by vendor docs. */
+export interface CommandDoc {
+  command: string;
+  /** Service action, such as ec2:DescribeInstances. */
+  calls: string[];
+  status: "vendor" | "approximate" | "missing";
+  operationIds?: string[];
+  docUrl?: string;
+}
+
+export interface CommandDocSummary {
+  total: number;
+  vendor: number;
+  approximate: number;
+  missing: number;
+}
+
+export function commandCoverageLabel(summary: CommandDocSummary): string {
+  return `${summary.vendor} of ${summary.total} commands from vendor docs, ${summary.approximate} approximate, ${summary.missing} missing`;
+}
+
 export interface MockSpec {
   version: 1;
   source: {
@@ -271,6 +294,8 @@ export interface MockSpec {
     xsoar?: XsoarIntegration;
     /** Commands from an integration YAML, including ones that did not become an operation. */
     coverage?: CommandCoverage[];
+    /** YAML commands scored against vendor examples for this integration. */
+    commandDocs?: CommandDoc[];
   };
   operations: MockOperation[];
   chaos: ChaosSpec;
@@ -428,6 +453,7 @@ export function validateMockSpec(input: unknown): MockSpec {
       verification: normalizeVerification(raw.source.verification),
       xsoar: normalizeXsoar(raw.source.xsoar),
       coverage: normalizeCoverage(raw.source.coverage),
+      commandDocs: normalizeCommandDocs(raw.source.commandDocs),
     },
     operations,
     chaos: normalizeChaos(raw.chaos),
@@ -472,6 +498,7 @@ function normalizeOperation(
     record: normalizeField(operation.record, 0, countField),
     queryMatch: normalizeQueryMatch(operation.queryMatch),
     headerMatch: normalizeHeaderMatch(operation.headerMatch),
+    awsAction: normalizeAwsAction(operation.awsAction),
     bodyMatch: normalizeBodyMatch(operation.bodyMatch),
     graphqlOperation: cleanOptional(operation.graphqlOperation, 80),
     priority: clampInt(operation.priority, -100, 1000, 0) || undefined,
@@ -598,6 +625,40 @@ function normalizeFixture(value: unknown): string | undefined {
     return undefined;
   }
   return trimmed;
+}
+
+function normalizeAwsAction(value: string | undefined): string | undefined {
+  const action = cleanOptional(value, 80);
+  return action && /^[A-Za-z][A-Za-z0-9]*$/.test(action) ? action : undefined;
+}
+
+function normalizeCommandDocs(value: CommandDoc[] | undefined): CommandDoc[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const rows: CommandDoc[] = [];
+  for (const row of value) {
+    if (!row || typeof row !== "object") continue;
+    const command = String(row.command || "").trim().slice(0, 120);
+    if (!command) continue;
+    const status = row.status === "vendor" || row.status === "approximate" || row.status === "missing"
+      ? row.status
+      : "missing";
+    const calls = Array.isArray(row.calls)
+      ? row.calls.filter((call) => typeof call === "string" && call.trim()).map((call) => call.trim().slice(0, 80)).slice(0, 8)
+      : [];
+    const operationIds = Array.isArray(row.operationIds)
+      ? row.operationIds.filter((id) => typeof id === "string" && id.trim()).map((id) => id.trim().slice(0, 80)).slice(0, 8)
+      : [];
+    const docUrl = cleanOptional(row.docUrl, 300);
+    rows.push({
+      command,
+      calls,
+      status,
+      operationIds: operationIds.length ? operationIds : undefined,
+      docUrl: docUrl && docUrl.startsWith("https://") ? docUrl : undefined,
+    });
+    if (rows.length >= MOCK_LIMITS.maxOperations) break;
+  }
+  return rows.length ? rows : undefined;
 }
 
 function normalizeCoverage(value: CommandCoverage[] | undefined): CommandCoverage[] | undefined {
@@ -1031,7 +1092,7 @@ function normalizeHeaderMatch(match: Record<string, string> | undefined): Record
   for (const [key, value] of Object.entries(match).slice(0, 6)) {
     const name = key.toLowerCase().trim();
     if (!/^[a-z0-9-]{1,40}$/.test(name)) continue;
-    if (typeof value !== "string" || value.length > 80 || /[\r\n]/.test(value)) continue;
+    if (typeof value !== "string" || value.length > 160 || /[\r\n]/.test(value)) continue;
     out[name] = value;
   }
   return Object.keys(out).length ? out : undefined;

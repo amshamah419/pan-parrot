@@ -21,7 +21,7 @@
       "name": "AWS - CloudTrail",
       "fidelity": "approximate",
       "attribution": "Public API reference or demisto/content client (MIT).",
-      "sourceUrl": "https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_LookupEvents.html",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-CloudTrail/Integrations/AWS-CloudTrail",
       "notes": [
         "POST / with X-Amz-Target CloudTrail_20131101.LookupEvents returns { Events }.",
         "CloudTrailEvent is a shortened JSON string, not the full record.",
@@ -29,14 +29,76 @@
       ],
       "verification": {
         "status": "approximate",
-        "docUrl": "https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_LookupEvents.html",
         "checkedAt": "2026-11-10",
         "differences": [
+          "4 of 8 commands from vendor docs, 1 approximate, 3 missing.",
+          "0 of 8 commands from vendor docs, 8 approximate, 0 missing.",
           "POST / with X-Amz-Target CloudTrail_20131101.LookupEvents returns { Events }.",
           "CloudTrailEvent is a shortened JSON string, not the full record.",
           "SigV4 is not checked."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "aws-cloudtrail-create-trail",
+          "calls": [
+            "cloudtrail:CreateTrail"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-cloudtrail-delete-trail",
+          "calls": [
+            "cloudtrail:DeleteTrail"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-cloudtrail-describe-trails",
+          "calls": [
+            "cloudtrail:DescribeTrails"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-cloudtrail-update-trail",
+          "calls": [
+            "cloudtrail:UpdateTrail"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-cloudtrail-start-logging",
+          "calls": [
+            "cloudtrail:StartLogging"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-cloudtrail-stop-logging",
+          "calls": [
+            "cloudtrail:StopLogging"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-cloudtrail-lookup-events",
+          "calls": [
+            "cloudtrail:LookupEvents"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "lookup-events"
+          ]
+        },
+        {
+          "command": "aws-cloudtrail-get-trail-status",
+          "calls": [
+            "cloudtrail:GetTrailStatus"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {

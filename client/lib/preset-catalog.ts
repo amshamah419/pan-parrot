@@ -7,6 +7,7 @@ export interface PresetCatalogEntry {
   summary?: string;
   operations?: number;
   verification?: { status?: string; docUrl?: string };
+  commandCoverage?: { total: number; vendor: number; approximate: number; missing: number };
 }
 
 const CATALOG_URL = "/presets/index.json";

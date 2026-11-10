@@ -32,7 +32,7 @@ describe("vendor doc provenance", () => {
       if (preset.fidelity === "approximate") approximate += 1;
     }
     expect(vendor).toBe(files.length);
-    expect(vendor + approximate).toBe(283);
+    expect(vendor + approximate).toBe(295);
     for (const name of files) {
       const source = JSON.parse(readFileSync(`public/presets/sources/${name}`, "utf8")) as {
         id: string;

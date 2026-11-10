@@ -3,9 +3,9 @@
   "name": "AWS - IAM",
   "pack": "AWS-IAM",
   "vendor": "Amazon Web Services",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "ListUsers as IAM query-protocol XML.",
+  "summary": "From vendor docs. ListUsers as IAM query-protocol XML.",
   "notes": [
     "boto3 ListUsers is the IAM query protocol. POST / matches Action=ListUsers from the form body or the query string and returns ListUsersResponse XML in the namespace https://iam.amazonaws.com/doc/2010-05-08/.",
     "ListUsersResult/Users/member includes Path, UserName, UserId, Arn, and CreateDate. IsTruncated and Marker page with MaxItems. ResponseMetadata/RequestId is present.",
@@ -19,24 +19,741 @@
       "kind": "preset",
       "id": "aws-iam-aws-iam",
       "name": "AWS - IAM",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
-      "sourceUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUsers.html",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-IAM/Integrations/AWS-IAM",
       "notes": [
         "boto3 ListUsers is the IAM query protocol. POST / matches Action=ListUsers from the form body or the query string and returns ListUsersResponse XML in the namespace https://iam.amazonaws.com/doc/2010-05-08/.",
         "ListUsersResult/Users/member includes Path, UserName, UserId, Arn, and CreateDate. IsTruncated and Marker page with MaxItems. ResponseMetadata/RequestId is present.",
         "Access keys and policies are omitted. The Marker is pp_ plus a base36 index. Version is not checked. SigV4 is not checked."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUsers.html",
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateUser.html",
         "checkedAt": "2026-11-10",
         "differences": [
+          "62 of 66 commands from vendor docs, 0 approximate, 4 missing.",
           "boto3 ListUsers is the IAM query protocol. POST / matches Action=ListUsers from the form body or the query string and returns ListUsersResponse XML in the namespace https://iam.amazonaws.com/doc/2010-05-08/.",
           "ListUsersResult/Users/member includes Path, UserName, UserId, Arn, and CreateDate. IsTruncated and Marker page with MaxItems. ResponseMetadata/RequestId is present.",
           "Access keys and policies are omitted. The Marker is pp_ plus a base36 index. Version is not checked. SigV4 is not checked."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "aws-iam-create-user",
+          "calls": [
+            "iam:CreateUser"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-create-user"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateUser.html"
+        },
+        {
+          "command": "aws-iam-get-user",
+          "calls": [
+            "iam:GetUser"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-get-user"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetUser.html"
+        },
+        {
+          "command": "aws-iam-list-users",
+          "calls": [
+            "iam:ListUsers"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "list-users"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUsers.html"
+        },
+        {
+          "command": "aws-iam-update-user",
+          "calls": [
+            "iam:UpdateUser"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-update-user"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateUser.html"
+        },
+        {
+          "command": "aws-iam-delete-user",
+          "calls": [
+            "iam:DeleteUser"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-delete-user"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteUser.html"
+        },
+        {
+          "command": "aws-iam-update-login-profile",
+          "calls": [
+            "iam:UpdateLoginProfile"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-update-login-profile"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateLoginProfile.html"
+        },
+        {
+          "command": "aws-iam-create-group",
+          "calls": [
+            "iam:CreateGroup"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-create-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateGroup.html"
+        },
+        {
+          "command": "aws-iam-list-groups",
+          "calls": [
+            "iam:ListGroups"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-groups"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListGroups.html"
+        },
+        {
+          "command": "aws-iam-list-groups-for-user",
+          "calls": [
+            "iam:ListGroupsForUser"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-groups-for-user"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListGroupsForUser.html"
+        },
+        {
+          "command": "aws-iam-add-user-to-group",
+          "calls": [
+            "iam:AddUserToGroup"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-add-user-to-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_AddUserToGroup.html"
+        },
+        {
+          "command": "aws-iam-create-access-key",
+          "calls": [
+            "iam:CreateAccessKey"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-create-access-key"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateAccessKey.html"
+        },
+        {
+          "command": "aws-iam-update-access-key",
+          "calls": [
+            "iam:UpdateAccessKey"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-update-access-key"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateAccessKey.html"
+        },
+        {
+          "command": "aws-iam-list-access-keys-for-user",
+          "calls": [
+            "iam:ListAccessKeys"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-access-keys"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListAccessKeys.html"
+        },
+        {
+          "command": "aws-iam-list-policies",
+          "calls": [
+            "iam:ListPolicies"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-policies"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListPolicies.html"
+        },
+        {
+          "command": "aws-iam-list-roles",
+          "calls": [
+            "iam:ListRoles"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-roles"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListRoles.html"
+        },
+        {
+          "command": "aws-iam-attach-policy",
+          "calls": [
+            "iam:AttachUserPolicy",
+            "iam:AttachGroupPolicy",
+            "iam:AttachRolePolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-attach-user-policy",
+            "iam-attach-group-policy",
+            "iam-attach-role-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_AttachUserPolicy.html"
+        },
+        {
+          "command": "aws-iam-detach-policy",
+          "calls": [
+            "iam:DetachUserPolicy",
+            "iam:DetachGroupPolicy",
+            "iam:DetachRolePolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-detach-user-policy",
+            "iam-detach-group-policy",
+            "iam-detach-role-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DetachUserPolicy.html"
+        },
+        {
+          "command": "aws-iam-delete-login-profile",
+          "calls": [
+            "iam:DeleteLoginProfile"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-delete-login-profile"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteLoginProfile.html"
+        },
+        {
+          "command": "aws-iam-delete-group",
+          "calls": [
+            "iam:DeleteGroup"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-delete-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteGroup.html"
+        },
+        {
+          "command": "aws-iam-remove-user-from-group",
+          "calls": [
+            "iam:RemoveUserFromGroup"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-remove-user-from-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_RemoveUserFromGroup.html"
+        },
+        {
+          "command": "aws-iam-create-login-profile",
+          "calls": [
+            "iam:CreateLoginProfile"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-create-login-profile"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateLoginProfile.html"
+        },
+        {
+          "command": "aws-iam-delete-access-key",
+          "calls": [
+            "iam:DeleteAccessKey"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-delete-access-key"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteAccessKey.html"
+        },
+        {
+          "command": "aws-iam-create-instance-profile",
+          "calls": [
+            "iam:CreateInstanceProfile"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-create-instance-profile"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateInstanceProfile.html"
+        },
+        {
+          "command": "aws-iam-delete-instance-profile",
+          "calls": [
+            "iam:DeleteInstanceProfile"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-delete-instance-profile"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteInstanceProfile.html"
+        },
+        {
+          "command": "aws-iam-list-instance-profiles",
+          "calls": [
+            "iam:ListInstanceProfiles"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-instance-profiles"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListInstanceProfiles.html"
+        },
+        {
+          "command": "aws-iam-add-role-to-instance-profile",
+          "calls": [
+            "iam:AddRoleToInstanceProfile"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-add-role-to-instance-profile"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_AddRoleToInstanceProfile.html"
+        },
+        {
+          "command": "aws-iam-remove-role-from-instance-profile",
+          "calls": [
+            "iam:RemoveRoleFromInstanceProfile"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-remove-role-from-instance-profile"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_RemoveRoleFromInstanceProfile.html"
+        },
+        {
+          "command": "aws-iam-list-instance-profiles-for-role",
+          "calls": [
+            "iam:ListInstanceProfilesForRole"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-instance-profiles-for-role"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListInstanceProfilesForRole.html"
+        },
+        {
+          "command": "aws-iam-get-instance-profile",
+          "calls": [
+            "iam:GetInstanceProfile"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-get-instance-profile"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetInstanceProfile.html"
+        },
+        {
+          "command": "aws-iam-get-role",
+          "calls": [
+            "iam:GetRole"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-get-role"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetRole.html"
+        },
+        {
+          "command": "aws-iam-delete-role",
+          "calls": [
+            "iam:DeleteRole"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-delete-role"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteRole.html"
+        },
+        {
+          "command": "aws-iam-create-role",
+          "calls": [
+            "iam:CreateRole"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-create-role"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html"
+        },
+        {
+          "command": "aws-iam-create-policy",
+          "calls": [
+            "iam:CreatePolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-create-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreatePolicy.html"
+        },
+        {
+          "command": "aws-iam-delete-policy",
+          "calls": [
+            "iam:DeletePolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-delete-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeletePolicy.html"
+        },
+        {
+          "command": "aws-iam-create-policy-version",
+          "calls": [
+            "iam:CreatePolicyVersion"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-create-policy-version"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreatePolicyVersion.html"
+        },
+        {
+          "command": "aws-iam-delete-policy-version",
+          "calls": [
+            "iam:DeletePolicyVersion"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-delete-policy-version"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeletePolicyVersion.html"
+        },
+        {
+          "command": "aws-iam-list-policy-versions",
+          "calls": [
+            "iam:ListPolicyVersions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-policy-versions"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListPolicyVersions.html"
+        },
+        {
+          "command": "aws-iam-get-policy-version",
+          "calls": [
+            "iam:GetPolicyVersion"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-get-policy-version"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetPolicyVersion.html"
+        },
+        {
+          "command": "aws-iam-set-default-policy-version",
+          "calls": [
+            "iam:SetDefaultPolicyVersion"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-set-default-policy-version"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_SetDefaultPolicyVersion.html"
+        },
+        {
+          "command": "aws-iam-create-account-alias",
+          "calls": [
+            "iam:CreateAccountAlias"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-create-account-alias"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateAccountAlias.html"
+        },
+        {
+          "command": "aws-iam-delete-account-alias",
+          "calls": [
+            "iam:DeleteAccountAlias"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-delete-account-alias"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteAccountAlias.html"
+        },
+        {
+          "command": "aws-iam-get-account-password-policy",
+          "calls": [
+            "iam:GetAccountPasswordPolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-get-account-password-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountPasswordPolicy.html"
+        },
+        {
+          "command": "aws-iam-update-account-password-policy",
+          "calls": [
+            "iam:UpdateAccountPasswordPolicy",
+            "iam:GetAccountPasswordPolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-update-account-password-policy",
+            "iam-get-account-password-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateAccountPasswordPolicy.html"
+        },
+        {
+          "command": "aws-iam-account-password-policy-update-quick-action",
+          "calls": [
+            "iam:UpdateAccountPasswordPolicy",
+            "iam:GetAccountPasswordPolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-update-account-password-policy",
+            "iam-get-account-password-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateAccountPasswordPolicy.html"
+        },
+        {
+          "command": "aws-iam-login-profile-delete-quick-action",
+          "calls": [
+            "iam:DeleteLoginProfile"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-delete-login-profile"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteLoginProfile.html"
+        },
+        {
+          "command": "aws-iam-user-policy-put-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-iam-access-key-update-quick-action",
+          "calls": [
+            "iam:UpdateAccessKey"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-update-access-key"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateAccessKey.html"
+        },
+        {
+          "command": "aws-iam-list-role-policies",
+          "calls": [
+            "iam:ListRolePolicies"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-role-policies"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListRolePolicies.html"
+        },
+        {
+          "command": "aws-iam-get-role-policy",
+          "calls": [
+            "iam:GetRolePolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-get-role-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetRolePolicy.html"
+        },
+        {
+          "command": "aws-iam-get-policy",
+          "calls": [
+            "iam:GetPolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-get-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetPolicy.html"
+        },
+        {
+          "command": "aws-iam-list-user-policies",
+          "calls": [
+            "iam:ListUserPolicies"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-user-policies"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUserPolicies.html"
+        },
+        {
+          "command": "aws-iam-list-attached-user-policies",
+          "calls": [
+            "iam:ListAttachedUserPolicies"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-attached-user-policies"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListAttachedUserPolicies.html"
+        },
+        {
+          "command": "aws-iam-list-attached-group-policies",
+          "calls": [
+            "iam:ListAttachedGroupPolicies"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-attached-group-policies"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListAttachedGroupPolicies.html"
+        },
+        {
+          "command": "aws-iam-get-user-login-profile",
+          "calls": [
+            "iam:GetLoginProfile"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-get-login-profile"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetLoginProfile.html"
+        },
+        {
+          "command": "aws-iam-put-role-policy",
+          "calls": [
+            "iam:PutRolePolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-put-role-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_PutRolePolicy.html"
+        },
+        {
+          "command": "aws-iam-put-user-policy",
+          "calls": [
+            "iam:PutUserPolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-put-user-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_PutUserPolicy.html"
+        },
+        {
+          "command": "aws-iam-put-group-policy",
+          "calls": [
+            "iam:PutGroupPolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-put-group-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_PutGroupPolicy.html"
+        },
+        {
+          "command": "aws-iam-tag-role",
+          "calls": [
+            "iam:TagRole"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-tag-role"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_TagRole.html"
+        },
+        {
+          "command": "aws-iam-tag-user",
+          "calls": [
+            "iam:TagUser"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-tag-user"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_TagUser.html"
+        },
+        {
+          "command": "aws-iam-untag-user",
+          "calls": [
+            "iam:UntagUser"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-untag-user"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_UntagUser.html"
+        },
+        {
+          "command": "aws-iam-untag-role",
+          "calls": [
+            "iam:UntagRole"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-untag-role"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_UntagRole.html"
+        },
+        {
+          "command": "aws-iam-get-access-key-last-used",
+          "calls": [
+            "iam:GetAccessKeyLastUsed"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-get-access-key-last-used"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccessKeyLastUsed.html"
+        },
+        {
+          "command": "aws-iam-list-attached-role-policies",
+          "calls": [
+            "iam:ListAttachedRolePolicies"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "iam-list-attached-role-policies"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListAttachedRolePolicies.html"
+        },
+        {
+          "command": "aws-iam-list-mfa-devices",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-iam-deactivate-mfa-devices",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-iam-delete-mfa-devices",
+          "calls": [],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -94,13 +811,2061 @@
         "headers": {},
         "contentType": "text/xml; charset=utf-8",
         "pagination": {
-          "style": "cursor",
+          "style": "none",
           "limitParam": "MaxItems",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "Marker",
           "defaultLimit": 20,
           "maxLimit": 100
+        },
+        "awsAction": "ListUsers",
+        "fixture": "<ListUsersResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n <ListUsersResult>\n    <Users>\n       <member>\n          <UserId>AID2MAB8DPLSRHEXAMPLE</UserId>\n          <Path>/division_abc/subdivision_xyz/engineering/</Path>\n          <UserName>Andrew</UserName>\n          <Arn>arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/engineering/Andrew</Arn>\n          <CreateDate>2012-09-05T19:38:48Z</CreateDate>\n          <PasswordLastUsed>2014-09-08T21:47:36Z</PasswordLastUsed>\n       </member>\n       <member>\n          <UserId>AIDIODR4TAW7CSEXAMPLE</UserId>\n          <Path>/division_abc/subdivision_xyz/engineering/</Path>\n          <UserName>Jackie</UserName>\n          <Arn>arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/engineering/Jackie</Arn>\n          <CreateDate>2014-04-09T15:43:45Z</CreateDate>\n          <PasswordLastUsed>2014-09-24T16:18:07Z</PasswordLastUsed>\n       </member>\n    </Users>\n    <IsTruncated>false</IsTruncated>\n </ListUsersResult>\n <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n </ResponseMetadata>\n</ListUsersResponse>"
+      },
+      {
+        "id": "iam-create-user",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam CreateUser",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreateUser",
+        "fixture": "<CreateUserResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <CreateUserResult>\n    <User>\n      <Path>/division_abc/subdivision_xyz/</Path>\n      <UserName>Bob</UserName>\n      <UserId>AIDACKCEVSQ6C2EXAMPLE</UserId>\n      <Arn>arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/Bob</Arn>\n    </User>\n  </CreateUserResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</CreateUserResponse>",
+        "queryMatch": {
+          "Action": "CreateUser"
+        }
+      },
+      {
+        "id": "iam-get-user",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam GetUser",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetUser",
+        "fixture": "<GetUserResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetUserResult>\n    <User>\n      <UserId>AIDACKCEVSQ6C2EXAMPLE</UserId>\n      <Path>/division_abc/subdivision_xyz/</Path>\n      <UserName>Bob</UserName>\n      <Arn>arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/Bob</Arn>\n      <CreateDate>2013-10-02T17:01:44Z</CreateDate>\n      <PasswordLastUsed>2014-10-10T14:37:51Z</PasswordLastUsed>\n    </User>\n  </GetUserResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</GetUserResponse>",
+        "queryMatch": {
+          "Action": "GetUser"
+        }
+      },
+      {
+        "id": "iam-update-user",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam UpdateUser",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "UpdateUser",
+        "fixture": "<UpdateUserResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n <UpdateUserResult>\n <User>\n    <Path>/division_abc/subdivision_xyz/</Path>\n    <UserName>Robert</UserName>\n    <UserId>AIDACKCEVSQ6C2EXAMPLE</UserId>\n    <Arn>arn:aws::123456789012:user/division_abc/subdivision_xyz/Robert\n    </Arn>\n </User>\n </UpdateUserResult>\n <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n </ResponseMetadata>\n</UpdateUserResponse>",
+        "queryMatch": {
+          "Action": "UpdateUser"
+        }
+      },
+      {
+        "id": "iam-delete-user",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam DeleteUser",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeleteUser",
+        "fixture": "<DeleteUserResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeleteUserResponse>",
+        "queryMatch": {
+          "Action": "DeleteUser"
+        }
+      },
+      {
+        "id": "iam-update-login-profile",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam UpdateLoginProfile",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "UpdateLoginProfile",
+        "fixture": "<UpdateLoginProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n </ResponseMetadata>\n</UpdateLoginProfileResponse>",
+        "queryMatch": {
+          "Action": "UpdateLoginProfile"
+        }
+      },
+      {
+        "id": "iam-create-group",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam CreateGroup",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreateGroup",
+        "fixture": "<CreateGroupResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <CreateGroupResult>\n    <Group>\n      <Path>/</Path>\n      <GroupName>Admins</GroupName>\n      <GroupId>AGPACKCEVSQ6C2EXAMPLE</GroupId>\n      <Arn>arn:aws:iam::123456789012:group/Admins</Arn>\n    </Group>\n  </CreateGroupResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</CreateGroupResponse>",
+        "queryMatch": {
+          "Action": "CreateGroup"
+        }
+      },
+      {
+        "id": "iam-list-groups",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListGroups",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListGroups",
+        "fixture": "<ListGroupsResponse>\n  <ListGroupsResult>\n    <Groups>\n       <member>\n          <Path>/division_abc/subdivision_xyz/</Path>\n          <GroupName>Admins</GroupName>\n          <GroupId>AGPACKCEVSQ6C2EXAMPLE</GroupId>\n          <Arn>arn:aws:iam::123456789012:group/Admins</Arn>\n       </member>\n       <member>\n          <Path>/division_abc/subdivision_xyz/product_1234/engineering/\n          </Path>\n          <GroupName>Test</GroupName>\n          <GroupId>AGP2MAB8DPLSRHEXAMPLE</GroupId>\n          <Arn>arn:aws:iam::123456789012:group\n          /division_abc/subdivision_xyz/product_1234/engineering/Test</Arn>\n       </member>\n       <member>\n          <Path>/division_abc/subdivision_xyz/product_1234/</Path>\n          <GroupName>Managers</GroupName>\n          <GroupId>AGPIODR4TAW7CSEXAMPLE</GroupId>\n          <Arn>arn:aws:iam::123456789012\n          :group/division_abc/subdivision_xyz/product_1234/Managers</Arn>\n       </member>\n    </Groups>\n    <IsTruncated>false</IsTruncated>\n  </ListGroupsResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</ListGroupsResponse>",
+        "queryMatch": {
+          "Action": "ListGroups"
+        }
+      },
+      {
+        "id": "iam-list-groups-for-user",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListGroupsForUser",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListGroupsForUser",
+        "fixture": "<ListGroupsForUserResponse>\n  <ListGroupsForUserResult>\n    <Groups>\n       <member>\n          <Path>/</Path>\n          <GroupName>Admins</GroupName>\n          <GroupId>AGPACKCEVSQ6C2EXAMPLE</GroupId>\n          <Arn>arn:aws:iam::123456789012:group/Admins</Arn>\n       </member>\n    </Groups>\n    <IsTruncated>false</IsTruncated>\n  </ListGroupsForUserResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</ListGroupsForUserResponse>",
+        "queryMatch": {
+          "Action": "ListGroupsForUser"
+        }
+      },
+      {
+        "id": "iam-add-user-to-group",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam AddUserToGroup",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "AddUserToGroup",
+        "fixture": "<AddUserToGroupResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</AddUserToGroupResponse>",
+        "queryMatch": {
+          "Action": "AddUserToGroup"
+        }
+      },
+      {
+        "id": "iam-create-access-key",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam CreateAccessKey",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreateAccessKey",
+        "fixture": "<CreateAccessKeyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <CreateAccessKeyResult>\n    <AccessKey>\n      <UserName>Bob</UserName>\n      <AccessKeyId>AKIAIOSFODNN7EXAMPLE</AccessKeyId>\n      <Status>Active</Status>\n      <SecretAccessKey>wJalrXUtnFEMI/K7MDENG/bPxRfiCYzEXAMPLEKEY\n      </SecretAccessKey>\n    </AccessKey>\n  </CreateAccessKeyResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</CreateAccessKeyResponse>",
+        "queryMatch": {
+          "Action": "CreateAccessKey"
+        }
+      },
+      {
+        "id": "iam-update-access-key",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam UpdateAccessKey",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "UpdateAccessKey",
+        "fixture": "<UpdateAccessKeyResponse>\n <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n </ResponseMetadata>\n</UpdateAccessKeyResponse>",
+        "queryMatch": {
+          "Action": "UpdateAccessKey"
+        }
+      },
+      {
+        "id": "iam-list-access-keys",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListAccessKeys",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListAccessKeys",
+        "fixture": "<ListAccessKeysResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ListAccessKeysResult>\n    <UserName>Bob</UserName>\n    <AccessKeyMetadata>\n       <member>\n          <UserName>Bob</UserName>\n          <AccessKeyId>AKIA1234567890EXAMPLE</AccessKeyId>\n          <Status>Active</Status>\n\t   <CreateDate>2016-12-03T18:53:41Z</CreateDate>\n       </member>\n       <member>\n          <UserName>Susan</UserName>\n          <AccessKeyId>AKIA2345678901EXAMPLE</AccessKeyId>\n          <Status>Inactive</Status>\n\t   <CreateDate>2017-03-25T20:38:14Z</CreateDate>\n       </member>\n    </AccessKeyMetadata>\n    <IsTruncated>false</IsTruncated>\n  </ListAccessKeysResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</ListAccessKeysResponse>",
+        "queryMatch": {
+          "Action": "ListAccessKeys"
+        }
+      },
+      {
+        "id": "iam-list-policies",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListPolicies",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListPolicies",
+        "fixture": "<ListPoliciesResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ListPoliciesResult>\n    <IsTruncated>true</IsTruncated>\n    <Marker>EXAMPLEkakv9BCuUNFDtxWSyfzetYwEx2ADc8dnzfvERF5S6YMvXKx41t6gCl/eeaCX3Jo94/bKqezEAg8TEVS\n    99EKFLxm3jtbpl25FDWEXAMPLE\n    </Marker>\n    <Policies>\n      <member>\n        <Arn>arn:aws:iam::123456789012:policy/ExamplePolicy</Arn>\n        <AttachmentCount>2</AttachmentCount>\n        <CreateDate>2014-09-15T17:36:14Z</CreateDate>\n        <DefaultVersionId>v1</DefaultVersionId>\n        <IsAttachable>true</IsAttachable>\n        <Path>/</Path>\n        <PermissionsBoundaryUsageCount>0</PermissionsBoundaryUsageCount>\n        <PolicyId>AGPACKCEVSQ6C2EXAMPLE</PolicyId>\n        <PolicyName>ExamplePolicy</PolicyName>\n        <UpdateDate>2014-09-15T20:31:47Z</UpdateDate>\n      </member>\n      <member>\n        <Arn>arn:aws:iam::aws:policy/PowerUserAccess</Arn>\n        <AttachmentCount>0</AttachmentCount>\n        <CreateDate>2014-08-21T20:25:01Z</CreateDate>\n        <DefaultVersionId>v1</DefaultVersionId>\n        <IsAttachable>true</IsAttachable>\n        <Path>/</Path>\n        <PermissionsBoundaryUsageCount>0</PermissionsBoundaryUsageCount>\n        <PolicyId>AGPACKCEVSQ6C2EXAMPLE</PolicyId>\n        <PolicyName>PowerUserAccess</PolicyName>\n        <UpdateDate>2014-08-21T20:25:01Z</UpdateDate>\n      </member>\n      <member>\n        <Arn>arn:aws:iam::aws:policy/AdministratorAccess</Arn>\n        <AttachmentCount>1</AttachmentCount>\n        <CreateDate>2014-08-21T20:11:25Z</CreateDate>\n        <DefaultVersionId>v1</DefaultVersionId>\n        <IsAttachable>true</IsAttachable>\n        <Path>/</Path>\n        <PermissionsBoundaryUsageCount>1</PermissionsBoundaryUsageCount>\n        <PolicyId>AGPACKCEVSQ6C2EXAMPLE</PolicyId>\n        <PolicyName>AdministratorAccess</PolicyName>\n        <UpdateDate>2014-08-21T20:11:25Z</UpdateDate>\n      </member>\n      <member>\n        <Arn>arn:aws:iam::aws:policy/ReadOnlyAccess</Arn>\n        <AttachmentCount>6</AttachmentCount>\n        <CreateDate>2014-08-21T20:31:44Z</CreateDate>\n        <DefaultVersionId>v1</DefaultVersionId>\n        <IsAttachable>true</IsAttachable>\n        <Path>/</Path>\n        <PermissionsBoundaryUsageCount>2</PermissionsBoundaryUsageCount>\n        <PolicyId>AGPACKCEVSQ6C2EXAMPLE</PolicyId>\n        <PolicyName>ReadOnlyAccess</PolicyName>\n        <UpdateDate>2014-08-21T20:31:44Z</UpdateDate>\n      </member>\n    </Policies>\n  </ListPoliciesResult>\n  <ResponseMetadata>\n    <RequestId>6207e832-3eb7-11e4-9d0d-6f969EXAMPLE</RequestId>\n  </ResponseMetadata>\n</ListPoliciesResponse>",
+        "queryMatch": {
+          "Action": "ListPolicies"
+        }
+      },
+      {
+        "id": "iam-list-roles",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListRoles",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListRoles",
+        "fixture": "<ListRolesResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n<ListRolesResult>\n  <IsTruncated>false</IsTruncated>\n  <Roles>\n    <member>\n      <Path>/application_abc/component_xyz/</Path>\n      <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n      <RoleName>S3Access</RoleName>\n      <AssumeRolePolicyDocument>\n        {\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\n        \"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}\n      </AssumeRolePolicyDocument>\n      <CreateDate>2012-05-09T15:45:35Z</CreateDate>\n      <RoleId>AROACVSVTSZYEXAMPLEYK</RoleId>\n    </member>\n    <member>\n      <Path>/application_abc/component_xyz/</Path>\n      <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/SDBAccess</Arn>\n      <RoleName>SDBAccess</RoleName>\n      <AssumeRolePolicyDocument>\n        {\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\n        \"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}\n      </AssumeRolePolicyDocument>\n      <CreateDate>2012-05-09T15:45:45Z</CreateDate>\n      <RoleId>AROAC2ICXG32EXAMPLEWK</RoleId>\n    </member>\n  </Roles>\n</ListRolesResult>\n<ResponseMetadata>\n  <RequestId>20f7279f-99ee-11e1-a4c3-27EXAMPLE804</RequestId>\n</ResponseMetadata>\n</ListRolesResponse>",
+        "queryMatch": {
+          "Action": "ListRoles"
+        }
+      },
+      {
+        "id": "iam-attach-user-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam AttachUserPolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "AttachUserPolicy",
+        "fixture": "<AttachUserPolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>ed7e72d3-3d07-11e4-bfad-8d1c6EXAMPLE</RequestId>\n  </ResponseMetadata>\n</AttachUserPolicyResponse>",
+        "queryMatch": {
+          "Action": "AttachUserPolicy"
+        }
+      },
+      {
+        "id": "iam-attach-group-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam AttachGroupPolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "AttachGroupPolicy",
+        "fixture": "<AttachGroupPolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>f8a7b7b9-3d01-11e4-bfad-8d1c6EXAMPLE</RequestId>\n  </ResponseMetadata>\n</AttachGroupPolicyResponse>",
+        "queryMatch": {
+          "Action": "AttachGroupPolicy"
+        }
+      },
+      {
+        "id": "iam-attach-role-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam AttachRolePolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "AttachRolePolicy",
+        "fixture": "<AttachRolePolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>37a87673-3d07-11e4-bfad-8d1c6EXAMPLE</RequestId>\n  </ResponseMetadata>\n</AttachRolePolicyResponse>",
+        "queryMatch": {
+          "Action": "AttachRolePolicy"
+        }
+      },
+      {
+        "id": "iam-detach-user-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam DetachUserPolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DetachUserPolicy",
+        "fixture": "<DetachUserPolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>85ba31fa-3d1f-11e4-a4a0-cffb9EXAMPLE</RequestId>\n  </ResponseMetadata>\n</DetachUserPolicyResponse>",
+        "queryMatch": {
+          "Action": "DetachUserPolicy"
+        }
+      },
+      {
+        "id": "iam-detach-group-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam DetachGroupPolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DetachGroupPolicy",
+        "fixture": "<DetachGroupPolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>d4faa7aa-3d1d-11e4-a4a0-cffb9EXAMPLE</RequestId>\n  </ResponseMetadata>\n</DetachGroupPolicyResponse>",
+        "queryMatch": {
+          "Action": "DetachGroupPolicy"
+        }
+      },
+      {
+        "id": "iam-detach-role-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam DetachRolePolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DetachRolePolicy",
+        "fixture": "<DetachRolePolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>4c80ccf4-3d1e-11e4-a4a0-cffb9EXAMPLE</RequestId>\n  </ResponseMetadata>\n</DetachRolePolicyResponse>",
+        "queryMatch": {
+          "Action": "DetachRolePolicy"
+        }
+      },
+      {
+        "id": "iam-delete-login-profile",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam DeleteLoginProfile",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeleteLoginProfile",
+        "fixture": "<DeleteLoginProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeleteLoginProfileResponse>",
+        "queryMatch": {
+          "Action": "DeleteLoginProfile"
+        }
+      },
+      {
+        "id": "iam-delete-group",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam DeleteGroup",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeleteGroup",
+        "fixture": "<DeleteGroupResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeleteGroupResponse>",
+        "queryMatch": {
+          "Action": "DeleteGroup"
+        }
+      },
+      {
+        "id": "iam-remove-user-from-group",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam RemoveUserFromGroup",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "RemoveUserFromGroup",
+        "fixture": "<RemoveUserFromGroupResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n </ResponseMetadata>\n</RemoveUserFromGroupResponse>",
+        "queryMatch": {
+          "Action": "RemoveUserFromGroup"
+        }
+      },
+      {
+        "id": "iam-create-login-profile",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam CreateLoginProfile",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreateLoginProfile",
+        "fixture": "<CreateLoginProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <CreateLoginProfileResult>\n    <LoginProfile>\n      <PasswordResetRequired>false</PasswordResetRequired>\n      <UserName>Bob</UserName>\n      <CreateDate>2015-03-25T20:48:52.558Z</CreateDate>\n    </LoginProfile>\n  </CreateLoginProfileResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</CreateLoginProfileResponse>",
+        "queryMatch": {
+          "Action": "CreateLoginProfile"
+        }
+      },
+      {
+        "id": "iam-delete-access-key",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam DeleteAccessKey",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeleteAccessKey",
+        "fixture": "<DeleteAccessKeyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeleteAccessKeyResponse>",
+        "queryMatch": {
+          "Action": "DeleteAccessKey"
+        }
+      },
+      {
+        "id": "iam-create-instance-profile",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam CreateInstanceProfile",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreateInstanceProfile",
+        "fixture": "<CreateInstanceProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <CreateInstanceProfileResult>\n    <InstanceProfile>\n      <InstanceProfileId>AIPAD5ARO2C5EXAMPLE3G</InstanceProfileId>\n      <Roles/>\n      <InstanceProfileName>Webserver</InstanceProfileName>\n      <Path>/application_abc/component_xyz/</Path>\n      <Arn>arn:aws:iam::123456789012:instance-profile/application_abc/component_xyz/Webserver</Arn>\n      <CreateDate>2012-05-09T16:11:10.222Z</CreateDate>\n    </InstanceProfile>\n  </CreateInstanceProfileResult>\n  <ResponseMetadata>\n    <RequestId>974142ee-99f1-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</CreateInstanceProfileResponse>",
+        "queryMatch": {
+          "Action": "CreateInstanceProfile"
+        }
+      },
+      {
+        "id": "iam-delete-instance-profile",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam DeleteInstanceProfile",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeleteInstanceProfile",
+        "fixture": "<DeleteInstanceProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>90c18667-99f3-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</DeleteInstanceProfileResponse>",
+        "queryMatch": {
+          "Action": "DeleteInstanceProfile"
+        }
+      },
+      {
+        "id": "iam-list-instance-profiles",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListInstanceProfiles",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListInstanceProfiles",
+        "fixture": "<ListInstanceProfilesResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n<ListInstanceProfilesResult>\n  <IsTruncated>false</IsTruncated>\n  <InstanceProfiles>\n    <member>\n      <Arn>arn:aws:iam::123456789012:instance-profile/application_abc/component_xyz/Database</Arn>\n      <CreateDate>2012-05-09T16:27:03Z</CreateDate>\n      <InstanceProfileId>AIPA1234567890EXAMPLE</InstanceProfileId>\n      <InstanceProfileName>Database</InstanceProfileName>\n      <Path>/</Path>,\n      <Roles>\n        <member>\n          <Arn>arn:aws:iam::123456789012:role/ec2instancerole-MyADFSTestServer</Arn>\n          <AssumeRolePolicyDocument>{  …  JSON POLICY DOCUMENT HERE … }</AssumeRolePolicyDocument>\n          <CreateDate>2016-04-27T21:18:27Z</CreateDate>\n          <Path>/</Path>\n          <RoleId>AROA1234567890EXAMPLE</RoleId>\n          <RoleName>ec2instancerole-MyADFSTestServer</RoleName>\n        </member>\n      </Roles>\n    </member>\n    <member>\n      <Arn>arn:aws:iam::123456789012:instance-profile/application_abc/component_xyz/Webserver</Arn>\n      <CreateDate>2012-05-09T16:27:11Z</CreateDate>\n      <InstanceProfileId>AIPA2345678901EXAMPLE</InstanceProfileId>\n      <InstanceProfileName>Webserver</InstanceProfileName>\n      <Path>/application_abc/component_xyz/</Path>\n      <Roles/>\n    </member>\n  </InstanceProfiles>\n</ListInstanceProfilesResult>\n<ResponseMetadata>\n  <RequestId>fd74fa8d-99f3-11e1-a4c3-27EXAMPLE804</RequestId>\n</ResponseMetadata>\n</ListInstanceProfilesResponse>",
+        "queryMatch": {
+          "Action": "ListInstanceProfiles"
+        }
+      },
+      {
+        "id": "iam-add-role-to-instance-profile",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam AddRoleToInstanceProfile",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "AddRoleToInstanceProfile",
+        "fixture": "<AddRoleToInstanceProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>12657608-99f2-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</AddRoleToInstanceProfileResponse>",
+        "queryMatch": {
+          "Action": "AddRoleToInstanceProfile"
+        }
+      },
+      {
+        "id": "iam-remove-role-from-instance-profile",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam RemoveRoleFromInstanceProfile",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "RemoveRoleFromInstanceProfile",
+        "fixture": "<RemoveRoleFromInstanceProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n<ResponseMetadata>\n  <RequestId>29f47818-99f5-11e1-a4c3-27EXAMPLE804</RequestId>\n</ResponseMetadata>\n</RemoveRoleFromInstanceProfileResponse>",
+        "queryMatch": {
+          "Action": "RemoveRoleFromInstanceProfile"
+        }
+      },
+      {
+        "id": "iam-list-instance-profiles-for-role",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListInstanceProfilesForRole",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListInstanceProfilesForRole",
+        "fixture": "<ListInstanceProfilesForRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n<ListInstanceProfilesForRoleResult>\n  <IsTruncated>false</IsTruncated>\n  <InstanceProfiles>\n    <member>\n      <Id>AIPACZLS2EYYXMEXAMPLE</Id>\n      <Roles>\n        <member>\n          <Path>/application_abc/component_xyz/</Path>\n          <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n          <RoleName>S3Access</RoleName>\n          <AssumeRolePolicyDocument>\n            {\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\n            \"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}\n          </AssumeRolePolicyDocument>\n          <CreateDate>2012-05-09T15:45:35Z</CreateDate>\n          <RoleId>AROACVSVTSZYK3EXAMPLE</RoleId>\n        </member>\n      </Roles>\n      <InstanceProfileName>Webserver</InstanceProfileName>\n      <Path>/application_abc/component_xyz/</Path>\n      <Arn>arn:aws:iam::123456789012:instance-profile/application_abc/component_xyz/Webserver</Arn>\n      <CreateDate>2012-05-09T16:27:11Z</CreateDate>\n    </member>\n  </InstanceProfiles>\n</ListInstanceProfilesForRoleResult>\n<ResponseMetadata>\n  <RequestId>6a8c3992-99f4-11e1-a4c3-27EXAMPLE804</RequestId>\n</ResponseMetadata>\n</ListInstanceProfilesForRoleResponse>",
+        "queryMatch": {
+          "Action": "ListInstanceProfilesForRole"
+        }
+      },
+      {
+        "id": "iam-get-instance-profile",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam GetInstanceProfile",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetInstanceProfile",
+        "fixture": "<GetInstanceProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n<GetInstanceProfileResult>\n  <InstanceProfile>\n    <InstanceProfileId>AIPAD5ARO2C5EXAMPLE3G</InstanceProfileId>\n    <Roles>\n      <member>\n        <Path>/application_abc/component_xyz/</Path>\n        <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n        <RoleName>S3Access</RoleName>\n        <AssumeRolePolicyDocument>\n          {\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\n          \"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}\n        </AssumeRolePolicyDocument>\n        <CreateDate>2012-05-09T15:45:35Z</CreateDate>\n        <RoleId>AROACVYKSVTSZFEXAMPLE</RoleId>\n      </member>\n    </Roles>\n    <InstanceProfileName>Webserver</InstanceProfileName>\n    <Path>/application_abc/component_xyz/</Path>\n    <Arn>arn:aws:iam::123456789012:instance-profile/application_abc/component_xyz/Webserver</Arn>\n    <CreateDate>2012-05-09T16:11:10Z</CreateDate>\n  </InstanceProfile>\n</GetInstanceProfileResult>\n<ResponseMetadata>\n  <RequestId>37289fda-99f2-11e1-a4c3-27EXAMPLE804</RequestId>\n</ResponseMetadata>\n</GetInstanceProfileResponse>",
+        "queryMatch": {
+          "Action": "GetInstanceProfile"
+        }
+      },
+      {
+        "id": "iam-get-role",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam GetRole",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetRole",
+        "fixture": "<GetRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n<GetRoleResult>\n  <Role>\n    <Path>/application_abc/component_xyz/</Path>\n    <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n    <RoleName>S3Access</RoleName>\n    <AssumeRolePolicyDocument>\n      {\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\n      \"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}\n    </AssumeRolePolicyDocument>\n    <CreateDate>2012-05-08T23:34:01Z</CreateDate>\n    <RoleId>AROADBQP57FF2AEXAMPLE</RoleId>\n    <RoleLastUsed>\n      <LastUsedDate>2019-11-20T17:09:20Z</LastUsedDate>\n      <Region>us-east-1</Region>\n    </RoleLastUsed>\n  </Role>\n</GetRoleResult>\n<ResponseMetadata>\n  <RequestId>df37e965-9967-11e1-a4c3-270EXAMPLE04</RequestId>\n</ResponseMetadata>\n</GetRoleResponse>",
+        "queryMatch": {
+          "Action": "GetRole"
+        }
+      },
+      {
+        "id": "iam-delete-role",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam DeleteRole",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeleteRole",
+        "fixture": "<DeleteRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>913e3f37-99ed-11e1-a4c3-270EXAMPLE04</RequestId>\n  </ResponseMetadata>\n</DeleteRoleResponse>",
+        "queryMatch": {
+          "Action": "DeleteRole"
+        }
+      },
+      {
+        "id": "iam-create-role",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam CreateRole",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreateRole",
+        "fixture": "<CreateRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <CreateRoleResult>\n    <Role>\n      <Path>/application_abc/component_xyz/</Path>\n      <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n      <RoleName>S3Access</RoleName>\n      <AssumeRolePolicyDocument>\n        {\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\n        \"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}\n      </AssumeRolePolicyDocument>\n      <CreateDate>2012-05-08T23:34:01.495Z</CreateDate>\n      <RoleId>AROADBQP57FF2AEXAMPLE</RoleId>\n    </Role>\n  </CreateRoleResult>\n  <ResponseMetadata>\n    <RequestId>4a93ceee-9966-11e1-b624-b1aEXAMPLE7c</RequestId>\n  </ResponseMetadata>\n</CreateRoleResponse>",
+        "queryMatch": {
+          "Action": "CreateRole"
+        }
+      },
+      {
+        "id": "iam-create-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam CreatePolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreatePolicy",
+        "fixture": "<CreatePolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <CreatePolicyResult>\n    <Policy>\n      <PolicyName>S3-read-only-example-bucket</PolicyName>\n      <DefaultVersionId>v1</DefaultVersionId>\n      <PolicyId>AGPACKCEVSQ6C2EXAMPLE</PolicyId>\n      <Path>/</Path>\n      <Arn>arn:aws:iam::123456789012:policy/S3-read-only-example-bucket</Arn>\n      <AttachmentCount>0</AttachmentCount>\n      <CreateDate>2014-09-15T17:36:14.673Z</CreateDate>\n      <UpdateDate>2014-09-15T17:36:14.673Z</UpdateDate>\n    </Policy>\n  </CreatePolicyResult>\n  <ResponseMetadata>\n    <RequestId>ca64c9e1-3cfe-11e4-bfad-8d1c6EXAMPLE</RequestId>\n  </ResponseMetadata>\n</CreatePolicyResponse>",
+        "queryMatch": {
+          "Action": "CreatePolicy"
+        }
+      },
+      {
+        "id": "iam-delete-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam DeletePolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeletePolicy",
+        "fixture": "<DeletePolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>4706281b-3d19-11e4-a4a0-cffb9EXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeletePolicyResponse>",
+        "queryMatch": {
+          "Action": "DeletePolicy"
+        }
+      },
+      {
+        "id": "iam-create-policy-version",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam CreatePolicyVersion",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreatePolicyVersion",
+        "fixture": "<CreatePolicyVersionResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <CreatePolicyVersionResult>\n    <PolicyVersion>\n      <IsDefaultVersion>false</IsDefaultVersion>\n      <VersionId>v2</VersionId>\n      <CreateDate>2014-09-15T19:58:59.430Z</CreateDate>\n    </PolicyVersion>\n  </CreatePolicyVersionResult>\n  <ResponseMetadata>\n    <RequestId>bb551b92-3d12-11e4-bfad-8d1c6EXAMPLE</RequestId>\n  </ResponseMetadata>\n</CreatePolicyVersionResponse>",
+        "queryMatch": {
+          "Action": "CreatePolicyVersion"
+        }
+      },
+      {
+        "id": "iam-delete-policy-version",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam DeletePolicyVersion",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeletePolicyVersion",
+        "fixture": "<DeletePolicyVersionResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>268e1556-3d19-11e4-a4a0-cffb9EXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeletePolicyVersionResponse>",
+        "queryMatch": {
+          "Action": "DeletePolicyVersion"
+        }
+      },
+      {
+        "id": "iam-list-policy-versions",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListPolicyVersions",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListPolicyVersions",
+        "fixture": "<ListPolicyVersionsResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ListPolicyVersionsResult>\n    <Versions>\n      <member>\n        <IsDefaultVersion>false</IsDefaultVersion>\n        <VersionId>v3</VersionId>\n        <CreateDate>2014-09-17T22:32:43Z</CreateDate>\n      </member>\n      <member>\n        <IsDefaultVersion>true</IsDefaultVersion>\n        <VersionId>v2</VersionId>\n        <CreateDate>2014-09-15T20:31:47Z</CreateDate>\n      </member>\n      <member>\n        <IsDefaultVersion>false</IsDefaultVersion>\n        <VersionId>v1</VersionId>\n        <CreateDate>2014-09-15T17:36:14Z</CreateDate>\n      </member>\n    </Versions>\n    <IsTruncated>false</IsTruncated>\n  </ListPolicyVersionsResult>\n  <ResponseMetadata>\n    <RequestId>a31d1a86-3eba-11e4-9d0d-6f969EXAMPLE</RequestId>\n  </ResponseMetadata>\n</ListPolicyVersionsResponse>",
+        "queryMatch": {
+          "Action": "ListPolicyVersions"
+        }
+      },
+      {
+        "id": "iam-get-policy-version",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam GetPolicyVersion",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetPolicyVersion",
+        "fixture": "<GetPolicyVersionResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetPolicyVersionResult>\n    <PolicyVersion>\n      <Document>\n      {\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"s3:Get*\",\"s3:List*\"],\n      \"Resource\":[\"arn:aws:s3:::EXAMPLE-BUCKET\",\"arn:aws:s3:::EXAMPLE-BUCKET/*\"]}]}\n      </Document>\n      <IsDefaultVersion>true</IsDefaultVersion>\n      <VersionId>v1</VersionId>\n      <CreateDate>2014-09-15T20:31:47Z</CreateDate>\n    </PolicyVersion>\n  </GetPolicyVersionResult>\n  <ResponseMetadata>\n    <RequestId>d472f28e-3d23-11e4-a4a0-cffb9EXAMPLE</RequestId>\n  </ResponseMetadata>\n</GetPolicyVersionResponse>",
+        "queryMatch": {
+          "Action": "GetPolicyVersion"
+        }
+      },
+      {
+        "id": "iam-set-default-policy-version",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam SetDefaultPolicyVersion",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "SetDefaultPolicyVersion",
+        "fixture": "<SetDefaultPolicyVersionResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>35f241af-3ebc-11e4-9d0d-6f969EXAMPLE</RequestId>\n  </ResponseMetadata>\n</SetDefaultPolicyVersionResponse>",
+        "queryMatch": {
+          "Action": "SetDefaultPolicyVersion"
+        }
+      },
+      {
+        "id": "iam-create-account-alias",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam CreateAccountAlias",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreateAccountAlias",
+        "fixture": "<CreateAccountAliasResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>36b5db08-f1b0-11df-8fbe-45274EXAMPLE</RequestId>\n  </ResponseMetadata>\n</CreateAccountAliasResponse>",
+        "queryMatch": {
+          "Action": "CreateAccountAlias"
+        }
+      },
+      {
+        "id": "iam-delete-account-alias",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam DeleteAccountAlias",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeleteAccountAlias",
+        "fixture": "<DeleteAccountAliasResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeleteAccountAliasResponse>",
+        "queryMatch": {
+          "Action": "DeleteAccountAlias"
+        }
+      },
+      {
+        "id": "iam-get-account-password-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam GetAccountPasswordPolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetAccountPasswordPolicy",
+        "fixture": "<GetAccountPasswordPolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetAccountPasswordPolicyResult>\n    <PasswordPolicy>\n      <AllowUsersToChangePassword>true</AllowUsersToChangePassword>\n      <RequireUppercaseCharacters>true</RequireUppercaseCharacters>\n      <RequireSymbols>true</RequireSymbols>\n      <ExpirePasswords>false</ExpirePasswords>\n      <PasswordReusePrevention>12</PasswordReusePrevention>\n      <RequireLowercaseCharacters>true</RequireLowercaseCharacters>\n      <MaxPasswordAge>90</MaxPasswordAge>\n      <HardExpiry>false</HardExpiry>\n      <RequireNumbers>true</RequireNumbers>\n      <MinimumPasswordLength>12</MinimumPasswordLength>\n    </PasswordPolicy>\n  </GetAccountPasswordPolicyResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</GetAccountPasswordPolicyResponse>",
+        "queryMatch": {
+          "Action": "GetAccountPasswordPolicy"
+        }
+      },
+      {
+        "id": "iam-update-account-password-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam UpdateAccountPasswordPolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "UpdateAccountPasswordPolicy",
+        "fixture": "<UpdateAccountPasswordPolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n </ResponseMetadata>\n</UpdateAccountPasswordPolicyResponse>",
+        "queryMatch": {
+          "Action": "UpdateAccountPasswordPolicy"
+        }
+      },
+      {
+        "id": "iam-list-role-policies",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListRolePolicies",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListRolePolicies",
+        "fixture": "<ListRolePoliciesResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n<ListRolePoliciesResult>\n  <PolicyNames>\n    <member>CloudwatchPutMetricPolicy</member>\n    <member>S3AccessPolicy</member>\n  </PolicyNames>\n  <IsTruncated>false</IsTruncated>\n</ListRolePoliciesResult>\n<ResponseMetadata>\n  <RequestId>8c7e1816-99f0-11e1-a4c3-27EXAMPLE804</RequestId>\n</ResponseMetadata>\n</ListRolePoliciesResponse>",
+        "queryMatch": {
+          "Action": "ListRolePolicies"
+        }
+      },
+      {
+        "id": "iam-get-role-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam GetRolePolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetRolePolicy",
+        "fixture": "<GetRolePolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n<GetRolePolicyResult>\n  <PolicyName>S3AccessPolicy</PolicyName>\n  <RoleName>S3Access</RoleName>\n  <PolicyDocument>\n  {\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"s3:*\"],\"Resource\":[\"*\"]}]}\n  </PolicyDocument>\n</GetRolePolicyResult>\n<ResponseMetadata>\n  <RequestId>7e7cd8bc-99ef-11e1-a4c3-27EXAMPLE804</RequestId>\n</ResponseMetadata>\n</GetRolePolicyResponse>",
+        "queryMatch": {
+          "Action": "GetRolePolicy"
+        }
+      },
+      {
+        "id": "iam-get-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam GetPolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetPolicy",
+        "fixture": "<GetPolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetPolicyResult>\n    <Policy>\n      <PolicyName>S3-read-only-example-bucket</PolicyName>\n      <Description>Allows read-only access to the example bucket</Description>\n      <DefaultVersionId>v1</DefaultVersionId>\n      <PolicyId>AGPACKCEVSQ6C2EXAMPLE</PolicyId>\n      <Path>/</Path>\n      <Arn>arn:aws:iam::123456789012:policy/S3-read-only-example-bucket</Arn>\n      <AttachmentCount>9</AttachmentCount>\n      <CreateDate>2014-09-15T17:36:14Z</CreateDate>\n      <UpdateDate>2014-09-15T20:31:47Z</UpdateDate>\n    </Policy>\n  </GetPolicyResult>\n  <ResponseMetadata>\n    <RequestId>684f0917-3d22-11e4-a4a0-cffb9EXAMPLE</RequestId>\n  </ResponseMetadata>\n</GetPolicyResponse>",
+        "queryMatch": {
+          "Action": "GetPolicy"
+        }
+      },
+      {
+        "id": "iam-list-user-policies",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListUserPolicies",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListUserPolicies",
+        "fixture": "<ListUserPoliciesResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n <ListUserPoliciesResult>\n    <PolicyNames>\n       <member>AllAccessPolicy</member>\n       <member>KeyPolicy</member>\n    </PolicyNames>\n    <IsTruncated>false</IsTruncated>\n </ListUserPoliciesResult>\n <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n </ResponseMetadata>\n</ListUserPoliciesResponse>",
+        "queryMatch": {
+          "Action": "ListUserPolicies"
+        }
+      },
+      {
+        "id": "iam-list-attached-user-policies",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListAttachedUserPolicies",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListAttachedUserPolicies",
+        "fixture": "<ListAttachedUserPoliciesResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ListAttachedUserPoliciesResult>\n    <AttachedPolicies>\n      <member>\n        <PolicyName>AdministratorAccess</PolicyName>\n        <PolicyArn>arn:aws:iam::aws:policy/AdministratorAccess</PolicyArn>\n      </member>\n    </AttachedPolicies>\n    <IsTruncated>false</IsTruncated>\n  </ListAttachedUserPoliciesResult>\n  <ResponseMetadata>\n    <RequestId>75980e78-3ea6-11e4-9d0d-6f969EXAMPLE</RequestId>\n  </ResponseMetadata>\n</ListAttachedUserPoliciesResponse>",
+        "queryMatch": {
+          "Action": "ListAttachedUserPolicies"
+        }
+      },
+      {
+        "id": "iam-list-attached-group-policies",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListAttachedGroupPolicies",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListAttachedGroupPolicies",
+        "fixture": "<ListAttachedGroupPoliciesResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ListAttachedGroupPoliciesResult>\n    <AttachedPolicies>\n      <member>\n        <PolicyName>ReadOnlyAccess</PolicyName>\n        <PolicyArn>arn:aws:iam::aws:policy/ReadOnlyAccess</PolicyArn>\n      </member>\n    </AttachedPolicies>\n    <IsTruncated>false</IsTruncated>\n  </ListAttachedGroupPoliciesResult>\n  <ResponseMetadata>\n    <RequestId>710f2d3f-3df1-11e4-9d0d-6f969EXAMPLE</RequestId>\n  </ResponseMetadata>\n</ListAttachedGroupPoliciesResponse>",
+        "queryMatch": {
+          "Action": "ListAttachedGroupPolicies"
+        }
+      },
+      {
+        "id": "iam-get-login-profile",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam GetLoginProfile",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetLoginProfile",
+        "fixture": "<GetLoginProfileResponse>\n <GetLoginProfileResult>\n    <LoginProfile>\n       <UserName>Bob</UserName>\n       <CreateDate>2011-09-19T23:00:56Z</CreateDate>\n    </LoginProfile>\n </GetLoginProfileResult>\n <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n </ResponseMetadata>\n</GetLoginProfileResponse>",
+        "queryMatch": {
+          "Action": "GetLoginProfile"
+        }
+      },
+      {
+        "id": "iam-put-role-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam PutRolePolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "PutRolePolicy",
+        "fixture": "<PutRolePolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n </ResponseMetadata>\n</PutRolePolicyResponse>",
+        "queryMatch": {
+          "Action": "PutRolePolicy"
+        }
+      },
+      {
+        "id": "iam-put-user-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam PutUserPolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "PutUserPolicy",
+        "fixture": "<PutUserPolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n </ResponseMetadata>\n</PutUserPolicyResponse>",
+        "queryMatch": {
+          "Action": "PutUserPolicy"
+        }
+      },
+      {
+        "id": "iam-put-group-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam PutGroupPolicy",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "PutGroupPolicy",
+        "fixture": "<PutGroupPolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n </ResponseMetadata>\n</PutGroupPolicyResponse>",
+        "queryMatch": {
+          "Action": "PutGroupPolicy"
+        }
+      },
+      {
+        "id": "iam-tag-role",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam TagRole",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "TagRole",
+        "fixture": "<TagRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>EXAMPLE8-90ab-cdef-fedc-ba987EXAMPLE</RequestId>\n  </ResponseMetadata>\n</TagRoleResponse>",
+        "queryMatch": {
+          "Action": "TagRole"
+        }
+      },
+      {
+        "id": "iam-tag-user",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam TagUser",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "TagUser",
+        "fixture": "<TagUserResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>EXAMPLE8-90ab-cdef-fedc-ba987EXAMPLE</RequestId>\n  </ResponseMetadata>\n</TagUserResponse>",
+        "queryMatch": {
+          "Action": "TagUser"
+        }
+      },
+      {
+        "id": "iam-untag-user",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam UntagUser",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "UntagUser",
+        "fixture": "<UntagUserResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>EXAMPLE8-90ab-cdef-fedc-ba987EXAMPLE</RequestId>\n  </ResponseMetadata>\n</UntagUserResponse>",
+        "queryMatch": {
+          "Action": "UntagUser"
+        }
+      },
+      {
+        "id": "iam-untag-role",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam UntagRole",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "UntagRole",
+        "fixture": "<UntagRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>EXAMPLE8-90ab-cdef-fedc-ba987EXAMPLE</RequestId>\n  </ResponseMetadata>\n</UntagRoleResponse>",
+        "queryMatch": {
+          "Action": "UntagRole"
+        }
+      },
+      {
+        "id": "iam-get-access-key-last-used",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam GetAccessKeyLastUsed",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetAccessKeyLastUsed",
+        "fixture": "<GetAccessKeyLastUsedResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetAccessKeyLastUsedResult>\n    <AccessKeyLastUsed>\n      <Region>us-west-2</Region>\n      <LastUsedDate>2015-03-13T10:45:00Z</LastUsedDate>\n      <ServiceName>s3</ServiceName>\n    </AccessKeyLastUsed>\n    <UserName>bob</UserName>\n  </GetAccessKeyLastUsedResult>\n  <ResponseMetadata>\n    <RequestId>510a6abf-d022-11e4-abe8-9b0ebEXAMPLE</RequestId>\n  </ResponseMetadata>\n</GetAccessKeyLastUsedResponse>",
+        "queryMatch": {
+          "Action": "GetAccessKeyLastUsed"
+        }
+      },
+      {
+        "id": "iam-list-attached-role-policies",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "iam ListAttachedRolePolicies",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListAttachedRolePolicies",
+        "fixture": "<ListAttachedRolePoliciesResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ListAttachedRolePoliciesResult>\n    <AttachedPolicies>\n      <member>\n        <PolicyName>ReadOnlyAccess</PolicyName>\n        <PolicyArn>arn:aws:iam::aws:policy/ReadOnlyAccess</PolicyArn>\n      </member>\n    </AttachedPolicies>\n    <IsTruncated>false</IsTruncated>\n  </ListAttachedRolePoliciesResult>\n  <ResponseMetadata>\n    <RequestId>9a3b490d-3ea5-11e4-9d0d-6f969EXAMPLE</RequestId>\n  </ResponseMetadata>\n</ListAttachedRolePoliciesResponse>",
+        "queryMatch": {
+          "Action": "ListAttachedRolePolicies"
         }
       }
     ],

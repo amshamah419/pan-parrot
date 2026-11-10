@@ -1,1 +1,1445 @@
-{"id":"aws-iamidentitycenter-awsiamidentitycenter","name":"AWS - IAM Identity Center","pack":"AWS-IAMIdentityCenter","fidelity":"shape","curated":false,"summary":"Amazon Web Services IAM Identity Center.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-iamidentitycenter-awsiamidentitycenter","name":"AWS - IAM Identity Center","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-IAMIdentityCenter/Integrations/AWSIAMIdentityCenter","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-iam-identitycenter-create-user","method":"GET","pathTemplate":"/","summary":"Creates a new IAM Identity Center user for your AWS account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"IAMIdentityCenter","kind":"object","optional":false,"children":[{"name":"User","kind":"object","optional":false,"children":[{"name":"UserId","kind":"id","optional":false},{"name":"IdentityStoreId","kind":"id","optional":false}]}]}]}]}},{"id":"aws-iam-identitycenter-get-user","method":"GET","pathTemplate":"/","summary":"Retrieves information about the specified IAM user.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"IAMIdentityCenter","kind":"object","optional":false,"children":[{"name":"User","kind":"object","optional":false,"children":[{"name":"UserName","kind":"string","optional":false,"example":"UserName"},{"name":"UserId","kind":"id","optional":false},{"name":"ExternalIds","kind":"object","optional":false,"children":[{"name":"Issuer","kind":"string","optional":false,"example":"Issuer"},{"name":"Id","kind":"id","optional":false}]},{"name":"Name","kind":"object","optional":false,"children":[{"name":"Formatted","kind":"string","optional":false,"example":"Formatted"},{"name":"FamilyName","kind":"string","optional":false,"example":"FamilyName"},{"name":"GivenName","kind":"string","optional":false,"example":"GivenName"},{"name":"MiddleName","kind":"string","optional":false,"example":"MiddleName"},{"name":"HonorificPrefix","kind":"string","optional":false,"example":"HonorificPrefix"},{"name":"HonorificSuffix","kind":"string","optional":false,"example":"HonorificSuffix"}]},{"name":"DisplayName","kind":"string","optional":false,"example":"DisplayName"},{"name":"NickName","kind":"string","optional":false,"example":"NickName"},{"name":"ProfileUrl","kind":"string","optional":false,"example":"ProfileUrl"},{"name":"Emails","kind":"object","optional":false,"children":[{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Primary","kind":"string","optional":false,"example":"Primary"}]},{"name":"Addresses","kind":"object","optional":false,"children":[{"name":"StreetAddress","kind":"string","optional":false,"example":"StreetAddress"},{"name":"Locality","kind":"string","optional":false,"example":"Locality"},{"name":"Region","kind":"string","optional":false,"example":"Region"},{"name":"PostalCode","kind":"string","optional":false,"example":"PostalCode"},{"name":"Country","kind":"string","optional":false,"example":"Country"},{"name":"Formatted","kind":"string","optional":false,"example":"Formatted"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Primary","kind":"string","optional":false,"example":"Primary"}]},{"name":"PhoneNumbers","kind":"object","optional":false,"children":[{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Primary","kind":"string","optional":false,"example":"Primary"}]},{"name":"UserType","kind":"string","optional":false,"example":"UserType"},{"name":"Title","kind":"string","optional":false,"example":"Title"},{"name":"PreferredLanguage","kind":"string","optional":false,"example":"PreferredLanguage"},{"name":"Locale","kind":"string","optional":false,"example":"Locale"},{"name":"Timezone","kind":"string","optional":false,"example":"Timezone"},{"name":"IdentityStoreId","kind":"id","optional":false}]}]}]}]}},{"id":"aws-iam-identitycenter-list-users","method":"GET","pathTemplate":"/","summary":"Lists the IAM users, returns all users in the AWS account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"IAMIdentityCenter","kind":"object","optional":false,"children":[{"name":"User","kind":"object","optional":false,"children":[{"name":"UserName","kind":"string","optional":false,"example":"UserName"},{"name":"UserId","kind":"id","optional":false},{"name":"ExternalIds","kind":"object","optional":false,"children":[{"name":"Issuer","kind":"string","optional":false,"example":"Issuer"},{"name":"Id","kind":"id","optional":false}]},{"name":"Name","kind":"object","optional":false,"children":[{"name":"Formatted","kind":"string","optional":false,"example":"Formatted"},{"name":"FamilyName","kind":"string","optional":false,"example":"FamilyName"},{"name":"GivenName","kind":"string","optional":false,"example":"GivenName"},{"name":"MiddleName","kind":"string","optional":false,"example":"MiddleName"},{"name":"HonorificPrefix","kind":"string","optional":false,"example":"HonorificPrefix"},{"name":"HonorificSuffix","kind":"string","optional":false,"example":"HonorificSuffix"}]},{"name":"DisplayName","kind":"string","optional":false,"example":"DisplayName"},{"name":"NickName","kind":"string","optional":false,"example":"NickName"},{"name":"ProfileUrl","kind":"string","optional":false,"example":"ProfileUrl"},{"name":"Emails","kind":"object","optional":false,"children":[{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Primary","kind":"string","optional":false,"example":"Primary"}]},{"name":"Addresses","kind":"object","optional":false,"children":[{"name":"StreetAddress","kind":"string","optional":false,"example":"StreetAddress"},{"name":"Locality","kind":"string","optional":false,"example":"Locality"},{"name":"Region","kind":"string","optional":false,"example":"Region"},{"name":"PostalCode","kind":"string","optional":false,"example":"PostalCode"},{"name":"Country","kind":"string","optional":false,"example":"Country"},{"name":"Formatted","kind":"string","optional":false,"example":"Formatted"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Primary","kind":"string","optional":false,"example":"Primary"}]},{"name":"PhoneNumbers","kind":"object","optional":false,"children":[{"name":"Value","kind":"string","optional":false,"example":"Value"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Primary","kind":"string","optional":false,"example":"Primary"}]},{"name":"UserType","kind":"string","optional":false,"example":"UserType"},{"name":"Title","kind":"string","optional":false,"example":"Title"},{"name":"PreferredLanguage","kind":"string","optional":false,"example":"PreferredLanguage"},{"name":"Locale","kind":"string","optional":false,"example":"Locale"},{"name":"Timezone","kind":"string","optional":false,"example":"Timezone"},{"name":"IdentityStoreId","kind":"id","optional":false}]},{"name":"UserNextToken","kind":"string","optional":false,"example":"UserNextToken"}]}]}]}},{"id":"aws-iam-identitycenter-list-groups","method":"GET","pathTemplate":"/","summary":"Lists all the IAM groups in the AWS account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"IAMIdentityCenter","kind":"object","optional":false,"children":[{"name":"Group","kind":"object","optional":false,"children":[{"name":"GroupId","kind":"id","optional":false},{"name":"DisplayName","kind":"string","optional":false,"example":"DisplayName"},{"name":"ExternalIds","kind":"object","optional":false,"children":[{"name":"Issuer","kind":"string","optional":false,"example":"Issuer"},{"name":"Id","kind":"id","optional":false}]},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"IdentityStoreId","kind":"id","optional":false}]},{"name":"GroupNextToken","kind":"string","optional":false,"example":"GroupNextToken"}]}]}]}},{"id":"aws-iam-identitycenter-list-groups-for-user","method":"GET","pathTemplate":"/","summary":"Lists the IAM Identity Center groups that the specified IAM user belongs to.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"IAMIdentityCenter","kind":"object","optional":false,"children":[{"name":"User","kind":"object","optional":false,"children":[{"name":"UserId","kind":"id","optional":false},{"name":"GroupMemeberships","kind":"object","optional":false,"children":[{"name":"MembershipId","kind":"id","optional":false},{"name":"GroupId","kind":"id","optional":false}]}]}]}]}]}},{"id":"aws-iam-identitycenter-add-user-to-group","method":"GET","pathTemplate":"/","summary":"Adds the specified user to the specified group.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"IdentityStoreId","kind":"string","optional":false,"example":"IdentityStoreId"},{"name":"userName","kind":"string","optional":false,"example":"userName"},{"name":"groupName","kind":"string","optional":false,"example":"groupName"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-iamidentitycenter-awsiamidentitycenter",
+  "name": "AWS - IAM Identity Center",
+  "pack": "AWS-IAMIdentityCenter",
+  "fidelity": "vendor",
+  "curated": false,
+  "summary": "From vendor docs. Amazon Web Services IAM Identity Center.",
+  "operations": 6,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-iamidentitycenter-awsiamidentitycenter",
+      "name": "AWS - IAM Identity Center",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-IAMIdentityCenter/Integrations/AWSIAMIdentityCenter",
+      "fidelity": "vendor",
+      "notes": [
+        "Field names come from the integration YAML command outputs, not a captured vendor response.",
+        "No HTTP path was recovered from the client. The shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-iam-identitycenter-create-user",
+          "calls": [
+            "identitystore:CreateUser"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-iam-identitycenter-create-user"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_CreateUser.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-get-user",
+          "calls": [
+            "identitystore:DescribeUser",
+            "identitystore:GetUserId"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-iam-identitycenter-get-user",
+            "identitystore-get-user-id"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_DescribeUser.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-list-users",
+          "calls": [
+            "identitystore:ListUsers"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-iam-identitycenter-list-users"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_ListUsers.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-list-groups",
+          "calls": [
+            "identitystore:ListGroups"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-iam-identitycenter-list-groups"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_ListGroups.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-list-groups-for-user",
+          "calls": [
+            "identitystore:ListGroupMembershipsForMember",
+            "identitystore:GetUserId"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-iam-identitycenter-list-groups-for-user",
+            "identitystore-get-user-id"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_ListGroupMembershipsForMember.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-add-user-to-group",
+          "calls": [
+            "identitystore:CreateGroupMembership",
+            "identitystore:GetUserId",
+            "identitystore:GetGroupId"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-iam-identitycenter-add-user-to-group",
+            "identitystore-get-user-id",
+            "identitystore-get-group-id"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_CreateGroupMembership.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-get-group",
+          "calls": [
+            "identitystore:DescribeGroup",
+            "identitystore:GetGroupId"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "identitystore-describe-group",
+            "identitystore-get-group-id"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_DescribeGroup.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-get-user-by-email",
+          "calls": [
+            "identitystore:ListUsers"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-iam-identitycenter-list-users"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_ListUsers.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-delete-user",
+          "calls": [
+            "identitystore:DeleteUser",
+            "identitystore:GetUserId"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "identitystore-delete-user",
+            "identitystore-get-user-id"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_DeleteUser.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-create-group",
+          "calls": [
+            "identitystore:CreateGroup"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "identitystore-create-group"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_CreateGroup.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-delete-group",
+          "calls": [
+            "identitystore:DeleteGroup",
+            "identitystore:GetGroupId"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "identitystore-delete-group",
+            "identitystore-get-group-id"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_DeleteGroup.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-delete-group-membership",
+          "calls": [
+            "identitystore:DeleteGroupMembership",
+            "identitystore:ListGroupMembershipsForMember"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "aws-iam-identitycenter-list-groups-for-user"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_ListGroupMembershipsForMember.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-list-memberships",
+          "calls": [
+            "identitystore:ListGroupMemberships",
+            "identitystore:GetGroupId"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "identitystore-list-group-memberships",
+            "identitystore-get-group-id"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_ListGroupMemberships.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-update-user",
+          "calls": [
+            "identitystore:UpdateUser",
+            "identitystore:GetUserId"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "identitystore-update-user",
+            "identitystore-get-user-id"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_UpdateUser.html"
+        },
+        {
+          "command": "aws-iam-identitycenter-update-group",
+          "calls": [
+            "identitystore:UpdateGroup",
+            "identitystore:GetGroupId"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "identitystore-update-group",
+            "identitystore-get-group-id"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_UpdateGroup.html"
+        }
+      ],
+      "verification": {
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_CreateUser.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "14 of 15 commands from vendor docs, 1 approximate, 0 missing.",
+          "15 of 15 commands from vendor docs, 0 approximate, 0 missing."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "aws-iam-identitycenter-create-user",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Creates a new IAM Identity Center user for your AWS account.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "IAMIdentityCenter",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "User",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "UserId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "IdentityStoreId",
+                          "kind": "id",
+                          "optional": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "CreateUser",
+        "fixture": "{\n  \"IdentityStoreId\": \"d-1234567890\",\n  \"UserId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n  \"UserArn\": \"arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n  \"Revision\": \"1699564800000\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.CreateUser"
+        }
+      },
+      {
+        "id": "aws-iam-identitycenter-get-user",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Retrieves information about the specified IAM user.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "IAMIdentityCenter",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "User",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "UserName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "UserName"
+                        },
+                        {
+                          "name": "UserId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "ExternalIds",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Issuer",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Issuer"
+                            },
+                            {
+                              "name": "Id",
+                              "kind": "id",
+                              "optional": false
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Name",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Formatted",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Formatted"
+                            },
+                            {
+                              "name": "FamilyName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "FamilyName"
+                            },
+                            {
+                              "name": "GivenName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "GivenName"
+                            },
+                            {
+                              "name": "MiddleName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "MiddleName"
+                            },
+                            {
+                              "name": "HonorificPrefix",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "HonorificPrefix"
+                            },
+                            {
+                              "name": "HonorificSuffix",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "HonorificSuffix"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "DisplayName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "DisplayName"
+                        },
+                        {
+                          "name": "NickName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "NickName"
+                        },
+                        {
+                          "name": "ProfileUrl",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "ProfileUrl"
+                        },
+                        {
+                          "name": "Emails",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Value",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Value"
+                            },
+                            {
+                              "name": "Type",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Type"
+                            },
+                            {
+                              "name": "Primary",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Primary"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Addresses",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "StreetAddress",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "StreetAddress"
+                            },
+                            {
+                              "name": "Locality",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Locality"
+                            },
+                            {
+                              "name": "Region",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Region"
+                            },
+                            {
+                              "name": "PostalCode",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "PostalCode"
+                            },
+                            {
+                              "name": "Country",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Country"
+                            },
+                            {
+                              "name": "Formatted",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Formatted"
+                            },
+                            {
+                              "name": "Type",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Type"
+                            },
+                            {
+                              "name": "Primary",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Primary"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "PhoneNumbers",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Value",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Value"
+                            },
+                            {
+                              "name": "Type",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Type"
+                            },
+                            {
+                              "name": "Primary",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Primary"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "UserType",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "UserType"
+                        },
+                        {
+                          "name": "Title",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Title"
+                        },
+                        {
+                          "name": "PreferredLanguage",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "PreferredLanguage"
+                        },
+                        {
+                          "name": "Locale",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Locale"
+                        },
+                        {
+                          "name": "Timezone",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Timezone"
+                        },
+                        {
+                          "name": "IdentityStoreId",
+                          "kind": "id",
+                          "optional": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "DescribeUser",
+        "fixture": "{\n  \"IdentityStoreId\": \"d-1234567890\",\n  \"UserId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n  \"UserArn\": \"arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n  \"UserName\": \"johndoe\",\n  \"Name\": {\n    \"Formatted\": \"John Doe\",\n    \"FamilyName\": \"Doe\",\n    \"GivenName\": \"John\"\n  },\n  \"DisplayName\": \"John Doe\",\n  \"Emails\": [\n    {\n      \"Value\": \"johndoe@example.com\",\n      \"Type\": \"work\",\n      \"Primary\": true\n    }\n  ],\n  \"Addresses\": [\n    {\n      \"StreetAddress\": \"123 Main St\",\n      \"Locality\": \"Any Town\",\n      \"Region\": \"ST\",\n      \"PostalCode\": \"12345\",\n      \"Country\": \"USA\",\n      \"Formatted\": \"123 Main St, Anytown, ST 12345, USA\",\n      \"Type\": \"home\"\n    }\n  ],\n  \"PhoneNumbers\": [\n    {\n      \"Value\": \"+1 (832) 555-0100\",\n      \"Type\": \"work\",\n      \"Primary\": true\n    }\n  ],\n  \"Revision\": \"1699564800000\",\n  \"Extensions\": {\n    \"aws:identitystore:enterprise\": {\n      \"employeeNumber\": \"701984\",\n      \"costCenter\": \"4130\",\n      \"organization\": \"Universal Studios\",\n      \"division\": \"Theme Park\",\n      \"department\": \"Tour Operations\",\n      \"manager\": {\n        \"value\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE44444\"\n      }\n    }\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.DescribeUser"
+        }
+      },
+      {
+        "id": "aws-iam-identitycenter-list-users",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Lists the IAM users, returns all users in the AWS account.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "IAMIdentityCenter",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "User",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "UserName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "UserName"
+                        },
+                        {
+                          "name": "UserId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "ExternalIds",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Issuer",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Issuer"
+                            },
+                            {
+                              "name": "Id",
+                              "kind": "id",
+                              "optional": false
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Name",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Formatted",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Formatted"
+                            },
+                            {
+                              "name": "FamilyName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "FamilyName"
+                            },
+                            {
+                              "name": "GivenName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "GivenName"
+                            },
+                            {
+                              "name": "MiddleName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "MiddleName"
+                            },
+                            {
+                              "name": "HonorificPrefix",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "HonorificPrefix"
+                            },
+                            {
+                              "name": "HonorificSuffix",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "HonorificSuffix"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "DisplayName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "DisplayName"
+                        },
+                        {
+                          "name": "NickName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "NickName"
+                        },
+                        {
+                          "name": "ProfileUrl",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "ProfileUrl"
+                        },
+                        {
+                          "name": "Emails",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Value",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Value"
+                            },
+                            {
+                              "name": "Type",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Type"
+                            },
+                            {
+                              "name": "Primary",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Primary"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Addresses",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "StreetAddress",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "StreetAddress"
+                            },
+                            {
+                              "name": "Locality",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Locality"
+                            },
+                            {
+                              "name": "Region",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Region"
+                            },
+                            {
+                              "name": "PostalCode",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "PostalCode"
+                            },
+                            {
+                              "name": "Country",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Country"
+                            },
+                            {
+                              "name": "Formatted",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Formatted"
+                            },
+                            {
+                              "name": "Type",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Type"
+                            },
+                            {
+                              "name": "Primary",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Primary"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "PhoneNumbers",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Value",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Value"
+                            },
+                            {
+                              "name": "Type",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Type"
+                            },
+                            {
+                              "name": "Primary",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Primary"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "UserType",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "UserType"
+                        },
+                        {
+                          "name": "Title",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Title"
+                        },
+                        {
+                          "name": "PreferredLanguage",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "PreferredLanguage"
+                        },
+                        {
+                          "name": "Locale",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Locale"
+                        },
+                        {
+                          "name": "Timezone",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Timezone"
+                        },
+                        {
+                          "name": "IdentityStoreId",
+                          "kind": "id",
+                          "optional": false
+                        }
+                      ]
+                    },
+                    {
+                      "name": "UserNextToken",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "UserNextToken"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "ListUsers",
+        "fixture": "{\n  \"Users\": [\n    {\n      \"IdentityStoreId\": \"d-1234567890\",\n      \"UserId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n      \"UserArn\": \"arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n      \"Revision\": \"1699564800000\",\n      \"UserName\": \"john_doe\",\n      \"Name\": {\n        \"FamilyName\": \"Doe\",\n        \"GivenName\": \"John\"\n      },\n      \"Extensions\": {\n        \"aws:identitystore:enterprise\": {\n          \"employeeNumber\": \"701984\",\n          \"costCenter\": \"4130\",\n          \"organization\": \"Universal Studios\",\n          \"division\": \"Theme Park\",\n          \"department\": \"Tour Operations\",\n          \"manager\": {\n            \"value\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE44444\"\n          }\n        }\n      }\n    },\n    {\n      \"IdentityStoreId\": \"d-1234567890\",\n      \"UserId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE55555\",\n      \"UserArn\": \"arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE55555\",\n      \"Revision\": \"1699564800000\",\n      \"UserName\": \"mary_major\",\n      \"Name\": {\n        \"FamilyName\": \"Major\",\n        \"GivenName\": \"Mary\"\n      }\n    }\n  ],\n  \"NextToken\": \"EXAMPLE-TOKEN\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.ListUsers"
+        }
+      },
+      {
+        "id": "aws-iam-identitycenter-list-groups",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Lists all the IAM groups in the AWS account.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "IAMIdentityCenter",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Group",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "GroupId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "DisplayName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "DisplayName"
+                        },
+                        {
+                          "name": "ExternalIds",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Issuer",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Issuer"
+                            },
+                            {
+                              "name": "Id",
+                              "kind": "id",
+                              "optional": false
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Description",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Description"
+                        },
+                        {
+                          "name": "IdentityStoreId",
+                          "kind": "id",
+                          "optional": false
+                        }
+                      ]
+                    },
+                    {
+                      "name": "GroupNextToken",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "GroupNextToken"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "ListGroups",
+        "fixture": "{\n  \"Groups\": [\n    {\n      \"IdentityStoreId\": \"d-1234567890\",\n      \"GroupId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n      \"GroupArn\": \"arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n      \"DisplayName\": \"Developers\",\n      \"Description\": \"Group that contains all developers\",\n      \"Revision\": \"1699564800000\"\n    },\n    {\n      \"IdentityStoreId\": \"d-1234567890\",\n      \"GroupId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE55555\",\n      \"GroupArn\": \"arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE55555\",\n      \"DisplayName\": \"Engineers\",\n      \"Description\": \"Group that contains all engineers\",\n      \"Revision\": \"1699564800000\"\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.ListGroups"
+        }
+      },
+      {
+        "id": "aws-iam-identitycenter-list-groups-for-user",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Lists the IAM Identity Center groups that the specified IAM user belongs to.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "IAMIdentityCenter",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "User",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "UserId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "GroupMemeberships",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "MembershipId",
+                              "kind": "id",
+                              "optional": false
+                            },
+                            {
+                              "name": "GroupId",
+                              "kind": "id",
+                              "optional": false
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "ListGroupMembershipsForMember",
+        "fixture": "{\n  \"GroupMemberships\": [\n    {\n      \"IdentityStoreId\": \"d-1234567890\",\n      \"MembershipId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE33333\",\n      \"MembershipArn\": \"arn:aws:identitystore:::membership/a1b2c3d4-5678-90ab-cdef-EXAMPLE33333\",\n      \"GroupId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n      \"MemberId\": {\n        \"UserId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n      }\n    },\n    {\n      \"IdentityStoreId\": \"d-1234567890\",\n      \"MembershipId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE66666\",\n      \"MembershipArn\": \"arn:aws:identitystore:::membership/a1b2c3d4-5678-90ab-cdef-EXAMPLE66666\",\n      \"GroupId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE55555\",\n      \"MemberId\": {\n        \"UserId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n      }\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.ListGroupMembershipsForMember"
+        }
+      },
+      {
+        "id": "aws-iam-identitycenter-add-user-to-group",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Adds the specified user to the specified group.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            },
+            {
+              "name": "roleArn",
+              "kind": "string",
+              "optional": false,
+              "example": "roleArn"
+            },
+            {
+              "name": "roleSessionDuration",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionDuration"
+            },
+            {
+              "name": "roleSessionName",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionName"
+            },
+            {
+              "name": "IdentityStoreId",
+              "kind": "string",
+              "optional": false,
+              "example": "IdentityStoreId"
+            },
+            {
+              "name": "userName",
+              "kind": "string",
+              "optional": false,
+              "example": "userName"
+            },
+            {
+              "name": "groupName",
+              "kind": "string",
+              "optional": false,
+              "example": "groupName"
+            }
+          ]
+        },
+        "awsAction": "CreateGroupMembership",
+        "fixture": "{\n  \"IdentityStoreId\": \"d-1234567890\",\n  \"MembershipId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE33333\",\n  \"MembershipArn\": \"arn:aws:identitystore:::membership/a1b2c3d4-5678-90ab-cdef-EXAMPLE33333\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.CreateGroupMembership"
+        }
+      },
+      {
+        "id": "identitystore-get-user-id",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "identitystore GetUserId",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetUserId",
+        "fixture": "{\n  \"IdentityStoreId\": \"d-1234567890\",\n  \"UserId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n  \"UserArn\": \"arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.GetUserId"
+        }
+      },
+      {
+        "id": "identitystore-get-group-id",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "identitystore GetGroupId",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetGroupId",
+        "fixture": "{\n  \"IdentityStoreId\": \"d-1234567890\",\n  \"GroupId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n  \"GroupArn\": \"arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.GetGroupId"
+        }
+      },
+      {
+        "id": "identitystore-describe-group",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "identitystore DescribeGroup",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DescribeGroup",
+        "fixture": "{\n  \"IdentityStoreId\": \"d-1234567890\",\n  \"GroupId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n  \"GroupArn\": \"arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n  \"DisplayName\": \"Developers\",\n  \"Description\": \"Group that contains all developers\",\n  \"Revision\": \"1699564800000\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.DescribeGroup"
+        }
+      },
+      {
+        "id": "identitystore-delete-user",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "identitystore DeleteUser",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeleteUser",
+        "fixture": "{\n  \"IdentityStoreId\": \"d-1234567890\",\n  \"UserId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n  \"Revision\": \"1699564800000\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.DeleteUser"
+        }
+      },
+      {
+        "id": "identitystore-create-group",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "identitystore CreateGroup",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreateGroup",
+        "fixture": "{\n  \"IdentityStoreId\": \"d-1234567890\",\n  \"GroupId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n  \"GroupArn\": \"arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n  \"Revision\": \"1699564800000\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.CreateGroup"
+        }
+      },
+      {
+        "id": "identitystore-delete-group",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "identitystore DeleteGroup",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeleteGroup",
+        "fixture": "{\n  \"IdentityStoreId\": \"d-1234567890\",\n  \"GroupId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n  \"Revision\": \"1699564800000\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.DeleteGroup"
+        }
+      },
+      {
+        "id": "identitystore-list-group-memberships",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "identitystore ListGroupMemberships",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListGroupMemberships",
+        "fixture": "{\n  \"GroupMemberships\": [\n    {\n      \"IdentityStoreId\": \"d-1234567890\",\n      \"MembershipId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE33333\",\n      \"MembershipArn\": \"arn:aws:identitystore:::membership/a1b2c3d4-5678-90ab-cdef-EXAMPLE33333\",\n      \"GroupId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n      \"MemberId\": {\n        \"UserId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n      }\n    },\n    {\n      \"IdentityStoreId\": \"d-1234567890\",\n      \"MembershipId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE66666\",\n      \"MembershipArn\": \"arn:aws:identitystore:::membership/a1b2c3d4-5678-90ab-cdef-EXAMPLE66666\",\n      \"GroupId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n      \"MemberId\": {\n        \"UserId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE44444\"\n      }\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.ListGroupMemberships"
+        }
+      },
+      {
+        "id": "identitystore-update-user",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "identitystore UpdateUser",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "UpdateUser",
+        "fixture": "{\n  \"IdentityStoreId\": \"d-1234567890\",\n  \"UserId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n  \"UserArn\": \"arn:aws:identitystore:::user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n  \"Revision\": \"1699651200000\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.UpdateUser"
+        }
+      },
+      {
+        "id": "identitystore-update-group",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "identitystore UpdateGroup",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "UpdateGroup",
+        "fixture": "{\n  \"IdentityStoreId\": \"d-1234567890\",\n  \"GroupId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n  \"GroupArn\": \"arn:aws:identitystore:::group/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n  \"Revision\": \"1699651200000\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSIdentityStore.UpdateGroup"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-IAMIdentityCenter/Integrations/AWSIAMIdentityCenter"
+}

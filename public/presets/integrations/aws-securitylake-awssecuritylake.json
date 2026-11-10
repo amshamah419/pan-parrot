@@ -1,1 +1,646 @@
-{"id":"aws-securitylake-awssecuritylake","name":"Amazon Security Lake","pack":"AWS-SecurityLake","fidelity":"shape","curated":false,"summary":"Amazon Security Lake is a fully managed security data lake service.","operations":3,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"aws-securitylake-awssecuritylake","name":"Amazon Security Lake","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-SecurityLake/Integrations/AWSSecurityLake","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-expected-context-get-query-execution-com","method":"GET","pathTemplate":"/","summary":"test_data/expected_context/get_query_execution_command.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"QueryExecutionId","kind":"id","optional":false,"example":"b3c194e7-6580-421c-81fa-4b409e1ba04f"},{"name":"Query","kind":"string","optional":false,"example":"SELECT * FROM test_db.test_table"},{"name":"StatementType","kind":"string","optional":false,"example":"DML"},{"name":"ResultConfiguration","kind":"object","optional":false,"children":[{"name":"OutputLocation","kind":"string","optional":false,"example":"s3://athena-queries-test/b3c194e7-6580-421c-81fa-4b409e1ba04f.csv"}]},{"name":"ResultReuseConfiguration","kind":"object","optional":false,"children":[{"name":"ResultReuseByAgeConfiguration","kind":"object","optional":false,"children":[{"name":"Enabled","kind":"boolean","optional":false}]}]},{"name":"QueryExecutionContext","kind":"object","optional":false,"children":[]},{"name":"Status","kind":"object","optional":false,"children":[{"name":"State","kind":"string","optional":false,"example":"SUCCEEDED"},{"name":"SubmissionDateTime","kind":"timestamp","optional":false,"example":"2023-11-07T10:01:03","format":"iso"},{"name":"CompletionDateTime","kind":"timestamp","optional":false,"example":"2023-11-07T10:01:04","format":"iso"}]},{"name":"Statistics","kind":"object","optional":false,"children":[{"name":"EngineExecutionTimeInMillis","kind":"integer","optional":false},{"name":"DataScannedInBytes","kind":"integer","optional":false},{"name":"TotalExecutionTimeInMillis","kind":"integer","optional":false},{"name":"QueryQueueTimeInMillis","kind":"integer","optional":false},{"name":"QueryPlanningTimeInMillis","kind":"integer","optional":false},{"name":"ServiceProcessingTimeInMillis","kind":"integer","optional":false},{"name":"ResultReuseInformation","kind":"object","optional":false,"children":[{"name":"ReusedPreviousResult","kind":"boolean","optional":false}]}]},{"name":"WorkGroup","kind":"string","optional":false,"example":"primary"},{"name":"EngineVersion","kind":"object","optional":false,"children":[{"name":"SelectedEngineVersion","kind":"string","optional":false,"example":"AUTO"},{"name":"EffectiveEngineVersion","kind":"string","optional":false,"example":"Athena engine version 3"}]},{"name":"SubstatementType","kind":"string","optional":false,"example":"SELECT"}]}},{"id":"test-data-expected-context-get-query-results-comma","method":"GET","pathTemplate":"/","summary":"test_data/expected_context/get_query_results_command.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"metadata","kind":"string","optional":false,"example":"{product={version=1.09, name=CloudTrail, vendor_name=AWS, feature={name=Data}}, uid=7c33bcd3-0252-4b28-b2c7-7f38ed881796"},{"name":"time","kind":"string","optional":false,"example":"1699342808000"},{"name":"cloud","kind":"string","optional":false,"example":"{region=eu-central-1, provider=AWS}"},{"name":"api","kind":"string","optional":false,"example":"{response={error=null, message=null}, operation=PutObject, version=null, service={name=s3.amazonaws.com}, request={uid=5"},{"name":"actor","kind":"string","optional":false,"example":"{user={type=AWSService, name=null, uid=null, uuid=null, account_uid=null, credential_uid=null}, session={created_time=nu"},{"name":"http_request","kind":"string","optional":false,"example":"{user_agent=s3.amazonaws.com}"},{"name":"src_endpoint","kind":"string","optional":false,"example":"{uid=vpce-59a25a30, ip=null, domain=s3.amazonaws.com}"},{"name":"resources","kind":"string","optional":false,"example":"[{uid=arn:aws:s3:::test-log-collector/2023-11-07-07-40-08-CD1B1BC0934C71D4, account_uid=null, type=AWS::S3::Object}, {ui"},{"name":"class_name","kind":"string","optional":false,"example":"API Activity"},{"name":"class_uid","kind":"id","optional":false,"example":"3005"},{"name":"category_name","kind":"string","optional":false,"example":"Audit Activity"},{"name":"category_uid","kind":"id","optional":false,"example":"3"},{"name":"severity_id","kind":"id","optional":false,"example":"1"},{"name":"severity","kind":"string","optional":false,"example":"Informational"},{"name":"activity_name","kind":"string","optional":false,"example":"Update"},{"name":"activity_id","kind":"id","optional":false,"example":"3"},{"name":"type_uid","kind":"id","optional":false,"example":"300503"},{"name":"type_name","kind":"string","optional":false,"example":"API Activity: Update"},{"name":"status","kind":"string","optional":false,"example":"Success"},{"name":"status_id","kind":"id","optional":false,"example":"1"},{"name":"unmapped","kind":"string","optional":false,"example":"{additionalEventData.SSEApplied=Default_SSE_S3, additionalEventData.SignatureVersion=SigV4, additionalEventData.CipherSu"},{"name":"region","kind":"string","optional":false,"example":"eu-central-1"},{"name":"accountid","kind":"id","optional":false,"example":"123456789012"},{"name":"eventday","kind":"string","optional":false,"example":"20231107"},{"name":"query_execution_id","kind":"id","optional":false,"example":"b3c194e7-6580-421c-81fa-4b409e1ba04f"}]}},{"id":"test-data-expected-context-list-data-lakes-command","method":"GET","pathTemplate":"/","summary":"test_data/expected_context/list_data_lakes_command.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"createStatus","kind":"string","optional":false,"example":"INITIALIZED"},{"name":"dataLakeArn","kind":"string","optional":false,"example":"test"},{"name":"encryptionConfiguration","kind":"object","optional":false,"children":[{"name":"kmsKeyId","kind":"id","optional":false,"example":"test"}]},{"name":"lifecycleConfiguration","kind":"object","optional":false,"children":[{"name":"expiration","kind":"object","optional":false,"children":[{"name":"days","kind":"integer","optional":false}]},{"name":"transitions","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"days","kind":"integer","optional":false},{"name":"storageClass","kind":"string","optional":false,"example":"test"}]},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"region","kind":"string","optional":false,"example":"test"},{"name":"replicationConfiguration","kind":"object","optional":false,"children":[{"name":"regions","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"test"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"roleArn","kind":"string","optional":false,"example":"test"}]},{"name":"s3BucketArn","kind":"string","optional":false,"example":"test"},{"name":"updateStatus","kind":"object","optional":false,"children":[{"name":"exception","kind":"object","optional":false,"children":[{"name":"code","kind":"string","optional":false,"example":"test"},{"name":"reason","kind":"string","optional":false,"example":"test"}]},{"name":"requestId","kind":"id","optional":false,"example":"test"},{"name":"status","kind":"string","optional":false,"example":"INITIALIZED"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-securitylake-awssecuritylake",
+  "name": "Amazon Security Lake",
+  "pack": "AWS-SecurityLake",
+  "fidelity": "shape",
+  "curated": false,
+  "summary": "Amazon Security Lake is a fully managed security data lake service.",
+  "operations": 3,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-securitylake-awssecuritylake",
+      "name": "Amazon Security Lake",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-SecurityLake/Integrations/AWSSecurityLake",
+      "fidelity": "shape",
+      "notes": [
+        "Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.",
+        "No HTTP path was recovered from the client. The sample shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-security-lake-query-execute",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-security-lake-data-catalogs-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-security-lake-databases-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-security-lake-table-metadata-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-security-lake-user-mfalogin-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-security-lake-source-ip-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-security-lake-guardduty-activity-query",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-security-lake-data-sources-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-security-lake-data-lakes-list",
+          "calls": [],
+          "status": "missing"
+        }
+      ]
+    },
+    "operations": [
+      {
+        "id": "test-data-expected-context-get-query-execution-com",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/expected_context/get_query_execution_command.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "QueryExecutionId",
+              "kind": "id",
+              "optional": false,
+              "example": "b3c194e7-6580-421c-81fa-4b409e1ba04f"
+            },
+            {
+              "name": "Query",
+              "kind": "string",
+              "optional": false,
+              "example": "SELECT * FROM test_db.test_table"
+            },
+            {
+              "name": "StatementType",
+              "kind": "string",
+              "optional": false,
+              "example": "DML"
+            },
+            {
+              "name": "ResultConfiguration",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "OutputLocation",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "s3://athena-queries-test/b3c194e7-6580-421c-81fa-4b409e1ba04f.csv"
+                }
+              ]
+            },
+            {
+              "name": "ResultReuseConfiguration",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "ResultReuseByAgeConfiguration",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Enabled",
+                      "kind": "boolean",
+                      "optional": false
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "QueryExecutionContext",
+              "kind": "object",
+              "optional": false,
+              "children": []
+            },
+            {
+              "name": "Status",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "State",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "SUCCEEDED"
+                },
+                {
+                  "name": "SubmissionDateTime",
+                  "kind": "timestamp",
+                  "optional": false,
+                  "example": "2023-11-07T10:01:03",
+                  "format": "iso"
+                },
+                {
+                  "name": "CompletionDateTime",
+                  "kind": "timestamp",
+                  "optional": false,
+                  "example": "2023-11-07T10:01:04",
+                  "format": "iso"
+                }
+              ]
+            },
+            {
+              "name": "Statistics",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "EngineExecutionTimeInMillis",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "DataScannedInBytes",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "TotalExecutionTimeInMillis",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "QueryQueueTimeInMillis",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "QueryPlanningTimeInMillis",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "ServiceProcessingTimeInMillis",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "ResultReuseInformation",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "ReusedPreviousResult",
+                      "kind": "boolean",
+                      "optional": false
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "WorkGroup",
+              "kind": "string",
+              "optional": false,
+              "example": "primary"
+            },
+            {
+              "name": "EngineVersion",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "SelectedEngineVersion",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "AUTO"
+                },
+                {
+                  "name": "EffectiveEngineVersion",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "Athena engine version 3"
+                }
+              ]
+            },
+            {
+              "name": "SubstatementType",
+              "kind": "string",
+              "optional": false,
+              "example": "SELECT"
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-expected-context-get-query-results-comma",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/expected_context/get_query_results_command.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "metadata",
+              "kind": "string",
+              "optional": false,
+              "example": "{product={version=1.09, name=CloudTrail, vendor_name=AWS, feature={name=Data}}, uid=7c33bcd3-0252-4b28-b2c7-7f38ed881796"
+            },
+            {
+              "name": "time",
+              "kind": "string",
+              "optional": false,
+              "example": "1699342808000"
+            },
+            {
+              "name": "cloud",
+              "kind": "string",
+              "optional": false,
+              "example": "{region=eu-central-1, provider=AWS}"
+            },
+            {
+              "name": "api",
+              "kind": "string",
+              "optional": false,
+              "example": "{response={error=null, message=null}, operation=PutObject, version=null, service={name=s3.amazonaws.com}, request={uid=5"
+            },
+            {
+              "name": "actor",
+              "kind": "string",
+              "optional": false,
+              "example": "{user={type=AWSService, name=null, uid=null, uuid=null, account_uid=null, credential_uid=null}, session={created_time=nu"
+            },
+            {
+              "name": "http_request",
+              "kind": "string",
+              "optional": false,
+              "example": "{user_agent=s3.amazonaws.com}"
+            },
+            {
+              "name": "src_endpoint",
+              "kind": "string",
+              "optional": false,
+              "example": "{uid=vpce-59a25a30, ip=null, domain=s3.amazonaws.com}"
+            },
+            {
+              "name": "resources",
+              "kind": "string",
+              "optional": false,
+              "example": "[{uid=arn:aws:s3:::test-log-collector/2023-11-07-07-40-08-CD1B1BC0934C71D4, account_uid=null, type=AWS::S3::Object}, {ui"
+            },
+            {
+              "name": "class_name",
+              "kind": "string",
+              "optional": false,
+              "example": "API Activity"
+            },
+            {
+              "name": "class_uid",
+              "kind": "id",
+              "optional": false,
+              "example": "3005"
+            },
+            {
+              "name": "category_name",
+              "kind": "string",
+              "optional": false,
+              "example": "Audit Activity"
+            },
+            {
+              "name": "category_uid",
+              "kind": "id",
+              "optional": false,
+              "example": "3"
+            },
+            {
+              "name": "severity_id",
+              "kind": "id",
+              "optional": false,
+              "example": "1"
+            },
+            {
+              "name": "severity",
+              "kind": "string",
+              "optional": false,
+              "example": "Informational"
+            },
+            {
+              "name": "activity_name",
+              "kind": "string",
+              "optional": false,
+              "example": "Update"
+            },
+            {
+              "name": "activity_id",
+              "kind": "id",
+              "optional": false,
+              "example": "3"
+            },
+            {
+              "name": "type_uid",
+              "kind": "id",
+              "optional": false,
+              "example": "300503"
+            },
+            {
+              "name": "type_name",
+              "kind": "string",
+              "optional": false,
+              "example": "API Activity: Update"
+            },
+            {
+              "name": "status",
+              "kind": "string",
+              "optional": false,
+              "example": "Success"
+            },
+            {
+              "name": "status_id",
+              "kind": "id",
+              "optional": false,
+              "example": "1"
+            },
+            {
+              "name": "unmapped",
+              "kind": "string",
+              "optional": false,
+              "example": "{additionalEventData.SSEApplied=Default_SSE_S3, additionalEventData.SignatureVersion=SigV4, additionalEventData.CipherSu"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "eu-central-1"
+            },
+            {
+              "name": "accountid",
+              "kind": "id",
+              "optional": false,
+              "example": "123456789012"
+            },
+            {
+              "name": "eventday",
+              "kind": "string",
+              "optional": false,
+              "example": "20231107"
+            },
+            {
+              "name": "query_execution_id",
+              "kind": "id",
+              "optional": false,
+              "example": "b3c194e7-6580-421c-81fa-4b409e1ba04f"
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-expected-context-list-data-lakes-command",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/expected_context/list_data_lakes_command.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "createStatus",
+              "kind": "string",
+              "optional": false,
+              "example": "INITIALIZED"
+            },
+            {
+              "name": "dataLakeArn",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "encryptionConfiguration",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "kmsKeyId",
+                  "kind": "id",
+                  "optional": false,
+                  "example": "test"
+                }
+              ]
+            },
+            {
+              "name": "lifecycleConfiguration",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "expiration",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "days",
+                      "kind": "integer",
+                      "optional": false
+                    }
+                  ]
+                },
+                {
+                  "name": "transitions",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "optional": false,
+                    "children": [
+                      {
+                        "name": "days",
+                        "kind": "integer",
+                        "optional": false
+                      },
+                      {
+                        "name": "storageClass",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "test"
+                      }
+                    ]
+                  },
+                  "minItems": 0,
+                  "maxItems": 1,
+                  "pageItems": false
+                }
+              ]
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "replicationConfiguration",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "regions",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "test"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1,
+                  "pageItems": false
+                },
+                {
+                  "name": "roleArn",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "test"
+                }
+              ]
+            },
+            {
+              "name": "s3BucketArn",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "updateStatus",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "exception",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "code",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "test"
+                    },
+                    {
+                      "name": "reason",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "test"
+                    }
+                  ]
+                },
+                {
+                  "name": "requestId",
+                  "kind": "id",
+                  "optional": false,
+                  "example": "test"
+                },
+                {
+                  "name": "status",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "INITIALIZED"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

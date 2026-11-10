@@ -1,1 +1,2123 @@
-{"id":"aws-systemmanager-awssystemmanager","name":"AWS - System Manager","pack":"AWS_SystemManager","fidelity":"shape","curated":false,"summary":"AWS Systems Manager is the operations hub for your AWS applications and resources and a secure end-to-end management solution for hybrid cloud environments that enables safe and se","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"aws-systemmanager-awssystemmanager","name":"AWS - System Manager","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS_SystemManager/Integrations/AWSSystemManager","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-association-description-json","method":"GET","pathTemplate":"/","summary":"test_data/association_description.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AssociationDescription","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"AWS"},{"name":"AssociationVersion","kind":"string","optional":false,"example":"1"},{"name":"Date","kind":"timestamp","optional":false,"example":"2023-07-18T13:50:27.691000+03:00","format":"iso"},{"name":"LastUpdateAssociationDate","kind":"timestamp","optional":false,"example":"2023-07-18T13:50:27.691000+03:00","format":"iso"},{"name":"Overview","kind":"object","optional":false,"children":[{"name":"Status","kind":"string","optional":false,"example":"Pending"},{"name":"DetailedStatus","kind":"string","optional":false,"example":"Associated"}]},{"name":"DocumentVersion","kind":"string","optional":false,"example":"$DEFAULT"},{"name":"Parameters","kind":"object","optional":false,"children":[{"name":"applications","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Enabled"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"awsComponents","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Enabled"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"billingInfo","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Enabled"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"customInventory","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Enabled"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"files","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"instanceDetailedInformation","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Enabled"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"networkConfig","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Enabled"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"services","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Enabled"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"windowsRegistry","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"windowsRoles","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Enabled"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"windowsUpdates","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Enabled"},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"AssociationId","kind":"id","optional":false,"example":"association_id"},{"name":"Targets","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"Key","kind":"string","optional":false,"example":"InstanceIds"},{"name":"Values","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"instance_id"},"minItems":0,"maxItems":2,"pageItems":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"ScheduleExpression","kind":"string","optional":false,"example":"rate(30 minutes)"},{"name":"LastExecutionDate","kind":"timestamp","optional":false,"example":"2023-07-25T18:51:28.607000+03:00","format":"iso"},{"name":"LastSuccessfulExecutionDate","kind":"timestamp","optional":false,"example":"2023-07-25T18:51:28.607000+03:00","format":"iso"},{"name":"AssociationName","kind":"string","optional":false,"example":"test"},{"name":"ApplyOnlyAtCronInterval","kind":"boolean","optional":false}]},{"name":"ResponseMetadata","kind":"object","optional":false,"children":[{"name":"RequestId","kind":"id","optional":false},{"name":"HTTPStatusCode","kind":"integer","optional":false},{"name":"HTTPHeaders","kind":"object","optional":false,"children":[{"name":"server","kind":"string","optional":false,"example":"Server"},{"name":"date","kind":"string","optional":false,"example":"Thu, 17 Aug 2023 16:50:14 GMT"},{"name":"content-type","kind":"string","optional":false,"example":"application/x-amz-json-1.1"},{"name":"content-length","kind":"string","optional":false,"example":"888"},{"name":"connection","kind":"string","optional":false,"example":"keep-alive"},{"name":"x-amzn-requestid","kind":"id","optional":false}]},{"name":"RetryAttempts","kind":"integer","optional":false}]}]}},{"id":"test-data-get-automation-execution-json","method":"GET","pathTemplate":"/","summary":"test_data/get_automation_execution.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AutomationExecution","kind":"object","optional":false,"children":[{"name":"AutomationExecutionId","kind":"id","optional":false,"example":"AutomationExecutionId"},{"name":"DocumentName","kind":"string","optional":false,"example":"AWS"},{"name":"DocumentVersion","kind":"string","optional":false,"example":"1"},{"name":"ExecutionStartTime","kind":"timestamp","optional":false,"example":"2023-08-29T19:00:50.101000+03:00","format":"iso"},{"name":"ExecutionEndTime","kind":"timestamp","optional":false,"example":"2023-08-29T19:00:51.618000+03:00","format":"iso"},{"name":"AutomationExecutionStatus","kind":"string","optional":false,"example":"Success"},{"name":"StepExecutions","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"StepName","kind":"string","optional":false,"example":"Instances"},{"name":"Action","kind":"string","optional":false,"example":"aws:"},{"name":"OnFailure","kind":"string","optional":false,"example":"Continue"},{"name":"ExecutionStartTime","kind":"timestamp","optional":false,"example":"2023-08-29T19:00:50.463000+03:00","format":"iso"},{"name":"ExecutionEndTime","kind":"timestamp","optional":false,"example":"2023-08-29T19:00:50.961000+03:00","format":"iso"},{"name":"StepStatus","kind":"string","optional":false,"example":"Success"},{"name":"Inputs","kind":"object","optional":false,"children":[{"name":"DesiredState","kind":"string","optional":false,"example":"\"stopped\""},{"name":"InstanceIds","kind":"string","optional":false,"example":"[\"i-\"]"}]},{"name":"Outputs","kind":"object","optional":false,"children":[{"name":"InstanceStates","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"StepExecutionId","kind":"id","optional":false,"example":"StepExecutionId"},{"name":"OverriddenParameters","kind":"object","optional":false,"children":[]},{"name":"ValidNextSteps","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Instances"},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"StepExecutionsTruncated","kind":"boolean","optional":false},{"name":"Parameters","kind":"object","optional":false,"children":[{"name":"AutomationAssumeRole","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"arn"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"InstanceId","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"i-"},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"Outputs","kind":"object","optional":false,"children":[]},{"name":"Mode","kind":"string","optional":false,"example":"Auto"},{"name":"ExecutedBy","kind":"string","optional":false,"example":"arn"},{"name":"Targets","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"ResolvedTargets","kind":"object","optional":false,"children":[{"name":"ParameterValues","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"Truncated","kind":"boolean","optional":false}]}]},{"name":"ResponseMetadata","kind":"object","optional":false,"children":[{"name":"RequestId","kind":"id","optional":false},{"name":"HTTPStatusCode","kind":"integer","optional":false},{"name":"HTTPHeaders","kind":"object","optional":false,"children":[{"name":"server","kind":"string","optional":false,"example":"Server"},{"name":"date","kind":"string","optional":false,"example":"Wed, 30 Aug 2023 12:41:14 GMT"},{"name":"content-type","kind":"string","optional":false,"example":"application/x-amz-json-1.1"},{"name":"content-length","kind":"string","optional":false},{"name":"connection","kind":"string","optional":false,"example":"keep-alive"},{"name":"x-amzn-requestid","kind":"id","optional":false}]},{"name":"RetryAttempts","kind":"integer","optional":false}]}]}},{"id":"test-data-get-document-response-json","method":"GET","pathTemplate":"/","summary":"test_data/get_document_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Document","kind":"object","optional":false,"children":[{"name":"Hash","kind":"string","optional":false,"example":"hash"},{"name":"HashType","kind":"string","optional":false,"example":"hashType"},{"name":"Name","kind":"string","optional":false,"example":"AWS"},{"name":"Owner","kind":"string","optional":false,"example":"Amazon"},{"name":"CreatedDate","kind":"timestamp","optional":false,"example":"2022-10-11T01:06:56.878000+03:00","format":"iso"},{"name":"Status","kind":"string","optional":false,"example":"Active"},{"name":"DocumentVersion","kind":"string","optional":false,"example":"1"},{"name":"Description","kind":"string","optional":false,"example":"Change the test"},{"name":"Parameters","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"test"},{"name":"Type","kind":"string","optional":false,"example":"String"},{"name":"Description","kind":"string","optional":false,"example":"(Required) ID of test"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"PlatformTypes","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Windows"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"DocumentType","kind":"string","optional":false,"example":"Automation"},{"name":"SchemaVersion","kind":"string","optional":false,"example":"0.3"},{"name":"LatestVersion","kind":"string","optional":false,"example":"1"},{"name":"DefaultVersion","kind":"string","optional":false,"example":"1"},{"name":"DocumentFormat","kind":"string","optional":false,"example":"JSON"},{"name":"TargetType","kind":"string","optional":false,"example":"/AWS"},{"name":"Tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"Category","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Instance management"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"CategoryEnum","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"InstanceManagement"},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"ResponseMetadata","kind":"object","optional":false,"children":[{"name":"RequestId","kind":"id","optional":false},{"name":"HTTPStatusCode","kind":"integer","optional":false},{"name":"HTTPHeaders","kind":"object","optional":false,"children":[{"name":"server","kind":"string","optional":false,"example":"Server"},{"name":"date","kind":"string","optional":false,"example":"Wed, 23 Aug 2023 16:08:10 GMT"},{"name":"content-type","kind":"string","optional":false,"example":"application/x-amz-json-1.1"},{"name":"content-length","kind":"string","optional":false,"example":"000"},{"name":"connection","kind":"string","optional":false,"example":"keep-alive"},{"name":"x-amzn-requestid","kind":"id","optional":false}]},{"name":"RetryAttempts","kind":"integer","optional":false}]}]}},{"id":"test-data-get-inventory-entry-command-json","method":"GET","pathTemplate":"/","summary":"test_data/get_inventory_entry_command.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"TypeName","kind":"string","optional":false,"example":"AWS:InstanceInformation"},{"name":"InstanceId","kind":"id","optional":false,"example":"test"},{"name":"SchemaVersion","kind":"string","optional":false,"example":"1.0"},{"name":"CaptureTime","kind":"timestamp","optional":false,"example":"2023-07-25T16:01:59Z","format":"iso"},{"name":"Entries","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"AgentType","kind":"string","optional":false,"example":"agent_type"},{"name":"AgentVersion","kind":"string","optional":false,"example":"agent_version"},{"name":"ComputerName","kind":"string","optional":false,"example":"computer_name"},{"name":"InstanceId","kind":"id","optional":false,"example":"instance_id"},{"name":"InstanceStatus","kind":"string","optional":false,"example":"Stopped"},{"name":"IpAddress","kind":"string","optional":false,"example":"ip_address"},{"name":"PlatformName","kind":"string","optional":false,"example":"Ubuntu"},{"name":"PlatformType","kind":"string","optional":false,"example":"Linux"},{"name":"PlatformVersion","kind":"string","optional":false,"example":"20.04"},{"name":"ResourceType","kind":"string","optional":false,"example":"resource_type"}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"ResponseMetadata","kind":"object","optional":false,"children":[{"name":"RequestId","kind":"id","optional":false,"example":"request_id"},{"name":"HTTPStatusCode","kind":"integer","optional":false},{"name":"HTTPHeaders","kind":"object","optional":false,"children":[{"name":"server","kind":"string","optional":false,"example":"Server"},{"name":"date","kind":"string","optional":false,"example":"Sun, 13 Aug 2023 17:53:49 GMT"},{"name":"content-type","kind":"string","optional":false,"example":"application/x-amz-json-1.1"},{"name":"content-length","kind":"string","optional":false,"example":"000"},{"name":"connection","kind":"string","optional":false,"example":"keep-alive"},{"name":"x-amzn-requestid","kind":"id","optional":false,"example":"request_id"}]},{"name":"RetryAttempts","kind":"integer","optional":false}]}]}},{"id":"test-data-get-inventory-response-json","method":"GET","pathTemplate":"/","summary":"test_data/get_inventory_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Entities","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false,"example":"i-test_1"},{"name":"Data","kind":"object","optional":false,"children":[]}]},"minItems":0,"maxItems":3,"pageItems":false}]}},{"id":"test-data-list-association-versions-response-json","method":"GET","pathTemplate":"/","summary":"test_data/list_association_versions_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AssociationVersions","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"AssociationId","kind":"id","optional":false,"example":"association_id"},{"name":"AssociationVersion","kind":"string","optional":false,"example":"1"},{"name":"CreatedDate","kind":"timestamp","optional":false,"example":"2023-02-14T13:48:24.511000+02:00","format":"iso"},{"name":"Name","kind":"string","optional":false,"example":"AWSQuickSetup"},{"name":"Parameters","kind":"object","optional":false,"children":[{"name":"AutomationAssumeRole","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"arn"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"IsPolicyAttachAllowed","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"false"},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"Targets","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"Key","kind":"string","optional":false,"example":"ParameterValues"},{"name":"Values","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"ScheduleExpression","kind":"string","optional":false,"example":"rate(30 days)"},{"name":"AssociationName","kind":"string","optional":false,"example":"AWS-QuickSetup"},{"name":"CalendarNames","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"ResponseMetadata","kind":"object","optional":false,"children":[{"name":"RequestId","kind":"id","optional":false},{"name":"HTTPStatusCode","kind":"integer","optional":false},{"name":"HTTPHeaders","kind":"object","optional":false,"children":[{"name":"server","kind":"string","optional":false,"example":"Server"},{"name":"date","kind":"string","optional":false,"example":"Sun, 20 Aug 2023 09:46:42 GMT"},{"name":"content-type","kind":"string","optional":false,"example":"application/x-amz-json-1.1"},{"name":"content-length","kind":"string","optional":false,"example":"582"},{"name":"connection","kind":"string","optional":false,"example":"keep-alive"},{"name":"x-amzn-requestid","kind":"id","optional":false}]},{"name":"RetryAttempts","kind":"integer","optional":false}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-systemmanager-awssystemmanager",
+  "name": "AWS - System Manager",
+  "pack": "AWS_SystemManager",
+  "fidelity": "vendor",
+  "curated": false,
+  "summary": "From vendor docs. AWS Systems Manager is the operations hub for your AWS applications and resources and a secure end-to-end management solution for hybrid cloud environments that enables safe and se",
+  "operations": 6,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-systemmanager-awssystemmanager",
+      "name": "AWS - System Manager",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS_SystemManager/Integrations/AWSSystemManager",
+      "fidelity": "vendor",
+      "notes": [
+        "Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.",
+        "No HTTP path was recovered from the client. The sample shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-ssm-tag-add",
+          "calls": [
+            "ssm:AddTagsToResource"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-tag-remove",
+          "calls": [
+            "ssm:RemoveTagsFromResource"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-tag-list",
+          "calls": [
+            "ssm:ListTagsForResource"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "ssm-list-tags-for-resource"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListTagsForResource.html"
+        },
+        {
+          "command": "aws-ssm-inventory-list",
+          "calls": [
+            "ssm:GetInventory"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "ssm-get-inventory"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_GetInventory.html"
+        },
+        {
+          "command": "aws-ssm-inventory-entry-list",
+          "calls": [
+            "ssm:ListInventoryEntries"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "ssm-list-inventory-entries"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListInventoryEntries.html"
+        },
+        {
+          "command": "aws-ssm-association-list",
+          "calls": [
+            "ssm:ListAssociations"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "ssm-list-associations"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListAssociations.html"
+        },
+        {
+          "command": "aws-ssm-association-get",
+          "calls": [
+            "ssm:DescribeAssociation"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "ssm-describe-association"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_DescribeAssociation.html"
+        },
+        {
+          "command": "aws-ssm-association-version-list",
+          "calls": [
+            "ssm:ListAssociationVersions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "ssm-list-association-versions"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListAssociationVersions.html"
+        },
+        {
+          "command": "aws-ssm-document-list",
+          "calls": [
+            "ssm:ListDocuments"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "ssm-list-documents"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListDocuments.html"
+        },
+        {
+          "command": "aws-ssm-document-get",
+          "calls": [
+            "ssm:DescribeDocument"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "ssm-describe-document"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_DescribeDocument.html"
+        },
+        {
+          "command": "aws-ssm-automation-execution-run",
+          "calls": [
+            "ssm:StartAutomationExecution",
+            "ssm:GetAutomationExecution"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "ssm-start-automation-execution",
+            "ssm-get-automation-execution"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_StartAutomationExecution.html"
+        },
+        {
+          "command": "aws-ssm-automation-execution-cancel",
+          "calls": [
+            "ssm:StopAutomationExecution",
+            "ssm:GetAutomationExecution"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "ssm-get-automation-execution"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_GetAutomationExecution.html"
+        },
+        {
+          "command": "aws-ssm-automation-execution-list",
+          "calls": [
+            "ssm:GetAutomationExecution"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "ssm-get-automation-execution"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_GetAutomationExecution.html"
+        },
+        {
+          "command": "aws-ssm-command-list",
+          "calls": [
+            "ssm:ListCommands"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "ssm-list-commands"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListCommands.html"
+        },
+        {
+          "command": "aws-ssm-command-run",
+          "calls": [
+            "ssm:SendCommand",
+            "ssm:ListCommands"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "ssm-send-command",
+            "ssm-list-commands"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_SendCommand.html"
+        },
+        {
+          "command": "aws-ssm-command-cancel",
+          "calls": [
+            "ssm:CancelCommand",
+            "ssm:ListCommands"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "ssm-list-commands"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListCommands.html"
+        }
+      ],
+      "verification": {
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListTagsForResource.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "12 of 16 commands from vendor docs, 2 approximate, 2 missing.",
+          "16 of 16 commands from vendor docs, 0 approximate, 0 missing."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "test-data-association-description-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/association_description.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AssociationDescription",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Name",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "AWS"
+                },
+                {
+                  "name": "AssociationVersion",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "1"
+                },
+                {
+                  "name": "Date",
+                  "kind": "timestamp",
+                  "optional": false,
+                  "example": "2023-07-18T13:50:27.691000+03:00",
+                  "format": "iso"
+                },
+                {
+                  "name": "LastUpdateAssociationDate",
+                  "kind": "timestamp",
+                  "optional": false,
+                  "example": "2023-07-18T13:50:27.691000+03:00",
+                  "format": "iso"
+                },
+                {
+                  "name": "Overview",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Status",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "Pending"
+                    },
+                    {
+                      "name": "DetailedStatus",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "Associated"
+                    }
+                  ]
+                },
+                {
+                  "name": "DocumentVersion",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "$DEFAULT"
+                },
+                {
+                  "name": "Parameters",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "applications",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "Enabled"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "awsComponents",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "Enabled"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "billingInfo",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "Enabled"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "customInventory",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "Enabled"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "files",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "instanceDetailedInformation",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "Enabled"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "networkConfig",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "Enabled"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "services",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "Enabled"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "windowsRegistry",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "windowsRoles",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "Enabled"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "windowsUpdates",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "Enabled"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    }
+                  ]
+                },
+                {
+                  "name": "AssociationId",
+                  "kind": "id",
+                  "optional": false,
+                  "example": "association_id"
+                },
+                {
+                  "name": "Targets",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "optional": false,
+                    "children": [
+                      {
+                        "name": "Key",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "InstanceIds"
+                      },
+                      {
+                        "name": "Values",
+                        "kind": "array",
+                        "optional": false,
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "instance_id"
+                        },
+                        "minItems": 0,
+                        "maxItems": 2,
+                        "pageItems": false
+                      }
+                    ]
+                  },
+                  "minItems": 0,
+                  "maxItems": 1,
+                  "pageItems": false
+                },
+                {
+                  "name": "ScheduleExpression",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "rate(30 minutes)"
+                },
+                {
+                  "name": "LastExecutionDate",
+                  "kind": "timestamp",
+                  "optional": false,
+                  "example": "2023-07-25T18:51:28.607000+03:00",
+                  "format": "iso"
+                },
+                {
+                  "name": "LastSuccessfulExecutionDate",
+                  "kind": "timestamp",
+                  "optional": false,
+                  "example": "2023-07-25T18:51:28.607000+03:00",
+                  "format": "iso"
+                },
+                {
+                  "name": "AssociationName",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "test"
+                },
+                {
+                  "name": "ApplyOnlyAtCronInterval",
+                  "kind": "boolean",
+                  "optional": false
+                }
+              ]
+            },
+            {
+              "name": "ResponseMetadata",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "RequestId",
+                  "kind": "id",
+                  "optional": false
+                },
+                {
+                  "name": "HTTPStatusCode",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "HTTPHeaders",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "server",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "Server"
+                    },
+                    {
+                      "name": "date",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "Thu, 17 Aug 2023 16:50:14 GMT"
+                    },
+                    {
+                      "name": "content-type",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "application/x-amz-json-1.1"
+                    },
+                    {
+                      "name": "content-length",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "888"
+                    },
+                    {
+                      "name": "connection",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "keep-alive"
+                    },
+                    {
+                      "name": "x-amzn-requestid",
+                      "kind": "id",
+                      "optional": false
+                    }
+                  ]
+                },
+                {
+                  "name": "RetryAttempts",
+                  "kind": "integer",
+                  "optional": false
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-get-automation-execution-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/get_automation_execution.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AutomationExecution",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "AutomationExecutionId",
+                  "kind": "id",
+                  "optional": false,
+                  "example": "AutomationExecutionId"
+                },
+                {
+                  "name": "DocumentName",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "AWS"
+                },
+                {
+                  "name": "DocumentVersion",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "1"
+                },
+                {
+                  "name": "ExecutionStartTime",
+                  "kind": "timestamp",
+                  "optional": false,
+                  "example": "2023-08-29T19:00:50.101000+03:00",
+                  "format": "iso"
+                },
+                {
+                  "name": "ExecutionEndTime",
+                  "kind": "timestamp",
+                  "optional": false,
+                  "example": "2023-08-29T19:00:51.618000+03:00",
+                  "format": "iso"
+                },
+                {
+                  "name": "AutomationExecutionStatus",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "Success"
+                },
+                {
+                  "name": "StepExecutions",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "optional": false,
+                    "children": [
+                      {
+                        "name": "StepName",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "Instances"
+                      },
+                      {
+                        "name": "Action",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "aws:"
+                      },
+                      {
+                        "name": "OnFailure",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "Continue"
+                      },
+                      {
+                        "name": "ExecutionStartTime",
+                        "kind": "timestamp",
+                        "optional": false,
+                        "example": "2023-08-29T19:00:50.463000+03:00",
+                        "format": "iso"
+                      },
+                      {
+                        "name": "ExecutionEndTime",
+                        "kind": "timestamp",
+                        "optional": false,
+                        "example": "2023-08-29T19:00:50.961000+03:00",
+                        "format": "iso"
+                      },
+                      {
+                        "name": "StepStatus",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "Success"
+                      },
+                      {
+                        "name": "Inputs",
+                        "kind": "object",
+                        "optional": false,
+                        "children": [
+                          {
+                            "name": "DesiredState",
+                            "kind": "string",
+                            "optional": false,
+                            "example": "\"stopped\""
+                          },
+                          {
+                            "name": "InstanceIds",
+                            "kind": "string",
+                            "optional": false,
+                            "example": "[\"i-\"]"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "Outputs",
+                        "kind": "object",
+                        "optional": false,
+                        "children": [
+                          {
+                            "name": "InstanceStates",
+                            "kind": "array",
+                            "optional": false,
+                            "item": {
+                              "name": "item",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "nested"
+                            },
+                            "minItems": 0,
+                            "maxItems": 1,
+                            "pageItems": false
+                          }
+                        ]
+                      },
+                      {
+                        "name": "StepExecutionId",
+                        "kind": "id",
+                        "optional": false,
+                        "example": "StepExecutionId"
+                      },
+                      {
+                        "name": "OverriddenParameters",
+                        "kind": "object",
+                        "optional": false,
+                        "children": []
+                      },
+                      {
+                        "name": "ValidNextSteps",
+                        "kind": "array",
+                        "optional": false,
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Instances"
+                        },
+                        "minItems": 0,
+                        "maxItems": 1,
+                        "pageItems": false
+                      }
+                    ]
+                  },
+                  "minItems": 0,
+                  "maxItems": 2,
+                  "pageItems": false
+                },
+                {
+                  "name": "StepExecutionsTruncated",
+                  "kind": "boolean",
+                  "optional": false
+                },
+                {
+                  "name": "Parameters",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "AutomationAssumeRole",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "arn"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "InstanceId",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "i-"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    }
+                  ]
+                },
+                {
+                  "name": "Outputs",
+                  "kind": "object",
+                  "optional": false,
+                  "children": []
+                },
+                {
+                  "name": "Mode",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "Auto"
+                },
+                {
+                  "name": "ExecutedBy",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "arn"
+                },
+                {
+                  "name": "Targets",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "optional": false
+                  },
+                  "minItems": 0,
+                  "maxItems": 1,
+                  "pageItems": false
+                },
+                {
+                  "name": "ResolvedTargets",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "ParameterValues",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "Truncated",
+                      "kind": "boolean",
+                      "optional": false
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ResponseMetadata",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "RequestId",
+                  "kind": "id",
+                  "optional": false
+                },
+                {
+                  "name": "HTTPStatusCode",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "HTTPHeaders",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "server",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "Server"
+                    },
+                    {
+                      "name": "date",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "Wed, 30 Aug 2023 12:41:14 GMT"
+                    },
+                    {
+                      "name": "content-type",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "application/x-amz-json-1.1"
+                    },
+                    {
+                      "name": "content-length",
+                      "kind": "string",
+                      "optional": false
+                    },
+                    {
+                      "name": "connection",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "keep-alive"
+                    },
+                    {
+                      "name": "x-amzn-requestid",
+                      "kind": "id",
+                      "optional": false
+                    }
+                  ]
+                },
+                {
+                  "name": "RetryAttempts",
+                  "kind": "integer",
+                  "optional": false
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-get-document-response-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/get_document_response.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "Document",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Hash",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "hash"
+                },
+                {
+                  "name": "HashType",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "hashType"
+                },
+                {
+                  "name": "Name",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "AWS"
+                },
+                {
+                  "name": "Owner",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "Amazon"
+                },
+                {
+                  "name": "CreatedDate",
+                  "kind": "timestamp",
+                  "optional": false,
+                  "example": "2022-10-11T01:06:56.878000+03:00",
+                  "format": "iso"
+                },
+                {
+                  "name": "Status",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "Active"
+                },
+                {
+                  "name": "DocumentVersion",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "1"
+                },
+                {
+                  "name": "Description",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "Change the test"
+                },
+                {
+                  "name": "Parameters",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "optional": false,
+                    "children": [
+                      {
+                        "name": "Name",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "test"
+                      },
+                      {
+                        "name": "Type",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "String"
+                      },
+                      {
+                        "name": "Description",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "(Required) ID of test"
+                      }
+                    ]
+                  },
+                  "minItems": 0,
+                  "maxItems": 3,
+                  "pageItems": false
+                },
+                {
+                  "name": "PlatformTypes",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "Windows"
+                  },
+                  "minItems": 0,
+                  "maxItems": 3,
+                  "pageItems": false
+                },
+                {
+                  "name": "DocumentType",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "Automation"
+                },
+                {
+                  "name": "SchemaVersion",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "0.3"
+                },
+                {
+                  "name": "LatestVersion",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "1"
+                },
+                {
+                  "name": "DefaultVersion",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "1"
+                },
+                {
+                  "name": "DocumentFormat",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "JSON"
+                },
+                {
+                  "name": "TargetType",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "/AWS"
+                },
+                {
+                  "name": "Tags",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "optional": false
+                  },
+                  "minItems": 0,
+                  "maxItems": 1,
+                  "pageItems": false
+                },
+                {
+                  "name": "Category",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "Instance management"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1,
+                  "pageItems": false
+                },
+                {
+                  "name": "CategoryEnum",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "InstanceManagement"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1,
+                  "pageItems": false
+                }
+              ]
+            },
+            {
+              "name": "ResponseMetadata",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "RequestId",
+                  "kind": "id",
+                  "optional": false
+                },
+                {
+                  "name": "HTTPStatusCode",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "HTTPHeaders",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "server",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "Server"
+                    },
+                    {
+                      "name": "date",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "Wed, 23 Aug 2023 16:08:10 GMT"
+                    },
+                    {
+                      "name": "content-type",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "application/x-amz-json-1.1"
+                    },
+                    {
+                      "name": "content-length",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "000"
+                    },
+                    {
+                      "name": "connection",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "keep-alive"
+                    },
+                    {
+                      "name": "x-amzn-requestid",
+                      "kind": "id",
+                      "optional": false
+                    }
+                  ]
+                },
+                {
+                  "name": "RetryAttempts",
+                  "kind": "integer",
+                  "optional": false
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-get-inventory-entry-command-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/get_inventory_entry_command.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "TypeName",
+              "kind": "string",
+              "optional": false,
+              "example": "AWS:InstanceInformation"
+            },
+            {
+              "name": "InstanceId",
+              "kind": "id",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "SchemaVersion",
+              "kind": "string",
+              "optional": false,
+              "example": "1.0"
+            },
+            {
+              "name": "CaptureTime",
+              "kind": "timestamp",
+              "optional": false,
+              "example": "2023-07-25T16:01:59Z",
+              "format": "iso"
+            },
+            {
+              "name": "Entries",
+              "kind": "array",
+              "optional": false,
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "optional": false,
+                "children": [
+                  {
+                    "name": "AgentType",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "agent_type"
+                  },
+                  {
+                    "name": "AgentVersion",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "agent_version"
+                  },
+                  {
+                    "name": "ComputerName",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "computer_name"
+                  },
+                  {
+                    "name": "InstanceId",
+                    "kind": "id",
+                    "optional": false,
+                    "example": "instance_id"
+                  },
+                  {
+                    "name": "InstanceStatus",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "Stopped"
+                  },
+                  {
+                    "name": "IpAddress",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "ip_address"
+                  },
+                  {
+                    "name": "PlatformName",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "Ubuntu"
+                  },
+                  {
+                    "name": "PlatformType",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "Linux"
+                  },
+                  {
+                    "name": "PlatformVersion",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "20.04"
+                  },
+                  {
+                    "name": "ResourceType",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "resource_type"
+                  }
+                ]
+              },
+              "minItems": 0,
+              "maxItems": 2,
+              "pageItems": false
+            },
+            {
+              "name": "ResponseMetadata",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "RequestId",
+                  "kind": "id",
+                  "optional": false,
+                  "example": "request_id"
+                },
+                {
+                  "name": "HTTPStatusCode",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "HTTPHeaders",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "server",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "Server"
+                    },
+                    {
+                      "name": "date",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "Sun, 13 Aug 2023 17:53:49 GMT"
+                    },
+                    {
+                      "name": "content-type",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "application/x-amz-json-1.1"
+                    },
+                    {
+                      "name": "content-length",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "000"
+                    },
+                    {
+                      "name": "connection",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "keep-alive"
+                    },
+                    {
+                      "name": "x-amzn-requestid",
+                      "kind": "id",
+                      "optional": false,
+                      "example": "request_id"
+                    }
+                  ]
+                },
+                {
+                  "name": "RetryAttempts",
+                  "kind": "integer",
+                  "optional": false
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-get-inventory-response-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/get_inventory_response.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "Entities",
+              "kind": "array",
+              "optional": false,
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "optional": false,
+                "children": [
+                  {
+                    "name": "Id",
+                    "kind": "id",
+                    "optional": false,
+                    "example": "i-test_1"
+                  },
+                  {
+                    "name": "Data",
+                    "kind": "object",
+                    "optional": false,
+                    "children": []
+                  }
+                ]
+              },
+              "minItems": 0,
+              "maxItems": 3,
+              "pageItems": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-list-association-versions-response-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/list_association_versions_response.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AssociationVersions",
+              "kind": "array",
+              "optional": false,
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "optional": false,
+                "children": [
+                  {
+                    "name": "AssociationId",
+                    "kind": "id",
+                    "optional": false,
+                    "example": "association_id"
+                  },
+                  {
+                    "name": "AssociationVersion",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "1"
+                  },
+                  {
+                    "name": "CreatedDate",
+                    "kind": "timestamp",
+                    "optional": false,
+                    "example": "2023-02-14T13:48:24.511000+02:00",
+                    "format": "iso"
+                  },
+                  {
+                    "name": "Name",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "AWSQuickSetup"
+                  },
+                  {
+                    "name": "Parameters",
+                    "kind": "object",
+                    "optional": false,
+                    "children": [
+                      {
+                        "name": "AutomationAssumeRole",
+                        "kind": "array",
+                        "optional": false,
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "arn"
+                        },
+                        "minItems": 0,
+                        "maxItems": 1,
+                        "pageItems": false
+                      },
+                      {
+                        "name": "IsPolicyAttachAllowed",
+                        "kind": "array",
+                        "optional": false,
+                        "item": {
+                          "name": "item",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "false"
+                        },
+                        "minItems": 0,
+                        "maxItems": 1,
+                        "pageItems": false
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Targets",
+                    "kind": "array",
+                    "optional": false,
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Key",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "ParameterValues"
+                        },
+                        {
+                          "name": "Values",
+                          "kind": "array",
+                          "optional": false,
+                          "item": {
+                            "name": "item",
+                            "kind": "string",
+                            "optional": false,
+                            "example": "nested"
+                          },
+                          "minItems": 0,
+                          "maxItems": 1,
+                          "pageItems": false
+                        }
+                      ]
+                    },
+                    "minItems": 0,
+                    "maxItems": 1,
+                    "pageItems": false
+                  },
+                  {
+                    "name": "ScheduleExpression",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "rate(30 days)"
+                  },
+                  {
+                    "name": "AssociationName",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "AWS-QuickSetup"
+                  },
+                  {
+                    "name": "CalendarNames",
+                    "kind": "array",
+                    "optional": false,
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "optional": false
+                    },
+                    "minItems": 0,
+                    "maxItems": 1,
+                    "pageItems": false
+                  }
+                ]
+              },
+              "minItems": 0,
+              "maxItems": 1,
+              "pageItems": false
+            },
+            {
+              "name": "ResponseMetadata",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "RequestId",
+                  "kind": "id",
+                  "optional": false
+                },
+                {
+                  "name": "HTTPStatusCode",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "HTTPHeaders",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "server",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "Server"
+                    },
+                    {
+                      "name": "date",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "Sun, 20 Aug 2023 09:46:42 GMT"
+                    },
+                    {
+                      "name": "content-type",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "application/x-amz-json-1.1"
+                    },
+                    {
+                      "name": "content-length",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "582"
+                    },
+                    {
+                      "name": "connection",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "keep-alive"
+                    },
+                    {
+                      "name": "x-amzn-requestid",
+                      "kind": "id",
+                      "optional": false
+                    }
+                  ]
+                },
+                {
+                  "name": "RetryAttempts",
+                  "kind": "integer",
+                  "optional": false
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "ssm-list-tags-for-resource",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "ssm ListTagsForResource",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListTagsForResource",
+        "fixture": "{\n  \"TagList\": [\n    {\n      \"Key\": \"Platform\",\n      \"Value\": \"Windows Server\"\n    },\n    {\n      \"Key\": \"Environment\",\n      \"Value\": \"Production\"\n    },\n    {\n      \"Key\": \"Region\",\n      \"Value\": \"EMEA\"\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSSM.ListTagsForResource"
+        }
+      },
+      {
+        "id": "ssm-get-inventory",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "ssm GetInventory",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetInventory",
+        "fixture": "{\n  \"Entities\": [\n    {\n      \"Data\": {\n        \"Id\": \"i-04bf6ad63bEXAMPLE\",\n        \"AWS:InstanceInformation\": {\n          \"TypeName\": \"AWS:InstanceInformation\",\n          \"SchemaVersion\": \"1.0\",\n          \"CaptureTime\": \"2024-03-30T14:00:57Z\",\n          \"Content\": [\n            {\n              \"AgentType\": \"amazon-ssm-agent\",\n              \"AgentVersion\": \"2.3.930.0\",\n              \"ComputerName\": \"EC2AMAZ-EXAMPLE.WORKGROUP\",\n              \"InstanceId\": \"i-04bf6ad63bEXAMPLE\",\n              \"InstanceStatus\": \"Stopped\",\n              \"IpAddress\": \"172.16.0.4\",\n              \"PlatformName\": \"Microsoft Windows Server 2016 Datacenter\",\n              \"PlatformType\": \"Windows\",\n              \"PlatformVersion\": \"10.0.14393\",\n              \"ResourceType\": \"EC2Instance\"\n            }\n          ]\n        }\n      }\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSSM.GetInventory"
+        }
+      },
+      {
+        "id": "ssm-list-inventory-entries",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "ssm ListInventoryEntries",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListInventoryEntries",
+        "fixture": "{\n  \"CaptureTime\": \"2020-03-30T15:45:32Z\",\n  \"Entries\": [\n    {\n      \"Architecture\": \"i386\",\n      \"InstalledTime\": \"2020-01-15T00:00:00Z\",\n      \"Name\": \"AWS Tools for Windows\",\n      \"PackageId\": \"{2088D019-97CC-4349-BA45-9777568EAE94}\",\n      \"Publisher\": \"Amazon Web Services Developer Relations\",\n      \"Version\": \"3.15.925\"\n    },\n    {\n      \"Architecture\": \"i386\",\n      \"Name\": \"Amazon SSM Agent\",\n      \"PackageId\": \"{2a4673c2-68c6-4a4c-9be6-c3b1be96fdff}\",\n      \"Publisher\": \"Amazon Web Services\",\n      \"Version\": \"2.3.930.0\"\n    },\n    {\n      \"Architecture\": \"x86_64\",\n      \"InstalledTime\": \"2018-10-14T00:00:00Z\",\n      \"Name\": \"aws-cfn-bootstrap\",\n      \"PackageId\": \"{34CD0CCF-195B-4BC5-B409-D44EB9A129C8}\",\n      \"Publisher\": \"Amazon Web Services\",\n      \"Version\": \"1.4.31\"\n    },\n    {\n      \"Architecture\": \"x86_64\",\n      \"InstalledTime\": \"2020-03-10T00:00:00Z\",\n      \"Name\": \"PowerShell 7-x64\",\n      \"PackageId\": \"{B324E508-9AAE-446A-BC4C-BB446E8C2A18}\",\n      \"Publisher\": \"Microsoft Corporation\",\n      \"Version\": \"7.0.0.0\"\n    },\n    {\n      \"Architecture\": \"x86_64\",\n      \"InstalledTime\": \"2019-09-06T00:00:00Z\",\n      \"Name\": \"AWS PV Drivers\",\n      \"PackageId\": \"{C1F68A8D-F235-4886-87B0-150107C07EDA}\",\n      \"Publisher\": \"Amazon Web Services\",\n      \"Version\": \"8.3.2\"\n    }\n  ],\n  \"InstanceId\": \"i-04bf6ad63bEXAMPLE\",\n  \"SchemaVersion\": \"1.1\",\n  \"TypeName\": \"AWS:Application\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSSM.ListInventoryEntries"
+        }
+      },
+      {
+        "id": "ssm-list-associations",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "ssm ListAssociations",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListAssociations",
+        "fixture": "{\n  \"Associations\": [\n    {\n      \"AssociationId\": \"fa94c678-85c6-4d40-926b-7c791EXAMPLE\",\n      \"AssociationVersion\": \"1\",\n      \"LastExecutionDate\": 1582037438.692,\n      \"Name\": \"AWS-UpdateSSMAgent\",\n      \"Overview\": {\n        \"AssociationStatusAggregatedCount\": {\n          \"Success\": 3\n        },\n        \"DetailedStatus\": \"Success\",\n        \"Status\": \"Success\"\n      },\n      \"Targets\": [\n        {\n          \"Key\": \"tag:ssm\",\n          \"Values\": [\n            \"true\"\n          ]\n        }\n      ]\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSSM.ListAssociations"
+        }
+      },
+      {
+        "id": "ssm-describe-association",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "ssm DescribeAssociation",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DescribeAssociation",
+        "fixture": "{\n  \"AssociationDescription\": {\n    \"ApplyOnlyAtCronInterval\": false,\n    \"AssociationId\": \"fa94c678-85c6-4d40-926b-7c791EXAMPLE\",\n    \"AssociationVersion\": \"1\",\n    \"ComplianceSeverity\": \"UNSPECIFIED\",\n    \"Date\": 1561053271.583,\n    \"DocumentVersion\": \"$DEFAULT\",\n    \"LastExecutionDate\": 1582037438.692,\n    \"LastSuccessfulExecutionDate\": 1582037438.692,\n    \"LastUpdateAssociationDate\": 1561053271.583,\n    \"Name\": \"AWS-UpdateSSMAgent\",\n    \"Overview\": {\n      \"AssociationStatusAggregatedCount\": {\n        \"Success\": 3\n      },\n      \"DetailedStatus\": \"Success\",\n      \"Status\": \"Success\"\n    },\n    \"Parameters\": {\n      \"allowDowngrade\": [\n        \"false\"\n      ],\n      \"version\": [\n        \"\"\n      ]\n    },\n    \"Targets\": [\n      {\n        \"Key\": \"tag:ssm\",\n        \"Values\": [\n          \"true\"\n        ]\n      }\n    ]\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSSM.DescribeAssociation"
+        }
+      },
+      {
+        "id": "ssm-list-association-versions",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "ssm ListAssociationVersions",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListAssociationVersions",
+        "fixture": "{\n  \"AssociationVersions\": [\n    {\n      \"ApplyOnlyAtCronInterval\": false,\n      \"AssociationId\": \"fa94c678-85c6-4d40-926b-7c791EXAMPLE\",\n      \"AssociationVersion\": \"1\",\n      \"CreatedDate\": 1561053271.583,\n      \"Name\": \"AWS-UpdateSSMAgent\",\n      \"Parameters\": {\n        \"allowDowngrade\": [\n          \"false\"\n        ],\n        \"version\": [\n          \"\"\n        ]\n      },\n      \"Targets\": [\n        {\n          \"Key\": \"tag:ssm\",\n          \"Values\": [\n            \"true\"\n          ]\n        }\n      ]\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSSM.ListAssociationVersions"
+        }
+      },
+      {
+        "id": "ssm-list-documents",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "ssm ListDocuments",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListDocuments",
+        "fixture": "{\n  \"DocumentIdentifiers\": [\n    {\n      \"CreatedDate\": 1486594364.541,\n      \"DocumentFormat\": \"YAML\",\n      \"DocumentType\": \"Automation\",\n      \"DocumentVersion\": \"1\",\n      \"DisplayName\": \"ExampleDoc\",\n      \"Name\": \"Example\",\n      \"Owner\": \"111122223333\",\n      \"PlatformTypes\": [\n        \"Windows\",\n        \"Linux\"\n      ],\n      \"SchemaVersion\": \"0.3\",\n      \"Tags\": [\n        {\n          \"Key\": \"DocUse\",\n          \"Value\": \"Testing\"\n        }\n      ]\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSSM.ListDocuments"
+        }
+      },
+      {
+        "id": "ssm-describe-document",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "ssm DescribeDocument",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DescribeDocument",
+        "fixture": "{\n  \"Document\": {\n    \"CreatedDate\": 1585061514.204,\n    \"DefaultVersion\": \"1\",\n    \"Description\": \"Example\",\n    \"DocumentFormat\": \"YAML\",\n    \"DocumentType\": \"Automation\",\n    \"DocumentVersion\": \"1\",\n    \"DisplayName\": \"ExampleDoc\",\n    \"Hash\": \"68b196e538f5a895f87a0cc15eb74614021f44b47329aa95ccc0f4f71EXAMPLE\",\n    \"HashType\": \"Sha256\",\n    \"LatestVersion\": \"1\",\n    \"Name\": \"Example\",\n    \"Owner\": \"111122223333\",\n    \"Parameters\": [\n      {\n        \"DefaultValue\": \"\",\n        \"Description\": \"(Required) The ARN of the role that allows Automation to perform the actions on your behalf. If no role is specified, Systems Manager Automation uses your IAM permissions to execute this document.\",\n        \"Name\": \"AutomationAssumeRole\",\n        \"Type\": \"String\"\n      },\n      {\n        \"DefaultValue\": \"\",\n        \"Description\": \"(Required) The Instance Id to create an image of.\",\n        \"Name\": \"InstanceId\",\n        \"Type\": \"String\"\n      }\n    ],\n    \"PlatformTypes\": [\n      \"Windows\",\n      \"Linux\"\n    ],\n    \"SchemaVersion\": \"0.3\",\n    \"Status\": \"Active\",\n    \"Tags\": []\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSSM.DescribeDocument"
+        }
+      },
+      {
+        "id": "ssm-start-automation-execution",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "ssm StartAutomationExecution",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "StartAutomationExecution",
+        "fixture": "{\n  \"AutomationExecutionId\": \"832a6fba-f4f0-4b2a-ab85-587adEXAMPLE\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSSM.StartAutomationExecution"
+        }
+      },
+      {
+        "id": "ssm-get-automation-execution",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "ssm GetAutomationExecution",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetAutomationExecution",
+        "fixture": "{\n  \"AutomationExecution\": {\n    \"AutomationExecutionId\": \"8a5f5be8-5d93-437a-adbb-394f7EXAMPLE\",\n    \"AutomationExecutionStatus\": \"Success\",\n    \"DocumentName\": \"CreateImage\",\n    \"DocumentVersion\": \"1\",\n    \"ExecutedBy\": \"arn:aws:sts::111122223333:assumed-role/Example\",\n    \"ExecutionEndTime\": 1585062669.053,\n    \"ExecutionStartTime\": 1585061570.827,\n    \"Mode\": \"Auto\",\n    \"Outputs\": {},\n    \"Parameters\": {\n      \"InstanceId\": [\n        \"i-02573cafcfEXAMPLE\"\n      ]\n    },\n    \"ResolvedTargets\": {\n      \"ParameterValues\": [],\n      \"Truncated\": false\n    },\n    \"StepExecutions\": [\n      {\n        \"Action\": \"aws:createImage\",\n        \"ExecutionEndTime\": 1585062668.968,\n        \"ExecutionStartTime\": 1585061571.144,\n        \"Inputs\": {\n          \"ImageDescription\": \"\\\"AMI for i-02573cafcfEXAMPLE created on 2020-03-24_14.52.51\\\"\",\n          \"ImageName\": \"\\\"i-02573cafcfEXAMPLE-2020-03-24_14.52.51\\\"\",\n          \"InstanceId\": \"\\\"i-02573cafcfEXAMPLE\\\"\",\n          \"NoReboot\": \"false\"\n        },\n        \"OnFailure\": \"Abort\",\n        \"Outputs\": {\n          \"ImageId\": [\n            \"ami-0f4706cb37EXAMPLE\"\n          ],\n          \"ImageState\": [\n            \"available\"\n          ],\n          \"OutputPayload\": [\n            \"{\\\"ImageId\\\":\\\"ami-0f4706cb37EXAMPLE\\\",\\\"ImageState\\\":\\\"available\\\"}\"\n          ]\n        },\n        \"OverriddenParameters\": {},\n        \"StepExecutionId\": \"eff80946-356d-4128-97b2-6a0f5EXAMPLE\",\n        \"StepName\": \"createImage\",\n        \"StepStatus\": \"Success\"\n      }\n    ],\n    \"StepExecutionsTruncated\": false,\n    \"Targets\": []\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSSM.GetAutomationExecution"
+        }
+      },
+      {
+        "id": "ssm-list-commands",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "ssm ListCommands",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListCommands",
+        "fixture": "{\n  \"Commands\": [\n    {\n      \"CloudWatchOutputConfig\": {\n        \"CloudWatchLogGroupName\": \"my-log-group\",\n        \"CloudWatchOutputEnabled\": true\n      },\n      \"CommandId\": \"088e4813-f292-48b3-8180-d8be9EXAMPLE\",\n      \"Comment\": \"\",\n      \"CompletedCount\": 0,\n      \"DeliveryTimedOutCount\": 0,\n      \"DocumentName\": \"AWS-InstallMissingWindowsUpdates\",\n      \"DocumentVersion\": \"1\",\n      \"ErrorCount\": 0,\n      \"ExpiresAfter\": 1582248743.188,\n      \"InstanceIds\": [],\n      \"Interactive\": false,\n      \"MaxConcurrency\": \"2\",\n      \"MaxErrors\": \"3\",\n      \"NotificationConfig\": {\n        \"NotificationArn\": \"arn:aws:sns:us-east-2:111122223333:my-us-east-2-notification-arn\",\n        \"NotificationEvents\": [\n          \"All\"\n        ],\n        \"NotificationType\": \"Command\"\n      },\n      \"OutputS3BucketName\": \"amzn-s3-demo-bucket\",\n      \"OutputS3KeyPrefix\": \"my-prefix\",\n      \"Parameters\": {\n        \"ExcludeKbArticleIds\": [\n          \"\"\n        ],\n        \"UpdateLevel\": [\n          \"All\"\n        ]\n      },\n      \"RequestedDateTime\": 1582244543.188,\n      \"ServiceRole\": \"arn:aws:iam::111122223333:role/my-SNS-notifications-role\",\n      \"Status\": \"InProgress\",\n      \"StatusDetails\": \"InProgress\",\n      \"TargetCount\": 5,\n      \"Targets\": [\n        {\n          \"Key\": \"InstanceIds\",\n          \"Values\": [\n            \"i-09c350ed76EXAMPLE\",\n            \"i-07be1baa4aEXAMPLE\",\n            \"i-00ec29b21eEXAMPLE\",\n            \"i-09911ddd90EXAMPLE\",\n            \"i-017431b35cEXAMPLE\"\n          ]\n        }\n      ]\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSSM.ListCommands"
+        }
+      },
+      {
+        "id": "ssm-send-command",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "ssm SendCommand",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "SendCommand",
+        "fixture": "{\n  \"Command\": {\n    \"CommandId\": \"b94bf1dc-fe7d-4e88-851d-e85e5EXAMPLE\",\n    \"DocumentName\": \"AWS-ConfigureCloudWatch\",\n    \"DocumentVersion\": \"1\",\n    \"Comment\": \"\",\n    \"ExpiresAfter\": 1582250177.7,\n    \"Parameters\": {\n      \"properties\": [\n        \"\"\n      ],\n      \"status\": [\n        \"Enabled\"\n      ]\n    },\n    \"InstanceIds\": [],\n    \"Targets\": [\n      {\n        \"Key\": \"InstanceIds\",\n        \"Values\": [\n          \"i-07be1baa4aEXAMPLE\",\n          \"i-017431b35cEXAMPLE\",\n          \"i-09c350ed76EXAMPLE\"\n        ]\n      }\n    ],\n    \"RequestedDateTime\": 1582245977.7,\n    \"Status\": \"Pending\",\n    \"StatusDetails\": \"Pending\",\n    \"OutputS3BucketName\": \"amzn-s3-demo-bucket\",\n    \"OutputS3KeyPrefix\": \"my-prefix\",\n    \"MaxConcurrency\": \"2\",\n    \"MaxErrors\": \"1\",\n    \"TargetCount\": 0,\n    \"CompletedCount\": 0,\n    \"ErrorCount\": 0,\n    \"DeliveryTimedOutCount\": 0,\n    \"ServiceRole\": \"arn:aws:iam::111122223333:role/my-SNS-notifications-role\",\n    \"NotificationConfig\": {\n      \"NotificationArn\": \"arn:aws:sns:us-east-2:111122223333:my-us-east-2-notification-arn\",\n      \"NotificationEvents\": [\n        \"Failed\",\n        \"Success\"\n      ],\n      \"NotificationType\": \"Command\"\n    },\n    \"CloudWatchOutputConfig\": {\n      \"CloudWatchLogGroupName\": \"my-log-group\",\n      \"CloudWatchOutputEnabled\": true\n    }\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSSM.SendCommand"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS_SystemManager/Integrations/AWSSystemManager"
+}

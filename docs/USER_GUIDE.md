@@ -56,7 +56,7 @@ Open **Admin Panel** on the dashboard. The page has five tabs.
 
 ## What you can point at a catch URL
 
-- A **From vendor docs** preset returns the example published on the vendor's own page for that method and path. The badge links to that page. Every other catalog preset is **Approximate**: a guessed shape from the integration's sample, README, or YAML, or a client-checked path whose vendor example was not available. Treat an approximate preset as a starting point and edit it.
+- A **From vendor docs** preset returns the example published on the vendor's own page for that method and path. The badge links to that page. Every other catalog preset is **Approximate**: a guessed shape from the integration's sample, README, or YAML, or a client-checked path whose vendor example was not available. Treat an approximate preset as a starting point and edit it. AWS integrations also show command coverage: how many YAML commands return a vendor example, how many are approximate, and how many have no mock yet.
 - Paste an OpenAPI 3, Swagger 2, Postman collection, WSDL, or XSOAR integration YAML. A YAML becomes one operation per command, at most 12.
 - The **Match** tab picks an operation by method, path, query, headers, and a JSONPath or XPath. JSONPath can use `[*]`, `..name`, and one `[?(@.field=="value")]`. XPath can use `[2]`, `[@attr="value"]`, and `[text()="value"]`. Filters and predicates do not run scripts.
 - The **Flow** tab can save records, play a sequence, or reveal one time window per poll. Those stay off until you turn them on.

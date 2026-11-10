@@ -1,1 +1,1903 @@
-{"id":"aws-dynamodb-aws-dynamodb","name":"Amazon DynamoDB","pack":"AWS_DynamoDB","fidelity":"shape","curated":false,"summary":"Amazon DynamoDB Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. DynamoDB lets you offload the ad","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-dynamodb-aws-dynamodb","name":"Amazon DynamoDB","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS_DynamoDB/Integrations/AWS_DynamoDB","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-dynamodb-batch-get-item","method":"GET","pathTemplate":"/","summary":"The BatchGetItem operation returns the attributes of one or more items from one or more tables. You identify requested items by primary key. A single operation","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-DynamoDB","kind":"object","optional":false,"children":[{"name":"Responses","kind":"string","optional":false,"example":"Responses"},{"name":"UnprocessedKeys","kind":"string","optional":false,"example":"UnprocessedKeys"},{"name":"TableName","kind":"string","optional":false,"example":"TableName"},{"name":"CapacityUnits","kind":"string","optional":false,"example":"CapacityUnits"},{"name":"ReadCapacityUnits","kind":"string","optional":false,"example":"ReadCapacityUnits"},{"name":"WriteCapacityUnits","kind":"string","optional":false,"example":"WriteCapacityUnits"},{"name":"Table","kind":"object","optional":false,"children":[{"name":"ReadCapacityUnits","kind":"string","optional":false,"example":"ReadCapacityUnits"},{"name":"WriteCapacityUnits","kind":"string","optional":false,"example":"WriteCapacityUnits"},{"name":"CapacityUnits","kind":"string","optional":false,"example":"CapacityUnits"}]},{"name":"LocalSecondaryIndexes","kind":"string","optional":false,"example":"LocalSecondaryIndexes"},{"name":"GlobalSecondaryIndexes","kind":"string","optional":false,"example":"GlobalSecondaryIndexes"},{"name":"docs","kind":"string","optional":false,"example":"docs"}]}]}},{"id":"aws-dynamodb-batch-write-item","method":"GET","pathTemplate":"/","summary":"The BatchWriteItem operation puts or deletes multiple items in one or more tables. A single call to BatchWriteItem can write up to 16 MB of data, which can comp","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-DynamoDB","kind":"object","optional":false,"children":[{"name":"UnprocessedItems","kind":"string","optional":false,"example":"UnprocessedItems"},{"name":"ItemCollectionMetrics","kind":"string","optional":false,"example":"ItemCollectionMetrics"},{"name":"TableName","kind":"string","optional":false,"example":"TableName"},{"name":"CapacityUnits","kind":"string","optional":false,"example":"CapacityUnits"},{"name":"ReadCapacityUnits","kind":"string","optional":false,"example":"ReadCapacityUnits"},{"name":"WriteCapacityUnits","kind":"string","optional":false,"example":"WriteCapacityUnits"},{"name":"Table","kind":"object","optional":false,"children":[{"name":"ReadCapacityUnits","kind":"string","optional":false,"example":"ReadCapacityUnits"},{"name":"WriteCapacityUnits","kind":"string","optional":false,"example":"WriteCapacityUnits"},{"name":"CapacityUnits","kind":"string","optional":false,"example":"CapacityUnits"}]},{"name":"LocalSecondaryIndexes","kind":"string","optional":false,"example":"LocalSecondaryIndexes"},{"name":"GlobalSecondaryIndexes","kind":"string","optional":false,"example":"GlobalSecondaryIndexes"},{"name":"docs","kind":"string","optional":false,"example":"docs"}]}]}},{"id":"aws-dynamodb-create-backup","method":"GET","pathTemplate":"/","summary":"Creates a backup for an existing table. Each time you create an on-demand backup, the entire table data is backed up. There is no limit to the number of on-dema","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-DynamoDB","kind":"object","optional":false,"children":[{"name":"BackupDetails","kind":"object","optional":false,"children":[{"name":"BackupArn","kind":"string","optional":false,"example":"BackupArn"},{"name":"BackupName","kind":"string","optional":false,"example":"BackupName"},{"name":"BackupSizeBytes","kind":"string","optional":false,"example":"BackupSizeBytes"},{"name":"BackupStatus","kind":"string","optional":false,"example":"BackupStatus"},{"name":"BackupType","kind":"string","optional":false,"example":"BackupType"},{"name":"BackupCreationDateTime","kind":"string","optional":false,"example":"BackupCreationDateTime"},{"name":"BackupExpiryDateTime","kind":"string","optional":false,"example":"BackupExpiryDateTime"}]}]}]}},{"id":"aws-dynamodb-create-global-table","method":"GET","pathTemplate":"/","summary":"Creates a global table from an existing table. A global table creates a replication relationship between two or more DynamoDB tables with the same table name in","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-DynamoDB","kind":"object","optional":false,"children":[{"name":"GlobalTableDescription","kind":"object","optional":false,"children":[{"name":"ReplicationGroup","kind":"object","optional":false,"children":[{"name":"RegionName","kind":"string","optional":false,"example":"RegionName"}]},{"name":"GlobalTableArn","kind":"string","optional":false,"example":"GlobalTableArn"},{"name":"CreationDateTime","kind":"string","optional":false,"example":"CreationDateTime"},{"name":"GlobalTableStatus","kind":"string","optional":false,"example":"GlobalTableStatus"},{"name":"GlobalTableName","kind":"string","optional":false,"example":"GlobalTableName"}]}]}]}},{"id":"aws-dynamodb-create-table","method":"GET","pathTemplate":"/","summary":"The CreateTable operation adds a new table to your account. In an AWS account, table names must be unique within each Region. That is, you can have two tables w","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-DynamoDB","kind":"object","optional":false,"children":[{"name":"TableDescription","kind":"object","optional":false,"children":[{"name":"AttributeDefinitions","kind":"object","optional":false,"children":[{"name":"AttributeName","kind":"string","optional":false,"example":"AttributeName"},{"name":"AttributeType","kind":"string","optional":false,"example":"AttributeType"}]},{"name":"TableName","kind":"string","optional":false,"example":"TableName"},{"name":"KeySchema","kind":"object","optional":false,"children":[{"name":"AttributeName","kind":"string","optional":false,"example":"AttributeName"},{"name":"KeyType","kind":"string","optional":false,"example":"KeyType"}]},{"name":"TableStatus","kind":"string","optional":false,"example":"TableStatus"},{"name":"CreationDateTime","kind":"string","optional":false,"example":"CreationDateTime"},{"name":"ProvisionedThroughput","kind":"object","optional":false,"children":[{"name":"LastIncreaseDateTime","kind":"string","optional":false,"example":"LastIncreaseDateTime"},{"name":"LastDecreaseDateTime","kind":"string","optional":false,"example":"LastDecreaseDateTime"},{"name":"NumberOfDecreasesToday","kind":"string","optional":false,"example":"NumberOfDecreasesToday"},{"name":"ReadCapacityUnits","kind":"string","optional":false,"example":"ReadCapacityUnits"},{"name":"WriteCapacityUnits","kind":"string","optional":false,"example":"WriteCapacityUnits"}]},{"name":"TableSizeBytes","kind":"string","optional":false,"example":"TableSizeBytes"},{"name":"ItemCount","kind":"string","optional":false,"example":"ItemCount"},{"name":"TableArn","kind":"string","optional":false,"example":"TableArn"},{"name":"TableId","kind":"id","optional":false},{"name":"BillingModeSummary","kind":"object","optional":false,"children":[{"name":"BillingMode","kind":"string","optional":false,"example":"BillingMode"},{"name":"LastUpdateToPayPerRequestDateTime","kind":"string","optional":false,"example":"LastUpdateToPayPerRequestDateTime"}]},{"name":"LocalSecondaryIndexes","kind":"object","optional":false,"children":[{"name":"IndexName","kind":"string","optional":false,"example":"IndexName"},{"name":"KeySchema","kind":"object","optional":false,"children":[{"name":"AttributeName","kind":"string","optional":false,"example":"AttributeName"},{"name":"KeyType","kind":"string","optional":false,"example":"KeyType"}]},{"name":"Projection","kind":"object","optional":false,"children":[{"name":"ProjectionType","kind":"string","optional":false,"example":"ProjectionType"},{"name":"NonKeyAttributes","kind":"string","optional":false,"example":"NonKeyAttributes"}]},{"name":"IndexSizeBytes","kind":"string","optional":false,"example":"IndexSizeBytes"},{"name":"ItemCount","kind":"string","optional":false,"example":"ItemCount"},{"name":"IndexArn","kind":"string","optional":false,"example":"IndexArn"}]},{"name":"GlobalSecondaryIndexes","kind":"object","optional":false,"children":[{"name":"IndexName","kind":"string","optional":false,"example":"IndexName"},{"name":"KeySchema","kind":"object","optional":false,"children":[{"name":"AttributeName","kind":"string","optional":false,"example":"AttributeName"},{"name":"KeyType","kind":"string","optional":false,"example":"KeyType"}]},{"name":"Projection","kind":"object","optional":false,"children":[{"name":"ProjectionType","kind":"string","optional":false,"example":"ProjectionType"},{"name":"NonKeyAttributes","kind":"string","optional":false,"example":"NonKeyAttributes"}]},{"name":"IndexStatus","kind":"string","optional":false,"example":"IndexStatus"},{"name":"Backfilling","kind":"string","optional":false,"example":"Backfilling"},{"name":"ProvisionedThroughput","kind":"object","optional":false,"children":[{"name":"LastIncreaseDateTime","kind":"string","optional":false,"example":"LastIncreaseDateTime"},{"name":"LastDecreaseDateTime","kind":"string","optional":false,"example":"LastDecreaseDateTime"},{"name":"NumberOfDecreasesToday","kind":"string","optional":false,"example":"NumberOfDecreasesToday"},{"name":"ReadCapacityUnits","kind":"string","optional":false,"example":"ReadCapacityUnits"},{"name":"WriteCapacityUnits","kind":"string","optional":false,"example":"WriteCapacityUnits"}]},{"name":"IndexSizeBytes","kind":"string","optional":false,"example":"IndexSizeBytes"},{"name":"ItemCount","kind":"string","optional":false,"example":"ItemCount"},{"name":"IndexArn","kind":"string","optional":false,"example":"IndexArn"}]},{"name":"StreamSpecification","kind":"object","optional":false,"children":[{"name":"StreamEnabled","kind":"string","optional":false,"example":"StreamEnabled"},{"name":"StreamViewType","kind":"string","optional":false,"example":"StreamViewType"}]},{"name":"LatestStreamLabel","kind":"string","optional":false,"example":"LatestStreamLabel"},{"name":"LatestStreamArn","kind":"string","optional":false,"example":"LatestStreamArn"}]}]}]}},{"id":"aws-dynamodb-delete-backup","method":"GET","pathTemplate":"/","summary":"Deletes an existing backup of a table. You can call DeleteBackup at a maximum rate of 10 times per second.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-DynamoDB","kind":"object","optional":false,"children":[{"name":"BackupDescription","kind":"object","optional":false,"children":[{"name":"BackupDetails","kind":"object","optional":false,"children":[{"name":"BackupArn","kind":"string","optional":false,"example":"BackupArn"},{"name":"BackupName","kind":"string","optional":false,"example":"BackupName"},{"name":"BackupSizeBytes","kind":"string","optional":false,"example":"BackupSizeBytes"},{"name":"BackupStatus","kind":"string","optional":false,"example":"BackupStatus"},{"name":"BackupType","kind":"string","optional":false,"example":"BackupType"},{"name":"BackupCreationDateTime","kind":"string","optional":false,"example":"BackupCreationDateTime"},{"name":"BackupExpiryDateTime","kind":"string","optional":false,"example":"BackupExpiryDateTime"}]},{"name":"SourceTableDetails","kind":"object","optional":false,"children":[{"name":"TableName","kind":"string","optional":false,"example":"TableName"},{"name":"TableId","kind":"id","optional":false},{"name":"TableArn","kind":"string","optional":false,"example":"TableArn"},{"name":"TableSizeBytes","kind":"string","optional":false,"example":"TableSizeBytes"},{"name":"KeySchema","kind":"object","optional":false,"children":[{"name":"AttributeName","kind":"string","optional":false,"example":"AttributeName"},{"name":"KeyType","kind":"string","optional":false,"example":"KeyType"}]},{"name":"TableCreationDateTime","kind":"string","optional":false,"example":"TableCreationDateTime"},{"name":"ProvisionedThroughput","kind":"object","optional":false,"children":[{"name":"ReadCapacityUnits","kind":"string","optional":false,"example":"ReadCapacityUnits"},{"name":"WriteCapacityUnits","kind":"string","optional":false,"example":"WriteCapacityUnits"}]},{"name":"ItemCount","kind":"string","optional":false,"example":"ItemCount"},{"name":"BillingMode","kind":"string","optional":false,"example":"BillingMode"}]},{"name":"SourceTableFeatureDetails","kind":"object","optional":false,"children":[{"name":"LocalSecondaryIndexes","kind":"object","optional":false,"children":[{"name":"IndexName","kind":"string","optional":false,"example":"IndexName"},{"name":"KeySchema","kind":"object","optional":false,"children":[{"name":"AttributeName","kind":"string","optional":false,"example":"AttributeName"},{"name":"KeyType","kind":"string","optional":false,"example":"KeyType"}]},{"name":"Projection","kind":"object","optional":false,"children":[{"name":"ProjectionType","kind":"string","optional":false,"example":"ProjectionType"},{"name":"NonKeyAttributes","kind":"string","optional":false,"example":"NonKeyAttributes"}]}]},{"name":"GlobalSecondaryIndexes","kind":"object","optional":false,"children":[{"name":"IndexName","kind":"string","optional":false,"example":"IndexName"},{"name":"KeySchema","kind":"object","optional":false,"children":[{"name":"AttributeName","kind":"string","optional":false,"example":"AttributeName"},{"name":"KeyType","kind":"string","optional":false,"example":"KeyType"}]},{"name":"Projection","kind":"object","optional":false,"children":[{"name":"ProjectionType","kind":"string","optional":false,"example":"ProjectionType"},{"name":"NonKeyAttributes","kind":"string","optional":false,"example":"NonKeyAttributes"}]},{"name":"ProvisionedThroughput","kind":"object","optional":false,"children":[{"name":"ReadCapacityUnits","kind":"string","optional":false,"example":"ReadCapacityUnits"},{"name":"WriteCapacityUnits","kind":"string","optional":false,"example":"WriteCapacityUnits"}]}]},{"name":"StreamDescription","kind":"object","optional":false,"children":[{"name":"StreamEnabled","kind":"string","optional":false,"example":"StreamEnabled"},{"name":"StreamViewType","kind":"string","optional":false,"example":"StreamViewType"}]},{"name":"TimeToLiveDescription","kind":"object","optional":false,"children":[{"name":"TimeToLiveStatus","kind":"string","optional":false,"example":"TimeToLiveStatus"},{"name":"AttributeName","kind":"string","optional":false,"example":"AttributeName"}]},{"name":"SSEDescription","kind":"object","optional":false,"children":[{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"SSEType","kind":"string","optional":false,"example":"SSEType"},{"name":"KMSMasterKeyArn","kind":"string","optional":false,"example":"KMSMasterKeyArn"}]}]}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-dynamodb-aws-dynamodb",
+  "name": "Amazon DynamoDB",
+  "pack": "AWS_DynamoDB",
+  "fidelity": "vendor",
+  "curated": false,
+  "summary": "From vendor docs. Amazon DynamoDB Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. DynamoDB lets you offload the ad",
+  "operations": 6,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-dynamodb-aws-dynamodb",
+      "name": "Amazon DynamoDB",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS_DynamoDB/Integrations/AWS_DynamoDB",
+      "fidelity": "vendor",
+      "notes": [
+        "Field names come from the integration YAML command outputs, not a captured vendor response.",
+        "No HTTP path was recovered from the client. The shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-dynamodb-batch-get-item",
+          "calls": [
+            "dynamodb:BatchGetItem"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-dynamodb-batch-get-item"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-batch-write-item",
+          "calls": [
+            "dynamodb:BatchWriteItem"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-create-backup",
+          "calls": [
+            "dynamodb:CreateBackup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-create-global-table",
+          "calls": [
+            "dynamodb:CreateGlobalTable"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-create-table",
+          "calls": [
+            "dynamodb:CreateTable"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-dynamodb-create-table"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-delete-backup",
+          "calls": [
+            "dynamodb:DeleteBackup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-delete-item",
+          "calls": [
+            "dynamodb:DeleteItem"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "dynamodb-delete-item"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-delete-table",
+          "calls": [
+            "dynamodb:DeleteTable"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "dynamodb-delete-table"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-describe-backup",
+          "calls": [
+            "dynamodb:DescribeBackup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-describe-continuous-backups",
+          "calls": [
+            "dynamodb:DescribeContinuousBackups"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-describe-endpoints",
+          "calls": [
+            "dynamodb:DescribeEndpoints"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-describe-global-table",
+          "calls": [
+            "dynamodb:DescribeGlobalTable"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-describe-global-table-settings",
+          "calls": [
+            "dynamodb:DescribeGlobalTableSettings"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-describe-limits",
+          "calls": [
+            "dynamodb:DescribeLimits"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "dynamodb-describe-limits"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-describe-table",
+          "calls": [
+            "dynamodb:DescribeTable"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "dynamodb-describe-table"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-describe-time-to-live",
+          "calls": [
+            "dynamodb:DescribeTimeToLive"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-get-item",
+          "calls": [
+            "dynamodb:GetItem"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "dynamodb-get-item"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-list-backups",
+          "calls": [
+            "dynamodb:ListBackups"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-list-global-tables",
+          "calls": [
+            "dynamodb:ListGlobalTables"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-list-tables",
+          "calls": [
+            "dynamodb:ListTables"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "dynamodb-list-tables"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-list-tags-of-resource",
+          "calls": [
+            "dynamodb:ListTagsOfResource"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-put-item",
+          "calls": [
+            "dynamodb:PutItem"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "dynamodb-put-item"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-query",
+          "calls": [
+            "dynamodb:Query"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "dynamodb-query"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-restore-table-from-backup",
+          "calls": [
+            "dynamodb:RestoreTableFromBackup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-restore-table-to-point-in-time",
+          "calls": [
+            "dynamodb:RestoreTableToPointInTime"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-scan",
+          "calls": [
+            "dynamodb:Scan"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "dynamodb-scan"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-tag-resource",
+          "calls": [
+            "dynamodb:TagResource"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-transact-get-items",
+          "calls": [
+            "dynamodb:TransactGetItems"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-transact-write-items",
+          "calls": [
+            "dynamodb:TransactWriteItems"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-untag-resource",
+          "calls": [
+            "dynamodb:UntagResource"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-update-continuous-backups",
+          "calls": [
+            "dynamodb:UpdateContinuousBackups"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-update-global-table",
+          "calls": [
+            "dynamodb:UpdateGlobalTable"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-update-global-table-settings",
+          "calls": [
+            "dynamodb:UpdateGlobalTableSettings"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-dynamodb-update-item",
+          "calls": [
+            "dynamodb:UpdateItem"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "dynamodb-update-item"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-update-table",
+          "calls": [
+            "dynamodb:UpdateTable"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "dynamodb-update-table"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json"
+        },
+        {
+          "command": "aws-dynamodb-update-time-to-live",
+          "calls": [
+            "dynamodb:UpdateTimeToLive"
+          ],
+          "status": "missing"
+        }
+      ],
+      "verification": {
+        "status": "vendor",
+        "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/dynamodb/2012-08-10/examples-1.json",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "13 of 36 commands from vendor docs, 0 approximate, 23 missing."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "aws-dynamodb-batch-get-item",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "The BatchGetItem operation returns the attributes of one or more items from one or more tables. You identify requested items by primary key. A single operation",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS-DynamoDB",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Responses",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "Responses"
+                },
+                {
+                  "name": "UnprocessedKeys",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "UnprocessedKeys"
+                },
+                {
+                  "name": "TableName",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "TableName"
+                },
+                {
+                  "name": "CapacityUnits",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "CapacityUnits"
+                },
+                {
+                  "name": "ReadCapacityUnits",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "ReadCapacityUnits"
+                },
+                {
+                  "name": "WriteCapacityUnits",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "WriteCapacityUnits"
+                },
+                {
+                  "name": "Table",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "ReadCapacityUnits",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "ReadCapacityUnits"
+                    },
+                    {
+                      "name": "WriteCapacityUnits",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "WriteCapacityUnits"
+                    },
+                    {
+                      "name": "CapacityUnits",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "CapacityUnits"
+                    }
+                  ]
+                },
+                {
+                  "name": "LocalSecondaryIndexes",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "LocalSecondaryIndexes"
+                },
+                {
+                  "name": "GlobalSecondaryIndexes",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "GlobalSecondaryIndexes"
+                },
+                {
+                  "name": "docs",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "BatchGetItem",
+        "fixture": "{\n  \"Responses\": {\n    \"Music\": [\n      {\n        \"AlbumTitle\": {\n          \"S\": \"Somewhat Famous\"\n        }\n      },\n      {\n        \"AlbumTitle\": {\n          \"S\": \"Blue Sky Blues\"\n        }\n      },\n      {\n        \"AlbumTitle\": {\n          \"S\": \"Louder Than Ever\"\n        }\n      }\n    ]\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.BatchGetItem"
+        }
+      },
+      {
+        "id": "aws-dynamodb-batch-write-item",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "The BatchWriteItem operation puts or deletes multiple items in one or more tables. A single call to BatchWriteItem can write up to 16 MB of data, which can comp",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS-DynamoDB",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "UnprocessedItems",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "UnprocessedItems"
+                },
+                {
+                  "name": "ItemCollectionMetrics",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "ItemCollectionMetrics"
+                },
+                {
+                  "name": "TableName",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "TableName"
+                },
+                {
+                  "name": "CapacityUnits",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "CapacityUnits"
+                },
+                {
+                  "name": "ReadCapacityUnits",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "ReadCapacityUnits"
+                },
+                {
+                  "name": "WriteCapacityUnits",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "WriteCapacityUnits"
+                },
+                {
+                  "name": "Table",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "ReadCapacityUnits",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "ReadCapacityUnits"
+                    },
+                    {
+                      "name": "WriteCapacityUnits",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "WriteCapacityUnits"
+                    },
+                    {
+                      "name": "CapacityUnits",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "CapacityUnits"
+                    }
+                  ]
+                },
+                {
+                  "name": "LocalSecondaryIndexes",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "LocalSecondaryIndexes"
+                },
+                {
+                  "name": "GlobalSecondaryIndexes",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "GlobalSecondaryIndexes"
+                },
+                {
+                  "name": "docs",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-dynamodb-create-backup",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Creates a backup for an existing table. Each time you create an on-demand backup, the entire table data is backed up. There is no limit to the number of on-dema",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS-DynamoDB",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "BackupDetails",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "BackupArn",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "BackupArn"
+                    },
+                    {
+                      "name": "BackupName",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "BackupName"
+                    },
+                    {
+                      "name": "BackupSizeBytes",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "BackupSizeBytes"
+                    },
+                    {
+                      "name": "BackupStatus",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "BackupStatus"
+                    },
+                    {
+                      "name": "BackupType",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "BackupType"
+                    },
+                    {
+                      "name": "BackupCreationDateTime",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "BackupCreationDateTime"
+                    },
+                    {
+                      "name": "BackupExpiryDateTime",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "BackupExpiryDateTime"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-dynamodb-create-global-table",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Creates a global table from an existing table. A global table creates a replication relationship between two or more DynamoDB tables with the same table name in",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS-DynamoDB",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "GlobalTableDescription",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "ReplicationGroup",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "RegionName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "RegionName"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "GlobalTableArn",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "GlobalTableArn"
+                    },
+                    {
+                      "name": "CreationDateTime",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "CreationDateTime"
+                    },
+                    {
+                      "name": "GlobalTableStatus",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "GlobalTableStatus"
+                    },
+                    {
+                      "name": "GlobalTableName",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "GlobalTableName"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-dynamodb-create-table",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "The CreateTable operation adds a new table to your account. In an AWS account, table names must be unique within each Region. That is, you can have two tables w",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS-DynamoDB",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "TableDescription",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "AttributeDefinitions",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "AttributeName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "AttributeName"
+                        },
+                        {
+                          "name": "AttributeType",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "AttributeType"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "TableName",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "TableName"
+                    },
+                    {
+                      "name": "KeySchema",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "AttributeName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "AttributeName"
+                        },
+                        {
+                          "name": "KeyType",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "KeyType"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "TableStatus",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "TableStatus"
+                    },
+                    {
+                      "name": "CreationDateTime",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "CreationDateTime"
+                    },
+                    {
+                      "name": "ProvisionedThroughput",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "LastIncreaseDateTime",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "LastIncreaseDateTime"
+                        },
+                        {
+                          "name": "LastDecreaseDateTime",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "LastDecreaseDateTime"
+                        },
+                        {
+                          "name": "NumberOfDecreasesToday",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "NumberOfDecreasesToday"
+                        },
+                        {
+                          "name": "ReadCapacityUnits",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "ReadCapacityUnits"
+                        },
+                        {
+                          "name": "WriteCapacityUnits",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "WriteCapacityUnits"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "TableSizeBytes",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "TableSizeBytes"
+                    },
+                    {
+                      "name": "ItemCount",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "ItemCount"
+                    },
+                    {
+                      "name": "TableArn",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "TableArn"
+                    },
+                    {
+                      "name": "TableId",
+                      "kind": "id",
+                      "optional": false
+                    },
+                    {
+                      "name": "BillingModeSummary",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "BillingMode",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "BillingMode"
+                        },
+                        {
+                          "name": "LastUpdateToPayPerRequestDateTime",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "LastUpdateToPayPerRequestDateTime"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "LocalSecondaryIndexes",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "IndexName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "IndexName"
+                        },
+                        {
+                          "name": "KeySchema",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "AttributeName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "AttributeName"
+                            },
+                            {
+                              "name": "KeyType",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "KeyType"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Projection",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "ProjectionType",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ProjectionType"
+                            },
+                            {
+                              "name": "NonKeyAttributes",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "NonKeyAttributes"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "IndexSizeBytes",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "IndexSizeBytes"
+                        },
+                        {
+                          "name": "ItemCount",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "ItemCount"
+                        },
+                        {
+                          "name": "IndexArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "IndexArn"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "GlobalSecondaryIndexes",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "IndexName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "IndexName"
+                        },
+                        {
+                          "name": "KeySchema",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "AttributeName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "AttributeName"
+                            },
+                            {
+                              "name": "KeyType",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "KeyType"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Projection",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "ProjectionType",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ProjectionType"
+                            },
+                            {
+                              "name": "NonKeyAttributes",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "NonKeyAttributes"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "IndexStatus",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "IndexStatus"
+                        },
+                        {
+                          "name": "Backfilling",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Backfilling"
+                        },
+                        {
+                          "name": "ProvisionedThroughput",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "LastIncreaseDateTime",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "LastIncreaseDateTime"
+                            },
+                            {
+                              "name": "LastDecreaseDateTime",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "LastDecreaseDateTime"
+                            },
+                            {
+                              "name": "NumberOfDecreasesToday",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "NumberOfDecreasesToday"
+                            },
+                            {
+                              "name": "ReadCapacityUnits",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ReadCapacityUnits"
+                            },
+                            {
+                              "name": "WriteCapacityUnits",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "WriteCapacityUnits"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "IndexSizeBytes",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "IndexSizeBytes"
+                        },
+                        {
+                          "name": "ItemCount",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "ItemCount"
+                        },
+                        {
+                          "name": "IndexArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "IndexArn"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "StreamSpecification",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "StreamEnabled",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "StreamEnabled"
+                        },
+                        {
+                          "name": "StreamViewType",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "StreamViewType"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "LatestStreamLabel",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "LatestStreamLabel"
+                    },
+                    {
+                      "name": "LatestStreamArn",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "LatestStreamArn"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "CreateTable",
+        "fixture": "{\n  \"TableDescription\": {\n    \"AttributeDefinitions\": [\n      {\n        \"AttributeName\": \"Artist\",\n        \"AttributeType\": \"S\"\n      },\n      {\n        \"AttributeName\": \"SongTitle\",\n        \"AttributeType\": \"S\"\n      }\n    ],\n    \"CreationDateTime\": \"1421866952.062\",\n    \"ItemCount\": 0,\n    \"KeySchema\": [\n      {\n        \"AttributeName\": \"Artist\",\n        \"KeyType\": \"HASH\"\n      },\n      {\n        \"AttributeName\": \"SongTitle\",\n        \"KeyType\": \"RANGE\"\n      }\n    ],\n    \"ProvisionedThroughput\": {\n      \"ReadCapacityUnits\": 5,\n      \"WriteCapacityUnits\": 5\n    },\n    \"TableName\": \"Music\",\n    \"TableSizeBytes\": 0,\n    \"TableStatus\": \"CREATING\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.CreateTable"
+        }
+      },
+      {
+        "id": "aws-dynamodb-delete-backup",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Deletes an existing backup of a table. You can call DeleteBackup at a maximum rate of 10 times per second.",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS-DynamoDB",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "BackupDescription",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "BackupDetails",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "BackupArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "BackupArn"
+                        },
+                        {
+                          "name": "BackupName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "BackupName"
+                        },
+                        {
+                          "name": "BackupSizeBytes",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "BackupSizeBytes"
+                        },
+                        {
+                          "name": "BackupStatus",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "BackupStatus"
+                        },
+                        {
+                          "name": "BackupType",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "BackupType"
+                        },
+                        {
+                          "name": "BackupCreationDateTime",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "BackupCreationDateTime"
+                        },
+                        {
+                          "name": "BackupExpiryDateTime",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "BackupExpiryDateTime"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "SourceTableDetails",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "TableName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "TableName"
+                        },
+                        {
+                          "name": "TableId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "TableArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "TableArn"
+                        },
+                        {
+                          "name": "TableSizeBytes",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "TableSizeBytes"
+                        },
+                        {
+                          "name": "KeySchema",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "AttributeName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "AttributeName"
+                            },
+                            {
+                              "name": "KeyType",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "KeyType"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "TableCreationDateTime",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "TableCreationDateTime"
+                        },
+                        {
+                          "name": "ProvisionedThroughput",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "ReadCapacityUnits",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ReadCapacityUnits"
+                            },
+                            {
+                              "name": "WriteCapacityUnits",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "WriteCapacityUnits"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ItemCount",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "ItemCount"
+                        },
+                        {
+                          "name": "BillingMode",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "BillingMode"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "SourceTableFeatureDetails",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "LocalSecondaryIndexes",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "IndexName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "IndexName"
+                            },
+                            {
+                              "name": "KeySchema",
+                              "kind": "object",
+                              "optional": false,
+                              "children": [
+                                {
+                                  "name": "AttributeName",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "AttributeName"
+                                },
+                                {
+                                  "name": "KeyType",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "KeyType"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Projection",
+                              "kind": "object",
+                              "optional": false,
+                              "children": [
+                                {
+                                  "name": "ProjectionType",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "ProjectionType"
+                                },
+                                {
+                                  "name": "NonKeyAttributes",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "NonKeyAttributes"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "GlobalSecondaryIndexes",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "IndexName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "IndexName"
+                            },
+                            {
+                              "name": "KeySchema",
+                              "kind": "object",
+                              "optional": false,
+                              "children": [
+                                {
+                                  "name": "AttributeName",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "AttributeName"
+                                },
+                                {
+                                  "name": "KeyType",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "KeyType"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Projection",
+                              "kind": "object",
+                              "optional": false,
+                              "children": [
+                                {
+                                  "name": "ProjectionType",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "ProjectionType"
+                                },
+                                {
+                                  "name": "NonKeyAttributes",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "NonKeyAttributes"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ProvisionedThroughput",
+                              "kind": "object",
+                              "optional": false,
+                              "children": [
+                                {
+                                  "name": "ReadCapacityUnits",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "ReadCapacityUnits"
+                                },
+                                {
+                                  "name": "WriteCapacityUnits",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "WriteCapacityUnits"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StreamDescription",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "StreamEnabled",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "StreamEnabled"
+                            },
+                            {
+                              "name": "StreamViewType",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "StreamViewType"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "TimeToLiveDescription",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "TimeToLiveStatus",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "TimeToLiveStatus"
+                            },
+                            {
+                              "name": "AttributeName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "AttributeName"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "SSEDescription",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Status",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Status"
+                            },
+                            {
+                              "name": "SSEType",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "SSEType"
+                            },
+                            {
+                              "name": "KMSMasterKeyArn",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "KMSMasterKeyArn"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "dynamodb-delete-item",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "dynamodb DeleteItem",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeleteItem",
+        "fixture": "{\n  \"ConsumedCapacity\": {\n    \"CapacityUnits\": 1,\n    \"TableName\": \"Music\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.DeleteItem"
+        }
+      },
+      {
+        "id": "dynamodb-delete-table",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "dynamodb DeleteTable",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DeleteTable",
+        "fixture": "{\n  \"TableDescription\": {\n    \"ItemCount\": 0,\n    \"ProvisionedThroughput\": {\n      \"NumberOfDecreasesToday\": 1,\n      \"ReadCapacityUnits\": 5,\n      \"WriteCapacityUnits\": 5\n    },\n    \"TableName\": \"Music\",\n    \"TableSizeBytes\": 0,\n    \"TableStatus\": \"DELETING\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.DeleteTable"
+        }
+      },
+      {
+        "id": "dynamodb-describe-limits",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "dynamodb DescribeLimits",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DescribeLimits",
+        "fixture": "{\n  \"AccountMaxReadCapacityUnits\": 20000,\n  \"AccountMaxWriteCapacityUnits\": 20000,\n  \"TableMaxReadCapacityUnits\": 10000,\n  \"TableMaxWriteCapacityUnits\": 10000\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.DescribeLimits"
+        }
+      },
+      {
+        "id": "dynamodb-describe-table",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "dynamodb DescribeTable",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DescribeTable",
+        "fixture": "{\n  \"Table\": {\n    \"AttributeDefinitions\": [\n      {\n        \"AttributeName\": \"Artist\",\n        \"AttributeType\": \"S\"\n      },\n      {\n        \"AttributeName\": \"SongTitle\",\n        \"AttributeType\": \"S\"\n      }\n    ],\n    \"CreationDateTime\": \"1421866952.062\",\n    \"ItemCount\": 0,\n    \"KeySchema\": [\n      {\n        \"AttributeName\": \"Artist\",\n        \"KeyType\": \"HASH\"\n      },\n      {\n        \"AttributeName\": \"SongTitle\",\n        \"KeyType\": \"RANGE\"\n      }\n    ],\n    \"ProvisionedThroughput\": {\n      \"NumberOfDecreasesToday\": 1,\n      \"ReadCapacityUnits\": 5,\n      \"WriteCapacityUnits\": 5\n    },\n    \"TableName\": \"Music\",\n    \"TableSizeBytes\": 0,\n    \"TableStatus\": \"ACTIVE\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.DescribeTable"
+        }
+      },
+      {
+        "id": "dynamodb-get-item",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "dynamodb GetItem",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetItem",
+        "fixture": "{\n  \"Item\": {\n    \"AlbumTitle\": {\n      \"S\": \"Songs About Life\"\n    },\n    \"Artist\": {\n      \"S\": \"Acme Band\"\n    },\n    \"SongTitle\": {\n      \"S\": \"Happy Day\"\n    }\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.GetItem"
+        }
+      },
+      {
+        "id": "dynamodb-list-tables",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "dynamodb ListTables",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListTables",
+        "fixture": "{\n  \"TableNames\": [\n    \"Forum\",\n    \"ProductCatalog\",\n    \"Reply\",\n    \"Thread\"\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.ListTables"
+        }
+      },
+      {
+        "id": "dynamodb-put-item",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "dynamodb PutItem",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "PutItem",
+        "fixture": "{\n  \"ConsumedCapacity\": {\n    \"CapacityUnits\": 1,\n    \"TableName\": \"Music\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.PutItem"
+        }
+      },
+      {
+        "id": "dynamodb-query",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "dynamodb Query",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "Query",
+        "fixture": "{\n  \"ConsumedCapacity\": {},\n  \"Count\": 2,\n  \"Items\": [\n    {\n      \"SongTitle\": {\n        \"S\": \"Call Me Today\"\n      }\n    }\n  ],\n  \"ScannedCount\": 2\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.Query"
+        }
+      },
+      {
+        "id": "dynamodb-scan",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "dynamodb Scan",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "Scan",
+        "fixture": "{\n  \"ConsumedCapacity\": {},\n  \"Count\": 2,\n  \"Items\": [\n    {\n      \"AlbumTitle\": {\n        \"S\": \"Somewhat Famous\"\n      },\n      \"SongTitle\": {\n        \"S\": \"Call Me Today\"\n      }\n    },\n    {\n      \"AlbumTitle\": {\n        \"S\": \"Blue Sky Blues\"\n      },\n      \"SongTitle\": {\n        \"S\": \"Scared of My Shadow\"\n      }\n    }\n  ],\n  \"ScannedCount\": 3\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.Scan"
+        }
+      },
+      {
+        "id": "dynamodb-update-item",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "dynamodb UpdateItem",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "UpdateItem",
+        "fixture": "{\n  \"Attributes\": {\n    \"AlbumTitle\": {\n      \"S\": \"Louder Than Ever\"\n    },\n    \"Artist\": {\n      \"S\": \"Acme Band\"\n    },\n    \"SongTitle\": {\n      \"S\": \"Happy Day\"\n    },\n    \"Year\": {\n      \"N\": \"2015\"\n    }\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.UpdateItem"
+        }
+      },
+      {
+        "id": "dynamodb-update-table",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "dynamodb UpdateTable",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "UpdateTable",
+        "fixture": "{\n  \"TableDescription\": {\n    \"AttributeDefinitions\": [\n      {\n        \"AttributeName\": \"Artist\",\n        \"AttributeType\": \"S\"\n      },\n      {\n        \"AttributeName\": \"SongTitle\",\n        \"AttributeType\": \"S\"\n      }\n    ],\n    \"CreationDateTime\": \"1421866952.062\",\n    \"ItemCount\": 0,\n    \"KeySchema\": [\n      {\n        \"AttributeName\": \"Artist\",\n        \"KeyType\": \"HASH\"\n      },\n      {\n        \"AttributeName\": \"SongTitle\",\n        \"KeyType\": \"RANGE\"\n      }\n    ],\n    \"ProvisionedThroughput\": {\n      \"LastIncreaseDateTime\": \"1421874759.194\",\n      \"NumberOfDecreasesToday\": 1,\n      \"ReadCapacityUnits\": 1,\n      \"WriteCapacityUnits\": 1\n    },\n    \"TableName\": \"MusicCollection\",\n    \"TableSizeBytes\": 0,\n    \"TableStatus\": \"UPDATING\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "DynamoDB_20120810.UpdateTable"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS_DynamoDB/Integrations/AWS_DynamoDB"
+}

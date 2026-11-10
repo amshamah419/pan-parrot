@@ -1,1 +1,965 @@
-{"id":"aws-networkfirewall-aws-networkfirewall","name":"AWS Network Firewall","pack":"AWS-NetworkFirewall","fidelity":"shape","curated":false,"summary":"AWS Network Firewall is a stateful, managed, network firewall and intrusion detection and prevention service for Amazon Virtual Private Cloud (Amazon VPC). With Network Firewall, y","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-networkfirewall-aws-networkfirewall","name":"AWS Network Firewall","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-NetworkFirewall/Integrations/AWS-NetworkFirewall","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-network-firewall-associate-firewall-policy","method":"GET","pathTemplate":"/","summary":"Associates a FirewallPolicy to a Firewall. A firewall policy defines how to monitor and manage your VPC network traffic, using a collection of inspection rule g","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-NetworkFirewall","kind":"object","optional":false,"children":[{"name":"AssociationResults","kind":"object","optional":false,"children":[{"name":"FirewallPolicy","kind":"object","optional":false,"children":[{"name":"FirewallArn","kind":"string","optional":false,"example":"FirewallArn"},{"name":"FirewallName","kind":"string","optional":false,"example":"FirewallName"},{"name":"FirewallPolicyArn","kind":"string","optional":false,"example":"FirewallPolicyArn"},{"name":"UpdateToken","kind":"string","optional":false,"example":"UpdateToken"}]}]}]}]}},{"id":"aws-network-firewall-associate-subnets","method":"GET","pathTemplate":"/","summary":"Associates the specified subnets in the Amazon VPC to the firewall. You can specify one subnet for each of the Availability Zones that the VPC spans. This reque","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-NetworkFirewall","kind":"object","optional":false,"children":[{"name":"AssociationResults","kind":"object","optional":false,"children":[{"name":"Subnets","kind":"object","optional":false,"children":[{"name":"FirewallArn","kind":"string","optional":false,"example":"FirewallArn"},{"name":"FirewallName","kind":"string","optional":false,"example":"FirewallName"},{"name":"SubnetId","kind":"id","optional":false},{"name":"SubnetMappings","kind":"string","optional":false,"example":"SubnetMappings"},{"name":"UpdateToken","kind":"string","optional":false,"example":"UpdateToken"}]}]}]}]}},{"id":"aws-network-firewall-create-firewall","method":"GET","pathTemplate":"/","summary":"Creates an AWS Network Firewall Firewall and accompanying FirewallStatus for a VPC. The firewall defines the configuration settings for an AWS Network Firewall","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-NetworkFirewall","kind":"object","optional":false,"children":[{"name":"Firewall","kind":"object","optional":false,"children":[{"name":"Firewall","kind":"object","optional":false,"children":[{"name":"FirewallName","kind":"string","optional":false,"example":"FirewallName"},{"name":"FirewallArn","kind":"string","optional":false,"example":"FirewallArn"},{"name":"FirewallPolicyArn","kind":"string","optional":false,"example":"FirewallPolicyArn"},{"name":"VpcId","kind":"id","optional":false},{"name":"SubnetMappings","kind":"object","optional":false,"children":[{"name":"SubnetId","kind":"id","optional":false}]},{"name":"DeleteProtection","kind":"string","optional":false,"example":"DeleteProtection"},{"name":"SubnetChangeProtection","kind":"string","optional":false,"example":"SubnetChangeProtection"},{"name":"FirewallPolicyChangeProtection","kind":"string","optional":false,"example":"FirewallPolicyChangeProtection"},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"FirewallId","kind":"id","optional":false},{"name":"Tags","kind":"object","optional":false,"children":[{"name":"Key","kind":"string","optional":false,"example":"Key"},{"name":"Value","kind":"string","optional":false,"example":"Value"}]}]},{"name":"FirewallStatus","kind":"object","optional":false,"children":[{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"ConfigurationSyncStateSummary","kind":"string","optional":false,"example":"ConfigurationSyncStateSummary"},{"name":"SyncStates","kind":"string","optional":false,"example":"SyncStates"}]}]}]}]}},{"id":"aws-network-firewall-create-firewall-policy","method":"GET","pathTemplate":"/","summary":"Creates the firewall policy for the firewall according to the specifications. An AWS Network Firewall firewall policy defines the behavior of a firewall, in a c","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-NetworkFirewall","kind":"object","optional":false,"children":[{"name":"FirewallPolicy","kind":"object","optional":false,"children":[{"name":"UpdateToken","kind":"string","optional":false,"example":"UpdateToken"},{"name":"FirewallPolicyResponse","kind":"object","optional":false,"children":[{"name":"FirewallPolicyName","kind":"string","optional":false,"example":"FirewallPolicyName"},{"name":"FirewallPolicyArn","kind":"string","optional":false,"example":"FirewallPolicyArn"},{"name":"FirewallPolicyId","kind":"id","optional":false},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"FirewallPolicyStatus","kind":"string","optional":false,"example":"FirewallPolicyStatus"},{"name":"Tags","kind":"object","optional":false,"children":[{"name":"Key","kind":"string","optional":false,"example":"Key"},{"name":"Value","kind":"string","optional":false,"example":"Value"}]}]}]}]}]}},{"id":"aws-network-firewall-create-rule-group","method":"GET","pathTemplate":"/","summary":"Creates the specified stateless or stateful rule group, which includes the rules for network traffic inspection, a capacity setting, and tags. You provide your","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-NetworkFirewall","kind":"object","optional":false,"children":[{"name":"RuleGroup","kind":"object","optional":false,"children":[{"name":"UpdateToken","kind":"string","optional":false,"example":"UpdateToken"},{"name":"RuleGroupResponse","kind":"object","optional":false,"children":[{"name":"RuleGroupArn","kind":"string","optional":false,"example":"RuleGroupArn"},{"name":"RuleGroupName","kind":"string","optional":false,"example":"RuleGroupName"},{"name":"RuleGroupId","kind":"id","optional":false},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Capacity","kind":"string","optional":false,"example":"Capacity"},{"name":"RuleGroupStatus","kind":"string","optional":false,"example":"RuleGroupStatus"},{"name":"Tags","kind":"object","optional":false,"children":[{"name":"Key","kind":"string","optional":false,"example":"Key"},{"name":"Value","kind":"string","optional":false,"example":"Value"}]}]}]}]}]}},{"id":"aws-network-firewall-delete-firewall","method":"GET","pathTemplate":"/","summary":"Deletes the specified Firewall and its FirewallStatus. This operation requires the firewall's DeleteProtection flag to be FALSE. You can't revert this operation","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS-NetworkFirewall","kind":"object","optional":false,"children":[{"name":"Firewall","kind":"object","optional":false,"children":[{"name":"Firewall","kind":"object","optional":false,"children":[{"name":"FirewallName","kind":"string","optional":false,"example":"FirewallName"},{"name":"FirewallArn","kind":"string","optional":false,"example":"FirewallArn"},{"name":"FirewallPolicyArn","kind":"string","optional":false,"example":"FirewallPolicyArn"},{"name":"VpcId","kind":"id","optional":false},{"name":"SubnetMappings","kind":"object","optional":false,"children":[{"name":"SubnetId","kind":"id","optional":false}]},{"name":"DeleteProtection","kind":"string","optional":false,"example":"DeleteProtection"},{"name":"SubnetChangeProtection","kind":"string","optional":false,"example":"SubnetChangeProtection"},{"name":"FirewallPolicyChangeProtection","kind":"string","optional":false,"example":"FirewallPolicyChangeProtection"},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"FirewallId","kind":"id","optional":false},{"name":"Tags","kind":"object","optional":false,"children":[{"name":"Key","kind":"string","optional":false,"example":"Key"},{"name":"Value","kind":"string","optional":false,"example":"Value"}]}]},{"name":"FirewallStatus","kind":"object","optional":false,"children":[{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"ConfigurationSyncStateSummary","kind":"string","optional":false,"example":"ConfigurationSyncStateSummary"},{"name":"SyncStates","kind":"string","optional":false,"example":"SyncStates"}]}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-networkfirewall-aws-networkfirewall",
+  "name": "AWS Network Firewall",
+  "pack": "AWS-NetworkFirewall",
+  "fidelity": "shape",
+  "curated": false,
+  "summary": "AWS Network Firewall is a stateful, managed, network firewall and intrusion detection and prevention service for Amazon Virtual Private Cloud (Amazon VPC). With Network Firewall, y",
+  "operations": 6,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-networkfirewall-aws-networkfirewall",
+      "name": "AWS Network Firewall",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-NetworkFirewall/Integrations/AWS-NetworkFirewall",
+      "fidelity": "shape",
+      "notes": [
+        "Field names come from the integration YAML command outputs, not a captured vendor response.",
+        "No HTTP path was recovered from the client. The shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-network-firewall-associate-firewall-policy",
+          "calls": [
+            "network-firewall:AssociateFirewallPolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-associate-subnets",
+          "calls": [
+            "network-firewall:AssociateSubnets"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-create-firewall",
+          "calls": [
+            "network-firewall:CreateFirewall"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-create-firewall-policy",
+          "calls": [
+            "network-firewall:CreateFirewallPolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-create-rule-group",
+          "calls": [
+            "network-firewall:CreateRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-delete-firewall",
+          "calls": [
+            "network-firewall:DeleteFirewall"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "aws-network-firewall-delete-firewall"
+          ]
+        },
+        {
+          "command": "aws-network-firewall-delete-firewall-policy",
+          "calls": [
+            "network-firewall:DeleteFirewallPolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-delete-resource-policy",
+          "calls": [
+            "network-firewall:DeleteResourcePolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-delete-rule-group",
+          "calls": [
+            "network-firewall:DeleteRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-describe-firewall",
+          "calls": [
+            "network-firewall:DescribeFirewall"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-describe-firewall-policy",
+          "calls": [
+            "network-firewall:DescribeFirewallPolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-describe-logging-configuration",
+          "calls": [
+            "network-firewall:DescribeLoggingConfiguration"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-describe-resource-policy",
+          "calls": [
+            "network-firewall:DescribeResourcePolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-describe-rule-group",
+          "calls": [
+            "network-firewall:DescribeRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-disassociate-subnets",
+          "calls": [
+            "network-firewall:DisassociateSubnets"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-list-firewall-policies",
+          "calls": [
+            "network-firewall:ListFirewallPolicies"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-list-firewalls",
+          "calls": [
+            "network-firewall:ListFirewalls"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-list-rule-groups",
+          "calls": [
+            "network-firewall:ListRuleGroups"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-list-tags-for-resource",
+          "calls": [
+            "network-firewall:ListTagsForResource"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-put-resource-policy",
+          "calls": [
+            "network-firewall:PutResourcePolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-tag-resource",
+          "calls": [
+            "network-firewall:TagResource"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-untag-resource",
+          "calls": [
+            "network-firewall:UntagResource"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-update-firewall-delete-protection",
+          "calls": [
+            "network-firewall:UpdateFirewallDeleteProtection"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-update-firewall-description",
+          "calls": [
+            "network-firewall:UpdateFirewallDescription"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-update-firewall-policy",
+          "calls": [
+            "network-firewall:UpdateFirewallPolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-update-firewall-policy-change-protection",
+          "calls": [
+            "network-firewall:UpdateFirewallPolicyChangeProtection"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-update-logging-configuration",
+          "calls": [
+            "network-firewall:UpdateLoggingConfiguration"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-update-rule-group",
+          "calls": [
+            "network-firewall:UpdateRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-update-subnet-change-protection",
+          "calls": [
+            "network-firewall:UpdateSubnetChangeProtection"
+          ],
+          "status": "missing"
+        }
+      ],
+      "verification": {
+        "status": "shape",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "0 of 29 commands from vendor docs, 1 approximate, 28 missing.",
+          "9 of 29 commands from vendor docs, 0 approximate, 20 missing."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "aws-network-firewall-associate-firewall-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Associates a FirewallPolicy to a Firewall. A firewall policy defines how to monitor and manage your VPC network traffic, using a collection of inspection rule g",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS-NetworkFirewall",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "AssociationResults",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "FirewallPolicy",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "FirewallArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallArn"
+                        },
+                        {
+                          "name": "FirewallName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallName"
+                        },
+                        {
+                          "name": "FirewallPolicyArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallPolicyArn"
+                        },
+                        {
+                          "name": "UpdateToken",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "UpdateToken"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-network-firewall-associate-subnets",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Associates the specified subnets in the Amazon VPC to the firewall. You can specify one subnet for each of the Availability Zones that the VPC spans. This reque",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS-NetworkFirewall",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "AssociationResults",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Subnets",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "FirewallArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallArn"
+                        },
+                        {
+                          "name": "FirewallName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallName"
+                        },
+                        {
+                          "name": "SubnetId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "SubnetMappings",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "SubnetMappings"
+                        },
+                        {
+                          "name": "UpdateToken",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "UpdateToken"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-network-firewall-create-firewall",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Creates an AWS Network Firewall Firewall and accompanying FirewallStatus for a VPC. The firewall defines the configuration settings for an AWS Network Firewall",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS-NetworkFirewall",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Firewall",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Firewall",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "FirewallName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallName"
+                        },
+                        {
+                          "name": "FirewallArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallArn"
+                        },
+                        {
+                          "name": "FirewallPolicyArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallPolicyArn"
+                        },
+                        {
+                          "name": "VpcId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "SubnetMappings",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "SubnetId",
+                              "kind": "id",
+                              "optional": false
+                            }
+                          ]
+                        },
+                        {
+                          "name": "DeleteProtection",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "DeleteProtection"
+                        },
+                        {
+                          "name": "SubnetChangeProtection",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "SubnetChangeProtection"
+                        },
+                        {
+                          "name": "FirewallPolicyChangeProtection",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallPolicyChangeProtection"
+                        },
+                        {
+                          "name": "Description",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Description"
+                        },
+                        {
+                          "name": "FirewallId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Tags",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Key",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Key"
+                            },
+                            {
+                              "name": "Value",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Value"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "FirewallStatus",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Status",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Status"
+                        },
+                        {
+                          "name": "ConfigurationSyncStateSummary",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "ConfigurationSyncStateSummary"
+                        },
+                        {
+                          "name": "SyncStates",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "SyncStates"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-network-firewall-create-firewall-policy",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Creates the firewall policy for the firewall according to the specifications. An AWS Network Firewall firewall policy defines the behavior of a firewall, in a c",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS-NetworkFirewall",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "FirewallPolicy",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "UpdateToken",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "UpdateToken"
+                    },
+                    {
+                      "name": "FirewallPolicyResponse",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "FirewallPolicyName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallPolicyName"
+                        },
+                        {
+                          "name": "FirewallPolicyArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallPolicyArn"
+                        },
+                        {
+                          "name": "FirewallPolicyId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Description",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Description"
+                        },
+                        {
+                          "name": "FirewallPolicyStatus",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallPolicyStatus"
+                        },
+                        {
+                          "name": "Tags",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Key",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Key"
+                            },
+                            {
+                              "name": "Value",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Value"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-network-firewall-create-rule-group",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Creates the specified stateless or stateful rule group, which includes the rules for network traffic inspection, a capacity setting, and tags. You provide your",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS-NetworkFirewall",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "RuleGroup",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "UpdateToken",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "UpdateToken"
+                    },
+                    {
+                      "name": "RuleGroupResponse",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "RuleGroupArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "RuleGroupArn"
+                        },
+                        {
+                          "name": "RuleGroupName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "RuleGroupName"
+                        },
+                        {
+                          "name": "RuleGroupId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Description",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Description"
+                        },
+                        {
+                          "name": "Type",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Type"
+                        },
+                        {
+                          "name": "Capacity",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Capacity"
+                        },
+                        {
+                          "name": "RuleGroupStatus",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "RuleGroupStatus"
+                        },
+                        {
+                          "name": "Tags",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Key",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Key"
+                            },
+                            {
+                              "name": "Value",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Value"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-network-firewall-delete-firewall",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Deletes the specified Firewall and its FirewallStatus. This operation requires the firewall's DeleteProtection flag to be FALSE. You can't revert this operation",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS-NetworkFirewall",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Firewall",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Firewall",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "FirewallName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallName"
+                        },
+                        {
+                          "name": "FirewallArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallArn"
+                        },
+                        {
+                          "name": "FirewallPolicyArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallPolicyArn"
+                        },
+                        {
+                          "name": "VpcId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "SubnetMappings",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "SubnetId",
+                              "kind": "id",
+                              "optional": false
+                            }
+                          ]
+                        },
+                        {
+                          "name": "DeleteProtection",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "DeleteProtection"
+                        },
+                        {
+                          "name": "SubnetChangeProtection",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "SubnetChangeProtection"
+                        },
+                        {
+                          "name": "FirewallPolicyChangeProtection",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FirewallPolicyChangeProtection"
+                        },
+                        {
+                          "name": "Description",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Description"
+                        },
+                        {
+                          "name": "FirewallId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Tags",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Key",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Key"
+                            },
+                            {
+                              "name": "Value",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Value"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "FirewallStatus",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Status",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Status"
+                        },
+                        {
+                          "name": "ConfigurationSyncStateSummary",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "ConfigurationSyncStateSummary"
+                        },
+                        {
+                          "name": "SyncStates",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "SyncStates"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "DeleteFirewall",
+        "headerMatch": {
+          "x-amz-target": "NetworkFirewall_20201112.DeleteFirewall"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-NetworkFirewall/Integrations/AWS-NetworkFirewall"
+}

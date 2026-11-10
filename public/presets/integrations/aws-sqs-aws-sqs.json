@@ -1,1 +1,528 @@
-{"id":"aws-sqs-aws-sqs","name":"AWS - SQS","pack":"AWS-SQS","fidelity":"shape","curated":false,"summary":"Amazon Web Services Simple Queuing Service (SQS).","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-sqs-aws-sqs","name":"AWS - SQS","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-SQS/Integrations/AWS-SQS","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-sqs-get-queue-url","method":"GET","pathTemplate":"/","summary":"Returns the URL of an existing queue. To access a queue that belongs to another AWS account, use the queueOwnerAWSAccountId parameter to specify the account ID","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"SQS","kind":"object","optional":false,"children":[{"name":"Queues","kind":"object","optional":false,"children":[{"name":"QueueUrl","kind":"string","optional":false,"example":"QueueUrl"}]}]}]}]}},{"id":"aws-sqs-list-queues","method":"GET","pathTemplate":"/","summary":"Returns a list of your queues. The maximum number of queues that can be returned is 1,000. If you specify a value for the optional QueueNamePrefix parameter, on","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"SQS","kind":"object","optional":false,"children":[{"name":"Queues","kind":"object","optional":false,"children":[{"name":"QueueUrl","kind":"string","optional":false,"example":"QueueUrl"}]}]}]}]}},{"id":"aws-sqs-send-message","method":"GET","pathTemplate":"/","summary":"Delivers a message to the specified queue.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"SQS","kind":"object","optional":false,"children":[{"name":"Queues","kind":"object","optional":false,"children":[{"name":"SentMessages","kind":"object","optional":false,"children":[{"name":"MD5OfMessageBody","kind":"string","optional":false,"example":"MD5OfMessageBody"},{"name":"MD5OfMessageAttributes","kind":"string","optional":false,"example":"MD5OfMessageAttributes"},{"name":"MessageId","kind":"id","optional":false},{"name":"SequenceNumber","kind":"string","optional":false,"example":"SequenceNumber"}]}]}]}]}]}},{"id":"aws-sqs-create-queue","method":"GET","pathTemplate":"/","summary":"Creates a new standard or FIFO queue. You can pass one or more attributes in the request.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"SQS","kind":"object","optional":false,"children":[{"name":"Queues","kind":"object","optional":false,"children":[{"name":"QueueUrl","kind":"string","optional":false,"example":"QueueUrl"}]}]}]}]}},{"id":"aws-sqs-delete-queue","method":"GET","pathTemplate":"/","summary":"Deletes the queue specified by the QueueUrl , regardless of the queue's contents. If the specified queue doesn't exist, Amazon SQS returns a successful response","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"queueUrl","kind":"string","optional":false,"example":"queueUrl"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}},{"id":"aws-sqs-purge-queue","method":"GET","pathTemplate":"/","summary":"Deletes the messages in a queue specified by the QueueURL parameter.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"queueUrl","kind":"string","optional":false,"example":"queueUrl"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-sqs-aws-sqs",
+  "name": "AWS - SQS",
+  "pack": "AWS-SQS",
+  "fidelity": "vendor",
+  "curated": false,
+  "summary": "From vendor docs. Amazon Web Services Simple Queuing Service (SQS).",
+  "operations": 6,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-sqs-aws-sqs",
+      "name": "AWS - SQS",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-SQS/Integrations/AWS-SQS",
+      "fidelity": "vendor",
+      "notes": [
+        "Field names come from the integration YAML command outputs, not a captured vendor response.",
+        "No HTTP path was recovered from the client. The shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-sqs-get-queue-url",
+          "calls": [
+            "sqs:GetQueueUrl"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-sqs-get-queue-url"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueUrl.html"
+        },
+        {
+          "command": "aws-sqs-list-queues",
+          "calls": [
+            "sqs:ListQueues"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-sqs-list-queues"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ListQueues.html"
+        },
+        {
+          "command": "aws-sqs-send-message",
+          "calls": [
+            "sqs:SendMessage"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-sqs-send-message"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html"
+        },
+        {
+          "command": "aws-sqs-create-queue",
+          "calls": [
+            "sqs:CreateQueue"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-sqs-create-queue"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html"
+        },
+        {
+          "command": "aws-sqs-delete-queue",
+          "calls": [
+            "sqs:DeleteQueue"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-sqs-delete-queue"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteQueue.html"
+        },
+        {
+          "command": "aws-sqs-purge-queue",
+          "calls": [
+            "sqs:PurgeQueue"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-sqs-purge-queue"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_PurgeQueue.html"
+        }
+      ],
+      "verification": {
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueUrl.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "6 of 6 commands from vendor docs, 0 approximate, 0 missing."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "aws-sqs-get-queue-url",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Returns the URL of an existing queue. To access a queue that belongs to another AWS account, use the queueOwnerAWSAccountId parameter to specify the account ID",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "SQS",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Queues",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "QueueUrl",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "QueueUrl"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "GetQueueUrl",
+        "fixture": "{\n  \"QueueUrl\": \"https://sqs.us-east-1.amazonaws.com/177715257436/MyQueue\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSQS.GetQueueUrl"
+        }
+      },
+      {
+        "id": "aws-sqs-list-queues",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Returns a list of your queues. The maximum number of queues that can be returned is 1,000. If you specify a value for the optional QueueNamePrefix parameter, on",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "SQS",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Queues",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "QueueUrl",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "QueueUrl"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "ListQueues",
+        "fixture": "{\n  \"QueueUrls\": [\n    \"https://sqs.us-east-1.amazonaws.com/177715257436/MyQueue\",\n    \"https://sqs.us-east-1.amazonaws.com/177715257436/MyQueue1648169377027\",\n    \"https://sqs.us-east-1.amazonaws.com/177715257436/MyQueue1648169549830\",\n    \"https://sqs.us-east-1.amazonaws.com/177715257436/MyQueue1648227401019\",\n    \"https://sqs.us-east-1.amazonaws.com/177715257436/MyQueue1648248132466\",\n    \"https://sqs.us-east-1.amazonaws.com/177715257436/MyQueue1649201932174\",\n    \"https://sqs.us-east-1.amazonaws.com/177715257436/MyQueue2\"\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSQS.ListQueues"
+        }
+      },
+      {
+        "id": "aws-sqs-send-message",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Delivers a message to the specified queue.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "SQS",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Queues",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "SentMessages",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "MD5OfMessageBody",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "MD5OfMessageBody"
+                            },
+                            {
+                              "name": "MD5OfMessageAttributes",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "MD5OfMessageAttributes"
+                            },
+                            {
+                              "name": "MessageId",
+                              "kind": "id",
+                              "optional": false
+                            },
+                            {
+                              "name": "SequenceNumber",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "SequenceNumber"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "SendMessage",
+        "fixture": "{\n  \"MD5OfMessageAttributes\": \"c48838208d2b4e14e3ca0093a8443f09\",\n  \"MD5OfMessageBody\": \"fafb00f5732ab283681e124bf8747ed1\",\n  \"MessageId\": \"219f8380-5770-4cc2-8c3e-5c715e145f5e\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSQS.SendMessage"
+        }
+      },
+      {
+        "id": "aws-sqs-create-queue",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Creates a new standard or FIFO queue. You can pass one or more attributes in the request.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "SQS",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Queues",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "QueueUrl",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "QueueUrl"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "CreateQueue",
+        "fixture": "{\n  \"QueueUrl\": \"https://sqs.us-east-1.amazonaws.com/177715257436/MyQueue\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSQS.CreateQueue"
+        }
+      },
+      {
+        "id": "aws-sqs-delete-queue",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Deletes the queue specified by the QueueUrl , regardless of the queue's contents. If the specified queue doesn't exist, Amazon SQS returns a successful response",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "queueUrl",
+              "kind": "string",
+              "optional": false,
+              "example": "queueUrl"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            },
+            {
+              "name": "roleArn",
+              "kind": "string",
+              "optional": false,
+              "example": "roleArn"
+            },
+            {
+              "name": "roleSessionName",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionName"
+            },
+            {
+              "name": "roleSessionDuration",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionDuration"
+            }
+          ]
+        },
+        "awsAction": "DeleteQueue",
+        "fixture": "{\n  \"QueueUrl\": \"https://sqs.us-east-1.amazonaws.com/177715257436/MyQueue\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSQS.DeleteQueue"
+        }
+      },
+      {
+        "id": "aws-sqs-purge-queue",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Deletes the messages in a queue specified by the QueueURL parameter.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.0",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "queueUrl",
+              "kind": "string",
+              "optional": false,
+              "example": "queueUrl"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            },
+            {
+              "name": "roleArn",
+              "kind": "string",
+              "optional": false,
+              "example": "roleArn"
+            },
+            {
+              "name": "roleSessionName",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionName"
+            },
+            {
+              "name": "roleSessionDuration",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionDuration"
+            }
+          ]
+        },
+        "awsAction": "PurgeQueue",
+        "fixture": "{\n  \"QueueUrl\": \"https://sqs.us-east-1.amazonaws.com/177715257436/MyQueue/\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonSQS.PurgeQueue"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-SQS/Integrations/AWS-SQS"
+}

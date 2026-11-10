@@ -1,1 +1,209 @@
-{"id":"aws-s3-aws-s3","name":"AWS - S3","pack":"AWS-S3","fidelity":"shape","curated":false,"summary":"Amazon Web Services Simple Storage Service (S3).","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"aws-s3-aws-s3","name":"AWS - S3","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-S3/Integrations/AWS-S3","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-get-bucket-policy-json","method":"GET","pathTemplate":"/","summary":"test_data/get_bucket_policy.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"BucketName","kind":"string","optional":false,"example":"test_bucket"},{"name":"PolicyId","kind":"id","optional":false,"example":"1"},{"name":"PolicyVersion","kind":"string","optional":false,"example":"1.0.0"},{"name":"Sid","kind":"id","optional":false,"example":"Sid_1"},{"name":"Action","kind":"string","optional":false,"example":"action_1"},{"name":"Principal","kind":"string","optional":false,"example":"principal_1"},{"name":"Resource","kind":"string","optional":false,"example":"resource_1"},{"name":"Effect","kind":"string","optional":false,"example":"effect_1"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-s3-aws-s3",
+  "name": "AWS - S3",
+  "pack": "AWS-S3",
+  "fidelity": "shape",
+  "curated": false,
+  "summary": "Amazon Web Services Simple Storage Service (S3).",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-s3-aws-s3",
+      "name": "AWS - S3",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-S3/Integrations/AWS-S3",
+      "fidelity": "shape",
+      "notes": [
+        "Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.",
+        "No HTTP path was recovered from the client. The sample shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-s3-create-bucket",
+          "calls": [
+            "s3:CreateBucket"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-delete-bucket",
+          "calls": [
+            "s3:DeleteBucket"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-list-buckets",
+          "calls": [
+            "s3:ListBuckets"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-get-bucket-policy",
+          "calls": [
+            "s3:GetBucketPolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-delete-bucket-policy",
+          "calls": [
+            "s3:DeleteBucketPolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-download-file",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-list-bucket-objects",
+          "calls": [
+            "s3:ListObjects"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-put-bucket-policy",
+          "calls": [
+            "s3:PutBucketPolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-get-bucket-encryption",
+          "calls": [
+            "s3:GetBucketEncryption"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-upload-file",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-get-public-access-block",
+          "calls": [
+            "s3:GetPublicAccessBlock"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-put-public-access-block",
+          "calls": [
+            "s3:PutPublicAccessBlock"
+          ],
+          "status": "missing"
+        }
+      ]
+    },
+    "operations": [
+      {
+        "id": "test-data-get-bucket-policy-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/get_bucket_policy.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "BucketName",
+              "kind": "string",
+              "optional": false,
+              "example": "test_bucket"
+            },
+            {
+              "name": "PolicyId",
+              "kind": "id",
+              "optional": false,
+              "example": "1"
+            },
+            {
+              "name": "PolicyVersion",
+              "kind": "string",
+              "optional": false,
+              "example": "1.0.0"
+            },
+            {
+              "name": "Sid",
+              "kind": "id",
+              "optional": false,
+              "example": "Sid_1"
+            },
+            {
+              "name": "Action",
+              "kind": "string",
+              "optional": false,
+              "example": "action_1"
+            },
+            {
+              "name": "Principal",
+              "kind": "string",
+              "optional": false,
+              "example": "principal_1"
+            },
+            {
+              "name": "Resource",
+              "kind": "string",
+              "optional": false,
+              "example": "resource_1"
+            },
+            {
+              "name": "Effect",
+              "kind": "string",
+              "optional": false,
+              "example": "effect_1"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

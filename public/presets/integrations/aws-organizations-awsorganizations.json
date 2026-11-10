@@ -1,1 +1,905 @@
-{"id":"aws-organizations-awsorganizations","name":"AWS - Organizations","pack":"AWS-Organizations","fidelity":"shape","curated":false,"summary":"Manage Amazon Web Services accounts and their resources.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-organizations-awsorganizations","name":"AWS - Organizations","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-Organizations/Integrations/AWSOrganizations","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-org-root-list","method":"GET","pathTemplate":"/","summary":"List the roots that are defined in the current organization.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"Organizations","kind":"object","optional":false,"children":[{"name":"Root","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false},{"name":"Arn","kind":"string","optional":false,"example":"Arn"},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"PolicyTypes","kind":"object","optional":false,"children":[{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Status","kind":"string","optional":false,"example":"Status"}]}]},{"name":"RootNextToken","kind":"string","optional":false,"example":"RootNextToken"}]}]}]}},{"id":"aws-org-children-list","method":"GET","pathTemplate":"/","summary":"List all of the organizational units (OUs) or accounts that are contained in the specified parent OU or root.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"Organizations","kind":"object","optional":false,"children":[{"name":"Children","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"ParentId","kind":"id","optional":false}]},{"name":"ChildrenNextToken","kind":"string","optional":false,"example":"ChildrenNextToken"}]}]}]}},{"id":"aws-org-parent-list","method":"GET","pathTemplate":"/","summary":"Lists all of the organizational units (OUs) or accounts that are a parent OU or root of the specified child. This command returns only the immediate parents in","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"Organizations","kind":"object","optional":false,"children":[{"name":"Parent","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"ChildId","kind":"id","optional":false}]}]}]}]}},{"id":"aws-org-organization-unit-get","method":"GET","pathTemplate":"/","summary":"Retrieve information about an organizational unit (OU). This command can be called only from the organization's management account or by a member account that i","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"Organizations","kind":"object","optional":false,"children":[{"name":"OrganizationUnit","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false},{"name":"Arn","kind":"string","optional":false,"example":"Arn"},{"name":"Name","kind":"string","optional":false,"example":"Name"}]}]}]}]}},{"id":"aws-org-account-list","method":"GET","pathTemplate":"/","summary":"Lists all the accounts in the organization or a specific account by ID.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"Organizations","kind":"object","optional":false,"children":[{"name":"Account","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false},{"name":"Arn","kind":"string","optional":false,"example":"Arn"},{"name":"Email","kind":"string","optional":false,"example":"Email"},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"JoinedMethod","kind":"string","optional":false,"example":"JoinedMethod"},{"name":"JoinedTimestamp","kind":"timestamp","optional":false,"format":"iso"}]},{"name":"AccountNextToken","kind":"string","optional":false,"example":"AccountNextToken"}]}]}]}},{"id":"aws-org-organization-get","method":"GET","pathTemplate":"/","summary":"Retrieves information about the organization that the user's account belongs to.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"Organizations","kind":"object","optional":false,"children":[{"name":"Organization","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false},{"name":"Arn","kind":"string","optional":false,"example":"Arn"},{"name":"FeatureSet","kind":"string","optional":false,"example":"FeatureSet"},{"name":"MasterAccountArn","kind":"string","optional":false,"example":"MasterAccountArn"},{"name":"MasterAccountId","kind":"id","optional":false},{"name":"MasterAccountEmail","kind":"string","optional":false,"example":"MasterAccountEmail"}]}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-organizations-awsorganizations",
+  "name": "AWS - Organizations",
+  "pack": "AWS-Organizations",
+  "fidelity": "vendor",
+  "curated": false,
+  "summary": "From vendor docs. Manage Amazon Web Services accounts and their resources.",
+  "operations": 6,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-organizations-awsorganizations",
+      "name": "AWS - Organizations",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-Organizations/Integrations/AWSOrganizations",
+      "fidelity": "vendor",
+      "notes": [
+        "Field names come from the integration YAML command outputs, not a captured vendor response.",
+        "No HTTP path was recovered from the client. The shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-org-root-list",
+          "calls": [],
+          "status": "approximate",
+          "operationIds": [
+            "aws-org-root-list"
+          ]
+        },
+        {
+          "command": "aws-org-children-list",
+          "calls": [],
+          "status": "approximate",
+          "operationIds": [
+            "aws-org-children-list"
+          ]
+        },
+        {
+          "command": "aws-org-parent-list",
+          "calls": [],
+          "status": "approximate",
+          "operationIds": [
+            "aws-org-parent-list"
+          ]
+        },
+        {
+          "command": "aws-org-organization-unit-get",
+          "calls": [
+            "organizations:DescribeOrganizationalUnit"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-org-organization-unit-get"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/organizations/2016-11-28/examples-1.json"
+        },
+        {
+          "command": "aws-org-account-list",
+          "calls": [
+            "organizations:DescribeAccount"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-org-account-list"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/organizations/2016-11-28/examples-1.json"
+        },
+        {
+          "command": "aws-org-organization-get",
+          "calls": [
+            "organizations:DescribeOrganization"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-org-organization-get"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/organizations/2016-11-28/examples-1.json"
+        },
+        {
+          "command": "aws-org-account-remove",
+          "calls": [
+            "organizations:RemoveAccountFromOrganization"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-org-account-move",
+          "calls": [
+            "organizations:MoveAccount"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-org-account-create",
+          "calls": [
+            "organizations:CreateAccount",
+            "organizations:DescribeCreateAccountStatus",
+            "organizations:DescribeAccount"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "organizations-create-account",
+            "organizations-describe-create-account-status",
+            "aws-org-account-list"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/organizations/2016-11-28/examples-1.json"
+        },
+        {
+          "command": "aws-org-account-close",
+          "calls": [
+            "organizations:DescribeAccount",
+            "organizations:CloseAccount"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "aws-org-account-list"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/organizations/2016-11-28/examples-1.json"
+        },
+        {
+          "command": "aws-org-organization-unit-create",
+          "calls": [
+            "organizations:CreateOrganizationalUnit"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "organizations-create-organizational-unit"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/organizations/2016-11-28/examples-1.json"
+        },
+        {
+          "command": "aws-org-organization-unit-delete",
+          "calls": [
+            "organizations:DeleteOrganizationalUnit"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-org-organization-unit-rename",
+          "calls": [
+            "organizations:UpdateOrganizationalUnit"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "organizations-update-organizational-unit"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/organizations/2016-11-28/examples-1.json"
+        },
+        {
+          "command": "aws-org-policy-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-org-target-policy-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-org-policy-get",
+          "calls": [
+            "organizations:DescribePolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "organizations-describe-policy"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/organizations/2016-11-28/examples-1.json"
+        },
+        {
+          "command": "aws-org-policy-delete",
+          "calls": [
+            "organizations:DeletePolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-org-policy-attach",
+          "calls": [
+            "organizations:AttachPolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-org-policy-target-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-org-resource-tag-add",
+          "calls": [
+            "organizations:TagResource"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-org-resource-tag-list",
+          "calls": [
+            "organizations:ListTagsForResource"
+          ],
+          "status": "missing"
+        }
+      ],
+      "verification": {
+        "status": "vendor",
+        "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/organizations/2016-11-28/examples-1.json",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "7 of 21 commands from vendor docs, 4 approximate, 10 missing."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "aws-org-root-list",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "List the roots that are defined in the current organization.",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Organizations",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Root",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Id",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Arn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Arn"
+                        },
+                        {
+                          "name": "Name",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Name"
+                        },
+                        {
+                          "name": "PolicyTypes",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Type",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Type"
+                            },
+                            {
+                              "name": "Status",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Status"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "RootNextToken",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "RootNextToken"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-org-children-list",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "List all of the organizational units (OUs) or accounts that are contained in the specified parent OU or root.",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Organizations",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Children",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Id",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Type",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Type"
+                        },
+                        {
+                          "name": "ParentId",
+                          "kind": "id",
+                          "optional": false
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ChildrenNextToken",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "ChildrenNextToken"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-org-parent-list",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Lists all of the organizational units (OUs) or accounts that are a parent OU or root of the specified child. This command returns only the immediate parents in",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Organizations",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Parent",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Id",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Type",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Type"
+                        },
+                        {
+                          "name": "ChildId",
+                          "kind": "id",
+                          "optional": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-org-organization-unit-get",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Retrieve information about an organizational unit (OU). This command can be called only from the organization's management account or by a member account that i",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Organizations",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "OrganizationUnit",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Id",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Arn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Arn"
+                        },
+                        {
+                          "name": "Name",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Name"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "DescribeOrganizationalUnit",
+        "fixture": "{\n  \"OrganizationalUnit\": {\n    \"Arn\": \"arn:aws:organizations::111111111111:ou/o-exampleorgid/ou-examplerootid111-exampleouid111\",\n    \"Id\": \"ou-examplerootid111-exampleouid111\",\n    \"Name\": \"Accounting Group\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSOrganizationsV20161128.DescribeOrganizationalUnit"
+        }
+      },
+      {
+        "id": "aws-org-account-list",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Lists all the accounts in the organization or a specific account by ID.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Organizations",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Account",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Id",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Arn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Arn"
+                        },
+                        {
+                          "name": "Email",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Email"
+                        },
+                        {
+                          "name": "Name",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Name"
+                        },
+                        {
+                          "name": "Status",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Status"
+                        },
+                        {
+                          "name": "JoinedMethod",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "JoinedMethod"
+                        },
+                        {
+                          "name": "JoinedTimestamp",
+                          "kind": "timestamp",
+                          "optional": false,
+                          "format": "iso"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "AccountNextToken",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "AccountNextToken"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "DescribeAccount",
+        "fixture": "{\n  \"Account\": {\n    \"Arn\": \"arn:aws:organizations::111111111111:account/o-exampleorgid/555555555555\",\n    \"Email\": \"anika@example.com\",\n    \"Id\": \"555555555555\",\n    \"Name\": \"Beta Account\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSOrganizationsV20161128.DescribeAccount"
+        }
+      },
+      {
+        "id": "aws-org-organization-get",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Retrieves information about the organization that the user's account belongs to.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Organizations",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Organization",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Id",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Arn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Arn"
+                        },
+                        {
+                          "name": "FeatureSet",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FeatureSet"
+                        },
+                        {
+                          "name": "MasterAccountArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "MasterAccountArn"
+                        },
+                        {
+                          "name": "MasterAccountId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "MasterAccountEmail",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "MasterAccountEmail"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "DescribeOrganization",
+        "fixture": "{\n  \"Organization\": {\n    \"Arn\": \"arn:aws:organizations::111111111111:organization/o-exampleorgid\",\n    \"AvailablePolicyTypes\": [\n      {\n        \"Status\": \"ENABLED\",\n        \"Type\": \"SERVICE_CONTROL_POLICY\"\n      }\n    ],\n    \"FeatureSet\": \"ALL\",\n    \"Id\": \"o-exampleorgid\",\n    \"MasterAccountArn\": \"arn:aws:organizations::111111111111:account/o-exampleorgid/111111111111\",\n    \"MasterAccountEmail\": \"bill@example.com\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSOrganizationsV20161128.DescribeOrganization"
+        }
+      },
+      {
+        "id": "organizations-create-account",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "organizations CreateAccount",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreateAccount",
+        "fixture": "{\n  \"CreateAccountStatus\": {\n    \"Id\": \"car-examplecreateaccountrequestid111\",\n    \"State\": \"IN_PROGRESS\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSOrganizationsV20161128.CreateAccount"
+        }
+      },
+      {
+        "id": "organizations-describe-create-account-status",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "organizations DescribeCreateAccountStatus",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DescribeCreateAccountStatus",
+        "fixture": "{\n  \"CreateAccountStatus\": {\n    \"AccountId\": \"333333333333\",\n    \"Id\": \"car-exampleaccountcreationrequestid\",\n    \"State\": \"SUCCEEDED\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSOrganizationsV20161128.DescribeCreateAccountStatus"
+        }
+      },
+      {
+        "id": "organizations-create-organizational-unit",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "organizations CreateOrganizationalUnit",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreateOrganizationalUnit",
+        "fixture": "{\n  \"OrganizationalUnit\": {\n    \"Arn\": \"arn:aws:organizations::111111111111:ou/o-exampleorgid/ou-examplerootid111-exampleouid111\",\n    \"Id\": \"ou-examplerootid111-exampleouid111\",\n    \"Name\": \"AccountingOU\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSOrganizationsV20161128.CreateOrganizationalUnit"
+        }
+      },
+      {
+        "id": "organizations-update-organizational-unit",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "organizations UpdateOrganizationalUnit",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "UpdateOrganizationalUnit",
+        "fixture": "{\n  \"OrganizationalUnit\": {\n    \"Arn\": \"arn:aws:organizations::111111111111:ou/o-exampleorgid/ou-examplerootid111-exampleouid111\",\n    \"Id\": \"ou-examplerootid111-exampleouid111\",\n    \"Name\": \"AccountingOU\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSOrganizationsV20161128.UpdateOrganizationalUnit"
+        }
+      },
+      {
+        "id": "organizations-describe-policy",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "organizations DescribePolicy",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DescribePolicy",
+        "fixture": "{\n  \"Policy\": {\n    \"Content\": \"{\\\\n  \\\\\\\"Version\\\\\\\": \\\\\\\"2012-10-17\\\\\\\",\\\\n  \\\\\\\"Statement\\\\\\\": [\\\\n    {\\\\n      \\\\\\\"Effect\\\\\\\": \\\\\\\"Allow\\\\\\\",\\\\n      \\\\\\\"Action\\\\\\\": \\\\\\\"*\\\\\\\",\\\\n      \\\\\\\"Resource\\\\\\\": \\\\\\\"*\\\\\\\"\\\\n    }\\\\n  ]\\\\n}\",\n    \"PolicySummary\": {\n      \"Arn\": \"arn:aws:organizations::111111111111:policy/o-exampleorgid/service_control_policy/p-examplepolicyid111\",\n      \"AwsManaged\": false,\n      \"Description\": \"Enables admins to delegate S3 permissions\",\n      \"Id\": \"p-examplepolicyid111\",\n      \"Name\": \"AllowAllS3Actions\",\n      \"Type\": \"SERVICE_CONTROL_POLICY\"\n    }\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AWSOrganizationsV20161128.DescribePolicy"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-Organizations/Integrations/AWSOrganizations"
+}

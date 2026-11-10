@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { CommandCoverage, MockSpec } from "@shared/mock-spec";
+import { commandCoverageLabel, type CommandDoc, type MockSpec } from "@shared/mock-spec";
+import type { CommandCoverage } from "@shared/mock-spec";
 import { instanceGuide } from "@shared/xsoar-instance";
 
 const RESPONSE_LABEL: Record<CommandCoverage["response"], string> = {
@@ -134,6 +135,59 @@ export function CommandCoveragePanel({
                 </tr>
               );
             })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+const DOC_LABEL: Record<CommandDoc["status"], string> = {
+  vendor: "From vendor docs",
+  approximate: "Approximate",
+  missing: "Missing",
+};
+
+export function CommandDocsPanel({ spec }: { spec: MockSpec }) {
+  const rows = spec.source.commandDocs;
+  if (!rows?.length) return null;
+  const summary = {
+    total: rows.length,
+    vendor: rows.filter((row) => row.status === "vendor").length,
+    approximate: rows.filter((row) => row.status === "approximate").length,
+    missing: rows.filter((row) => row.status === "missing").length,
+  };
+  return (
+    <section className="rounded-lg border bg-card p-4" aria-labelledby="command-docs-heading">
+      <h2 id="command-docs-heading" className="text-sm font-medium">Command coverage</h2>
+      <p className="mt-1 text-xs text-muted-foreground">{commandCoverageLabel(summary)}</p>
+      <div className="mt-3 max-h-80 overflow-auto">
+        <table className="w-full text-left text-sm">
+          <thead>
+            <tr className="border-b text-xs text-muted-foreground">
+              <th className="py-2 pr-3 font-medium">Command</th>
+              <th className="py-2 pr-3 font-medium">API call</th>
+              <th className="py-2 font-medium">Docs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.command} className="border-b align-top">
+                <td className="py-2 pr-3 font-medium">{row.command}</td>
+                <td className="py-2 pr-3 font-mono text-xs text-muted-foreground">
+                  {row.calls.length ? row.calls.join(", ") : "—"}
+                </td>
+                <td className="py-2 text-xs">
+                  {row.status === "vendor" && row.docUrl ? (
+                    <a className="underline" href={row.docUrl} target="_blank" rel="noreferrer">
+                      {DOC_LABEL[row.status]}
+                    </a>
+                  ) : (
+                    DOC_LABEL[row.status]
+                  )}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

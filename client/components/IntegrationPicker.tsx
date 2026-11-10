@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrustBadge } from "@/components/TrustBadge";
+import { commandCoverageLabel } from "@shared/mock-spec";
 import { createEndpoint, importSpec } from "@/lib/api";
 import { clearPresetCatalogCache, loadPresetCatalog, type PresetCatalogEntry } from "@/lib/preset-catalog";
 import type { UserEndpoint } from "@shared/api";
@@ -204,6 +205,11 @@ export function IntegrationPicker({
                     <span className="block text-xs text-muted-foreground">
                       {entry.summary ? entry.summary.slice(0, 140) : entry.pack}
                     </span>
+                    {entry.commandCoverage && entry.commandCoverage.total > 0 && (
+                      <span className="block text-xs text-muted-foreground">
+                        {commandCoverageLabel(entry.commandCoverage)}
+                      </span>
+                    )}
                   </span>
                   <TrustBadge
                     status={entry.verification?.status}

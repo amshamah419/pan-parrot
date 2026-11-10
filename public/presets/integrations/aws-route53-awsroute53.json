@@ -1,1 +1,675 @@
-{"id":"aws-route53-awsroute53","name":"AWS - Route53","pack":"AWS-Route53","fidelity":"shape","curated":false,"summary":"Amazon Web Services Managed Cloud DNS Service.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-route53-awsroute53","name":"AWS - Route53","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-Route53/Integrations/AWSRoute53","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-route53-create-record","method":"DELETE","pathTemplate":"/ResourceRecordSet","summary":"Creates a resource record set. Creates a resource record set that has the specified values.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"Route53","kind":"object","optional":false,"children":[{"name":"RecordSetsChange","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"Comment","kind":"string","optional":false,"example":"Comment"}]}]}]}]}},{"id":"aws-route53-delete-record","method":"GET","pathTemplate":"/","summary":"Deletes a resource record set. Deletes an existing resource record set that has the specified values.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"Route53","kind":"object","optional":false,"children":[{"name":"RecordSetsChange","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"Comment","kind":"string","optional":false,"example":"Comment"}]}]}]}]}},{"id":"aws-route53-list-hosted-zones","method":"GET","pathTemplate":"/","summary":"Retrieves a list of the public and private hosted zones that are associated with the current AWS account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"Route53","kind":"object","optional":false,"children":[{"name":"HostedZones","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"CallerReference","kind":"string","optional":false,"example":"CallerReference"},{"name":"Config","kind":"object","optional":false,"children":[{"name":"Comment","kind":"string","optional":false,"example":"Comment"},{"name":"PrivateZone","kind":"string","optional":false,"example":"PrivateZone"}]},{"name":"ResourceRecordSetCount","kind":"number","optional":false},{"name":"LinkedService","kind":"object","optional":false,"children":[{"name":"ServicePrincipal","kind":"string","optional":false,"example":"ServicePrincipal"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]}]}]}]}},{"id":"aws-route53-list-resource-record-sets","method":"GET","pathTemplate":"/","summary":"Lists the resource record sets in a specified hosted zone.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"Route53","kind":"object","optional":false,"children":[{"name":"RecordSets","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"SetIdentifier","kind":"string","optional":false,"example":"SetIdentifier"},{"name":"Weight","kind":"number","optional":false},{"name":"Region","kind":"string","optional":false,"example":"Region"},{"name":"GeoLocation","kind":"object","optional":false,"children":[{"name":"ContinentCode","kind":"string","optional":false,"example":"ContinentCode"},{"name":"CountryCode","kind":"string","optional":false,"example":"CountryCode"},{"name":"SubdivisionCode","kind":"string","optional":false,"example":"SubdivisionCode"}]},{"name":"Failover","kind":"string","optional":false,"example":"Failover"},{"name":"MultiValueAnswer","kind":"string","optional":false,"example":"MultiValueAnswer"},{"name":"TTL","kind":"string","optional":false,"example":"TTL"},{"name":"ResourceRecords","kind":"object","optional":false,"children":[{"name":"Value","kind":"string","optional":false,"example":"Value"}]},{"name":"AliasTarget","kind":"object","optional":false,"children":[{"name":"HostedZoneId","kind":"id","optional":false},{"name":"DNSName","kind":"string","optional":false,"example":"DNSName"},{"name":"EvaluateTargetHealth","kind":"string","optional":false,"example":"EvaluateTargetHealth"}]},{"name":"HealthCheckId","kind":"id","optional":false},{"name":"TrafficPolicyInstanceId","kind":"id","optional":false}]}]}]}]}},{"id":"aws-route53-waiter-resource-record-sets-changed","method":"GET","pathTemplate":"/","summary":"A waiter function that waits until record set change is successful.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"string","optional":false,"example":"id"},{"name":"waiterDelay","kind":"string","optional":false,"example":"waiterDelay"},{"name":"waiterMaxAttempts","kind":"string","optional":false,"example":"waiterMaxAttempts"}]}},{"id":"aws-route53-test-dns-answer","method":"GET","pathTemplate":"/","summary":"Gets the value that Amazon Route 53 returns in response to a DNS request for a specified record name and type. You can optionally specify the IP address of a DN","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"Route53","kind":"object","optional":false,"children":[{"name":"TestDNSAnswer","kind":"object","optional":false,"children":[{"name":"Nameserver","kind":"string","optional":false,"example":"Nameserver"},{"name":"RecordName","kind":"string","optional":false,"example":"RecordName"},{"name":"RecordType","kind":"string","optional":false,"example":"RecordType"},{"name":"ResponseCode","kind":"string","optional":false,"example":"ResponseCode"},{"name":"Protocol","kind":"string","optional":false,"example":"Protocol"},{"name":"RecordData","kind":"string","optional":false,"example":"RecordData"}]}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-route53-awsroute53",
+  "name": "AWS - Route53",
+  "pack": "AWS-Route53",
+  "fidelity": "vendor",
+  "curated": false,
+  "summary": "From vendor docs. Amazon Web Services Managed Cloud DNS Service.",
+  "operations": 6,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-route53-awsroute53",
+      "name": "AWS - Route53",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-Route53/Integrations/AWSRoute53",
+      "fidelity": "vendor",
+      "notes": [
+        "Field names come from the integration YAML command outputs, not a captured vendor response.",
+        "No HTTP path was recovered from the client. The shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-route53-create-record",
+          "calls": [
+            "route53:ChangeResourceRecordSets"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-route53-delete-record",
+          "calls": [
+            "route53:ChangeResourceRecordSets"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-route53-list-hosted-zones",
+          "calls": [
+            "route53:ListHostedZones"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-route53-list-hosted-zones"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/Route53/latest/APIReference/API_ListHostedZones.html"
+        },
+        {
+          "command": "aws-route53-list-resource-record-sets",
+          "calls": [
+            "route53:ListResourceRecordSets"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-route53-list-resource-record-sets"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/Route53/latest/APIReference/API_ListResourceRecordSets.html"
+        },
+        {
+          "command": "aws-route53-waiter-resource-record-sets-changed",
+          "calls": [],
+          "status": "approximate",
+          "operationIds": [
+            "aws-route53-waiter-resource-record-sets-changed"
+          ]
+        },
+        {
+          "command": "aws-route53-test-dns-answer",
+          "calls": [],
+          "status": "approximate",
+          "operationIds": [
+            "aws-route53-test-dns-answer"
+          ]
+        },
+        {
+          "command": "aws-route53-upsert-record",
+          "calls": [
+            "route53:ChangeResourceRecordSets"
+          ],
+          "status": "missing"
+        }
+      ],
+      "verification": {
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/Route53/latest/APIReference/API_ListHostedZones.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "2 of 7 commands from vendor docs, 2 approximate, 3 missing."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "aws-route53-create-record",
+        "method": "DELETE",
+        "pathTemplate": "/ResourceRecordSet",
+        "summary": "Creates a resource record set. Creates a resource record set that has the specified values.",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Route53",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "RecordSetsChange",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Id",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Status",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Status"
+                        },
+                        {
+                          "name": "Comment",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Comment"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-route53-delete-record",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Deletes a resource record set. Deletes an existing resource record set that has the specified values.",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Route53",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "RecordSetsChange",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Id",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Status",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Status"
+                        },
+                        {
+                          "name": "Comment",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Comment"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-route53-list-hosted-zones",
+        "method": "GET",
+        "pathTemplate": "/2013-04-01/hostedzone",
+        "summary": "Retrieves a list of the public and private hosted zones that are associated with the current AWS account.",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Route53",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "HostedZones",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Id",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "Name",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Name"
+                        },
+                        {
+                          "name": "CallerReference",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "CallerReference"
+                        },
+                        {
+                          "name": "Config",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Comment",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Comment"
+                            },
+                            {
+                              "name": "PrivateZone",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "PrivateZone"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ResourceRecordSetCount",
+                          "kind": "number",
+                          "optional": false
+                        },
+                        {
+                          "name": "LinkedService",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "ServicePrincipal",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ServicePrincipal"
+                            },
+                            {
+                              "name": "Description",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Description"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "ListHostedZones",
+        "fixture": "<ListHostedZonesResponse xmlns=\"https://route53.amazonaws.com/doc/2013-04-01/\">\n   <HostedZones>\n      <HostedZone>\n         <Id>/hostedzone/Z111111QQQQQQQ</Id>\n         <Name>example.com.</Name>\n         <CallerReference>MyUniqueIdentifier1</CallerReference>\n         <Config>\n            <Comment>This is my first hosted zone.</Comment>\n            <PrivateZone>false</PrivateZone>\n         </Config>\n         <ResourceRecordSetCount>42</ResourceRecordSetCount>\n      </HostedZone>\n   </HostedZones>\n   <IsTruncated>true</IsTruncated>\n   <NextMarker>Z222222VVVVVVV</NextMarker>\n   <MaxItems>1</MaxItems>\n</ListHostedZonesResponse>"
+      },
+      {
+        "id": "aws-route53-list-resource-record-sets",
+        "method": "GET",
+        "pathTemplate": "/2013-04-01/hostedzone/{Id}/rrset",
+        "summary": "Lists the resource record sets in a specified hosted zone.",
+        "status": 200,
+        "contentType": "text/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Route53",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "RecordSets",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Name",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Name"
+                        },
+                        {
+                          "name": "Type",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Type"
+                        },
+                        {
+                          "name": "SetIdentifier",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "SetIdentifier"
+                        },
+                        {
+                          "name": "Weight",
+                          "kind": "number",
+                          "optional": false
+                        },
+                        {
+                          "name": "Region",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Region"
+                        },
+                        {
+                          "name": "GeoLocation",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "ContinentCode",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ContinentCode"
+                            },
+                            {
+                              "name": "CountryCode",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "CountryCode"
+                            },
+                            {
+                              "name": "SubdivisionCode",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "SubdivisionCode"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Failover",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Failover"
+                        },
+                        {
+                          "name": "MultiValueAnswer",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "MultiValueAnswer"
+                        },
+                        {
+                          "name": "TTL",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "TTL"
+                        },
+                        {
+                          "name": "ResourceRecords",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Value",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Value"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "AliasTarget",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "HostedZoneId",
+                              "kind": "id",
+                              "optional": false
+                            },
+                            {
+                              "name": "DNSName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "DNSName"
+                            },
+                            {
+                              "name": "EvaluateTargetHealth",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "EvaluateTargetHealth"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "HealthCheckId",
+                          "kind": "id",
+                          "optional": false
+                        },
+                        {
+                          "name": "TrafficPolicyInstanceId",
+                          "kind": "id",
+                          "optional": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "ListResourceRecordSets",
+        "fixture": "<ListResourceRecordSetsResponse xmlns=\"https://route53.amazonaws.com/doc/2013-04-01/\">\n   <ResourceRecordSets>\n      <ResourceRecordSet>\n         <Name>example.com.</Name>\n         <Type>SOA</Type>\n         <TTL>900</TTL>\n         <ResourceRecords>\n            <ResourceRecord>\n               <Value>ns-2048.awsdns-64.net. hostmaster.awsdns.com. 1 7200 900 1209600 86400</Value>\n            </ResourceRecord>\n         </ResourceRecords>\n      </ResourceRecordSet>\n   </ResourceRecordSets>\n   <IsTruncated>true</IsTruncated>\n   <MaxItems>1</MaxItems>\n   <NextRecordName>example.com.</NextRecordName>\n   <NextRecordType>NS</NextRecordType>\n</ListResourceRecordSetsResponse>"
+      },
+      {
+        "id": "aws-route53-waiter-resource-record-sets-changed",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "A waiter function that waits until record set change is successful.",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "id",
+              "kind": "string",
+              "optional": false,
+              "example": "id"
+            },
+            {
+              "name": "waiterDelay",
+              "kind": "string",
+              "optional": false,
+              "example": "waiterDelay"
+            },
+            {
+              "name": "waiterMaxAttempts",
+              "kind": "string",
+              "optional": false,
+              "example": "waiterMaxAttempts"
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-route53-test-dns-answer",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Gets the value that Amazon Route 53 returns in response to a DNS request for a specified record name and type. You can optionally specify the IP address of a DN",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Route53",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "TestDNSAnswer",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Nameserver",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Nameserver"
+                        },
+                        {
+                          "name": "RecordName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "RecordName"
+                        },
+                        {
+                          "name": "RecordType",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "RecordType"
+                        },
+                        {
+                          "name": "ResponseCode",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "ResponseCode"
+                        },
+                        {
+                          "name": "Protocol",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Protocol"
+                        },
+                        {
+                          "name": "RecordData",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "RecordData"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-Route53/Integrations/AWSRoute53"
+}

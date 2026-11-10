@@ -1,1 +1,1112 @@
-{"id":"aws-lambda-aws-lambda","name":"AWS - Lambda","pack":"AWS-Lambda","fidelity":"shape","curated":false,"summary":"Amazon Web Services Serverless Compute service (lambda).","operations":3,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"aws-lambda-aws-lambda","name":"AWS - Lambda","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-Lambda/Integrations/AWS_Lambda","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-create-function-json","method":"GET","pathTemplate":"/","summary":"test_data/create_function.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FunctionName","kind":"string","optional":false,"example":"TestLambdaFunction"},{"name":"FunctionArn","kind":"string","optional":false,"example":"test"},{"name":"Runtime","kind":"string","optional":false,"example":"nodejs"},{"name":"Role","kind":"string","optional":false,"example":"test"},{"name":"Handler","kind":"string","optional":false,"example":"test handler"},{"name":"CodeSize","kind":"integer","optional":false},{"name":"Description","kind":"string","optional":false,"example":"test function"},{"name":"Timeout","kind":"integer","optional":false},{"name":"MemorySize","kind":"integer","optional":false},{"name":"LastModified","kind":"string","optional":false,"example":"test"},{"name":"CodeSha256","kind":"string","optional":false,"example":"test"},{"name":"Version","kind":"string","optional":false,"example":"test"},{"name":"VpcConfig","kind":"object","optional":false,"children":[{"name":"SubnetIds","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"test1"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"SecurityGroupIds","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"test1"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"VpcId","kind":"id","optional":false,"example":"test"},{"name":"Ipv6AllowedForDualStack","kind":"boolean","optional":false}]},{"name":"DeadLetterConfig","kind":"object","optional":false,"children":[{"name":"TargetArn","kind":"string","optional":false,"example":"test"}]},{"name":"Environment","kind":"object","optional":false,"children":[{"name":"Variables","kind":"object","optional":false,"children":[{"name":"string","kind":"string","optional":false,"example":"test"}]},{"name":"Error","kind":"object","optional":false,"children":[{"name":"ErrorCode","kind":"string","optional":false,"example":"test"},{"name":"Message","kind":"string","optional":false,"example":"test"}]}]},{"name":"KMSKeyArn","kind":"string","optional":false,"example":"test"},{"name":"TracingConfig","kind":"object","optional":false,"children":[{"name":"Mode","kind":"string","optional":false,"example":"Active"}]},{"name":"MasterArn","kind":"string","optional":false,"example":"test"},{"name":"RevisionId","kind":"id","optional":false,"example":"test"},{"name":"Layers","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"Arn","kind":"string","optional":false,"example":"test"},{"name":"CodeSize","kind":"integer","optional":false},{"name":"SigningProfileVersionArn","kind":"string","optional":false,"example":"test"},{"name":"SigningJobArn","kind":"string","optional":false,"example":"test"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"State","kind":"string","optional":false,"example":"Pending"},{"name":"StateReason","kind":"string","optional":false,"example":"test"},{"name":"StateReasonCode","kind":"string","optional":false,"example":"Idle"},{"name":"LastUpdateStatus","kind":"string","optional":false,"example":"Successful"},{"name":"LastUpdateStatusReason","kind":"string","optional":false,"example":"test"},{"name":"LastUpdateStatusReasonCode","kind":"string","optional":false,"example":"EniLimitExceeded"},{"name":"FileSystemConfigs","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"Arn","kind":"string","optional":false,"example":"test"},{"name":"LocalMountPath","kind":"string","optional":false,"example":"test"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"PackageType","kind":"string","optional":false,"example":"Zip"},{"name":"ImageConfigResponse","kind":"object","optional":false,"children":[{"name":"ImageConfig","kind":"object","optional":false,"children":[{"name":"EntryPoint","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"test"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"Command","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"test"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"WorkingDirectory","kind":"string","optional":false,"example":"test"}]},{"name":"Error","kind":"object","optional":false,"children":[{"name":"ErrorCode","kind":"string","optional":false,"example":"test"},{"name":"Message","kind":"string","optional":false,"example":"test"}]}]}]}},{"id":"test-data-list-layer-version-json","method":"GET","pathTemplate":"/","summary":"test_data/list_layer_version.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"NextMarker","kind":"string","optional":false,"example":"test_marker"},{"name":"LayerVersions","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"LayerVersionArn","kind":"string","optional":false,"example":"testLayer"},{"name":"Version","kind":"integer","optional":false},{"name":"Description","kind":"string","optional":false,"example":"test"},{"name":"CreatedDate","kind":"timestamp","optional":false,"example":"2018-11-27T15:10:45.123+0000","format":"iso"},{"name":"CompatibleRuntimes","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nodejs"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"LicenseInfo","kind":"string","optional":false,"example":"test"},{"name":"CompatibleArchitectures","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"x86_64"},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-publish-layer-json","method":"GET","pathTemplate":"/","summary":"test_data/publish_layer.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Content","kind":"object","optional":false,"children":[{"name":"Location","kind":"string","optional":false,"example":"test"},{"name":"CodeSha256","kind":"string","optional":false,"example":"test"},{"name":"CodeSize","kind":"integer","optional":false},{"name":"SigningProfileVersionArn","kind":"string","optional":false,"example":"test"},{"name":"SigningJobArn","kind":"string","optional":false,"example":"test"}]},{"name":"LayerArn","kind":"string","optional":false,"example":"test"},{"name":"LayerVersionArn","kind":"string","optional":false,"example":"test"},{"name":"Description","kind":"string","optional":false,"example":"test"},{"name":"CreatedDate","kind":"string","optional":false,"example":"test"},{"name":"Version","kind":"integer","optional":false},{"name":"CompatibleRuntimes","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nodejs"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"LicenseInfo","kind":"string","optional":false,"example":"test"},{"name":"CompatibleArchitectures","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"x86_64"},"minItems":0,"maxItems":1,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-lambda-aws-lambda",
+  "name": "AWS - Lambda",
+  "pack": "AWS-Lambda",
+  "fidelity": "vendor",
+  "curated": false,
+  "summary": "From vendor docs. Amazon Web Services Serverless Compute service (lambda).",
+  "operations": 3,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-lambda-aws-lambda",
+      "name": "AWS - Lambda",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-Lambda/Integrations/AWS_Lambda",
+      "fidelity": "vendor",
+      "notes": [
+        "Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.",
+        "No HTTP path was recovered from the client. The sample shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-lambda-get-function",
+          "calls": [
+            "lambda:GetFunction"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-list-functions",
+          "calls": [
+            "lambda:ListFunctions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "lambda-list-functions"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json"
+        },
+        {
+          "command": "aws-lambda-list-aliases",
+          "calls": [
+            "lambda:ListAliases"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "lambda-list-aliases"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json"
+        },
+        {
+          "command": "aws-lambda-invoke",
+          "calls": [
+            "lambda:Invoke"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "lambda-invoke"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json"
+        },
+        {
+          "command": "aws-lambda-get-account-settings",
+          "calls": [
+            "lambda:GetAccountSettings"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "lambda-get-account-settings"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json"
+        },
+        {
+          "command": "aws-lambda-get-policy",
+          "calls": [
+            "lambda:GetPolicy"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "lambda-get-policy"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json"
+        },
+        {
+          "command": "aws-lambda-list-versions-by-function",
+          "calls": [
+            "lambda:ListVersionsByFunction"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "lambda-list-versions-by-function"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json"
+        },
+        {
+          "command": "aws-lambda-get-function-url-config",
+          "calls": [
+            "lambda:GetFunctionUrlConfig"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-get-function-configuration",
+          "calls": [
+            "lambda:GetFunctionConfiguration"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "lambda-get-function-configuration"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json"
+        },
+        {
+          "command": "aws-lambda-delete-function-url-config",
+          "calls": [
+            "lambda:DeleteFunctionUrlConfig"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-delete-function",
+          "calls": [
+            "lambda:DeleteFunction"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-create-function",
+          "calls": [
+            "lambda:CreateFunction"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "lambda-create-function"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json"
+        },
+        {
+          "command": "aws-lambda-publish-layer-version",
+          "calls": [
+            "lambda:PublishLayerVersion"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-list-layer-version",
+          "calls": [
+            "lambda:ListLayerVersions"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "lambda-list-layer-versions"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json"
+        },
+        {
+          "command": "aws-lambda-delete-layer-version",
+          "calls": [
+            "lambda:DeleteLayerVersion"
+          ],
+          "status": "missing"
+        }
+      ],
+      "verification": {
+        "status": "vendor",
+        "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "9 of 15 commands from vendor docs, 0 approximate, 6 missing.",
+          "7 of 15 commands from vendor docs, 0 approximate, 8 missing."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "test-data-create-function-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/create_function.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "FunctionName",
+              "kind": "string",
+              "optional": false,
+              "example": "TestLambdaFunction"
+            },
+            {
+              "name": "FunctionArn",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "Runtime",
+              "kind": "string",
+              "optional": false,
+              "example": "nodejs"
+            },
+            {
+              "name": "Role",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "Handler",
+              "kind": "string",
+              "optional": false,
+              "example": "test handler"
+            },
+            {
+              "name": "CodeSize",
+              "kind": "integer",
+              "optional": false
+            },
+            {
+              "name": "Description",
+              "kind": "string",
+              "optional": false,
+              "example": "test function"
+            },
+            {
+              "name": "Timeout",
+              "kind": "integer",
+              "optional": false
+            },
+            {
+              "name": "MemorySize",
+              "kind": "integer",
+              "optional": false
+            },
+            {
+              "name": "LastModified",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "CodeSha256",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "Version",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "VpcConfig",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "SubnetIds",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "test1"
+                  },
+                  "minItems": 0,
+                  "maxItems": 2,
+                  "pageItems": false
+                },
+                {
+                  "name": "SecurityGroupIds",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "test1"
+                  },
+                  "minItems": 0,
+                  "maxItems": 2,
+                  "pageItems": false
+                },
+                {
+                  "name": "VpcId",
+                  "kind": "id",
+                  "optional": false,
+                  "example": "test"
+                },
+                {
+                  "name": "Ipv6AllowedForDualStack",
+                  "kind": "boolean",
+                  "optional": false
+                }
+              ]
+            },
+            {
+              "name": "DeadLetterConfig",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "TargetArn",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "test"
+                }
+              ]
+            },
+            {
+              "name": "Environment",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Variables",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "string",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "test"
+                    }
+                  ]
+                },
+                {
+                  "name": "Error",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "ErrorCode",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "test"
+                    },
+                    {
+                      "name": "Message",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "test"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "KMSKeyArn",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "TracingConfig",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Mode",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "Active"
+                }
+              ]
+            },
+            {
+              "name": "MasterArn",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "RevisionId",
+              "kind": "id",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "Layers",
+              "kind": "array",
+              "optional": false,
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "optional": false,
+                "children": [
+                  {
+                    "name": "Arn",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "test"
+                  },
+                  {
+                    "name": "CodeSize",
+                    "kind": "integer",
+                    "optional": false
+                  },
+                  {
+                    "name": "SigningProfileVersionArn",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "test"
+                  },
+                  {
+                    "name": "SigningJobArn",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "test"
+                  }
+                ]
+              },
+              "minItems": 0,
+              "maxItems": 1,
+              "pageItems": false
+            },
+            {
+              "name": "State",
+              "kind": "string",
+              "optional": false,
+              "example": "Pending"
+            },
+            {
+              "name": "StateReason",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "StateReasonCode",
+              "kind": "string",
+              "optional": false,
+              "example": "Idle"
+            },
+            {
+              "name": "LastUpdateStatus",
+              "kind": "string",
+              "optional": false,
+              "example": "Successful"
+            },
+            {
+              "name": "LastUpdateStatusReason",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "LastUpdateStatusReasonCode",
+              "kind": "string",
+              "optional": false,
+              "example": "EniLimitExceeded"
+            },
+            {
+              "name": "FileSystemConfigs",
+              "kind": "array",
+              "optional": false,
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "optional": false,
+                "children": [
+                  {
+                    "name": "Arn",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "test"
+                  },
+                  {
+                    "name": "LocalMountPath",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "test"
+                  }
+                ]
+              },
+              "minItems": 0,
+              "maxItems": 1,
+              "pageItems": false
+            },
+            {
+              "name": "PackageType",
+              "kind": "string",
+              "optional": false,
+              "example": "Zip"
+            },
+            {
+              "name": "ImageConfigResponse",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "ImageConfig",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "EntryPoint",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "test"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "Command",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "test"
+                      },
+                      "minItems": 0,
+                      "maxItems": 1,
+                      "pageItems": false
+                    },
+                    {
+                      "name": "WorkingDirectory",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "test"
+                    }
+                  ]
+                },
+                {
+                  "name": "Error",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "ErrorCode",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "test"
+                    },
+                    {
+                      "name": "Message",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "test"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-list-layer-version-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/list_layer_version.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "NextMarker",
+              "kind": "string",
+              "optional": false,
+              "example": "test_marker"
+            },
+            {
+              "name": "LayerVersions",
+              "kind": "array",
+              "optional": false,
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "optional": false,
+                "children": [
+                  {
+                    "name": "LayerVersionArn",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "testLayer"
+                  },
+                  {
+                    "name": "Version",
+                    "kind": "integer",
+                    "optional": false
+                  },
+                  {
+                    "name": "Description",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "test"
+                  },
+                  {
+                    "name": "CreatedDate",
+                    "kind": "timestamp",
+                    "optional": false,
+                    "example": "2018-11-27T15:10:45.123+0000",
+                    "format": "iso"
+                  },
+                  {
+                    "name": "CompatibleRuntimes",
+                    "kind": "array",
+                    "optional": false,
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "nodejs"
+                    },
+                    "minItems": 0,
+                    "maxItems": 1,
+                    "pageItems": false
+                  },
+                  {
+                    "name": "LicenseInfo",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "test"
+                  },
+                  {
+                    "name": "CompatibleArchitectures",
+                    "kind": "array",
+                    "optional": false,
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "x86_64"
+                    },
+                    "minItems": 0,
+                    "maxItems": 1,
+                    "pageItems": false
+                  }
+                ]
+              },
+              "minItems": 0,
+              "maxItems": 1,
+              "pageItems": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-publish-layer-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/publish_layer.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "Content",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Location",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "test"
+                },
+                {
+                  "name": "CodeSha256",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "test"
+                },
+                {
+                  "name": "CodeSize",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "SigningProfileVersionArn",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "test"
+                },
+                {
+                  "name": "SigningJobArn",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "test"
+                }
+              ]
+            },
+            {
+              "name": "LayerArn",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "LayerVersionArn",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "Description",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "CreatedDate",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "Version",
+              "kind": "integer",
+              "optional": false
+            },
+            {
+              "name": "CompatibleRuntimes",
+              "kind": "array",
+              "optional": false,
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "optional": false,
+                "example": "nodejs"
+              },
+              "minItems": 0,
+              "maxItems": 1,
+              "pageItems": false
+            },
+            {
+              "name": "LicenseInfo",
+              "kind": "string",
+              "optional": false,
+              "example": "test"
+            },
+            {
+              "name": "CompatibleArchitectures",
+              "kind": "array",
+              "optional": false,
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "optional": false,
+                "example": "x86_64"
+              },
+              "minItems": 0,
+              "maxItems": 1,
+              "pageItems": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "lambda-invoke",
+        "method": "POST",
+        "pathTemplate": "/2015-03-31/functions/{FunctionName}/invocations",
+        "summary": "lambda Invoke",
+        "status": 200,
+        "contentType": "application/json",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "Invoke",
+        "fixture": "{\n  \"Payload\": \"200 SUCCESS\",\n  \"StatusCode\": 200\n}\n"
+      },
+      {
+        "id": "lambda-get-account-settings",
+        "method": "GET",
+        "pathTemplate": "/2016-08-19/account-settings",
+        "summary": "lambda GetAccountSettings",
+        "status": 200,
+        "contentType": "application/json",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetAccountSettings",
+        "fixture": "{\n  \"AccountLimit\": {\n    \"CodeSizeUnzipped\": 262144000,\n    \"CodeSizeZipped\": 52428800,\n    \"ConcurrentExecutions\": 1000,\n    \"TotalCodeSize\": 80530636800,\n    \"UnreservedConcurrentExecutions\": 1000\n  },\n  \"AccountUsage\": {\n    \"FunctionCount\": 4,\n    \"TotalCodeSize\": 9426\n  }\n}\n"
+      },
+      {
+        "id": "lambda-get-policy",
+        "method": "GET",
+        "pathTemplate": "/2015-03-31/functions/{FunctionName}/policy",
+        "summary": "lambda GetPolicy",
+        "status": 200,
+        "contentType": "application/json",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetPolicy",
+        "fixture": "{\n  \"Policy\": \"{\\\"Version\\\":\\\"2012-10-17\\\",\\\"Id\\\":\\\"default\\\",\\\"Statement\\\":[{\\\"Sid\\\":\\\"xaccount\\\",\\\"Effect\\\":\\\"Allow\\\",\\\"Principal\\\":{\\\"AWS\\\":\\\"arn:aws:iam::123456789012:root\\\"},\\\"Action\\\":\\\"lambda:InvokeFunction\\\",\\\"Resource\\\":\\\"arn:aws:lambda:us-east-2:123456789012:function:my-function:1\\\"}]}\",\n  \"RevisionId\": \"4843f2f6-7c59-4fda-b484-afd0bc0e22b8\"\n}\n"
+      },
+      {
+        "id": "lambda-list-versions-by-function",
+        "method": "GET",
+        "pathTemplate": "/2015-03-31/functions/{FunctionName}/versions",
+        "summary": "lambda ListVersionsByFunction",
+        "status": 200,
+        "contentType": "application/json",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListVersionsByFunction",
+        "fixture": "{\n  \"Versions\": [\n    {\n      \"CodeSha256\": \"YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=\",\n      \"CodeSize\": 5797206,\n      \"Description\": \"Process image objects from Amazon S3.\",\n      \"Environment\": {\n        \"Variables\": {\n          \"BUCKET\": \"my-bucket-1xpuxmplzrlbh\",\n          \"PREFIX\": \"inbound\"\n        }\n      },\n      \"FunctionArn\": \"arn:aws:lambda:us-west-2:123456789012:function:my-function\",\n      \"FunctionName\": \"my-function\",\n      \"Handler\": \"index.handler\",\n      \"KMSKeyArn\": \"arn:aws:kms:us-west-2:123456789012:key/b0844d6c-xmpl-4463-97a4-d49f50839966\",\n      \"LastModified\": \"2020-04-10T19:06:32.563+0000\",\n      \"MemorySize\": 256,\n      \"RevisionId\": \"850ca006-2d98-4ff4-86db-8766e9d32fe9\",\n      \"Role\": \"arn:aws:iam::123456789012:role/lambda-role\",\n      \"Runtime\": \"nodejs12.x\",\n      \"Timeout\": 15,\n      \"TracingConfig\": {\n        \"Mode\": \"Active\"\n      },\n      \"Version\": \"$LATEST\"\n    },\n    {\n      \"CodeSha256\": \"YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=\",\n      \"CodeSize\": 5797206,\n      \"Description\": \"Process image objects from Amazon S3.\",\n      \"Environment\": {\n        \"Variables\": {\n          \"BUCKET\": \"my-bucket-1xpuxmplzrlbh\",\n          \"PREFIX\": \"inbound\"\n        }\n      },\n      \"FunctionArn\": \"arn:aws:lambda:us-west-2:123456789012:function:my-function\",\n      \"FunctionName\": \"my-function\",\n      \"Handler\": \"index.handler\",\n      \"KMSKeyArn\": \"arn:aws:kms:us-west-2:123456789012:key/b0844d6c-xmpl-4463-97a4-d49f50839966\",\n      \"LastModified\": \"2020-04-10T19:06:32.563+0000\",\n      \"MemorySize\": 256,\n      \"RevisionId\": \"b75dcd81-xmpl-48a8-a75a-93ba8b5b9727\",\n      \"Role\": \"arn:aws:iam::123456789012:role/lambda-role\",\n      \"Runtime\": \"nodejs12.x\",\n      \"Timeout\": 5,\n      \"TracingConfig\": {\n        \"Mode\": \"Active\"\n      },\n      \"Version\": \"1\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "lambda-get-function-configuration",
+        "method": "GET",
+        "pathTemplate": "/2015-03-31/functions/{FunctionName}/configuration",
+        "summary": "lambda GetFunctionConfiguration",
+        "status": 200,
+        "contentType": "application/json",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "GetFunctionConfiguration",
+        "fixture": "{\n  \"CodeSha256\": \"YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=\",\n  \"CodeSize\": 5797206,\n  \"Description\": \"Process image objects from Amazon S3.\",\n  \"Environment\": {\n    \"Variables\": {\n      \"BUCKET\": \"my-bucket-1xpuxmplzrlbh\",\n      \"PREFIX\": \"inbound\"\n    }\n  },\n  \"FunctionArn\": \"arn:aws:lambda:us-west-2:123456789012:function:my-function\",\n  \"FunctionName\": \"my-function\",\n  \"Handler\": \"index.handler\",\n  \"KMSKeyArn\": \"arn:aws:kms:us-west-2:123456789012:key/b0844d6c-xmpl-4463-97a4-d49f50839966\",\n  \"LastModified\": \"2020-04-10T19:06:32.563+0000\",\n  \"LastUpdateStatus\": \"Successful\",\n  \"MemorySize\": 256,\n  \"RevisionId\": \"b75dcd81-xmpl-48a8-a75a-93ba8b5b9727\",\n  \"Role\": \"arn:aws:iam::123456789012:role/lambda-role\",\n  \"Runtime\": \"nodejs12.x\",\n  \"State\": \"Active\",\n  \"Timeout\": 15,\n  \"TracingConfig\": {\n    \"Mode\": \"Active\"\n  },\n  \"Version\": \"$LATEST\"\n}\n"
+      },
+      {
+        "id": "lambda-create-function",
+        "method": "POST",
+        "pathTemplate": "/2015-03-31/functions",
+        "summary": "lambda CreateFunction",
+        "status": 200,
+        "contentType": "application/json",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "CreateFunction",
+        "fixture": "{\n  \"CodeSha256\": \"YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=\",\n  \"CodeSize\": 5797206,\n  \"Description\": \"Process image objects from Amazon S3.\",\n  \"Environment\": {\n    \"Variables\": {\n      \"BUCKET\": \"my-bucket-1xpuxmplzrlbh\",\n      \"PREFIX\": \"inbound\"\n    }\n  },\n  \"FunctionArn\": \"arn:aws:lambda:us-west-2:123456789012:function:my-function\",\n  \"FunctionName\": \"my-function\",\n  \"Handler\": \"index.handler\",\n  \"KMSKeyArn\": \"arn:aws:kms:us-west-2:123456789012:key/b0844d6c-xmpl-4463-97a4-d49f50839966\",\n  \"LastModified\": \"2020-04-10T19:06:32.563+0000\",\n  \"LastUpdateStatus\": \"Successful\",\n  \"MemorySize\": 256,\n  \"RevisionId\": \"b75dcd81-xmpl-48a8-a75a-93ba8b5b9727\",\n  \"Role\": \"arn:aws:iam::123456789012:role/lambda-role\",\n  \"Runtime\": \"nodejs12.x\",\n  \"State\": \"Active\",\n  \"Timeout\": 15,\n  \"TracingConfig\": {\n    \"Mode\": \"Active\"\n  },\n  \"Version\": \"1\"\n}\n"
+      },
+      {
+        "id": "lambda-list-layer-versions",
+        "method": "GET",
+        "pathTemplate": "/2018-10-31/layers/{LayerName}/versions",
+        "summary": "lambda ListLayerVersions",
+        "status": 200,
+        "contentType": "application/json",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListLayerVersions",
+        "fixture": "{\n  \"LayerVersions\": [\n    {\n      \"CompatibleRuntimes\": [\n        \"java8\"\n      ],\n      \"CreatedDate\": \"2020-03-18T23:38:42.284+0000\",\n      \"Description\": \"Dependencies for the blank-java sample app.\",\n      \"LayerVersionArn\": \"arn:aws:lambda:us-east-2:123456789012:layer:blank-java-lib:7\",\n      \"Version\": 7\n    },\n    {\n      \"CompatibleRuntimes\": [\n        \"java8\"\n      ],\n      \"CreatedDate\": \"2020-03-17T07:24:21.960+0000\",\n      \"Description\": \"Dependencies for the blank-java sample app.\",\n      \"LayerVersionArn\": \"arn:aws:lambda:us-east-2:123456789012:layer:blank-java-lib:6\",\n      \"Version\": 6\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "lambda-list-functions",
+        "method": "GET",
+        "pathTemplate": "/2015-03-31/functions",
+        "summary": "lambda ListFunctions",
+        "status": 200,
+        "contentType": "application/json",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListFunctions",
+        "fixture": "{\n  \"Functions\": [\n    {\n      \"CodeSha256\": \"dBG9m8SGdmlEjw/JYXlhhvCrAv5TxvXsbL/RMr0fT/I=\",\n      \"CodeSize\": 294,\n      \"Description\": \"\",\n      \"FunctionArn\": \"arn:aws:lambda:us-west-2:123456789012:function:helloworld\",\n      \"FunctionName\": \"helloworld\",\n      \"Handler\": \"helloworld.handler\",\n      \"LastModified\": \"2019-09-23T18:32:33.857+0000\",\n      \"MemorySize\": 128,\n      \"RevisionId\": \"1718e831-badf-4253-9518-d0644210af7b\",\n      \"Role\": \"arn:aws:iam::123456789012:role/service-role/MyTestFunction-role-zgur6bf4\",\n      \"Runtime\": \"nodejs10.x\",\n      \"Timeout\": 3,\n      \"TracingConfig\": {\n        \"Mode\": \"PassThrough\"\n      },\n      \"Version\": \"$LATEST\"\n    },\n    {\n      \"CodeSha256\": \"sU0cJ2/hOZevwV/lTxCuQqK3gDZP3i8gUoqUUVRmY6E=\",\n      \"CodeSize\": 266,\n      \"Description\": \"\",\n      \"FunctionArn\": \"arn:aws:lambda:us-west-2:123456789012:function:my-function\",\n      \"FunctionName\": \"my-function\",\n      \"Handler\": \"index.handler\",\n      \"LastModified\": \"2019-10-01T16:47:28.490+0000\",\n      \"MemorySize\": 256,\n      \"RevisionId\": \"93017fc9-59cb-41dc-901b-4845ce4bf668\",\n      \"Role\": \"arn:aws:iam::123456789012:role/service-role/helloWorldPython-role-uy3l9qyq\",\n      \"Runtime\": \"nodejs10.x\",\n      \"Timeout\": 3,\n      \"TracingConfig\": {\n        \"Mode\": \"PassThrough\"\n      },\n      \"Version\": \"$LATEST\",\n      \"VpcConfig\": {\n        \"SecurityGroupIds\": [],\n        \"SubnetIds\": [],\n        \"VpcId\": \"\"\n      }\n    }\n  ],\n  \"NextMarker\": \"\"\n}\n"
+      },
+      {
+        "id": "lambda-list-aliases",
+        "method": "GET",
+        "pathTemplate": "/2015-03-31/functions/{FunctionName}/aliases",
+        "summary": "lambda ListAliases",
+        "status": 200,
+        "contentType": "application/json",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "ListAliases",
+        "fixture": "{\n  \"Aliases\": [\n    {\n      \"AliasArn\": \"arn:aws:lambda:us-west-2:123456789012:function:my-function:BETA\",\n      \"Description\": \"Production environment BLUE.\",\n      \"FunctionVersion\": \"2\",\n      \"Name\": \"BLUE\",\n      \"RevisionId\": \"a410117f-xmpl-494e-8035-7e204bb7933b\",\n      \"RoutingConfig\": {\n        \"AdditionalVersionWeights\": {\n          \"1\": 0.7\n        }\n      }\n    },\n    {\n      \"AliasArn\": \"arn:aws:lambda:us-west-2:123456789012:function:my-function:LIVE\",\n      \"Description\": \"Production environment GREEN.\",\n      \"FunctionVersion\": \"1\",\n      \"Name\": \"GREEN\",\n      \"RevisionId\": \"21d40116-xmpl-40ba-9360-3ea284da1bb5\"\n    }\n  ]\n}\n"
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-Lambda/Integrations/AWS_Lambda"
+}
