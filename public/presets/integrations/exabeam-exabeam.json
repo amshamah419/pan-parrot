@@ -1,1 +1,118 @@
-{"id":"exabeam-exabeam","name":"Exabeam Advanced Analytics","pack":"Exabeam","fidelity":"shape","curated":false,"summary":"The Exabeam Security Management Platform provides end-to-end detection, User Event Behavioral Analytics, and SOAR.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"exabeam-exabeam","name":"Exabeam Advanced Analytics","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Exabeam/Integrations/Exabeam","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"get-notable-users","method":"GET","pathTemplate":"/api/setup/contextTables/{context_table_name}/changes/addBulk","summary":"Returns notable users in a period of time.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Exabeam","kind":"object","optional":false,"children":[{"name":"User","kind":"object","optional":false,"children":[{"name":"RiskScore","kind":"number","optional":false},{"name":"UserFullName","kind":"string","optional":false,"example":"UserFullName"},{"name":"AverageRiskScore","kind":"number","optional":false},{"name":"FirstSeen","kind":"timestamp","optional":false,"format":"iso"},{"name":"NotableSessionIds","kind":"string","optional":false,"example":"NotableSessionIds"},{"name":"AccountsNumber","kind":"number","optional":false},{"name":"LastSeen","kind":"timestamp","optional":false,"format":"iso"},{"name":"Location","kind":"string","optional":false,"example":"Location"},{"name":"UserName","kind":"string","optional":false,"example":"UserName"},{"name":"Labels","kind":"string","optional":false,"example":"Labels"},{"name":"LastActivityType","kind":"string","optional":false,"example":"LastActivityType"},{"name":"NotableUser","kind":"boolean","optional":false}]}]}]}},{"id":"exabeam-get-notable-users","method":"GET","pathTemplate":"/api/setup/contextTables/{context_table_name}/changes/update","summary":"Returns notable users in a period of time.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Exabeam","kind":"object","optional":false,"children":[{"name":"User","kind":"object","optional":false,"children":[{"name":"RiskScore","kind":"number","optional":false},{"name":"UserFullName","kind":"string","optional":false,"example":"UserFullName"},{"name":"AverageRiskScore","kind":"number","optional":false},{"name":"FirstSeen","kind":"timestamp","optional":false,"format":"iso"},{"name":"NotableSessionIds","kind":"string","optional":false,"example":"NotableSessionIds"},{"name":"AccountsNumber","kind":"number","optional":false},{"name":"LastSeen","kind":"timestamp","optional":false,"format":"iso"},{"name":"Location","kind":"string","optional":false,"example":"Location"},{"name":"UserName","kind":"string","optional":false,"example":"UserName"},{"name":"Labels","kind":"string","optional":false,"example":"Labels"},{"name":"LastActivityType","kind":"string","optional":false,"example":"LastActivityType"},{"name":"NotableUser","kind":"boolean","optional":false}]}]}]}},{"id":"get-watchlists","method":"GET","pathTemplate":"/api/setup/contextTables/{context_table_name}/changes/delete","summary":"Returns all watchlist IDs and titles.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Exabeam","kind":"object","optional":false,"children":[{"name":"Watchlist","kind":"object","optional":false,"children":[{"name":"Category","kind":"string","optional":false,"example":"Category"},{"name":"Title","kind":"string","optional":false,"example":"Title"},{"name":"WatchlistID","kind":"id","optional":false}]}]}]}},{"id":"exabeam-get-watchlists","method":"GET","pathTemplate":"/api/setup/contextTables/{context_table_name}/changes/add","summary":"Returns all watchlist IDs and titles.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Exabeam","kind":"object","optional":false,"children":[{"name":"Watchlist","kind":"object","optional":false,"children":[{"name":"Category","kind":"string","optional":false,"example":"Category"},{"name":"Title","kind":"string","optional":false,"example":"Title"},{"name":"WatchlistID","kind":"id","optional":false}]}]}]}},{"id":"get-peer-groups","method":"GET","pathTemplate":"/api/setup/contextTables/{context_table_name}/records/csv","summary":"Returns all peer groups.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Exabeam","kind":"object","optional":false,"children":[{"name":"PeerGroup","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"}]}]}]}},{"id":"exabeam-get-peer-groups","method":"GET","pathTemplate":"/uba/api/asset/sequence/{asset_sequence_id}/eventTypes","summary":"Returns all peer groups.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Exabeam","kind":"object","optional":false,"children":[{"name":"PeerGroup","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "exabeam-exabeam",
+  "name": "Exabeam Advanced Analytics",
+  "pack": "Exabeam",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /uba/api/asset/{asset_id}/securityAlerts.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "exabeam-exabeam",
+      "name": "Exabeam Advanced Analytics",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Exabeam/Integrations/Exabeam",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /uba/api/asset/{asset_id}/securityAlerts. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Exabeam/Integrations/Exabeam",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /uba/api/asset/{asset_id}/securityAlerts. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-uba-api-asset-asset-id-securityalerts-0",
+        "method": "GET",
+        "pathTemplate": "/uba/api/asset/{asset_id}/securityAlerts",
+        "summary": "GET /uba/api/asset/{asset_id}/securityAlerts",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Content-Disposition",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "accountNames",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "accounts",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "addedCount",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "aggregatedEvents",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Exabeam/Integrations/Exabeam",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /uba/api/asset/{asset_id}/securityAlerts. Fields are keys the client reads or test_data contains."
+  ]
+}

@@ -1,1 +1,134 @@
-{"id":"oktaasa-oktaasa","name":"Okta ASA","pack":"OktaASA","fidelity":"sample","curated":false,"summary":"Okta Advanced Server Access integration for Cortex XSIAM allows you to fetch logs of a wide range of configuration, enrollment, authentication, and authorization events that occur ","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"oktaasa-oktaasa","name":"Okta ASA","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/OktaASA/Integrations/OktaASA","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-event-empty-details-json","method":"POST","pathTemplate":"/service_token","summary":"test_data/event_empty_details.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"list","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"test_1"},{"name":"timestamp","kind":"timestamp","optional":false,"example":"2025-01-15T10:30:00Z","format":"iso"},{"name":"details","kind":"object","optional":false,"children":[]}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"related_objects","kind":"object","optional":false,"children":[{"name":"srv_123","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"test"}]}]}]}]}},{"id":"test-data-event-malformed-related-data-json","method":"GET","pathTemplate":"/auditsV2","summary":"test_data/event_malformed_related_data.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"list","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"test_1"},{"name":"timestamp","kind":"timestamp","optional":false,"example":"2025-01-15T10:30:00Z","format":"iso"},{"name":"details","kind":"object","optional":false,"children":[{"name":"server","kind":"string","optional":false,"example":"srv_123"},{"name":"project","kind":"string","optional":false,"example":"proj_456"}]}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"related_objects","kind":"object","optional":false,"children":[{"name":"srv_123","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"web-server-01"}]}]},{"name":"proj_456","kind":"object","optional":false,"children":[{"name":"object","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"my-project"}]}]}]}]}},{"id":"test-data-event-missing-related-objects-json","method":"GET","pathTemplate":"/","summary":"test_data/event_missing_related_objects.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"list","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"test_1"},{"name":"timestamp","kind":"timestamp","optional":false,"example":"2025-01-15T10:30:00Z","format":"iso"},{"name":"details","kind":"object","optional":false,"children":[{"name":"server","kind":"string","optional":false,"example":"srv_123"},{"name":"project","kind":"string","optional":false,"example":"proj_missing"}]}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"related_objects","kind":"object","optional":false,"children":[{"name":"srv_123","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"web-server-01"}]}]}]}]}},{"id":"test-data-event-non-string-references-json","method":"GET","pathTemplate":"/","summary":"test_data/event_non_string_references.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"list","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"test_1"},{"name":"timestamp","kind":"timestamp","optional":false,"example":"2025-01-15T10:30:00Z","format":"iso"},{"name":"details","kind":"object","optional":false,"children":[{"name":"server","kind":"string","optional":false,"example":"srv_123"},{"name":"count","kind":"integer","optional":false},{"name":"active","kind":"boolean","optional":false},{"name":"metadata","kind":"object","optional":false,"children":[{"name":"key","kind":"string","optional":false,"example":"value"}]}]}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"related_objects","kind":"object","optional":false,"children":[{"name":"srv_123","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"web-server-01"}]}]}]}]}},{"id":"test-data-multiple-events-shared-objects-json","method":"GET","pathTemplate":"/","summary":"test_data/multiple_events_shared_objects.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"list","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"evt_001"},{"name":"timestamp","kind":"timestamp","optional":false,"example":"2025-01-15T10:30:00Z","format":"iso"},{"name":"type","kind":"string","optional":false,"example":"ssh_connection"},{"name":"details","kind":"object","optional":false,"children":[{"name":"server","kind":"string","optional":false,"example":"srv_web01"},{"name":"project","kind":"string","optional":false,"example":"proj_prod"},{"name":"user","kind":"string","optional":false,"example":"usr_john"},{"name":"client","kind":"string","optional":false,"example":"client_laptop01"},{"name":"from_address","kind":"ip","optional":false,"example":"192.168.1.100"},{"name":"ssh_algorithm","kind":"string","optional":false,"example":"rsa-sha2-256"}]}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"related_objects","kind":"object","optional":false,"children":[{"name":"srv_web01","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"web-server-01"},{"name":"ip","kind":"ip","optional":false,"example":"10.0.1.10"},{"name":"region","kind":"string","optional":false,"example":"us-east-1"},{"name":"role","kind":"string","optional":false,"example":"web"},{"name":"os","kind":"string","optional":false,"example":"Ubuntu 20.04"}]}]},{"name":"srv_web02","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"web-server-02"},{"name":"ip","kind":"ip","optional":false,"example":"10.0.1.11"},{"name":"region","kind":"string","optional":false,"example":"us-east-1"},{"name":"role","kind":"string","optional":false,"example":"web"},{"name":"os","kind":"string","optional":false,"example":"Ubuntu 20.04"}]}]},{"name":"srv_db01","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"database-server-01"},{"name":"ip","kind":"ip","optional":false,"example":"10.0.2.10"},{"name":"region","kind":"string","optional":false,"example":"us-east-1"},{"name":"role","kind":"string","optional":false,"example":"database"},{"name":"os","kind":"string","optional":false,"example":"CentOS 8"}]}]},{"name":"proj_prod","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"project"},{"name":"object","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"production-environment"},{"name":"environment","kind":"string","optional":false,"example":"prod"},{"name":"team","kind":"string","optional":false,"example":"platform"},{"name":"created_at","kind":"timestamp","optional":false,"example":"2024-01-01T00:00:00Z","format":"iso"}]}]},{"name":"proj_staging","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"project"},{"name":"object","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"staging-environment"},{"name":"environment","kind":"string","optional":false,"example":"staging"},{"name":"team","kind":"string","optional":false,"example":"platform"},{"name":"created_at","kind":"timestamp","optional":false,"example":"2024-01-01T00:00:00Z","format":"iso"}]}]},{"name":"usr_john","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"user"},{"name":"object","kind":"object","optional":false,"children":[{"name":"email","kind":"email","optional":false},{"name":"name","kind":"string","optional":false,"example":"John Doe"},{"name":"role","kind":"string","optional":false,"example":"senior-engineer"},{"name":"department","kind":"string","optional":false,"example":"engineering"},{"name":"team","kind":"string","optional":false,"example":"platform"}]}]}]}]}},{"id":"test-data-response-10-items-descending-default-jso","method":"GET","pathTemplate":"/","summary":"test_data/response_10_items_descending_default.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"list","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"1"},{"name":"timestamp","kind":"timestamp","optional":false,"example":"2025-02-04T14:19:30.000000Z","format":"iso"},{"name":"details","kind":"object","optional":false,"children":[{"name":"from_address","kind":"string","optional":false,"example":"x"},{"name":"project","kind":"string","optional":false,"example":"project_1"},{"name":"server","kind":"string","optional":false,"example":"server_1"},{"name":"client","kind":"string","optional":false,"example":"client_1"},{"name":"ssh_algorithm","kind":"string","optional":false,"example":"x"},{"name":"ssh_public_key","kind":"string","optional":false,"example":"x"},{"name":"team_id","kind":"id","optional":false,"example":"x"},{"name":"team_name","kind":"string","optional":false,"example":"x"},{"name":"trace_id","kind":"id","optional":false,"example":"x"},{"name":"type","kind":"string","optional":false,"example":"x"},{"name":"unix_user_name","kind":"string","optional":false,"example":"x"},{"name":"user","kind":"string","optional":false,"example":"user_1"}]}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"related_objects","kind":"object","optional":false,"children":[{"name":"server_1","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"data","kind":"string","optional":false,"example":"some_data"}]}]},{"name":"server_2","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"data","kind":"string","optional":false,"example":"some_data"}]}]},{"name":"server_3","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"data","kind":"string","optional":false,"example":"some_data"}]}]},{"name":"server_4","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"data","kind":"string","optional":false,"example":"some_data"}]}]},{"name":"server_5","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"data","kind":"string","optional":false,"example":"some_data"}]}]},{"name":"server_6","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"data","kind":"string","optional":false,"example":"some_data"}]}]},{"name":"server_7","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"data","kind":"string","optional":false,"example":"some_data"}]}]},{"name":"server_8","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"data","kind":"string","optional":false,"example":"some_data"}]}]},{"name":"server_9","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"data","kind":"string","optional":false,"example":"some_data"}]}]},{"name":"server_10","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"server"},{"name":"object","kind":"object","optional":false,"children":[{"name":"data","kind":"string","optional":false,"example":"some_data"}]}]},{"name":"project_1","kind":"object","optional":false,"children":[]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "oktaasa-oktaasa",
+  "name": "Okta ASA",
+  "pack": "OktaASA",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /auditsV2.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "oktaasa-oktaasa",
+      "name": "Okta ASA",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/OktaASA/Integrations/OktaASA",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /auditsV2. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/OktaASA/Integrations/OktaASA",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /auditsV2. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-auditsv2-0",
+        "method": "GET",
+        "pathTemplate": "/auditsV2",
+        "summary": "GET /auditsV2",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "bearer_token",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "details",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "expires_at",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "list",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "details",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "timestamp",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "object",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/OktaASA/Integrations/OktaASA",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /auditsV2. Fields are keys the client reads or test_data contains."
+  ]
+}

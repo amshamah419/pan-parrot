@@ -404,6 +404,7 @@ def parse_file(path: Path) -> Mod | None:
     mod.yml_defaults = load_yml_defaults(path)
     mod.enum_routes = enum_path_pairs(tree)
     seed_module(mod, tree)
+    seed_class_constants(mod, tree)
     inits = [func for func in funcs.values() if func.name == "__init__"]
     for func in inits:
         run_func(mod, func, {}, MAX_HOP)
@@ -435,6 +436,30 @@ def urljoin_style(tree: ast.AST) -> str:
         elif node.module == "CommonServerPython":
             style = "xsoar"
     return style
+
+
+def seed_class_constants(mod: Mod, tree: ast.AST) -> None:
+    """Class-level string constants are the values ``self.NAME`` has before ``__init__``."""
+    for node in tree.body:
+        if not isinstance(node, ast.ClassDef):
+            continue
+        bucket = mod.class_attrs.setdefault(node.name, {})
+        for item in node.body:
+            targets: list[ast.Name] = []
+            value_node = None
+            if isinstance(item, ast.Assign):
+                targets = [target for target in item.targets if isinstance(target, ast.Name)]
+                value_node = item.value
+            elif isinstance(item, ast.AnnAssign) and isinstance(item.target, ast.Name) and item.value:
+                targets = [item.target]
+                value_node = item.value
+            if not targets or value_node is None:
+                continue
+            value = eval_expr(value_node, mod.env, mod, node.name)
+            if not value.text or "{" in value.text or value.dynamic:
+                continue
+            for target in targets:
+                bucket.setdefault(target.id, value)
 
 
 def seed_module(mod: Mod, tree: ast.AST) -> None:
@@ -2360,6 +2385,24 @@ def self_test() -> int:
     compute = dict(listed, pathTemplate="/compute/v1/projects/{project}/zones/{zone}/instances")
     compute_row = check_preset(lab_preset("Match", compute), content)
     assert compute_row["status"] == "match", compute_row
+
+    write(
+        "Prefix",
+        "\n".join(
+            [
+                "import requests",
+                "class Client:",
+                "    URI_PREFIX = '/services/data/v39.0/'",
+                "    def send(self, method, uri):",
+                "        return requests.request(method, f'{self.URI_PREFIX}{uri}')",
+                "    def cases(self):",
+                "        return self.send('GET', 'sobjects/Case')",
+            ]
+        ),
+    )
+    prefix = dict(listed, pathTemplate="/services/data/v39.0/sobjects/Case")
+    prefix_row = check_preset(lab_preset("Prefix", prefix), content)
+    assert prefix_row["status"] == "match", prefix_row
     print("self-test ok")
     return 0
 

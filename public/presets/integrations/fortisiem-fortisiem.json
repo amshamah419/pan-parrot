@@ -1,1 +1,118 @@
-{"id":"fortisiem-fortisiem","name":"FortiSIEM","pack":"FortiSIEM","fidelity":"shape","curated":false,"summary":"Search and update events of FortiSIEM and manage resource lists.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"fortisiem-fortisiem","name":"FortiSIEM","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/FortiSIEM/Integrations/FortiSIEM","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"fortisiem-get-events-by-incident","method":"GET","pathTemplate":"/phoenix/rest/cmdbDeviceInfo/devices","summary":"Get events by incidents.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FortiSIEM","kind":"object","optional":false,"children":[{"name":"Events","kind":"object","optional":false,"children":[{"name":"EventType","kind":"string","optional":false,"example":"EventType"},{"name":"EventID","kind":"id","optional":false},{"name":"RawEventLog","kind":"string","optional":false,"example":"RawEventLog"},{"name":"ReportingDevice","kind":"string","optional":false,"example":"ReportingDevice"},{"name":"IncidentID","kind":"number","optional":false},{"name":"User","kind":"string","optional":false,"example":"User"},{"name":"EventReceiveTime","kind":"number","optional":false},{"name":"EventName","kind":"string","optional":false,"example":"EventName"},{"name":"ReportingIP","kind":"string","optional":false,"example":"ReportingIP"},{"name":"SystemEventCategory","kind":"string","optional":false,"example":"SystemEventCategory"},{"name":"EventAction","kind":"string","optional":false,"example":"EventAction"},{"name":"RelayingIP","kind":"string","optional":false,"example":"RelayingIP"},{"name":"EventSeverityCategory","kind":"string","optional":false,"example":"EventSeverityCategory"},{"name":"OrganizationName","kind":"string","optional":false,"example":"OrganizationName"},{"name":"ReportingVendor","kind":"string","optional":false,"example":"ReportingVendor"},{"name":"ReportingModel","kind":"string","optional":false,"example":"ReportingModel"},{"name":"CollectorID","kind":"number","optional":false},{"name":"EventParserName","kind":"string","optional":false,"example":"EventParserName"},{"name":"HostIP","kind":"string","optional":false,"example":"HostIP"},{"name":"HostName","kind":"string","optional":false,"example":"HostName"},{"name":"FileName","kind":"string","optional":false,"example":"FileName"},{"name":"ProcessName","kind":"string","optional":false,"example":"ProcessName"},{"name":"JobName","kind":"string","optional":false,"example":"JobName"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"DestinationPort","kind":"string","optional":false,"example":"DestinationPort"},{"name":"SourcePort","kind":"string","optional":false,"example":"SourcePort"},{"name":"DestinationIP","kind":"string","optional":false,"example":"DestinationIP"},{"name":"SourceIP","kind":"string","optional":false,"example":"SourceIP"},{"name":"ExtendedData","kind":"string","optional":false,"example":"ExtendedData"},{"name":"DestinationInterface","kind":"string","optional":false,"example":"DestinationInterface"},{"name":"NATTranslation","kind":"string","optional":false,"example":"NATTranslation"},{"name":"Protocol","kind":"string","optional":false,"example":"Protocol"},{"name":"SourceMAC","kind":"string","optional":false,"example":"SourceMAC"},{"name":"NATIP","kind":"string","optional":false,"example":"NATIP"}]}]}]}},{"id":"fortisiem-clear-incident","method":"GET","pathTemplate":"/phoenix/rest/h5/incident/clear","summary":"Clear (close) a FortiSIEM incident.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"incident_id","kind":"string","optional":false,"example":"incident_id"},{"name":"close_reason","kind":"string","optional":false,"example":"close_reason"}]}},{"id":"fortisiem-get-events-by-filter","method":"GET","pathTemplate":"/eventAttributeType/all","summary":"Returns an event list according to the specified filters.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FortiSIEM","kind":"object","optional":false,"children":[{"name":"Events","kind":"object","optional":false,"children":[{"name":"EventType","kind":"string","optional":false,"example":"EventType"},{"name":"SourceCountry","kind":"string","optional":false,"example":"SourceCountry"}]}]}]}},{"id":"fortisiem-get-cmdb-devices","method":"GET","pathTemplate":"/phoenix/login-html.jsf","summary":"Returns the description of each device.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FortiSIEM","kind":"object","optional":false,"children":[{"name":"CmdbDevice","kind":"string","optional":false,"example":"CmdbDevice"}]}]}},{"id":"fortisiem-get-events-by-query","method":"GET","pathTemplate":"/report/reportProgress","summary":"Returns event list filtered by query.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FortiSIEM","kind":"object","optional":false,"children":[{"name":"Events","kind":"object","optional":false,"children":[{"name":"EventType","kind":"string","optional":false,"example":"EventType"},{"name":"SourceCountry","kind":"string","optional":false,"example":"SourceCountry"}]}]}]}},{"id":"fortisiem-add-item-to-resource-list","method":"GET","pathTemplate":"/report/resultByReport","summary":"add element to a resource list.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FortiSIEM","kind":"object","optional":false,"children":[{"name":"Resource","kind":"string","optional":false,"example":"Resource"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "fortisiem-fortisiem",
+  "name": "FortiSIEM",
+  "pack": "FortiSIEM",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /phoenix/rest/query/events/0/1000.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "fortisiem-fortisiem",
+      "name": "FortiSIEM",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FortiSIEM/Integrations/FortiSIEM",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /phoenix/rest/query/events/0/1000. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/FortiSIEM/Integrations/FortiSIEM",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /phoenix/rest/query/events/0/1000. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-phoenix-rest-query-events-0-1000-0",
+        "method": "GET",
+        "pathTemplate": "/phoenix/rest/query/events/0/1000",
+        "summary": "GET /phoenix/rest/query/events/0/1000",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "accessIp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "approved",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "attributeId",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "children",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "creationMethod",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FortiSIEM/Integrations/FortiSIEM",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /phoenix/rest/query/events/0/1000. Fields are keys the client reads or test_data contains."
+  ]
+}

@@ -1,1 +1,118 @@
-{"id":"paloaltonetworks-prisma-airs-prismaairsmodelsecurity","name":"Palo Alto Networks Prisma AIRS - AI Supply Chain Security","pack":"PaloAltoNetworks_Prisma_AIRs","fidelity":"shape","curated":false,"summary":"Scan and govern AI models with Palo Alto Networks Prisma AIRS AI Supply Chain Security: model scans, evaluations, violations, labels, model groups, and security rules.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"paloaltonetworks-prisma-airs-prismaairsmodelsecurity","name":"Palo Alto Networks Prisma AIRS - AI Supply Chain Security","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Prisma_AIRs/Integrations/PrismaAIRsModelSecurity","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"prisma-airs-model-security-scans-list","method":"GET","pathTemplate":"/v1/security-groups/{security_group_uuid}/rule-instances/{rule_instance_uuid}","summary":"List all model security scans.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaAIRs","kind":"object","optional":false,"children":[{"name":"ModelSecurityScan","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false},{"name":"model_uri","kind":"string","optional":false,"example":"model_uri"},{"name":"eval_outcome","kind":"string","optional":false,"example":"eval_outcome"},{"name":"source_type","kind":"string","optional":false,"example":"source_type"},{"name":"security_group_uuid","kind":"id","optional":false},{"name":"security_group_name","kind":"string","optional":false,"example":"security_group_name"},{"name":"scan_origin","kind":"string","optional":false,"example":"scan_origin"},{"name":"created_at","kind":"timestamp","optional":false,"format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"format":"iso"},{"name":"created_by","kind":"string","optional":false,"example":"created_by"}]}]}]}},{"id":"prisma-airs-model-security-scans-create","method":"GET","pathTemplate":"/v1/security-groups/{security_group_uuid}/rule-instances","summary":"Create a new model security scan to check a model for supply chain security issues. Scan is asynchronous - use scans-get to poll for completion.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaAIRs","kind":"object","optional":false,"children":[{"name":"ModelSecurityScanCreate","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false},{"name":"labels","kind":"string","optional":false,"example":"labels"},{"name":"model_uri","kind":"string","optional":false,"example":"model_uri"},{"name":"security_group_uuid","kind":"id","optional":false},{"name":"security_group_name","kind":"string","optional":false,"example":"security_group_name"},{"name":"scan_origin","kind":"string","optional":false,"example":"scan_origin"},{"name":"eval_outcome","kind":"string","optional":false,"example":"eval_outcome"},{"name":"source_type","kind":"string","optional":false,"example":"source_type"},{"name":"owner","kind":"string","optional":false,"example":"owner"},{"name":"created_at","kind":"timestamp","optional":false,"format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"format":"iso"},{"name":"tsg_id","kind":"id","optional":false},{"name":"rules_passed","kind":"number","optional":false},{"name":"rules_failed","kind":"number","optional":false},{"name":"total_rules","kind":"number","optional":false}]}]}]}},{"id":"prisma-airs-model-security-scans-get","method":"GET","pathTemplate":"/v1/model-versions/{model_version_uuid}/files","summary":"Get model security scan status and results. Use this to poll scan completion after scans-create.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaAIRs","kind":"object","optional":false,"children":[{"name":"ModelSecurityScanGet","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false},{"name":"model_uri","kind":"string","optional":false,"example":"model_uri"},{"name":"security_group_uuid","kind":"id","optional":false},{"name":"security_group_name","kind":"string","optional":false,"example":"security_group_name"},{"name":"scan_origin","kind":"string","optional":false,"example":"scan_origin"},{"name":"eval_outcome","kind":"string","optional":false,"example":"eval_outcome"},{"name":"source_type","kind":"string","optional":false,"example":"source_type"},{"name":"owner","kind":"string","optional":false,"example":"owner"},{"name":"created_at","kind":"timestamp","optional":false,"format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"format":"iso"},{"name":"created_by","kind":"string","optional":false,"example":"created_by"},{"name":"tsg_id","kind":"id","optional":false},{"name":"model_version_uuid","kind":"id","optional":false},{"name":"enabled_rule_count_snapshot","kind":"number","optional":false},{"name":"scanner_version","kind":"string","optional":false,"example":"scanner_version"},{"name":"time_started","kind":"timestamp","optional":false,"format":"iso"},{"name":"total_files_scanned","kind":"number","optional":false},{"name":"total_files_skipped","kind":"number","optional":false},{"name":"rules_passed","kind":"number","optional":false},{"name":"rules_failed","kind":"number","optional":false},{"name":"total_rules","kind":"number","optional":false},{"name":"error_code","kind":"string","optional":false,"example":"error_code"},{"name":"error_message","kind":"string","optional":false,"example":"error_message"},{"name":"model_formats","kind":"string","optional":false,"example":"model_formats"}]}]}]}},{"id":"prisma-airs-model-security-scans-violations","method":"GET","pathTemplate":"/v1/models/{model_uuid}/model-versions","summary":"Get rule violations for a model security scan. Shows detailed information about which security rules failed and why.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaAIRs","kind":"object","optional":false,"children":[{"name":"ModelSecurityViolation","kind":"object","optional":false,"children":[{"name":"scan_uuid","kind":"id","optional":false},{"name":"violations","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false},{"name":"rule_name","kind":"string","optional":false,"example":"rule_name"},{"name":"rule_description","kind":"string","optional":false,"example":"rule_description"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"rule_instance_state","kind":"string","optional":false,"example":"rule_instance_state"},{"name":"file","kind":"string","optional":false,"example":"file"},{"name":"threat","kind":"string","optional":false,"example":"threat"},{"name":"threat_description","kind":"string","optional":false,"example":"threat_description"},{"name":"module","kind":"string","optional":false,"example":"module"},{"name":"operator","kind":"string","optional":false,"example":"operator"},{"name":"hash","kind":"string","optional":false,"example":"hash"},{"name":"rule_instance_uuid","kind":"id","optional":false},{"name":"created_at","kind":"timestamp","optional":false,"format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"format":"iso"},{"name":"tsg_id","kind":"id","optional":false}]},{"name":"total_items","kind":"number","optional":false},{"name":"limit","kind":"number","optional":false},{"name":"offset","kind":"number","optional":false}]}]}]}},{"id":"prisma-airs-model-security-labels-keys","method":"GET","pathTemplate":"/v1/scans/{scan_uuid}/evaluations","summary":"Get distinct label keys across all model security scans. Use for discovering available labels for filtering/organization.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaAIRs","kind":"object","optional":false,"children":[{"name":"ModelSecurityLabelKeys","kind":"object","optional":false,"children":[{"name":"keys","kind":"string","optional":false,"example":"keys"},{"name":"total_items","kind":"number","optional":false},{"name":"limit","kind":"number","optional":false},{"name":"offset","kind":"number","optional":false}]}]}]}},{"id":"prisma-airs-model-security-labels-values","method":"GET","pathTemplate":"/v1/scans/{uuid}/rule-violations","summary":"Get distinct values for a specific label key across all model security scans. Use to discover what values exist for a given label.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaAIRs","kind":"object","optional":false,"children":[{"name":"ModelSecurityLabelValues","kind":"object","optional":false,"children":[{"name":"key","kind":"string","optional":false,"example":"key"},{"name":"values","kind":"string","optional":false,"example":"values"},{"name":"total_items","kind":"number","optional":false},{"name":"limit","kind":"number","optional":false},{"name":"offset","kind":"number","optional":false}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "paloaltonetworks-prisma-airs-prismaairsmodelsecurity",
+  "name": "Palo Alto Networks Prisma AIRS - AI Supply Chain Security",
+  "pack": "PaloAltoNetworks_Prisma_AIRs",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /v1/security-groups/{security_group_uuid}/rule-instances.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "paloaltonetworks-prisma-airs-prismaairsmodelsecurity",
+      "name": "Palo Alto Networks Prisma AIRS - AI Supply Chain Security",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Prisma_AIRs/Integrations/PrismaAIRsModelSecurity",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /v1/security-groups/{security_group_uuid}/rule-instances. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Prisma_AIRs/Integrations/PrismaAIRsModelSecurity",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v1/security-groups/{security_group_uuid}/rule-instances. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-v1-security-groups-security-group-uuid-r-0",
+        "method": "GET",
+        "pathTemplate": "/v1/security-groups/{security_group_uuid}/rule-instances",
+        "summary": "GET /v1/security-groups/{security_group_uuid}/rule-instances",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "blob_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "compatible_sources",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "constant_values",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created_at",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created_by",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Prisma_AIRs/Integrations/PrismaAIRsModelSecurity",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /v1/security-groups/{security_group_uuid}/rule-instances. Fields are keys the client reads or test_data contains."
+  ]
+}

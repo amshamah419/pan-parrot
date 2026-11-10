@@ -1,1 +1,118 @@
-{"id":"phishlabs-phishlabsioc-eir","name":"PhishLabs IOC EIR","pack":"PhishLabs","fidelity":"shape","curated":false,"summary":"Get Email Incident Reports from PhishLabs.","operations":2,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"phishlabs-phishlabsioc-eir","name":"PhishLabs IOC EIR","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PhishLabs/Integrations/PhishLabsIOC_EIR","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"phishlabs-ioc-eir-get-incidents","method":"GET","pathTemplate":"/incidents/EIR/{incident_id}","summary":"Returns EIR incidents from PhishLabs-IOC EIR service. The default number of incidents returned is 25.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PhishLabsIOC","kind":"object","optional":false,"children":[{"name":"EIR","kind":"object","optional":false,"children":[{"name":"CaseType","kind":"string","optional":false,"example":"CaseType"},{"name":"Classification","kind":"string","optional":false,"example":"Classification"},{"name":"SubClassification","kind":"string","optional":false,"example":"SubClassification"},{"name":"Severity","kind":"string","optional":false,"example":"Severity"},{"name":"SubmissionMethod","kind":"string","optional":false,"example":"SubmissionMethod"},{"name":"FurtherReviewReason","kind":"string","optional":false,"example":"FurtherReviewReason"},{"name":"ID","kind":"id","optional":false},{"name":"Title","kind":"string","optional":false,"example":"Title"},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Status","kind":"boolean","optional":false},{"name":"Created","kind":"timestamp","optional":false,"format":"iso"},{"name":"Modified","kind":"timestamp","optional":false,"format":"iso"},{"name":"Closed","kind":"timestamp","optional":false,"format":"iso"},{"name":"Duration","kind":"number","optional":false},{"name":"EmailReportedBy","kind":"string","optional":false,"example":"EmailReportedBy"},{"name":"Email","kind":"object","optional":false,"children":[{"name":"EmailBody","kind":"string","optional":false,"example":"EmailBody"},{"name":"Sender","kind":"string","optional":false,"example":"Sender"},{"name":"URL","kind":"object","optional":false,"children":[{"name":"URL","kind":"string","optional":false,"example":"URL"},{"name":"Malicious","kind":"boolean","optional":false},{"name":"MaliciousDomain","kind":"boolean","optional":false}]},{"name":"Attachment","kind":"object","optional":false,"children":[{"name":"FileName","kind":"string","optional":false,"example":"FileName"},{"name":"MimeType","kind":"string","optional":false,"example":"MimeType"},{"name":"MD5","kind":"string","optional":false,"example":"MD5"},{"name":"SHA256","kind":"string","optional":false,"example":"SHA256"},{"name":"Malicious","kind":"boolean","optional":false}]}]}]}]},{"name":"Email","kind":"object","optional":false,"children":[{"name":"To","kind":"string","optional":false,"example":"To"},{"name":"From","kind":"string","optional":false,"example":"From"},{"name":"BodyHTML","kind":"string","optional":false,"example":"BodyHTML"}]},{"name":"File","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"SHA256","kind":"string","optional":false,"example":"SHA256"},{"name":"MD5","kind":"string","optional":false,"example":"MD5"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"URL","kind":"object","optional":false,"children":[{"name":"Data","kind":"string","optional":false,"example":"Data"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Score","kind":"string","optional":false,"example":"Score"}]}]}},{"id":"phishlabs-ioc-eir-get-incident-by-id","method":"GET","pathTemplate":"/incidents/EIR/INC1","summary":"Returns a single Incident based on the given ID.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PhishLabsIOC","kind":"object","optional":false,"children":[{"name":"EIR","kind":"object","optional":false,"children":[{"name":"CaseType","kind":"string","optional":false,"example":"CaseType"},{"name":"Classification","kind":"string","optional":false,"example":"Classification"},{"name":"SubClassification","kind":"string","optional":false,"example":"SubClassification"},{"name":"Severity","kind":"string","optional":false,"example":"Severity"},{"name":"SubmissionMethod","kind":"string","optional":false,"example":"SubmissionMethod"},{"name":"FurtherReviewReason","kind":"string","optional":false,"example":"FurtherReviewReason"},{"name":"ID","kind":"id","optional":false},{"name":"Title","kind":"string","optional":false,"example":"Title"},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Status","kind":"boolean","optional":false},{"name":"Created","kind":"timestamp","optional":false,"format":"iso"},{"name":"Modified","kind":"timestamp","optional":false,"format":"iso"},{"name":"Closed","kind":"timestamp","optional":false,"format":"iso"},{"name":"Duration","kind":"number","optional":false},{"name":"EmailReportedBy","kind":"string","optional":false,"example":"EmailReportedBy"},{"name":"Email","kind":"object","optional":false,"children":[{"name":"EmailBody","kind":"string","optional":false,"example":"EmailBody"},{"name":"Sender","kind":"string","optional":false,"example":"Sender"},{"name":"URL","kind":"object","optional":false,"children":[{"name":"URL","kind":"string","optional":false,"example":"URL"},{"name":"Malicious","kind":"boolean","optional":false},{"name":"MaliciousDomain","kind":"boolean","optional":false}]},{"name":"Attachment","kind":"object","optional":false,"children":[{"name":"FileName","kind":"string","optional":false,"example":"FileName"},{"name":"MimeType","kind":"string","optional":false,"example":"MimeType"},{"name":"MD5","kind":"string","optional":false,"example":"MD5"},{"name":"SHA256","kind":"string","optional":false,"example":"SHA256"},{"name":"Malicious","kind":"boolean","optional":false}]}]}]}]},{"name":"Email","kind":"object","optional":false,"children":[{"name":"To","kind":"string","optional":false,"example":"To"},{"name":"From","kind":"string","optional":false,"example":"From"},{"name":"BodyHTML","kind":"string","optional":false,"example":"BodyHTML"}]},{"name":"File","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"SHA256","kind":"string","optional":false,"example":"SHA256"},{"name":"MD5","kind":"string","optional":false,"example":"MD5"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"URL","kind":"object","optional":false,"children":[{"name":"Data","kind":"string","optional":false,"example":"Data"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Description","kind":"string","optional":false,"example":"Description"}]}]},{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Score","kind":"string","optional":false,"example":"Score"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "phishlabs-phishlabsioc-eir",
+  "name": "PhishLabs IOC EIR",
+  "pack": "PhishLabs",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /idapi/v1/incidents/EIR.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "phishlabs-phishlabsioc-eir",
+      "name": "PhishLabs IOC EIR",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PhishLabs/Integrations/PhishLabsIOC_EIR",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /idapi/v1/incidents/EIR. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/PhishLabs/Integrations/PhishLabsIOC_EIR",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /idapi/v1/incidents/EIR. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-idapi-v1-incidents-eir-0",
+        "method": "GET",
+        "pathTemplate": "/idapi/v1/incidents/EIR",
+        "summary": "GET /idapi/v1/incidents/EIR",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "attachments",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "caseType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "classification",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "closed",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "dbotscore",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PhishLabs/Integrations/PhishLabsIOC_EIR",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /idapi/v1/incidents/EIR. Fields are keys the client reads or test_data contains."
+  ]
+}

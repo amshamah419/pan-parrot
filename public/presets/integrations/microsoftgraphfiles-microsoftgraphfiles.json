@@ -1,1 +1,167 @@
-{"id":"microsoftgraphfiles-microsoftgraphfiles","name":"O365 File Management (Onedrive/Sharepoint/Teams)","pack":"MicrosoftGraphFiles","fidelity":"shape","curated":false,"summary":"Use the O365 File Management (Onedrive/Sharepoint/Teams) integration to enable your app to get authorized access to files in OneDrive, SharePoint, and MS Teams across your entire o","operations":3,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"microsoftgraphfiles-microsoftgraphfiles","name":"O365 File Management (Onedrive/Sharepoint/Teams)","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphFiles/Integrations/MicrosoftGraphFiles","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-mock-list-permissions-json","method":"GET","pathTemplate":"/","summary":"test_data/mock_list_permissions.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"value","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"1"},{"name":"@deprecated.GrantedToIdentities","kind":"string","optional":false,"example":"GrantedToIdentities has been deprecated. Refer to GrantedToIdentitiesV2"},{"name":"roles","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"read"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"grantedToIdentities","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"application","kind":"object","optional":false,"children":[{"name":"id","kind":"string","optional":false,"example":"nested"},{"name":"displayName","kind":"string","optional":false,"example":"nested"}]}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"grantedToIdentitiesV2","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"application","kind":"object","optional":false,"children":[{"name":"id","kind":"string","optional":false,"example":"nested"},{"name":"displayName","kind":"string","optional":false,"example":"nested"}]}]},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-response-json","method":"GET","pathTemplate":"/","summary":"test_data/response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"list_tenant_sites","kind":"object","optional":false,"children":[{"name":"@odata.context","kind":"string","optional":false,"example":"test"},{"name":"value","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"createdDateTime","kind":"timestamp","optional":false,"example":"2016-09-14T11:12:59Z","format":"iso"},{"name":"id","kind":"id","optional":false,"example":"test_id"},{"name":"lastModifiedDateTime","kind":"timestamp","optional":false,"example":"2016-09-14T11:13:53Z","format":"iso"},{"name":"name","kind":"string","optional":false,"example":"test_name"},{"name":"webUrl","kind":"string","optional":false,"example":"test/test_url/test"},{"name":"displayName","kind":"string","optional":false,"example":"Demisto Team Site"},{"name":"root","kind":"object","optional":false,"children":[]},{"name":"siteCollection","kind":"object","optional":false,"children":[{"name":"hostname","kind":"string","optional":false,"example":"test_hostname"}]}]},"minItems":0,"maxItems":2,"pageItems":false}]},{"name":"list_drive_children","kind":"object","optional":false,"children":[{"name":"@odata.context","kind":"string","optional":false,"example":"test"},{"name":"@odata.nextLink","kind":"string","optional":false,"example":"test_next_token"},{"name":"value","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"createdDateTime","kind":"timestamp","optional":false,"example":"2019-12-08T13:24:58Z","format":"iso"},{"name":"eTag","kind":"string","optional":false,"example":"\"{test-test},1\""},{"name":"id","kind":"id","optional":false,"example":"test"},{"name":"lastModifiedDateTime","kind":"timestamp","optional":false,"example":"2019-12-08T13:24:58Z","format":"iso"},{"name":"name","kind":"string","optional":false,"example":"demisto"},{"name":"webUrl","kind":"string","optional":false,"example":"test/test_url/test"},{"name":"cTag","kind":"string","optional":false,"example":"\"c:{test-test},0\""},{"name":"size","kind":"integer","optional":false},{"name":"createdBy","kind":"object","optional":false,"children":[{"name":"application","kind":"object","optional":false,"children":[{"name":"id","kind":"string","optional":false,"example":"nested"},{"name":"displayName","kind":"string","optional":false,"example":"nested"}]}]},{"name":"lastModifiedBy","kind":"object","optional":false,"children":[{"name":"application","kind":"object","optional":false,"children":[{"name":"id","kind":"string","optional":false,"example":"nested"},{"name":"displayName","kind":"string","optional":false,"example":"nested"}]}]},{"name":"parentReference","kind":"object","optional":false,"children":[{"name":"driveId","kind":"id","optional":false,"example":"test"},{"name":"driveType","kind":"string","optional":false,"example":"documentLibrary"},{"name":"id","kind":"id","optional":false,"example":"test"},{"name":"path","kind":"string","optional":false,"example":"/drive/root:"}]},{"name":"fileSystemInfo","kind":"object","optional":false,"children":[{"name":"createdDateTime","kind":"timestamp","optional":false,"example":"2019-12-08T13:24:58Z","format":"iso"},{"name":"lastModifiedDateTime","kind":"timestamp","optional":false,"example":"2019-12-08T13:24:58Z","format":"iso"}]},{"name":"folder","kind":"object","optional":false,"children":[{"name":"childCount","kind":"integer","optional":false}]}]},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"create_new_folder","kind":"object","optional":false,"children":[{"name":"@odata.context","kind":"string","optional":false,"example":"test"},{"name":"createdDateTime","kind":"timestamp","optional":false,"example":"2020-01-12T09:35:50Z","format":"iso"},{"name":"eTag","kind":"string","optional":false,"example":"\"{test-test},1\""},{"name":"id","kind":"id","optional":false,"example":"test"},{"name":"lastModifiedDateTime","kind":"timestamp","optional":false,"example":"2020-01-12T09:35:50Z","format":"iso"},{"name":"name","kind":"string","optional":false,"example":"playbook_folder 51"},{"name":"webUrl","kind":"string","optional":false,"example":"test/test_url/test"},{"name":"cTag","kind":"string","optional":false,"example":"\"c:{test-test},0\""},{"name":"size","kind":"integer","optional":false},{"name":"createdBy","kind":"object","optional":false,"children":[{"name":"application","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"test"},{"name":"displayName","kind":"string","optional":false,"example":"MS Graph Files Dev"}]}]},{"name":"lastModifiedBy","kind":"object","optional":false,"children":[]}]}]}},{"id":"test-data-test-inputs-json","method":"GET","pathTemplate":"/","summary":"test_data/test_inputs.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"remove_identifier_data_application_type","kind":"object","optional":false,"children":[{"name":"CreatedBy","kind":"object","optional":false,"children":[{"name":"Application","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false,"example":"test"},{"name":"DisplayName","kind":"string","optional":false,"example":"MS Graph Files Dev"}]}]}]},{"name":"remove_identifier_data_user_type","kind":"object","optional":false,"children":[{"name":"CreatedBy","kind":"object","optional":false,"children":[{"name":"User","kind":"object","optional":false,"children":[{"name":"DisplayName","kind":"string","optional":false,"example":"MS Graph Files Dev"}]}]}]},{"name":"valid_next_link_url","kind":"string","optional":false,"example":"https://graph.microsoft.com/v1.0/drives/1234/root/children?top=1&$skiptoken=1234fsff"},{"name":"invalid_next_link_url","kind":"string","optional":false,"example":"https://url/v1.0/drives/1234/root/children?top=1&"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "microsoftgraphfiles-microsoftgraphfiles",
+  "name": "O365 File Management (Onedrive/Sharepoint/Teams)",
+  "pack": "MicrosoftGraphFiles",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /v1.0/sites.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "microsoftgraphfiles-microsoftgraphfiles",
+      "name": "O365 File Management (Onedrive/Sharepoint/Teams)",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphFiles/Integrations/MicrosoftGraphFiles",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /v1.0/sites. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphFiles/Integrations/MicrosoftGraphFiles",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v1.0/sites. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-v1-0-sites-0",
+        "method": "GET",
+        "pathTemplate": "/v1.0/sites",
+        "summary": "GET /v1.0/sites",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "@deprecated",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "grantedToIdentities",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "grantedToIdentitiesV2",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                },
+                {
+                  "name": "id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "roles",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "@odata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "context",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "nextLink",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "Action",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ActionCount",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ActivityDateTime",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Actor",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphFiles/Integrations/MicrosoftGraphFiles",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /v1.0/sites. Fields are keys the client reads or test_data contains."
+  ]
+}

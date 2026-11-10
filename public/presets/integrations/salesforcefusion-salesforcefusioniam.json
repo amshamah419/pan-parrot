@@ -1,1 +1,118 @@
-{"id":"salesforcefusion-salesforcefusioniam","name":"Salesforce Fusion IAM","pack":"SalesforceFusion","fidelity":"shape","curated":false,"summary":"Integrate with Salesforce Fusion Identity Access Management service to execute CRUD (create, read, update, and delete) operations for employee lifecycle processes.","operations":4,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"salesforcefusion-salesforcefusioniam","name":"Salesforce Fusion IAM","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/SalesforceFusion/Integrations/SalesforceFusionIAM","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"iam-create-user","method":"GET","pathTemplate":"/services/oauth2/token","summary":"Creates a user.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"brand","kind":"string","optional":false,"example":"brand"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"},{"name":"id","kind":"id","optional":false},{"name":"instanceName","kind":"string","optional":false,"example":"instanceName"},{"name":"success","kind":"boolean","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"}]}]}]}},{"id":"iam-update-user","method":"GET","pathTemplate":"/services/data/v51.0","summary":"Updates an existing user with the data passed in the user-profile argument.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"brand","kind":"string","optional":false,"example":"brand"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"},{"name":"id","kind":"id","optional":false},{"name":"instanceName","kind":"string","optional":false,"example":"instanceName"},{"name":"success","kind":"boolean","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"}]}]}]}},{"id":"iam-get-user","method":"GET","pathTemplate":"/","summary":"Retrieves a single user resource.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"brand","kind":"string","optional":false,"example":"brand"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"},{"name":"id","kind":"id","optional":false},{"name":"instanceName","kind":"string","optional":false,"example":"instanceName"},{"name":"success","kind":"boolean","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"}]}]}]}},{"id":"iam-disable-user","method":"GET","pathTemplate":"/","summary":"Disable an active user.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IAM","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"object","optional":false,"children":[{"name":"active","kind":"boolean","optional":false},{"name":"brand","kind":"string","optional":false,"example":"brand"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"email","kind":"string","optional":false,"example":"email"},{"name":"errorCode","kind":"number","optional":false},{"name":"errorMessage","kind":"string","optional":false,"example":"errorMessage"},{"name":"id","kind":"id","optional":false},{"name":"instanceName","kind":"string","optional":false,"example":"instanceName"},{"name":"success","kind":"boolean","optional":false},{"name":"username","kind":"string","optional":false,"example":"username"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "salesforcefusion-salesforcefusioniam",
+  "name": "Salesforce Fusion IAM",
+  "pack": "SalesforceFusion",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /services/data/v51.0/parameterizedSearch.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "salesforcefusion-salesforcefusioniam",
+      "name": "Salesforce Fusion IAM",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SalesforceFusion/Integrations/SalesforceFusionIAM",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /services/data/v51.0/parameterizedSearch. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/SalesforceFusion/Integrations/SalesforceFusionIAM",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /services/data/v51.0/parameterizedSearch. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-services-data-v51-0-parameterizedsearch-0",
+        "method": "GET",
+        "pathTemplate": "/services/data/v51.0/parameterizedSearch",
+        "summary": "GET /services/data/v51.0/parameterizedSearch",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Work_Email__c",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "detail",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "fields",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SalesforceFusion/Integrations/SalesforceFusionIAM",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /services/data/v51.0/parameterizedSearch. Fields are keys the client reads or test_data contains."
+  ]
+}

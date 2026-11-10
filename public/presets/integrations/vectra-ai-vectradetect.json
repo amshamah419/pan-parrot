@@ -1,1 +1,142 @@
-{"id":"vectra-ai-vectradetect","name":"Vectra Detect","pack":"Vectra_AI","fidelity":"sample","curated":false,"summary":"This integration allows to create incidents based on Vectra Accounts/Hosts/Detections objects.","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"vectra-ai-vectradetect","name":"Vectra Detect","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraDetect","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-account-note-add-response-json","method":"GET","pathTemplate":"/test","summary":"test_data/account_note_add_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"date_created","kind":"timestamp","optional":false,"example":"2024-07-10T07:30:58.574942Z","format":"iso"},{"name":"date_modified","kind":"string","optional":true},{"name":"created_by","kind":"string","optional":false,"example":"xsoar"},{"name":"modified_by","kind":"string","optional":true},{"name":"note","kind":"string","optional":false,"example":"test note"}]}},{"id":"test-data-account-note-list-response-json","method":"GET","pathTemplate":"/","summary":"test_data/account_note_list_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"date_created","kind":"timestamp","optional":false,"example":"2024-07-10T05:40:31Z","format":"iso"},{"name":"date_modified","kind":"timestamp","optional":true,"example":"2024-07-16T12:56:30Z","format":"iso"},{"name":"created_by","kind":"string","optional":false,"example":"xsoar"},{"name":"modified_by","kind":"string","optional":true,"example":"xsoar"},{"name":"note","kind":"string","optional":false,"example":"updated_note"}]}},{"id":"test-data-account-note-update-response-json","method":"GET","pathTemplate":"/","summary":"test_data/account_note_update_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"date_created","kind":"timestamp","optional":false,"example":"2024-07-10T07:30:58.574942Z","format":"iso"},{"name":"date_modified","kind":"timestamp","optional":false,"example":"2024-07-12T06:42:29.546835Z","format":"iso"},{"name":"created_by","kind":"string","optional":false,"example":"xsoar"},{"name":"modified_by","kind":"string","optional":false,"example":"xsoar"},{"name":"note","kind":"string","optional":false,"example":"updated test note"}]}},{"id":"test-data-assign-group-response-json","method":"GET","pathTemplate":"/","summary":"test_data/assign_group_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"domain"},{"name":"name","kind":"string","optional":false,"example":"xsoar-group-accout-test"},{"name":"description","kind":"string","optional":false,"example":"xsoar-group-accout-test"},{"name":"cognito_managed","kind":"boolean","optional":true},{"name":"members","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"*.domain1.net"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"rules","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"last_modified","kind":"timestamp","optional":false,"example":"2023-09-04T06:30:01Z","format":"iso"},{"name":"last_modified_by","kind":"string","optional":false,"example":"TEST Client"},{"name":"importance","kind":"string","optional":true,"example":"medium"}]}},{"id":"test-data-assignments-of-account-json","method":"GET","pathTemplate":"/","summary":"test_data/assignments_of_account.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"count","kind":"integer","optional":false},{"name":"next","kind":"string","optional":true},{"name":"previous","kind":"string","optional":true},{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"assigned_by","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"username","kind":"string","optional":false,"example":"cds_xsoar"}]},{"name":"date_assigned","kind":"timestamp","optional":false,"example":"2024-07-11T05:40:56Z","format":"iso"},{"name":"date_resolved","kind":"string","optional":true},{"name":"events","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"assignment_id","kind":"integer","optional":false},{"name":"actor","kind":"integer","optional":false},{"name":"event_type","kind":"string","optional":false,"example":"created"},{"name":"datetime","kind":"timestamp","optional":false,"example":"2024-07-11T05:40:56Z","format":"iso"},{"name":"context","kind":"object","optional":false,"children":[{"name":"to","kind":"string","optional":false,"example":"nested"},{"name":"entity_t_score","kind":"string","optional":false,"example":"nested"},{"name":"entity_c_score","kind":"string","optional":false,"example":"nested"}]}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"outcome","kind":"string","optional":true},{"name":"resolved_by","kind":"string","optional":true},{"name":"triaged_detections","kind":"object","optional":false,"children":[]},{"name":"host_id","kind":"string","optional":true},{"name":"account_id","kind":"integer","optional":false},{"name":"assigned_to","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"username","kind":"string","optional":false,"example":"admin"}]}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-detection-note-add-response-json","method":"GET","pathTemplate":"/","summary":"test_data/detection_note_add_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"date_created","kind":"timestamp","optional":false,"example":"2024-07-10T07:32:58.574942Z","format":"iso"},{"name":"date_modified","kind":"string","optional":true},{"name":"created_by","kind":"string","optional":false,"example":"xsoar"},{"name":"modified_by","kind":"string","optional":true},{"name":"note","kind":"string","optional":false,"example":"test note for detection"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "vectra-ai-vectradetect",
+  "name": "Vectra Detect",
+  "pack": "Vectra_AI",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /api/v2.5/search/detections.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "vectra-ai-vectradetect",
+      "name": "Vectra Detect",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraDetect",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v2.5/search/detections. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraDetect",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v2.5/search/detections. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-api-v2-5-search-detections-0",
+        "method": "GET",
+        "pathTemplate": "/api/v2.5/search/detections",
+        "summary": "GET /api/v2.5/search/detections",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "results",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "_doc_modified_ts",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "account_id",
+                  "kind": "integer"
+                },
+                {
+                  "name": "active_traffic",
+                  "kind": "boolean"
+                },
+                {
+                  "name": "assigned_by",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "assigned_date",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "Category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "DocModifiedTimestamp",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Hostname",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "LastDetectionTimestamp",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraDetect",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v2.5/search/detections. Fields are keys the client reads or test_data contains."
+  ]
+}

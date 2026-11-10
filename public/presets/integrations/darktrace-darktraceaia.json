@@ -1,1 +1,168 @@
-{"id":"darktrace-darktraceaia","name":"Darktrace AI Analyst","pack":"Darktrace","fidelity":"sample","curated":false,"summary":"Rapid detection of malicious behaviour can make all the difference in the response to a security event. This pack includes configurations to combine the world-class threat detectio","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"darktrace-darktraceaia","name":"Darktrace AI Analyst","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceAIA","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-ack-response-json","method":"GET","pathTemplate":"/aianalyst/incident/comments","summary":"test_data/ack_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"aianalyst","kind":"string","optional":false,"example":"SUCCESS"}]}},{"id":"test-data-ai-analyst-incident-json","method":"GET","pathTemplate":"/aianalyst/incidentevents","summary":"test_data/ai_analyst_incident.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"summariser","kind":"string","optional":false,"example":"SaasHijackSummary"},{"name":"acknowledged","kind":"boolean","optional":false},{"name":"pinned","kind":"boolean","optional":false},{"name":"createdAt","kind":"integer","optional":false},{"name":"attackPhases","kind":"array","optional":false,"item":{"name":"item","kind":"integer","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"mitreTactics","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"privilege-escalation"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"title","kind":"string","optional":false,"example":"Possible Hijack of AzureActiveDirectory Account"},{"name":"id","kind":"id","optional":false,"example":"bc64f242-ce29-4f35-bc94-230991116564"},{"name":"children","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"bc64f242-ce29-4f35-bc94-230991116564"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"category","kind":"string","optional":false,"example":"critical"},{"name":"currentGroup","kind":"string","optional":false,"example":"g750d9a5e-8df9-43fb-b3a3-1d1915dbc5fc"},{"name":"groupCategory","kind":"string","optional":false,"example":"critical"},{"name":"groupScore","kind":"number","optional":false},{"name":"groupPreviousGroups","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"activityId","kind":"id","optional":false,"example":"da39a3ee"},{"name":"groupingIds","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"97265864"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"groupByActivity","kind":"boolean","optional":false},{"name":"userTriggered","kind":"boolean","optional":false},{"name":"externalTriggered","kind":"boolean","optional":false},{"name":"aiaScore","kind":"integer","optional":false},{"name":"summary","kind":"string","optional":false,"example":"Though this behaviour could be the result of legitimate service usage or administration, it could also be a sign of th"},{"name":"periods","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"start","kind":"integer","optional":false},{"name":"end","kind":"integer","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"breachDevices","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"identifier","kind":"email","optional":false},{"name":"hostname","kind":"email","optional":false},{"name":"ip","kind":"string","optional":true},{"name":"mac","kind":"string","optional":true},{"name":"subnet","kind":"string","optional":true},{"name":"did","kind":"integer","optional":false},{"name":"sid","kind":"integer","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"relatedBreaches","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"modelName","kind":"string","optional":false,"example":"SaaS / Admin / User Added To Admin Group"},{"name":"pbid","kind":"integer","optional":false},{"name":"threatScore","kind":"integer","optional":false},{"name":"timestamp","kind":"integer","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"details","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"blockType","kind":"string","optional":false,"example":"single"},{"name":"blocks","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"blockHeader","kind":"string","optional":false,"example":"SaaS User Details"},{"name":"bulletBlocks","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"explanations","kind":"array","optional":false,"item":{"name":"item","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"iconType","kind":"string","optional":false,"example":"search"},{"name":"valueType","kind":"string","optional":false,"example":"formatString"},{"name":"value","kind":"string","optional":false,"example":"Searching for recent SaaS actions from {}."}]},"minItems":0,"maxItems":3,"pageItems":false},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-formatted-ack-json","method":"GET","pathTemplate":"/aianalyst/unacknowledge","summary":"test_data/formatted_ack.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"acknowledged","kind":"string","optional":false,"example":"True"},{"name":"eventId","kind":"id","optional":false,"example":"bc64f242-ce29-4f35-bc94-230991116564"},{"name":"response","kind":"string","optional":false,"example":"Incident Event Successfully Acknowledged"}]}},{"id":"test-data-formatted-ai-analyst-incident-json","method":"GET","pathTemplate":"/aianalyst/acknowledge","summary":"test_data/formatted_ai_analyst_incident.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"eventId","kind":"id","optional":false,"example":"bc64f242-ce29-4f35-bc94-230991116564"},{"name":"title","kind":"string","optional":false,"example":"Possible Hijack of AzureActiveDirectory Account"},{"name":"mitreTactics","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"privilege-escalation"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"score","kind":"string","optional":false,"example":"94%"},{"name":"createdAt","kind":"timestamp","optional":false,"example":"2022-07-26T16:45:09.000Z","format":"iso"},{"name":"category","kind":"string","optional":false,"example":"critical"},{"name":"summary","kind":"string","optional":false,"example":"Though this behaviour could be the result of legitimate service usage or administration, it could also be a sign of th"},{"name":"groupId","kind":"id","optional":false,"example":"g750d9a5e-8df9-43fb-b3a3-1d1915dbc5fc"},{"name":"devices","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"identifier","kind":"email","optional":false},{"name":"hostname","kind":"email","optional":false},{"name":"ip","kind":"string","optional":true},{"name":"mac","kind":"string","optional":true},{"name":"subnet","kind":"string","optional":true},{"name":"did","kind":"integer","optional":false},{"name":"sid","kind":"integer","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"modelBreaches","kind":"object","optional":false,"children":[{"name":"0","kind":"object","optional":false,"children":[{"name":"modelName","kind":"string","optional":false,"example":"SaaS / Admin / User Added To Admin Group"},{"name":"pbid","kind":"integer","optional":false},{"name":"threatScore","kind":"integer","optional":false},{"name":"timestamp","kind":"timestamp","optional":false,"example":"2022-07-26T16:40:36.000Z","format":"iso"}]}]},{"name":"link","kind":"string","optional":false,"example":"/#aiagroup/g750d9a5e-8df9-43fb-b3a3-1d1915dbc5fc"}]}},{"id":"test-data-formatted-get-comment-response-json","method":"GET","pathTemplate":"/aianalyst/comments","summary":"test_data/formatted_get_comment_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"comments","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"eventId","kind":"id","optional":false,"example":"bc64f242-ce29-4f35-bc94-230991116564"},{"name":"message","kind":"string","optional":false,"example":"first comment"},{"name":"time","kind":"timestamp","optional":false,"example":"2022-12-21T12:55:55.000Z","format":"iso"},{"name":"username","kind":"string","optional":false,"example":"foo.sample"}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-formatted-group-response-json","method":"GET","pathTemplate":"/aianalyst/groups","summary":"test_data/formatted_group_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"groupId","kind":"id","optional":false,"example":"g750d9a5e-8df9-43fb-b3a3-1d1915dbc5fc"},{"name":"acknowledged","kind":"boolean","optional":false},{"name":"mitreTactics","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"privilege-escalation"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"incidentEvents","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"eventId","kind":"id","optional":false,"example":"750d9a5e-8df9-43fb-b3a3-1d1915dbc5fc"},{"name":"start","kind":"timestamp","optional":false,"example":"2022-07-26T16:38:52.000Z","format":"iso"},{"name":"title","kind":"string","optional":false,"example":"Possible Hijack of Office365 Account"},{"name":"deviceId","kind":"integer","optional":false},{"name":"visible","kind":"boolean","optional":false}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"groupCategory","kind":"string","optional":false,"example":"critical"},{"name":"groupScore","kind":"number","optional":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "darktrace-darktraceaia",
+  "name": "Darktrace AI Analyst",
+  "pack": "Darktrace",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /aianalyst/incidentevents.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "darktrace-darktraceaia",
+      "name": "Darktrace AI Analyst",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceAIA",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /aianalyst/incidentevents. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceAIA",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /aianalyst/incidentevents. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-aianalyst-incidentevents-0",
+        "method": "GET",
+        "pathTemplate": "/aianalyst/incidentevents",
+        "summary": "GET /aianalyst/incidentevents",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "acknowledged",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "aiaScore",
+              "kind": "integer"
+            },
+            {
+              "name": "breachDevices",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "did",
+                  "kind": "integer"
+                },
+                {
+                  "name": "hostname",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "identifier",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "ip",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "mac",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "comments",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "eventId",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "incident_id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "message",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "time",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "username",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "createdAt",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceAIA",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /aianalyst/incidentevents. Fields are keys the client reads or test_data contains."
+  ]
+}

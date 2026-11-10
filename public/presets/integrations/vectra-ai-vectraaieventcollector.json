@@ -1,1 +1,158 @@
-{"id":"vectra-ai-vectraaieventcollector","name":"Vectra AI Event Collector","pack":"Vectra_AI","fidelity":"sample","curated":false,"summary":"Collects Vectra Detections and Audits into XSIAM Events.","operations":2,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"vectra-ai-vectraaieventcollector","name":"Vectra AI Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraAIEventCollector","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-audits-json","method":"GET","pathTemplate":"/api/v{self.api_version}","summary":"test_data/audits.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"start","kind":"string","optional":false,"example":"2023-02-19"},{"name":"end","kind":"string","optional":false,"example":"9999-12-31"},{"name":"audits","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"user","kind":"string","optional":true},{"name":"role","kind":"string","optional":true},{"name":"source_ip","kind":"ip","optional":false,"example":"127.127.127.127"},{"name":"headend_addr","kind":"ip","optional":false,"example":"127.127.127.127"},{"name":"dvchost","kind":"string","optional":false,"example":"hostname.dev"},{"name":"version","kind":"string","optional":false,"example":"7.3"},{"name":"result","kind":"string","optional":false,"example":"failure"},{"name":"message","kind":"string","optional":false,"example":"invalid authentication token '1c9a********' used for API request"},{"name":"vectra_timestamp","kind":"timestamp","optional":false,"example":"1676764803","format":"unix-string"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"_meta","kind":"object","optional":false,"children":[{"name":"level","kind":"string","optional":false,"example":"success"},{"name":"message","kind":"string","optional":false,"example":"Success."}]}]}},{"id":"test-data-search-detections-json","method":"GET","pathTemplate":"/","summary":"test_data/search_detections.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"count","kind":"integer","optional":false},{"name":"next","kind":"string","optional":false,"example":"mock://vectra-v22.dev.local/api/v2.2/search/detections?page_size=5"},{"name":"previous","kind":"string","optional":true},{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"summary","kind":"object","optional":false,"children":[{"name":"app_protocols","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"rdp"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"num_attempts","kind":"integer","optional":false},{"name":"description","kind":"string","optional":false,"example":"This host is making many login attempts on an internal system."},{"name":"dst_ips","kind":"array","optional":false,"item":{"name":"item","kind":"ip","optional":false,"example":"127.127.127.127"},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"id","kind":"integer","optional":false},{"name":"url","kind":"string","optional":false,"example":"mock://vectra-v22.dev.local/api/v2.2/detections/7412"},{"name":"detection_url","kind":"string","optional":false,"example":"mock://vectra-v22.dev.local/api/v2.2/detections/7412"},{"name":"category","kind":"string","optional":false,"example":"LATERAL MOVEMENT"},{"name":"detection","kind":"string","optional":false,"example":"Brute-Force"},{"name":"detection_category","kind":"string","optional":false,"example":"LATERAL MOVEMENT"},{"name":"detection_type","kind":"string","optional":false,"example":"Brute-Force"},{"name":"custom_detection","kind":"string","optional":true},{"name":"description","kind":"string","optional":true},{"name":"src_ip","kind":"ip","optional":false,"example":"127.127.127.127"},{"name":"state","kind":"string","optional":false,"example":"fixed"},{"name":"t_score","kind":"integer","optional":false},{"name":"c_score","kind":"integer","optional":false},{"name":"certainty","kind":"integer","optional":false},{"name":"threat","kind":"integer","optional":false},{"name":"created_timestamp","kind":"timestamp","optional":false,"example":"2022-09-01T02:27:27Z","format":"iso"},{"name":"first_timestamp","kind":"timestamp","optional":false,"example":"2022-09-01T02:15:48Z","format":"iso"},{"name":"last_timestamp","kind":"timestamp","optional":false,"example":"2022-09-30T05:56:02Z","format":"iso"},{"name":"targets_key_asset","kind":"boolean","optional":false},{"name":"is_targeting_key_asset","kind":"boolean","optional":false},{"name":"src_account","kind":"string","optional":true},{"name":"src_host","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"ip","kind":"ip","optional":false,"example":"127.127.127.127"},{"name":"name","kind":"string","optional":false,"example":"VMAL #2 windows 127.127.127.127 (endo-kao12)"},{"name":"url","kind":"string","optional":false,"example":"mock://vectra-v22.dev.local/api/v2.2/hosts/873"},{"name":"is_key_asset","kind":"boolean","optional":false},{"name":"groups","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"string","optional":false,"example":"nested"},{"name":"name","kind":"string","optional":false,"example":"nested"},{"name":"description","kind":"string","optional":false,"example":"nested"},{"name":"last_modified","kind":"string","optional":false,"example":"nested"},{"name":"last_modified_by","kind":"string","optional":false,"example":"nested"},{"name":"type","kind":"string","optional":false,"example":"nested"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"threat","kind":"integer","optional":false},{"name":"certainty","kind":"integer","optional":false}]},{"name":"note","kind":"string","optional":true},{"name":"notes","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"note_modified_by","kind":"string","optional":true},{"name":"note_modified_timestamp","kind":"string","optional":true},{"name":"sensor","kind":"string","optional":false,"example":"eti2pc2s"},{"name":"sensor_name","kind":"string","optional":false,"example":"Vec2c610896a947c5b5102c466a28f49a"},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"triage_rule_id","kind":"string","optional":true}]},"minItems":0,"maxItems":3,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "vectra-ai-vectraaieventcollector",
+  "name": "Vectra AI Event Collector",
+  "pack": "Vectra_AI",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /api/v2.2/search/{expr}.",
+  "operations": 1,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "vectra-ai-vectraaieventcollector",
+      "name": "Vectra AI Event Collector",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraAIEventCollector",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v2.2/search/{expr}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraAIEventCollector",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v2.2/search/{expr}. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-api-v2-2-search-expr-0",
+        "method": "GET",
+        "pathTemplate": "/api/v2.2/search/{expr}",
+        "summary": "GET /api/v2.2/search/{expr}",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "results",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "assigned_date",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "assigned_to",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "c_score",
+                  "kind": "integer"
+                },
+                {
+                  "name": "category",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "certainty",
+                  "kind": "integer"
+                }
+              ]
+            },
+            {
+              "name": "audits",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "dvchost",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "headend_addr",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "message",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "result",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "role",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "fetch_limit",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "first_fetch",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Vectra_AI/Integrations/VectraAIEventCollector",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v2.2/search/{expr}. Fields are keys the client reads or test_data contains."
+  ]
+}

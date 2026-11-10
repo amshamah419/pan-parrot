@@ -1,1 +1,118 @@
-{"id":"azurewaf-azurewaf","name":"Azure Web Application Firewall","pack":"AzureWAF","fidelity":"shape","curated":false,"summary":"The Azure WAF (Web Application Firewall) integration provides centralized protection of your web applications from common exploits and vulnerabilities. It enables you to control po","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"azurewaf-azurewaf","name":"Azure Web Application Firewall","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AzureWAF/Integrations/AzureWAF","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"azure-waf-policies-get","method":"GET","pathTemplate":"/full_url","summary":"Retrieves protection policies within a resource group.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AzureWAF","kind":"object","optional":false,"children":[{"name":"Policy","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"id","kind":"id","optional":false},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"etag","kind":"string","optional":false,"example":"etag"},{"name":"tags","kind":"string","optional":false,"example":"tags"},{"name":"location","kind":"string","optional":false,"example":"location"},{"name":"properties","kind":"object","optional":false,"children":[{"name":"resourceState","kind":"string","optional":false,"example":"resourceState"},{"name":"provisioningState","kind":"string","optional":false,"example":"provisioningState"},{"name":"policySettings","kind":"object","optional":false,"children":[{"name":"state","kind":"string","optional":false,"example":"state"},{"name":"mode","kind":"string","optional":false,"example":"mode"},{"name":"maxRequestBodySizeInKb","kind":"number","optional":false},{"name":"fileUploadLimitInMb","kind":"number","optional":false},{"name":"requestBodyCheck","kind":"boolean","optional":false}]},{"name":"customRules","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"priority","kind":"number","optional":false},{"name":"ruleType","kind":"string","optional":false,"example":"ruleType"},{"name":"matchConditions","kind":"object","optional":false,"children":[{"name":"matchVariables","kind":"object","optional":false,"children":[{"name":"variableName","kind":"string","optional":false,"example":"variableName"},{"name":"selector","kind":"string","optional":false,"example":"selector"}]},{"name":"operator","kind":"string","optional":false,"example":"operator"},{"name":"negationCondition","kind":"boolean","optional":false},{"name":"matchValues","kind":"string","optional":false,"example":"matchValues"}]},{"name":"action","kind":"string","optional":false,"example":"action"}]},{"name":"managedRules","kind":"object","optional":false,"children":[{"name":"managedRuleSets","kind":"object","optional":false,"children":[{"name":"ruleSetType","kind":"string","optional":false,"example":"ruleSetType"},{"name":"ruleSetVersion","kind":"string","optional":false,"example":"ruleSetVersion"},{"name":"ruleGroupOverrides","kind":"object","optional":false,"children":[{"name":"ruleGroupName","kind":"string","optional":false,"example":"ruleGroupName"},{"name":"rules","kind":"object","optional":false,"children":[]}]}]},{"name":"exclusions","kind":"object","optional":false,"children":[{"name":"matchVariable","kind":"string","optional":false,"example":"matchVariable"},{"name":"selectorMatchOperator","kind":"string","optional":false,"example":"selectorMatchOperator"},{"name":"selector","kind":"string","optional":false,"example":"selector"}]}]}]}]}]}]}},{"id":"azure-waf-policies-list-all-in-subscription","method":"PUT","pathTemplate":"/full_url","summary":"Retrieves all the WAF policies in a subscription.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AzureWAF","kind":"object","optional":false,"children":[{"name":"Policy","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"id","kind":"id","optional":false},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"etag","kind":"string","optional":false,"example":"etag"},{"name":"tags","kind":"string","optional":false,"example":"tags"},{"name":"location","kind":"string","optional":false,"example":"location"},{"name":"properties","kind":"object","optional":false,"children":[{"name":"resourceState","kind":"string","optional":false,"example":"resourceState"},{"name":"provisioningState","kind":"string","optional":false,"example":"provisioningState"},{"name":"policySettings","kind":"object","optional":false,"children":[{"name":"state","kind":"string","optional":false,"example":"state"},{"name":"mode","kind":"string","optional":false,"example":"mode"},{"name":"maxRequestBodySizeInKb","kind":"number","optional":false},{"name":"fileUploadLimitInMb","kind":"number","optional":false},{"name":"requestBodyCheck","kind":"boolean","optional":false}]},{"name":"customRules","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"priority","kind":"number","optional":false},{"name":"ruleType","kind":"string","optional":false,"example":"ruleType"},{"name":"matchConditions","kind":"object","optional":false,"children":[{"name":"matchVariables","kind":"object","optional":false,"children":[{"name":"variableName","kind":"string","optional":false,"example":"variableName"},{"name":"selector","kind":"string","optional":false,"example":"selector"}]},{"name":"operator","kind":"string","optional":false,"example":"operator"},{"name":"negationConditon","kind":"boolean","optional":false},{"name":"matchValues","kind":"string","optional":false,"example":"matchValues"}]},{"name":"action","kind":"string","optional":false,"example":"action"}]},{"name":"managedRules","kind":"object","optional":false,"children":[{"name":"managedRuleSets","kind":"object","optional":false,"children":[{"name":"ruleSetType","kind":"string","optional":false,"example":"ruleSetType"},{"name":"ruleSetVersion","kind":"string","optional":false,"example":"ruleSetVersion"},{"name":"ruleGroupOverrides","kind":"object","optional":false,"children":[{"name":"ruleGroupName","kind":"string","optional":false,"example":"ruleGroupName"},{"name":"rules","kind":"object","optional":false,"children":[]}]}]},{"name":"exclusions","kind":"object","optional":false,"children":[{"name":"matchVariable","kind":"string","optional":false,"example":"matchVariable"},{"name":"selectorMatchOperator","kind":"string","optional":false,"example":"selectorMatchOperator"},{"name":"selector","kind":"string","optional":false,"example":"selector"}]}]}]}]}]}]}},{"id":"azure-waf-policy-update-or-create","method":"GET","pathTemplate":"/","summary":"Creates or updates a policy with a specified rule set name within a resource group.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AzureWAF","kind":"object","optional":false,"children":[{"name":"Policy","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"id","kind":"id","optional":false},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"etag","kind":"string","optional":false,"example":"etag"},{"name":"tags","kind":"string","optional":false,"example":"tags"},{"name":"location","kind":"string","optional":false,"example":"location"},{"name":"properties","kind":"object","optional":false,"children":[{"name":"resourceState","kind":"string","optional":false,"example":"resourceState"},{"name":"provisioningState","kind":"string","optional":false,"example":"provisioningState"},{"name":"policySettings","kind":"object","optional":false,"children":[{"name":"state","kind":"string","optional":false,"example":"state"},{"name":"mode","kind":"string","optional":false,"example":"mode"},{"name":"maxRequestBodySizeInKb","kind":"number","optional":false},{"name":"fileUploadLimitInMb","kind":"number","optional":false},{"name":"requestBodyCheck","kind":"boolean","optional":false}]},{"name":"customRules","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"priority","kind":"number","optional":false},{"name":"ruleType","kind":"string","optional":false,"example":"ruleType"},{"name":"matchConditions","kind":"object","optional":false,"children":[{"name":"matchVariables","kind":"object","optional":false,"children":[{"name":"variableName","kind":"string","optional":false,"example":"variableName"},{"name":"selector","kind":"string","optional":false,"example":"selector"}]},{"name":"operator","kind":"string","optional":false,"example":"operator"},{"name":"negationConditon","kind":"boolean","optional":false},{"name":"matchValues","kind":"string","optional":false,"example":"matchValues"}]},{"name":"action","kind":"string","optional":false,"example":"action"}]},{"name":"managedRules","kind":"object","optional":false,"children":[{"name":"managedRuleSets","kind":"object","optional":false,"children":[{"name":"ruleSetType","kind":"string","optional":false,"example":"ruleSetType"},{"name":"ruleSetVersion","kind":"string","optional":false,"example":"ruleSetVersion"},{"name":"ruleGroupOverrides","kind":"object","optional":false,"children":[{"name":"ruleGroupName","kind":"string","optional":false,"example":"ruleGroupName"},{"name":"rules","kind":"object","optional":false,"children":[]}]}]},{"name":"exclusions","kind":"object","optional":false,"children":[{"name":"matchVariable","kind":"string","optional":false,"example":"matchVariable"},{"name":"selectorMatchOperator","kind":"string","optional":false,"example":"selectorMatchOperator"},{"name":"selector","kind":"string","optional":false,"example":"selector"}]}]}]}]}]}]}},{"id":"azure-waf-policy-delete","method":"GET","pathTemplate":"/","summary":"Deletes a policy.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"policy_name","kind":"string","optional":false,"example":"policy_name"},{"name":"subscription_id","kind":"string","optional":false,"example":"subscription_id"},{"name":"resource_group_name","kind":"string","optional":false,"example":"resource_group_name"}]}},{"id":"azure-waf-front-door-policies-list","method":"GET","pathTemplate":"/","summary":"Lists all of the Front Door protection policies within a resource group.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AzureWAF","kind":"object","optional":false,"children":[{"name":"FrontDoorPolicy","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"id","kind":"id","optional":false},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"etag","kind":"string","optional":false,"example":"etag"},{"name":"location","kind":"string","optional":false,"example":"location"}]}]}]}},{"id":"azure-waf-front-door-policies-list-all-in-subscrip","method":"GET","pathTemplate":"/","summary":"Lists all of the Front Door protection policies within a subscription.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AzureWAF","kind":"object","optional":false,"children":[{"name":"FrontDoorPolicy","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"id","kind":"id","optional":false},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"etag","kind":"string","optional":false,"example":"etag"},{"name":"location","kind":"string","optional":false,"example":"location"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "azurewaf-azurewaf",
+  "name": "Azure Web Application Firewall",
+  "pack": "AzureWAF",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /subscriptions/{subscription_id}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "azurewaf-azurewaf",
+      "name": "Azure Web Application Firewall",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureWAF/Integrations/AzureWAF",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureWAF/Integrations/AzureWAF",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-subscriptions-subscription-id-providers--0",
+        "method": "GET",
+        "pathTemplate": "/subscriptions/{subscription_id}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies",
+        "summary": "GET /subscriptions/{subscription_id}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "customRules",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "etag",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "grant_type",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "location",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureWAF/Integrations/AzureWAF",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies. Fields are keys the client reads or test_data contains."
+  ]
+}

@@ -1,1 +1,130 @@
-{"id":"microsoftgraphcalendar-microsoftgraphcalendar","name":"O365 Outlook Calendar","pack":"MicrosoftGraphCalendar","fidelity":"shape","curated":false,"summary":"O365 Outlook Calendar enables you to create and manage different calendars and events according to your requirements.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"microsoftgraphcalendar-microsoftgraphcalendar","name":"O365 Outlook Calendar","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphCalendar/Integrations/MicrosoftGraphCalendar","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"msgraph-calendar-list-calendars","method":"GET","pathTemplate":"/users/{user}/calendars/{calendar_id}/events","summary":"Retrieves a list of user Calendar.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"MSGraphCalendar","kind":"object","optional":false,"children":[{"name":"Calendar","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"CanShare","kind":"boolean","optional":false},{"name":"CanEdit","kind":"boolean","optional":false},{"name":"ChangeKey","kind":"string","optional":false,"example":"ChangeKey"},{"name":"Owner","kind":"string","optional":false,"example":"Owner"},{"name":"ID","kind":"id","optional":false},{"name":"CanViewPrivateItems","kind":"boolean","optional":false}]}]}]}},{"id":"msgraph-calendar-get-calendar","method":"GET","pathTemplate":"/v1.0","summary":"Retrieves one of user's Calendars.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"MSGraphCalendar","kind":"object","optional":false,"children":[{"name":"Calendar","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"CanShare","kind":"boolean","optional":false},{"name":"CanEdit","kind":"boolean","optional":false},{"name":"ChangeKey","kind":"string","optional":false,"example":"ChangeKey"},{"name":"Owner","kind":"string","optional":false,"example":"Owner"},{"name":"ID","kind":"id","optional":false},{"name":"CanViewPrivateItems","kind":"string","optional":false,"example":"CanViewPrivateItems"}]}]}]}},{"id":"msgraph-calendar-list-events","method":"GET","pathTemplate":"/","summary":"Retrieves a list of Calendar's events.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"MSGraphCalendar","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false},{"name":"DisplayName","kind":"string","optional":false,"example":"DisplayName"},{"name":"GivenName","kind":"string","optional":false,"example":"GivenName"},{"name":"BusinessPhones","kind":"string","optional":false,"example":"BusinessPhones"},{"name":"JobTitle","kind":"string","optional":false,"example":"JobTitle"},{"name":"Mail","kind":"string","optional":false,"example":"Mail"},{"name":"MobilePhone","kind":"string","optional":false,"example":"MobilePhone"},{"name":"OfficeLocation","kind":"string","optional":false,"example":"OfficeLocation"},{"name":"PreferredLanguage","kind":"string","optional":false,"example":"PreferredLanguage"},{"name":"Surname","kind":"string","optional":false,"example":"Surname"},{"name":"UserPrincipalName","kind":"string","optional":false,"example":"UserPrincipalName"}]}]}},{"id":"msgraph-calendar-get-event","method":"GET","pathTemplate":"/","summary":"Retrieves an event by event ID.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"MSGraphCalendar","kind":"object","optional":false,"children":[{"name":"Event","kind":"object","optional":false,"children":[{"name":"OriginalStartTimeZone","kind":"string","optional":false,"example":"OriginalStartTimeZone"},{"name":"HasAttachments","kind":"boolean","optional":false},{"name":"ResponseRequested","kind":"boolean","optional":false},{"name":"WebLink","kind":"string","optional":false,"example":"WebLink"},{"name":"Recurrence","kind":"string","optional":false,"example":"Recurrence"},{"name":"Start","kind":"string","optional":false,"example":"Start"},{"name":"End","kind":"string","optional":false,"example":"End"},{"name":"Location","kind":"string","optional":false,"example":"Location"},{"name":"Attendees","kind":"string","optional":false,"example":"Attendees"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"ResponseStatus","kind":"object","optional":false,"children":[{"name":"response","kind":"string","optional":false,"example":"response"}]},{"name":"Importance","kind":"string","optional":false,"example":"Importance"},{"name":"ICalUId","kind":"id","optional":false},{"name":"IsCancelled","kind":"boolean","optional":false},{"name":"IsAllDay","kind":"boolean","optional":false},{"name":"ReminderMinutesBeforeStart","kind":"number","optional":false},{"name":"LastModifiedDateTime","kind":"string","optional":false,"example":"LastModifiedDateTime"},{"name":"OriginalEndTimeZone","kind":"string","optional":false,"example":"OriginalEndTimeZone"},{"name":"CreatedDateTime","kind":"string","optional":false,"example":"CreatedDateTime"},{"name":"ChangeKey","kind":"string","optional":false,"example":"ChangeKey"},{"name":"ID","kind":"id","optional":false},{"name":"IsOrganizer","kind":"boolean","optional":false},{"name":"Sensitivity","kind":"string","optional":false,"example":"Sensitivity"},{"name":"IsReminderOn","kind":"boolean","optional":false},{"name":"Organizer","kind":"string","optional":false,"example":"Organizer"},{"name":"Subject","kind":"string","optional":false,"example":"Subject"},{"name":"OnlineMeetingUrl","kind":"string","optional":false,"example":"OnlineMeetingUrl"}]}]}]}},{"id":"msgraph-calendar-create-event","method":"GET","pathTemplate":"/","summary":"Creates a new event.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"MSGraphCalendar","kind":"object","optional":false,"children":[{"name":"Event","kind":"object","optional":false,"children":[{"name":"OriginalStartTimeZone","kind":"string","optional":false,"example":"OriginalStartTimeZone"},{"name":"HasAttachments","kind":"boolean","optional":false},{"name":"ResponseRequested","kind":"boolean","optional":false},{"name":"WebLink","kind":"string","optional":false,"example":"WebLink"},{"name":"Recurrence","kind":"string","optional":false,"example":"Recurrence"},{"name":"Start","kind":"string","optional":false,"example":"Start"},{"name":"End","kind":"string","optional":false,"example":"End"},{"name":"Location","kind":"string","optional":false,"example":"Location"},{"name":"Attendees","kind":"string","optional":false,"example":"Attendees"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"ResponseStatus","kind":"object","optional":false,"children":[{"name":"response","kind":"string","optional":false,"example":"response"}]},{"name":"Importance","kind":"string","optional":false,"example":"Importance"},{"name":"ICalUId","kind":"id","optional":false},{"name":"IsCancelled","kind":"boolean","optional":false},{"name":"IsAllDay","kind":"boolean","optional":false},{"name":"ReminderMinutesBeforeStart","kind":"number","optional":false},{"name":"LastModifiedDateTime","kind":"string","optional":false,"example":"LastModifiedDateTime"},{"name":"OriginalEndTimeZone","kind":"string","optional":false,"example":"OriginalEndTimeZone"},{"name":"CreatedDateTime","kind":"string","optional":false,"example":"CreatedDateTime"},{"name":"ChangeKey","kind":"string","optional":false,"example":"ChangeKey"},{"name":"ID","kind":"id","optional":false},{"name":"IsOrganizer","kind":"boolean","optional":false},{"name":"Sensitivity","kind":"string","optional":false,"example":"Sensitivity"},{"name":"IsReminderOn","kind":"boolean","optional":false},{"name":"Organizer","kind":"string","optional":false,"example":"Organizer"},{"name":"Subject","kind":"string","optional":false,"example":"Subject"},{"name":"OnlineMeetingUrl","kind":"string","optional":false,"example":"OnlineMeetingUrl"}]}]}]}},{"id":"msgraph-calendar-update-event","method":"GET","pathTemplate":"/","summary":"Updates an existing event.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"MSGraphCalendar","kind":"object","optional":false,"children":[{"name":"Event","kind":"object","optional":false,"children":[{"name":"OriginalStartTimeZone","kind":"string","optional":false,"example":"OriginalStartTimeZone"},{"name":"HasAttachments","kind":"boolean","optional":false},{"name":"ResponseRequested","kind":"boolean","optional":false},{"name":"WebLink","kind":"string","optional":false,"example":"WebLink"},{"name":"Recurrence","kind":"string","optional":false,"example":"Recurrence"},{"name":"Start","kind":"string","optional":false,"example":"Start"},{"name":"End","kind":"string","optional":false,"example":"End"},{"name":"Location","kind":"string","optional":false,"example":"Location"},{"name":"Attendees","kind":"string","optional":false,"example":"Attendees"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"ResponseStatus","kind":"object","optional":false,"children":[{"name":"response","kind":"string","optional":false,"example":"response"}]},{"name":"Importance","kind":"string","optional":false,"example":"Importance"},{"name":"ICalUId","kind":"id","optional":false},{"name":"IsCancelled","kind":"boolean","optional":false},{"name":"IsAllDay","kind":"boolean","optional":false},{"name":"ReminderMinutesBeforeStart","kind":"number","optional":false},{"name":"LastModifiedDateTime","kind":"string","optional":false,"example":"LastModifiedDateTime"},{"name":"OriginalEndTimeZone","kind":"string","optional":false,"example":"OriginalEndTimeZone"},{"name":"CreatedDateTime","kind":"string","optional":false,"example":"CreatedDateTime"},{"name":"ChangeKey","kind":"string","optional":false,"example":"ChangeKey"},{"name":"ID","kind":"id","optional":false},{"name":"IsOrganizer","kind":"boolean","optional":false},{"name":"Sensitivity","kind":"string","optional":false,"example":"Sensitivity"},{"name":"IsReminderOn","kind":"boolean","optional":false},{"name":"Organizer","kind":"string","optional":false,"example":"Organizer"},{"name":"Subject","kind":"string","optional":false,"example":"Subject"},{"name":"OnlineMeetingUrl","kind":"string","optional":false,"example":"OnlineMeetingUrl"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "microsoftgraphcalendar-microsoftgraphcalendar",
+  "name": "O365 Outlook Calendar",
+  "pack": "MicrosoftGraphCalendar",
+  "fidelity": "verified",
+  "curated": false,
+  "summary": "Rebuilt from the client: GET /v1.0/users/{calendar_url}/events.",
+  "operations": 1,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "microsoftgraphcalendar-microsoftgraphcalendar",
+      "name": "O365 Outlook Calendar",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphCalendar/Integrations/MicrosoftGraphCalendar",
+      "fidelity": "verified",
+      "notes": [
+        "Rebuilt from the XSOAR client. The checker matched GET /v1.0/users/{calendar_url}/events. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphCalendar/Integrations/MicrosoftGraphCalendar",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /v1.0/users/{calendar_url}/events. Fields are keys the client reads or test_data contains."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "get-v1-0-users-calendar-url-events-0",
+        "method": "GET",
+        "pathTemplate": "/v1.0/users/{calendar_url}/events",
+        "summary": "GET /v1.0/users/{calendar_url}/events",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "@odata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "nextLink",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "Attendees",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "End",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "dateTime",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Name",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphCalendar/Integrations/MicrosoftGraphCalendar",
+  "notes": [
+    "Rebuilt from the XSOAR client. The checker matched GET /v1.0/users/{calendar_url}/events. Fields are keys the client reads or test_data contains."
+  ]
+}
