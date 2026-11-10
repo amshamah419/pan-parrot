@@ -3,11 +3,11 @@
   "name": "Proofpoint Threat Response",
   "pack": "ProofpointThreatResponse",
   "vendor": "Proofpoint",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Incident list. The fixture incidents.json is an array of id, summary, and state.",
+  "summary": "The checker matched GET /api/incidents.",
   "notes": [
-    "Cross-check: path: GET /api/incidents is not a client call. Closest: /{url}api/incidents (1)."
+    "The checker matched GET /api/incidents. The client concatenates the instance URL and api/incidents with no extra slash, so the route on the catch URL is /api/incidents."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ProofpointThreatResponse/Integrations/ProofpointThreatResponse",
@@ -17,12 +17,20 @@
       "kind": "preset",
       "id": "proofpointthreatresponse-proofpointthreatresponse",
       "name": "Proofpoint Threat Response",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://help.proofpoint.com/Threat_Response/API_Documentation",
       "notes": [
-        "Cross-check: path: GET /api/incidents is not a client call. Closest: /{url}api/incidents (1)."
-      ]
+        "The checker matched GET /api/incidents. The client concatenates the instance URL and api/incidents with no extra slash, so the route on the catch URL is /api/incidents."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.proofpoint.com/Threat_Response/API_Documentation",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The checker matched GET /api/incidents. The client concatenates the instance URL and api/incidents with no extra slash, so the route on the catch URL is /api/incidents."
+        ]
+      }
     },
     "operations": [
       {
