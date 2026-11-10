@@ -5,11 +5,9 @@
   "vendor": "Trellix",
   "fidelity": "verified",
   "curated": true,
-  "summary": "Alert search for Helix.",
+  "summary": "GET /api/v3/alerts",
   "notes": [
-    "Helix API docs are customer-gated. GET /helix/id/api/v3/alerts returns { results }.",
-    "Each alert keeps id, alert_type, and risk.",
-    "x-fireeye-api-key is required."
+    "GET /api/v3/alerts returns results[]. The list command reads id, alert_type.id, alert_type.name, risk, and created_at. alert_type is an object."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeHelix/Integrations/FireEyeHelix",
@@ -23,18 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeHelix/Integrations/FireEyeHelix",
       "notes": [
-        "Helix API docs are customer-gated. GET /helix/id/api/v3/alerts returns { results }.",
-        "Each alert keeps id, alert_type, and risk.",
-        "x-fireeye-api-key is required."
+        "GET /api/v3/alerts returns results[]. The list command reads id, alert_type.id, alert_type.name, risk, and created_at. alert_type is an object."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeHelix/Integrations/FireEyeHelix",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Helix API docs are customer-gated. GET /api/v3/alerts returns { results }.",
-          "Each alert keeps id, alert_type, and risk.",
-          "x-fireeye-api-key is required."
+          "GET /api/v3/alerts returns results[]. The list command reads id, alert_type.id, alert_type.name, risk, and created_at. alert_type is an object."
         ]
       }
     },
@@ -56,26 +50,34 @@
           "children": [
             {
               "name": "id",
-              "kind": "id"
+              "kind": "id",
+              "example": "1001"
             },
             {
               "name": "alert_type",
-              "kind": "string",
-              "example": "malware"
-            },
-            {
-              "name": "risk",
-              "kind": "enum",
-              "enumValues": [
-                "Low",
-                "Medium",
-                "High",
-                "Critical"
+              "kind": "object",
+              "children": [
+                {
+                  "name": "id",
+                  "kind": "id",
+                  "example": "12"
+                },
+                {
+                  "name": "name",
+                  "kind": "string",
+                  "example": "Malware"
+                }
               ]
             },
             {
+              "name": "risk",
+              "kind": "string",
+              "example": "High"
+            },
+            {
               "name": "created_at",
-              "kind": "timestamp"
+              "kind": "timestamp",
+              "example": "2019-03-30T19:40:16.132456Z"
             }
           ]
         },

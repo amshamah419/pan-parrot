@@ -5,9 +5,9 @@
   "vendor": "Google",
   "fidelity": "verified",
   "curated": true,
-  "summary": "The checker matched GET /gmail/v1/users/me/messages.",
+  "summary": "GET /gmail/v1/users/me/messages",
   "notes": [
-    "The checker matched GET /gmail/v1/users/{userId}/messages. This preset sends userId me, the single-user value. Send and attachment download are the same Gmail client and are not separate operations."
+    "GET /gmail/v1/users/me/messages returns messages[].id. The list call reads id. threadId is read from the later messages.get call, not this body."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GmailSingleUser/Integrations/GmailSingleUser",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.messages/list",
       "notes": [
-        "The checker matched GET /gmail/v1/users/{userId}/messages. This preset sends userId me, the single-user value. Send and attachment download are the same Gmail client and are not separate operations."
+        "GET /gmail/v1/users/me/messages returns messages[].id. The list call reads id. threadId is read from the later messages.get call, not this body."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.messages/list",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The checker matched GET /gmail/v1/users/{userId}/messages. This preset sends userId me, the single-user value. Send and attachment download are the same Gmail client and are not separate operations."
+          "GET /gmail/v1/users/me/messages returns messages[].id. The list call reads id. threadId is read from the later messages.get call, not this body."
         ]
       }
     },
@@ -50,10 +50,6 @@
           "children": [
             {
               "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "threadId",
               "kind": "id"
             }
           ]

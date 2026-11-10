@@ -234,6 +234,104 @@ describe("sample and openapi import", () => {
   });
 });
 
+describe("audited response shapes", () => {
+  it("returns an OpenPhish feed as text, not a JSON object", () => {
+    const spec = validateMockSpec({
+      version: 1,
+      source: { kind: "preset", id: "feed", name: "Feed" },
+      totalRecords: 2,
+      operations: [
+        {
+          id: "feed",
+          method: "GET",
+          pathTemplate: "/feed.txt",
+          status: 200,
+          contentType: "text/plain; charset=utf-8",
+          list: false,
+          envelope: { type: "object" },
+          record: {
+            name: "body",
+            kind: "string",
+            example: "https://phish.example/a\nhttps://phish.example/b",
+          },
+          pagination: {
+            style: "none",
+            limitParam: "limit",
+            offsetParam: "offset",
+            pageParam: "page",
+            cursorParam: "cursor",
+            defaultLimit: 20,
+            maxLimit: 100,
+          },
+        },
+      ],
+    });
+    const matched = matchOperation(spec, "GET", "/feed.txt");
+    if (!matched) throw new Error("missing feed");
+    const result = generateMockResponse({
+      spec,
+      operation: matched.operation,
+      pathParams: matched.pathParams,
+      query: {},
+      requestIndex: 1,
+    });
+    expect(result.headers["content-type"]).toMatch(/^text\/plain/);
+    expect(result.body).toBe("https://phish.example/a\nhttps://phish.example/b");
+  });
+
+  it("renders a Sophos Status code attribute and its text", () => {
+    const spec = validateMockSpec({
+      version: 1,
+      source: { kind: "preset", id: "api", name: "API" },
+      totalRecords: 2,
+      operations: [
+        {
+          id: "api",
+          method: "GET",
+          pathTemplate: "/webconsole/APIController",
+          status: 200,
+          contentType: "text/xml; charset=utf-8",
+          list: false,
+          envelope: { type: "xml" },
+          record: {
+            name: "Response",
+            kind: "object",
+            children: [
+              {
+                name: "Status",
+                kind: "object",
+                children: [
+                  { name: "code", kind: "string", example: "200", xml: { attribute: true } },
+                  { name: "message", kind: "string", example: "Successful", xml: { text: true } },
+                ],
+              },
+            ],
+          },
+          pagination: {
+            style: "none",
+            limitParam: "limit",
+            offsetParam: "offset",
+            pageParam: "page",
+            cursorParam: "cursor",
+            defaultLimit: 20,
+            maxLimit: 100,
+          },
+        },
+      ],
+    });
+    const matched = matchOperation(spec, "GET", "/webconsole/APIController");
+    if (!matched) throw new Error("missing api");
+    const result = generateMockResponse({
+      spec,
+      operation: matched.operation,
+      pathParams: matched.pathParams,
+      query: {},
+      requestIndex: 1,
+    });
+    expect(result.body).toContain('<Status code="200">Successful</Status>');
+  });
+});
+
 function idsOf(result: { body: string }): string[] {
   return result.body
     .split("\n")

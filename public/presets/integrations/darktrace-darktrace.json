@@ -5,11 +5,9 @@
   "vendor": "Darktrace",
   "fidelity": "verified",
   "curated": true,
-  "summary": "Model breach list. The customer API guide is login-gated, so the shape is the public fixture.",
+  "summary": "GET /modelbreaches",
   "notes": [
-    "The Darktrace customer portal API guide did not load without a login. Fields are breach_details.json (pbid, score, time, device, model) and the client calls GET /modelbreaches/.",
-    "The response is a JSON array. Signature headers are not checked.",
-    "Comments, similar devices, and acknowledge are not modeled."
+    "GET /modelbreaches returns a JSON array. The formatter reads pbid, score, time, commentCount, device fields, and model.then (name, pid, uuid, tags, priority, description). model.name is the formatted copy, not the response."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/Darktrace",
@@ -23,18 +21,14 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://github.com/demisto/content/blob/master/Packs/Darktrace/Integrations/Darktrace/test_data/breach_details.json",
       "notes": [
-        "The Darktrace customer portal API guide did not load without a login. Fields are breach_details.json (pbid, score, time, device, model) and the client calls GET /modelbreaches/.",
-        "The response is a JSON array. Signature headers are not checked.",
-        "Comments, similar devices, and acknowledge are not modeled."
+        "GET /modelbreaches returns a JSON array. The formatter reads pbid, score, time, commentCount, device fields, and model.then (name, pid, uuid, tags, priority, description). model.name is the formatted copy, not the response."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/blob/master/Packs/Darktrace/Integrations/Darktrace/test_data/breach_details.json",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The Darktrace customer portal API guide did not load without a login. Fields are breach_details.json (pbid, score, time, device, model) and the client calls GET /modelbreaches/.",
-          "The response is a JSON array. Signature headers are not checked.",
-          "Comments, similar devices, and acknowledge are not modeled."
+          "GET /modelbreaches returns a JSON array. The formatter reads pbid, score, time, commentCount, device fields, and model.then (name, pid, uuid, tags, priority, description). model.name is the formatted copy, not the response."
         ]
       }
     },
@@ -55,16 +49,23 @@
           "children": [
             {
               "name": "pbid",
-              "kind": "integer"
+              "kind": "integer",
+              "example": 95
             },
             {
               "name": "score",
               "kind": "number",
-              "example": "0.65"
+              "example": 0.65
             },
             {
               "name": "time",
-              "kind": "timestamp"
+              "kind": "timestamp",
+              "example": "2021-08-24T11:08:22.000Z"
+            },
+            {
+              "name": "commentCount",
+              "kind": "integer",
+              "example": 0
             },
             {
               "name": "device",
@@ -72,7 +73,8 @@
               "children": [
                 {
                   "name": "did",
-                  "kind": "id"
+                  "kind": "string",
+                  "example": "1272"
                 },
                 {
                   "name": "hostname",
@@ -81,7 +83,23 @@
                 },
                 {
                   "name": "ip",
-                  "kind": "ip"
+                  "kind": "ip",
+                  "example": "10.18.45.52"
+                },
+                {
+                  "name": "macaddress",
+                  "kind": "string",
+                  "example": "00:11:22:33:44:55"
+                },
+                {
+                  "name": "vendor",
+                  "kind": "string",
+                  "example": "VMware, Inc."
+                },
+                {
+                  "name": "devicelabel",
+                  "kind": "string",
+                  "example": "desktop"
                 }
               ]
             },
@@ -90,13 +108,44 @@
               "kind": "object",
               "children": [
                 {
-                  "name": "name",
-                  "kind": "string",
-                  "example": "Compromise::Ransomware"
-                },
-                {
-                  "name": "pid",
-                  "kind": "integer"
+                  "name": "then",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "name",
+                      "kind": "string",
+                      "example": "Compromise::Ransomware"
+                    },
+                    {
+                      "name": "pid",
+                      "kind": "integer",
+                      "example": 287
+                    },
+                    {
+                      "name": "uuid",
+                      "kind": "string",
+                      "example": "80010119-6d7f-0000-0305-5e0000000325"
+                    },
+                    {
+                      "name": "tags",
+                      "kind": "array",
+                      "item": {
+                        "name": "item",
+                        "kind": "string",
+                        "example": "AP: Exploit"
+                      }
+                    },
+                    {
+                      "name": "priority",
+                      "kind": "integer",
+                      "example": 4
+                    },
+                    {
+                      "name": "description",
+                      "kind": "string",
+                      "example": "A device is writing suspicious terms."
+                    }
+                  ]
                 }
               ]
             }

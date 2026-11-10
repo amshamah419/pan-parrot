@@ -39,6 +39,8 @@ export interface FieldSpec {
     attribute?: boolean;
     namespace?: string;
     prefix?: string;
+    /** Element text, the `#text` xml2json keeps beside attributes. */
+    text?: boolean;
   };
 }
 
@@ -721,8 +723,13 @@ function normalizeField(
     const prefix = field.xml.prefix && /^[A-Za-z][A-Za-z0-9]{0,12}$/.test(field.xml.prefix)
       ? field.xml.prefix
       : undefined;
-    if (field.xml.attribute || namespace || prefix) {
-      next.xml = { attribute: Boolean(field.xml.attribute), namespace, prefix };
+    if (field.xml.attribute || field.xml.text || namespace || prefix) {
+      next.xml = {
+        attribute: Boolean(field.xml.attribute),
+        namespace,
+        prefix,
+        text: field.xml.text ? true : undefined,
+      };
     }
   }
   return next;

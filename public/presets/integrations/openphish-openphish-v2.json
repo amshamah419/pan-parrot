@@ -5,9 +5,9 @@
   "vendor": "OpenPhish",
   "fidelity": "verified",
   "curated": true,
-  "summary": "Rebuilt from the client: GET /feed.txt.",
+  "summary": "GET /feed.txt",
   "notes": [
-    "Sample fields are the ones GET /feed.txt reads in the matched command. Lists the command iterates are arrays."
+    "GET /feed.txt is a text feed, one URL per line. The command splits those lines. integrationReliability, list, and timestamp are integration context, not the response."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/OpenPhish",
@@ -21,14 +21,14 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://openphish.com/faq.html",
       "notes": [
-        "Sample fields are the ones GET /feed.txt reads in the matched command. Lists the command iterates are arrays."
+        "GET /feed.txt is a text feed, one URL per line. The command splits those lines. integrationReliability, list, and timestamp are integration context, not the response."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://openphish.com/faq.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /feed.txt reads in the matched command. Lists the command iterates are arrays."
+          "GET /feed.txt is a text feed, one URL per line. The command splits those lines. integrationReliability, list, and timestamp are integration context, not the response."
         ]
       }
     },
@@ -39,7 +39,7 @@
         "pathTemplate": "/feed.txt",
         "summary": "GET /feed.txt",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "text/plain; charset=utf-8",
         "headers": {},
         "list": false,
         "envelope": {
@@ -56,28 +56,8 @@
         },
         "record": {
           "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "integrationReliability",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "list",
-              "kind": "array",
-              "item": {
-                "name": "item",
-                "kind": "string",
-                "example": "lab"
-              }
-            },
-            {
-              "name": "timestamp",
-              "kind": "string",
-              "example": "lab"
-            }
-          ]
+          "kind": "string",
+          "example": "https://phish.example/login\nhttps://phish.example/reset"
         }
       }
     ],
