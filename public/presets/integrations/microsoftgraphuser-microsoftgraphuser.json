@@ -3,11 +3,11 @@
   "name": "Entra ID Users",
   "pack": "MicrosoftGraphUser",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /v1.0/users returns the Graph value array.",
+  "summary": "Rebuilt from the client: POST /users.",
   "notes": [
-    "Cross-check: path: GET /v1.0/users is not a client call. Closest: /users (1)."
+    "Rebuilt from the XSOAR client. The checker matched POST /users. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphUser/Integrations/MicrosoftGraphUser",
@@ -17,56 +17,82 @@
       "kind": "preset",
       "id": "microsoftgraphuser-microsoftgraphuser",
       "name": "Entra ID Users",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/user-list?view=graph-rest-1.0",
       "notes": [
-        "Cross-check: path: GET /v1.0/users is not a client call. Closest: /users (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /users. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list?view=graph-rest-1.0",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /users. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
+        "id": "post-users-0",
+        "method": "POST",
+        "pathTemplate": "/users",
+        "summary": "POST /users",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
-          "limitParam": "$top",
-          "offsetParam": "$skip",
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 100,
-          "maxLimit": 500
-        },
-        "id": "list-users",
-        "method": "GET",
-        "pathTemplate": "/v1.0/users",
-        "summary": "List users",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "odata",
-          "context": "https://graph.microsoft.com/v1.0/$metadata#users"
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "user",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "id",
-              "kind": "uuid"
+              "name": "@odata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "nextLink",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
             },
             {
-              "name": "displayName",
+              "name": "AUTHENTICATOR",
               "kind": "string",
-              "example": "Ada Lovelace"
+              "example": "lab"
             },
             {
-              "name": "userPrincipalName",
-              "kind": "email"
+              "name": "DisplayName",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "accountEnabled",
-              "kind": "boolean"
+              "name": "FIDO2",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "JobTitle",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

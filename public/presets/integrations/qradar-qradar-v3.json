@@ -3,11 +3,11 @@
   "name": "IBM QRadar v3",
   "pack": "QRadar",
   "vendor": "IBM",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /siem/offenses returns the offense array. Ariel search create and results are included.",
+  "summary": "Rebuilt from the client: GET /api/ariel/searches/{search_id}/results.",
   "notes": [
-    "Cross-check: path: GET /siem/offenses is not a client call. Closest: /api/siem/{address_suffix} (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/ariel/searches/{search_id}/results, GET /api/ariel/searches. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/QRadar/Integrations/QRadar_v3",
@@ -17,182 +17,166 @@
       "kind": "preset",
       "id": "qradar-qradar-v3",
       "name": "IBM QRadar v3",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://ibmsecuritydocs.github.io/qradar_api_21.0/21.0--siem_offenses--get.html",
       "notes": [
-        "Cross-check: path: GET /siem/offenses is not a client call. Closest: /api/siem/{address_suffix} (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/ariel/searches/{search_id}/results, GET /api/ariel/searches. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://ibmsecuritydocs.github.io/qradar_api_21.0/21.0--siem_offenses--get.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/ariel/searches/{search_id}/results, GET /api/ariel/searches. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "offset",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 50,
-          "maxLimit": 500
-        },
-        "id": "list-offenses",
+        "id": "get-api-ariel-searches-search-id-results-0",
         "method": "GET",
-        "pathTemplate": "/siem/offenses",
-        "summary": "List offenses",
+        "pathTemplate": "/api/ariel/searches/{search_id}/results",
+        "summary": "GET /api/ariel/searches/{search_id}/results",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "array"
-        },
-        "record": {
-          "name": "offense",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "integer"
-            },
-            {
-              "name": "description",
-              "kind": "string",
-              "example": "Multiple login failures"
-            },
-            {
-              "name": "status",
-              "kind": "enum",
-              "enumValues": [
-                "OPEN",
-                "HIDDEN",
-                "CLOSED"
-              ]
-            },
-            {
-              "name": "magnitude",
-              "kind": "integer"
-            },
-            {
-              "name": "offense_type",
-              "kind": "integer"
-            },
-            {
-              "name": "start_time",
-              "kind": "timestamp",
-              "format": "unix-ms"
-            },
-            {
-              "name": "last_updated_time",
-              "kind": "timestamp",
-              "format": "unix-ms"
-            },
-            {
-              "name": "source_address_ids",
-              "kind": "array",
-              "item": {
-                "name": "id",
-                "kind": "integer"
-              },
-              "minItems": 1,
-              "maxItems": 1
-            }
-          ]
-        }
-      },
-      {
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 1,
-          "maxLimit": 1
-        },
-        "id": "create-search",
-        "method": "POST",
-        "pathTemplate": "/api/ariel/searches",
-        "summary": "Create an Ariel search",
-        "status": 201,
-        "list": false,
-        "envelope": {
-          "type": "object"
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "search",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "search_id",
-              "kind": "id"
+              "name": "Asset",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "hostnames",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "products",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "users",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
             },
             {
-              "name": "status",
-              "kind": "const",
-              "constValue": "COMPLETED"
+              "name": "CreationDate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Enabled",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Endpoint",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }
       },
       {
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "offset",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 50,
-          "maxLimit": 500
-        },
-        "id": "search-results",
+        "id": "get-api-ariel-searches-1",
         "method": "GET",
-        "pathTemplate": "/api/ariel/searches/{search_id}/results",
-        "summary": "Get Ariel search results",
+        "pathTemplate": "/api/ariel/searches",
+        "summary": "GET /api/ariel/searches",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
         "record": {
-          "name": "results",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "events",
-              "kind": "array",
-              "pageItems": true,
-              "item": {
-                "name": "event",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "qid",
-                    "kind": "integer"
-                  },
-                  {
-                    "name": "sourceip",
-                    "kind": "ip"
-                  },
-                  {
-                    "name": "destinationip",
-                    "kind": "ip"
-                  },
-                  {
-                    "name": "username",
-                    "kind": "string",
-                    "example": "lab-user"
-                  },
-                  {
-                    "name": "starttime",
-                    "kind": "timestamp",
-                    "format": "unix-ms"
-                  }
-                ]
-              }
+              "name": "Asset",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "hostnames",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "products",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "users",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "CreationDate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Data",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Enabled",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Endpoint",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

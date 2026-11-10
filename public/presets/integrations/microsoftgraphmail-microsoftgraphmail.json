@@ -3,11 +3,11 @@
   "name": "O365 Outlook Mail (Using Graph API)",
   "pack": "MicrosoftGraphMail",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Graph messages list for fetch. value and @odata.nextLink.",
+  "summary": "Rebuilt from the client: GET /users/{_mailbox_to_fetch}/messages.",
   "notes": [
-    "Cross-check: path: GET /v1.0/me/messages is not a client call. Closest: /users/{user_id}{folder_path}/messages (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /users/{_mailbox_to_fetch}/messages, GET /users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphMail/Integrations/MicrosoftGraphMail",
@@ -17,75 +17,168 @@
       "kind": "preset",
       "id": "microsoftgraphmail-microsoftgraphmail",
       "name": "O365 Outlook Mail (Using Graph API)",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-messages",
       "notes": [
-        "Cross-check: path: GET /v1.0/me/messages is not a client call. Closest: /users/{user_id}{folder_path}/messages (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /users/{_mailbox_to_fetch}/messages, GET /users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-messages",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /users/{_mailbox_to_fetch}/messages, GET /users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-messages",
+        "id": "get-users-mailbox-to-fetch-messages-0",
         "method": "GET",
-        "pathTemplate": "/v1.0/me/messages",
-        "summary": "List messages",
+        "pathTemplate": "/users/{_mailbox_to_fetch}/messages",
+        "summary": "GET /users/{_mailbox_to_fetch}/messages",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "odata",
-          "context": "https://graph.microsoft.com/v1.0/$metadata#users('me')/messages"
-        },
-        "record": {
-          "name": "message",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "subject",
-              "kind": "string",
-              "example": "Invoice attached"
-            },
-            {
-              "name": "receivedDateTime",
-              "kind": "timestamp"
-            },
-            {
-              "name": "from",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "emailAddress",
-                  "kind": "object",
-                  "children": [
-                    {
-                      "name": "address",
-                      "kind": "email"
-                    },
-                    {
-                      "name": "name",
-                      "kind": "string",
-                      "example": "A. Sender"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
-          "limitParam": "$top",
-          "offsetParam": "$skip",
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "@odata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "context",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "nextLink",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "type",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "Attachments",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Contents",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "File",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileName",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-users-mailbox-to-fetch-mailfolders-folde-1",
+        "method": "GET",
+        "pathTemplate": "/users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages",
+        "summary": "GET /users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "@odata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "context",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "nextLink",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "type",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "Attachments",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Contents",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "File",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileName",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

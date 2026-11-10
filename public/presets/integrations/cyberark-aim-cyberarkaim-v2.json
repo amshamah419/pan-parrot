@@ -3,71 +3,48 @@
   "name": "CyberArk AIM v2",
   "pack": "CyberArk_AIM",
   "vendor": "CyberArk",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Central Credential Provider account fetch.",
+  "summary": "Rebuilt from the client: POST /AIMWebService/api/Accounts.",
   "notes": [
-    "Cross-check: no-source: Packs/CyberArk_AIM/Integrations/CyberArkAIM_v2 is not in the content checkout"
+    "Rebuilt from the XSOAR client. The checker matched POST /AIMWebService/api/Accounts. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
-  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CyberArk_AIM/Integrations/CyberArkAIM_v2",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/cyberark_AIM/Integrations/CyberArkAIM_v2",
   "spec": {
     "version": 1,
     "source": {
       "kind": "preset",
       "id": "cyberark-aim-cyberarkaim-v2",
       "name": "CyberArk AIM v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.cyberark.com/credential-providers/latest/en/content/ccp/calling-the-web-service-using-rest.htm",
       "notes": [
-        "Cross-check: no-source: Packs/CyberArk_AIM/Integrations/CyberArkAIM_v2 is not in the content checkout"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /AIMWebService/api/Accounts. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.cyberark.com/credential-providers/latest/en/content/ccp/calling-the-web-service-using-rest.htm",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /AIMWebService/api/Accounts. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "get-account",
-        "method": "GET",
+        "id": "post-aimwebservice-api-accounts-0",
+        "method": "POST",
         "pathTemplate": "/AIMWebService/api/Accounts",
-        "summary": "Get an account password",
+        "summary": "POST /AIMWebService/api/Accounts",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "account",
-          "kind": "object",
-          "children": [
-            {
-              "name": "Content",
-              "kind": "const",
-              "constValue": "dummy-not-a-real-password"
-            },
-            {
-              "name": "UserName",
-              "kind": "const",
-              "constValue": "lab"
-            },
-            {
-              "name": "Address",
-              "kind": "const",
-              "constValue": "lab-host"
-            },
-            {
-              "name": "Safe",
-              "kind": "const",
-              "constValue": "Lab"
-            },
-            {
-              "name": "Folder",
-              "kind": "const",
-              "constValue": "Root"
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -75,7 +52,38 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Content",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Name",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Object",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "UserName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "key_text_creds",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

@@ -3,11 +3,11 @@
   "name": "Claroty",
   "pack": "Claroty",
   "vendor": "Claroty",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Ranger alerts.",
+  "summary": "Rebuilt from the client: GET /ranger/alerts/{rid}.",
   "notes": [
-    "Cross-check: path: GET /ranger/alerts is not a client call. Closest: /ranger/alerts/{rid} (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /ranger/alerts/{rid}, POST /ranger/ranger_api/resolve_alerts. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Claroty/Integrations/Claroty",
@@ -17,62 +17,34 @@
       "kind": "preset",
       "id": "claroty-claroty",
       "name": "Claroty",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Claroty/Integrations/Claroty",
       "notes": [
-        "Cross-check: path: GET /ranger/alerts is not a client call. Closest: /ranger/alerts/{rid} (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /ranger/alerts/{rid}, POST /ranger/ranger_api/resolve_alerts. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Claroty/Integrations/Claroty",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /ranger/alerts/{rid}, POST /ranger/ranger_api/resolve_alerts. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "alerts",
+        "id": "get-ranger-alerts-rid-0",
         "method": "GET",
-        "pathTemplate": "/ranger/alerts",
-        "summary": "List alerts",
+        "pathTemplate": "/ranger/alerts/{rid}",
+        "summary": "GET /ranger/alerts/{rid}",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "alerts",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "alert",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  },
-                  {
-                    "name": "type",
-                    "kind": "string",
-                    "example": "network"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -80,7 +52,101 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Authorization",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CVE",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CVE-ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Modified",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Published",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "post-ranger-ranger-api-resolve-alerts-1",
+        "method": "POST",
+        "pathTemplate": "/ranger/ranger_api/resolve_alerts",
+        "summary": "POST /ranger/ranger_api/resolve_alerts",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Authorization",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CVE",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CVE-ID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Modified",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Published",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

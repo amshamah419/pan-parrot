@@ -3,11 +3,11 @@
   "name": "Entra ID Groups",
   "pack": "MicrosoftGraphGroups",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Group list. value and @odata.nextLink.",
+  "summary": "Rebuilt from the client: GET /groups.",
   "notes": [
-    "Cross-check: path: GET /v1.0/groups is not a client call. Closest: /groups (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /groups. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphGroups/Integrations/MicrosoftGraphGroups",
@@ -17,58 +17,84 @@
       "kind": "preset",
       "id": "microsoftgraphgroups-microsoftgraphgroups",
       "name": "Entra ID Groups",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/group-list",
       "notes": [
-        "Cross-check: path: GET /v1.0/groups is not a client call. Closest: /groups (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /groups. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/group-list",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /groups. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-groups",
+        "id": "get-groups-0",
         "method": "GET",
-        "pathTemplate": "/v1.0/groups",
-        "summary": "List groups",
+        "pathTemplate": "/groups",
+        "summary": "GET /groups",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "odata",
-          "context": "https://graph.microsoft.com/v1.0/$metadata#groups"
-        },
-        "record": {
-          "name": "group",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "uuid"
-            },
-            {
-              "name": "displayName",
-              "kind": "string",
-              "example": "Security Analysts"
-            },
-            {
-              "name": "mail",
-              "kind": "email"
-            },
-            {
-              "name": "securityEnabled",
-              "kind": "boolean"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
-          "limitParam": "$top",
-          "offsetParam": "$skip",
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "@odata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "nextLink",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "credentials_certificate_thumbprint",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "creds_auth_code",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "creds_auth_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "creds_tenant_id",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "value",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

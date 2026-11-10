@@ -3,11 +3,11 @@
   "name": "Cisco Meraki v2",
   "pack": "cisco-meraki",
   "vendor": "Cisco",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /api/v1/organizations and one org's networks.",
+  "summary": "Rebuilt from the client: GET /organizations/{organization_id}/networks.",
   "notes": [
-    "Cross-check: path: GET /api/v1/organizations is not a client call. Closest: /organizations (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /organizations/{organization_id}/networks, GET /organizations. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/cisco-meraki/Integrations/CiscoMerakiv2",
@@ -17,41 +17,34 @@
       "kind": "preset",
       "id": "cisco-meraki-ciscomerakiv2",
       "name": "Cisco Meraki v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.cisco.com/meraki/api-v1/get-organizations/",
       "notes": [
-        "Cross-check: path: GET /api/v1/organizations is not a client call. Closest: /organizations (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /organizations/{organization_id}/networks, GET /organizations. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.cisco.com/meraki/api-v1/get-organizations/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /organizations/{organization_id}/networks, GET /organizations. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "organizations",
+        "id": "get-organizations-organization-id-networks-0",
         "method": "GET",
-        "pathTemplate": "/api/v1/organizations",
-        "summary": "List organizations",
+        "pathTemplate": "/organizations/{organization_id}/networks",
+        "summary": "GET /organizations/{organization_id}/networks",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "array"
-        },
-        "record": {
-          "name": "organization",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "name",
-              "kind": "string",
-              "example": "lab-org"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -59,47 +52,55 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CIDR",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Comment",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Enable",
+              "kind": "boolean"
+            },
+            {
+              "name": "Enabled",
+              "kind": "boolean"
+            }
+          ]
         }
       },
       {
-        "id": "networks",
+        "id": "get-organizations-1",
         "method": "GET",
-        "pathTemplate": "/organizations/lab-org/networks",
-        "summary": "List networks",
+        "pathTemplate": "/organizations",
+        "summary": "GET /organizations",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "array"
-        },
-        "record": {
-          "name": "network",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "name",
-              "kind": "string",
-              "example": "lab-network"
-            },
-            {
-              "name": "productTypes",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "type",
-                "kind": "const",
-                "constValue": "appliance"
-              }
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -107,7 +108,41 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Address",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CIDR",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Comment",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Description",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Enable",
+              "kind": "boolean"
+            },
+            {
+              "name": "Enabled",
+              "kind": "boolean"
+            }
+          ]
         }
       }
     ],

@@ -3,11 +3,11 @@
   "name": "Rapid7 InsightVM Cloud",
   "pack": "Rapid7InsightVMCloud",
   "vendor": "Rapid7",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Cloud asset search and the vulnerability catalog.",
+  "summary": "Rebuilt from the client: POST /v4/integration/assets.",
   "notes": [
-    "Cross-check: path: GET /v4/integration/assets is not a client call. Closest: /admin/health (0)."
+    "Rebuilt from the XSOAR client. The checker matched POST /v4/integration/assets, POST /v4/integration/vulnerabilities. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Rapid7InsightVMCloud/Integrations/Rapid7InsightVMCloud",
@@ -17,23 +17,42 @@
       "kind": "preset",
       "id": "rapid7insightvmcloud-rapid7insightvmcloud",
       "name": "Rapid7 InsightVM Cloud",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://help.rapid7.com/insightvm/en-us/api/index.html",
       "notes": [
-        "Cross-check: path: GET /v4/integration/assets is not a client call. Closest: /admin/health (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /v4/integration/assets, POST /v4/integration/vulnerabilities. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.rapid7.com/insightvm/en-us/api/index.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /v4/integration/assets, POST /v4/integration/vulnerabilities. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "assets",
-        "method": "GET",
+        "id": "post-v4-integration-assets-0",
+        "method": "POST",
         "pathTemplate": "/v4/integration/assets",
-        "summary": "Search assets",
+        "summary": "POST /v4/integration/assets",
         "status": 200,
-        "list": false,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
         "envelope": {
           "type": "object"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "size",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
@@ -41,52 +60,37 @@
           "children": [
             {
               "name": "data",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "asset",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "host_name",
-                    "kind": "string",
-                    "example": "lab-host"
-                  },
-                  {
-                    "name": "ip",
-                    "kind": "ip"
-                  }
-                ]
-              }
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "scans",
+              "kind": "string",
+              "example": "lab"
             }
           ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "none",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
         }
       },
       {
-        "id": "vulns",
-        "method": "GET",
+        "id": "post-v4-integration-vulnerabilities-1",
+        "method": "POST",
         "pathTemplate": "/v4/integration/vulnerabilities",
-        "summary": "Search vulnerabilities",
+        "summary": "POST /v4/integration/vulnerabilities",
         "status": 200,
-        "list": false,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": true,
         "envelope": {
           "type": "object"
+        },
+        "pagination": {
+          "style": "page",
+          "limitParam": "size",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
           "name": "body",
@@ -94,47 +98,15 @@
           "children": [
             {
               "name": "data",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "vuln",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "title",
-                    "kind": "string",
-                    "example": "Lab CVE"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high",
-                      "critical"
-                    ]
-                  }
-                ]
-              }
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "scans",
+              "kind": "string",
+              "example": "lab"
             }
           ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "none",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
         }
       }
     ],

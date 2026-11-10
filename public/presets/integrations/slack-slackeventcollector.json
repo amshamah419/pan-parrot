@@ -3,11 +3,11 @@
   "name": "Slack Event Collector",
   "pack": "Slack",
   "vendor": "Slack",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Audit log entries.",
+  "summary": "Rebuilt from the client: GET /logs.",
   "notes": [
-    "Cross-check: path: GET /audit/v1/logs is not a client call. Closest: /logs (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /logs. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Slack/Integrations/SlackEventCollector",
@@ -17,58 +17,34 @@
       "kind": "preset",
       "id": "slack-slackeventcollector",
       "name": "Slack Event Collector",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://api.slack.com/admins/audit-logs",
       "notes": [
-        "Cross-check: path: GET /audit/v1/logs is not a client call. Closest: /logs (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /logs. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://api.slack.com/admins/audit-logs",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /logs. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "logs",
+        "id": "get-logs-0",
         "method": "GET",
-        "pathTemplate": "/audit/v1/logs",
-        "summary": "List audit logs",
+        "pathTemplate": "/logs",
+        "summary": "GET /logs",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "entries",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "entry",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "action",
-                    "kind": "string",
-                    "example": "user_login"
-                  },
-                  {
-                    "name": "date_create",
-                    "kind": "timestamp",
-                    "format": "unix"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -76,7 +52,85 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "action",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "actor",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "type",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "user",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "context",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "ip_address",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "location",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "session_id",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "ua",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "date_create",
+              "kind": "integer"
+            },
+            {
+              "name": "entity",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "type",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "user",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "entries",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

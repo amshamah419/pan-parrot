@@ -3,11 +3,11 @@
   "name": "Microsoft Graph Mail Single User",
   "pack": "MicrosoftGraphMail",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Subscription create for a single mailbox.",
+  "summary": "Rebuilt from the client: GET /users/{_mailbox_to_fetch}/messages.",
   "notes": [
-    "Cross-check: path: POST /v1.0/subscriptions is not a client call. Closest: /{suffix}/None/createReply (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /users/{_mailbox_to_fetch}/messages, GET /users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphMail/Integrations/MicrosoftGraphListener",
@@ -17,50 +17,34 @@
       "kind": "preset",
       "id": "microsoftgraphmail-microsoftgraphlistener",
       "name": "Microsoft Graph Mail Single User",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/subscription-post-subscriptions",
       "notes": [
-        "Cross-check: path: POST /v1.0/subscriptions is not a client call. Closest: /{suffix}/None/createReply (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /users/{_mailbox_to_fetch}/messages, GET /users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/subscription-post-subscriptions",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /users/{_mailbox_to_fetch}/messages, GET /users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "create-subscription",
-        "method": "POST",
-        "pathTemplate": "/v1.0/subscriptions",
-        "summary": "Create a mail subscription",
-        "status": 201,
+        "id": "get-users-mailbox-to-fetch-messages-0",
+        "method": "GET",
+        "pathTemplate": "/users/{_mailbox_to_fetch}/messages",
+        "summary": "GET /users/{_mailbox_to_fetch}/messages",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "subscription",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "uuid"
-            },
-            {
-              "name": "resource",
-              "kind": "const",
-              "constValue": "users/me/messages"
-            },
-            {
-              "name": "changeType",
-              "kind": "const",
-              "constValue": "created"
-            },
-            {
-              "name": "expirationDateTime",
-              "kind": "timestamp"
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -68,7 +52,123 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "@odata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "nextLink",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "type",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "Attachments",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Contents",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "File",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileName",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-users-mailbox-to-fetch-mailfolders-folde-1",
+        "method": "GET",
+        "pathTemplate": "/users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages",
+        "summary": "GET /users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "@odata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "nextLink",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "type",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "Attachments",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Contents",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "File",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileID",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileName",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

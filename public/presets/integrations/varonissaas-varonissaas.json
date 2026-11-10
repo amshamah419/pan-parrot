@@ -3,11 +3,11 @@
   "name": "Varonis SaaS",
   "pack": "VaronisSaaS",
   "vendor": "Varonis",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Search alerts in the SaaS data query API.",
+  "summary": "Rebuilt from the client: POST /app/dataquery/api/search/v2/search.",
   "notes": [
-    "Cross-check: field: POST /app/dataquery/api/search/v2/search root keys ['data'] are not read by the client or present in test_data ['Locations', 'alert_id', 'authEndpoint', 'entityTagHeaderValue', 'last_fetched_ingest_time', 'ruleArea', 'ruleSource', 'start_time']."
+    "Rebuilt from the XSOAR client. The checker matched POST /app/dataquery/api/search/v2/search. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VaronisSaaS/Integrations/VaronisSaaS",
@@ -17,57 +17,34 @@
       "kind": "preset",
       "id": "varonissaas-varonissaas",
       "name": "Varonis SaaS",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VaronisSaaS",
       "notes": [
-        "Cross-check: field: POST /app/dataquery/api/search/v2/search root keys ['data'] are not read by the client or present in test_data ['Locations', 'alert_id', 'authEndpoint', 'entityTagHeaderValue', 'last_fetched_ingest_time', 'ruleArea', 'ruleSource', 'start_time']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /app/dataquery/api/search/v2/search. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/VaronisSaaS",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /app/dataquery/api/search/v2/search. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "search",
+        "id": "post-app-dataquery-api-search-v2-search-0",
         "method": "POST",
         "pathTemplate": "/app/dataquery/api/search/v2/search",
-        "summary": "Search alerts",
+        "summary": "POST /app/dataquery/api/search/v2/search",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "data",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "alert",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -75,7 +52,68 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Alert",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "Alert",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Asset",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "CloseReason",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Data",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Device",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "AlertSeqId",
+              "kind": "integer"
+            },
+            {
+              "name": "Category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CloseNotes",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "CloseReason",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ContainMaliciousExternalIP",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

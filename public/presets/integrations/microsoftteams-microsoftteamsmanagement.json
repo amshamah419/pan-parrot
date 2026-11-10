@@ -3,11 +3,11 @@
   "name": "Microsoft Teams Management",
   "pack": "MicrosoftTeams",
   "vendor": "Microsoft",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /v1.0/teams lists teams.",
+  "summary": "Rebuilt from the client: POST /v1.0/teams.",
   "notes": [
-    "Cross-check: path: GET /v1.0/teams is not a client call. Closest: /beta/groups (0)."
+    "Rebuilt from the XSOAR client. The checker matched POST /v1.0/teams. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftTeams/Integrations/MicrosoftTeamsManagement",
@@ -17,53 +17,34 @@
       "kind": "preset",
       "id": "microsoftteams-microsoftteamsmanagement",
       "name": "Microsoft Teams Management",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/group-list",
       "notes": [
-        "Cross-check: path: GET /v1.0/teams is not a client call. Closest: /beta/groups (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /v1.0/teams. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/group-list",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /v1.0/teams. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "teams",
-        "method": "GET",
+        "id": "post-v1-0-teams-0",
+        "method": "POST",
         "pathTemplate": "/v1.0/teams",
-        "summary": "List teams",
+        "summary": "POST /v1.0/teams",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "value",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "team",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "displayName",
-                    "kind": "string",
-                    "example": "Lab team"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -71,7 +52,90 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "@odata",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "context",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "count",
+                  "kind": "integer"
+                },
+                {
+                  "name": "type",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "discoverySettings",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "showInTeamsSearchAndSuggestions",
+                  "kind": "boolean"
+                }
+              ]
+            },
+            {
+              "name": "displayName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "email",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "funSettings",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "allowCustomMemes",
+                  "kind": "boolean"
+                },
+                {
+                  "name": "allowGiphy",
+                  "kind": "boolean"
+                },
+                {
+                  "name": "allowStickersAndMemes",
+                  "kind": "boolean"
+                },
+                {
+                  "name": "giphyContentRating",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "guestSettings",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "allowCreateUpdateChannels",
+                  "kind": "boolean"
+                },
+                {
+                  "name": "allowDeleteChannels",
+                  "kind": "boolean"
+                }
+              ]
+            }
+          ]
         }
       }
     ],

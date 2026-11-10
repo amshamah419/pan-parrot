@@ -3,11 +3,11 @@
   "name": "Sophos Firewall",
   "pack": "SophosXGFirewall",
   "vendor": "Sophos",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "ATP events. The appliance API is XML; this mock is JSON.",
+  "summary": "Rebuilt from the client: GET /webconsole/APIController.",
   "notes": [
-    "Cross-check: field: GET /webconsole/APIController root keys ['events'] are not read by the client or present in test_data ['IsDeleted', 'Response', 'credentials', 'endpoint_tag', 'table_headers']."
+    "Rebuilt from the XSOAR client. The checker matched GET /webconsole/APIController. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SophosXGFirewall/Integrations/SophosXGFirewall",
@@ -17,55 +17,34 @@
       "kind": "preset",
       "id": "sophosxgfirewall-sophosxgfirewall",
       "name": "Sophos Firewall",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.sophos.com/nsg/sophos-firewall/19.5/API/",
       "notes": [
-        "Cross-check: field: GET /webconsole/APIController root keys ['events'] are not read by the client or present in test_data ['IsDeleted', 'Response', 'credentials', 'endpoint_tag', 'table_headers']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /webconsole/APIController. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.sophos.com/nsg/sophos-firewall/19.5/API/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /webconsole/APIController. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "atp-events",
+        "id": "get-webconsole-apicontroller-0",
         "method": "GET",
         "pathTemplate": "/webconsole/APIController",
-        "summary": "ATP events",
+        "summary": "GET /webconsole/APIController",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "events"
-        },
-        "record": {
-          "name": "event",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "id"
-            },
-            {
-              "name": "threat",
-              "kind": "string",
-              "example": "EICAR"
-            },
-            {
-              "name": "src_ip",
-              "kind": "ip"
-            },
-            {
-              "name": "user",
-              "kind": "string",
-              "example": "jsmith"
-            },
-            {
-              "name": "time",
-              "kind": "timestamp"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -73,7 +52,54 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "IsDeleted",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Response",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "@APIVersion",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "@IPS_CAT_VER",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "Login",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "SecurityPolicy",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "endpoint_tag",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "table_headers",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

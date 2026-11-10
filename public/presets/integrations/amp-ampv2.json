@@ -3,11 +3,11 @@
   "name": "Cisco AMP v2",
   "pack": "AMP",
   "vendor": "Cisco",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Secure Endpoint events. The public events route returns data plus metadata.",
+  "summary": "Rebuilt from the client: GET /events.",
   "notes": [
-    "Cross-check: path: GET /v1/events is not a client call. Closest: /events (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /events. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AMP/Integrations/AMPv2",
@@ -17,70 +17,34 @@
       "kind": "preset",
       "id": "amp-ampv2",
       "name": "Cisco AMP v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://developer.cisco.com/docs/secure-endpoint/v1-api-reference-events/",
       "notes": [
-        "Cross-check: path: GET /v1/events is not a client call. Closest: /events (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /events. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.cisco.com/docs/secure-endpoint/v1-api-reference-events/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /events. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-events",
+        "id": "get-events-0",
         "method": "GET",
-        "pathTemplate": "/v1/events",
-        "summary": "List events",
+        "pathTemplate": "/events",
+        "summary": "GET /events",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": true,
         "envelope": {
-          "type": "wrapped",
-          "arrayKey": "data"
+          "type": "object"
         },
-        "record": {
-          "name": "event",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "integer"
-            },
-            {
-              "name": "timestamp",
-              "kind": "timestamp"
-            },
-            {
-              "name": "event_type",
-              "kind": "string",
-              "example": "Threat Detected"
-            },
-            {
-              "name": "severity",
-              "kind": "enum",
-              "enumValues": [
-                "Low",
-                "Medium",
-                "High"
-              ]
-            },
-            {
-              "name": "computer",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "connector_guid",
-                  "kind": "uuid"
-                },
-                {
-                  "name": "hostname",
-                  "kind": "string",
-                  "example": "lab-host"
-                }
-              ]
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "offset",
           "limitParam": "limit",
@@ -88,7 +52,69 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Allow",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "connector_guid",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "active",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "ancestry",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "application",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "available",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "bp_data",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "end_date",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "errors",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "event_type",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

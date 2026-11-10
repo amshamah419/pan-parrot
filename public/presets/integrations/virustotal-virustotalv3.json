@@ -3,11 +3,11 @@
   "name": "VirusTotal v3",
   "pack": "VirusTotal",
   "vendor": "VirusTotal",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /files/{id} and /ip_addresses/{ip} in the v3 data/attributes envelope.",
+  "summary": "Rebuilt from the client: GET /api/v3/files/{file}.",
   "notes": [
-    "Cross-check: path: GET /files/{id} is not a client call. Closest: /api/v3/files/{file} (1)."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v3/files/{file}, GET /api/v3/ip_addresses/{ip}. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VirusTotal/Integrations/VirusTotalV3",
@@ -17,166 +17,134 @@
       "kind": "preset",
       "id": "virustotal-virustotalv3",
       "name": "VirusTotal v3",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://docs.virustotal.com/reference/file-info",
       "notes": [
-        "Cross-check: path: GET /files/{id} is not a client call. Closest: /api/v3/files/{file} (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v3/files/{file}, GET /api/v3/ip_addresses/{ip}. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.virustotal.com/reference/file-info",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v3/files/{file}, GET /api/v3/ip_addresses/{ip}. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
+        "id": "get-api-v3-files-file-0",
+        "method": "GET",
+        "pathTemplate": "/api/v3/files/{file}",
+        "summary": "GET /api/v3/files/{file}",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 1,
-          "maxLimit": 1
-        },
-        "id": "file-info",
-        "method": "GET",
-        "pathTemplate": "/files/{id}",
-        "summary": "Get a file report",
-        "status": 200,
-        "list": false,
-        "envelope": {
-          "type": "object"
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "report",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "id",
-                  "kind": "id"
-                },
-                {
-                  "name": "type",
-                  "kind": "const",
-                  "constValue": "file"
-                },
-                {
-                  "name": "attributes",
-                  "kind": "object",
-                  "children": [
-                    {
-                      "name": "md5",
-                      "kind": "id"
-                    },
-                    {
-                      "name": "sha1",
-                      "kind": "id"
-                    },
-                    {
-                      "name": "sha256",
-                      "kind": "id"
-                    },
-                    {
-                      "name": "last_analysis_date",
-                      "kind": "timestamp",
-                      "format": "unix"
-                    },
-                    {
-                      "name": "last_analysis_stats",
-                      "kind": "object",
-                      "children": [
-                        {
-                          "name": "malicious",
-                          "kind": "integer"
-                        },
-                        {
-                          "name": "suspicious",
-                          "kind": "integer"
-                        },
-                        {
-                          "name": "undetected",
-                          "kind": "integer"
-                        },
-                        {
-                          "name": "harmless",
-                          "kind": "integer"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+              "name": "CompanyName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileTypeExtension",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "MIMEType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "OriginalFileName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ProductName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "abuse",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }
       },
       {
-        "headers": {},
+        "id": "get-api-v3-ip-addresses-ip-1",
+        "method": "GET",
+        "pathTemplate": "/api/v3/ip_addresses/{ip}",
+        "summary": "GET /api/v3/ip_addresses/{ip}",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
           "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
-          "defaultLimit": 1,
-          "maxLimit": 1
-        },
-        "id": "ip-info",
-        "method": "GET",
-        "pathTemplate": "/ip_addresses/{ip}",
-        "summary": "Get an IP address report",
-        "status": 200,
-        "list": false,
-        "envelope": {
-          "type": "object"
+          "defaultLimit": 20,
+          "maxLimit": 100
         },
         "record": {
-          "name": "report",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "data",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "id",
-                  "kind": "ip"
-                },
-                {
-                  "name": "type",
-                  "kind": "const",
-                  "constValue": "ip_address"
-                },
-                {
-                  "name": "attributes",
-                  "kind": "object",
-                  "children": [
-                    {
-                      "name": "country",
-                      "kind": "enum",
-                      "enumValues": [
-                        "US",
-                        "DE",
-                        "JP"
-                      ]
-                    },
-                    {
-                      "name": "as_owner",
-                      "kind": "string",
-                      "example": "Example ISP"
-                    },
-                    {
-                      "name": "last_analysis_date",
-                      "kind": "timestamp",
-                      "format": "unix"
-                    }
-                  ]
-                }
-              ]
+              "name": "CompanyName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "FileTypeExtension",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "MIMEType",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "OriginalFileName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ProductName",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "abuse",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }

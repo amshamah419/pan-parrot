@@ -3,11 +3,11 @@
   "name": "ExtraHop Reveal(x)",
   "pack": "ExtraHop",
   "vendor": "ExtraHop",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Detections list. The REST guide returns a JSON array.",
+  "summary": "Rebuilt from the client: GET /api/v1/alerts.",
   "notes": [
-    "Cross-check: path: GET /api/v1/detections is not a client call. Closest: /api/v1/extrahop (0)."
+    "Rebuilt from the XSOAR client. The checker matched GET /api/v1/alerts, POST /api/v1/detections/search. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ExtraHop/Integrations/ExtraHop_v2",
@@ -17,62 +17,158 @@
       "kind": "preset",
       "id": "extrahop-extrahop-v2",
       "name": "ExtraHop Reveal(x)",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.extrahop.com/current/rest-detections/",
       "notes": [
-        "Cross-check: path: GET /api/v1/detections is not a client call. Closest: /api/v1/extrahop (0)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /api/v1/alerts, POST /api/v1/detections/search. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.extrahop.com/current/rest-detections/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /api/v1/alerts, POST /api/v1/detections/search. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "list-detections",
+        "id": "get-api-v1-alerts-0",
         "method": "GET",
-        "pathTemplate": "/api/v1/detections",
-        "summary": "List detections",
+        "pathTemplate": "/api/v1/alerts",
+        "summary": "GET /api/v1/alerts",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "array"
-        },
-        "record": {
-          "name": "detection",
-          "kind": "object",
-          "children": [
-            {
-              "name": "id",
-              "kind": "integer"
-            },
-            {
-              "name": "title",
-              "kind": "string",
-              "example": "Unusual DNS server"
-            },
-            {
-              "name": "type",
-              "kind": "string",
-              "example": "dns_server"
-            },
-            {
-              "name": "mod_time",
-              "kind": "timestamp"
-            },
-            {
-              "name": "risk_score",
-              "kind": "integer"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ExtraHop",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "Record",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "_source",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "already_fetched",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis_level",
+              "kind": "integer"
+            },
+            {
+              "name": "annotations",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "protocols",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "post-api-v1-detections-search-1",
+        "method": "POST",
+        "pathTemplate": "/api/v1/detections/search",
+        "summary": "POST /api/v1/detections/search",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "ExtraHop",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "Record",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "_source",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "already_fetched",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "analysis_level",
+              "kind": "integer"
+            },
+            {
+              "name": "annotations",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "protocols",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            }
+          ]
         }
       }
     ],

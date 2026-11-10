@@ -3,11 +3,11 @@
   "name": "Qualys FIM",
   "pack": "QualysFIM",
   "vendor": "Qualys",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "POST fim/v3/incidents/search returns file-integrity incidents.",
+  "summary": "Rebuilt from the client: POST /fim/v3/incidents/search.",
   "notes": [
-    "Cross-check: field: POST /fim/v3/incidents/search root keys ['incidents'] are not read by the client or present in test_data ['createdById', 'filterFromDate', 'fullPath', 'hostname', 'lastUpdatedByName', 'last_fetch', 'profiles', 'ruleId']."
+    "Rebuilt from the XSOAR client. The checker matched POST /fim/v3/incidents/search, POST /fim/v2/incidents/{incident_id}/events/search. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/QualysFIM/Integrations/QualysFIM",
@@ -17,62 +17,34 @@
       "kind": "preset",
       "id": "qualysfim-qualysfim",
       "name": "Qualys FIM",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.qualys.com/en/fim/api/index.htm",
       "notes": [
-        "Cross-check: field: POST /fim/v3/incidents/search root keys ['incidents'] are not read by the client or present in test_data ['createdById', 'filterFromDate', 'fullPath', 'hostname', 'lastUpdatedByName', 'last_fetch', 'profiles', 'ruleId']."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /fim/v3/incidents/search, POST /fim/v2/incidents/{incident_id}/events/search. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.qualys.com/en/fim/api/index.htm",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /fim/v3/incidents/search, POST /fim/v2/incidents/{incident_id}/events/search. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "incidents",
+        "id": "post-fim-v3-incidents-search-0",
         "method": "POST",
         "pathTemplate": "/fim/v3/incidents/search",
-        "summary": "Search FIM incidents",
+        "summary": "POST /fim/v3/incidents/search",
         "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
         "list": false,
         "envelope": {
           "type": "object"
         },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "incidents",
-              "kind": "array",
-              "minItems": 1,
-              "maxItems": 1,
-              "item": {
-                "name": "incident",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  },
-                  {
-                    "name": "status",
-                    "kind": "const",
-                    "constValue": "open"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -80,7 +52,151 @@
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "action",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "actor",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "imagePath",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "process",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "processID",
+                  "kind": "integer"
+                },
+                {
+                  "name": "userID",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "userName",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "agentVersion",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "approvalDate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "approvalStatus",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "approvalType",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "post-fim-v2-incidents-incident-id-events-sear-1",
+        "method": "POST",
+        "pathTemplate": "/fim/v2/incidents/{incident_id}/events/search",
+        "summary": "POST /fim/v2/incidents/{incident_id}/events/search",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "action",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "actor",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "imagePath",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "process",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "processID",
+                  "kind": "integer"
+                },
+                {
+                  "name": "userID",
+                  "kind": "string",
+                  "example": "lab"
+                },
+                {
+                  "name": "userName",
+                  "kind": "string",
+                  "example": "lab"
+                }
+              ]
+            },
+            {
+              "name": "agentVersion",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "approvalDate",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "approvalStatus",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "approvalType",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],

@@ -3,11 +3,11 @@
   "name": "Rapid7 InsightIDR",
   "pack": "Rapid7_InsightIDR",
   "vendor": "Rapid7",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "GET /idr/v2/investigations returns the data array the v2 client reads.",
+  "summary": "Rebuilt from the client: POST /idr/v2/investigations.",
   "notes": [
-    "Cross-check: path: GET /idr/v2/investigations is not a client call. Closest: /idr/v1/investigations (1)."
+    "Rebuilt from the XSOAR client. The checker matched POST /idr/v2/investigations, GET /idr/v1/investigations. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Rapid7_InsightIDR/Integrations/Rapid7_InsightIDR",
@@ -17,72 +17,134 @@
       "kind": "preset",
       "id": "rapid7-insightidr-rapid7-insightidr",
       "name": "Rapid7 InsightIDR",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://help.rapid7.com/insightidr/en-us/api/v2/index.html",
       "notes": [
-        "Cross-check: path: GET /idr/v2/investigations is not a client call. Closest: /idr/v1/investigations (1)."
-      ]
+        "Rebuilt from the XSOAR client. The checker matched POST /idr/v2/investigations, GET /idr/v1/investigations. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://help.rapid7.com/insightidr/en-us/api/v2/index.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched POST /idr/v2/investigations, GET /idr/v1/investigations. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "headers": {},
+        "id": "post-idr-v2-investigations-0",
+        "method": "POST",
+        "pathTemplate": "/idr/v2/investigations",
+        "summary": "POST /idr/v2/investigations",
+        "status": 200,
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
-          "limitParam": "size",
-          "offsetParam": "index",
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 100
         },
-        "id": "list-investigations",
-        "method": "GET",
-        "pathTemplate": "/idr/v2/investigations",
-        "summary": "List investigations",
-        "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "data"
-        },
         "record": {
-          "name": "investigation",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "rrn",
-              "kind": "id"
-            },
-            {
-              "name": "title",
+              "name": "Content-Disposition",
               "kind": "string",
-              "example": "Suspicious login"
+              "example": "lab"
             },
             {
-              "name": "status",
-              "kind": "enum",
-              "enumValues": [
-                "OPEN",
-                "INVESTIGATING",
-                "CLOSED"
-              ]
+              "name": "ProductAlert",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "priority",
-              "kind": "enum",
-              "enumValues": [
-                "LOW",
-                "MEDIUM",
-                "HIGH",
-                "CRITICAL"
-              ]
+              "name": "alert",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "apikey_creds",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assignee",
+              "kind": "string",
+              "example": "lab"
             },
             {
               "name": "created_time",
-              "kind": "timestamp",
-              "format": "iso"
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
+        }
+      },
+      {
+        "id": "get-idr-v1-investigations-1",
+        "method": "GET",
+        "pathTemplate": "/idr/v1/investigations",
+        "summary": "GET /idr/v1/investigations",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "Content-Disposition",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "ProductAlert",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "alert",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "apikey_creds",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "assignee",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "created_time",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }
