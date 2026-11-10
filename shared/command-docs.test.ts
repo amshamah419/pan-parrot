@@ -152,6 +152,41 @@ describe("AWS command coverage", () => {
       (item) => item.method === "POST" && item.pathTemplate === "/v1/workspaces/{workspace_id}/query",
     );
     expect(queryOp?.fixture).toContain("PrimaryResult");
+    const openapi = sums(
+      covered.filter((preset) =>
+        [
+          "github-github",
+          "github-github-iam",
+          "pagerduty-pagerduty",
+          "box-boxv2",
+          "slack-slackv3",
+          "slack-slackeventcollector",
+          "bitbucket-bitbucket",
+          "zendesk-zendeskv2",
+          "gitlab-gitlabeventcollector",
+          "cloudflarewaf-cloudflarewaf",
+          "qualys-qualysv2",
+          "qualysfim-qualysfim",
+          "tenable-io-tenable-io",
+          "zoommail-zoommail",
+        ].includes(preset.id),
+      ),
+    );
+    expect(openapi).toEqual({ vendor: 45, approximate: 12, missing: 271 });
+    const github = JSON.parse(readFileSync("public/presets/integrations/github-github.json", "utf8")) as {
+      spec: Parameters<typeof validateMockSpec>[0];
+    };
+    const issues = validateMockSpec(github.spec).operations.find(
+      (item) => item.method === "GET" && item.pathTemplate === "/repos/{owner}/{repo}/issues",
+    );
+    expect(issues?.fixture).toContain("Found a bug");
+    const pagerduty = JSON.parse(readFileSync("public/presets/integrations/pagerduty-pagerduty.json", "utf8")) as {
+      spec: Parameters<typeof validateMockSpec>[0];
+    };
+    const incidents = validateMockSpec(pagerduty.spec).operations.find(
+      (item) => item.method === "GET" && item.pathTemplate === "/incidents",
+    );
+    expect(incidents?.fixture).toContain("The server is on fire.");
 
     const iam = JSON.parse(readFileSync("public/presets/integrations/aws-iam-aws-iam.json", "utf8")) as {
       spec: Parameters<typeof validateMockSpec>[0];
