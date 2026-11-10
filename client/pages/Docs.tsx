@@ -87,6 +87,7 @@ export default function Docs() {
 panparrot version
 panparrot --json login --url https://your-site --token pp_...
 panparrot --json presets --q github
+panparrot --json coverage GitHub.yml
 panparrot --json mock from-integration HelloWorld.yml
 panparrot --json mock fetch --mock <id> --reset
 panparrot --json mock state --mock <id> --reset

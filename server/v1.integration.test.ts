@@ -205,6 +205,46 @@ describe("agent API", () => {
     }
   });
 
+  it("scores a local integration YAML command by command", async () => {
+    const issued = await mint(["mocks:read"], "coverage");
+    const response = await app.request("/api/v1/coverage", {
+      method: "POST",
+      headers: { authorization: `Bearer ${issued.token}`, "content-type": "application/json" },
+      body: JSON.stringify({
+        yaml: `
+name: GitHub
+commonfields:
+  id: GitHub
+script:
+  commands:
+    - name: GitHub-get-branch
+    - name: GitHub-create-issue
+    - name: GitHub-not-scored
+`,
+      }),
+    });
+    expect(response.status).toBe(200);
+    const report = await response.json();
+    expect(report.presetId).toBe("github-github");
+    expect(report.commands).toEqual([
+      { command: "GitHub-get-branch", status: "vendor" },
+      { command: "GitHub-create-issue", status: "missing" },
+      { command: "GitHub-not-scored", status: "missing" },
+    ]);
+    const hidden = await app.request("/api/v1/coverage", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ yaml: "name: GitHub\n" }),
+    });
+    expect(hidden.status).toBe(404);
+    expect(await hidden.text()).toBe("Not found");
+    const revoked = await app.request(`/api/tokens/${issued.id}`, {
+      method: "DELETE",
+      headers: { cookie, origin: "http://localhost:8080" },
+    });
+    expect(revoked.status).toBe(200);
+  });
+
   it("hides /api/v1 until a real token is presented", async () => {
     const hidden = await app.request("/api/v1/openapi.json");
     expect(hidden.status).toBe(404);

@@ -61,6 +61,8 @@ def dispatch(args: list[str]) -> dict:
         return installed_version()
     if args[0] == "presets":
         return presets(args[1:])
+    if args[0] == "coverage":
+        return coverage(args[1:])
     if args[0] == "mock" and len(args) > 1 and args[1] == "from-integration":
         return from_integration(args[2:])
     if args[0] == "mock" and len(args) > 1 and args[1] == "fetch":
@@ -179,6 +181,9 @@ def from_integration(args: list[str]) -> dict:
         if route.get("method") and route.get("path"):
             lines.append(f"{route.get('command')}  {route.get('method')} {route.get('path')}  {route.get('pathFrom')}")
     lines.append("")
+    lines.extend(coverage_lines(created.get("coverage")))
+    if created.get("coverage"):
+        lines.append("")
     for param in config.get("params") or []:
         lines.append(f"{param.get('name')} = {param.get('value')}")
     return {
@@ -186,8 +191,33 @@ def from_integration(args: list[str]) -> dict:
         "routes": routes,
         "instanceConfig": config,
         "warnings": created.get("warnings") or [],
+        "coverage": created.get("coverage"),
         "text": "\n".join(lines).strip(),
     }
+
+
+def coverage(args: list[str]) -> dict:
+    yml = Path(args[0] if args and not args[0].startswith("-") else flag(args, "--yaml"))
+    if not yml.is_file():
+        raise SystemExit(f"Integration YAML not found: {yml}")
+    report = api("POST", "/api/v1/coverage", {"yaml": yml.read_text()})
+    return {"coverage": report, "text": "\n".join(coverage_lines(report))}
+
+
+def coverage_lines(report: dict | None) -> list[str]:
+    if not report:
+        return []
+    summary = report.get("summary") or {}
+    if report.get("scored"):
+        lines = [
+            f"{report.get('presetId')}  {summary.get('vendor')} vendor, {summary.get('approximate')} approximate, "
+            f"{summary.get('missing')} missing of {summary.get('total')}"
+        ]
+    else:
+        lines = ["Not in the scored catalog."]
+    for row in report.get("commands") or []:
+        lines.append(f"{row.get('command')}  {row.get('status')}")
+    return lines
 
 
 def mock_fetch(args: list[str]) -> dict:
@@ -517,6 +547,7 @@ HELP = """panparrot [--json] <command>
   version
   login --url https://your-site --token pp_...
   presets [--q text]
+  coverage <integration.yml>
   mock from-integration <integration.yml> [--python file] [--test-data dir]
   mock fetch --mock <id> [--since name] [--first-fetch name] [--time-field name] [--window seconds] [--per-poll n] [--no-dedup] [--reset] [--off]
   mock state --mock <id> [--id-field name] [--reset] [--off]

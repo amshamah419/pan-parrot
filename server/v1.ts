@@ -10,6 +10,7 @@ import { mockFromGraphql, looksLikeGraphql } from "../shared/graphql-mock";
 import { specFromDocument } from "../shared/openapi";
 import { POLICY } from "../shared/policy";
 import cliRelease from "./cli-release.json";
+import { reportCommands, type CatalogCommands } from "../shared/command-report";
 import { validateMockSpec, type MockSpec, type XsoarIntegration } from "../shared/mock-spec";
 import { specFromXml } from "../shared/wsdl";
 import { instanceGuide } from "../shared/xsoar-instance";
@@ -94,6 +95,15 @@ export function registerV1(app: Hono<AppEnv>) {
     });
   });
 
+  app.post("/api/v1/coverage", async (c) => {
+    requireScope(c, "mocks:read");
+    const body = await readBody(c);
+    if (typeof body.yaml !== "string" || !body.yaml.trim()) throw new HttpError(400, "YAML is required");
+    const identity = commandsFromYaml(body.yaml);
+    if (!identity) throw new HttpError(400, "YAML is not an XSOAR integration");
+    return c.json(reportCommands(identity.id, identity.commands, await commandDocsCatalog()));
+  });
+
   app.get("/api/v1/mocks", async (c) => {
     requireScope(c, "mocks:read");
     const user = c.get("apiToken")!.user;
@@ -124,7 +134,7 @@ export function registerV1(app: Hono<AppEnv>) {
         await c.get("db").update(endpoints).set({ name: String(body.name).trim().slice(0, 80), updatedAt: new Date() }).where(eq(endpoints.id, existing.id));
       }
       const endpoint = await getEndpointForUser(c.get("db"), user.id, existing.id);
-      return c.json({ ...mockView(endpoint, built), created: false, warnings: built.warnings, routes: routesOf(built.spec) });
+      return c.json({ ...mockView(endpoint, built), created: false, warnings: built.warnings, routes: routesOf(built.spec), coverage: await coverageFor(body) });
     }
     const created = await createEndpointForUser(c.get("db"), user, {
       name: built.name,
@@ -136,7 +146,7 @@ export function registerV1(app: Hono<AppEnv>) {
         integrationVersion: built.version,
       }).where(eq(endpoints.id, created.id));
     }
-    return c.json({ ...mockView(created, built), created: true, warnings: built.warnings, routes: routesOf(built.spec) }, 201);
+    return c.json({ ...mockView(created, built), created: true, warnings: built.warnings, routes: routesOf(built.spec), coverage: await coverageFor(body) }, 201);
   });
 
   app.get("/api/v1/mocks/:id", async (c) => {
@@ -191,7 +201,7 @@ export function registerV1(app: Hono<AppEnv>) {
       }).where(and(eq(endpoints.id, id), eq(endpoints.userId, user.id)));
     }
     const endpoint = await getEndpointForUser(c.get("db"), user.id, id);
-    return c.json({ ...mockView(endpoint, built), created: false, warnings: built.warnings, routes: routesOf(built.spec) });
+    return c.json({ ...mockView(endpoint, built), created: false, warnings: built.warnings, routes: routesOf(built.spec), coverage: await coverageFor(body) });
   });
 
   app.delete("/api/v1/mocks/:id", async (c) => {
@@ -533,6 +543,36 @@ function clientSourceOf(body: Record<string, unknown>): string | undefined {
   return source;
 }
 
+async function coverageFor(body: Record<string, unknown>) {
+  if (typeof body.yaml !== "string" || !body.yaml.trim()) return undefined;
+  const identity = commandsFromYaml(body.yaml);
+  if (!identity) return undefined;
+  return reportCommands(identity.id, identity.commands, await commandDocsCatalog());
+}
+
+function commandsFromYaml(yaml: string): { id: string; commands: string[] } | null {
+  let document: unknown;
+  try {
+    document = parseYaml(yaml);
+  } catch {
+    return null;
+  }
+  if (!document || typeof document !== "object") return null;
+  const doc = document as { name?: string; commonfields?: { id?: string }; script?: { commands?: Array<{ name?: string }> } };
+  if (!Array.isArray(doc.script?.commands)) return null;
+  const commands = doc.script.commands.map((command) => String(command?.name || "").trim()).filter(Boolean);
+  return { id: String(doc.commonfields?.id || doc.name || "").trim(), commands };
+}
+
+let commandCatalog: CatalogCommands[] | null = null;
+async function commandDocsCatalog(): Promise<CatalogCommands[]> {
+  if (!commandCatalog) {
+    const text = await readFile(path.resolve("public/presets/command-docs.json"), "utf8");
+    commandCatalog = (JSON.parse(text) as { presets?: CatalogCommands[] }).presets || [];
+  }
+  return commandCatalog;
+}
+
 function routesOf(spec: MockSpec) {
   const operations = new Map(spec.operations.map((operation) => [operation.id, operation]));
   return (spec.source.coverage || []).map((row) => {
@@ -636,6 +676,7 @@ function openApiDocument() {
       "/api/v1/cli": { get: { summary: "CLI release for a cli:download token, a mocks token, or the signed-in session.", responses: { "200": { description: "Version and wheel name", content: json } } } },
       "/api/v1/cli/{filename}": { get: { summary: "Download the versioned CLI wheel. A cli:download token cannot read or change mocks. Not published to public PyPI.", responses: { "200": { description: "Wheel bytes" } } } },
       "/api/v1/presets": { get: { summary: "Search catalog presets", security: [{ bearer: ["mocks:read"] }], responses: { "200": { description: "Matching presets", content: json } } } },
+      "/api/v1/coverage": { post: { summary: "Vendor, approximate, or missing for each command in an integration YAML", security: [{ bearer: ["mocks:read"] }], responses: { "200": { description: "Per-command coverage", content: json } } } },
       "/api/v1/mocks": {
         get: { summary: "List mocks", security: [{ bearer: ["mocks:read"] }], responses: { "200": { description: "Mocks", content: json } } },
         post: { summary: "Create or upsert a mock", security: [{ bearer: ["mocks:write"] }], responses: { "201": { description: "Created", content: json }, "200": { description: "Updated", content: json } } },

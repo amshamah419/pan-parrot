@@ -409,6 +409,51 @@ def test_mock_scenario_sends_ordered_steps(tmp_path, monkeypatch, capsys):
     assert bad == 1
 
 
+def test_coverage_prints_each_command(tmp_path, monkeypatch, capsys):
+    config = tmp_path / "credentials.json"
+    config.write_text(json.dumps({"url": "https://panparrot.example", "token": "pp_abc"}))
+    os.chmod(config, 0o600)
+    monkeypatch.setenv("PANPARROT_CONFIG", str(config))
+    yml = tmp_path / "GitHub.yml"
+    yml.write_text("name: GitHub\n")
+    seen = {}
+
+    class Response:
+        status = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return json.dumps({
+                "presetId": "github-github",
+                "scored": True,
+                "summary": {"vendor": 1, "approximate": 0, "missing": 1, "unscored": 0, "total": 2},
+                "commands": [
+                    {"command": "GitHub-get-branch", "status": "vendor"},
+                    {"command": "GitHub-create-issue", "status": "missing"},
+                ],
+            }).encode()
+
+    def urlopen(request, timeout=0):
+        seen["url"] = request.full_url
+        seen["body"] = json.loads(request.data.decode())
+        return Response()
+
+    monkeypatch.setattr("panparrot.cli.urllib.request.urlopen", urlopen)
+    code = main(["coverage", str(yml)])
+    assert code == 0
+    assert seen["url"].endswith("/api/v1/coverage")
+    assert "name: GitHub" in seen["body"]["yaml"]
+    text = capsys.readouterr().out
+    assert "github-github  1 vendor, 0 approximate, 1 missing of 2" in text
+    assert "GitHub-get-branch  vendor" in text
+    assert "GitHub-create-issue  missing" in text
+
+
 def test_payload_matches_the_sdk_credential_shape():
     metadata = {
         "name": "HelloWorld",
