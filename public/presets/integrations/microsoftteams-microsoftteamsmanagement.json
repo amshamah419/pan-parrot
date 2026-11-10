@@ -1,1 +1,128 @@
-{"id":"microsoftteams-microsoftteamsmanagement","name":"Microsoft Teams Management","pack":"MicrosoftTeams","fidelity":"sample","curated":false,"summary":"Manage teams and members in Microsoft Teams.","operations":4,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"microsoftteams-microsoftteamsmanagement","name":"Microsoft Teams Management","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MicrosoftTeams/Integrations/MicrosoftTeamsManagement","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-member-get-json","method":"GET","pathTemplate":"/v1.0/teams/{team_id}/members/{membership_id}","summary":"test_data/member_get.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"@odata.context","kind":"string","optional":false,"example":"https://graph.microsoft.com/v1.0/$metadata#teams('ece6f0a1-7ca4-498b-be79-edf6c8fc4d82')/members/microsoft.graph.aadUser"},{"name":"@odata.type","kind":"string","optional":false,"example":"#microsoft.graph.aadUserConversationMember"},{"name":"id","kind":"id","optional":false,"example":"/ZWUwZjVhZTItOGJjNi00YWU1LTg0NjYtN2RhZWViYmZhMDYyIyM3Mzc2MWYwNi0yYWM5LTQ2OWMtOWY"},{"name":"roles","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"owner"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"displayName","kind":"string","optional":false,"example":"John Doe"},{"name":"userId","kind":"id","optional":false,"example":"8b081ef6-4792-4def-b2c9-c363a1bf41d5"},{"name":"email","kind":"string","optional":true}]}},{"id":"test-data-members-list-json","method":"GET","pathTemplate":"/v1.0/users/{user_id}/joinedTeams","summary":"test_data/members_list.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"@odata.context","kind":"string","optional":false,"example":"https://graph.microsoft.com/v1.0/$metadata#teams('ee0f5ae2-8bc6-4ae5-8466-7daeebbfa062')/members"},{"name":"@odata.count","kind":"integer","optional":false},{"name":"value","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"@odata.type","kind":"string","optional":false,"example":"#microsoft.graph.aadUserConversationMember"},{"name":"id","kind":"id","optional":false,"example":"ZWUwZjVhZTItOGJjNi00YWU1LTg0NjYtN2RhZWViYmZhMDYyIyM3Mzc2MWYwNi0yYWM5LTQ2OWMtOWYx"},{"name":"roles","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"displayName","kind":"string","optional":false,"example":"Adele Vance"},{"name":"userId","kind":"id","optional":false,"example":"73761f06-2ac9-469c-9f10-279a8cc267f9"},{"name":"email","kind":"email","optional":false}]},"minItems":0,"maxItems":3,"pageItems":false}]}},{"id":"test-data-team-get-json","method":"GET","pathTemplate":"/v1.0/teams/{team_id}/unarchive","summary":"test_data/team_get.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"isArchived","kind":"boolean","optional":false},{"name":"discoverySettings","kind":"object","optional":false,"children":[{"name":"showInTeamsSearchAndSuggestions","kind":"boolean","optional":false}]},{"name":"memberSettings","kind":"object","optional":false,"children":[{"name":"allowCreateUpdateChannels","kind":"boolean","optional":false},{"name":"allowDeleteChannels","kind":"boolean","optional":false},{"name":"allowAddRemoveApps","kind":"boolean","optional":false},{"name":"allowCreateUpdateRemoveTabs","kind":"boolean","optional":false},{"name":"allowCreateUpdateRemoveConnectors","kind":"boolean","optional":false}]},{"name":"guestSettings","kind":"object","optional":false,"children":[{"name":"allowCreateUpdateChannels","kind":"boolean","optional":false},{"name":"allowDeleteChannels","kind":"boolean","optional":false}]},{"name":"messagingSettings","kind":"object","optional":false,"children":[{"name":"allowUserEditMessages","kind":"boolean","optional":false},{"name":"allowUserDeleteMessages","kind":"boolean","optional":false},{"name":"allowOwnerDeleteMessages","kind":"boolean","optional":false},{"name":"allowTeamMentions","kind":"boolean","optional":false},{"name":"allowChannelMentions","kind":"boolean","optional":false}]},{"name":"funSettings","kind":"object","optional":false,"children":[{"name":"allowGiphy","kind":"boolean","optional":false},{"name":"giphyContentRating","kind":"string","optional":false,"example":"strict"},{"name":"allowStickersAndMemes","kind":"boolean","optional":false},{"name":"allowCustomMemes","kind":"boolean","optional":false}]}]}},{"id":"test-data-teams-list-json","method":"GET","pathTemplate":"/v1.0/teams/{team_id}/members","summary":"test_data/teams_list.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"@odata.context","kind":"string","optional":false,"example":"https://graph.microsoft.com/beta/$metadata#groups"},{"name":"value","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"02bd9fd6-8f93-4758-87c3-1fb73740a315"},{"name":"description","kind":"string","optional":false,"example":"Welcome to the HR Taskforce team."},{"name":"displayName","kind":"string","optional":false,"example":"HR Taskforce"},{"name":"groupTypes","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Unified"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"mailEnabled","kind":"boolean","optional":false},{"name":"mailNickname","kind":"string","optional":false,"example":"HRTaskforce"},{"name":"resourceBehaviorOptions","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"resourceProvisioningOptions","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Team"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"securityEnabled","kind":"boolean","optional":false},{"name":"visibility","kind":"string","optional":false,"example":"Private"}]},"minItems":0,"maxItems":2,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "microsoftteams-microsoftteamsmanagement",
+  "name": "Microsoft Teams Management",
+  "pack": "MicrosoftTeams",
+  "vendor": "Microsoft",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /v1.0/teams lists teams.",
+  "notes": [
+    "The client GETs https://graph.microsoft.com/v1.0/teams. This mock returns { value } with one team.",
+    "Team templates and the token call at login.microsoftonline.com are not modeled.",
+    "The Graph group-list page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftTeams/Integrations/MicrosoftTeamsManagement",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "microsoftteams-microsoftteamsmanagement",
+      "name": "Microsoft Teams Management",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/group-list",
+      "notes": [
+        "The client GETs https://graph.microsoft.com/v1.0/teams. This mock returns { value } with one team.",
+        "Team templates and the token call at login.microsoftonline.com are not modeled.",
+        "The Graph group-list page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/group-list",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client GETs https://graph.microsoft.com/v1.0/teams. This mock returns { value } with one team.",
+          "Team templates and the token call at login.microsoftonline.com are not modeled.",
+          "The Graph group-list page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "teams",
+        "method": "GET",
+        "pathTemplate": "/v1.0/teams",
+        "summary": "List teams",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "team",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "displayName",
+                    "kind": "string",
+                    "example": "Lab team"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "microsoftteams-microsoftteamsmanagement",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

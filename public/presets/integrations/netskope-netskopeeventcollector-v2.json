@@ -1,1 +1,138 @@
-{"id":"netskope-netskopeeventcollector-v2","name":"Netskope Event Collector v2","pack":"Netskope","fidelity":"shape","curated":false,"summary":"Netskope Event Collector v2 integration.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"netskope-netskopeeventcollector-v2","name":"Netskope Event Collector v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Netskope/Integrations/NetskopeEventCollector_v2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"netskope-get-events","method":"GET","pathTemplate":"/events/datasearch/incident","summary":"Returns events extracted from SaaS traffic and or logs. Use this command for development and debugging only, as it may produce duplicate events, exceed API rate","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"should_push_events","kind":"string","optional":false,"example":"should_push_events"},{"name":"limit","kind":"string","optional":false,"example":"limit"},{"name":"start_time","kind":"string","optional":false,"example":"start_time"},{"name":"end_time","kind":"string","optional":false,"example":"end_time"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "netskope-netskopeeventcollector-v2",
+  "name": "Netskope Event Collector v2",
+  "pack": "Netskope",
+  "vendor": "Netskope",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Network events for the v2 collector.",
+  "notes": [
+    "The collector reads /api/v2/events/data/network and other event types. This mock is the network route.",
+    "Incident datasearch and the page iterator are not modeled.",
+    "The REST API v2 overview was not reloaded. Netskope-Api-Token is the dummy key. The deprecated collector stays on its earlier preset."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Netskope/Integrations/NetskopeEventCollector_v2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "netskope-netskopeeventcollector-v2",
+      "name": "Netskope Event Collector v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.netskope.com/en/netskope-help/admin-console/rest-api/rest-api-v2-overview/",
+      "notes": [
+        "The collector reads /api/v2/events/data/network and other event types. This mock is the network route.",
+        "Incident datasearch and the page iterator are not modeled.",
+        "The REST API v2 overview was not reloaded. Netskope-Api-Token is the dummy key. The deprecated collector stays on its earlier preset."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.netskope.com/en/netskope-help/admin-console/rest-api/rest-api-v2-overview/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The collector reads /api/v2/events/data/network and other event types. This mock is the network route.",
+          "Incident datasearch and the page iterator are not modeled.",
+          "The REST API v2 overview was not reloaded. Netskope-Api-Token is the dummy key. The deprecated collector stays on its earlier preset."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "network",
+        "method": "GET",
+        "pathTemplate": "/api/v2/events/data/network",
+        "summary": "List network events",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "result",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "event",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "srcip",
+                    "kind": "ip"
+                  },
+                  {
+                    "name": "dstip",
+                    "kind": "ip"
+                  },
+                  {
+                    "name": "timestamp",
+                    "kind": "timestamp",
+                    "format": "unix"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "netskope-netskopeeventcollector-v2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "Netskope-Api-Token",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

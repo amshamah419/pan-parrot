@@ -1,1 +1,181 @@
-{"id":"crowdstrikefalconx-crowdstrikefalconx","name":"CrowdStrike Falcon Intelligence Sandbox","pack":"CrowdStrikeFalconX","fidelity":"shape","curated":false,"summary":"Use the CrowdStrike Falcon Intelligence Sandbox integration to submit files, file hashes, URLs, and FTPs for sandbox analysis, and to retrieve reports.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"crowdstrikefalconx-crowdstrikefalconx","name":"CrowdStrike Falcon Intelligence Sandbox","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CrowdStrikeFalconX/Integrations/CrowdStrikeFalconX","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"cs-fx-upload-file","method":"POST","pathTemplate":"/oauth2/token","summary":"Uploads a file for sandbox analysis.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"csfalconx","kind":"object","optional":false,"children":[{"name":"resource","kind":"object","optional":false,"children":[{"name":"tags","kind":"string","optional":false,"example":"tags"},{"name":"sandbox","kind":"object","optional":false,"children":[{"name":"http_requests","kind":"object","optional":false,"children":[{"name":"header","kind":"string","optional":false,"example":"header"},{"name":"Accept","kind":"string","optional":false,"example":"Accept"},{"name":"host_ip","kind":"string","optional":false,"example":"host_ip"},{"name":"host_port","kind":"number","optional":false},{"name":"method","kind":"string","optional":false,"example":"method"},{"name":"url","kind":"string","optional":false,"example":"url"}]},{"name":"User-Agent","kind":"string","optional":false,"example":"User-Agent"},{"name":"processes","kind":"object","optional":false,"children":[{"name":"command_line","kind":"string","optional":false,"example":"command_line"},{"name":"handles","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"path","kind":"string","optional":false,"example":"path"}]},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"normalized_path","kind":"string","optional":false,"example":"normalized_path"},{"name":"pid","kind":"number","optional":false},{"name":"sha256","kind":"string","optional":false,"example":"sha256"}]},{"name":"architecture","kind":"string","optional":false,"example":"architecture"},{"name":"classification","kind":"string","optional":false,"example":"classification"},{"name":"classification_tags","kind":"string","optional":false,"example":"classification_tags"},{"name":"extracted_files","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"file_size","kind":"number","optional":false},{"name":"sha256","kind":"string","optional":false,"example":"sha256"},{"name":"md5","kind":"string","optional":false,"example":"md5"},{"name":"sha1","kind":"string","optional":false,"example":"sha1"},{"name":"runtime_process","kind":"string","optional":false,"example":"runtime_process"},{"name":"type_tags","kind":"string","optional":false,"example":"type_tags"},{"name":"threat_level_readable","kind":"string","optional":false,"example":"threat_level_readable"},{"name":"description","kind":"string","optional":false,"example":"description"}]},{"name":"file_metadata","kind":"object","optional":false,"children":[{"name":"file_compositions","kind":"string","optional":false,"example":"file_compositions"},{"name":"imported_objects","kind":"string","optional":false,"example":"imported_objects"},{"name":"file_analysis","kind":"string","optional":false,"example":"file_analysis"}]},{"name":"file_size","kind":"number","optional":false},{"name":"file_type","kind":"string","optional":false,"example":"file_type"},{"name":"file_type_short","kind":"string","optional":false,"example":"file_type_short"},{"name":"packer","kind":"string","optional":false,"example":"packer"},{"name":"screenshots_artifact_ids","kind":"string","optional":false,"example":"screenshots_artifact_ids"},{"name":"dns_requests","kind":"object","optional":false,"children":[{"name":"address","kind":"string","optional":false,"example":"address"},{"name":"country","kind":"string","optional":false,"example":"country"},{"name":"domain","kind":"string","optional":false,"example":"domain"},{"name":"registrar_creation_timestamp","kind":"string","optional":false,"example":"registrar_creation_timestamp"},{"name":"registrar_name","kind":"string","optional":false,"example":"registrar_name"},{"name":"registrar_organization","kind":"string","optional":false,"example":"registrar_organization"}]},{"name":"contacted_hosts","kind":"object","optional":false,"children":[{"name":"address","kind":"string","optional":false,"example":"address"},{"name":"country","kind":"string","optional":false,"example":"country"},{"name":"port","kind":"number","optional":false},{"name":"protocol","kind":"string","optional":false,"example":"protocol"},{"name":"associated_runtime","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"pid","kind":"id","optional":false}]}]}]}]}]}]}},{"id":"cs-fx-submit-uploaded-file","method":"POST","pathTemplate":"/falconx/entities/submissions/v1","summary":"Submits a sample SHA256 hash for sandbox analysis.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"csfalconx","kind":"object","optional":false,"children":[{"name":"resource","kind":"object","optional":false,"children":[{"name":"uploaded_id","kind":"id","optional":false},{"name":"file_name","kind":"string","optional":false,"example":"file_name"},{"name":"tags","kind":"string","optional":false,"example":"tags"},{"name":"sandbox","kind":"object","optional":false,"children":[{"name":"http_requests","kind":"object","optional":false,"children":[{"name":"header","kind":"string","optional":false,"example":"header"},{"name":"Accept","kind":"string","optional":false,"example":"Accept"},{"name":"host_ip","kind":"string","optional":false,"example":"host_ip"},{"name":"host_port","kind":"number","optional":false},{"name":"method","kind":"string","optional":false,"example":"method"},{"name":"url","kind":"string","optional":false,"example":"url"}]},{"name":"User-Agent","kind":"string","optional":false,"example":"User-Agent"},{"name":"processes","kind":"object","optional":false,"children":[{"name":"command_line","kind":"string","optional":false,"example":"command_line"},{"name":"handles","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"path","kind":"string","optional":false,"example":"path"}]},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"normalized_path","kind":"string","optional":false,"example":"normalized_path"},{"name":"pid","kind":"number","optional":false},{"name":"sha256","kind":"string","optional":false,"example":"sha256"}]},{"name":"architecture","kind":"string","optional":false,"example":"architecture"},{"name":"classification","kind":"string","optional":false,"example":"classification"},{"name":"classification_tags","kind":"string","optional":false,"example":"classification_tags"},{"name":"extracted_files","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"file_size","kind":"number","optional":false},{"name":"sha256","kind":"string","optional":false,"example":"sha256"},{"name":"md5","kind":"string","optional":false,"example":"md5"},{"name":"sha1","kind":"string","optional":false,"example":"sha1"},{"name":"runtime_process","kind":"string","optional":false,"example":"runtime_process"},{"name":"type_tags","kind":"string","optional":false,"example":"type_tags"},{"name":"threat_level_readable","kind":"string","optional":false,"example":"threat_level_readable"},{"name":"description","kind":"string","optional":false,"example":"description"}]},{"name":"file_metadata","kind":"object","optional":false,"children":[{"name":"file_compositions","kind":"string","optional":false,"example":"file_compositions"},{"name":"imported_objects","kind":"string","optional":false,"example":"imported_objects"},{"name":"file_analysis","kind":"string","optional":false,"example":"file_analysis"}]},{"name":"file_size","kind":"number","optional":false},{"name":"file_type","kind":"string","optional":false,"example":"file_type"},{"name":"file_type_short","kind":"string","optional":false,"example":"file_type_short"},{"name":"packer","kind":"string","optional":false,"example":"packer"},{"name":"screenshots_artifact_ids","kind":"string","optional":false,"example":"screenshots_artifact_ids"},{"name":"dns_requests","kind":"object","optional":false,"children":[{"name":"address","kind":"string","optional":false,"example":"address"},{"name":"country","kind":"string","optional":false,"example":"country"},{"name":"domain","kind":"string","optional":false,"example":"domain"},{"name":"registrar_creation_timestamp","kind":"string","optional":false,"example":"registrar_creation_timestamp"},{"name":"registrar_name","kind":"string","optional":false,"example":"registrar_name"},{"name":"registrar_organization","kind":"string","optional":false,"example":"registrar_organization"}]},{"name":"contacted_hosts","kind":"object","optional":false,"children":[{"name":"address","kind":"string","optional":false,"example":"address"},{"name":"country","kind":"string","optional":false,"example":"country"},{"name":"port","kind":"number","optional":false},{"name":"protocol","kind":"string","optional":false,"example":"protocol"},{"name":"associated_runtime","kind":"object","optional":false,"children":[]}]}]}]}]}]}},{"id":"cs-fx-get-full-report","method":"GET","pathTemplate":"/","summary":"Gets a full version of a sandbox report.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"csfalconx","kind":"object","optional":false,"children":[{"name":"resource","kind":"object","optional":false,"children":[{"name":"tags","kind":"string","optional":false,"example":"tags"},{"name":"file_name","kind":"string","optional":false,"example":"file_name"},{"name":"sandbox","kind":"object","optional":false,"children":[{"name":"http_requests","kind":"object","optional":false,"children":[{"name":"header","kind":"string","optional":false,"example":"header"},{"name":"Accept","kind":"string","optional":false,"example":"Accept"},{"name":"host_ip","kind":"string","optional":false,"example":"host_ip"},{"name":"host_port","kind":"number","optional":false},{"name":"method","kind":"string","optional":false,"example":"method"},{"name":"url","kind":"string","optional":false,"example":"url"}]},{"name":"User-Agent","kind":"string","optional":false,"example":"User-Agent"},{"name":"processes","kind":"object","optional":false,"children":[{"name":"command_line","kind":"string","optional":false,"example":"command_line"},{"name":"handles","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"path","kind":"string","optional":false,"example":"path"}]},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"normalized_path","kind":"string","optional":false,"example":"normalized_path"},{"name":"pid","kind":"number","optional":false},{"name":"sha256","kind":"string","optional":false,"example":"sha256"}]},{"name":"architecture","kind":"string","optional":false,"example":"architecture"},{"name":"classification","kind":"string","optional":false,"example":"classification"},{"name":"classification_tags","kind":"string","optional":false,"example":"classification_tags"},{"name":"extracted_files","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"file_size","kind":"number","optional":false},{"name":"sha256","kind":"string","optional":false,"example":"sha256"},{"name":"md5","kind":"string","optional":false,"example":"md5"},{"name":"sha1","kind":"string","optional":false,"example":"sha1"},{"name":"runtime_process","kind":"string","optional":false,"example":"runtime_process"},{"name":"type_tags","kind":"string","optional":false,"example":"type_tags"},{"name":"threat_level_readable","kind":"string","optional":false,"example":"threat_level_readable"},{"name":"description","kind":"string","optional":false,"example":"description"}]},{"name":"file_metadata","kind":"object","optional":false,"children":[{"name":"file_compositions","kind":"string","optional":false,"example":"file_compositions"},{"name":"imported_objects","kind":"string","optional":false,"example":"imported_objects"},{"name":"file_analysis","kind":"string","optional":false,"example":"file_analysis"}]},{"name":"file_size","kind":"number","optional":false},{"name":"file_type","kind":"string","optional":false,"example":"file_type"},{"name":"file_type_short","kind":"string","optional":false,"example":"file_type_short"},{"name":"packer","kind":"string","optional":false,"example":"packer"},{"name":"screenshots_artifact_ids","kind":"string","optional":false,"example":"screenshots_artifact_ids"},{"name":"dns_requests","kind":"object","optional":false,"children":[{"name":"address","kind":"string","optional":false,"example":"address"},{"name":"country","kind":"string","optional":false,"example":"country"},{"name":"domain","kind":"string","optional":false,"example":"domain"},{"name":"registrar_creation_timestamp","kind":"string","optional":false,"example":"registrar_creation_timestamp"},{"name":"registrar_name","kind":"string","optional":false,"example":"registrar_name"},{"name":"registrar_organization","kind":"string","optional":false,"example":"registrar_organization"}]},{"name":"contacted_hosts","kind":"object","optional":false,"children":[{"name":"address","kind":"string","optional":false,"example":"address"},{"name":"country","kind":"string","optional":false,"example":"country"},{"name":"port","kind":"number","optional":false},{"name":"protocol","kind":"string","optional":false,"example":"protocol"},{"name":"associated_runtime","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"}]}]}]}]}]}]}},{"id":"cs-fx-get-report-summary","method":"GET","pathTemplate":"/","summary":"Gets a short summary version of a sandbox report.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"csfalconx","kind":"object","optional":false,"children":[{"name":"resource","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"tag","kind":"string","optional":false,"example":"tag"},{"name":"tags","kind":"string","optional":false,"example":"tags"},{"name":"verdict","kind":"string","optional":false,"example":"verdict"},{"name":"created_timestamp","kind":"string","optional":false,"example":"created_timestamp"},{"name":"environment_id","kind":"id","optional":false},{"name":"environment_description","kind":"string","optional":false,"example":"environment_description"},{"name":"threat_score","kind":"string","optional":false,"example":"threat_score"},{"name":"submit_url","kind":"string","optional":false,"example":"submit_url"},{"name":"submission_type","kind":"string","optional":false,"example":"submission_type"},{"name":"file_type","kind":"string","optional":false,"example":"file_type"},{"name":"file_size","kind":"string","optional":false,"example":"file_size"},{"name":"sha256","kind":"string","optional":false,"example":"sha256"},{"name":"ioc_report_strict_csv_artifact_id","kind":"id","optional":false},{"name":"ioc_report_broad_csv_artifact_id","kind":"id","optional":false},{"name":"ioc_report_strict_json_artifact_id","kind":"id","optional":false},{"name":"ioc_report_broad_json_artifact_id","kind":"id","optional":false},{"name":"ioc_report_strict_stix_artifact_id","kind":"id","optional":false},{"name":"ioc_report_broad_stix_artifact_id","kind":"id","optional":false},{"name":"ioc_report_strict_maec_artifact_id","kind":"id","optional":false},{"name":"ioc_report_broad_maec_artifact_id","kind":"id","optional":false}]}]}]}},{"id":"cs-fx-get-analysis-status","method":"GET","pathTemplate":"/","summary":"Checks the status of a sandbox analysis.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"csfalconx","kind":"object","optional":false,"children":[{"name":"resource","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"verdict","kind":"string","optional":false,"example":"verdict"},{"name":"created_timestamp","kind":"string","optional":false,"example":"created_timestamp"},{"name":"environment_id","kind":"id","optional":false},{"name":"environment_description","kind":"string","optional":false,"example":"environment_description"},{"name":"threat_score","kind":"string","optional":false,"example":"threat_score"},{"name":"submit_url","kind":"string","optional":false,"example":"submit_url"},{"name":"submission_type","kind":"string","optional":false,"example":"submission_type"},{"name":"file_type","kind":"string","optional":false,"example":"file_type"},{"name":"file_size","kind":"string","optional":false,"example":"file_size"},{"name":"sha256","kind":"string","optional":false,"example":"sha256"},{"name":"ioc_report_strict_csv_artifact_id","kind":"id","optional":false},{"name":"ioc_report_broad_csv_artifact_id","kind":"id","optional":false},{"name":"ioc_report_strict_json_artifact_id","kind":"id","optional":false},{"name":"ioc_report_broad_json_artifact_id","kind":"id","optional":false},{"name":"ioc_report_strict_stix_artifact_id","kind":"id","optional":false},{"name":"ioc_report_broad_stix_artifact_id","kind":"id","optional":false},{"name":"ioc_report_strict_maec_artifact_id","kind":"id","optional":false},{"name":"ioc_report_broad_maec_artifact_id","kind":"id","optional":false}]}]}]}},{"id":"cs-fx-check-quota","method":"GET","pathTemplate":"/","summary":"Returns the total quota number and the in use quota number.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"csfalconx","kind":"object","optional":false,"children":[{"name":"resource","kind":"object","optional":false,"children":[{"name":"total","kind":"number","optional":false},{"name":"used","kind":"number","optional":false},{"name":"in_progress","kind":"number","optional":false}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "crowdstrikefalconx-crowdstrikefalconx",
+  "name": "CrowdStrike Falcon Intelligence Sandbox",
+  "pack": "CrowdStrikeFalconX",
+  "vendor": "CrowdStrike",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Submit a Falcon X sample and read the report.",
+  "notes": [
+    "The client POSTs /falconx/entities/submissions/v1 and reads /falconx/entities/reports/v1. Both return { resources }.",
+    "Sample upload and report summaries are not modeled. OAuth at /oauth2/token is not modeled.",
+    "The Falcon X collection page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CrowdStrikeFalconX/Integrations/CrowdStrikeFalconX",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "crowdstrikefalconx-crowdstrikefalconx",
+      "name": "CrowdStrike Falcon Intelligence Sandbox",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developer.crowdstrike.com/api-reference/collections/falconx-sandbox/",
+      "notes": [
+        "The client POSTs /falconx/entities/submissions/v1 and reads /falconx/entities/reports/v1. Both return { resources }.",
+        "Sample upload and report summaries are not modeled. OAuth at /oauth2/token is not modeled.",
+        "The Falcon X collection page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.crowdstrike.com/api-reference/collections/falconx-sandbox/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client POSTs /falconx/entities/submissions/v1 and reads /falconx/entities/reports/v1. Both return { resources }.",
+          "Sample upload and report summaries are not modeled. OAuth at /oauth2/token is not modeled.",
+          "The Falcon X collection page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "submit",
+        "method": "POST",
+        "pathTemplate": "/falconx/entities/submissions/v1",
+        "summary": "Submit a sample",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "resources",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "submission",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "state",
+                    "kind": "const",
+                    "constValue": "success"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "reports",
+        "method": "GET",
+        "pathTemplate": "/falconx/entities/reports/v1",
+        "summary": "Get reports",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "resources",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "report",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "verdict",
+                    "kind": "enum",
+                    "enumValues": [
+                      "no specific threat",
+                      "suspicious",
+                      "malicious"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "crowdstrikefalconx-crowdstrikefalconx",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

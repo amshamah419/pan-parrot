@@ -1,1 +1,137 @@
-{"id":"jira-jiraeventcollector","name":"Jira Event Collector","pack":"Jira","fidelity":"sample","curated":false,"summary":"Jira logs event collector integration for Cortex XSIAM.","operations":2,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"jira-jiraeventcollector","name":"Jira Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Jira/Integrations/JiraEventCollector","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-events-json","method":"GET","pathTemplate":"/url","summary":"test_data/events.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"offset","kind":"integer","optional":false},{"name":"limit","kind":"integer","optional":false},{"name":"total","kind":"integer","optional":false},{"name":"records","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"summary","kind":"string","optional":false,"example":"User Changed"},{"name":"remoteAddress","kind":"ip","optional":false,"example":"192.168.1.1"},{"name":"authorKey","kind":"string","optional":false,"example":"administrator"},{"name":"authorAccountId","kind":"id","optional":false,"example":"5ab8f18d741e9c2c7e9d4538"},{"name":"created","kind":"timestamp","optional":false,"example":"2022-04-12T18:45:42.967+0000","format":"iso"},{"name":"category","kind":"string","optional":false,"example":"user management"},{"name":"eventSource","kind":"string","optional":false,"example":"Jira Connect Plugin"},{"name":"description","kind":"string","optional":false,"example":"Optional description"},{"name":"objectItem","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"user"},{"name":"name","kind":"string","optional":false,"example":"user"},{"name":"typeName","kind":"string","optional":false,"example":"USER"},{"name":"parentId","kind":"id","optional":false,"example":"1"},{"name":"parentName","kind":"string","optional":false,"example":"Jira Internal Directory"}]},{"name":"changedValues","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"fieldName","kind":"string","optional":false,"example":"email"},{"name":"changedFrom","kind":"email","optional":false},{"name":"changedTo","kind":"email","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"associatedItems","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"jira-software-users"},{"name":"name","kind":"string","optional":false,"example":"jira-software-users"},{"name":"typeName","kind":"string","optional":false,"example":"GROUP"},{"name":"parentId","kind":"id","optional":false,"example":"1"},{"name":"parentName","kind":"string","optional":false,"example":"Jira Internal Directory"}]},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":3,"pageItems":false}]}},{"id":"test-data-no-events-json","method":"GET","pathTemplate":"/","summary":"test_data/no_events.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"offset","kind":"integer","optional":false},{"name":"limit","kind":"integer","optional":false},{"name":"total","kind":"integer","optional":false},{"name":"records","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "jira-jiraeventcollector",
+  "name": "Jira Event Collector",
+  "pack": "Jira",
+  "vendor": "Atlassian",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Audit records for the Jira collector.",
+  "notes": [
+    "The collector GETs /rest/api/3/auditing/record. This mock returns { records } with one audit event.",
+    "The older /rest/auditing/1.0/events route and the OAuth cloud id prefix are not modeled.",
+    "The audit-records page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Jira/Integrations/JiraEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "jira-jiraeventcollector",
+      "name": "Jira Event Collector",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-audit-records/",
+      "notes": [
+        "The collector GETs /rest/api/3/auditing/record. This mock returns { records } with one audit event.",
+        "The older /rest/auditing/1.0/events route and the OAuth cloud id prefix are not modeled.",
+        "The audit-records page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-audit-records/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The collector GETs /rest/api/3/auditing/record. This mock returns { records } with one audit event.",
+          "The older /rest/auditing/1.0/events route and the OAuth cloud id prefix are not modeled.",
+          "The audit-records page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "audit",
+        "method": "GET",
+        "pathTemplate": "/rest/api/3/auditing/record",
+        "summary": "List audit records",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "total",
+              "kind": "integer"
+            },
+            {
+              "name": "records",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "record",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "summary",
+                    "kind": "string",
+                    "example": "User logged in"
+                  },
+                  {
+                    "name": "created",
+                    "kind": "timestamp",
+                    "format": "iso"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "jira-jiraeventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

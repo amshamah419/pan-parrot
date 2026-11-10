@@ -1,1 +1,128 @@
-{"id":"microsoftgraphteams-microsoftgraphteams","name":"O365 Teams (Using Graph API)","pack":"MicrosoftGraphTeams","fidelity":"shape","curated":false,"summary":"Microsoft Graph lets your app get authorized access to a user's Teams app in a personal or organization account.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"microsoftgraphteams-microsoftgraphteams","name":"O365 Teams (Using Graph API)","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphTeams/Integrations/MicrosoftGraphTeams","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"msgraph-teams-list-chats","method":"GET","pathTemplate":"/","summary":"Retrieve the list of chats that the user is part of.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"MSGraphTeamsChat","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false},{"name":"UserID","kind":"id","optional":false},{"name":"Subject","kind":"string","optional":false,"example":"Subject"},{"name":"Created","kind":"timestamp","optional":false,"format":"iso"},{"name":"LastUpdatedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}},{"id":"msgraph-teams-create-chat","method":"GET","pathTemplate":"/","summary":"Create a new chat.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"MSGraphTeamsChat","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false},{"name":"UserID","kind":"id","optional":false},{"name":"Subject","kind":"string","optional":false,"example":"Subject"},{"name":"Created","kind":"timestamp","optional":false,"format":"iso"},{"name":"LastUpdatedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}},{"id":"msgraph-teams-get-chat","method":"GET","pathTemplate":"/","summary":"Retrieve a single chat (without its messages).","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"MSGraphTeamsChat","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false},{"name":"UserID","kind":"id","optional":false},{"name":"Subject","kind":"string","optional":false,"example":"Subject"},{"name":"Created","kind":"timestamp","optional":false,"format":"iso"},{"name":"LastUpdatedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}},{"id":"msgraph-teams-update-chat","method":"GET","pathTemplate":"/","summary":"Update the properties of a chat object.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"MSGraphTeamsChat","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false},{"name":"UserID","kind":"id","optional":false},{"name":"Subject","kind":"string","optional":false,"example":"Subject"},{"name":"Created","kind":"timestamp","optional":false,"format":"iso"},{"name":"LastUpdatedTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}},{"id":"msgraph-teams-list-members","method":"GET","pathTemplate":"/","summary":"List all conversation members in a chat.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"MSGraphTeamsChatMember","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"HistoryStartTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"ChatID","kind":"id","optional":false}]}]}},{"id":"msgraph-teams-add-member","method":"GET","pathTemplate":"/","summary":"Add a conversationMember to a chat.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"chat_id","kind":"string","optional":false,"example":"chat_id"},{"name":"user_id","kind":"string","optional":false,"example":"user_id"},{"name":"share_history","kind":"string","optional":false,"example":"share_history"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "microsoftgraphteams-microsoftgraphteams",
+  "name": "O365 Teams (Using Graph API)",
+  "pack": "MicrosoftGraphTeams",
+  "vendor": "Microsoft",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "List messages in a lab channel.",
+  "notes": [
+    "This pack talks to Microsoft Graph for Teams. This mock is GET /v1.0/teams/lab-team/channels/lab-channel/messages.",
+    "Replies, mentions, and hosted contents are not modeled.",
+    "The channel messages page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphTeams/Integrations/MicrosoftGraphTeams",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "microsoftgraphteams-microsoftgraphteams",
+      "name": "O365 Teams (Using Graph API)",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/channel-list-messages",
+      "notes": [
+        "This pack talks to Microsoft Graph for Teams. This mock is GET /v1.0/teams/lab-team/channels/lab-channel/messages.",
+        "Replies, mentions, and hosted contents are not modeled.",
+        "The channel messages page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/channel-list-messages",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "This pack talks to Microsoft Graph for Teams. This mock is GET /v1.0/teams/lab-team/channels/lab-channel/messages.",
+          "Replies, mentions, and hosted contents are not modeled.",
+          "The channel messages page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "messages",
+        "method": "GET",
+        "pathTemplate": "/v1.0/teams/lab-team/channels/lab-channel/messages",
+        "summary": "List channel messages",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "message",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "body",
+                    "kind": "string",
+                    "example": "lab update"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "microsoftgraphteams-microsoftgraphteams",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

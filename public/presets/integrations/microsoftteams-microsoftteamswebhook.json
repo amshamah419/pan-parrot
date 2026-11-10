@@ -1,1 +1,109 @@
-{"id":"microsoftteams-microsoftteamswebhook","name":"Microsoft Teams via Webhook","pack":"MicrosoftTeams","fidelity":"shape","curated":false,"summary":"Integration for sending notifications to a Microsoft Teams channel via a workflow of type `Post to a channel when a webhook request is received`.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"microsoftteams-microsoftteamswebhook","name":"Microsoft Teams via Webhook","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MicrosoftTeams/Integrations/MicrosoftTeamsWebhook","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"ms-teams-message","method":"GET","pathTemplate":"/","summary":"Send a message to Microsoft Teams via Incoming Webhook.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"message","kind":"string","optional":false,"example":"message"},{"name":"team_webhook","kind":"string","optional":false,"example":"team_webhook"},{"name":"alternative_url","kind":"string","optional":false,"example":"alternative_url"},{"name":"url_title","kind":"string","optional":false,"example":"url_title"},{"name":"adaptive_cards_format","kind":"string","optional":false,"example":"adaptive_cards_format"},{"name":"overwrite_adaptive_card_json","kind":"string","optional":false,"example":"overwrite_adaptive_card_json"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "microsoftteams-microsoftteamswebhook",
+  "name": "Microsoft Teams via Webhook",
+  "pack": "MicrosoftTeams",
+  "vendor": "Microsoft",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "POST an Adaptive Card to the incoming webhook.",
+  "notes": [
+    "The pack posts a card to the webhook URL the instance stores. This mock answers POST /webhook with 1, which is the Teams success body.",
+    "The card schema is not validated. The webhook secret in the URL is not checked.",
+    "The incoming-webhook page was not reloaded."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftTeams/Integrations/MicrosoftTeamsWebhook",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "microsoftteams-microsoftteamswebhook",
+      "name": "Microsoft Teams via Webhook",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook",
+      "notes": [
+        "The pack posts a card to the webhook URL the instance stores. This mock answers POST /webhook with 1, which is the Teams success body.",
+        "The card schema is not validated. The webhook secret in the URL is not checked.",
+        "The incoming-webhook page was not reloaded."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The pack posts a card to the webhook URL the instance stores. This mock answers POST /webhook with 1, which is the Teams success body.",
+          "The card schema is not validated. The webhook secret in the URL is not checked.",
+          "The incoming-webhook page was not reloaded."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "webhook",
+        "method": "POST",
+        "pathTemplate": "/webhook",
+        "summary": "Post a card",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "result",
+              "kind": "const",
+              "constValue": "1"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "microsoftteams-microsoftteamswebhook",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

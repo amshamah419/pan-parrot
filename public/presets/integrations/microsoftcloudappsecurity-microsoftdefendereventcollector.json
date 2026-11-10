@@ -1,1 +1,137 @@
-{"id":"microsoftcloudappsecurity-microsoftdefendereventcollector","name":"Microsoft Defender for Cloud Apps Event Collector","pack":"MicrosoftCloudAppSecurity","fidelity":"shape","curated":false,"summary":"Collects the events log for alerts and activities provided Microsoft Defender for Cloud Apps API.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"microsoftcloudappsecurity-microsoftdefendereventcollector","name":"Microsoft Defender for Cloud Apps Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MicrosoftCloudAppSecurity/Integrations/MicrosoftDefenderEventCollector","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"microsoft-defender-cloud-apps-get-events","method":"GET","pathTemplate":"/api/v1","summary":"Returns a list of alerts. Use this command for development and debugging only, as it may produce duplicate events, exceed API rate limits, or disrupt the fetch","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"limit","kind":"string","optional":false,"example":"limit"},{"name":"after","kind":"string","optional":false,"example":"after"},{"name":"should_push_events","kind":"string","optional":false,"example":"should_push_events"},{"name":"event_types_to_fetch","kind":"string","optional":false,"example":"event_types_to_fetch"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "microsoftcloudappsecurity-microsoftdefendereventcollector",
+  "name": "Microsoft Defender for Cloud Apps Event Collector",
+  "pack": "MicrosoftCloudAppSecurity",
+  "vendor": "Microsoft",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Alerts for the Cloud Apps collector.",
+  "notes": [
+    "The collector base is /api/v1/ and requests alerts. This mock is POST /api/v1/alerts and returns { data }.",
+    "Activity types are not modeled. The filter body is ignored. The main Cloud Apps preset stays separate.",
+    "The alerts API page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftCloudAppSecurity/Integrations/MicrosoftDefenderEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "microsoftcloudappsecurity-microsoftdefendereventcollector",
+      "name": "Microsoft Defender for Cloud Apps Event Collector",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://learn.microsoft.com/en-us/defender-cloud-apps/api-alerts",
+      "notes": [
+        "The collector base is /api/v1/ and requests alerts. This mock is POST /api/v1/alerts and returns { data }.",
+        "Activity types are not modeled. The filter body is ignored. The main Cloud Apps preset stays separate.",
+        "The alerts API page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/defender-cloud-apps/api-alerts",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The collector base is /api/v1/ and requests alerts. This mock is POST /api/v1/alerts and returns { data }.",
+          "Activity types are not modeled. The filter body is ignored. The main Cloud Apps preset stays separate.",
+          "The alerts API page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "alerts",
+        "method": "POST",
+        "pathTemplate": "/api/v1/alerts",
+        "summary": "List alerts",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "alert",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "title",
+                    "kind": "string",
+                    "example": "Impossible travel"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "enum",
+                    "enumValues": [
+                      "low",
+                      "medium",
+                      "high"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "microsoftcloudappsecurity-microsoftdefendereventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

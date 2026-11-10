@@ -1,1 +1,128 @@
-{"id":"anyrun-anyrunsandbox","name":"ANY.RUN Cloud Sandbox","pack":"ANYRUN","fidelity":"shape","curated":false,"summary":"ANY.RUN Sandbox is an online interactive sandbox for malware analysis, a tool for detection, monitoring, and research of cyber threats in real time.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"anyrun-anyrunsandbox","name":"ANY.RUN Cloud Sandbox","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/ANYRUN/Integrations/AnyRunSandbox","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"anyrun-detonate-file-windows","method":"GET","pathTemplate":"/","summary":"Performs file analysis using a Windows VM.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ANYRUN_DetonateFileWindows","kind":"object","optional":false,"children":[{"name":"TaskID","kind":"id","optional":false}]}]}},{"id":"anyrun-detonate-url-windows","method":"GET","pathTemplate":"/","summary":"Performs URL analysis using a Windows VM.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ANYRUN_DetonateUrlWindows","kind":"object","optional":false,"children":[{"name":"TaskID","kind":"id","optional":false}]}]}},{"id":"anyrun-detonate-file-linux","method":"GET","pathTemplate":"/","summary":"Performs file analysis using a Linux VM.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ANYRUN_DetonateFileLinux","kind":"object","optional":false,"children":[{"name":"TaskID","kind":"id","optional":false}]}]}},{"id":"anyrun-detonate-url-linux","method":"GET","pathTemplate":"/","summary":"Performs URL analysis using a Linux VM.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ANYRUN_DetonateUrlLinux","kind":"object","optional":false,"children":[{"name":"TaskID","kind":"id","optional":false}]}]}},{"id":"anyrun-detonate-file-android","method":"GET","pathTemplate":"/","summary":"Performs file analysis using an Android VM.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ANYRUN_DetonateFileAndroid","kind":"object","optional":false,"children":[{"name":"TaskID","kind":"id","optional":false}]}]}},{"id":"anyrun-detonate-url-android","method":"GET","pathTemplate":"/","summary":"Performs a URL analysis using an Android VM.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ANYRUN_DetonateUrlAndroid","kind":"object","optional":false,"children":[{"name":"TaskID","kind":"id","optional":false}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "anyrun-anyrunsandbox",
+  "name": "ANY.RUN Cloud Sandbox",
+  "pack": "ANYRUN",
+  "vendor": "ANY.RUN",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "POST /v1/analysis starts a sandbox task.",
+  "notes": [
+    "The pack uses the anyrun SandboxConnector. The older ANY.RUN client posts analysis/ under /v1/. This mock answers POST /v1/analysis.",
+    "The response is one task id. File upload and the interactive report are not modeled.",
+    "The API documentation page was not reloaded. The API-KEY header is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ANYRUN/Integrations/AnyRunSandbox",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "anyrun-anyrunsandbox",
+      "name": "ANY.RUN Cloud Sandbox",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://any.run/api-documentation/",
+      "notes": [
+        "The pack uses the anyrun SandboxConnector. The older ANY.RUN client posts analysis/ under /v1/. This mock answers POST /v1/analysis.",
+        "The response is one task id. File upload and the interactive report are not modeled.",
+        "The API documentation page was not reloaded. The API-KEY header is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://any.run/api-documentation/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The pack uses the anyrun SandboxConnector. The older ANY.RUN client posts analysis/ under /v1/. This mock answers POST /v1/analysis.",
+          "The response is one task id. File upload and the interactive report are not modeled.",
+          "The API documentation page was not reloaded. The API-KEY header is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "analysis",
+        "method": "POST",
+        "pathTemplate": "/v1/analysis",
+        "summary": "Start an analysis",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "taskid",
+                  "kind": "id"
+                },
+                {
+                  "name": "verdict",
+                  "kind": "enum",
+                  "enumValues": [
+                    "No threats",
+                    "Suspicious",
+                    "Malicious"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "anyrun-anyrunsandbox",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "API-KEY",
+        "value": "dummy-anyrun-key"
+      }
+    }
+  }
+}
