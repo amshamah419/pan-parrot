@@ -510,7 +510,7 @@ export const moreVerifiedPresets = [
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/SentinelOne/Integrations/SentinelOne",
     auth: { mode: "api-key", apiKey: { in: "header", name: "Authorization", value: "ApiToken dummy-s1-token" } },
     differences: [
-      "The threats list is { data: [...], pagination }. This mock returns data and ignores the pagination object. limit and cursor query parameters page the array.",
+      "get_threats_request GETs threats and reads response.data. It sends limit, not cursor. The live body also has pagination.nextCursor, which this mock does not emit.",
       "Activities and cloud detection alerts are separate routes in the event collector and are not modeled here.",
       "Authorization must be ApiToken plus the dummy token. The management console host is the catch URL.",
     ],
@@ -523,7 +523,7 @@ export const moreVerifiedPresets = [
         status: 200,
         list: true,
         envelope: { type: "wrapped", arrayKey: "data" },
-        pagination: { style: "cursor", limitParam: "limit", cursorParam: "cursor", defaultLimit: 10, maxLimit: 100 },
+        pagination: { style: "offset", limitParam: "limit", defaultLimit: 10, maxLimit: 100 },
         record: object("threat", [
           field("id", "id"),
           object("threatInfo", [

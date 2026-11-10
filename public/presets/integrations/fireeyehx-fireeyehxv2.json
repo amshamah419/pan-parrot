@@ -7,9 +7,9 @@
   "curated": true,
   "summary": "HX host list. data.entries.",
   "notes": [
-    "GET /hx/api/v3/hosts returns { data: { entries } }. This mock returns entries with _id, hostname, and agent_version.",
-    "The Trellix REST bundle was not reloaded. The client calls /hx/api/v3.",
-    "Containment and acquisitions are not modeled. A token header is required."
+    "get_hosts_request reads response data.entries and entry _id. The previous mock put entries at the top level.",
+    "The client base is the server URL plus /hx/api/v3/. offset and limit are the page parameters.",
+    "GET /hx/api/v3/token returns X-FeApi-Token. Later calls send that header. Containment is not modeled."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FireEyeHX/Integrations/FireEyeHXv2",
@@ -23,18 +23,18 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.trellix.com/bundle/hx-rest-api",
       "notes": [
-        "GET /hx/api/v3/hosts returns { data: { entries } }. This mock returns entries with _id, hostname, and agent_version.",
-        "The Trellix REST bundle was not reloaded. The client calls /hx/api/v3.",
-        "Containment and acquisitions are not modeled. A token header is required."
+        "get_hosts_request reads response data.entries and entry _id. The previous mock put entries at the top level.",
+        "The client base is the server URL plus /hx/api/v3/. offset and limit are the page parameters.",
+        "GET /hx/api/v3/token returns X-FeApi-Token. Later calls send that header. Containment is not modeled."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.trellix.com/bundle/hx-rest-api",
         "checkedAt": "2026-11-10",
         "differences": [
-          "GET /hx/api/v3/hosts returns { data: { entries } }. This mock returns entries with _id, hostname, and agent_version.",
-          "The Trellix REST bundle was not reloaded. The client calls /hx/api/v3.",
-          "Containment and acquisitions are not modeled. A token header is required."
+          "get_hosts_request reads response data.entries and entry _id. The previous mock put entries at the top level.",
+          "The client base is the server URL plus /hx/api/v3/. offset and limit are the page parameters.",
+          "GET /hx/api/v3/token returns X-FeApi-Token. Later calls send that header. Containment is not modeled."
         ]
       }
     },
@@ -45,36 +45,52 @@
         "pathTemplate": "/hx/api/v3/hosts",
         "summary": "List hosts",
         "status": 200,
-        "list": true,
+        "list": false,
         "envelope": {
-          "type": "wrapped",
-          "arrayKey": "entries"
+          "type": "object"
         },
         "record": {
-          "name": "host",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "_id",
-              "kind": "id"
-            },
-            {
-              "name": "hostname",
-              "kind": "string",
-              "example": "lab-host"
-            },
-            {
-              "name": "agent_version",
-              "kind": "const",
-              "constValue": "32.0.0"
-            },
-            {
-              "name": "containment_state",
-              "kind": "enum",
-              "enumValues": [
-                "normal",
-                "contain",
-                "contain_fail"
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "entries",
+                  "kind": "array",
+                  "pageItems": true,
+                  "item": {
+                    "name": "host",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "_id",
+                        "kind": "id"
+                      },
+                      {
+                        "name": "hostname",
+                        "kind": "string",
+                        "example": "lab-host"
+                      },
+                      {
+                        "name": "agent_version",
+                        "kind": "const",
+                        "constValue": "32.0.0"
+                      },
+                      {
+                        "name": "containment_state",
+                        "kind": "enum",
+                        "enumValues": [
+                          "normal",
+                          "contain",
+                          "contain_fail"
+                        ]
+                      }
+                    ]
+                  }
+                }
               ]
             }
           ]

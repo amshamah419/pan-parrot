@@ -5,10 +5,10 @@
   "vendor": "Palo Alto Networks",
   "fidelity": "verified",
   "curated": true,
-  "summary": "Runtime scan plus the management profile list.",
+  "summary": "Management profile list for AI Runtime Security.",
   "notes": [
-    "Runtime scan posts ai_profile and contents. PrismaAirsApiModule is not in this content checkout. This mock answers POST /v1/scan/sync/request with scan_id, action, and category.",
-    "GET /v1/mgmt/profiles/tsg/lab-tsg is the profiles list the client builds from MGMT_API_V1_PREFIX. API key create and DLP profiles are not modeled.",
+    "The runtime scan URL is built in PrismaAirsApiModule, which is not in this checkout. POST /v1/scan/sync/request was removed because that path is not in the checked client.",
+    "GET /v1/mgmt/profiles/tsg/{tsg_id} is the profiles list. This mock uses tsg lab-tsg. API key create and DLP profiles are not modeled.",
     "The runtime API page was not reloaded. A bearer token is required."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
@@ -23,8 +23,8 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.paloaltonetworks.com/ai-runtime-security/activation-and-onboarding/ai-runtime-security-api",
       "notes": [
-        "Runtime scan posts ai_profile and contents. PrismaAirsApiModule is not in this content checkout. This mock answers POST /v1/scan/sync/request with scan_id, action, and category.",
-        "GET /v1/mgmt/profiles/tsg/lab-tsg is the profiles list the client builds from MGMT_API_V1_PREFIX. API key create and DLP profiles are not modeled.",
+        "The runtime scan URL is built in PrismaAirsApiModule, which is not in this checkout. POST /v1/scan/sync/request was removed because that path is not in the checked client.",
+        "GET /v1/mgmt/profiles/tsg/{tsg_id} is the profiles list. This mock uses tsg lab-tsg. API key create and DLP profiles are not modeled.",
         "The runtime API page was not reloaded. A bearer token is required."
       ],
       "verification": {
@@ -32,63 +32,13 @@
         "docUrl": "https://docs.paloaltonetworks.com/ai-runtime-security/activation-and-onboarding/ai-runtime-security-api",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Runtime scan posts ai_profile and contents. PrismaAirsApiModule is not in this content checkout. This mock answers POST /v1/scan/sync/request with scan_id, action, and category.",
-          "GET /v1/mgmt/profiles/tsg/lab-tsg is the profiles list the client builds from MGMT_API_V1_PREFIX. API key create and DLP profiles are not modeled.",
+          "The runtime scan URL is built in PrismaAirsApiModule, which is not in this checkout. POST /v1/scan/sync/request was removed because that path is not in the checked client.",
+          "GET /v1/mgmt/profiles/tsg/{tsg_id} is the profiles list. This mock uses tsg lab-tsg. API key create and DLP profiles are not modeled.",
           "The runtime API page was not reloaded. A bearer token is required."
         ]
       }
     },
     "operations": [
-      {
-        "id": "scan",
-        "method": "POST",
-        "pathTemplate": "/v1/scan/sync/request",
-        "summary": "Scan a prompt",
-        "status": 200,
-        "list": false,
-        "envelope": {
-          "type": "object"
-        },
-        "record": {
-          "name": "body",
-          "kind": "object",
-          "children": [
-            {
-              "name": "scan_id",
-              "kind": "id"
-            },
-            {
-              "name": "action",
-              "kind": "enum",
-              "enumValues": [
-                "allow",
-                "block"
-              ]
-            },
-            {
-              "name": "category",
-              "kind": "const",
-              "constValue": "benign"
-            },
-            {
-              "name": "prompt_detected",
-              "kind": "const",
-              "constValue": false
-            }
-          ]
-        },
-        "headers": {},
-        "contentType": "application/json; charset=utf-8",
-        "pagination": {
-          "style": "none",
-          "limitParam": "limit",
-          "offsetParam": "offset",
-          "pageParam": "page",
-          "cursorParam": "cursor",
-          "defaultLimit": 20,
-          "maxLimit": 500
-        }
-      },
       {
         "id": "profiles",
         "method": "GET",

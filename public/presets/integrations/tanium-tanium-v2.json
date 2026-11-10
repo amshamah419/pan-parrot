@@ -5,11 +5,11 @@
   "vendor": "Tanium",
   "fidelity": "verified",
   "curated": true,
-  "summary": "Endpoint list from the gateway API.",
+  "summary": "Sensor list and session login on /api/v2.",
   "notes": [
-    "GET /api/v2/endpoints returns { data }. Endpoints keep id, name, and ip.",
-    "The gateway guide was not reloaded. Saved questions and packages are not modeled.",
-    "Session is a bearer token."
+    "The client base is server + /api/v2/. It does not call /endpoints. do_request reads data from sensors, packages, and saved questions.",
+    "POST session/login returns data.session. Later calls send that value in the session header.",
+    "The gateway guide was not reloaded. Packages and saved questions are not modeled."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Tanium/Integrations/Tanium_v2",
@@ -23,27 +23,66 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Tanium/Integrations/Tanium_v2",
       "notes": [
-        "GET /api/v2/endpoints returns { data }. Endpoints keep id, name, and ip.",
-        "The gateway guide was not reloaded. Saved questions and packages are not modeled.",
-        "Session is a bearer token."
+        "The client base is server + /api/v2/. It does not call /endpoints. do_request reads data from sensors, packages, and saved questions.",
+        "POST session/login returns data.session. Later calls send that value in the session header.",
+        "The gateway guide was not reloaded. Packages and saved questions are not modeled."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Tanium/Integrations/Tanium_v2",
         "checkedAt": "2026-11-10",
         "differences": [
-          "GET /api/v2/endpoints returns { data }. Endpoints keep id, name, and ip.",
-          "The gateway guide was not reloaded. Saved questions and packages are not modeled.",
-          "Session is a bearer token."
+          "The client base is server + /api/v2/. It does not call /endpoints. do_request reads data from sensors, packages, and saved questions.",
+          "POST session/login returns data.session. Later calls send that value in the session header.",
+          "The gateway guide was not reloaded. Packages and saved questions are not modeled."
         ]
       }
     },
     "operations": [
       {
-        "id": "endpoints",
+        "id": "login",
+        "method": "POST",
+        "pathTemplate": "/api/v2/session/login",
+        "summary": "Create a session",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "session",
+                  "kind": "const",
+                  "constValue": "dummy-tanium-session"
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "sensors",
         "method": "GET",
-        "pathTemplate": "/api/v2/endpoints",
-        "summary": "List endpoints",
+        "pathTemplate": "/api/v2/sensors",
+        "summary": "List sensors",
         "status": 200,
         "list": true,
         "envelope": {
@@ -51,7 +90,7 @@
           "arrayKey": "data"
         },
         "record": {
-          "name": "endpoint",
+          "name": "sensor",
           "kind": "object",
           "children": [
             {
@@ -61,23 +100,14 @@
             {
               "name": "name",
               "kind": "string",
-              "example": "lab-host"
-            },
-            {
-              "name": "ip",
-              "kind": "ip"
-            },
-            {
-              "name": "os",
-              "kind": "const",
-              "constValue": "Windows"
+              "example": "Computer Name"
             }
           ]
         },
         "headers": {},
         "contentType": "application/json; charset=utf-8",
         "pagination": {
-          "style": "offset",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
@@ -117,9 +147,11 @@
     },
     "totalRecords": 40,
     "auth": {
-      "mode": "bearer",
-      "bearer": {
-        "token": "dummy-bearer"
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "session",
+        "value": "dummy-tanium-session"
       }
     }
   }

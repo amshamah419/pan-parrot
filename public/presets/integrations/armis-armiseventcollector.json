@@ -7,8 +7,8 @@
   "curated": true,
   "summary": "The same device search used by the collector.",
   "notes": [
-    "The collector GETs /search/ on /api/v1 after POST /access_token/. This mock returns one device from the search.",
-    "The token route is not modeled. The AQL string is ignored.",
+    "The collector GETs /api/v1/search/ and reads data.results and data.next. It sends from and length.",
+    "next is 0 so paging stops. The access token route is not modeled. The AQL string is ignored.",
     "The Armis platform page was not an API reference. A bearer token is required."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
@@ -23,8 +23,8 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://www.armis.com/platform/",
       "notes": [
-        "The collector GETs /search/ on /api/v1 after POST /access_token/. This mock returns one device from the search.",
-        "The token route is not modeled. The AQL string is ignored.",
+        "The collector GETs /api/v1/search/ and reads data.results and data.next. It sends from and length.",
+        "next is 0 so paging stops. The access token route is not modeled. The AQL string is ignored.",
         "The Armis platform page was not an API reference. A bearer token is required."
       ],
       "verification": {
@@ -32,8 +32,8 @@
         "docUrl": "https://www.armis.com/platform/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The collector GETs /search/ on /api/v1 after POST /access_token/. This mock returns one device from the search.",
-          "The token route is not modeled. The AQL string is ignored.",
+          "The collector GETs /api/v1/search/ and reads data.results and data.next. It sends from and length.",
+          "next is 0 so paging stops. The access token route is not modeled. The AQL string is ignored.",
           "The Armis platform page was not an API reference. A bearer token is required."
         ]
       }
@@ -81,6 +81,11 @@
                       }
                     ]
                   }
+                },
+                {
+                  "name": "next",
+                  "kind": "const",
+                  "constValue": 0
                 }
               ]
             }

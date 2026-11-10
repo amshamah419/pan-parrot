@@ -750,28 +750,16 @@ export const panSiemVerifiedPresets = [
     id: "paloaltonetworks-prisma-airs-prismaairsruntime",
     name: "Palo Alto Networks Prisma AIRS - AI Runtime Security",
     pack: "PaloAltoNetworks_Prisma_AIRs",
-    summary: "Runtime scan plus the management profile list.",
+    summary: "Management profile list for AI Runtime Security.",
     docUrl: "https://docs.paloaltonetworks.com/ai-runtime-security/activation-and-onboarding/ai-runtime-security-api",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Prisma_AIRs/Integrations/PrismaAIRsRuntime",
     differences: [
-      "Runtime scan posts ai_profile and contents. PrismaAirsApiModule is not in this content checkout. This mock answers POST /v1/scan/sync/request with scan_id, action, and category.",
-      "GET /v1/mgmt/profiles/tsg/lab-tsg is the profiles list the client builds from MGMT_API_V1_PREFIX. API key create and DLP profiles are not modeled.",
+      "The runtime scan URL is built in PrismaAirsApiModule, which is not in this checkout. POST /v1/scan/sync/request was removed because that path is not in the checked client.",
+      "GET /v1/mgmt/profiles/tsg/{tsg_id} is the profiles list. This mock uses tsg lab-tsg. API key create and DLP profiles are not modeled.",
       "The runtime API page was not reloaded. A bearer token is required.",
     ],
     auth: bearer,
     operations: [
-      jsonOp(
-        "scan",
-        "POST",
-        "/v1/scan/sync/request",
-        "Scan a prompt",
-        object("body", [
-          field("scan_id", "id"),
-          field("action", "enum", { enumValues: ["allow", "block"] }),
-          field("category", "const", { constValue: "benign" }),
-          field("prompt_detected", "const", { constValue: false }),
-        ]),
-      ),
       jsonOp(
         "profiles",
         "GET",
@@ -1286,7 +1274,13 @@ export const panSiemVerifiedPresets = [
         record: object("network", [
           field("id", "id"),
           field("name", "string", { example: "lab-network" }),
-          field("productTypes", "const", { constValue: "appliance" }),
+          {
+            name: "productTypes",
+            kind: "array",
+            minItems: 1,
+            maxItems: 1,
+            item: field("type", "const", { constValue: "appliance" }),
+          },
         ]),
       }),
     ],

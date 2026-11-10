@@ -7,7 +7,7 @@
   "curated": true,
   "summary": "GET /web/api/v2.1/threats returns the data array.",
   "notes": [
-    "The threats list is { data: [...], pagination }. This mock returns data and ignores the pagination object. limit and cursor query parameters page the array.",
+    "get_threats_request GETs threats and reads response.data. It sends limit, not cursor. The live body also has pagination.nextCursor, which this mock does not emit.",
     "Activities and cloud detection alerts are separate routes in the event collector and are not modeled here.",
     "Authorization must be ApiToken plus the dummy token. The management console host is the catch URL."
   ],
@@ -28,7 +28,7 @@
         "docUrl": "https://usea1-partners.sentinelone.net/api-doc/overview",
         "checkedAt": "2026-11-09",
         "differences": [
-          "The threats list is { data: [...], pagination }. This mock returns data and ignores the pagination object. limit and cursor query parameters page the array.",
+          "get_threats_request GETs threats and reads response.data. It sends limit, not cursor. The live body also has pagination.nextCursor, which this mock does not emit.",
           "Activities and cloud detection alerts are separate routes in the event collector and are not modeled here.",
           "Authorization must be ApiToken plus the dummy token. The management console host is the catch URL."
         ]
@@ -39,7 +39,7 @@
         "headers": {},
         "contentType": "application/json; charset=utf-8",
         "pagination": {
-          "style": "cursor",
+          "style": "offset",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
@@ -130,7 +130,8 @@
       "authExpired": false,
       "authDenied": false,
       "authTokenFailure": false,
-      "authClockSkew": false
+      "authClockSkew": false,
+      "graphqlErrors": false
     },
     "totalRecords": 500,
     "auth": {

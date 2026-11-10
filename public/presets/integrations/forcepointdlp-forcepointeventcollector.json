@@ -5,11 +5,11 @@
   "vendor": "Forcepoint",
   "fidelity": "verified",
   "curated": true,
-  "summary": "DLP incidents for the collector.",
+  "summary": "POST /dlp/rest/v1/incidents returns incidents.",
   "notes": [
-    "Forcepoint DLP API pages were not loaded. The client base is /dlp/rest/v1 and GETs /incidents.",
-    "This mock returns one incident. The refresh-token route is not modeled.",
-    "A bearer token is required."
+    "get_incidents POSTs /incidents on a base of /dlp/rest/v1 and reads incidents. The earlier mock used GET.",
+    "Each incident keeps id and event_time, which the collector stores. POST /auth/refresh-token is not modeled.",
+    "Later calls send Authorization Bearer. A bearer token is required."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ForcepointDLP/Integrations/ForcepointEventCollector",
@@ -23,25 +23,25 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ForcepointDLP/Integrations/ForcepointEventCollector",
       "notes": [
-        "Forcepoint DLP API pages were not loaded. The client base is /dlp/rest/v1 and GETs /incidents.",
-        "This mock returns one incident. The refresh-token route is not modeled.",
-        "A bearer token is required."
+        "get_incidents POSTs /incidents on a base of /dlp/rest/v1 and reads incidents. The earlier mock used GET.",
+        "Each incident keeps id and event_time, which the collector stores. POST /auth/refresh-token is not modeled.",
+        "Later calls send Authorization Bearer. A bearer token is required."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/ForcepointDLP/Integrations/ForcepointEventCollector",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Forcepoint DLP API pages were not loaded. The client base is /dlp/rest/v1 and GETs /incidents.",
-          "This mock returns one incident. The refresh-token route is not modeled.",
-          "A bearer token is required."
+          "get_incidents POSTs /incidents on a base of /dlp/rest/v1 and reads incidents. The earlier mock used GET.",
+          "Each incident keeps id and event_time, which the collector stores. POST /auth/refresh-token is not modeled.",
+          "Later calls send Authorization Bearer. A bearer token is required."
         ]
       }
     },
     "operations": [
       {
         "id": "incidents",
-        "method": "GET",
+        "method": "POST",
         "pathTemplate": "/dlp/rest/v1/incidents",
         "summary": "List incidents",
         "status": 200,
@@ -67,6 +67,11 @@
                     "kind": "id"
                   },
                   {
+                    "name": "event_time",
+                    "kind": "timestamp",
+                    "format": "iso"
+                  },
+                  {
                     "name": "severity",
                     "kind": "enum",
                     "enumValues": [
@@ -74,11 +79,6 @@
                       "medium",
                       "high"
                     ]
-                  },
-                  {
-                    "name": "action",
-                    "kind": "const",
-                    "constValue": "blocked"
                   }
                 ]
               }

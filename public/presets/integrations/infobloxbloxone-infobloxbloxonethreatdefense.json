@@ -5,11 +5,11 @@
   "vendor": "Infoblox",
   "fidelity": "verified",
   "curated": true,
-  "summary": "TIDE threat list. The client calls /tide/api/data/threats.",
+  "summary": "TIDE indicator lookup. The client reads threat[0].",
   "notes": [
-    "The BloxOne space did not return a public schema in this pass. GET /tide/api/data/threats is the client path. The body is { threats }.",
-    "Lookalike domains and named lists are not modeled.",
-    "Authorization is a token header."
+    "ip_command reads GET /tide/api/data/threats and threat[0].threat_level, class, type, and confidence. The array key is threat, not threats.",
+    "The client sends rlimit. Lookalike domains and named lists are not modeled.",
+    "Authorization is a token header. The BloxOne space was not reloaded."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/InfobloxBloxOne/Integrations/InfobloxBloxOneThreatDefense",
@@ -23,18 +23,18 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.infoblox.com/space/BloxOneThreatDefense/",
       "notes": [
-        "The BloxOne space did not return a public schema in this pass. GET /tide/api/data/threats is the client path. The body is { threats }.",
-        "Lookalike domains and named lists are not modeled.",
-        "Authorization is a token header."
+        "ip_command reads GET /tide/api/data/threats and threat[0].threat_level, class, type, and confidence. The array key is threat, not threats.",
+        "The client sends rlimit. Lookalike domains and named lists are not modeled.",
+        "Authorization is a token header. The BloxOne space was not reloaded."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://docs.infoblox.com/space/BloxOneThreatDefense/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The BloxOne space did not return a public schema in this pass. GET /tide/api/data/threats is the client path. The body is { threats }.",
-          "Lookalike domains and named lists are not modeled.",
-          "Authorization is a token header."
+          "ip_command reads GET /tide/api/data/threats and threat[0].threat_level, class, type, and confidence. The array key is threat, not threats.",
+          "The client sends rlimit. Lookalike domains and named lists are not modeled.",
+          "Authorization is a token header. The BloxOne space was not reloaded."
         ]
       }
     },
@@ -48,7 +48,7 @@
         "list": true,
         "envelope": {
           "type": "wrapped",
-          "arrayKey": "threats"
+          "arrayKey": "threat"
         },
         "record": {
           "name": "threat",
@@ -62,22 +62,22 @@
               "name": "type",
               "kind": "enum",
               "enumValues": [
-                "HOST",
-                "IP",
-                "URL"
+                "ip",
+                "host",
+                "url"
               ]
             },
             {
-              "name": "host",
+              "name": "class",
               "kind": "string",
-              "example": "bad.example"
-            },
-            {
-              "name": "detected",
-              "kind": "timestamp"
+              "example": "Malware"
             },
             {
               "name": "threat_level",
+              "kind": "integer"
+            },
+            {
+              "name": "confidence",
               "kind": "integer"
             }
           ]
@@ -86,7 +86,7 @@
         "contentType": "application/json; charset=utf-8",
         "pagination": {
           "style": "offset",
-          "limitParam": "limit",
+          "limitParam": "rlimit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",

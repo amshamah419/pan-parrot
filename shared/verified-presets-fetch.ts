@@ -726,13 +726,13 @@ export const fetchVerifiedPresets = [
     name: "Infoblox Threat Defense",
     pack: "InfobloxBloxOne",
     vendor: "Infoblox",
-    summary: "TIDE threat list. The client calls /tide/api/data/threats.",
+    summary: "TIDE indicator lookup. The client reads threat[0].",
     docUrl: "https://docs.infoblox.com/space/BloxOneThreatDefense/",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/InfobloxBloxOne/Integrations/InfobloxBloxOneThreatDefense",
     differences: [
-      "The BloxOne space did not return a public schema in this pass. GET /tide/api/data/threats is the client path. The body is { threats }.",
-      "Lookalike domains and named lists are not modeled.",
-      "Authorization is a token header.",
+      "ip_command reads GET /tide/api/data/threats and threat[0].threat_level, class, type, and confidence. The array key is threat, not threats.",
+      "The client sends rlimit. Lookalike domains and named lists are not modeled.",
+      "Authorization is a token header. The BloxOne space was not reloaded.",
     ],
     auth: key("Authorization", "Token dummy-key"),
     operations: [
@@ -743,14 +743,14 @@ export const fetchVerifiedPresets = [
         summary: "List threats",
         status: 200,
         list: true,
-        envelope: { type: "wrapped", arrayKey: "threats" },
-        pagination: { style: "offset" },
+        envelope: { type: "wrapped", arrayKey: "threat" },
+        pagination: { style: "offset", limitParam: "rlimit" },
         record: object("threat", [
           field("id", "id"),
-          field("type", "enum", { enumValues: ["HOST", "IP", "URL"] }),
-          field("host", "string", { example: "bad.example" }),
-          field("detected", "timestamp"),
+          field("type", "enum", { enumValues: ["ip", "host", "url"] }),
+          field("class", "string", { example: "Malware" }),
           field("threat_level", "integer"),
+          field("confidence", "integer"),
         ]),
       }),
     ],
@@ -1000,31 +1000,69 @@ export const fetchVerifiedPresets = [
     name: "Cybereason",
     pack: "Cybereason",
     vendor: "Cybereason",
-    summary: "Malop inbox. The client posts /rest/detection/inbox.",
+    summary: "Malop query. The client posts /rest/crimes/unified.",
     docUrl: "https://github.com/demisto/content/blob/master/Packs/Cybereason/Integrations/Cybereason/Cybereason.py",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Cybereason/Integrations/Cybereason",
     differences: [
-      "Nest API docs require a customer login. POST /rest/detection/inbox is the public client path. This mock returns { malops }.",
-      "A malop keeps guid, displayName, severity, and creationTime.",
+      "query_malops posts /rest/crimes/unified and reads data.resultIdToElementDataMap. simpleValues.creationTime.values[0] and managementStatus.values[0] are the fields it keeps.",
+      "POST /rest/detection/inbox exists in the file and is not called. The old { malops } envelope was not what the command parses.",
       "Basic auth is the console user. Isolate and remediate are not modeled.",
     ],
     auth: basic,
     operations: [
       op({
-        id: "malop-inbox",
+        id: "malops",
         method: "POST",
-        pathTemplate: "/rest/detection/inbox",
-        summary: "List malops",
+        pathTemplate: "/rest/crimes/unified",
+        summary: "Query malops",
         status: 200,
-        list: true,
-        envelope: { type: "wrapped", arrayKey: "malops" },
-        pagination: { style: "offset" },
-        record: object("malop", [
-          field("guid", "uuid"),
-          field("displayName", "string", { example: "Malicious process" }),
-          field("severity", "enum", { enumValues: ["Low", "Medium", "High"] }),
-          field("creationTime", "timestamp"),
-          field("status", "enum", { enumValues: ["Open", "Closed"] }),
+        list: false,
+        envelope: { type: "object" },
+        pagination: { style: "none" },
+        record: object("body", [
+          object("data", [
+            object("resultIdToElementDataMap", [
+              object("11111111-1111-4111-8111-111111111111", [
+                object("simpleValues", [
+                  object("managementStatus", [
+                    { name: "values", kind: "array", minItems: 1, maxItems: 1, item: field("value", "const", { constValue: "Active" }) },
+                  ]),
+                  object("creationTime", [
+                    { name: "values", kind: "array", minItems: 1, maxItems: 1, item: field("value", "const", { constValue: "1600000000000" }) },
+                  ]),
+                  object("malopLastUpdateTime", [
+                    { name: "values", kind: "array", minItems: 1, maxItems: 1, item: field("value", "const", { constValue: "1600000001000" }) },
+                  ]),
+                  object("decisionFeature", [
+                    { name: "values", kind: "array", minItems: 1, maxItems: 1, item: field("value", "const", { constValue: "Process.lab" }) },
+                  ]),
+                ]),
+                object("elementValues", [
+                  object("suspects", [
+                    {
+                      name: "elementValues",
+                      kind: "array",
+                      minItems: 1,
+                      maxItems: 1,
+                      item: object("suspect", [
+                        field("elementType", "const", { constValue: "Process" }),
+                        field("name", "const", { constValue: "lab.exe" }),
+                      ]),
+                    },
+                  ]),
+                  object("affectedMachines", [
+                    {
+                      name: "elementValues",
+                      kind: "array",
+                      minItems: 1,
+                      maxItems: 1,
+                      item: object("machine", [field("name", "const", { constValue: "lab-host" })]),
+                    },
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]),
         ]),
       }),
     ],

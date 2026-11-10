@@ -320,13 +320,16 @@ export const identityVerifiedPresets = [
     docUrl: "https://www.armis.com/platform/",
     sourceUrl: gh("Armis", "ArmisEventCollector"),
     differences: [
-      "The collector GETs /search/ on /api/v1 after POST /access_token/. This mock returns one device from the search.",
-      "The token route is not modeled. The AQL string is ignored.",
+      "The collector GETs /api/v1/search/ and reads data.results and data.next. It sends from and length.",
+      "next is 0 so paging stops. The access token route is not modeled. The AQL string is ignored.",
       "The Armis platform page was not an API reference. A bearer token is required.",
     ],
     auth: bearer,
     operations: [jsonOp("search", "GET", "/api/v1/search", "Search devices", object("body", [
-      object("data", [listField("results", "device", [field("id", "id"), field("ipAddress", "ip"), field("type", "const", { constValue: "PLC" })])]),
+      object("data", [
+        listField("results", "device", [field("id", "id"), field("ipAddress", "ip"), field("type", "const", { constValue: "PLC" })]),
+        field("next", "const", { constValue: 0 }),
+      ]),
     ]))],
   }),
   preset({
@@ -455,13 +458,25 @@ export const identityVerifiedPresets = [
     docUrl: "https://docs.securitytrails.com/docs/overview",
     sourceUrl: gh("RecordedFutureASI", "RecordedFutureASI"),
     differences: [
-      "The client base is https://api.securitytrails.com/v1/asi and GETs /rules/{project}/{snapshot}/issues. This mock uses project lab-project and snapshot latest.",
-      "Activity history is not modeled.",
+      "The client base is hardcoded to https://api.securitytrails.com/v1/asi. Fetch calls /rules/{project}/recent/issues and reads data plus meta.snapshot.",
+      "The earlier mock used snapshot latest and an issues array. Activity history is not modeled.",
       "The SecurityTrails overview was not reloaded. The API key header is the dummy key.",
     ],
     auth: headerKey("APIKEY"),
-    operations: [jsonOp("issues", "GET", "/v1/asi/rules/lab-project/latest/issues", "List issues", object("body", [
-      listField("issues", "issue", [field("id", "id"), field("host", "string", { example: "lab.example" }), field("severity", "enum", { enumValues: ["low", "medium", "high"] })]),
+    operations: [jsonOp("issues", "GET", "/v1/asi/rules/lab-project/recent/issues", "List issues", object("body", [
+      object("meta", [field("snapshot", "const", { constValue: "recent" })]),
+      listField("data", "rule", [
+        field("name", "string", { example: "Open admin port" }),
+        field("description", "string", { example: "An admin port is exposed" }),
+        field("classification", "enum", { enumValues: ["informational", "moderate", "high"] }),
+        object("example_entities", [
+          { name: "domains", kind: "array", minItems: 1, maxItems: 1, item: field("domain", "const", { constValue: "lab.example" }) },
+          { name: "ips", kind: "array", minItems: 1, maxItems: 1, item: field("ip", "const", { constValue: "203.0.113.10" }) },
+        ]),
+        object("rule_metadata", [
+          object("entity_counts", [field("domains", "integer"), field("ips", "integer")]),
+        ]),
+      ]),
     ]))],
   }),
   preset({

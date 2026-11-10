@@ -47,7 +47,7 @@ Status: **done**, **in progress**, **todo**.
 
 ## Done through this PR
 
-The studio can sign in a `@paloaltonetworks.com` address, build a mock from a verified preset, a guessed catalog shape, an OpenAPI or SOAP document, or an in-progress integration YAML, then answer the catch URL with chaos, pagination, auth, flow, GraphQL, and AWS query XML. Push, share, version history, pytest export, and the request log (search, copy as cURL or Python, replay, and a side-by-side diff) are in place. Dark mode follows the system. CI runs typecheck, Vitest, the production build, and Playwright. 236 of 1338 presets are verified.
+The studio can sign in a `@paloaltonetworks.com` address, build a mock from a verified preset, a guessed catalog shape, an OpenAPI or SOAP document, or an in-progress integration YAML, then answer the catch URL with chaos, pagination, auth, flow, GraphQL, and AWS query XML. Push, share, version history, pytest export, and the request log (search, copy as cURL or Python, replay, and a side-by-side diff) are in place. Dark mode follows the system. CI runs typecheck, Vitest, the production build, and Playwright. 236 of 1338 presets are verified. A re-check of 25 presets, seeded so every batch was included, found 12 mismatches. Those 12 were fixed. None were downgraded.
 
 ## Go-live steps for Andrew
 
