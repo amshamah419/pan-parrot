@@ -53,7 +53,8 @@ describe("xml, zip, and mock credentials", () => {
     const op = await app.request("/catch/panos/api?type=op&key=dummy-panos-api-key&cmd=%3Cshow%3E%3Csystem%3E%3Cinfo/%3E%3C/system%3E%3C/show%3E");
     const opBody = await op.text();
     expect(opBody).toContain('status="success"');
-    expect(opBody).toContain("<hostname>lab-fw</hostname>");
+    expect(opBody).toContain("<hostname>firewall</hostname>");
+    expect(opBody).toContain("<model>PA-3020</model>");
     const logs = await app.request("/catch/panos/api?type=log&action=get&job-id=1&nlogs=2&key=dummy-panos-api-key");
     const logBody = await logs.text();
     expect(logBody.match(/<entry /g)?.length).toBe(2);

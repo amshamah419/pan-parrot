@@ -81,7 +81,16 @@ describe("AWS command coverage", () => {
     const zscaler = sums(covered.filter((preset) => preset.id.startsWith("zscaler-")));
     expect(zscaler).toEqual({ vendor: 0, approximate: 6, missing: 45 });
     const panos = sums(covered.filter((preset) => preset.id === "pan-os-panorama"));
-    expect(panos).toEqual({ vendor: 0, approximate: 0, missing: 289 });
+    expect(panos).toEqual({ vendor: 2, approximate: 223, missing: 64 });
+    const panosSpec = JSON.parse(readFileSync("public/presets/integrations/pan-os-panorama.json", "utf8")) as {
+      spec: Parameters<typeof validateMockSpec>[0];
+    };
+    const showDevice = validateMockSpec(panosSpec.spec).source.commandDocs?.find(
+      (row) => row.command === "pan-os-show-device-version",
+    );
+    expect(showDevice).toMatchObject({ status: "vendor", calls: ["GET /api?type=op&cmd=<show><system><info/></system></show>"] });
+    const showInfo = validateMockSpec(panosSpec.spec).operations.find((item) => item.id === "show-system-info-closed");
+    expect(showInfo?.fixture).toContain("<hostname>firewall</hostname>");
     const prisma = sums(covered.filter((preset) => preset.id.startsWith("prismacloud")));
     expect(prisma).toEqual({ vendor: 0, approximate: 4, missing: 81 });
     const virustotal = sums(covered.filter((preset) => preset.id.startsWith("virustotal-")));

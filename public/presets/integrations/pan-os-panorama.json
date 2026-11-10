@@ -3,15 +3,13 @@
   "name": "Palo Alto Networks PAN-OS",
   "pack": "PAN-OS",
   "vendor": "Palo Alto Networks",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "XML API for keygen, op, config, commit, and job polling.",
+  "summary": "XML API for keygen, op, config, commit, and job polling. Show system info is the published PAN-OS example.",
   "notes": [
-    "XSOAR calls GET /api/ with type=keygen, type=op, type=config, type=commit, and type=log. The body is the PAN-OS XML response.",
-    "type=commit returns a job id. Poll that job with type=op and job=10. A log query uses type=log, then type=log and action=get. nlogs is capped at 500.",
-    "The real show-jobs command is an XML cmd on type=op. This mock uses job= as a short poll. Export and user-id are not modeled. The dummy key is not a firewall credential."
+    "XSOAR calls GET or POST /api/ with type=keygen, type=op, type=config, type=commit, and type=log. Show system info returns the XML example from the PAN-OS XML API docs. Other commands stay approximate. type=commit returns a job id. Poll that job with type=op and job=10. A log query uses type=log, then type=log and action=get. nlogs is capped at 500. The real show-jobs command is an XML cmd on type=op. This mock uses job= as a short poll. Export, import, version, and user-id are not modeled. The dummy key is not a firewall credential."
   ],
-  "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+  "attribution": "Show system info is the example on the PAN-OS XML API docs. Other fields follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PAN-OS/Integrations/Panorama",
   "spec": {
     "version": 1,
@@ -19,250 +17,511 @@
       "kind": "preset",
       "id": "pan-os-panorama",
       "name": "Palo Alto Networks PAN-OS",
-      "fidelity": "approximate",
-      "attribution": "Vendor public API reference plus demisto/content (MIT).",
-      "sourceUrl": "https://docs.paloaltonetworks.com/ngfw/api/pan-os",
+      "fidelity": "vendor",
+      "attribution": "PAN-OS XML API docs plus demisto/content (MIT).",
+      "sourceUrl": "https://docs.paloaltonetworks.com/ngfw/api/pan-os-xml-api-use-cases/query-a-firewall-from-panorama-api",
       "notes": [],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://docs.paloaltonetworks.com/ngfw/api/pan-os",
-        "checkedAt": "2026-11-09",
+        "status": "vendor",
+        "docUrl": "https://docs.paloaltonetworks.com/ngfw/api/pan-os-xml-api-use-cases/query-a-firewall-from-panorama-api",
+        "checkedAt": "2026-11-10",
         "differences": [
-          "XSOAR calls GET /api/ with type=keygen, type=op, type=config, type=commit, and type=log. The body is the PAN-OS XML response.",
-          "type=commit returns a job id. Poll that job with type=op and job=10. A log query uses type=log, then type=log and action=get. nlogs is capped at 500.",
-          "The real show-jobs command is an XML cmd on type=op. This mock uses job= as a short poll. Export and user-id are not modeled. The dummy key is not a firewall credential."
+          "XSOAR calls GET or POST /api/ with type=keygen, type=op, type=config, type=commit, and type=log. Show system info returns the XML example from the PAN-OS XML API docs. Other commands stay approximate. type=commit returns a job id. Poll that job with type=op and job=10. A log query uses type=log, then type=log and action=get. nlogs is capped at 500. The real show-jobs command is an XML cmd on type=op. This mock uses job= as a short poll. Export, import, version, and user-id are not modeled. The dummy key is not a firewall credential."
         ]
       },
       "commandDocs": [
         {
           "command": "panorama",
-          "calls": [],
+          "calls": [
+            "POST /api"
+          ],
           "status": "missing"
         },
         {
           "command": "panorama-get-predefined-threats-list",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><predefined><xpath>/predefined/threats</xpath></prede"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-commit",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>",
+            "POST /api?type=commit&action=partial&cmd=<commit>{command}</commit>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op",
+            "commit-post"
+          ]
         },
         {
           "command": "panorama-push-to-device-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{push_job_id}</id></jobs></show>",
+            "POST /api?type=commit&action=all&cmd=<commit-all><shared-policy>{command}</share"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op",
+            "commit-post"
+          ]
         },
         {
           "command": "pan-os-push-to-template",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=commit&action=all&cmd=<commit-all><template>{command}</template><"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "commit-post"
+          ]
         },
         {
           "command": "pan-os-push-to-template-stack",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=commit&action=all&cmd=<commit-all><template-stack>{command}</temp"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "commit-post"
+          ]
         },
         {
           "command": "panorama-list-addresses",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=address/entry[( tag/member = '{tag}')]"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-get-address",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath={XPATH_OBJECTS}address/entry[@name='{name"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-create-address",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={XPATH_OBJECTS}tag",
+            "POST /api?type=config&action=set&xpath={XPATH_OBJECTS}tag/entry[@name='{non_exis",
+            "POST /api?type=config&action=set&xpath=address/entry[@name='{address_name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config",
+            "config-post"
+          ]
         },
         {
           "command": "panorama-delete-address",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=address/entry[@name='{name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-list-address-groups",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=address-group/entry[( tag/member = '{tag}'"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-get-address-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=address-group/entry[@name='{name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-create-address-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath=address-group/entry[@name='{address_group"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-block-vulnerability",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><predefined><xpath>/predefined/threats</xpath></prede"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-delete-address-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=address-group/entry[@name='{name}']",
+            "POST /api?type=config&action=delete&xpath=address-group/entry[@name='{address_gr"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-edit-address-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=address-group/entry[@name='{name}']",
+            "POST /api?type=config&action=edit",
+            "POST /api?type=config&action=edit&xpath={XPATH_OBJECTS}address-group/entry[@name"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config",
+            "config-post"
+          ]
         },
         {
           "command": "panorama-list-services",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=service/entry[( tag/member = '{tag}')]"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-get-service",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=service/entry[@name='{name}']",
+            "GET /api?type=config&action=show&xpath=service/entry[@name='{service_name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-create-service",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath=service/entry[@name='{service_name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-delete-service",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=service/entry[@name='{name}']",
+            "POST /api?type=config&action=delete&xpath=service/entry[@name='{service_name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-list-service-groups",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=service-group/entry[( tag/member = '{tag}'"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-get-service-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=service-group/entry[@name='{name}']",
+            "GET /api?type=config&action=show&xpath=service-group/entry[@name='{service_group"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-create-service-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath=service-group/entry[@name='{service_group"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-delete-service-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=service-group/entry[@name='{name}']",
+            "POST /api?type=config&action=delete&xpath=service-group/entry[@name='{service_gr"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-edit-service-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=service-group/entry[@name='{service_group",
+            "POST /api?type=config&action=edit&xpath=service-group/entry[@name='{service_grou"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config",
+            "config-post"
+          ]
         },
         {
           "command": "panorama-get-custom-url-category",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=profiles/custom-url-category/entry[@name='"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-create-custom-url-category",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_OBJECTS}profiles/custom-url-catego"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-delete-custom-url-category",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=profiles/custom-url-category/entry[@na"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-edit-custom-url-category",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=profiles/custom-url-category/entry[@name='",
+            "POST /api?type=config&action=edit&xpath=profiles/custom-url-category/entry[@name"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config",
+            "config-post"
+          ]
         },
         {
           "command": "panorama-get-url-category",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&action=show&cmd=<test><url>{url}</url></test>",
+            "POST /api?type=op&action=show&cmd=<test><url-info-cloud>{url}</url-info-cloud></",
+            "POST /api?type=op&action=show&cmd=<test><url-info-host>{url}</url-info-host></te",
+            "POST /api?type=op&action=show&cmd=<test><{url_cmd}>{url}</{url_cmd}></test>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post"
+          ]
         },
         {
           "command": "panorama-get-url-category-from-cloud",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&action=show&cmd=<test><url>{url}</url></test>",
+            "POST /api?type=op&action=show&cmd=<test><url-info-cloud>{url}</url-info-cloud></",
+            "POST /api?type=op&action=show&cmd=<test><url-info-host>{url}</url-info-host></te",
+            "POST /api?type=op&action=show&cmd=<test><{url_cmd}>{url}</{url_cmd}></test>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post"
+          ]
         },
         {
           "command": "panorama-get-url-category-from-host",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&action=show&cmd=<test><url>{url}</url></test>",
+            "POST /api?type=op&action=show&cmd=<test><url-info-cloud>{url}</url-info-cloud></",
+            "POST /api?type=op&action=show&cmd=<test><url-info-host>{url}</url-info-host></te",
+            "POST /api?type=op&action=show&cmd=<test><{url_cmd}>{url}</{url_cmd}></test>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post"
+          ]
         },
         {
           "command": "panorama-get-url-filter",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={XPATH_OBJECTS}profiles/url-filtering/entr"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-create-url-filter",
-          "calls": [],
+          "calls": [
+            "POST /api"
+          ],
           "status": "missing"
         },
         {
           "command": "panorama-edit-url-filter",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=edit&xpath={XPATH_OBJECTS}profiles/url-filtering/en",
+            "GET /api?type=config&action=get&xpath={XPATH_OBJECTS}profiles/url-filtering/entr"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post",
+            "config"
+          ]
         },
         {
           "command": "panorama-delete-url-filter",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=profiles/url-filtering/entry[@name='{n",
+            "POST /api?type=config&action=delete&xpath=profiles/url-filtering/entry[@name='{u"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-list-edls",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=external-list/entry"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-get-edl",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=external-list/entry[@name='{name}']",
+            "GET /api?type=config&action=show&xpath=external-list/entry[@name='{edl_name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-create-edl",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath=external-list/entry[@name='{name}']/type/"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-edit-edl",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=edit&xpath={XPATH_OBJECTS}external-list/entry[@name",
+            "GET /api?type=config&action=show&xpath=external-list/entry[@name='{edl_name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post",
+            "config"
+          ]
         },
         {
           "command": "panorama-delete-edl",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=external-list/entry[@name='{name}']",
+            "POST /api?type=config&action=delete&xpath=external-list/entry[@name='{edl_name}'"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-refresh-edl",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&cmd=<request><system><external-list><refresh><type><{edl_type}",
+            "GET /api?type=config&action=show&xpath=external-list/entry[@name='{name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post",
+            "config"
+          ]
         },
         {
           "command": "panorama-create-rule",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api",
+            "POST /api?type=config&action=move"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-custom-block-rule",
-          "calls": [],
+          "calls": [
+            "POST /api"
+          ],
           "status": "missing"
         },
         {
           "command": "panorama-move-rule",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=move"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-edit-rule",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set",
+            "POST /api?type=config&action=set&xpath={expr}/log-setting",
+            "POST /api?type=config&action=edit",
+            "GET /api?type=config&action=get&xpath={expr}/log-setting"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post",
+            "config"
+          ]
         },
         {
           "command": "panorama-delete-rule",
@@ -271,223 +530,438 @@
         },
         {
           "command": "panorama-list-applications",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=get&xpath=application/entry"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-commit-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-push-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-get-pcap",
-          "calls": [],
+          "calls": [
+            "GET /api?type=export"
+          ],
           "status": "missing"
         },
         {
           "command": "panorama-list-pcaps",
-          "calls": [],
+          "calls": [
+            "GET /api?type=export"
+          ],
           "status": "missing"
         },
         {
           "command": "panorama-register-ip-tag",
-          "calls": [],
+          "calls": [
+            "POST /api?type=user-id&cmd=<uid-message><version>2.0</version><type>update</type",
+            "GET /api?type=version"
+          ],
           "status": "missing"
         },
         {
           "command": "panorama-unregister-ip-tag",
-          "calls": [],
+          "calls": [
+            "POST /api?type=user-id&cmd=<uid-message><version>2.0</version><type>update</type"
+          ],
           "status": "missing"
         },
         {
           "command": "panorama-register-user-tag",
-          "calls": [],
+          "calls": [
+            "POST /api?type=user-id&cmd=<uid-message><version>2.0</version><type>update</type",
+            "GET /api?type=version"
+          ],
           "status": "missing"
         },
         {
           "command": "panorama-unregister-user-tag",
-          "calls": [],
+          "calls": [
+            "POST /api?type=user-id&cmd=<uid-message><version>2.0</version><type>update</type",
+            "GET /api?type=version"
+          ],
           "status": "missing"
         },
         {
           "command": "panorama-query-traffic-logs",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=log"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "log-job"
+          ]
         },
         {
           "command": "panorama-check-traffic-logs-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=log&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "log-get"
+          ]
         },
         {
           "command": "panorama-get-traffic-logs",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=log&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "log-get"
+          ]
         },
         {
           "command": "panorama-list-rules",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={expr}[{xpath_filter}]"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-query-logs",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=log",
+            "GET /api?type=log&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "log-job",
+            "log-get"
+          ]
         },
         {
           "command": "panorama-check-logs-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=log&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "log-get"
+          ]
         },
         {
           "command": "panorama-get-logs",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=log&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "log-get"
+          ]
         },
         {
           "command": "panorama-security-policy-match",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-list-static-routes",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={xpath_network}/virtual-router/entry[@name"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-get-static-route",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={xpath_network}/virtual-router/entry[@name"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-add-static-route",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=set&xpath={xpath_network}/virtual-router/entry[@name",
+            "GET /api?type=version"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-delete-static-route",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "DELETE /api?type=config&action=delete&xpath={xpath_network}/virtual-router/entry"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-delete"
+          ]
         },
         {
           "command": "panorama-show-device-version",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><system><info/></system></show>"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "show-system-info-closed"
+          ],
+          "docUrl": "https://docs.paloaltonetworks.com/ngfw/api/pan-os-xml-api-use-cases/query-a-firewall-from-panorama-api"
         },
         {
           "command": "panorama-download-latest-content-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&cmd=<request><{value}><upgrade><download><latest/></download><",
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post",
+            "op"
+          ]
         },
         {
           "command": "panorama-content-update-download-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-install-latest-content-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><{value}><upgrade><install><version>latest</versio",
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-content-update-install-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-check-latest-panos-software",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><system><software><check></check></software></syst"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-download-panos-version",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><system><software><download><version>{target_versi"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-download-panos-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-install-panos-version",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><system><software><install><version>{target_versio"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-install-panos-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-device-reboot",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><restart><system></system></restart></request>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-show-location-ip",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><location><ip>{ip_address}</ip></location></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-get-licenses",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><license><info/></license></request>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "panorama-get-security-profiles",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={XPATH_RULEBASE}profiles"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-apply-security-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={XPATH_RULEBASE}rulebase/security/rules/en",
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}rulebase/security/rules/e"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config",
+            "config-post"
+          ]
         },
         {
           "command": "panorama-get-ssl-decryption-rules",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-get-wildfire-configuration",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get",
+            "GET /api?type=config&action=get&xpath=/config/devices/entry[@name='localhost.loc"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-url-filtering-block-default-categories",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/url-filtering/en"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-get-anti-spyware-best-practice",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=/config/predefined/profiles/spyware"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-get-file-blocking-best-practice",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=/config/predefined/profiles/file-blocking"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-get-antivirus-best-practice",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=/config/predefined/profiles/virus"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-get-vulnerability-protection-best-practice",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=/config/predefined/profiles/vulnerability"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-get-wildfire-best-practice",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=/config/predefined/profiles/wildfire-analy"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-get-url-filtering-best-practice",
@@ -496,303 +970,637 @@
         },
         {
           "command": "panorama-enforce-wildfire-best-practice",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath=/config/devices/entry[@name='localhost.lo"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-create-antivirus-best-practice-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/virus/entry[@nam"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-create-anti-spyware-best-practice-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/spyware/entry[@n"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-create-vulnerability-best-practice-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/vulnerability/en"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-create-url-filtering-best-practice-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/url-filtering/en"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-create-file-blocking-best-practice-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/file-blocking/en"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-create-wildfire-best-practice-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/wildfire-analysi"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "panorama-show-user-id-interfaces-config",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=/config/devices/entry[@name='localhost.lo"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-show-zones-config",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=/config/devices/entry[@name='localhost.lo"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-list-configured-user-id-agents",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=/config/devices/entry[@name='localhost.lo",
+            "GET /api?type=version"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "panorama-upload-content-update-file",
-          "calls": [],
+          "calls": [
+            "POST /api?type=import"
+          ],
           "status": "missing"
         },
         {
           "command": "panorama-install-file-content-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><{category}><upgrade><install><file>{version_name}"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os",
-          "calls": [],
+          "calls": [
+            "POST /api"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-get-predefined-threats-list",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><predefined><xpath>/predefined/threats</xpath></prede"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-commit",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>",
+            "POST /api?type=commit&action=partial&cmd=<commit>{command}</commit>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op",
+            "commit-post"
+          ]
         },
         {
           "command": "pan-os-push-to-device-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{push_job_id}</id></jobs></show>",
+            "POST /api?type=commit&action=all&cmd=<commit-all><shared-policy>{command}</share"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op",
+            "commit-post"
+          ]
         },
         {
           "command": "pan-os-list-addresses",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=address/entry[( tag/member = '{tag}')]"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-get-address",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath={XPATH_OBJECTS}address/entry[@name='{name"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-create-address",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={XPATH_OBJECTS}tag",
+            "POST /api?type=config&action=set&xpath={XPATH_OBJECTS}tag/entry[@name='{non_exis",
+            "POST /api?type=config&action=set&xpath=address/entry[@name='{address_name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config",
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-edit-address",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=edit&xpath={XPATH_OBJECTS}address/entry[@name=\"{nam"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-delete-address",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=address/entry[@name='{name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-list-address-groups",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=address-group/entry[( tag/member = '{tag}'"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-get-address-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=address-group/entry[@name='{name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-create-address-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath=address-group/entry[@name='{address_group"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-block-vulnerability",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><predefined><xpath>/predefined/threats</xpath></prede"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-delete-address-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=address-group/entry[@name='{name}']",
+            "POST /api?type=config&action=delete&xpath=address-group/entry[@name='{address_gr"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-edit-address-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=address-group/entry[@name='{name}']",
+            "POST /api?type=config&action=edit",
+            "POST /api?type=config&action=edit&xpath={XPATH_OBJECTS}address-group/entry[@name"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config",
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-list-services",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=service/entry[( tag/member = '{tag}')]"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-get-service",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=service/entry[@name='{name}']",
+            "GET /api?type=config&action=show&xpath=service/entry[@name='{service_name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-create-service",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath=service/entry[@name='{service_name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-delete-service",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=service/entry[@name='{name}']",
+            "POST /api?type=config&action=delete&xpath=service/entry[@name='{service_name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-list-service-groups",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=service-group/entry[( tag/member = '{tag}'"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-get-service-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=service-group/entry[@name='{name}']",
+            "GET /api?type=config&action=show&xpath=service-group/entry[@name='{service_group"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-create-service-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath=service-group/entry[@name='{service_group"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-delete-service-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=service-group/entry[@name='{name}']",
+            "POST /api?type=config&action=delete&xpath=service-group/entry[@name='{service_gr"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-edit-service-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=service-group/entry[@name='{service_group",
+            "POST /api?type=config&action=edit&xpath=service-group/entry[@name='{service_grou"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config",
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-get-custom-url-category",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=profiles/custom-url-category/entry[@name='"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-create-custom-url-category",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_OBJECTS}profiles/custom-url-catego"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-delete-custom-url-category",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=profiles/custom-url-category/entry[@na"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-edit-custom-url-category",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=profiles/custom-url-category/entry[@name='",
+            "POST /api?type=config&action=edit&xpath=profiles/custom-url-category/entry[@name"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config",
+            "config-post"
+          ]
         },
         {
           "command": "url",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&action=show&cmd=<test><url>{url}</url></test>",
+            "POST /api?type=op&action=show&cmd=<test><url-info-cloud>{url}</url-info-cloud></",
+            "POST /api?type=op&action=show&cmd=<test><url-info-host>{url}</url-info-host></te",
+            "POST /api?type=op&action=show&cmd=<test><{url_cmd}>{url}</{url_cmd}></test>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post"
+          ]
         },
         {
           "command": "pan-os-get-url-category",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&action=show&cmd=<test><url>{url}</url></test>",
+            "POST /api?type=op&action=show&cmd=<test><url-info-cloud>{url}</url-info-cloud></",
+            "POST /api?type=op&action=show&cmd=<test><url-info-host>{url}</url-info-host></te",
+            "POST /api?type=op&action=show&cmd=<test><{url_cmd}>{url}</{url_cmd}></test>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post"
+          ]
         },
         {
           "command": "pan-os-get-url-category-from-cloud",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&action=show&cmd=<test><url>{url}</url></test>",
+            "POST /api?type=op&action=show&cmd=<test><url-info-cloud>{url}</url-info-cloud></",
+            "POST /api?type=op&action=show&cmd=<test><url-info-host>{url}</url-info-host></te",
+            "POST /api?type=op&action=show&cmd=<test><{url_cmd}>{url}</{url_cmd}></test>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post"
+          ]
         },
         {
           "command": "pan-os-get-url-category-from-host",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&action=show&cmd=<test><url>{url}</url></test>",
+            "POST /api?type=op&action=show&cmd=<test><url-info-cloud>{url}</url-info-cloud></",
+            "POST /api?type=op&action=show&cmd=<test><url-info-host>{url}</url-info-host></te",
+            "POST /api?type=op&action=show&cmd=<test><{url_cmd}>{url}</{url_cmd}></test>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post"
+          ]
         },
         {
           "command": "pan-os-get-url-filter",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={XPATH_OBJECTS}profiles/url-filtering/entr"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-create-url-filter",
-          "calls": [],
+          "calls": [
+            "POST /api"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-edit-url-filter",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=edit&xpath={XPATH_OBJECTS}profiles/url-filtering/en",
+            "GET /api?type=config&action=get&xpath={XPATH_OBJECTS}profiles/url-filtering/entr"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post",
+            "config"
+          ]
         },
         {
           "command": "pan-os-delete-url-filter",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=profiles/url-filtering/entry[@name='{n",
+            "POST /api?type=config&action=delete&xpath=profiles/url-filtering/entry[@name='{u"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-list-edls",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=external-list/entry"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-get-edl",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=external-list/entry[@name='{name}']",
+            "GET /api?type=config&action=show&xpath=external-list/entry[@name='{edl_name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-create-edl",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath=external-list/entry[@name='{name}']/type/"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-edit-edl",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=edit&xpath={XPATH_OBJECTS}external-list/entry[@name",
+            "GET /api?type=config&action=show&xpath=external-list/entry[@name='{edl_name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post",
+            "config"
+          ]
         },
         {
           "command": "pan-os-delete-edl",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete&xpath=external-list/entry[@name='{name}']",
+            "POST /api?type=config&action=delete&xpath=external-list/entry[@name='{edl_name}'"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-get-running-config",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-get-merged-config",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-refresh-edl",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&cmd=<request><system><external-list><refresh><type><{edl_type}",
+            "GET /api?type=config&action=show&xpath=external-list/entry[@name='{name}']"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post",
+            "config"
+          ]
         },
         {
           "command": "pan-os-create-rule",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api",
+            "POST /api?type=config&action=move"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-custom-block-rule",
-          "calls": [],
+          "calls": [
+            "POST /api"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-move-rule",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=move"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-edit-rule",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set",
+            "POST /api?type=config&action=set&xpath={expr}/log-setting",
+            "POST /api?type=config&action=edit",
+            "GET /api?type=config&action=get&xpath={expr}/log-setting"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post",
+            "config"
+          ]
         },
         {
           "command": "pan-os-delete-rule",
@@ -806,268 +1614,539 @@
         },
         {
           "command": "pan-os-list-applications",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=get&xpath=application/entry"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-commit-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-push-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-get-pcap",
-          "calls": [],
+          "calls": [
+            "GET /api?type=export"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-list-pcaps",
-          "calls": [],
+          "calls": [
+            "GET /api?type=export"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-register-ip-tag",
-          "calls": [],
+          "calls": [
+            "POST /api?type=user-id&cmd=<uid-message><version>2.0</version><type>update</type",
+            "GET /api?type=version"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-unregister-ip-tag",
-          "calls": [],
+          "calls": [
+            "POST /api?type=user-id&cmd=<uid-message><version>2.0</version><type>update</type"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-register-user-tag",
-          "calls": [],
+          "calls": [
+            "POST /api?type=user-id&cmd=<uid-message><version>2.0</version><type>update</type",
+            "GET /api?type=version"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-unregister-user-tag",
-          "calls": [],
+          "calls": [
+            "POST /api?type=user-id&cmd=<uid-message><version>2.0</version><type>update</type",
+            "GET /api?type=version"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-query-traffic-logs",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=log"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "log-job"
+          ]
         },
         {
           "command": "pan-os-check-traffic-logs-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=log&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "log-get"
+          ]
         },
         {
           "command": "pan-os-get-traffic-logs",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=log&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "log-get"
+          ]
         },
         {
           "command": "pan-os-list-rules",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={expr}[{xpath_filter}]"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-query-logs",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=log",
+            "GET /api?type=log&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "log-job",
+            "log-get"
+          ]
         },
         {
           "command": "pan-os-check-logs-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=log&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "log-get"
+          ]
         },
         {
           "command": "pan-os-get-logs",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=log&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "log-get"
+          ]
         },
         {
           "command": "pan-os-security-policy-match",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-list-static-routes",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={xpath_network}/virtual-router/entry[@name"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-get-static-route",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={xpath_network}/virtual-router/entry[@name"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-add-static-route",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=set&xpath={xpath_network}/virtual-router/entry[@name",
+            "GET /api?type=version"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-delete-static-route",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "DELETE /api?type=config&action=delete&xpath={xpath_network}/virtual-router/entry"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-delete"
+          ]
         },
         {
           "command": "pan-os-show-device-version",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><system><info/></system></show>"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "show-system-info-closed"
+          ],
+          "docUrl": "https://docs.paloaltonetworks.com/ngfw/api/pan-os-xml-api-use-cases/query-a-firewall-from-panorama-api"
         },
         {
           "command": "pan-os-check-dynamic-updates-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&cmd=<request><{value}><upgrade><check/></upgrade></{value}></r"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post"
+          ]
         },
         {
           "command": "pan-os-download-latest-content-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&cmd=<request><{value}><upgrade><download><latest/></download><",
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post",
+            "op"
+          ]
         },
         {
           "command": "pan-os-download-latest-antivirus-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&cmd=<request><{value}><upgrade><download><latest/></download><",
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post",
+            "op"
+          ]
         },
         {
           "command": "pan-os-download-latest-wildfire-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&cmd=<request><{value}><upgrade><download><latest/></download><",
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post",
+            "op"
+          ]
         },
         {
           "command": "pan-os-download-latest-gp-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=op&cmd=<request><{value}><upgrade><download><latest/></download><",
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op-post",
+            "op"
+          ]
         },
         {
           "command": "pan-os-content-update-download-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-install-latest-content-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><{value}><upgrade><install><version>latest</versio",
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-install-latest-antivirus-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><{value}><upgrade><install><version>latest</versio",
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-install-latest-wildfire-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><{value}><upgrade><install><version>latest</versio",
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-install-latest-gp-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><{value}><upgrade><install><version>latest</versio",
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-content-update-install-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-check-latest-panos-software",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><system><software><check></check></software></syst"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-download-panos-version",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><system><software><download><version>{target_versi"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-download-panos-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-install-panos-version",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><system><software><install><version>{target_versio"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-install-panos-status",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><jobs><id>{job_id}</id></jobs></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-device-reboot",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><restart><system></system></restart></request>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-show-location-ip",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<show><location><ip>{ip_address}</ip></location></show>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-get-licenses",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><license><info/></license></request>"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-get-security-profiles",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={XPATH_RULEBASE}profiles"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-apply-security-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={XPATH_RULEBASE}rulebase/security/rules/en",
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}rulebase/security/rules/e"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config",
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-remove-security-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={XPATH_RULEBASE}rulebase/security/rules/en",
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}rulebase/security/rules/e"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config",
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-get-ssl-decryption-rules",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-get-wildfire-configuration",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get",
+            "GET /api?type=config&action=get&xpath=/config/devices/entry[@name='localhost.loc"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-url-filtering-block-default-categories",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/url-filtering/en"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-get-anti-spyware-best-practice",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=/config/predefined/profiles/spyware"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-apply-dns-signature-policy",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath=/config/devices/entry[@name='localhost.lo"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-get-file-blocking-best-practice",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=/config/predefined/profiles/file-blocking"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-get-antivirus-best-practice",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=/config/predefined/profiles/virus"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-get-vulnerability-protection-best-practice",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=/config/predefined/profiles/vulnerability"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-get-wildfire-best-practice",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath=/config/predefined/profiles/wildfire-analy"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-get-url-filtering-best-practice",
@@ -1076,63 +2155,121 @@
         },
         {
           "command": "pan-os-enforce-wildfire-best-practice",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath=/config/devices/entry[@name='localhost.lo"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-create-antivirus-best-practice-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/virus/entry[@nam"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-create-anti-spyware-best-practice-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/spyware/entry[@n"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-create-vulnerability-best-practice-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/vulnerability/en"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-create-url-filtering-best-practice-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/url-filtering/en"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-create-file-blocking-best-practice-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/file-blocking/en"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-create-wildfire-best-practice-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set&xpath={XPATH_RULEBASE}profiles/wildfire-analysi"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-show-user-id-interfaces-config",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=/config/devices/entry[@name='localhost.lo"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-show-zones-config",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=/config/devices/entry[@name='localhost.lo"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-list-configured-user-id-agents",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=show&xpath=/config/devices/entry[@name='localhost.lo",
+            "GET /api?type=version"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-upload-content-update-file",
-          "calls": [],
+          "calls": [
+            "POST /api?type=import"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-install-file-content-update",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op&cmd=<request><{category}><upgrade><install><file>{version_name}"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-platform-get-arp-tables",
@@ -1291,167 +2428,319 @@
         },
         {
           "command": "pan-os-list-templates",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-list-nat-rules",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-create-nat-rule",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-delete-nat-rule",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-edit-nat-rule",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=edit"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-list-virtual-routers",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-list-redistribution-profiles",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-create-redistribution-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-edit-redistribution-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=edit"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-delete-redistribution-profile",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-list-pbf-rules",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-create-pbf-rule",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-edit-pbf-rule",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=edit"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-delete-pbf-rule",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-list-application-groups",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-create-application-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=set"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-edit-application-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=edit",
+            "GET /api?type=config&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post",
+            "config"
+          ]
         },
         {
           "command": "pan-os-delete-application-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "POST /api?type=config&action=delete"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config-post"
+          ]
         },
         {
           "command": "pan-os-list-tag",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-create-tag",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=set"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-edit-tag",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get",
+            "GET /api?type=config&action=edit"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-delete-tag",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=delete"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-list-device-groups",
-          "calls": [],
+          "calls": [
+            "GET /api?type=export&action=status",
+            "GET /api?type=export&action=get",
+            "GET /api?type=export"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-export-tech-support-file",
-          "calls": [],
+          "calls": [
+            "GET /api?type=export&action=status",
+            "GET /api?type=export&action=get",
+            "GET /api?type=export"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-list-security-profile-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={XPATH_RULEBASE}profile-group/entry"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-create-security-profile-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=set&xpath={XPATH_RULEBASE}profile-group/entry[@name="
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-edit-security-profile-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&xpath={XPATH_RULEBASE}profile-group/entry",
+            "GET /api?type=config&action=edit"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-delete-security-profile-group",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=delete&xpath={XPATH_RULEBASE}profile-group/entry[@na"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         },
         {
           "command": "pan-os-get-audit-comment",
-          "calls": [],
+          "calls": [
+            "GET /api"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-add-profile-exception",
-          "calls": [],
+          "calls": [
+            "GET /api"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-edit-profile-exception",
-          "calls": [],
+          "calls": [
+            "GET /api"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-delete-profile-exception",
-          "calls": [],
+          "calls": [
+            "GET /api"
+          ],
           "status": "missing"
         },
         {
           "command": "pan-os-list-profile-exception",
-          "calls": [],
+          "calls": [
+            "GET /api"
+          ],
           "status": "missing"
         },
         {
@@ -1461,23 +2750,43 @@
         },
         {
           "command": "pan-os-get-master-key-details",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-create-master-key",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-update-master-key",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=op"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "op"
+          ]
         },
         {
           "command": "pan-os-get-certificate-info",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "GET /api?type=config&action=get&cmd=show predefined&xpath=/config/predefined/cer"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "config"
+          ]
         }
       ]
     },
@@ -1954,6 +3263,322 @@
           "type": "log",
           "action": "get"
         }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "op-post",
+        "method": "POST",
+        "pathTemplate": "/api",
+        "summary": "Operational command (POST)",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "system",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "hostname",
+                      "kind": "string",
+                      "example": "lab-fw"
+                    },
+                    {
+                      "name": "sw-version",
+                      "kind": "const",
+                      "constValue": "11.1.0"
+                    },
+                    {
+                      "name": "model",
+                      "kind": "const",
+                      "constValue": "PA-VM"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "op"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "config-post",
+        "method": "POST",
+        "pathTemplate": "/api",
+        "summary": "Configuration command (POST)",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "entry",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "name",
+                      "kind": "string",
+                      "example": "localhost.localdomain",
+                      "xml": {
+                        "attribute": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "config"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "commit-post",
+        "method": "POST",
+        "pathTemplate": "/api",
+        "summary": "Commit (POST)",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "job",
+                  "kind": "const",
+                  "constValue": "10"
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "commit"
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "config-delete",
+        "method": "DELETE",
+        "pathTemplate": "/api",
+        "summary": "Configuration command (DELETE)",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "entry",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "name",
+                      "kind": "string",
+                      "example": "localhost.localdomain",
+                      "xml": {
+                        "attribute": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "queryMatch": {
+          "type": "config"
+        }
+      },
+      {
+        "id": "show-system-info",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Show system info",
+        "status": 200,
+        "contentType": "application/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "queryMatch": {
+          "type": "op",
+          "cmd": "<show><system><info></info></system></show>"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            }
+          ]
+        },
+        "fixture": "<response status=\"success\">\n  <result>\n    <system>\n      <hostname>firewall</hostname>\n      <ip-address>10.41.0.8</ip-address>\n      <netmask>255.255.224.0</netmask>\n      <default-gateway>10.41.0.1</default-gateway>\n      <is-dhcp>no</is-dhcp>\n      <ipv6-address>unknown</ipv6-address>\n      <ipv6-link-local-address>fe80::21c:17cf:feff:c04a/64</ipv6-link-local-address>\n      <ipv6-default-gateway/>\n      <mac-address>00:1b:17:fc:c0:4a</mac-address>\n      <time>Tue Oct 27 13:39:09 2015</time>\n      <uptime>12 days, 0:05:26</uptime>\n      <devicename>pm-firewall</devicename>\n      <family>3000</family>\n      <model>PA-3020</model>\n      <serial>001802000104</serial>\n      <sw-version>7.1.0-c54</sw-version>\n      <global-protect-client-package-version>2.0.0</global-protect-client-package-version>\n      <app-version>537-2965</app-version>\n      <app-release-date>2015/10/26 18:10:48</app-release-date>\n      <av-version>2149-2586</av-version>\n      <av-release-date>2015/10/26 15:31:55</av-release-date>\n      <threat-version>537-2965</threat-version>\n      <threat-release-date>2015/10/26 18:10:48</threat-release-date>\n      <wf-private-version>0</wf-private-version>\n      <wf-private-release-date>unknown</wf-private-release-date>\n      <url-db>paloaltonetworks</url-db>\n      <wildfire-version>80683-89773</wildfire-version>\n      <wildfire-release-date>unknown</wildfire-release-date>\n      <url-filtering-version>2015.10.27.226</url-filtering-version>\n      <global-protect-datafile-version>1445974904</global-protect-datafile-version>\n      <global-protect-datafile-release-date>2015/10/27 19:41:44</global-protect-datafile-release-date>\n      <logdb-version>7.0.9</logdb-version>\n      <platform-family>3000</platform-family>\n      <vpn-disable-mode>off</vpn-disable-mode>\n      <multi-vsys>on</multi-vsys>\n      <operational-mode>normal</operational-mode>\n    </system>\n  </result>\n</response>\n"
+      },
+      {
+        "id": "show-system-info-closed",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Show system info",
+        "status": 200,
+        "contentType": "application/xml; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "queryMatch": {
+          "type": "op",
+          "cmd": "<show><system><info/></system></show>"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            }
+          ]
+        },
+        "fixture": "<response status=\"success\">\n  <result>\n    <system>\n      <hostname>firewall</hostname>\n      <ip-address>10.41.0.8</ip-address>\n      <netmask>255.255.224.0</netmask>\n      <default-gateway>10.41.0.1</default-gateway>\n      <is-dhcp>no</is-dhcp>\n      <ipv6-address>unknown</ipv6-address>\n      <ipv6-link-local-address>fe80::21c:17cf:feff:c04a/64</ipv6-link-local-address>\n      <ipv6-default-gateway/>\n      <mac-address>00:1b:17:fc:c0:4a</mac-address>\n      <time>Tue Oct 27 13:39:09 2015</time>\n      <uptime>12 days, 0:05:26</uptime>\n      <devicename>pm-firewall</devicename>\n      <family>3000</family>\n      <model>PA-3020</model>\n      <serial>001802000104</serial>\n      <sw-version>7.1.0-c54</sw-version>\n      <global-protect-client-package-version>2.0.0</global-protect-client-package-version>\n      <app-version>537-2965</app-version>\n      <app-release-date>2015/10/26 18:10:48</app-release-date>\n      <av-version>2149-2586</av-version>\n      <av-release-date>2015/10/26 15:31:55</av-release-date>\n      <threat-version>537-2965</threat-version>\n      <threat-release-date>2015/10/26 18:10:48</threat-release-date>\n      <wf-private-version>0</wf-private-version>\n      <wf-private-release-date>unknown</wf-private-release-date>\n      <url-db>paloaltonetworks</url-db>\n      <wildfire-version>80683-89773</wildfire-version>\n      <wildfire-release-date>unknown</wildfire-release-date>\n      <url-filtering-version>2015.10.27.226</url-filtering-version>\n      <global-protect-datafile-version>1445974904</global-protect-datafile-version>\n      <global-protect-datafile-release-date>2015/10/27 19:41:44</global-protect-datafile-release-date>\n      <logdb-version>7.0.9</logdb-version>\n      <platform-family>3000</platform-family>\n      <vpn-disable-mode>off</vpn-disable-mode>\n      <multi-vsys>on</multi-vsys>\n      <operational-mode>normal</operational-mode>\n    </system>\n  </result>\n</response>\n"
       }
     ],
     "chaos": {
