@@ -36,6 +36,9 @@ export function registerV1(app: Hono<AppEnv>) {
       c.set("apiToken", resolved);
       await limitToken(c.get("db"), resolved.id);
       await limitAuthed(c.get("db"), resolved.user.id);
+      if (cli && !resolved.scopes.some((scope) => scope === "cli:download" || scope === "mocks:read" || scope === "mocks:write")) {
+        throw new HttpError(403, "Missing scope cli:download");
+      }
       return next();
     }
     if (cli) {
@@ -579,8 +582,8 @@ function openApiDocument() {
       description: "Create and update mocks, read logs, and fetch the XSOAR instance configuration. Send Authorization: Bearer pp_… . The CLI wheel also accepts that token as HTTP Basic, or the signed-in browser session. A missing or rejected credential is a quiet 404.",
     },
     paths: {
-      "/api/v1/cli": { get: { summary: "Installed CLI release. Any live personal token or the signed-in session.", responses: { "200": { description: "Version and wheel name", content: json } } } },
-      "/api/v1/cli/{filename}": { get: { summary: "Download the versioned CLI wheel. Not published to public PyPI.", responses: { "200": { description: "Wheel bytes" } } } },
+      "/api/v1/cli": { get: { summary: "CLI release for a cli:download token, a mocks token, or the signed-in session.", responses: { "200": { description: "Version and wheel name", content: json } } } },
+      "/api/v1/cli/{filename}": { get: { summary: "Download the versioned CLI wheel. A cli:download token cannot read or change mocks. Not published to public PyPI.", responses: { "200": { description: "Wheel bytes" } } } },
       "/api/v1/presets": { get: { summary: "Search catalog presets", security: [{ bearer: ["mocks:read"] }], responses: { "200": { description: "Matching presets", content: json } } } },
       "/api/v1/mocks": {
         get: { summary: "List mocks", security: [{ bearer: ["mocks:read"] }], responses: { "200": { description: "Mocks", content: json } } },

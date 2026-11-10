@@ -83,7 +83,7 @@ export default function Docs() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-muted-foreground">
-              <pre className="overflow-auto rounded bg-muted p-3 text-xs text-foreground">{`pipx install "https://<pp_ token>@your-site/api/v1/cli/panparrot-0.1.0-py3-none-any.whl"
+              <pre className="overflow-auto rounded bg-muted p-3 text-xs text-foreground">{`pipx install "https://<cli:download token>@your-site/api/v1/cli/panparrot-0.1.0-py3-none-any.whl"
 panparrot version
 panparrot --json login --url https://your-site --token pp_...
 panparrot --json presets --q github
@@ -95,7 +95,7 @@ panparrot --json mocks create --from-yml HelloWorld.yml --test-data ./test_data
 panparrot --json instance-config --mock <id>
 panparrot --json xsiam configure-instance --mock <id> --integration HelloWorld --instance-name lab --dry-run`}</pre>
               <p>
-                Tokens expire (90 days unless you choose otherwise, one year at most) and carry <code>mocks:read</code> and <code>mocks:write</code>. The CLI wheel is not on public PyPI. <code>/api/v1</code> is a quiet 404 without a live token or, for the wheel only, this signed-in session. The copy-paste agent recipe is in <code>docs/agent-usage.md</code>. XSIAM credentials stay on your machine. XSIAM has to reach the catch URL.
+                Tokens expire (90 days unless you choose otherwise, one year at most) and carry <code>mocks:read</code> and <code>mocks:write</code>. The install command uses a separate <code>cli:download</code> token that lasts 1 hour and cannot read or change mocks. The CLI wheel is not on public PyPI. <code>/api/v1</code> is a quiet 404 without a live token or, for the wheel only, this signed-in session. The copy-paste agent recipe is in <code>docs/agent-usage.md</code>. XSIAM credentials stay on your machine. XSIAM has to reach the catch URL.
               </p>
               <p>
                 <code>create --preset &lt;id&gt;</code> uses a catalog preset. <code>mocks</code> lists what you already have.
