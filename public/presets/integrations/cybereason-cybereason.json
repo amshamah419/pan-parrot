@@ -5,10 +5,10 @@
   "vendor": "Cybereason",
   "fidelity": "verified",
   "curated": true,
-  "summary": "Malop inbox. The client posts /rest/detection/inbox.",
+  "summary": "Malop query. The client posts /rest/crimes/unified.",
   "notes": [
-    "Nest API docs require a customer login. POST /rest/detection/inbox is the public client path. This mock returns { malops }.",
-    "A malop keeps guid, displayName, severity, and creationTime.",
+    "query_malops posts /rest/crimes/unified and reads data.resultIdToElementDataMap. simpleValues.creationTime.values[0] and managementStatus.values[0] are the fields it keeps.",
+    "POST /rest/detection/inbox exists in the file and is not called. The old { malops } envelope was not what the command parses.",
     "Basic auth is the console user. Isolate and remediate are not modeled."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
@@ -23,8 +23,8 @@
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://github.com/demisto/content/blob/master/Packs/Cybereason/Integrations/Cybereason/Cybereason.py",
       "notes": [
-        "Nest API docs require a customer login. POST /rest/detection/inbox is the public client path. This mock returns { malops }.",
-        "A malop keeps guid, displayName, severity, and creationTime.",
+        "query_malops posts /rest/crimes/unified and reads data.resultIdToElementDataMap. simpleValues.creationTime.values[0] and managementStatus.values[0] are the fields it keeps.",
+        "POST /rest/detection/inbox exists in the file and is not called. The old { malops } envelope was not what the command parses.",
         "Basic auth is the console user. Isolate and remediate are not modeled."
       ],
       "verification": {
@@ -32,56 +32,174 @@
         "docUrl": "https://github.com/demisto/content/blob/master/Packs/Cybereason/Integrations/Cybereason/Cybereason.py",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Nest API docs require a customer login. POST /rest/detection/inbox is the public client path. This mock returns { malops }.",
-          "A malop keeps guid, displayName, severity, and creationTime.",
+          "query_malops posts /rest/crimes/unified and reads data.resultIdToElementDataMap. simpleValues.creationTime.values[0] and managementStatus.values[0] are the fields it keeps.",
+          "POST /rest/detection/inbox exists in the file and is not called. The old { malops } envelope was not what the command parses.",
           "Basic auth is the console user. Isolate and remediate are not modeled."
         ]
       }
     },
     "operations": [
       {
-        "id": "malop-inbox",
+        "id": "malops",
         "method": "POST",
-        "pathTemplate": "/rest/detection/inbox",
-        "summary": "List malops",
+        "pathTemplate": "/rest/crimes/unified",
+        "summary": "Query malops",
         "status": 200,
-        "list": true,
+        "list": false,
         "envelope": {
-          "type": "wrapped",
-          "arrayKey": "malops"
+          "type": "object"
         },
         "record": {
-          "name": "malop",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "guid",
-              "kind": "uuid"
-            },
-            {
-              "name": "displayName",
-              "kind": "string",
-              "example": "Malicious process"
-            },
-            {
-              "name": "severity",
-              "kind": "enum",
-              "enumValues": [
-                "Low",
-                "Medium",
-                "High"
-              ]
-            },
-            {
-              "name": "creationTime",
-              "kind": "timestamp"
-            },
-            {
-              "name": "status",
-              "kind": "enum",
-              "enumValues": [
-                "Open",
-                "Closed"
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "resultIdToElementDataMap",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "11111111-1111-4111-8111-111111111111",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "simpleValues",
+                          "kind": "object",
+                          "children": [
+                            {
+                              "name": "managementStatus",
+                              "kind": "object",
+                              "children": [
+                                {
+                                  "name": "values",
+                                  "kind": "array",
+                                  "minItems": 1,
+                                  "maxItems": 1,
+                                  "item": {
+                                    "name": "value",
+                                    "kind": "const",
+                                    "constValue": "Active"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "name": "creationTime",
+                              "kind": "object",
+                              "children": [
+                                {
+                                  "name": "values",
+                                  "kind": "array",
+                                  "minItems": 1,
+                                  "maxItems": 1,
+                                  "item": {
+                                    "name": "value",
+                                    "kind": "const",
+                                    "constValue": "1600000000000"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "name": "malopLastUpdateTime",
+                              "kind": "object",
+                              "children": [
+                                {
+                                  "name": "values",
+                                  "kind": "array",
+                                  "minItems": 1,
+                                  "maxItems": 1,
+                                  "item": {
+                                    "name": "value",
+                                    "kind": "const",
+                                    "constValue": "1600000001000"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "name": "decisionFeature",
+                              "kind": "object",
+                              "children": [
+                                {
+                                  "name": "values",
+                                  "kind": "array",
+                                  "minItems": 1,
+                                  "maxItems": 1,
+                                  "item": {
+                                    "name": "value",
+                                    "kind": "const",
+                                    "constValue": "Process.lab"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "elementValues",
+                          "kind": "object",
+                          "children": [
+                            {
+                              "name": "suspects",
+                              "kind": "object",
+                              "children": [
+                                {
+                                  "name": "elementValues",
+                                  "kind": "array",
+                                  "minItems": 1,
+                                  "maxItems": 1,
+                                  "item": {
+                                    "name": "suspect",
+                                    "kind": "object",
+                                    "children": [
+                                      {
+                                        "name": "elementType",
+                                        "kind": "const",
+                                        "constValue": "Process"
+                                      },
+                                      {
+                                        "name": "name",
+                                        "kind": "const",
+                                        "constValue": "lab.exe"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "name": "affectedMachines",
+                              "kind": "object",
+                              "children": [
+                                {
+                                  "name": "elementValues",
+                                  "kind": "array",
+                                  "minItems": 1,
+                                  "maxItems": 1,
+                                  "item": {
+                                    "name": "machine",
+                                    "kind": "object",
+                                    "children": [
+                                      {
+                                        "name": "name",
+                                        "kind": "const",
+                                        "constValue": "lab-host"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
               ]
             }
           ]
@@ -89,7 +207,7 @@
         "headers": {},
         "contentType": "application/json; charset=utf-8",
         "pagination": {
-          "style": "offset",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",

@@ -680,18 +680,22 @@ export const usageVerifiedPresets = [
     name: "Forcepoint DLP Event Collector (Beta)",
     pack: "ForcepointDLP",
     vendor: "Forcepoint",
-    summary: "DLP incidents for the collector.",
+    summary: "POST /dlp/rest/v1/incidents returns incidents.",
     docUrl: "https://github.com/demisto/content/tree/master/Packs/ForcepointDLP/Integrations/ForcepointEventCollector",
     sourceUrl: gh("ForcepointDLP", "ForcepointEventCollector"),
     differences: [
-      "Forcepoint DLP API pages were not loaded. The client base is /dlp/rest/v1 and GETs /incidents.",
-      "This mock returns one incident. The refresh-token route is not modeled.",
-      "A bearer token is required.",
+      "get_incidents POSTs /incidents on a base of /dlp/rest/v1 and reads incidents. The earlier mock used GET.",
+      "Each incident keeps id and event_time, which the collector stores. POST /auth/refresh-token is not modeled.",
+      "Later calls send Authorization Bearer. A bearer token is required.",
     ],
     auth: bearer,
     operations: [
-      jsonOp("incidents", "GET", "/dlp/rest/v1/incidents", "List incidents", object("body", [
-        listField("incidents", "incident", [field("id", "id"), field("severity", "enum", { enumValues: ["low", "medium", "high"] }), field("action", "const", { constValue: "blocked" })]),
+      jsonOp("incidents", "POST", "/dlp/rest/v1/incidents", "List incidents", object("body", [
+        listField("incidents", "incident", [
+          field("id", "id"),
+          field("event_time", "timestamp", { format: "iso" }),
+          field("severity", "enum", { enumValues: ["low", "medium", "high"] }),
+        ]),
       ])),
     ],
   }),

@@ -7,8 +7,8 @@
   "curated": true,
   "summary": "Attack-surface issues for a project.",
   "notes": [
-    "The client base is https://api.securitytrails.com/v1/asi and GETs /rules/{project}/{snapshot}/issues. This mock uses project lab-project and snapshot latest.",
-    "Activity history is not modeled.",
+    "The client base is hardcoded to https://api.securitytrails.com/v1/asi. Fetch calls /rules/{project}/recent/issues and reads data plus meta.snapshot.",
+    "The earlier mock used snapshot latest and an issues array. Activity history is not modeled.",
     "The SecurityTrails overview was not reloaded. The API key header is the dummy key."
   ],
   "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
@@ -23,8 +23,8 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://docs.securitytrails.com/docs/overview",
       "notes": [
-        "The client base is https://api.securitytrails.com/v1/asi and GETs /rules/{project}/{snapshot}/issues. This mock uses project lab-project and snapshot latest.",
-        "Activity history is not modeled.",
+        "The client base is hardcoded to https://api.securitytrails.com/v1/asi. Fetch calls /rules/{project}/recent/issues and reads data plus meta.snapshot.",
+        "The earlier mock used snapshot latest and an issues array. Activity history is not modeled.",
         "The SecurityTrails overview was not reloaded. The API key header is the dummy key."
       ],
       "verification": {
@@ -32,8 +32,8 @@
         "docUrl": "https://docs.securitytrails.com/docs/overview",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client base is https://api.securitytrails.com/v1/asi and GETs /rules/{project}/{snapshot}/issues. This mock uses project lab-project and snapshot latest.",
-          "Activity history is not modeled.",
+          "The client base is hardcoded to https://api.securitytrails.com/v1/asi. Fetch calls /rules/{project}/recent/issues and reads data plus meta.snapshot.",
+          "The earlier mock used snapshot latest and an issues array. Activity history is not modeled.",
           "The SecurityTrails overview was not reloaded. The API key header is the dummy key."
         ]
       }
@@ -42,7 +42,7 @@
       {
         "id": "issues",
         "method": "GET",
-        "pathTemplate": "/v1/asi/rules/lab-project/latest/issues",
+        "pathTemplate": "/v1/asi/rules/lab-project/recent/issues",
         "summary": "List issues",
         "status": 200,
         "list": false,
@@ -54,30 +54,90 @@
           "kind": "object",
           "children": [
             {
-              "name": "issues",
+              "name": "meta",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "snapshot",
+                  "kind": "const",
+                  "constValue": "recent"
+                }
+              ]
+            },
+            {
+              "name": "data",
               "kind": "array",
               "minItems": 1,
               "maxItems": 1,
               "item": {
-                "name": "issue",
+                "name": "rule",
                 "kind": "object",
                 "children": [
                   {
-                    "name": "id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "host",
+                    "name": "name",
                     "kind": "string",
-                    "example": "lab.example"
+                    "example": "Open admin port"
                   },
                   {
-                    "name": "severity",
+                    "name": "description",
+                    "kind": "string",
+                    "example": "An admin port is exposed"
+                  },
+                  {
+                    "name": "classification",
                     "kind": "enum",
                     "enumValues": [
-                      "low",
-                      "medium",
+                      "informational",
+                      "moderate",
                       "high"
+                    ]
+                  },
+                  {
+                    "name": "example_entities",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "domains",
+                        "kind": "array",
+                        "minItems": 1,
+                        "maxItems": 1,
+                        "item": {
+                          "name": "domain",
+                          "kind": "const",
+                          "constValue": "lab.example"
+                        }
+                      },
+                      {
+                        "name": "ips",
+                        "kind": "array",
+                        "minItems": 1,
+                        "maxItems": 1,
+                        "item": {
+                          "name": "ip",
+                          "kind": "const",
+                          "constValue": "203.0.113.10"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rule_metadata",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "entity_counts",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "domains",
+                            "kind": "integer"
+                          },
+                          {
+                            "name": "ips",
+                            "kind": "integer"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]

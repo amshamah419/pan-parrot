@@ -7,8 +7,8 @@
   "curated": true,
   "summary": "Activities feed. data[] from /web/api/v2.1/activities.",
   "notes": [
-    "The client calls /activities and /threats. This mock is GET /web/api/v2.1/activities and returns { data }.",
-    "The management API reference is console-hosted. Activity type, createdAt, and agentId are the fields the collector keeps.",
+    "get_activities GETs /activities with limit and createdAt__gt and reads data. This mock is GET /web/api/v2.1/activities.",
+    "createdAt__gt is not applied. The collector keeps createdAt. Threats are on the SentinelOne v2 preset.",
     "Authorization is ApiToken dummy-key."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
@@ -23,8 +23,8 @@
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SentinelOne/Integrations/SentinelOneEventCollector",
       "notes": [
-        "The client calls /activities and /threats. This mock is GET /web/api/v2.1/activities and returns { data }.",
-        "The management API reference is console-hosted. Activity type, createdAt, and agentId are the fields the collector keeps.",
+        "get_activities GETs /activities with limit and createdAt__gt and reads data. This mock is GET /web/api/v2.1/activities.",
+        "createdAt__gt is not applied. The collector keeps createdAt. Threats are on the SentinelOne v2 preset.",
         "Authorization is ApiToken dummy-key."
       ],
       "verification": {
@@ -32,8 +32,8 @@
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/SentinelOne/Integrations/SentinelOneEventCollector",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The client calls /activities and /threats. This mock is GET /web/api/v2.1/activities and returns { data }.",
-          "The management API reference is console-hosted. Activity type, createdAt, and agentId are the fields the collector keeps.",
+          "get_activities GETs /activities with limit and createdAt__gt and reads data. This mock is GET /web/api/v2.1/activities.",
+          "createdAt__gt is not applied. The collector keeps createdAt. Threats are on the SentinelOne v2 preset.",
           "Authorization is ApiToken dummy-key."
         ]
       }
@@ -80,7 +80,7 @@
         "headers": {},
         "contentType": "application/json; charset=utf-8",
         "pagination": {
-          "style": "cursor",
+          "style": "offset",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
