@@ -109,6 +109,8 @@ describe("agent API", () => {
     expect(presets.status).toBe(200);
     const body = await presets.json();
     expect(body.presets.some((row: { id: string }) => row.id.includes("github"))).toBe(true);
+    const github = body.presets.find((row: { id: string }) => row.id === "github-github");
+    expect(github.commandCoverage).toMatchObject({ vendor: 33, approximate: 0, missing: 64, total: 97 });
     const denied = await app.request("/api/v1/mocks", {
       method: "POST",
       headers: { authorization: `Bearer ${issued.token}`, "content-type": "application/json" },

@@ -53,6 +53,40 @@ def test_mocks_list_uses_the_bearer_token(tmp_path, monkeypatch, capsys):
     assert json.loads(capsys.readouterr().out)["mocks"][0]["id"] == "m1"
 
 
+def test_presets_search_sends_the_query(tmp_path, monkeypatch, capsys):
+    config = tmp_path / "credentials.json"
+    config.write_text(json.dumps({"url": "https://panparrot.example", "token": "pp_abc"}))
+    os.chmod(config, 0o600)
+    monkeypatch.setenv("PANPARROT_CONFIG", str(config))
+    seen = {}
+
+    class Response:
+        status = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return b'{"presets":[{"id":"github-github","fidelity":"vendor","commandCoverage":{"vendor":33,"approximate":0,"missing":64,"total":97}}]}'
+
+    def urlopen(request, timeout=0):
+        seen["url"] = request.full_url
+        seen["authorization"] = request.get_header("Authorization")
+        return Response()
+
+    monkeypatch.setattr("panparrot.cli.urllib.request.urlopen", urlopen)
+    code = main(["presets", "--q", "git hub"])
+    assert code == 0
+    assert seen["url"] == "https://panparrot.example/api/v1/presets?q=git+hub"
+    assert seen["authorization"] == "Bearer pp_abc"
+    text = capsys.readouterr().out
+    assert "github-github" in text
+    assert "33 vendor" in text
+
+
 def test_dry_run_builds_the_demisto_sdk_payload(monkeypatch, capsys, tmp_path):
     config = tmp_path / "credentials.json"
     config.write_text(json.dumps({"url": "https://panparrot.example", "token": "pp_abc"}))

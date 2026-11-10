@@ -164,4 +164,4 @@ const data: MyRouteResponse = await response.json();
 
 ## Agent API
 
-Coding agents use `panparrot` and `/api/v1`. The recipe is `docs/agent-usage.md`. A personal token is shown once, stored as a hash, and refused when the user is disabled. `/api/v1` without a live bearer token is a quiet 404. XSIAM credentials stay in `DEMISTO_BASE_URL`, `DEMISTO_API_KEY`, and `XSIAM_AUTH_ID` and are not sent to PAN Parrot.
+Coding agents use `panparrot` and `/api/v1`. `panparrot presets --q` searches the catalog and returns command coverage when the preset has been scored. The recipe is `docs/agent-usage.md`. A personal token is shown once, stored as a hash, and refused when the user is disabled. `/api/v1` without a live bearer token is a quiet 404. XSIAM credentials stay in `DEMISTO_BASE_URL`, `DEMISTO_API_KEY`, and `XSIAM_AUTH_ID` and are not sent to PAN Parrot.

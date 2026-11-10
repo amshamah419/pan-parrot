@@ -9,13 +9,15 @@ You are configuring a PAN Parrot mock for the integration in this directory.
 
 1. Ask the user for a PAN Parrot personal API token (scopes mocks:read and mocks:write, shown once on the dashboard). Do not invent one.
 2. panparrot --json login --url https://<panparrot-site> --token pp_...
-3. panparrot --json mocks create --from-yml <Integration>.yml --test-data <test_data dir>
+3. panparrot --json presets --q <integration name>
+   Use the preset id when one matches. commandCoverage says how many commands return a vendor example.
+4. panparrot --json mocks create --from-yml <Integration>.yml --test-data <test_data dir>
    Repeat the same command to update that integration id and version. It upserts.
-4. panparrot --json instance-config --mock <id>
+5. panparrot --json instance-config --mock <id>
    Put baseUrl in the integration URL parameter. Use the returned param names and values. They come from the integration YAML.
-5. The user exports DEMISTO_BASE_URL, DEMISTO_API_KEY, and XSIAM_AUTH_ID in the shell. Do not send those values to PAN Parrot, and do not write them into the repo.
-6. panparrot --json xsiam configure-instance --mock <id> --integration <integration id> --instance-name <n> --dry-run
-7. Show the payload. After the user agrees, run the same command without --dry-run.
+6. The user exports DEMISTO_BASE_URL, DEMISTO_API_KEY, and XSIAM_AUTH_ID in the shell. Do not send those values to PAN Parrot, and do not write them into the repo.
+7. panparrot --json xsiam configure-instance --mock <id> --integration <integration id> --instance-name <n> --dry-run
+8. Show the payload. After the user agrees, run the same command without --dry-run.
    XSIAM must be able to reach the catch URL.
 ```
 
@@ -35,6 +37,7 @@ pipx install "git+https://github.com/amshamah419/pan-parrot.git#subdirectory=py/
 
 ```bash
 panparrot --json login --url https://<site> --token pp_...
+panparrot --json presets --q github
 panparrot --json mocks list
 panparrot --json mocks create --from-yml Integrations/HelloWorld/HelloWorld.yml --test-data Integrations/HelloWorld/test_data
 panparrot --json mocks push --from-yml Integrations/HelloWorld/HelloWorld.yml
@@ -51,7 +54,7 @@ Every command accepts `--json` and prints one object on stdout. `login` stores t
 
 | Method | Path | Scope |
 | --- | --- | --- |
-| GET | `/api/v1/presets?q=` | mocks:read |
+| GET | `/api/v1/presets?q=` | mocks:read | Returns `commandCoverage` (`vendor`, `approximate`, `missing`, `total`) when that preset has been scored. |
 | GET | `/api/v1/mocks` | mocks:read |
 | POST | `/api/v1/mocks` | mocks:write |
 | GET | `/api/v1/mocks/{id}` | mocks:read |

@@ -53,6 +53,7 @@ export function registerV1(app: Hono<AppEnv>) {
         fidelity: row.fidelity,
         summary: row.summary,
         operations: row.operations,
+        commandCoverage: row.commandCoverage,
       })),
     });
   });
@@ -362,7 +363,15 @@ async function loadPreset(id: string): Promise<{ id: string; name?: string; spec
   }
 }
 
-let presets: Array<{ id: string; name: string; pack?: string; fidelity?: string; summary?: string; operations?: number }> | null = null;
+let presets: Array<{
+  id: string;
+  name: string;
+  pack?: string;
+  fidelity?: string;
+  summary?: string;
+  operations?: number;
+  commandCoverage?: { total: number; vendor: number; approximate: number; missing: number };
+}> | null = null;
 async function presetIndex() {
   if (!presets) {
     const text = await readFile(path.resolve("public/presets/index.json"), "utf8");

@@ -43,6 +43,8 @@ def dispatch(args: list[str]) -> dict:
         return {"text": HELP}
     if args[0] == "login":
         return login(args[1:])
+    if args[0] == "presets":
+        return presets(args[1:])
     if args[0] == "mocks":
         return mocks(args[1:])
     if args[0] == "instance-config":
@@ -59,6 +61,25 @@ def login(args: list[str]) -> dict:
         raise SystemExit("login needs --url and --token pp_...")
     where = save_credentials(url, token)
     return {"url": url.rstrip("/"), "stored": where}
+
+
+def presets(args: list[str]) -> dict:
+    query = optional(args, "--q") or ""
+    path = "/api/v1/presets"
+    if query:
+        path += "?" + urllib.parse.urlencode({"q": query})
+    rows = api("GET", path).get("presets", [])
+    lines = []
+    for row in rows:
+        coverage = row.get("commandCoverage") or {}
+        detail = row.get("fidelity") or ""
+        if coverage.get("total"):
+            detail += (
+                f"  {coverage.get('vendor')} vendor, {coverage.get('approximate')} approximate, "
+                f"{coverage.get('missing')} missing of {coverage.get('total')}"
+            )
+        lines.append(f"{row.get('id')}  {detail}".rstrip())
+    return {"presets": rows, "text": "\n".join(lines) if lines else "No presets matched."}
 
 
 def mocks(args: list[str]) -> dict:
@@ -153,6 +174,7 @@ def quote(value: str) -> str:
 HELP = """panparrot [--json] <command>
 
   login --url https://your-site --token pp_...
+  presets [--q text]
   mocks list
   mocks create --from-yml Integration.yml [--test-data dir]
   mocks push --from-yml Integration.yml [--test-data dir]
