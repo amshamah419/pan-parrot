@@ -211,3 +211,37 @@ test("a new content developer can mock, load-test, and share", async ({ page, br
   await expect(friendPage.getByText("Akamai WAF SIEM").first()).toBeVisible();
   await friendContext.close();
 });
+
+test("dark mode follows the system and the request log can be searched", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  const email = `theme.${Date.now().toString(36)}@paloaltonetworks.com`;
+  await signIn(page, email);
+  await expect(page.locator("html")).toHaveClass(/dark/);
+  await page.getByRole("button", { name: /Color theme/ }).click();
+  await expect(page.locator("html")).not.toHaveClass(/dark/);
+  await page.reload();
+  await expect(page.getByRole("heading", { name: "Mocks" })).toBeVisible();
+  await expect(page.locator("html")).not.toHaveClass(/dark/);
+
+  await page.getByRole("button", { name: "Mock an integration" }).click();
+  await page.getByRole("button", { name: "Start with Akamai WAF SIEM" }).click();
+  await page.getByRole("button", { name: "Accept the header shape for local curls" }).click();
+  await page.getByRole("button", { name: "Save", exact: true }).click();
+  await expect(page.getByRole("status")).toHaveText("Saved. The catch URL is live.");
+  await page.getByRole("button", { name: "Send a sample call" }).click();
+  await expect(page.getByText(/200 ·/)).toBeVisible();
+  await page.getByRole("link", { name: "Mocks" }).click();
+  await page.getByLabel("Search captured requests").fill("this-will-not-match");
+  await expect(page.getByText("No requests match your filters.")).toBeVisible();
+  await page.getByLabel("Search captured requests").fill("");
+  await page.getByLabel("Filter by path").fill("siem");
+  const captured = page.getByRole("button", { name: /^GET / });
+  await expect(captured).toBeVisible();
+  await page.getByLabel("Filter by status").fill("599");
+  await expect(page.getByText("No requests match your filters.")).toBeVisible();
+  await page.getByLabel("Filter by status").fill("200");
+  await expect(captured).toBeVisible();
+  await page.getByRole("heading", { name: "Mocks" }).click();
+  await page.keyboard.press("?");
+  await expect(page.getByRole("heading", { name: "Keyboard shortcuts" })).toBeVisible();
+});

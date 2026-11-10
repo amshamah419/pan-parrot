@@ -43,6 +43,7 @@ Status: **done**, **in progress**, **todo**.
 - A GraphQL operation stores SDL or introspection JSON. The response follows the selection set, including aliases, fragments, and variables. Connection fields (edges/node/pageInfo or nodes/pageInfo) page with first and after across totalRecords. The Match tab can require an operation name. Chaos can return a GraphQL error object. Mutations are rejected with that error shape. Wiz is a verified issuesV2 subset.
 - AWS query-protocol mocks answer POST / when Action is in the form body or the query string. EC2 DescribeInstances, IAM ListUsers, STS AssumeRole and GetCallerIdentity, and SQS ReceiveMessage and DeleteMessage return the XML boto3 parses, including the service namespace and RequestId. AssumeRole returns the dummy session key ASIADUMMYEXAMPLE0001, the dummy secret, and dummy-session-token. Signature checks are off until the Auth tab checkbox is on. A mismatch is 403 SignatureDoesNotMatch XML. The dummy secret is sealed at rest. CloudTrail, GuardDuty, Security Hub, and Access Analyzer stay on the JSON protocol and X-Amz-Target. A CI test generates every verified operation and checks that sample against the declared field tree.
 - The home page is written for a content developer. On a mock, Chaos and load test, Auth, Flow, Push, Export fixtures, and Share jump to that part of the page. Virtual records is the catalog size. One response still stops at 500. Playwright runs `e2e/journey.spec.ts` against `npm run dev` in CI, with Postgres and `AUTH_DEV_EXPOSE_CODE` only in that job.
+- The request log searches method, status, path, headers, and body, copies a call as cURL or Python, replays it through the same public-https checks as Push, and diffs two calls side by side. `?` lists the shortcuts. Color theme follows the system until a Light or Dark choice is saved in the browser.
 
 ## Next ideas
 
@@ -54,6 +55,5 @@ Things a content developer would still have to work around:
 - An email to the owner when a catch URL receives its first call. Resend is already the mail path.
 - One download of every mock you own that imports back into the studio. Pytest export is a test fixture, not a backup.
 - XSIAM dataset and correlation samples, in addition to XSOAR integration packs.
-- Dark mode.
 - Richer JSONPath and XPath in the Match tab. The current subset is documented in the defaults above.
 - Playwright against a Netlify preview. CI already runs the journey against the local dev server. A preview run would need a Netlify token in GitHub.

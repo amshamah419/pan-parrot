@@ -174,6 +174,25 @@ describe("sign-in, sessions, and capture", () => {
     expect(requests[0].body.html).toBe("<script>alert(1)</script>");
     expect(requests[0].ip).toBe("203.0.113.10");
 
+    const replayLocal = await app.request(`/api/requests/${requests[0].id}/replay`, {
+      method: "POST",
+      headers: { cookie, "content-type": "application/json" },
+      body: JSON.stringify({ url: "https://127.0.0.1/hook" }),
+    });
+    expect(replayLocal.status).toBe(400);
+    const replayHttp = await app.request(`/api/requests/${requests[0].id}/replay`, {
+      method: "POST",
+      headers: { cookie, "content-type": "application/json" },
+      body: JSON.stringify({ url: "http://example.com/hook" }),
+    });
+    expect(replayHttp.status).toBe(400);
+    const replayMissing = await app.request("/api/requests/missing-request/replay", {
+      method: "POST",
+      headers: { cookie, "content-type": "application/json" },
+      body: JSON.stringify({ url: "https://example.com/hook" }),
+    });
+    expect(replayMissing.status).toBe(404);
+
     const mocked = await app.request(`/api/endpoints/${endpoint.id}/mock`, {
       method: "POST",
       headers: { cookie, "content-type": "application/json" },
