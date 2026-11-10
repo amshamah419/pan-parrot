@@ -10,15 +10,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Logo } from "@/components/Logo";
 import {
-  Monitor,
   Globe,
   Zap,
   Search,
   RotateCcw,
   Settings,
   Shield,
-  Clock,
-  ArrowRight,
   Check,
   LogIn,
 } from "lucide-react";
@@ -27,36 +24,39 @@ export default function Index() {
   const features = [
     {
       icon: Globe,
-      title: "Custom Endpoints",
+      title: "Integration catalog",
       description:
-        "Create unique endpoint paths with UUID-based or custom naming",
+        "Start from a vendor preset, one JSON sample, an OpenAPI document, or a SOAP/XML payload.",
     },
     {
-      icon: Monitor,
-      title: "Real-Time Console",
-      description: "Watch HTTP requests as they arrive. The console polls every few seconds.",
-    },
-    {
-      icon: Search,
-      title: "Advanced Filtering",
+      icon: Zap,
+      title: "Chaos and load tests",
       description:
-        "Filter by method, endpoint, status, or keyword in body/headers",
-    },
-    {
-      icon: RotateCcw,
-      title: "Request Replay",
-      description: "Inspect and replay requests with modifications",
-    },
-    {
-      icon: Settings,
-      title: "Mock Responses",
-      description:
-        "Configure static or conditional mock responses per endpoint",
+        "Grow the catalog to thousands of records and page through them. A single response still stops at 500.",
     },
     {
       icon: Shield,
-      title: "Request Persistence",
-      description: "Store and access your request history across sessions",
+      title: "Dummy auth",
+      description:
+        "Require the same API key, bearer token, OAuth, or SOAP handshake the integration already sends. Use dummy values.",
+    },
+    {
+      icon: RotateCcw,
+      title: "Flow and scenarios",
+      description:
+        "Save records, return a different body on each call, or reveal one fetch window per poll.",
+    },
+    {
+      icon: Settings,
+      title: "Outbound push",
+      description:
+        "Send generated events to a public https listener, on a schedule or when you click Push now.",
+    },
+    {
+      icon: Search,
+      title: "Content-pack fixtures",
+      description:
+        "Export test_data JSON, turn captured calls into fixtures, and diff a real vendor body against the preset.",
     },
   ];
 
@@ -72,9 +72,9 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
+        <div className="container flex min-h-16 flex-wrap items-center justify-between gap-3 py-2">
           <Logo />
-          <nav className="flex items-center space-x-6">
+          <nav className="flex flex-wrap items-center gap-3">
             <Link
               to="/docs"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -84,7 +84,7 @@ export default function Index() {
             <Button asChild>
               <Link to="/login">
                 <LogIn className="mr-2 h-4 w-4" />
-                Login
+                Sign in
               </Link>
             </Button>
           </nav>
@@ -93,35 +93,35 @@ export default function Index() {
 
       <main>
         {/* Hero Section */}
-        <section className="container px-4 py-24 md:py-32">
+        <section className="container py-12 md:py-24">
           <div className="mx-auto max-w-4xl text-center">
             <Badge variant="secondary" className="mb-4">
               <Zap className="mr-1 h-3 w-3" />
               Unofficial personal tool
             </Badge>
-            <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl md:text-7xl">
+            <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl">
               <span className="text-primary">PAN Parrot</span>
               <br />
-              HTTP Debugging Made Fun
+              Mock the APIs your content pack calls
             </h1>
-            <p className="mb-6 text-lg text-muted-foreground sm:text-xl">
-              A personal webhook catcher for people with a verified
+            <p className="mb-6 text-lg text-muted-foreground">
+              A catch URL for XSOAR and XSIAM content developers with a verified
               @paloaltonetworks.com email. Not a Palo Alto Networks service.
             </p>
             <ol className="mx-auto mb-8 max-w-xl space-y-2 text-left text-sm text-muted-foreground">
               <li>1. Sign in, then mock an integration or paste one JSON sample.</li>
-              <li>2. Copy the catch URL.</li>
-              <li>3. Paste it into the XSOAR server field. The first call shows up in the log.</li>
+              <li>2. Copy the catch URL into the XSOAR server field.</li>
+              <li>3. The first call shows up in the log. Chaos, auth, flow, push, and fixtures are on that mock.</li>
             </ol>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button size="lg" asChild className="text-base">
                 <Link to="/login">
                   <LogIn className="mr-2 h-4 w-4" />
-                  Login to Start
+                  Sign in
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="text-base">
-                <Link to="/docs">Read the Docs</Link>
+              <Button variant="outline" size="lg" asChild className="text-base">
+                <Link to="/docs">Read the docs</Link>
               </Button>
             </div>
           </div>
@@ -132,11 +132,10 @@ export default function Index() {
           <div className="mx-auto max-w-6xl">
             <div className="mb-12 text-center">
               <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-                Webhook debugging, without the corporate stamp
+                What you can exercise before the vendor is ready
               </h2>
               <p className="text-lg text-muted-foreground">
-                All the HTTP debugging tools you need, with a touch of parrot
-                personality
+                The same catch URL can page a large catalog, fail on purpose, demand a dummy token, and export the fixture your unit test loads.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -168,11 +167,10 @@ export default function Index() {
             <Card className="overflow-hidden border-primary/20 bg-gradient-to-r from-primary/5 to-primary/10">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl font-bold">
-                  Perfect for Development Teams
+                  Built for content packs
                 </CardTitle>
                 <CardDescription className="text-base">
-                  Streamline your API development workflow with these common use
-                  cases
+                  Point a pack at the catch URL while you write the integration, the playbook, or the test.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -195,16 +193,16 @@ export default function Index() {
         <section className="container px-4 py-24">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-tight">
-              Ready to squawk at some APIs? 🦜
+              Ready to mock a vendor? 🦜
             </h2>
             <p className="mb-8 text-lg text-muted-foreground">
               Sign in with a one-time code sent to your @paloaltonetworks.com
-              email.
+              email. There is no password.
             </p>
             <Button size="lg" asChild className="text-base">
               <Link to="/login">
                 <LogIn className="mr-2 h-4 w-4" />
-                Login to PAN Parrot
+                Sign in
               </Link>
             </Button>
           </div>

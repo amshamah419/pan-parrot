@@ -71,6 +71,7 @@ export default function Dashboard() {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [catalog, setCatalog] = useState<Array<{ id: string; name: string; description?: string | null; ownerEmail: string }>>([]);
+  const [copyNote, setCopyNote] = useState("");
 
   // Load data from API
   const loadData = async () => {
@@ -138,8 +139,11 @@ export default function Dashboard() {
     return JSON.stringify(body, null, 2);
   };
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+  const copyToClipboard = (text: string, note: string) => {
+    navigator.clipboard.writeText(text).then(
+      () => setCopyNote(note),
+      () => setCopyNote("Select the URL and copy it."),
+    );
   };
 
   const copyCurl = (request: CapturedRequest) => {
@@ -198,14 +202,18 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
+        <div className="container flex min-h-16 flex-wrap items-center justify-between gap-3 py-2">
           <Logo />
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-wrap items-center gap-3">
+            <Link to="/docs" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+              Docs
+            </Link>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
                   className="relative h-8 w-8 rounded-full"
+                  aria-label={user?.email ? `Account menu for ${user.email}` : "Account menu"}
                 >
                   <Avatar className="h-8 w-8">
                     <AvatarFallback className="bg-primary text-primary-foreground">
@@ -242,7 +250,8 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <div className="container mx-auto p-6">
+      <div className="container mx-auto py-6">
+        {copyNote && <p className="mb-3 text-sm text-green-700" role="status">{copyNote}</p>}
         {/* Endpoints Section */}
         <div className="mb-6">
           <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
@@ -301,7 +310,7 @@ export default function Dashboard() {
                         variant="ghost"
                         size="sm"
                         aria-label={`Copy catch URL for ${endpoint.name}`}
-                        onClick={() => copyToClipboard(endpoint.url)}
+                        onClick={() => copyToClipboard(endpoint.url, `Copied the catch URL for ${endpoint.name}.`)}
                       >
                         <Copy className="h-4 w-4" />
                       </Button>
@@ -321,7 +330,11 @@ export default function Dashboard() {
                           variant="ghost"
                           size="sm"
                           aria-label={`Delete ${endpoint.name}`}
-                          onClick={() => handleDeleteEndpoint(endpoint.id)}
+                          onClick={() => {
+                            if (window.confirm(`Delete ${endpoint.name}? The catch URL stops working.`)) {
+                              void handleDeleteEndpoint(endpoint.id);
+                            }
+                          }}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -362,10 +375,10 @@ export default function Dashboard() {
         </div>
 
         {/* Request Console */}
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid min-w-0 gap-6 lg:grid-cols-3">
           {/* Request List */}
-          <div className="lg:col-span-1">
-            <Card>
+          <div className="min-w-0 lg:col-span-1">
+            <Card className="min-w-0 overflow-hidden">
               <CardHeader>
                 <div className="flex items-center justify-between gap-2">
                   <CardTitle className="flex items-center">
@@ -375,6 +388,8 @@ export default function Dashboard() {
                   <Button
                     variant={isStreaming ? "default" : "outline"}
                     size="sm"
+                    aria-pressed={isStreaming}
+                    aria-label={isStreaming ? "Pause the live log" : "Resume the live log"}
                     onClick={() => setIsStreaming(!isStreaming)}
                   >
                     {isStreaming ? (
@@ -408,7 +423,7 @@ export default function Dashboard() {
                     />
                   </div>
                   <Select value={filterMethod} onValueChange={setFilterMethod}>
-                    <SelectTrigger>
+                    <SelectTrigger aria-label="Filter by method">
                       <SelectValue placeholder="Filter by method" />
                     </SelectTrigger>
                     <SelectContent>
@@ -436,9 +451,10 @@ export default function Dashboard() {
                       </div>
                     ) : (
                       filteredRequests.map((request) => (
-                        <div
+                        <button
                           key={request.id}
-                          className={`cursor-pointer rounded-lg border p-3 transition-colors hover:bg-muted/50 ${
+                          type="button"
+                          className={`w-full rounded-lg border p-3 text-left transition-colors hover:bg-muted/50 ${
                             selectedRequest?.id === request.id
                               ? "bg-muted border-primary"
                               : ""
@@ -453,8 +469,8 @@ export default function Dashboard() {
                               {new Date(request.timestamp).toLocaleTimeString()}
                             </span>
                           </div>
-                          <div className="mt-1">
-                            <code className="text-sm">{request.endpoint}</code>
+                          <div className="mt-1 min-w-0">
+                            <code className="break-all text-sm">{request.endpoint}</code>
                           </div>
                           <div className="mt-1 text-xs text-muted-foreground">
                             {request.status}
@@ -463,7 +479,7 @@ export default function Dashboard() {
                               ? ` · ${request.chaosEffects.join(", ")}`
                               : ""}
                           </div>
-                        </div>
+                        </button>
                       ))
                     )}
                   </div>
@@ -473,8 +489,8 @@ export default function Dashboard() {
           </div>
 
           {/* Request Details */}
-          <div className="lg:col-span-2">
-            <Card>
+          <div className="min-w-0 lg:col-span-2">
+            <Card className="min-w-0 overflow-hidden">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle>Request Details</CardTitle>
@@ -496,7 +512,7 @@ export default function Dashboard() {
               <CardContent>
                 {selectedRequest ? (
                   <Tabs defaultValue="overview">
-                    <TabsList className="grid w-full grid-cols-4">
+                    <TabsList className="flex h-auto flex-wrap">
                       <TabsTrigger value="overview">Overview</TabsTrigger>
                       <TabsTrigger value="headers">Headers</TabsTrigger>
                       <TabsTrigger value="body">Body</TabsTrigger>

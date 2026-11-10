@@ -14,9 +14,9 @@ export default function Docs() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
+        <div className="container flex min-h-16 flex-wrap items-center justify-between gap-3 py-2">
           <Logo />
-          <nav className="flex items-center space-x-6">
+          <nav className="flex flex-wrap items-center gap-3">
             <Link
               to="/"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -27,10 +27,10 @@ export default function Docs() {
               to="/dashboard"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
-              Dashboard
+              Mocks
             </Link>
             <Button asChild>
-              <Link to="/login">Login</Link>
+              <Link to="/login">Sign in</Link>
             </Button>
           </nav>
         </div>
@@ -67,7 +67,7 @@ export default function Docs() {
                 <li>Paste it into the XSOAR server field and send one call. The dashboard log shows what arrived.</li>
               </ol>
               <p className="mt-4 text-sm text-muted-foreground">
-                A guessed-shape preset is a starting point. The badge says when a preset was checked against a public vendor reference. Match, Flow, Auth, and Push are on the mock page. Presets and integration YAML imports also list the XSOAR instance fields, with copy buttons and an instance JSON download. A normal page stops at 500 records and 2 MB. The catch URL is public; sharing only changes who can edit the studio. The same notes are in docs/USER_GUIDE.md.
+                A guessed-shape preset is a starting point. The badge says when a preset was checked against a public vendor reference. On the mock page, the buttons under the catch URL jump to chaos, auth, flow, and push. Presets and integration YAML imports also list the XSOAR instance fields, with copy buttons and an instance JSON download. A normal page stops at 500 records and 2 MB. Set Virtual records into the thousands when you want a load test, then page through. The catch URL is public; sharing only changes who can edit the studio. The same notes are in docs/USER_GUIDE.md.
               </p>
             </CardContent>
           </Card>
