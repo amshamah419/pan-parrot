@@ -13,13 +13,15 @@ You are configuring a PAN Parrot mock for the integration in this directory.
    Use the preset id when one matches. commandCoverage says how many commands return a vendor example.
 4. panparrot --json mock from-integration <Integration>.yml
    This reads the YAML, the Python file beside it, and a sibling test_data directory. The routes come from the Python client. The result includes the catch URL and instance params. Repeat it to update the same integration id and version.
-5. panparrot --json instance-config --mock <id>
+5. panparrot --json mock fetch --mock <id>
+   Turns on since and first_fetch windows. Each poll returns the next window. Pass --reset before a repeated test. --off turns it off. Leave the XSOAR Fetch incidents checkbox off until a manual command shows up in the log.
+6. panparrot --json instance-config --mock <id>
    Put baseUrl in the integration URL parameter. Use the returned param names and values. They come from the integration YAML.
-6. The user exports DEMISTO_BASE_URL, DEMISTO_API_KEY, and XSIAM_AUTH_ID in the shell. Do not send those values to PAN Parrot, and do not write them into the repo.
-7. panparrot --json xsiam configure-instance --mock <id> --integration <integration id> --instance-name <n> --dry-run
-8. Show the payload. After the user agrees, run the same command without --dry-run.
+7. The user exports DEMISTO_BASE_URL, DEMISTO_API_KEY, and XSIAM_AUTH_ID in the shell. Do not send those values to PAN Parrot, and do not write them into the repo.
+8. panparrot --json xsiam configure-instance --mock <id> --integration <integration id> --instance-name <n> --dry-run
+9. Show the payload. After the user agrees, run the same command without --dry-run.
    XSIAM must be able to reach the catch URL.
-9. After the integration calls the catch URL, panparrot --json assert --mock <id> --file expectations.json
+10. After the integration calls the catch URL, panparrot --json assert --mock <id> --file expectations.json
    A failed assertion exits 1. expectations.json is a list of {method, path, query, status, bodyIncludes, min, max}.
 ```
 
@@ -41,6 +43,7 @@ pipx install "git+https://github.com/amshamah419/pan-parrot.git#subdirectory=py/
 panparrot --json login --url https://<site> --token pp_...
 panparrot --json presets --q github
 panparrot --json mock from-integration Integrations/HelloWorld/HelloWorld.yml
+panparrot --json mock fetch --mock <id> --window 300 --per-poll 3 --reset
 panparrot --json assert --mock <id> --method GET --path /hello --query since=2020-01-01T00:00:00Z
 panparrot --json mocks list
 panparrot --json mocks create --from-yml Integrations/HelloWorld/HelloWorld.yml --test-data Integrations/HelloWorld/test_data

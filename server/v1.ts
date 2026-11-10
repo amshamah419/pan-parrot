@@ -14,6 +14,7 @@ import { buildIntegrationMock, type TestDataFile } from "../shared/xsoar-workflo
 import { isOpenApiDocument, isXsoarIntegration } from "../shared/xsoar-yaml";
 import type { AppEnv } from "./app";
 import { createEndpointForUser, getEndpointForUser, saveMockSpec, deleteEndpointForUser } from "./data";
+import { resetRuntime } from "./runtime-state";
 import { HttpError, readJson } from "./http";
 import { limitAuthed, limitToken } from "./rate-limit";
 import { resolveApiToken, type ResolvedToken, type TokenScope } from "./tokens";
@@ -123,6 +124,22 @@ export function registerV1(app: Hono<AppEnv>) {
     const id = c.req.param("id");
     await getEndpointForUser(c.get("db"), user.id, id);
     const body = await readBody(c);
+    if (isFetchPatch(body)) {
+      const endpoint = await getEndpointForUser(c.get("db"), user.id, id);
+      if (!endpoint.mockSpec) throw new HttpError(400, "This mock has no definition");
+      if ("reset" in body && typeof body.reset !== "boolean") throw new HttpError(400, "reset must be true or false");
+      const spec = applyFetchPatch(endpoint.mockSpec, body.fetch);
+      await saveMockSpec(c.get("db"), user.id, id, spec);
+      if (body.reset === true) await resetRuntime(c.get("db"), id);
+      const saved = await getEndpointForUser(c.get("db"), user.id, id);
+      return c.json({
+        id: saved.id,
+        name: saved.name,
+        url: saved.url,
+        fetch: validateMockSpec(saved.mockSpec).behavior.fetch,
+        reset: body.reset === true,
+      });
+    }
     const built = await specFromUpload(body);
     await saveMockSpec(c.get("db"), user.id, id, built.spec);
     if (built.integrationId) {
@@ -255,7 +272,51 @@ interface Built {
   version: string;
 }
 
+const FETCH_KEYS = new Set(["enabled", "sinceParam", "firstFetchParam", "timeField", "windowSeconds", "dedup", "perPoll"]);
+
+function isFetchPatch(body: Record<string, unknown>): boolean {
+  const kinds = ["preset", "openapi", "yaml", "mockSpec"].filter((key) => body[key] != null && body[key] !== "");
+  return body.fetch != null && kinds.length === 0;
+}
+
+function applyFetchPatch(current: unknown, patch: unknown): MockSpec {
+  if (!patch || typeof patch !== "object" || Array.isArray(patch)) throw new HttpError(400, "fetch must be an object");
+  const raw = patch as Record<string, unknown>;
+  for (const key of Object.keys(raw)) {
+    if (!FETCH_KEYS.has(key)) throw new HttpError(400, "Unknown fetch setting");
+  }
+  const spec = validateMockSpec(current);
+  const fetch = { ...spec.behavior.fetch };
+  if ("enabled" in raw) {
+    if (typeof raw.enabled !== "boolean") throw new HttpError(400, "enabled must be true or false");
+    fetch.enabled = raw.enabled;
+  }
+  if ("dedup" in raw) {
+    if (typeof raw.dedup !== "boolean") throw new HttpError(400, "dedup must be true or false");
+    fetch.dedup = raw.dedup;
+  }
+  for (const key of ["sinceParam", "firstFetchParam", "timeField"] as const) {
+    if (!(key in raw)) continue;
+    const value = raw[key];
+    if (typeof value !== "string" || !/^[A-Za-z0-9_$.-]{1,40}$/.test(value)) {
+      throw new HttpError(400, `${key} must be a short name`);
+    }
+    fetch[key] = value;
+  }
+  if ("windowSeconds" in raw) fetch.windowSeconds = integerSetting(raw.windowSeconds, "windowSeconds", 1, 86_400);
+  if ("perPoll" in raw) fetch.perPoll = integerSetting(raw.perPoll, "perPoll", 1, 50);
+  return validateMockSpec({ ...spec, behavior: { ...spec.behavior, fetch } });
+}
+
+function integerSetting(value: unknown, name: string, min: number, max: number): number {
+  if (typeof value !== "number" || !Number.isInteger(value) || value < min || value > max) {
+    throw new HttpError(400, `${name} must be an integer from ${min} to ${max}`);
+  }
+  return value;
+}
+
 async function specFromUpload(body: Record<string, unknown>): Promise<Built> {
+  if (body.fetch != null) throw new HttpError(400, "Send fetch by itself to update an existing mock");
   const kinds = ["preset", "openapi", "yaml", "mockSpec"].filter((key) => body[key] != null && body[key] !== "");
   if (kinds.length !== 1) throw new HttpError(400, "Provide one of preset, openapi, yaml, or mockSpec");
   const version = cleanVersion(body.version);
@@ -444,7 +505,7 @@ function openApiDocument() {
       },
       "/api/v1/mocks/{id}": {
         get: { summary: "Read a mock", security: [{ bearer: ["mocks:read"] }], responses: { "200": { description: "Mock", content: json } } },
-        put: { summary: "Replace a mock definition", security: [{ bearer: ["mocks:write"] }], responses: { "200": { description: "Updated", content: json } } },
+        put: { summary: "Replace a mock definition, or send fetch to turn on since and first_fetch windows", security: [{ bearer: ["mocks:write"] }], responses: { "200": { description: "Updated", content: json } } },
         delete: { summary: "Delete a mock", security: [{ bearer: ["mocks:write"] }], responses: { "200": { description: "Deleted", content: json } } },
       },
       "/api/v1/mocks/{id}/logs": { get: { summary: "Read captured requests", security: [{ bearer: ["mocks:read"] }], responses: { "200": { description: "Logs", content: json } } } },
