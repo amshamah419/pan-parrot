@@ -2,9 +2,9 @@
   "id": "aws-securitylake-awssecuritylake",
   "name": "Amazon Security Lake",
   "pack": "AWS-SecurityLake",
-  "fidelity": "shape",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Amazon Security Lake is a fully managed security data lake service.",
+  "summary": "From vendor docs. Amazon Security Lake is a fully managed security data lake service.",
   "operations": 3,
   "origin": "sample",
   "spec": {
@@ -15,7 +15,7 @@
       "name": "Amazon Security Lake",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-SecurityLake/Integrations/AWSSecurityLake",
-      "fidelity": "shape",
+      "fidelity": "vendor",
       "notes": [
         "Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.",
         "No HTTP path was recovered from the client. The sample shape is served at the catch URL root."
@@ -23,50 +23,125 @@
       "commandDocs": [
         {
           "command": "aws-security-lake-query-execute",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "athena:GetQueryExecution",
+            "athena:StartQueryExecution",
+            "athena:GetQueryResults"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "athena-get-query-execution",
+            "athena-start-query-execution",
+            "athena-get-query-results"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/athena/get-query-execution.html"
         },
         {
           "command": "aws-security-lake-data-catalogs-list",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "athena:ListDataCatalogs"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "athena-list-data-catalogs"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/athena/list-data-catalogs.html"
         },
         {
           "command": "aws-security-lake-databases-list",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "athena:ListDatabases"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "athena-list-databases"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/athena/list-databases.html"
         },
         {
           "command": "aws-security-lake-table-metadata-list",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "athena:ListTableMetadata"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "athena-list-table-metadata"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/athena/list-table-metadata.html"
         },
         {
           "command": "aws-security-lake-user-mfalogin-query",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "athena:GetQueryExecution",
+            "athena:StartQueryExecution",
+            "athena:GetQueryResults"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "athena-get-query-execution",
+            "athena-start-query-execution",
+            "athena-get-query-results"
+          ]
         },
         {
           "command": "aws-security-lake-source-ip-query",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "athena:GetQueryExecution",
+            "athena:StartQueryExecution",
+            "athena:GetQueryResults"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "athena-get-query-execution",
+            "athena-start-query-execution",
+            "athena-get-query-results"
+          ]
         },
         {
           "command": "aws-security-lake-guardduty-activity-query",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "athena:GetQueryExecution",
+            "athena:StartQueryExecution",
+            "athena:GetQueryResults"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "athena-get-query-execution",
+            "athena-start-query-execution",
+            "athena-get-query-results"
+          ]
         },
         {
           "command": "aws-security-lake-data-sources-list",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "securitylake:GetDataLakeSources"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "securitylake-get-data-lake-sources"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/securitylake/get-data-lake-sources.html"
         },
         {
           "command": "aws-security-lake-data-lakes-list",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "securitylake:ListDataLakes"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "securitylake-list-data-lakes"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/securitylake/list-data-lakes.html"
         }
-      ]
+      ],
+      "verification": {
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/athena/get-query-execution.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "6 of 9 commands from vendor docs, 0 approximate, 3 missing."
+        ]
+      }
     },
     "operations": [
       {
@@ -618,6 +693,264 @@
             }
           ]
         }
+      },
+      {
+        "id": "athena-get-query-execution",
+        "summary": "athena GetQueryExecution",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "GetQueryExecution",
+        "fixture": "{\n  \"QueryExecution\": {\n    \"QueryExecutionId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n    \"Query\": \"select date, location, browser, uri, status from cloudfront_logs where method = 'GET' and status = 200 and location like 'SFO%' limit 10\",\n    \"StatementType\": \"DML\",\n    \"ResultConfiguration\": {\n      \"OutputLocation\": \"s3://amzn-s3-demo-bucket/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111.csv\"\n    },\n    \"QueryExecutionContext\": {\n      \"Database\": \"mydatabase\",\n      \"Catalog\": \"awsdatacatalog\"\n    },\n    \"Status\": {\n      \"State\": \"SUCCEEDED\",\n      \"SubmissionDateTime\": 1593469842.665,\n      \"CompletionDateTime\": 1593469846.486\n    },\n    \"Statistics\": {\n      \"EngineExecutionTimeInMillis\": 3600,\n      \"DataScannedInBytes\": 203089,\n      \"TotalExecutionTimeInMillis\": 3821,\n      \"QueryQueueTimeInMillis\": 267,\n      \"QueryPlanningTimeInMillis\": 1175\n    },\n    \"WorkGroup\": \"AthenaAdmin\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonAthena.GetQueryExecution"
+        }
+      },
+      {
+        "id": "athena-start-query-execution",
+        "summary": "athena StartQueryExecution",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "StartQueryExecution",
+        "fixture": "{\n  \"QueryExecutionId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonAthena.StartQueryExecution"
+        }
+      },
+      {
+        "id": "athena-get-query-results",
+        "summary": "athena GetQueryResults",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "GetQueryResults",
+        "fixture": "{\n  \"ResultSet\": {\n    \"Rows\": [\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"date\"\n          },\n          {\n            \"VarCharValue\": \"location\"\n          },\n          {\n            \"VarCharValue\": \"browser\"\n          },\n          {\n            \"VarCharValue\": \"uri\"\n          },\n          {\n            \"VarCharValue\": \"status\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Safari\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-2.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Opera\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-2.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Firefox\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-3.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Lynx\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-3.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"IE\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-2.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Opera\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-1.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Chrome\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-3.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Firefox\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-2.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Chrome\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-3.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"IE\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-2.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      }\n    ],\n    \"ResultSetMetadata\": {\n      \"ColumnInfo\": [\n        {\n          \"CatalogName\": \"hive\",\n          \"SchemaName\": \"\",\n          \"TableName\": \"\",\n          \"Name\": \"date\",\n          \"Label\": \"date\",\n          \"Type\": \"date\",\n          \"Precision\": 0,\n          \"Scale\": 0,\n          \"Nullable\": \"UNKNOWN\",\n          \"CaseSensitive\": false\n        },\n        {\n          \"CatalogName\": \"hive\",\n          \"SchemaName\": \"\",\n          \"TableName\": \"\",\n          \"Name\": \"location\",\n          \"Label\": \"location\",\n          \"Type\": \"varchar\",\n          \"Precision\": 2147483647,\n          \"Scale\": 0,\n          \"Nullable\": \"UNKNOWN\",\n          \"CaseSensitive\": true\n        },\n        {\n          \"CatalogName\": \"hive\",\n          \"SchemaName\": \"\",\n          \"TableName\": \"\",\n          \"Name\": \"browser\",\n          \"Label\": \"browser\",\n          \"Type\": \"varchar\",\n          \"Precision\": 2147483647,\n          \"Scale\": 0,\n          \"Nullable\": \"UNKNOWN\",\n          \"CaseSensitive\": true\n        },\n        {\n          \"CatalogName\": \"hive\",\n          \"SchemaName\": \"\",\n          \"TableName\": \"\",\n          \"Name\": \"uri\",\n          \"Label\": \"uri\",\n          \"Type\": \"varchar\",\n          \"Precision\": 2147483647,\n          \"Scale\": 0,\n          \"Nullable\": \"UNKNOWN\",\n          \"CaseSensitive\": true\n        },\n        {\n          \"CatalogName\": \"hive\",\n          \"SchemaName\": \"\",\n          \"TableName\": \"\",\n          \"Name\": \"status\",\n          \"Label\": \"status\",\n          \"Type\": \"integer\",\n          \"Precision\": 10,\n          \"Scale\": 0,\n          \"Nullable\": \"UNKNOWN\",\n          \"CaseSensitive\": false\n        }\n      ]\n    }\n  },\n  \"UpdateCount\": 0\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonAthena.GetQueryResults"
+        }
+      },
+      {
+        "id": "athena-list-data-catalogs",
+        "summary": "athena ListDataCatalogs",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "ListDataCatalogs",
+        "fixture": "{\n  \"DataCatalogsSummary\": [\n    {\n      \"CatalogName\": \"AwsDataCatalog\",\n      \"Type\": \"GLUE\"\n    },\n    {\n      \"CatalogName\": \"cw_logs_catalog\",\n      \"Type\": \"LAMBDA\"\n    },\n    {\n      \"CatalogName\": \"cw_metrics_catalog\",\n      \"Type\": \"LAMBDA\"\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonAthena.ListDataCatalogs"
+        }
+      },
+      {
+        "id": "athena-list-databases",
+        "summary": "athena ListDatabases",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "ListDatabases",
+        "fixture": "{\n  \"DatabaseList\": [\n    {\n      \"Name\": \"default\"\n    },\n    {\n      \"Name\": \"mydatabase\"\n    },\n    {\n      \"Name\": \"newdb\"\n    },\n    {\n      \"Name\": \"sampledb\",\n      \"Description\": \"Sample database\",\n      \"Parameters\": {\n        \"CreatedBy\": \"Athena\",\n        \"EXTERNAL\": \"TRUE\"\n      }\n    },\n    {\n      \"Name\": \"webdata\"\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonAthena.ListDatabases"
+        }
+      },
+      {
+        "id": "athena-list-table-metadata",
+        "summary": "athena ListTableMetadata",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "ListTableMetadata",
+        "fixture": "{\n  \"TableMetadataList\": [\n    {\n      \"Name\": \"country_codes\",\n      \"CreateTime\": 1586553454.0,\n      \"TableType\": \"EXTERNAL_TABLE\",\n      \"Columns\": [\n        {\n          \"Name\": \"country\",\n          \"Type\": \"string\",\n          \"Comment\": \"geo id\"\n        },\n        {\n          \"Name\": \"alpha-2 code\",\n          \"Type\": \"string\",\n          \"Comment\": \"geo id2\"\n        },\n        {\n          \"Name\": \"alpha-3 code\",\n          \"Type\": \"string\",\n          \"Comment\": \"state name\"\n        },\n        {\n          \"Name\": \"numeric code\",\n          \"Type\": \"bigint\",\n          \"Comment\": \"\"\n        },\n        {\n          \"Name\": \"latitude\",\n          \"Type\": \"bigint\",\n          \"Comment\": \"location (latitude)\"\n        },\n        {\n          \"Name\": \"longitude\",\n          \"Type\": \"bigint\",\n          \"Comment\": \"location (longitude)\"\n        }\n      ],\n      \"Parameters\": {\n        \"areColumnsQuoted\": \"false\",\n        \"classification\": \"csv\",\n        \"columnsOrdered\": \"true\",\n        \"delimiter\": \",\",\n        \"has_encrypted_data\": \"false\",\n        \"inputformat\": \"org.apache.hadoop.mapred.TextInputFormat\",\n        \"location\": \"s3://amzn-s3-demo-bucket/csv/countrycode\",\n        \"outputformat\": \"org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat\",\n        \"serde.param.field.delim\": \",\",\n        \"serde.serialization.lib\": \"org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe\",\n        \"skip.header.line.count\": \"1\",\n        \"typeOfData\": \"file\"\n      }\n    },\n    {\n      \"Name\": \"county_populations\",\n      \"CreateTime\": 1586553446.0,\n      \"TableType\": \"EXTERNAL_TABLE\",\n      \"Columns\": [\n        {\n          \"Name\": \"id\",\n          \"Type\": \"string\",\n          \"Comment\": \"geo id\"\n        },\n        {\n          \"Name\": \"id2\",\n          \"Type\": \"string\",\n          \"Comment\": \"geo id2\"\n        },\n        {\n          \"Name\": \"county\",\n          \"Type\": \"string\",\n          \"Comment\": \"county name\"\n        },\n        {\n          \"Name\": \"state\",\n          \"Type\": \"string\",\n          \"Comment\": \"state name\"\n        },\n        {\n          \"Name\": \"population estimate 2018\",\n          \"Type\": \"string\",\n          \"Comment\": \"\"\n        }\n      ],\n      \"Parameters\": {\n        \"areColumnsQuoted\": \"false\",\n        \"classification\": \"csv\",\n        \"columnsOrdered\": \"true\",\n        \"delimiter\": \",\",\n        \"has_encrypted_data\": \"false\",\n        \"inputformat\": \"org.apache.hadoop.mapred.TextInputFormat\",\n        \"location\": \"s3://amzn-s3-demo-bucket/csv/CountyPopulation\",\n        \"outputformat\": \"org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat\",\n        \"serde.param.field.delim\": \",\",\n        \"serde.serialization.lib\": \"org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe\",\n        \"skip.header.line.count\": \"1\",\n        \"typeOfData\": \"file\"\n      }\n    }\n  ],\n  \"NextToken\": \"eyJOZXh0VG9rZW4iOiBudWxsLCAiYm90b190cnVuY2F0ZV9hbW91bnQiOiAyfQ==\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonAthena.ListTableMetadata"
+        }
+      },
+      {
+        "id": "securitylake-get-data-lake-sources",
+        "summary": "securitylake GetDataLakeSources",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/v1/datalake/sources",
+        "contentType": "application/json",
+        "awsAction": "GetDataLakeSources",
+        "fixture": "{\n  \"dataLakeSources\": [\n    {\n      \"account\": \"123456789012\",\n      \"sourceName\": \"SH_FINDINGS\",\n      \"sourceStatuses\": [\n        {\n          \"resource\": \"vpc-1234567890abcdef0\",\n          \"status\": \"COLLECTING\"\n        }\n      ]\n    },\n    {\n      \"account\": \"123456789012\",\n      \"sourceName\": \"VPC_FLOW\",\n      \"sourceStatuses\": [\n        {\n          \"resource\": \"vpc-1234567890abcdef0\",\n          \"status\": \"NOT_COLLECTING\"\n        }\n      ]\n    },\n    {\n      \"account\": \"123456789012\",\n      \"sourceName\": \"LAMBDA_EXECUTION\",\n      \"sourceStatuses\": [\n        {\n          \"resource\": \"vpc-1234567890abcdef0\",\n          \"status\": \"COLLECTING\"\n        }\n      ]\n    },\n    {\n      \"account\": \"123456789012\",\n      \"sourceName\": \"ROUTE53\",\n      \"sourceStatuses\": [\n        {\n          \"resource\": \"vpc-1234567890abcdef0\",\n          \"status\": \"COLLECTING\"\n        }\n      ]\n    },\n    {\n      \"account\": \"123456789012\",\n      \"sourceName\": \"CLOUD_TRAIL_MGMT\",\n      \"sourceStatuses\": [\n        {\n          \"resource\": \"vpc-1234567890abcdef0\",\n          \"status\": \"COLLECTING\"\n        }\n      ]\n    }\n  ],\n  \"dataLakeArn\": null\n}\n"
+      },
+      {
+        "id": "securitylake-list-data-lakes",
+        "summary": "securitylake ListDataLakes",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/v1/datalakes",
+        "contentType": "application/json",
+        "awsAction": "ListDataLakes",
+        "fixture": "{\n  \"dataLakes\": [\n    {\n      \"createStatus\": \"COMPLETED\",\n      \"dataLakeArn\": \"arn:aws:securitylake:us-east-1:123456789012:data-lake/default\",\n      \"encryptionConfiguration\": {\n        \"kmsKeyId\": \"S3_MANAGED_KEY\"\n      },\n      \"lifecycleConfiguration\": {\n        \"expiration\": {\n          \"days\": 365\n        },\n        \"transitions\": [\n          {\n            \"days\": 60,\n            \"storageClass\": \"ONEZONE_IA\"\n          }\n        ]\n      },\n      \"region\": \"us-east-1\",\n      \"replicationConfiguration\": {\n        \"regions\": [\n          \"ap-northeast-3\"\n        ],\n        \"roleArn\": \"arn:aws:securitylake:ap-northeast-3:123456789012:data-lake/default\"\n      },\n      \"s3BucketArn\": \"arn:aws:s3:::aws-security-data-lake-us-east-1-1234567890abcdef0\",\n      \"updateStatus\": {\n        \"exception\": {\n          \"code\": \"software.amazon.awssdk.services.s3.model.S3Exception\",\n          \"reason\": \"\"\n        },\n        \"requestId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n        \"status\": \"FAILED\"\n      }\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {
@@ -642,5 +975,6 @@
     "auth": {
       "mode": "none"
     }
-  }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-SecurityLake/Integrations/AWSSecurityLake"
 }

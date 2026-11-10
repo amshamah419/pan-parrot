@@ -1,0 +1,190 @@
+{
+  "id": "aws-accessanalyzer-aws-accessanalyzer",
+  "retrievedAt": "2026-11-10",
+  "sourceType": "vendor-example",
+  "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/accessanalyzer/list-analyzers.html",
+  "operations": [
+    {
+      "operationId": "accessanalyzer-list-analyzers",
+      "method": "GET",
+      "path": "/analyzer",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/accessanalyzer/list-analyzers.html",
+      "rstPath": "awscli/examples/accessanalyzer/list-analyzers.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "analyzers": [
+          {
+            "arn": "arn:aws:access-analyzer:us-west-2:123456789012:analyzer/UnusedAccess-ConsoleAnalyzer-organization",
+            "createdAt": "2024-02-15T00:46:40+00:00",
+            "name": "UnusedAccess-ConsoleAnalyzer-organization",
+            "status": "ACTIVE",
+            "tags": {
+              "auto-delete": "no"
+            },
+            "type": "ORGANIZATION_UNUSED_ACCESS"
+          },
+          {
+            "arn": "arn:aws:access-analyzer:us-west-2:123456789012:analyzer/ConsoleAnalyzer-organization",
+            "createdAt": "2020-04-25T07:43:28+00:00",
+            "lastResourceAnalyzed": "arn:aws:s3:::amzn-s3-demo-bucket",
+            "lastResourceAnalyzedAt": "2024-02-15T21:51:56.517000+00:00",
+            "name": "ConsoleAnalyzer-organization",
+            "status": "ACTIVE",
+            "tags": {
+              "auto-delete": "no"
+            },
+            "type": "ORGANIZATION"
+          },
+          {
+            "arn": "arn:aws:access-analyzer:us-west-2:123456789012:analyzer/ConsoleAnalyzer-account",
+            "createdAt": "2019-12-03T07:28:17+00:00",
+            "lastResourceAnalyzed": "arn:aws:sns:us-west-2:123456789012:config-topic",
+            "lastResourceAnalyzedAt": "2024-02-15T18:01:53.003000+00:00",
+            "name": "ConsoleAnalyzer-account",
+            "status": "ACTIVE",
+            "tags": {
+              "auto-delete": "no"
+            },
+            "type": "ACCOUNT"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "accessanalyzer-list-analyzed-resources",
+      "method": "POST",
+      "path": "/analyzed-resource",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/accessanalyzer/list-analyzed-resources.html",
+      "rstPath": "awscli/examples/accessanalyzer/list-analyzed-resources.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "analyzedResources": [
+          {
+            "resourceArn": "arn:aws:sns:us-west-2:123456789012:Validation-Email",
+            "resourceOwnerAccount": "123456789012",
+            "resourceType": "AWS::SNS::Topic"
+          },
+          {
+            "resourceArn": "arn:aws:sns:us-west-2:123456789012:admin-alerts",
+            "resourceOwnerAccount": "123456789012",
+            "resourceType": "AWS::SNS::Topic"
+          },
+          {
+            "resourceArn": "arn:aws:sns:us-west-2:123456789012:config-topic",
+            "resourceOwnerAccount": "123456789012",
+            "resourceType": "AWS::SNS::Topic"
+          },
+          {
+            "resourceArn": "arn:aws:sns:us-west-2:123456789012:inspector-topic",
+            "resourceOwnerAccount": "123456789012",
+            "resourceType": "AWS::SNS::Topic"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "list-findings",
+      "method": "POST",
+      "path": "/finding",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/accessanalyzer/list-findings.html",
+      "rstPath": "awscli/examples/accessanalyzer/list-findings.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "findings": [
+          {
+            "id": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "principal": {
+              "Federated": "cognito-identity.amazonaws.com"
+            },
+            "action": [
+              "sts:AssumeRoleWithWebIdentity"
+            ],
+            "resource": "arn:aws:iam::123456789012:role/Cognito_testpoolUnauth_Role",
+            "isPublic": false,
+            "resourceType": "AWS::IAM::Role",
+            "condition": {
+              "cognito-identity.amazonaws.com:aud": "us-west-2:a1b2c3d4-5678-90ab-cdef-EXAMPLE22222"
+            },
+            "createdAt": "2021-02-26T21:17:24.710000+00:00",
+            "analyzedAt": "2024-02-16T18:17:47.888000+00:00",
+            "updatedAt": "2021-02-26T21:17:24.710000+00:00",
+            "status": "ACTIVE",
+            "resourceOwnerAccount": "123456789012"
+          },
+          {
+            "id": "a1b2c3d4-5678-90ab-cdef-EXAMPLE33333",
+            "principal": {
+              "Federated": "cognito-identity.amazonaws.com"
+            },
+            "action": [
+              "sts:AssumeRoleWithWebIdentity"
+            ],
+            "resource": "arn:aws:iam::123456789012:role/Cognito_testpoolAuth_Role",
+            "isPublic": false,
+            "resourceType": "AWS::IAM::Role",
+            "condition": {
+              "cognito-identity.amazonaws.com:aud": "us-west-2:a1b2c3d4-5678-90ab-cdef-EXAMPLE22222"
+            },
+            "createdAt": "2021-02-26T21:17:50.905000+00:00",
+            "analyzedAt": "2024-02-16T18:17:47.888000+00:00",
+            "updatedAt": "2021-02-26T21:17:50.905000+00:00",
+            "status": "ACTIVE",
+            "resourceOwnerAccount": "123456789012"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "accessanalyzer-get-analyzed-resource",
+      "method": "GET",
+      "path": "/analyzed-resource",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/accessanalyzer/get-analyzed-resource.html",
+      "rstPath": "awscli/examples/accessanalyzer/get-analyzed-resource.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "resource": {
+          "analyzedAt": "2024-02-15T18:01:53.002000+00:00",
+          "isPublic": false,
+          "resourceArn": "arn:aws:s3:::amzn-s3-demo-bucket",
+          "resourceOwnerAccount": "123456789012",
+          "resourceType": "AWS::S3::Bucket"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "accessanalyzer-get-finding",
+      "method": "GET",
+      "path": "/finding/{id}",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/accessanalyzer/get-finding.html",
+      "rstPath": "awscli/examples/accessanalyzer/get-finding.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "finding": {
+          "id": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "principal": {
+            "Federated": "cognito-identity.amazonaws.com"
+          },
+          "action": [
+            "sts:AssumeRoleWithWebIdentity"
+          ],
+          "resource": "arn:aws:iam::123456789012:role/Cognito_testpoolAuth_Role",
+          "isPublic": false,
+          "resourceType": "AWS::IAM::Role",
+          "condition": {
+            "cognito-identity.amazonaws.com:aud": "us-west-2:a1b2c3d4-5678-90ab-cdef-EXAMPLE22222"
+          },
+          "createdAt": "2021-02-26T21:17:50.905000+00:00",
+          "analyzedAt": "2024-02-16T18:17:47.888000+00:00",
+          "updatedAt": "2021-02-26T21:17:50.905000+00:00",
+          "status": "ACTIVE",
+          "resourceOwnerAccount": "123456789012"
+        }
+      },
+      "scrubs": []
+    }
+  ]
+}

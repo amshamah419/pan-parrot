@@ -3,9 +3,9 @@
   "name": "AWS - GuardDuty",
   "pack": "AWS-GuardDuty",
   "vendor": "Amazon Web Services",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "ListFindings and GetFindings on POST /, selected by the X-Amz-Target header.",
+  "summary": "From vendor docs. ListFindings and GetFindings on POST /, selected by the X-Amz-Target header.",
   "notes": [
     "The XSOAR pack uses boto3. GuardDuty's JSON protocol is POST / with X-Amz-Target GuardDuty_20171201.ListFindings or GetFindings.",
     "ListFindings returns FindingIds. GetFindings returns Findings with Id, Type, Severity, and Title. Service.Action and resource details are omitted.",
@@ -19,18 +19,16 @@
       "kind": "preset",
       "id": "aws-guardduty-awsguardduty",
       "name": "AWS - GuardDuty",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-GuardDuty/Integrations/AWSGuardDuty",
       "notes": [],
       "verification": {
-        "status": "approximate",
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/create-detector.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "10 of 28 commands from vendor docs, 1 approximate, 17 missing.",
-          "The XSOAR pack uses boto3. GuardDuty's JSON protocol is POST / with X-Amz-Target GuardDuty_20171201.ListFindings or GetFindings.",
-          "ListFindings returns FindingIds. GetFindings returns Findings with Id, Type, Severity, and Title. Service.Action and resource details are omitted.",
-          "SigV4 is not checked. A call without X-Amz-Target does not match either operation."
+          "10 of 28 commands from vendor docs, 0 approximate, 18 missing."
         ]
       },
       "commandDocs": [
@@ -39,7 +37,11 @@
           "calls": [
             "guardduty:CreateDetector"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "guardduty-create-detector"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/create-detector.html"
         },
         {
           "command": "aws-gd-delete-detector",
@@ -53,7 +55,11 @@
           "calls": [
             "guardduty:GetDetector"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "guardduty-get-detector"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/get-detector.html"
         },
         {
           "command": "aws-gd-update-detector",
@@ -64,12 +70,20 @@
         },
         {
           "command": "aws-gd-create-ip-set",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "guardduty:CreateIPSet"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "guardduty-create-i-p-set"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/create-ip-set.html"
         },
         {
           "command": "aws-gd-delete-ip-set",
-          "calls": [],
+          "calls": [
+            "guardduty:DeleteIPSet"
+          ],
           "status": "missing"
         },
         {
@@ -77,29 +91,51 @@
           "calls": [
             "guardduty:ListDetectors"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "guardduty-list-detectors"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/list-detectors.html"
         },
         {
           "command": "aws-gd-update-ip-set",
-          "calls": [],
+          "calls": [
+            "guardduty:UpdateIPSet"
+          ],
           "status": "missing"
         },
         {
           "command": "aws-gd-get-ip-set",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "guardduty:GetIPSet"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "guardduty-get-i-p-set"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/get-ip-set.html"
         },
         {
           "command": "aws-gd-list-ip-sets",
-          "calls": [],
-          "status": "missing"
+          "calls": [
+            "guardduty:ListIPSets"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "guardduty-list-i-p-sets"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/list-ip-sets.html"
         },
         {
           "command": "aws-gd-create-threatintel-set",
           "calls": [
             "guardduty:CreateThreatIntelSet"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "guardduty-create-threat-intel-set"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/create-threat-intel-set.html"
         },
         {
           "command": "aws-gd-delete-threatintel-set",
@@ -169,20 +205,22 @@
           "calls": [
             "guardduty:ListFindings"
           ],
-          "status": "approximate",
+          "status": "vendor",
           "operationIds": [
             "list-findings"
-          ]
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/list-findings.html"
         },
         {
           "command": "aws-gd-get-findings",
           "calls": [
             "guardduty:GetFindings"
           ],
-          "status": "approximate",
+          "status": "vendor",
           "operationIds": [
             "get-findings"
-          ]
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/get-findings.html"
         },
         {
           "command": "aws-gd-create-sample-findings",
@@ -217,7 +255,11 @@
           "calls": [
             "guardduty:ListMembers"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "guardduty-list-members"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/list-members.html"
         },
         {
           "command": "aws-gd-get-members",
@@ -258,11 +300,12 @@
         "headerMatch": {
           "x-amz-target": "GuardDuty_20171201.ListFindings"
         },
-        "awsAction": "ListFindings"
+        "awsAction": "ListFindings",
+        "fixture": "{\n  \"FindingIds\": [\n    \"04b8ab50fd29c64fc771b232dexample\",\n    \"5ab8ab50fd21373735c826d3aexample\",\n    \"90b93de7aba69107f05bbe60bexample\"\n  ]\n}\n"
       },
       {
         "headers": {},
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "pagination": {
           "style": "none",
           "limitParam": "limit",
@@ -274,7 +317,7 @@
         },
         "id": "get-findings",
         "method": "POST",
-        "pathTemplate": "/",
+        "pathTemplate": "/detector/{DetectorId}/findings/get",
         "summary": "Get findings",
         "status": 200,
         "list": true,
@@ -313,7 +356,249 @@
         },
         "headerMatch": {
           "x-amz-target": "GuardDuty_20171201.GetFindings"
-        }
+        },
+        "awsAction": "GetFindings",
+        "fixture": "{\n  \"Findings\": [\n    {\n      \"Resource\": {\n        \"ResourceType\": \"AccessKey\",\n        \"AccessKeyDetails\": {\n          \"UserName\": \"testuser\",\n          \"UserType\": \"IAMUser\",\n          \"PrincipalId\": \"AIDACKCEVSQ6C2EXAMPLE\",\n          \"AccessKeyId\": \"ASIASZ4SI7REEEXAMPLE\"\n        }\n      },\n      \"Description\": \"APIs commonly used to discover the users, groups, policies and permissions in an account, was invoked by IAM principal testuser under unusual circumstances. Such activity is not typically seen from this principal.\",\n      \"Service\": {\n        \"Count\": 5,\n        \"Archived\": false,\n        \"ServiceName\": \"guardduty\",\n        \"EventFirstSeen\": \"2020-05-26T22:02:24Z\",\n        \"ResourceRole\": \"TARGET\",\n        \"EventLastSeen\": \"2020-05-26T22:33:55Z\",\n        \"DetectorId\": \"d4b040365221be2b54a6264dcexample\",\n        \"Action\": {\n          \"ActionType\": \"AWS_API_CALL\",\n          \"AwsApiCallAction\": {\n            \"RemoteIpDetails\": {\n              \"GeoLocation\": {\n                \"Lat\": 51.5164,\n                \"Lon\": -0.093\n              },\n              \"City\": {\n                \"CityName\": \"London\"\n              },\n              \"IpAddressV4\": \"52.94.36.7\",\n              \"Organization\": {\n                \"Org\": \"Amazon.com\",\n                \"Isp\": \"Amazon.com\",\n                \"Asn\": \"16509\",\n                \"AsnOrg\": \"AMAZON-02\"\n              },\n              \"Country\": {\n                \"CountryName\": \"United Kingdom\"\n              }\n            },\n            \"Api\": \"ListPolicyVersions\",\n            \"ServiceName\": \"iam.amazonaws.com\",\n            \"CallerType\": \"Remote IP\"\n          }\n        }\n      },\n      \"Title\": \"Unusual user permission reconnaissance activity by testuser.\",\n      \"Type\": \"Recon:IAMUser/UserPermissions\",\n      \"Region\": \"us-west-2\",\n      \"Partition\": \"aws\",\n      \"Arn\": \"arn:aws:guardduty:us-west-2:123456789012:detector/d4b040365221be2b54a6264dcexample/finding/1ab92989eaf0e742df4a014d5example\",\n      \"UpdatedAt\": \"2020-05-26T22:55:21.703Z\",\n      \"SchemaVersion\": \"2.0\",\n      \"Severity\": 5,\n      \"Id\": \"1ab92989eaf0e742df4a014d5example\",\n      \"CreatedAt\": \"2020-05-26T22:21:48.385Z\",\n      \"AccountId\": \"123456789012\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "guardduty-create-detector",
+        "summary": "guardduty CreateDetector",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/detector",
+        "contentType": "application/json",
+        "awsAction": "CreateDetector",
+        "fixture": "{\n  \"DetectorId\": \"b6b992d6d2f48e64bc59180bfexample\"\n}\n"
+      },
+      {
+        "id": "guardduty-get-detector",
+        "summary": "guardduty GetDetector",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/detector/{DetectorId}",
+        "contentType": "application/json",
+        "awsAction": "GetDetector",
+        "fixture": "{\n  \"Status\": \"ENABLED\",\n  \"ServiceRole\": \"arn:aws:iam::123456789012:role/aws-service-role/guardduty.amazonaws.com/AWSServiceRoleForAmazonGuardDuty\",\n  \"Tags\": {},\n  \"FindingPublishingFrequency\": \"SIX_HOURS\",\n  \"UpdatedAt\": \"2018-11-07T03:24:22.938Z\",\n  \"CreatedAt\": \"2017-12-22T22:51:31.940Z\"\n}\n"
+      },
+      {
+        "id": "guardduty-list-detectors",
+        "summary": "guardduty ListDetectors",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/detector",
+        "contentType": "application/json",
+        "awsAction": "ListDetectors",
+        "fixture": "{\n  \"DetectorIds\": [\n    \"12abc34d567e8fa901bc2d34eexample\"\n  ]\n}\n"
+      },
+      {
+        "id": "guardduty-create-threat-intel-set",
+        "summary": "guardduty CreateThreatIntelSet",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/detector/{DetectorId}/threatintelset",
+        "contentType": "application/json",
+        "awsAction": "CreateThreatIntelSet",
+        "fixture": "{\n  \"ThreatIntelSetId\": \"20b9a4691aeb33506b808878cexample\"\n}\n"
+      },
+      {
+        "id": "guardduty-list-members",
+        "summary": "guardduty ListMembers",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/detector/{DetectorId}/member",
+        "contentType": "application/json",
+        "awsAction": "ListMembers",
+        "fixture": "{\n  \"Members\": [\n    {\n      \"RelationshipStatus\": \"Enabled\",\n      \"InvitedAt\": \"2020-06-09T22:49:00.910Z\",\n      \"MasterId\": \"123456789111\",\n      \"DetectorId\": \"7ab8b2f61b256c87f793f6a86example\",\n      \"UpdatedAt\": \"2020-06-09T23:08:22.512Z\",\n      \"Email\": \"your+member@example.com\",\n      \"AccountId\": \"123456789012\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "guardduty-create-i-p-set",
+        "summary": "guardduty CreateIPSet",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/detector/{DetectorId}/ipset",
+        "contentType": "application/json",
+        "awsAction": "CreateIPSet",
+        "fixture": "{\n  \"IpSetId\": \"d4b94fc952d6912b8f3060768example\"\n}\n"
+      },
+      {
+        "id": "guardduty-get-i-p-set",
+        "summary": "guardduty GetIPSet",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/detector/{DetectorId}/ipset/{IpSetId}",
+        "contentType": "application/json",
+        "awsAction": "GetIPSet",
+        "fixture": "{\n  \"Status\": \"ACTIVE\",\n  \"Location\": \"s3://amzn-s3-demo-bucket/customlist.csv\",\n  \"Tags\": {},\n  \"Format\": \"TXT\",\n  \"Name\": \"test-ip-set-example\"\n}\n"
+      },
+      {
+        "id": "guardduty-list-i-p-sets",
+        "summary": "guardduty ListIPSets",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/detector/{DetectorId}/ipset",
+        "contentType": "application/json",
+        "awsAction": "ListIPSets",
+        "fixture": "{\n  \"IpSetIds\": [\n    \"d4b94fc952d6912b8f3060768example\"\n  ]\n}\n"
       }
     ],
     "chaos": {

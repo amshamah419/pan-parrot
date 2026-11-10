@@ -1,0 +1,215 @@
+{
+  "id": "aws-guardduty-awsguardduty",
+  "retrievedAt": "2026-11-10",
+  "sourceType": "vendor-example",
+  "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/create-detector.html",
+  "operations": [
+    {
+      "operationId": "guardduty-create-detector",
+      "method": "POST",
+      "path": "/detector",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/create-detector.html",
+      "rstPath": "awscli/examples/guardduty/create-detector.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "DetectorId": "b6b992d6d2f48e64bc59180bfexample"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "guardduty-get-detector",
+      "method": "GET",
+      "path": "/detector/{DetectorId}",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/get-detector.html",
+      "rstPath": "awscli/examples/guardduty/get-detector.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Status": "ENABLED",
+        "ServiceRole": "arn:aws:iam::123456789012:role/aws-service-role/guardduty.amazonaws.com/AWSServiceRoleForAmazonGuardDuty",
+        "Tags": {},
+        "FindingPublishingFrequency": "SIX_HOURS",
+        "UpdatedAt": "2018-11-07T03:24:22.938Z",
+        "CreatedAt": "2017-12-22T22:51:31.940Z"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "guardduty-list-detectors",
+      "method": "GET",
+      "path": "/detector",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/list-detectors.html",
+      "rstPath": "awscli/examples/guardduty/list-detectors.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "DetectorIds": [
+          "12abc34d567e8fa901bc2d34eexample"
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "guardduty-create-threat-intel-set",
+      "method": "POST",
+      "path": "/detector/{DetectorId}/threatintelset",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/create-threat-intel-set.html",
+      "rstPath": "awscli/examples/guardduty/create-threat-intel-set.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "ThreatIntelSetId": "20b9a4691aeb33506b808878cexample"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "list-findings",
+      "method": "POST",
+      "path": "/detector/{DetectorId}/findings",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/list-findings.html",
+      "rstPath": "awscli/examples/guardduty/list-findings.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "FindingIds": [
+          "04b8ab50fd29c64fc771b232dexample",
+          "5ab8ab50fd21373735c826d3aexample",
+          "90b93de7aba69107f05bbe60bexample"
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "get-findings",
+      "method": "POST",
+      "path": "/detector/{DetectorId}/findings/get",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/get-findings.html",
+      "rstPath": "awscli/examples/guardduty/get-findings.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Findings": [
+          {
+            "Resource": {
+              "ResourceType": "AccessKey",
+              "AccessKeyDetails": {
+                "UserName": "testuser",
+                "UserType": "IAMUser",
+                "PrincipalId": "AIDACKCEVSQ6C2EXAMPLE",
+                "AccessKeyId": "ASIASZ4SI7REEEXAMPLE"
+              }
+            },
+            "Description": "APIs commonly used to discover the users, groups, policies and permissions in an account, was invoked by IAM principal testuser under unusual circumstances. Such activity is not typically seen from this principal.",
+            "Service": {
+              "Count": 5,
+              "Archived": false,
+              "ServiceName": "guardduty",
+              "EventFirstSeen": "2020-05-26T22:02:24Z",
+              "ResourceRole": "TARGET",
+              "EventLastSeen": "2020-05-26T22:33:55Z",
+              "DetectorId": "d4b040365221be2b54a6264dcexample",
+              "Action": {
+                "ActionType": "AWS_API_CALL",
+                "AwsApiCallAction": {
+                  "RemoteIpDetails": {
+                    "GeoLocation": {
+                      "Lat": 51.5164,
+                      "Lon": -0.093
+                    },
+                    "City": {
+                      "CityName": "London"
+                    },
+                    "IpAddressV4": "52.94.36.7",
+                    "Organization": {
+                      "Org": "Amazon.com",
+                      "Isp": "Amazon.com",
+                      "Asn": "16509",
+                      "AsnOrg": "AMAZON-02"
+                    },
+                    "Country": {
+                      "CountryName": "United Kingdom"
+                    }
+                  },
+                  "Api": "ListPolicyVersions",
+                  "ServiceName": "iam.amazonaws.com",
+                  "CallerType": "Remote IP"
+                }
+              }
+            },
+            "Title": "Unusual user permission reconnaissance activity by testuser.",
+            "Type": "Recon:IAMUser/UserPermissions",
+            "Region": "us-west-2",
+            "Partition": "aws",
+            "Arn": "arn:aws:guardduty:us-west-2:123456789012:detector/d4b040365221be2b54a6264dcexample/finding/1ab92989eaf0e742df4a014d5example",
+            "UpdatedAt": "2020-05-26T22:55:21.703Z",
+            "SchemaVersion": "2.0",
+            "Severity": 5,
+            "Id": "1ab92989eaf0e742df4a014d5example",
+            "CreatedAt": "2020-05-26T22:21:48.385Z",
+            "AccountId": "123456789012"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "guardduty-list-members",
+      "method": "GET",
+      "path": "/detector/{DetectorId}/member",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/list-members.html",
+      "rstPath": "awscli/examples/guardduty/list-members.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Members": [
+          {
+            "RelationshipStatus": "Enabled",
+            "InvitedAt": "2020-06-09T22:49:00.910Z",
+            "MasterId": "123456789111",
+            "DetectorId": "7ab8b2f61b256c87f793f6a86example",
+            "UpdatedAt": "2020-06-09T23:08:22.512Z",
+            "Email": "your+member@example.com",
+            "AccountId": "123456789012"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "guardduty-create-i-p-set",
+      "method": "POST",
+      "path": "/detector/{DetectorId}/ipset",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/create-ip-set.html",
+      "rstPath": "awscli/examples/guardduty/create-ip-set.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "IpSetId": "d4b94fc952d6912b8f3060768example"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "guardduty-get-i-p-set",
+      "method": "GET",
+      "path": "/detector/{DetectorId}/ipset/{IpSetId}",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/get-ip-set.html",
+      "rstPath": "awscli/examples/guardduty/get-ip-set.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Status": "ACTIVE",
+        "Location": "s3://amzn-s3-demo-bucket/customlist.csv",
+        "Tags": {},
+        "Format": "TXT",
+        "Name": "test-ip-set-example"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "guardduty-list-i-p-sets",
+      "method": "GET",
+      "path": "/detector/{DetectorId}/ipset",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/guardduty/list-ip-sets.html",
+      "rstPath": "awscli/examples/guardduty/list-ip-sets.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "IpSetIds": [
+          "d4b94fc952d6912b8f3060768example"
+        ]
+      },
+      "scrubs": []
+    }
+  ]
+}

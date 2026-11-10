@@ -49,6 +49,104 @@
         }
       },
       "scrubs": []
+    },
+    {
+      "operationId": "eks-update-cluster-config",
+      "method": "POST",
+      "path": "/clusters/{name}/update-config",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/eks/update-cluster-config.html",
+      "rstPath": "awscli/examples/eks/update-cluster-config.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "update": {
+          "id": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "status": "InProgress",
+          "type": "EndpointAccessUpdate",
+          "params": [
+            {
+              "type": "EndpointPublicAccess",
+              "value": "false"
+            },
+            {
+              "type": "EndpointPrivateAccess",
+              "value": "true"
+            }
+          ],
+          "createdAt": 1565806986.506,
+          "errors": []
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "eks-create-access-entry",
+      "method": "POST",
+      "path": "/clusters/{name}/access-entries",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/eks/create-access-entry.html",
+      "rstPath": "awscli/examples/eks/create-access-entry.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "accessEntry": {
+          "clusterName": "eks-customer",
+          "principalArn": "arn:aws:iam::123456789012:user/eks-user",
+          "kubernetesGroups": [],
+          "accessEntryArn": "arn:aws:eks:us-west-2:123456789012:access-entry/eks-customer/user/123456789012/eks-user/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "createdAt": "2025-04-14T22:45:48.097000-05:00",
+          "modifiedAt": "2025-04-14T22:45:48.097000-05:00",
+          "tags": {},
+          "username": "arn:aws:iam::123456789012:user/eks-user",
+          "type": "STANDARD"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "eks-associate-access-policy",
+      "method": "POST",
+      "path": "/clusters/{name}/access-entries/{principalArn}/access-policies",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/eks/associate-access-policy.html",
+      "rstPath": "awscli/examples/eks/associate-access-policy.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "clusterName": "eks-customer",
+        "principalArn": "arn:aws:iam::123456789012:role/Admin",
+        "associatedAccessPolicy": {
+          "policyArn": "arn:aws:eks::aws:cluster-access-policy/AmazonEKSEditPolicy",
+          "accessScope": {
+            "type": "namespace",
+            "namespaces": [
+              "default"
+            ]
+          },
+          "associatedAt": "2025-05-24T15:59:51.981000-05:00",
+          "modifiedAt": "2025-05-24T15:59:51.981000-05:00"
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "eks-update-access-entry",
+      "method": "POST",
+      "path": "/clusters/{name}/access-entries/{principalArn}",
+      "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/eks/update-access-entry.html",
+      "rstPath": "awscli/examples/eks/update-access-entry.rst",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "accessEntry": {
+          "clusterName": "eks-customer",
+          "principalArn": "arn:aws:iam::123456789012:role/Admin",
+          "kubernetesGroups": [
+            "tester"
+          ],
+          "accessEntryArn": "arn:aws:eks:us-west-2:123456789012:access-entry/eks-customer/role/123456789012/Admin/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+          "createdAt": "2025-05-24T11:02:04.432000-05:00",
+          "modifiedAt": "2025-05-24T17:08:01.608000-05:00",
+          "tags": {},
+          "username": "arn:aws:sts::123456789012:assumed-role/Admin/{{SessionName}}",
+          "type": "STANDARD"
+        }
+      },
+      "scrubs": []
     }
   ]
 }

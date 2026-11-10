@@ -2,9 +2,9 @@
   "id": "aws-athena-aws-athena",
   "name": "AWS - Athena",
   "pack": "AWS-Athena",
-  "fidelity": "shape",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Amazon Web Services Athena.",
+  "summary": "From vendor docs. Amazon Web Services Athena.",
   "operations": 6,
   "origin": "sample",
   "spec": {
@@ -15,7 +15,7 @@
       "name": "AWS - Athena",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-Athena/Integrations/AWS-Athena",
-      "fidelity": "shape",
+      "fidelity": "vendor",
       "notes": [
         "Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.",
         "No HTTP path was recovered from the client. The sample shape is served at the catch URL root."
@@ -28,14 +28,24 @@
             "athena:StartQueryExecution",
             "athena:GetQueryResults"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "athena-get-query-execution",
+            "athena-start-query-execution",
+            "athena-get-query-results"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/athena/get-query-execution.html"
         },
         {
           "command": "aws-athena-start-query",
           "calls": [
             "athena:StartQueryExecution"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "athena-start-query-execution"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/athena/start-query-execution.html"
         },
         {
           "command": "aws-athena-stop-query",
@@ -49,21 +59,30 @@
           "calls": [
             "athena:GetQueryExecution"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "athena-get-query-execution"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/athena/get-query-execution.html"
         },
         {
           "command": "aws-athena-get-query-results",
           "calls": [
             "athena:GetQueryResults"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "athena-get-query-results"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/athena/get-query-results.html"
         }
       ],
       "verification": {
-        "status": "shape",
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/athena/get-query-execution.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "3 of 5 commands from vendor docs, 1 approximate, 1 missing."
+          "4 of 5 commands from vendor docs, 0 approximate, 1 missing."
         ]
       }
     },
@@ -1052,6 +1071,105 @@
               ]
             }
           ]
+        }
+      },
+      {
+        "id": "athena-get-query-execution",
+        "summary": "athena GetQueryExecution",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "GetQueryExecution",
+        "fixture": "{\n  \"QueryExecution\": {\n    \"QueryExecutionId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n    \"Query\": \"select date, location, browser, uri, status from cloudfront_logs where method = 'GET' and status = 200 and location like 'SFO%' limit 10\",\n    \"StatementType\": \"DML\",\n    \"ResultConfiguration\": {\n      \"OutputLocation\": \"s3://amzn-s3-demo-bucket/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111.csv\"\n    },\n    \"QueryExecutionContext\": {\n      \"Database\": \"mydatabase\",\n      \"Catalog\": \"awsdatacatalog\"\n    },\n    \"Status\": {\n      \"State\": \"SUCCEEDED\",\n      \"SubmissionDateTime\": 1593469842.665,\n      \"CompletionDateTime\": 1593469846.486\n    },\n    \"Statistics\": {\n      \"EngineExecutionTimeInMillis\": 3600,\n      \"DataScannedInBytes\": 203089,\n      \"TotalExecutionTimeInMillis\": 3821,\n      \"QueryQueueTimeInMillis\": 267,\n      \"QueryPlanningTimeInMillis\": 1175\n    },\n    \"WorkGroup\": \"AthenaAdmin\"\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonAthena.GetQueryExecution"
+        }
+      },
+      {
+        "id": "athena-start-query-execution",
+        "summary": "athena StartQueryExecution",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "StartQueryExecution",
+        "fixture": "{\n  \"QueryExecutionId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonAthena.StartQueryExecution"
+        }
+      },
+      {
+        "id": "athena-get-query-results",
+        "summary": "athena GetQueryResults",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/",
+        "contentType": "application/x-amz-json-1.1",
+        "awsAction": "GetQueryResults",
+        "fixture": "{\n  \"ResultSet\": {\n    \"Rows\": [\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"date\"\n          },\n          {\n            \"VarCharValue\": \"location\"\n          },\n          {\n            \"VarCharValue\": \"browser\"\n          },\n          {\n            \"VarCharValue\": \"uri\"\n          },\n          {\n            \"VarCharValue\": \"status\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Safari\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-2.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Opera\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-2.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Firefox\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-3.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Lynx\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-3.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"IE\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-2.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Opera\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-1.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Chrome\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-3.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Firefox\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-2.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"Chrome\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-3.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      },\n      {\n        \"Data\": [\n          {\n            \"VarCharValue\": \"2014-07-05\"\n          },\n          {\n            \"VarCharValue\": \"SFO4\"\n          },\n          {\n            \"VarCharValue\": \"IE\"\n          },\n          {\n            \"VarCharValue\": \"/test-image-2.jpeg\"\n          },\n          {\n            \"VarCharValue\": \"200\"\n          }\n        ]\n      }\n    ],\n    \"ResultSetMetadata\": {\n      \"ColumnInfo\": [\n        {\n          \"CatalogName\": \"hive\",\n          \"SchemaName\": \"\",\n          \"TableName\": \"\",\n          \"Name\": \"date\",\n          \"Label\": \"date\",\n          \"Type\": \"date\",\n          \"Precision\": 0,\n          \"Scale\": 0,\n          \"Nullable\": \"UNKNOWN\",\n          \"CaseSensitive\": false\n        },\n        {\n          \"CatalogName\": \"hive\",\n          \"SchemaName\": \"\",\n          \"TableName\": \"\",\n          \"Name\": \"location\",\n          \"Label\": \"location\",\n          \"Type\": \"varchar\",\n          \"Precision\": 2147483647,\n          \"Scale\": 0,\n          \"Nullable\": \"UNKNOWN\",\n          \"CaseSensitive\": true\n        },\n        {\n          \"CatalogName\": \"hive\",\n          \"SchemaName\": \"\",\n          \"TableName\": \"\",\n          \"Name\": \"browser\",\n          \"Label\": \"browser\",\n          \"Type\": \"varchar\",\n          \"Precision\": 2147483647,\n          \"Scale\": 0,\n          \"Nullable\": \"UNKNOWN\",\n          \"CaseSensitive\": true\n        },\n        {\n          \"CatalogName\": \"hive\",\n          \"SchemaName\": \"\",\n          \"TableName\": \"\",\n          \"Name\": \"uri\",\n          \"Label\": \"uri\",\n          \"Type\": \"varchar\",\n          \"Precision\": 2147483647,\n          \"Scale\": 0,\n          \"Nullable\": \"UNKNOWN\",\n          \"CaseSensitive\": true\n        },\n        {\n          \"CatalogName\": \"hive\",\n          \"SchemaName\": \"\",\n          \"TableName\": \"\",\n          \"Name\": \"status\",\n          \"Label\": \"status\",\n          \"Type\": \"integer\",\n          \"Precision\": 10,\n          \"Scale\": 0,\n          \"Nullable\": \"UNKNOWN\",\n          \"CaseSensitive\": false\n        }\n      ]\n    }\n  },\n  \"UpdateCount\": 0\n}\n",
+        "headerMatch": {
+          "x-amz-target": "AmazonAthena.GetQueryResults"
         }
       }
     ],

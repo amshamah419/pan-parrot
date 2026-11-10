@@ -2,9 +2,9 @@
   "id": "aws-s3-aws-s3",
   "name": "AWS - S3",
   "pack": "AWS-S3",
-  "fidelity": "shape",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Amazon Web Services Simple Storage Service (S3).",
+  "summary": "From vendor docs. Amazon Web Services Simple Storage Service (S3).",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -15,7 +15,7 @@
       "name": "AWS - S3",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-S3/Integrations/AWS-S3",
-      "fidelity": "shape",
+      "fidelity": "vendor",
       "notes": [
         "Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.",
         "No HTTP path was recovered from the client. The sample shape is served at the catch URL root."
@@ -26,7 +26,11 @@
           "calls": [
             "s3:CreateBucket"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "s3-create-bucket"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/s3api/create-bucket.html"
         },
         {
           "command": "aws-s3-delete-bucket",
@@ -47,7 +51,11 @@
           "calls": [
             "s3:GetBucketPolicy"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "s3-get-bucket-policy"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/s3api/get-bucket-policy.html"
         },
         {
           "command": "aws-s3-delete-bucket-policy",
@@ -80,7 +88,11 @@
           "calls": [
             "s3:GetBucketEncryption"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "s3-get-bucket-encryption"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/s3api/get-bucket-encryption.html"
         },
         {
           "command": "aws-s3-upload-file",
@@ -92,7 +104,11 @@
           "calls": [
             "s3:GetPublicAccessBlock"
           ],
-          "status": "missing"
+          "status": "vendor",
+          "operationIds": [
+            "s3-get-public-access-block"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/s3api/get-public-access-block.html"
         },
         {
           "command": "aws-s3-put-public-access-block",
@@ -101,7 +117,15 @@
           ],
           "status": "missing"
         }
-      ]
+      ],
+      "verification": {
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/cli/latest/reference/s3api/create-bucket.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "4 of 12 commands from vendor docs, 0 approximate, 8 missing."
+        ]
+      }
     },
     "operations": [
       {
@@ -181,6 +205,126 @@
             }
           ]
         }
+      },
+      {
+        "id": "s3-create-bucket",
+        "summary": "s3 CreateBucket",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "PUT",
+        "pathTemplate": "/{Bucket}",
+        "contentType": "application/json",
+        "awsAction": "CreateBucket",
+        "fixture": "{\n  \"Location\": \"/amzn-s3-demo-bucket\"\n}\n"
+      },
+      {
+        "id": "s3-get-bucket-policy",
+        "summary": "s3 GetBucketPolicy",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/{Bucket}",
+        "contentType": "application/json",
+        "awsAction": "GetBucketPolicy",
+        "fixture": "{\n  \"Policy\": \"{\\\"Version\\\":\\\"2008-10-17\\\",\\\"Statement\\\":[{\\\"Sid\\\":\\\"\\\",\\\"Effect\\\":\\\"Allow\\\",\\\"Principal\\\":\\\"*\\\",\\\"Action\\\":\\\"s3:GetObject\\\",\\\"Resource\\\":\\\"arn:aws:s3:::amzn-s3-demo-bucket/*\\\"},{\\\"Sid\\\":\\\"\\\",\\\"Effect\\\":\\\"Deny\\\",\\\"Principal\\\":\\\"*\\\",\\\"Action\\\":\\\"s3:GetObject\\\",\\\"Resource\\\":\\\"arn:aws:s3:::amzn-s3-demo-bucket/secret/*\\\"}]}\"\n}\n"
+      },
+      {
+        "id": "s3-get-bucket-encryption",
+        "summary": "s3 GetBucketEncryption",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/{Bucket}",
+        "contentType": "application/json",
+        "awsAction": "GetBucketEncryption",
+        "fixture": "{\n  \"ServerSideEncryptionConfiguration\": {\n    \"Rules\": [\n      {\n        \"ApplyServerSideEncryptionByDefault\": {\n          \"SSEAlgorithm\": \"AES256\"\n        }\n      }\n    ]\n  }\n}\n"
+      },
+      {
+        "id": "s3-get-public-access-block",
+        "summary": "s3 GetPublicAccessBlock",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/{Bucket}",
+        "contentType": "application/json",
+        "awsAction": "GetPublicAccessBlock",
+        "fixture": "{\n  \"PublicAccessBlockConfiguration\": {\n    \"IgnorePublicAcls\": true,\n    \"BlockPublicPolicy\": true,\n    \"BlockPublicAcls\": true,\n    \"RestrictPublicBuckets\": true\n  }\n}\n"
       }
     ],
     "chaos": {
@@ -205,5 +349,6 @@
     "auth": {
       "mode": "none"
     }
-  }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-S3/Integrations/AWS-S3"
 }
