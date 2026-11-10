@@ -11,7 +11,7 @@ import { MockAuthPanel } from "@/components/MockAuthPanel";
 import { FlowPanel } from "@/components/FlowPanel";
 import { PushPanel } from "@/components/PushPanel";
 import { getEndpoint, resetRuntime, saveMockSpec } from "@/lib/api";
-import { sampleHeaders } from "@/lib/sample-call";
+import { sampleRequest } from "@/lib/sample-call";
 import { CollabPanel } from "@/components/CollabPanel";
 import { InstanceGuidePanel } from "@/components/InstanceGuide";
 import { FixturePanel } from "@/components/FixturePanel";
@@ -181,7 +181,8 @@ export default function MockStudio() {
               setSampleNote("");
               const target = new URL(tryUrl, window.location.origin);
               const sameOrigin = `${target.pathname}${target.search}`;
-              void fetch(sameOrigin, { headers: sampleHeaders(spec.auth) })
+              const sample = sampleRequest(operation, spec.auth);
+              void fetch(sameOrigin, sample)
                 .then(async (response) => {
                   const count = response.headers.get("x-pan-parrot-records");
                   setSampleNote(
@@ -504,7 +505,7 @@ export default function MockStudio() {
               />
             </div>
           </div>
-          <Label className="text-xs">Query rules, one key=value per line
+          <Label className="text-xs">Query rules, one key=value per line. A form body field counts the same way.
             <Textarea
               rows={3}
               className="font-mono text-xs"
@@ -604,7 +605,7 @@ function buildTryUrl(url: string, operation: MockOperation, auth: MockSpec["auth
     }
     return `${url.replace(/\/$/, "")}/api?${params.toString()}`;
   }
-  const params = new URLSearchParams();
+  const params = new URLSearchParams(operation.queryMatch || {});
   if (operation.pagination.style !== "none") params.set(operation.pagination.limitParam, "2");
   if (auth?.mode === "api-key" && auth.apiKey?.in === "query") {
     params.set(auth.apiKey.name, auth.apiKey.value);

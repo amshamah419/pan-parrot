@@ -21,7 +21,7 @@ describe("verified presets", () => {
           requestIndex: 1,
         });
         expect(result.body.length, `${preset.id} ${operation.id}`).toBeGreaterThan(0);
-        const loose = operation.envelope.type === "xml" || operation.envelope.type === "soap" || operation.envelope.type === "splunk-export" || operation.envelope.type === "ndjson";
+        const loose = operation.envelope.type === "xml" || operation.envelope.type === "soap" || operation.envelope.type === "aws-query" || operation.envelope.type === "splunk-export" || operation.envelope.type === "ndjson";
         if (!loose) {
           expect(() => JSON.parse(result.body), `${preset.id} ${operation.id}`).not.toThrow();
         }

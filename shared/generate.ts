@@ -1,3 +1,4 @@
+import { awsRequestId, formParams, renderAwsQueryXml } from "./aws-query";
 import { bodyMatches } from "./body-match";
 import { answerGraphql, graphqlRequestName } from "./graphql-mock";
 import { MOCK_LIMITS } from "./policy";
@@ -67,7 +68,7 @@ export function matchOperation(
     const matched = matchTemplate(operation.pathTemplate, path);
     if (!matched) continue;
     const score = scoreOperation(operation, hint);
-    if (rulesMatch(operation, query, hint)) {
+    if (rulesMatch(operation, requestParams(query, hint.body), hint)) {
       if (hasRules(operation)) specific.push({ operation, pathParams: matched, score });
       else defaults.push({ operation, pathParams: matched, score });
     }
@@ -196,9 +197,10 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
     };
   }
 
+  const params = requestParams(input.query, input.body);
   const page = resolvePage(
     operation.pagination,
-    input.query,
+    params,
     spec.totalRecords,
     chaosOn ? spec.chaos : null,
   );
@@ -233,7 +235,8 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
   if (chaosOn && spec.chaos.mixedTimestamps) effects.push("mixed-timestamps");
   if (chaosOn && spec.chaos.wrongTypes) effects.push("wrong-types");
 
-  let body = encodeBody(operation, records, page, input.requestUrl, chaosOn ? spec.chaos : null, effects);
+  const requestId = awsRequestId(spec.chaos.seed, input.requestIndex);
+  let body = encodeBody(operation, records, page, input.requestUrl, chaosOn ? spec.chaos : null, effects, requestId);
   let contentType = operation.pagination.style === "akamai" ? "application/x-ndjson; charset=utf-8" : operation.contentType;
   if (chaosOn && spec.chaos.malformedXml && isXmlOperation(operation)) {
     body = `${body.slice(0, Math.max(1, body.length - 8))}<<<`;
@@ -270,7 +273,7 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
   if (byteLength(body) > sizeCap) {
     capped = true;
     effects.push("size-cap");
-    body = downloadBytes > 0 || operation.stream ? body.slice(0, sizeCap) : trimToBytes(operation, records, page);
+    body = downloadBytes > 0 || operation.stream ? body.slice(0, sizeCap) : trimToBytes(operation, records, page, requestId);
   }
 
   const headers: Record<string, string> = {
@@ -438,8 +441,17 @@ function encodeBody(
   requestUrl?: string,
   chaos: ChaosSpec | null = null,
   effects: string[] = [],
+  requestId = "",
 ): string {
   const envelope = operation.envelope;
+  if (envelope.type === "aws-query") {
+    return renderAwsQueryXml({
+      envelope,
+      records,
+      nextToken: page.next == null ? null : encodeToken(page.next),
+      requestId: requestId || `req-${page.start}`,
+    });
+  }
   if (envelope.type === "xml" || envelope.type === "soap") {
     const xml = renderFieldXml(operation.record, records[0], {
       wrongNamespace: Boolean(chaos?.wrongNamespace),
@@ -534,14 +546,25 @@ function encodeBody(
   return JSON.stringify(records[0] ?? {});
 }
 
-function trimToBytes(operation: MockOperation, records: unknown[], page: PagePlan): string {
+function trimToBytes(operation: MockOperation, records: unknown[], page: PagePlan, requestId = ""): string {
   let kept = records.slice();
-  let body = encodeBody(operation, kept, page);
+  let body = encodeBody(operation, kept, page, undefined, null, [], requestId);
   while (kept.length > 1 && byteLength(body) > MOCK_LIMITS.maxResponseBytes) {
     kept = kept.slice(0, Math.ceil(kept.length / 2));
-    body = encodeBody(operation, kept, page);
+    body = encodeBody(operation, kept, page, undefined, null, [], requestId);
   }
   return body;
+}
+
+function requestParams(
+  query: Record<string, string | undefined>,
+  body: string | undefined,
+): Record<string, string | undefined> {
+  const merged: Record<string, string | undefined> = { ...formParams(body) };
+  for (const [key, value] of Object.entries(query)) {
+    if (value != null && value !== "") merged[key] = value;
+  }
+  return merged;
 }
 
 function nextLinkHeader(

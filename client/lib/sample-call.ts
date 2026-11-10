@@ -1,4 +1,4 @@
-import type { MockAuth } from "@shared/mock-spec";
+import type { MockAuth, MockOperation } from "@shared/mock-spec";
 
 /** Headers a local curl can send. Signature schemes need format-only mode first. */
 export function sampleHeaders(auth: MockAuth | undefined): Record<string, string> {
@@ -19,4 +19,22 @@ export function sampleHeaders(auth: MockAuth | undefined): Record<string, string
     };
   }
   return {};
+}
+
+/** The button next to the try URL. POST query-protocol mocks send Action as a form body. */
+export function sampleRequest(
+  operation: MockOperation,
+  auth: MockAuth | undefined,
+): { method: string; headers: Record<string, string>; body?: string } {
+  const method = operation.method === "ANY" ? "GET" : operation.method;
+  const headers = { ...sampleHeaders(auth) };
+  for (const [name, value] of Object.entries(operation.headerMatch || {})) {
+    if (value) headers[name] = value;
+  }
+  const rules = operation.queryMatch || {};
+  if (method === "GET" || method === "HEAD" || Object.keys(rules).length === 0) return { method, headers };
+  const form = new URLSearchParams(rules);
+  if (operation.pagination.style !== "none") form.set(operation.pagination.limitParam, "2");
+  headers["content-type"] = "application/x-www-form-urlencoded";
+  return { method, headers, body: form.toString() };
 }

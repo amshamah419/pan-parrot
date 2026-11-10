@@ -55,7 +55,20 @@ export type Envelope =
   | { type: "token-page"; arrayKey: string; tokenKey: string }
   | { type: "xml" }
   | { type: "soap"; version: "1.1" | "1.2" }
-  | { type: "graphql" };
+  | { type: "graphql" }
+  | AwsQueryEnvelope;
+
+/** EC2 and IAM/STS/SQS/SNS query-protocol XML. boto3 parses this, not JSON. */
+export interface AwsQueryEnvelope {
+  type: "aws-query";
+  /** ec2 puts fields on the response root and lists `item`. query wraps ActionResult and lists `member`. */
+  protocol: "ec2" | "query";
+  action: string;
+  namespace: string;
+  listElement: string;
+  itemElement: "item" | "member";
+  paging: "nextToken" | "marker";
+}
 
 export interface PaginationSpec {
   style: "none" | "offset" | "cursor" | "page" | "link" | "header" | "akamai";
@@ -84,7 +97,7 @@ export interface MockOperation {
   envelope: Envelope;
   pagination: PaginationSpec;
   record: FieldSpec;
-  /** Query keys that must match before this operation is chosen. */
+  /** Query keys that must match before this operation is chosen. Form body fields count too. */
   queryMatch?: Record<string, string>;
   /** Header name to exact value. A blank value means the header only has to be present. */
   headerMatch?: Record<string, string>;
@@ -466,10 +479,27 @@ function normalizeEnvelope(envelope: Envelope | undefined, list: boolean): Envel
     };
   }
   if (envelope.type === "graphql") return { type: "graphql" };
+  if (envelope.type === "aws-query") return normalizeAwsQuery(envelope);
   if (envelope.type === "xml") return { type: "xml" };
   if (envelope.type === "soap") return { type: "soap", version: envelope.version === "1.2" ? "1.2" : "1.1" };
   if (envelope.type === "array" || envelope.type === "object") return envelope;
   return list ? { type: "array" } : { type: "object" };
+}
+
+function normalizeAwsQuery(envelope: AwsQueryEnvelope): AwsQueryEnvelope {
+  const protocol = envelope.protocol === "ec2" ? "ec2" : envelope.protocol === "query" ? "query" : null;
+  if (!protocol) throw new Error("AWS query protocol must be ec2 or query");
+  const action = String(envelope.action || "");
+  if (!/^[A-Za-z][A-Za-z0-9]{0,63}$/.test(action)) throw new Error("Invalid AWS action");
+  const namespace = String(envelope.namespace || "");
+  if (!/^https?:\/\/[A-Za-z0-9._/-]{1,180}$/.test(namespace)) throw new Error("Invalid AWS namespace");
+  const listElement = String(envelope.listElement || "");
+  if (!/^[A-Za-z][A-Za-z0-9]{0,63}$/.test(listElement)) throw new Error("Invalid AWS list element");
+  const itemElement = envelope.itemElement === "member" || envelope.itemElement === "item" ? envelope.itemElement : null;
+  if (!itemElement) throw new Error("AWS list items are item or member");
+  const paging = envelope.paging === "marker" || envelope.paging === "nextToken" ? envelope.paging : null;
+  if (!paging) throw new Error("AWS paging is nextToken or marker");
+  return { type: "aws-query", protocol, action, namespace, listElement, itemElement, paging };
 }
 
 function normalizePagination(pagination: PaginationSpec | undefined): PaginationSpec {
