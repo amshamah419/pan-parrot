@@ -1,1 +1,136 @@
-{"id":"cofensetriage-cofensetriagev3","name":"Cofense Triage v3","pack":"CofenseTriage","fidelity":"sample","curated":false,"summary":"The integration uses the Cofense Triage v2 API that allows users to ingest phishing reports as incident alerts and execute commands such as threat indicators, reporters, categorize","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"cofensetriage-cofensetriagev3","name":"Cofense Triage v3","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CofenseTriage/Integrations/CofenseTriagev3","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-attachment-payload-attachment-payload-li","method":"GET","pathTemplate":"/api/public/v2/reports/{}/attachment_payloads","summary":"test_data/attachment_payload/attachment_payload_list_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"9"},{"name":"type","kind":"string","optional":false,"example":"attachment_payloads"},{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/attachment_payloads/9"}]},{"name":"attributes","kind":"object","optional":false,"children":[{"name":"mime_type","kind":"string","optional":false,"example":"image/png; charset=binary"},{"name":"md5","kind":"string","optional":false,"example":"9f16385db56b9429fc210b19df070fe7"},{"name":"sha256","kind":"string","optional":false,"example":"7609ec052a3834f0ac822001837d7b25dea34bd38143a13ea6a187c1922aad28"},{"name":"risk_score","kind":"string","optional":true},{"name":"created_at","kind":"timestamp","optional":false,"example":"2020-10-21T20:54:36.531Z","format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"example":"2020-10-21T20:54:36.531Z","format":"iso"}]},{"name":"relationships","kind":"object","optional":false,"children":[{"name":"attachments","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/attachment_payloads/9/relationships/attachments"},{"name":"related","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/attachment_payloads/9/attachments"}]}]},{"name":"clusters","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/attachment_payloads/9/relationships/clusters"},{"name":"related","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/attachment_payloads/9/clusters"}]}]},{"name":"integration_submissions","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/attachment_payloads/9/relationships/integration_submissions"},{"name":"related","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/attachment_payloads/9/integration_submissions"}]}]},{"name":"reports","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/attachment_payloads/9/relationships/reports"},{"name":"related","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/attachment_payloads/9/reports"}]}]}]}]},{"name":"links","kind":"object","optional":false,"children":[{"name":"first","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/attachment_payloads?page%5Bnumber%5D=1&page%5Bsize%5D=2"},{"name":"next","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/attachment_payloads?page%5Bnumber%5D=2&page%5Bsize%5D=2"},{"name":"last","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/attachment_payloads?page%5Bnumber%5D=103&page%5Bsize%5D=2"}]}]}},{"id":"test-data-category-category-list-response-json","method":"GET","pathTemplate":"/api/public/v2/{}/{}/integration_submissions","summary":"test_data/category/category_list_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"4"},{"name":"type","kind":"string","optional":false,"example":"categories"},{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/categories/4"}]},{"name":"attributes","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"Advanced Threats"},{"name":"score","kind":"integer","optional":false},{"name":"malicious","kind":"boolean","optional":false},{"name":"color","kind":"string","optional":false,"example":"#a9052a"},{"name":"archived","kind":"boolean","optional":false},{"name":"created_at","kind":"timestamp","optional":false,"example":"2020-10-21T15:30:56.280Z","format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"example":"2020-10-21T15:30:56.280Z","format":"iso"}]},{"name":"relationships","kind":"object","optional":false,"children":[{"name":"one_clicks","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]}]},{"name":"reports","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]}]}]}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"links","kind":"object","optional":false,"children":[{"name":"first","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/categories?filter%5Bscore%5D=4%2C10&page%5Bnumber%5D=1&page%5Bsize%5D=20"},{"name":"last","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/categories?filter%5Bscore%5D=4%2C10&page%5Bnumber%5D=1&page%5Bsize%5D=20"}]}]}},{"id":"test-data-cluster-cluster-list-response-json","method":"GET","pathTemplate":"/api/public/v2/reports/{}/attachments","summary":"test_data/cluster/cluster_list_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"1"},{"name":"type","kind":"string","optional":false,"example":"clusters"},{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/clusters/1"}]},{"name":"attributes","kind":"object","optional":false,"children":[{"name":"risk_score","kind":"integer","optional":false},{"name":"first_reported_at","kind":"timestamp","optional":false,"example":"2019-11-08T17:17:05.000Z","format":"iso"},{"name":"oldest_unprocessed_reported_at","kind":"string","optional":true},{"name":"last_received_at","kind":"string","optional":true},{"name":"last_reported_at","kind":"string","optional":true},{"name":"last_from_address","kind":"string","optional":true},{"name":"last_subject","kind":"string","optional":true},{"name":"average_reporter_reputation","kind":"string","optional":false,"example":"0.0"},{"name":"match_priority","kind":"integer","optional":false},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"host_source","kind":"string","optional":false,"example":"dummy_source"},{"name":"attachments_count","kind":"integer","optional":false},{"name":"unprocessed_reports_count","kind":"integer","optional":false},{"name":"processed_reports_count","kind":"integer","optional":false},{"name":"total_reports_count","kind":"integer","optional":false},{"name":"rules_count","kind":"integer","optional":false},{"name":"urls_count","kind":"integer","optional":false},{"name":"vip_reporters_count","kind":"integer","optional":false},{"name":"created_at","kind":"timestamp","optional":false,"example":"2020-10-21T20:54:25.644Z","format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"example":"2021-06-02T11:05:02.806Z","format":"iso"}]},{"name":"relationships","kind":"object","optional":false,"children":[{"name":"attachment_payloads","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]}]},{"name":"domains","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]}]},{"name":"hostnames","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]}]},{"name":"reports","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]}]},{"name":"reporters","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]}]},{"name":"rules","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]}]},{"name":"urls","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]}]}]}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-comment-comment-list-response-json","method":"GET","pathTemplate":"/api/public/v2/reports/{}/categorize","summary":"test_data/comment/comment_list_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"1"},{"name":"type","kind":"string","optional":false,"example":"comments"},{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/comments/1"}]},{"name":"attributes","kind":"object","optional":false,"children":[{"name":"body_format","kind":"string","optional":false,"example":"text"},{"name":"body","kind":"string","optional":false,"example":"www.comments.com"},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"created_at","kind":"timestamp","optional":false,"example":"2021-04-01T20:52:59.342Z","format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"example":"2021-04-01T20:52:59.342Z","format":"iso"}]},{"name":"relationships","kind":"object","optional":false,"children":[{"name":"commentable","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]},{"name":"data","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"nested"},{"name":"id","kind":"string","optional":false,"example":"nested"}]}]},{"name":"owner","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]},{"name":"data","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"nested"},{"name":"id","kind":"string","optional":false,"example":"nested"}]}]}]}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"links","kind":"object","optional":false,"children":[{"name":"first","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/comments?page%5Bnumber%5D=1&page%5Bsize%5D=3"},{"name":"next","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/comments?page%5Bnumber%5D=2&page%5Bsize%5D=3"},{"name":"last","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/comments?page%5Bnumber%5D=13&page%5Bsize%5D=3"}]}]}},{"id":"test-data-fetch-incidents-fetch-incidents-json","method":"GET","pathTemplate":"/api/public/v2/threat_indicators","summary":"test_data/fetch_incidents/fetch_incidents.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"incidents","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"IBM X-Force Exchange Notifications"},{"name":"occurred","kind":"timestamp","optional":false,"example":"2020-10-21T20:54:23.444Z","format":"iso"},{"name":"rawJSON","kind":"string","optional":false,"example":"{\"id\": \"4\", \"type\": \"reports\", \"links\": {\"self\": \"https://triage.example.com/api/public/v2/reports/4\"}, \"attributes\": {\""}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-fetch-incidents-fetch-incidents-response","method":"GET","pathTemplate":"/api/public/v2/system/status","summary":"test_data/fetch_incidents/fetch_incidents_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"4"},{"name":"type","kind":"string","optional":false,"example":"reports"},{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"https://triage.example.com/api/public/v2/reports/4"}]},{"name":"attributes","kind":"object","optional":false,"children":[{"name":"location","kind":"string","optional":false,"example":"Processed"},{"name":"risk_score","kind":"integer","optional":false},{"name":"from_address","kind":"string","optional":true},{"name":"subject","kind":"string","optional":false,"example":"IBM X-Force Exchange Notifications"},{"name":"received_at","kind":"timestamp","optional":false,"example":"2019-11-08T17:28:19.000Z","format":"iso"},{"name":"reported_at","kind":"timestamp","optional":false,"example":"2019-11-08T17:17:05.000Z","format":"iso"},{"name":"raw_headers","kind":"string","optional":false,"example":"dummy_raw_headers"},{"name":"text_body","kind":"string","optional":false,"example":"dummy_text_body"},{"name":"html_body","kind":"string","optional":false,"example":"dummy_html_body"},{"name":"md5","kind":"string","optional":false,"example":"b22ca222a75f9681be55c9d47513f511"},{"name":"sha256","kind":"string","optional":false,"example":"123c95564c3131479335d5d118da42118e802a48f4bc91992b8e96f87ec95f6c"},{"name":"match_priority","kind":"integer","optional":false},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"categorization_tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"test2"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"processed_at","kind":"timestamp","optional":false,"example":"2021-05-18T05:11:49.555Z","format":"iso"},{"name":"created_at","kind":"timestamp","optional":false,"example":"2020-10-21T20:54:23.444Z","format":"iso"},{"name":"updated_at","kind":"timestamp","optional":false,"example":"2021-05-18T05:11:51.667Z","format":"iso"}]},{"name":"relationships","kind":"object","optional":false,"children":[{"name":"assignee","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]},{"name":"data","kind":"string","optional":true}]},{"name":"category","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]},{"name":"data","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"nested"},{"name":"id","kind":"string","optional":false,"example":"nested"}]}]},{"name":"cluster","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]},{"name":"data","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"nested"},{"name":"id","kind":"string","optional":false,"example":"nested"}]}]},{"name":"reporter","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]},{"name":"data","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"nested"},{"name":"id","kind":"string","optional":false,"example":"nested"}]}]},{"name":"attachment_payloads","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[{"name":"self","kind":"string","optional":false,"example":"nested"},{"name":"related","kind":"string","optional":false,"example":"nested"}]}]},{"name":"attachments","kind":"object","optional":false,"children":[{"name":"links","kind":"object","optional":false,"children":[]}]}]}]},"minItems":0,"maxItems":2,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "cofensetriage-cofensetriagev3",
+  "name": "Cofense Triage v3",
+  "pack": "CofenseTriage",
+  "vendor": "Cofense",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Report list. GET /api/public/v2/reports.",
+  "notes": [
+    "The public v2 client uses /api/public/v2. This mock lists reports at /api/public/v2/reports as { data }.",
+    "The readme was not reloaded. Attachment payloads and categories are not modeled.",
+    "Authorization is a token header."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CofenseTriage/Integrations/CofenseTriagev3",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "cofensetriage-cofensetriagev3",
+      "name": "Cofense Triage v3",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://triage.readme.io/reference/get-reports",
+      "notes": [
+        "The public v2 client uses /api/public/v2. This mock lists reports at /api/public/v2/reports as { data }.",
+        "The readme was not reloaded. Attachment payloads and categories are not modeled.",
+        "Authorization is a token header."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://triage.readme.io/reference/get-reports",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The public v2 client uses /api/public/v2. This mock lists reports at /api/public/v2/reports as { data }.",
+          "The readme was not reloaded. Attachment payloads and categories are not modeled.",
+          "Authorization is a token header."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-reports",
+        "method": "GET",
+        "pathTemplate": "/api/public/v2/reports",
+        "summary": "List reports",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "data"
+        },
+        "record": {
+          "name": "report",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "subject",
+              "kind": "string",
+              "example": "Wire transfer"
+            },
+            {
+              "name": "from_address",
+              "kind": "email"
+            },
+            {
+              "name": "created_at",
+              "kind": "timestamp"
+            },
+            {
+              "name": "category_name",
+              "kind": "enum",
+              "enumValues": [
+                "Crimeware",
+                "Phishing",
+                "Spam"
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "page",
+          "limitParam": "per_page",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "cofensetriage-cofensetriagev3",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "Authorization",
+        "value": "Token token=dummy-key"
+      }
+    }
+  }
+}

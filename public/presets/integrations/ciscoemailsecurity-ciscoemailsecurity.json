@@ -1,1 +1,137 @@
-{"id":"ciscoemailsecurity-ciscoemailsecurity","name":"CiscoEmailSecurity (Beta) (Deprecated)","pack":"CiscoEmailSecurity","fidelity":"sample","curated":false,"summary":"Deprecated. Use Cisco Security Management Appliance instead.","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"ciscoemailsecurity-ciscoemailsecurity","name":"CiscoEmailSecurity (Beta) (Deprecated)","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CiscoEmailSecurity/Integrations/CiscoEmailSecurity","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-test-data-json","method":"POST","pathTemplate":"/sma/api/v2.0/login","summary":"test_data/test_data.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"headers_for_login","kind":"object","optional":false,"children":[{"name":"Content-Type","kind":"string","optional":false,"example":"application/json"},{"name":"Accept","kind":"string","optional":false,"example":"application/json"}]},{"name":"data_for_login","kind":"object","optional":false,"children":[{"name":"data","kind":"object","optional":false,"children":[{"name":"userName","kind":"string","optional":false,"example":"username"},{"name":"passphrase","kind":"string","optional":false,"example":"passphrase"}]}]},{"name":"args_for_list_report","kind":"object","optional":false,"children":[{"name":"start_date","kind":"string","optional":false,"example":"2017-02-14 09:51:46"},{"name":"end_date","kind":"string","optional":false,"example":"2017-02-14 09:51:46"},{"name":"device_type","kind":"string","optional":false,"example":"email"},{"name":"offset","kind":"string","optional":false,"example":"1"},{"name":"limit","kind":"string","optional":false,"example":"1"},{"name":"filter_key","kind":"string","optional":false,"example":"name"},{"name":"filter_operator","kind":"string","optional":false,"example":"is"},{"name":"filter_value","kind":"string","optional":false,"example":"name"},{"name":"device_group","kind":"string","optional":false,"example":"cisco"},{"name":"device_group_name","kind":"string","optional":false,"example":"Hosted_Cluster"}]},{"name":"url_params_for_list_reports","kind":"string","optional":false,"example":"/reporting_system?startDate=2017-02-14T09:51:46.000Z&endDate=2017-02-14T09:51:46.000Z&device_type=esa&device_group_name="},{"name":"args_for_list_messages","kind":"object","optional":false,"children":[{"name":"start_date","kind":"string","optional":false,"example":"2017-02-14 09:51:46"},{"name":"end_date","kind":"string","optional":false,"example":"2017-02-14 09:51:46"},{"name":"offset","kind":"string","optional":false,"example":"1"},{"name":"limit","kind":"string","optional":false,"example":"1"},{"name":"attachment_name_value","kind":"string","optional":false,"example":"name"},{"name":"attachment_name_operator","kind":"string","optional":false,"example":"is"},{"name":"recipient_filter_value","kind":"string","optional":false,"example":"name"},{"name":"sender_filter_value","kind":"string","optional":false,"example":"name"},{"name":"sender_filter_operator","kind":"string","optional":false,"example":"is"},{"name":"spam_positive","kind":"string","optional":false,"example":"True"},{"name":"file_hash","kind":"string","optional":false,"example":"1234abcd"}]},{"name":"url_params_for_list_messages","kind":"string","optional":false,"example":"?startDate=2017-02-14T09:51:46.000Z&endDate=2017-02-14T09:51:46.000Z&searchOption=messages&ciscoHost=All_Hosts&offset=1&"},{"name":"args_for_get_details","kind":"object","optional":false,"children":[{"name":"start_date","kind":"string","optional":false,"example":"2017-02-14 09:51:46"},{"name":"end_date","kind":"string","optional":false,"example":"2017-02-14 09:51:46"},{"name":"message_id","kind":"id","optional":false,"example":"1234"},{"name":"cisco_id","kind":"id","optional":false,"example":"1234"},{"name":"appliance_serial_number","kind":"string","optional":false,"example":"1234"}]},{"name":"url_params_for_get_details","kind":"string","optional":false,"example":"?startDate=2017-02-14T09:51:46.000Z&endDate=2017-02-14T09:51:46.000Z&mid=1234&icid=1234&serialNumber=1234"},{"name":"args_for_spam_quarantine","kind":"object","optional":false,"children":[{"name":"start_date","kind":"string","optional":false,"example":"2017-02-14 09:51:46"},{"name":"end_date","kind":"string","optional":false,"example":"2017-02-14 09:51:46"},{"name":"order_by","kind":"string","optional":false,"example":"name"},{"name":"order_dir","kind":"string","optional":false,"example":"asc"},{"name":"recipient_value","kind":"string","optional":false,"example":"name"},{"name":"recipient_operator","kind":"string","optional":false,"example":"is"},{"name":"filter_value","kind":"string","optional":false,"example":"name"}]},{"name":"url_params_for_spam_quarantine","kind":"string","optional":false,"example":"?startDate=2017-02-14T09:51:46.000Z&endDate=2017-02-14T09:51:46.000Z&quarantineType=spam&offset=0&limit=20&orderBy=name&"},{"name":"search_messages_response_data","kind":"object","optional":false,"children":[{"name":"meta","kind":"object","optional":false,"children":[{"name":"num_bad_records","kind":"integer","optional":false},{"name":"totalCount","kind":"integer","optional":false}]},{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"attributes","kind":"object","optional":false,"children":[{"name":"direction","kind":"string","optional":false,"example":"incoming"},{"name":"icid","kind":"integer","optional":false},{"name":"senderGroup","kind":"string","optional":false,"example":"UNKNOWNLIST"},{"name":"sender","kind":"string","optional":false,"example":"confikr.qa"}]}]},"minItems":0,"maxItems":3,"pageItems":false}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "ciscoemailsecurity-ciscoemailsecurity",
+  "name": "Cisco Email Security",
+  "pack": "CiscoEmailSecurity",
+  "vendor": "Cisco",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "SMA message tracking. The client calls /sma/api/v2.0/message-tracking/messages.",
+  "notes": [
+    "Message tracking returns { meta, data }. This mock returns data.messages. The SMA guide was not reloaded; the path is the public client.",
+    "Login at /sma/api/v2.0/login is not modeled. A bearer token is required on the tracking call.",
+    "DLP, AMP, and quarantine details are not modeled."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CiscoEmailSecurity/Integrations/CiscoEmailSecurity",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "ciscoemailsecurity-ciscoemailsecurity",
+      "name": "Cisco Email Security",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://www.cisco.com/c/en/us/td/docs/security/security_management/sma/sma14-2/api/b_SMA_API_14_2.html",
+      "notes": [
+        "Message tracking returns { meta, data }. This mock returns data.messages. The SMA guide was not reloaded; the path is the public client.",
+        "Login at /sma/api/v2.0/login is not modeled. A bearer token is required on the tracking call.",
+        "DLP, AMP, and quarantine details are not modeled."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.cisco.com/c/en/us/td/docs/security/security_management/sma/sma14-2/api/b_SMA_API_14_2.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Message tracking returns { meta, data }. This mock returns data.messages. The SMA guide was not reloaded; the path is the public client.",
+          "Login at /sma/api/v2.0/login is not modeled. A bearer token is required on the tracking call.",
+          "DLP, AMP, and quarantine details are not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-messages",
+        "method": "GET",
+        "pathTemplate": "/sma/api/v2.0/message-tracking/messages",
+        "summary": "List tracked messages",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "messages"
+        },
+        "record": {
+          "name": "message",
+          "kind": "object",
+          "children": [
+            {
+              "name": "mid",
+              "kind": "id"
+            },
+            {
+              "name": "sender",
+              "kind": "email"
+            },
+            {
+              "name": "recipient",
+              "kind": "email"
+            },
+            {
+              "name": "subject",
+              "kind": "string",
+              "example": "Quarterly report"
+            },
+            {
+              "name": "timestamp",
+              "kind": "timestamp"
+            },
+            {
+              "name": "direction",
+              "kind": "enum",
+              "enumValues": [
+                "incoming",
+                "outgoing"
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "ciscoemailsecurity-ciscoemailsecurity",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

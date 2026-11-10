@@ -1,1 +1,145 @@
-{"id":"orca-orcaeventcollector","name":"Orca Event Collector","pack":"Orca","fidelity":"sample","curated":false,"summary":"Orca Security event collector integration for Cortex XSIAM.","operations":1,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"orca-orcaeventcollector","name":"Orca Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Orca/Integrations/OrcaEventCollector","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-get-alerts-test-json","method":"GET","pathTemplate":"/serving-layer/query","summary":"test_data/get_alerts_test.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"test_1","kind":"object","optional":false,"children":[{"name":"status","kind":"string","optional":false,"example":"success"},{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"11111111-2222-3333-4444-555555555555_vendor-alert-001"},{"name":"type","kind":"string","optional":false,"example":"Alert"},{"name":"data","kind":"object","optional":false,"children":[{"name":"AlertId","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"AlertType","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"Category","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"CreatedAt","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"Labels","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"LastSeen","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"VendorScore","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"RiskLevel","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"RuleSource","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"ScoreVector","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"Source","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"Status","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"cluster_unique_id","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"CloudAccount","kind":"object","optional":false,"children":[{"name":"id","kind":"string","optional":false,"example":"nested"},{"name":"type","kind":"string","optional":false,"example":"nested"},{"name":"data","kind":"string","optional":false,"example":"nested"},{"name":"name","kind":"string","optional":false,"example":"nested"},{"name":"cluster_unique_id","kind":"string","optional":false,"example":"nested"}]},{"name":"Inventory","kind":"object","optional":false,"children":[{"name":"id","kind":"string","optional":false,"example":"nested"},{"name":"type","kind":"string","optional":false,"example":"nested"},{"name":"data","kind":"string","optional":false,"example":"nested"},{"name":"name","kind":"string","optional":false,"example":"nested"},{"name":"cluster_unique_id","kind":"string","optional":false,"example":"nested"}]}]},{"name":"cluster_unique_id","kind":"id","optional":false,"example":"function_123456789012_us-east-1_my-test-lambda-function-xyz789"},{"name":"last_seen","kind":"timestamp","optional":false,"example":"2023-01-02T11:00:00+00:00","format":"iso"}]},"minItems":0,"maxItems":3,"pageItems":false}]},{"name":"test_2","kind":"object","optional":false,"children":[{"name":"status","kind":"string","optional":false,"example":"success"},{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"11111111-2222-3333-4444-555555555555_vendor-alert-006"},{"name":"type","kind":"string","optional":false,"example":"Alert"},{"name":"data","kind":"object","optional":false,"children":[{"name":"AlertId","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"AlertType","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"nested"}]},{"name":"Category","kind":"object","optional":false,"children":[]}]}]},"minItems":0,"maxItems":3,"pageItems":false}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "orca-orcaeventcollector",
+  "name": "Orca Event Collector",
+  "pack": "Orca",
+  "vendor": "Orca",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Serving-layer alert query. status and data match get_alerts_test.json.",
+  "notes": [
+    "POST /serving-layer/query returns { status, data }. The fixture nests AlertId, AlertType, Category, and RiskLevel under data.*.value.",
+    "This mock flattens those to alertId, alertType, category, and riskLevel so a fetch loop can read them. The nested value objects are omitted.",
+    "Vendor HTML was not reloaded. The path is the public client and the fixture. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Orca/Integrations/OrcaEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "orca-orcaeventcollector",
+      "name": "Orca Event Collector",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://docs.orcasecurity.io/docs/serving-layer-api",
+      "notes": [
+        "POST /serving-layer/query returns { status, data }. The fixture nests AlertId, AlertType, Category, and RiskLevel under data.*.value.",
+        "This mock flattens those to alertId, alertType, category, and riskLevel so a fetch loop can read them. The nested value objects are omitted.",
+        "Vendor HTML was not reloaded. The path is the public client and the fixture. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.orcasecurity.io/docs/serving-layer-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "POST /serving-layer/query returns { status, data }. The fixture nests AlertId, AlertType, Category, and RiskLevel under data.*.value.",
+          "This mock flattens those to alertId, alertType, category, and riskLevel so a fetch loop can read them. The nested value objects are omitted.",
+          "Vendor HTML was not reloaded. The path is the public client and the fixture. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "query-alerts",
+        "method": "POST",
+        "pathTemplate": "/serving-layer/query",
+        "summary": "Query alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "data"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "type",
+              "kind": "const",
+              "constValue": "Alert"
+            },
+            {
+              "name": "alertId",
+              "kind": "id"
+            },
+            {
+              "name": "alertType",
+              "kind": "string",
+              "example": "Lambda function shares its IAM role"
+            },
+            {
+              "name": "category",
+              "kind": "string",
+              "example": "IAM misconfigurations"
+            },
+            {
+              "name": "riskLevel",
+              "kind": "enum",
+              "enumValues": [
+                "informational",
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            {
+              "name": "createdAt",
+              "kind": "timestamp"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "start_at_index",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "orca-orcaeventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

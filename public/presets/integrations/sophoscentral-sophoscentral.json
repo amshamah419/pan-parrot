@@ -1,1 +1,149 @@
-{"id":"sophoscentral-sophoscentral","name":"Sophos Central","pack":"SophosCentral","fidelity":"sample","curated":false,"summary":"The unified console for managing Sophos products.","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"sophoscentral-sophoscentral","name":"Sophos Central","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/SophosCentral/Integrations/SophosCentral","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-add-endpoints-json","method":"GET","pathTemplate":"/endpoint/v1/endpoint-groups/{group_id}/endpoints/{endpoint_id}","summary":"test_data/add_endpoints.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"addedEndpoints","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"147fd36c-afd4-4a29-bc29-b8f1207894ab"},{"name":"hostname","kind":"string","optional":false,"example":"Lightning-bnbh9ww3rn"}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-added-users-json","method":"GET","pathTemplate":"/endpoint/v1/endpoint-groups/{group_id}/endpoints","summary":"test_data/added_users.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"addedUsers","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"55570a08-0a38-41e6-b075-e0a7eb96571d"},{"name":"name","kind":"string","optional":false,"example":"Administrator"}]},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-alert-action-json","method":"GET","pathTemplate":"/endpoint/v1/endpoint-groups/{groupId}","summary":"test_data/alert_action.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"action","kind":"string","optional":false,"example":"clearThreat"},{"name":"alertId","kind":"id","optional":false,"example":"25c7b132-56d8-4bce-9d1b-6c51a7eb3c78"},{"name":"id","kind":"id","optional":false,"example":"e3719218-c243-4766-b709-7c20717b9c1e"},{"name":"requestedAt","kind":"timestamp","optional":false,"example":"2020-11-05T14:17:11.659Z","format":"iso"},{"name":"result","kind":"string","optional":false,"example":"success"},{"name":"status","kind":"string","optional":false,"example":"requested"}]}},{"id":"test-data-alert-list-json","method":"GET","pathTemplate":"/endpoint/v1/endpoint-groups","summary":"test_data/alert_list.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"items","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"56931431-9faf-480c-ba1d-8d7541eae259"},{"name":"allowedActions","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"clearThreat"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"category","kind":"string","optional":false,"example":"malware"},{"name":"description","kind":"string","optional":false,"example":"Manual cleanup required: 'EICAR-AV-Test' at 'C:\\Users\\Lior\\Downloads\\eicarcom2 (7).zip'"},{"name":"groupKey","kind":"string","optional":false,"example":"MSxFdmVudDo6RW5kcG9pbnQ6OlRocmVhdDo6Q2xlYW51cEZhaWxlZCwxNixFSUNBUi1BVi1UZXN0"},{"name":"managedAgent","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"6e9567ea-bb50-40c5-9f12-42eb308e4c9b"},{"name":"type","kind":"string","optional":false,"example":"computer"}]},{"name":"person","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"5d407889-8659-46ab-86c5-4f227302df78"}]},{"name":"product","kind":"string","optional":false,"example":"endpoint"},{"name":"raisedAt","kind":"timestamp","optional":false,"example":"2020-11-04T09:31:17.546Z","format":"iso"},{"name":"severity","kind":"string","optional":false,"example":"high"},{"name":"tenant","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"11f104c5-cc4a-4a9f-bb9c-632c936dfb9f"},{"name":"name","kind":"string","optional":false,"example":"Qnasters"}]},{"name":"type","kind":"string","optional":false,"example":"Event::Endpoint::Threat::CleanupFailed"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"pages","kind":"object","optional":false,"children":[{"name":"nextKey","kind":"string","optional":false,"example":"2000432653939"},{"name":"size","kind":"integer","optional":false},{"name":"maxSize","kind":"integer","optional":false}]}]}},{"id":"test-data-alert-single-json","method":"GET","pathTemplate":"/{creds_type}","summary":"test_data/alert_single.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"70e3781d-c0f6-4e72-b6aa-3c3ef21f3dbb"},{"name":"allowedActions","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"clearThreat"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"category","kind":"string","optional":false,"example":"malware"},{"name":"description","kind":"string","optional":false,"example":"Manual cleanup required: 'EICAR-AV-Test' at 'C:\\Users\\Lior\\Downloads\\eicarcom2 (8).zip'"},{"name":"groupKey","kind":"string","optional":false,"example":"MSxFdmVudDo6RW5kcG9pbnQ6OlRocmVhdDo6Q2xlYW51cEZhaWxlZCwxNixFSUNBUi1BVi1UZXN0"},{"name":"managedAgent","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"6e9567ea-bb50-40c5-9f12-42eb308e4c9b"},{"name":"type","kind":"string","optional":false,"example":"computer"}]},{"name":"person","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"5d407889-8659-46ab-86c5-4f227302df78"}]},{"name":"product","kind":"string","optional":false,"example":"endpoint"},{"name":"raisedAt","kind":"timestamp","optional":false,"example":"2020-11-04T09:31:19.894Z","format":"iso"},{"name":"severity","kind":"string","optional":false,"example":"high"},{"name":"tenant","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"11f104c5-cc4a-4a9f-bb9c-632c936dfb9f"},{"name":"name","kind":"string","optional":false,"example":"Qnasters"}]},{"name":"type","kind":"string","optional":false,"example":"Event::Endpoint::Threat::CleanupFailed"}]}},{"id":"test-data-allowed-item-list-json","method":"GET","pathTemplate":"/","summary":"test_data/allowed_item_list.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"items","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"a28c7ee1-8ad9-4b5c-8f15-4d913436ce18"},{"name":"createdAt","kind":"timestamp","optional":false,"example":"2020-11-11T08:18:09.971Z","format":"iso"},{"name":"updatedAt","kind":"timestamp","optional":false,"example":"2020-11-11T08:18:09.971Z","format":"iso"},{"name":"properties","kind":"object","optional":false,"children":[{"name":"fileName","kind":"string","optional":false,"example":"testfile"},{"name":"sha256","kind":"string","optional":false,"example":"04BC382643BD49C5ADF1A7C763CF91A2C6840601DCA0757CA40F5D390BAEF45B"}]},{"name":"comment","kind":"string","optional":false,"example":"new before demo"},{"name":"type","kind":"string","optional":false,"example":"sha256"}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"pages","kind":"object","optional":false,"children":[{"name":"current","kind":"integer","optional":false},{"name":"size","kind":"integer","optional":false},{"name":"maxSize","kind":"integer","optional":false}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "sophoscentral-sophoscentral",
+  "name": "Sophos Central",
+  "pack": "SophosCentral",
+  "vendor": "Sophos",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Common alerts list used by fetch. Items match the public alerts route.",
+  "notes": [
+    "GET /common/v1/alerts returns items. The fixture test_data/alert_list.json uses the same id, category, severity, raisedAt, and type fields.",
+    "Sophos pages with pages.nextKey. This mock accepts a cursor query and writes nextOffset.",
+    "Whoami and the data-region host lookup are not modeled. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SophosCentral/Integrations/SophosCentral",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "sophoscentral-sophoscentral",
+      "name": "Sophos Central",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://developer.sophos.com/docs/common-v1/1/routes/alerts/get",
+      "notes": [
+        "GET /common/v1/alerts returns items. The fixture test_data/alert_list.json uses the same id, category, severity, raisedAt, and type fields.",
+        "Sophos pages with pages.nextKey. This mock accepts a cursor query and writes nextOffset.",
+        "Whoami and the data-region host lookup are not modeled. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.sophos.com/docs/common-v1/1/routes/alerts/get",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "GET /common/v1/alerts returns items. The fixture test_data/alert_list.json uses the same id, category, severity, raisedAt, and type fields.",
+          "Sophos pages with pages.nextKey. This mock accepts a cursor query and writes nextOffset.",
+          "Whoami and the data-region host lookup are not modeled. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-alerts",
+        "method": "GET",
+        "pathTemplate": "/common/v1/alerts",
+        "summary": "List alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "items"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "uuid"
+            },
+            {
+              "name": "category",
+              "kind": "enum",
+              "enumValues": [
+                "malware",
+                "policy",
+                "protection"
+              ]
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "Manual cleanup required"
+            },
+            {
+              "name": "severity",
+              "kind": "enum",
+              "enumValues": [
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            {
+              "name": "raisedAt",
+              "kind": "timestamp"
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "Event::Endpoint::Threat::CleanupFailed"
+            },
+            {
+              "name": "product",
+              "kind": "const",
+              "constValue": "endpoint"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "pageSize",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "sophoscentral-sophoscentral",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

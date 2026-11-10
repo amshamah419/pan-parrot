@@ -1,1 +1,143 @@
-{"id":"securonix-securonix","name":"Securonix","pack":"Securonix","fidelity":"shape","curated":false,"summary":"Use the Securonix integration to manage incidents, threats, lookup tables, whitelists and watchlists.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"securonix-securonix","name":"Securonix","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Securonix/Integrations/Securonix","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"securonix-list-workflows","method":"GET","pathTemplate":"/POST","summary":"Gets a list of all available workflows.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Securonix","kind":"object","optional":false,"children":[{"name":"Workflows","kind":"object","optional":false,"children":[{"name":"Workflow","kind":"string","optional":false,"example":"Workflow"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Value","kind":"string","optional":false,"example":"Value"}]}]}]}},{"id":"securonix-get-default-assignee-for-workflow","method":"GET","pathTemplate":"/token/generate","summary":"Gets the default assignee for the specified workflow.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Securonix","kind":"object","optional":false,"children":[{"name":"Workflows","kind":"object","optional":false,"children":[{"name":"Workflow","kind":"string","optional":false,"example":"Workflow"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Value","kind":"string","optional":false,"example":"Value"}]}]}]}},{"id":"securonix-list-possible-threat-actions","method":"GET","pathTemplate":"/incident/get","summary":"Gets a list available threat actions.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Securonix","kind":"object","optional":false,"children":[{"name":"ThreatActions","kind":"string","optional":false,"example":"ThreatActions"}]}]}},{"id":"securonix-list-policies","method":"GET","pathTemplate":"/policy/getAllPolicies","summary":"Gets a list of all policies.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Securonix","kind":"object","optional":false,"children":[{"name":"Policies","kind":"object","optional":false,"children":[{"name":"CreatedBy","kind":"string","optional":false,"example":"CreatedBy"},{"name":"CreatedOn","kind":"timestamp","optional":false,"format":"iso"},{"name":"Criticality","kind":"string","optional":false,"example":"Criticality"},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Hql","kind":"string","optional":false,"example":"Hql"},{"name":"ID","kind":"id","optional":false},{"name":"Name","kind":"string","optional":false,"example":"Name"}]}]}]}},{"id":"securonix-list-resource-groups","method":"GET","pathTemplate":"/list/resourceGroups","summary":"Gets a list of resource groups.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Securonix","kind":"object","optional":false,"children":[{"name":"ResourceGroups","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}]}},{"id":"securonix-list-users","method":"GET","pathTemplate":"/list/allUsers","summary":"Gets a list of users.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Securonix","kind":"object","optional":false,"children":[{"name":"Users","kind":"object","optional":false,"children":[{"name":"LastName","kind":"string","optional":false,"example":"LastName"},{"name":"SkipEncryption","kind":"string","optional":false,"example":"SkipEncryption"},{"name":"Riskscore","kind":"string","optional":false,"example":"Riskscore"},{"name":"EmployeeID","kind":"id","optional":false},{"name":"Masked","kind":"string","optional":false,"example":"Masked"},{"name":"Division","kind":"string","optional":false,"example":"Division"},{"name":"Criticality","kind":"string","optional":false,"example":"Criticality"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"Department","kind":"string","optional":false,"example":"Department"},{"name":"Title","kind":"string","optional":false,"example":"Title"},{"name":"FirstName","kind":"string","optional":false,"example":"FirstName"},{"name":"Email","kind":"string","optional":false,"example":"Email"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "securonix-securonix",
+  "name": "Securonix",
+  "pack": "Securonix",
+  "vendor": "Securonix",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Incident list. The client calls GET /incident/get.",
+  "notes": [
+    "The Securonix documentation site is login-gated. GET /incident/get is the public client path. This mock returns { incidents }.",
+    "The pack also accepts an XML body. This mock is JSON.",
+    "A token from /token/generate is required on later calls. That route is not modeled."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Securonix/Integrations/Securonix",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "securonix-securonix",
+      "name": "Securonix",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://documentation.securonix.com/",
+      "notes": [
+        "The Securonix documentation site is login-gated. GET /incident/get is the public client path. This mock returns { incidents }.",
+        "The pack also accepts an XML body. This mock is JSON.",
+        "A token from /token/generate is required on later calls. That route is not modeled."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://documentation.securonix.com/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The Securonix documentation site is login-gated. GET /incident/get is the public client path. This mock returns { incidents }.",
+          "The pack also accepts an XML body. This mock is JSON.",
+          "A token from /token/generate is required on later calls. That route is not modeled."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-incidents",
+        "method": "GET",
+        "pathTemplate": "/incident/get",
+        "summary": "List incidents",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "incidents"
+        },
+        "record": {
+          "name": "incident",
+          "kind": "object",
+          "children": [
+            {
+              "name": "incidentId",
+              "kind": "id"
+            },
+            {
+              "name": "incidentStatus",
+              "kind": "enum",
+              "enumValues": [
+                "Open",
+                "In Progress",
+                "Closed"
+              ]
+            },
+            {
+              "name": "priority",
+              "kind": "enum",
+              "enumValues": [
+                "Low",
+                "Medium",
+                "High"
+              ]
+            },
+            {
+              "name": "riskscore",
+              "kind": "number"
+            },
+            {
+              "name": "incidentCreatedTime",
+              "kind": "timestamp"
+            },
+            {
+              "name": "violator",
+              "kind": "string",
+              "example": "jsmith"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "securonix-securonix",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

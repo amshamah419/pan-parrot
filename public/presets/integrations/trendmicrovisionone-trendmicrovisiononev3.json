@@ -1,1 +1,145 @@
-{"id":"trendmicrovisionone-trendmicrovisiononev3","name":"TrendAI Vision One™ v3","pack":"TrendMicroVisionOne","fidelity":"shape","curated":false,"summary":"TrendAI Vision One™ is a purpose-built threat defense platform that provides added value and new benefits beyond XDR solutions, allowing you to see more and respond faster. Providi","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"trendmicrovisionone-trendmicrovisiononev3","name":"TrendAI Vision One™ v3","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/TrendMicroVisionOne/Integrations/TrendMicroVisionOneV3","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-add-blocklist-json","method":"GET","pathTemplate":"/","summary":"test_data/add_blocklist.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"status","kind":"integer","optional":false},{"name":"headers","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"Operation-Location"},{"name":"value","kind":"string","optional":false,"example":"{{request.baseUrl}}/v3.0/xdr/response/tasks/00000007"}]},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-add-custom-script-json","method":"GET","pathTemplate":"/","summary":"test_data/add_custom_script.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"script_id","kind":"id","optional":false,"example":"44c99cb0-8c5f-4182-af55-62135dbe32f1"},{"name":"location","kind":"string","optional":false,"example":"https://api.xdr.trendmicro.com/3.0/response/customScrips/44c99cb0-8c5f-4182-af55-62135dbe32f1"}]}},{"id":"test-data-add-exception-json","method":"GET","pathTemplate":"/","summary":"test_data/add_exception.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"message","kind":"string","optional":false,"example":"success"},{"name":"status","kind":"integer","optional":false},{"name":"total_items","kind":"integer","optional":false}]}},{"id":"test-data-add-note-json","method":"GET","pathTemplate":"/","summary":"test_data/add_note.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Location","kind":"string","optional":false,"example":"{{request.baseUrl}}/v3/workbench/alerts/{{request.pathSegments.[3]}}/notes/1"}]}},{"id":"test-data-add-suspicious-list-json","method":"GET","pathTemplate":"/","summary":"test_data/add_suspicious_list.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"status","kind":"integer","optional":false},{"name":"total_items","kind":"integer","optional":false},{"name":"message","kind":"string","optional":false,"example":"success"}]}},{"id":"test-data-check-task-status-json","method":"GET","pathTemplate":"/","summary":"test_data/check_task_status.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"00000004"},{"name":"status","kind":"integer","optional":false},{"name":"createdDateTime","kind":"string","optional":false,"example":"{{now offset='-1 minutes'}}"},{"name":"lastActionDateTime","kind":"string","optional":false,"example":"{{now offset='-1 minutes'}}"},{"name":"description","kind":"string","optional":false,"example":"task description"},{"name":"action","kind":"string","optional":false,"example":"isolate"},{"name":"account","kind":"string","optional":false,"example":"test"},{"name":"agentGuid","kind":"id","optional":false,"example":"cb9c8412-1f64-4fa0-a36b-76bf41a07ede"},{"name":"endpointName","kind":"string","optional":false,"example":"trend-host-1"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "trendmicrovisionone-trendmicrovisiononev3",
+  "name": "Trend Vision One",
+  "pack": "TrendMicroVisionOne",
+  "vendor": "Trend Micro",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Workbench alerts. items and nextLink.",
+  "notes": [
+    "The v3 client fetches workbench alerts. This mock is GET /v3.0/workbench/alerts with { items }.",
+    "The automation portal was not reloaded. Notes, scripts, and the exception list are not modeled.",
+    "Authorization is a bearer token."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/TrendMicroVisionOne/Integrations/TrendMicroVisionOneV3",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "trendmicrovisionone-trendmicrovisiononev3",
+      "name": "Trend Vision One",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://automation.trendmicro.com/xdr/api-v3/#tag/Workbench",
+      "notes": [
+        "The v3 client fetches workbench alerts. This mock is GET /v3.0/workbench/alerts with { items }.",
+        "The automation portal was not reloaded. Notes, scripts, and the exception list are not modeled.",
+        "Authorization is a bearer token."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://automation.trendmicro.com/xdr/api-v3/#tag/Workbench",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The v3 client fetches workbench alerts. This mock is GET /v3.0/workbench/alerts with { items }.",
+          "The automation portal was not reloaded. Notes, scripts, and the exception list are not modeled.",
+          "Authorization is a bearer token."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-alerts",
+        "method": "GET",
+        "pathTemplate": "/v3.0/workbench/alerts",
+        "summary": "List workbench alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "items"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "schemaVersion",
+              "kind": "const",
+              "constValue": "3"
+            },
+            {
+              "name": "investigationStatus",
+              "kind": "enum",
+              "enumValues": [
+                "New",
+                "In Progress",
+                "Closed"
+              ]
+            },
+            {
+              "name": "severity",
+              "kind": "enum",
+              "enumValues": [
+                "low",
+                "medium",
+                "high",
+                "critical"
+              ]
+            },
+            {
+              "name": "createdDateTime",
+              "kind": "timestamp"
+            },
+            {
+              "name": "model",
+              "kind": "string",
+              "example": "Suspicious Process"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "top",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "nextBatchToken",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "trendmicrovisionone-trendmicrovisiononev3",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

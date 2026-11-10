@@ -1,1 +1,143 @@
-{"id":"vectraxdr-vectraxdr","name":"Vectra XDR","pack":"VectraXDR","fidelity":"sample","curated":false,"summary":"This integration allows to create incidents based on Vectra XDR Entities.","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"vectraxdr-vectraxdr","name":"Vectra XDR","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/VectraXDR/Integrations/VectraXDR","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-assign-group-response-json","method":"GET","pathTemplate":"/api/v3.3/detections/{}/notes/{}","summary":"test_data/assign_group_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"domain"},{"name":"name","kind":"string","optional":false,"example":"xsoar-group-accout-test"},{"name":"description","kind":"string","optional":false,"example":"xsoar-group-accout-test"},{"name":"cognito_managed","kind":"boolean","optional":true},{"name":"members","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"*.domain1.net"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"rules","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"last_modified","kind":"timestamp","optional":false,"example":"2023-09-04T06:30:01Z","format":"iso"},{"name":"last_modified_by","kind":"string","optional":false,"example":"API Client a7f5be37"},{"name":"importance","kind":"string","optional":true,"example":"medium"}]}},{"id":"test-data-assignment-list-response-json","method":"GET","pathTemplate":"/api/v3.3/assignments/{}/resolve","summary":"test_data/assignment_list_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"count","kind":"integer","optional":false},{"name":"next","kind":"string","optional":true},{"name":"previous","kind":"string","optional":true},{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"assigned_by","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"username","kind":"email","optional":false}]},{"name":"date_assigned","kind":"timestamp","optional":false,"example":"2023-08-18T10:55:29Z","format":"iso"},{"name":"date_resolved","kind":"string","optional":true},{"name":"events","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"assignment_id","kind":"integer","optional":false},{"name":"actor","kind":"integer","optional":false},{"name":"event_type","kind":"string","optional":false,"example":"reassigned"},{"name":"datetime","kind":"timestamp","optional":false,"example":"2023-08-18T10:56:11Z","format":"iso"},{"name":"context","kind":"object","optional":false,"children":[{"name":"from","kind":"string","optional":false,"example":"nested"},{"name":"to","kind":"string","optional":false,"example":"nested"},{"name":"entity_t_score","kind":"string","optional":false,"example":"nested"},{"name":"entity_c_score","kind":"string","optional":false,"example":"nested"}]}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"outcome","kind":"string","optional":true},{"name":"resolved_by","kind":"string","optional":true},{"name":"triaged_detections","kind":"object","optional":false,"children":[]},{"name":"host_id","kind":"integer","optional":false},{"name":"account_id","kind":"string","optional":true},{"name":"assigned_to","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"username","kind":"email","optional":false}]}]},"minItems":0,"maxItems":3,"pageItems":false}]}},{"id":"test-data-assignment-outcome-list-response-json","method":"GET","pathTemplate":"/api/v3.3/entities/{}/notes/{}","summary":"test_data/assignment_outcome_list_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"count","kind":"integer","optional":false},{"name":"next","kind":"string","optional":true},{"name":"previous","kind":"string","optional":true},{"name":"results","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"builtin","kind":"boolean","optional":false},{"name":"user_selectable","kind":"boolean","optional":false},{"name":"title","kind":"string","optional":false,"example":"Benign True Positive"},{"name":"category","kind":"string","optional":false,"example":"benign_true_positive"}]},"minItems":0,"maxItems":3,"pageItems":false}]}},{"id":"test-data-detection-note-add-response-json","method":"GET","pathTemplate":"/api/v3.3/tagging/detection/{}","summary":"test_data/detection_note_add_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"date_created","kind":"timestamp","optional":false,"example":"2023-06-21T06:19:15.224449Z","format":"iso"},{"name":"date_modified","kind":"string","optional":true},{"name":"created_by","kind":"string","optional":false,"example":"test_user"},{"name":"modified_by","kind":"string","optional":true},{"name":"note","kind":"string","optional":false,"example":"test_note"}]}},{"id":"test-data-detection-note-list-response-json","method":"GET","pathTemplate":"/api/v3.3/detections/{}/notes","summary":"test_data/detection_note_list_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"note_id","kind":"integer","optional":false},{"name":"date_created","kind":"timestamp","optional":false,"example":"2023-08-09T11:08:53Z","format":"iso"},{"name":"date_modified","kind":"timestamp","optional":true,"example":"2023-08-25T11:08:53Z","format":"iso"},{"name":"created_by","kind":"string","optional":false,"example":"test_user"},{"name":"modified_by","kind":"string","optional":true,"example":"test_user_2"},{"name":"note","kind":"string","optional":false,"example":"This entity with the name IP-192.168.30.189 and ID 97 is an host."},{"name":"detection_id","kind":"integer","optional":false}]}},{"id":"test-data-detection-note-update-response-json","method":"GET","pathTemplate":"/api/v3.3/assignment_outcomes","summary":"test_data/detection_note_update_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"date_created","kind":"timestamp","optional":false,"example":"2023-06-16T04:55:58Z","format":"iso"},{"name":"date_modified","kind":"timestamp","optional":false,"example":"2023-06-22T04:57:09Z","format":"iso"},{"name":"created_by","kind":"string","optional":false,"example":"test_user"},{"name":"modified_by","kind":"string","optional":false,"example":"test_user"},{"name":"note","kind":"string","optional":false,"example":"note modified"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "vectraxdr-vectraxdr",
+  "name": "Vectra XDR",
+  "pack": "VectraXDR",
+  "vendor": "Vectra",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Detections at /api/v3.3/detections. results and next.",
+  "notes": [
+    "The support article is gated. The public client calls GET /api/v3.3/detections. This mock returns { results } and pages with the cursor query.",
+    "Vectra's next URL is a full link. This mock uses a cursor token.",
+    "Entities, notes, and assignments are not modeled. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/VectraXDR/Integrations/VectraXDR",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "vectraxdr-vectraxdr",
+      "name": "Vectra XDR",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://support.vectra.ai/s/article/KB-VS-1174",
+      "notes": [
+        "The support article is gated. The public client calls GET /api/v3.3/detections. This mock returns { results } and pages with the cursor query.",
+        "Vectra's next URL is a full link. This mock uses a cursor token.",
+        "Entities, notes, and assignments are not modeled. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://support.vectra.ai/s/article/KB-VS-1174",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The support article is gated. The public client calls GET /api/v3.3/detections. This mock returns { results } and pages with the cursor query.",
+          "Vectra's next URL is a full link. This mock uses a cursor token.",
+          "Entities, notes, and assignments are not modeled. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-detections",
+        "method": "GET",
+        "pathTemplate": "/api/v3.3/detections",
+        "summary": "List detections",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "results"
+        },
+        "record": {
+          "name": "detection",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "type",
+              "kind": "string",
+              "example": "Hidden HTTPS Tunnel"
+            },
+            {
+              "name": "category",
+              "kind": "string",
+              "example": "COMMAND & CONTROL"
+            },
+            {
+              "name": "severity",
+              "kind": "enum",
+              "enumValues": [
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            {
+              "name": "last_timestamp",
+              "kind": "timestamp"
+            },
+            {
+              "name": "state",
+              "kind": "enum",
+              "enumValues": [
+                "active",
+                "inactive"
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "cursor",
+          "limitParam": "page_size",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "vectraxdr-vectraxdr",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

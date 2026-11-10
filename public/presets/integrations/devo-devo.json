@@ -1,1 +1,132 @@
-{"id":"devo-devo","name":"Devo (Deprecated)","pack":"Devo","fidelity":"shape","curated":false,"summary":"Deprecated. Use the Devo v2 integration instead.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"devo-devo","name":"Devo (Deprecated)","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Devo/Integrations/Devo","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"devo-query","method":"GET","pathTemplate":"/search","summary":"Perform a query.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Devo","kind":"object","optional":false,"children":[{"name":"Results","kind":"string","optional":false,"example":"Results"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "devo-devo",
+  "name": "Devo",
+  "pack": "Devo",
+  "vendor": "Devo",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Query API search. object[] is the event table.",
+  "notes": [
+    "POST /search/query returns { msg, status, object }. This mock returns object.",
+    "The query language is not executed. Every call returns generated rows.",
+    "The stand-alone API key header is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Devo/Integrations/Devo",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "devo-devo",
+      "name": "Devo",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://docs.devo.com/space/latest/147554326/Query+API",
+      "notes": [
+        "POST /search/query returns { msg, status, object }. This mock returns object.",
+        "The query language is not executed. Every call returns generated rows.",
+        "The stand-alone API key header is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.devo.com/space/latest/147554326/Query+API",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "POST /search/query returns { msg, status, object }. This mock returns object.",
+          "The query language is not executed. Every call returns generated rows.",
+          "The stand-alone API key header is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "query",
+        "method": "POST",
+        "pathTemplate": "/search/query",
+        "summary": "Run a query",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "object"
+        },
+        "record": {
+          "name": "event",
+          "kind": "object",
+          "children": [
+            {
+              "name": "eventdate",
+              "kind": "timestamp"
+            },
+            {
+              "name": "domain",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "srcIp",
+              "kind": "ip"
+            },
+            {
+              "name": "dstIp",
+              "kind": "ip"
+            },
+            {
+              "name": "message",
+              "kind": "string",
+              "example": "accepted connection"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "devo-devo",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "x-logtrust-apikey",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

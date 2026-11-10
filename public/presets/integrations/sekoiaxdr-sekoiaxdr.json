@@ -1,1 +1,157 @@
-{"id":"sekoiaxdr-sekoiaxdr","name":"Sekoia XDR","pack":"SekoiaXDR","fidelity":"sample","curated":false,"summary":"Fetch alerts and events from SEKOIA.IO XDR.\\nTo use this integration, please create an API Key with the appropriate permissions.","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"sekoiaxdr-sekoiaxdr","name":"Sekoia XDR","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/SekoiaXDR/Integrations/SekoiaXDR","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-sekoiaxdr-get-alert-json","method":"POST","pathTemplate":"/PUT","summary":"test_data/SekoiaXDR_get_alert.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"80ee2ccc-11e3-4416"},{"name":"title","kind":"string","optional":false,"example":"Feed Enriched"},{"name":"created_at","kind":"integer","optional":false},{"name":"created_by","kind":"string","optional":false,"example":"59899459-d385-48da"},{"name":"created_by_type","kind":"string","optional":false,"example":"application"},{"name":"updated_at","kind":"integer","optional":false},{"name":"updated_by","kind":"string","optional":false,"example":"59899459-d385-48da"},{"name":"updated_by_type","kind":"string","optional":false,"example":"application"},{"name":"community_uuid","kind":"id","optional":false,"example":"52bd045f-4199-4361"},{"name":"short_id","kind":"id","optional":false,"example":"ALL1A4SKUiU2"},{"name":"entity","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"7f7676e7-a254-43c3"},{"name":"name","kind":"string","optional":false,"example":"Information Technology test"}]},{"name":"urgency","kind":"object","optional":false,"children":[{"name":"current_value","kind":"integer","optional":false},{"name":"value","kind":"integer","optional":false},{"name":"severity","kind":"integer","optional":false},{"name":"criticity","kind":"integer","optional":false},{"name":"display","kind":"string","optional":false,"example":"Moderate"}]},{"name":"alert_type","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"brute-force"},{"name":"category","kind":"string","optional":false,"example":"intrusion-attempts"}]},{"name":"status","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"8f206505-af6d-433e"},{"name":"name","kind":"string","optional":false,"example":"Acknowledged"},{"name":"description","kind":"string","optional":false,"example":"The alert was checked by an operator"}]},{"name":"rule","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"ebcb5113-dcd1-4563"},{"name":"name","kind":"string","optional":false,"example":"Feed Enriched"},{"name":"description","kind":"string","optional":false,"example":"description test"},{"name":"severity","kind":"integer","optional":false},{"name":"type","kind":"string","optional":true},{"name":"pattern","kind":"string","optional":false,"example":"[ipv4-addr:value = '1.2.3.4']"}]},{"name":"detection_type","kind":"string","optional":true},{"name":"source","kind":"ip","optional":false,"example":"1.2.3.4"},{"name":"target","kind":"string","optional":true},{"name":"similar","kind":"integer","optional":false},{"name":"details","kind":"string","optional":false,"example":"details description"},{"name":"ttps","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"adversaries","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"stix","kind":"object","optional":false,"children":[]},{"name":"kill_chain_short_id","kind":"id","optional":false,"example":"KCXKNfnJuUUU"},{"name":"number_of_unseen_comments","kind":"integer","optional":false},{"name":"first_seen_at","kind":"timestamp","optional":false,"example":"2019-11-21T13:32:39.839600Z","format":"iso"},{"name":"last_seen_at","kind":"timestamp","optional":false,"example":"2020-11-21T13:32:39.839600Z","format":"iso"},{"name":"assets","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"time_to_detect","kind":"string","optional":true},{"name":"time_to_acknowledge","kind":"integer","optional":false},{"name":"time_to_respond","kind":"string","optional":true},{"name":"time_to_resolve","kind":"integer","optional":false},{"name":"comments","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"40528f74-2523-428f"},{"name":"content","kind":"string","optional":false,"example":"Alert has been closed automatically because it is older than 2 weeks."},{"name":"author","kind":"string","optional":false,"example":"apikey:f93a35e0-b9aa-4c00"},{"name":"date","kind":"integer","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-sekoiaxdr-get-alert-cases-json","method":"GET","pathTemplate":"/v1/sic/alerts","summary":"test_data/SekoiaXDR_get_alert_cases.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"items","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"05f229e7-0196-45a3"},{"name":"short_id","kind":"id","optional":false,"example":"CAs3AT1XeGCp"},{"name":"created_at","kind":"timestamp","optional":false,"example":"2022-12-15T10:08:21.434114+00:00","format":"iso"},{"name":"created_by","kind":"string","optional":false,"example":"2514dc77-47aa-42f4"},{"name":"created_by_type","kind":"string","optional":false,"example":"user"},{"name":"updated_at","kind":"timestamp","optional":false,"example":"2023-12-18T14:55:33.061335+00:00","format":"iso"},{"name":"updated_by","kind":"string","optional":false,"example":"2514dc77-47aa-42f4"},{"name":"updated_by_type","kind":"string","optional":false,"example":"user"},{"name":"title","kind":"string","optional":false,"example":"Test Add events"},{"name":"description","kind":"string","optional":false,"example":"Test Add events"},{"name":"priority","kind":"string","optional":false,"example":"low"},{"name":"status","kind":"string","optional":false,"example":"opened"},{"name":"status_uuid","kind":"id","optional":false,"example":"6adc2d64-87ee-4394"},{"name":"community_uuid","kind":"id","optional":false,"example":"52bd045f-4199-4361"},{"name":"subscribers","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"number_of_comments","kind":"integer","optional":false},{"name":"first_seen_at","kind":"timestamp","optional":false,"example":"2022-06-17T04:30:24.976000Z","format":"iso"},{"name":"last_seen_at","kind":"timestamp","optional":false,"example":"2023-12-18T13:56:08Z","format":"iso"},{"name":"manual","kind":"boolean","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"total","kind":"integer","optional":false}]}},{"id":"test-data-sekoiaxdr-get-alert-comments-json","method":"GET","pathTemplate":"/v1/asset-management/assets","summary":"test_data/SekoiaXDR_get_alert_comments.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"items","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"40528f74-2523-428f"},{"name":"content","kind":"string","optional":false,"example":"Alert has been closed automatically because it is older than 2 weeks."},{"name":"author","kind":"string","optional":false,"example":"apikey:f93a35e0-b9aa-4c95"},{"name":"date","kind":"integer","optional":false},{"name":"created_by","kind":"string","optional":false,"example":"f93a35e0-b9aa-4c95"},{"name":"created_by_type","kind":"string","optional":false,"example":"apikey"},{"name":"unseen","kind":"boolean","optional":false}]},"minItems":0,"maxItems":3,"pageItems":false},{"name":"total","kind":"integer","optional":false}]}},{"id":"test-data-sekoiaxdr-get-alert-workflow-json","method":"GET","pathTemplate":"/url_suffix","summary":"test_data/SekoiaXDR_get_alert_workflow.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"actions","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"937bdabf-6a08-434b"},{"name":"name","kind":"string","optional":false,"example":"Acknowledge"},{"name":"description","kind":"string","optional":false,"example":"Acknowledge the alert"}]},"minItems":0,"maxItems":3,"pageItems":false}]}},{"id":"test-data-sekoiaxdr-get-alerts-json","method":"GET","pathTemplate":"/url_sufix","summary":"test_data/SekoiaXDR_get_alerts.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"items","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"80ee2ccc-11e3-4416"},{"name":"title","kind":"string","optional":false,"example":"Feed Enriched"},{"name":"created_at","kind":"integer","optional":false},{"name":"created_by","kind":"string","optional":false,"example":"59899459-d385-48da"},{"name":"created_by_type","kind":"string","optional":false,"example":"application"},{"name":"updated_at","kind":"integer","optional":false},{"name":"updated_by","kind":"string","optional":false,"example":"59899459-d385-48da"},{"name":"updated_by_type","kind":"string","optional":false,"example":"application"},{"name":"community_uuid","kind":"id","optional":false,"example":"52bd045f-4199-4361"},{"name":"short_id","kind":"id","optional":false,"example":"ALL1A4SKUUUU"},{"name":"entity","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"7f7676e7-a254-43c3"},{"name":"name","kind":"string","optional":false,"example":"Information Technology TEST"}]},{"name":"urgency","kind":"object","optional":false,"children":[{"name":"current_value","kind":"integer","optional":false},{"name":"value","kind":"integer","optional":false},{"name":"severity","kind":"integer","optional":false},{"name":"criticity","kind":"integer","optional":false},{"name":"display","kind":"string","optional":false,"example":"Moderate"}]},{"name":"alert_type","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"brute-force"},{"name":"category","kind":"string","optional":false,"example":"intrusion-attempts"}]},{"name":"status","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"8f206505-af6d-433e"},{"name":"name","kind":"string","optional":false,"example":"Acknowledged"},{"name":"description","kind":"string","optional":false,"example":"The alert was checked by an operator"}]},{"name":"rule","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"ebcb5113-dcd1-4563"},{"name":"name","kind":"string","optional":false,"example":"Feed Enriched"},{"name":"description","kind":"string","optional":false,"example":"description test"},{"name":"severity","kind":"integer","optional":false},{"name":"type","kind":"string","optional":true},{"name":"pattern","kind":"string","optional":false,"example":"[ipv4-addr:value = '1.2.3.4']"}]},{"name":"detection_type","kind":"string","optional":true},{"name":"source","kind":"ip","optional":false,"example":"1.2.3.4"},{"name":"target","kind":"string","optional":true},{"name":"similar","kind":"integer","optional":false},{"name":"details","kind":"string","optional":false,"example":"details test"},{"name":"ttps","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"adversaries","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"stix","kind":"object","optional":false,"children":[]},{"name":"kill_chain_short_id","kind":"id","optional":false,"example":"KCXKNfnJuuuu"},{"name":"number_of_total_comments","kind":"integer","optional":false},{"name":"first_seen_at","kind":"timestamp","optional":false,"example":"2019-11-21T13:32:39.839600Z","format":"iso"},{"name":"last_seen_at","kind":"timestamp","optional":false,"example":"2019-11-26T13:32:39.839600Z","format":"iso"},{"name":"assets","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"time_to_detect","kind":"string","optional":true},{"name":"time_to_acknowledge","kind":"integer","optional":false},{"name":"time_to_respond","kind":"string","optional":true},{"name":"time_to_resolve","kind":"integer","optional":false}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-sekoiaxdr-get-alerts-first-offset-call-j","method":"POST","pathTemplate":"/url_suffix","summary":"test_data/SekoiaXDR_get_alerts_first_offset_call.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"items","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"80ee2ccc-11e3-4416"},{"name":"title","kind":"string","optional":false,"example":"Feed Enriched"},{"name":"created_at","kind":"integer","optional":false},{"name":"created_by","kind":"string","optional":false,"example":"59899459-d385-48da"},{"name":"created_by_type","kind":"string","optional":false,"example":"application"},{"name":"updated_at","kind":"integer","optional":false},{"name":"updated_by","kind":"string","optional":false,"example":"59899459-d385-48da"},{"name":"updated_by_type","kind":"string","optional":false,"example":"application"},{"name":"community_uuid","kind":"id","optional":false,"example":"52bd045f-4199-4361"},{"name":"short_id","kind":"id","optional":false,"example":"ALL1A4SKUUUU"},{"name":"entity","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"7f7676e7-a254-43c3"},{"name":"name","kind":"string","optional":false,"example":"Information Technology TEST"}]},{"name":"urgency","kind":"object","optional":false,"children":[{"name":"current_value","kind":"integer","optional":false},{"name":"value","kind":"integer","optional":false},{"name":"severity","kind":"integer","optional":false},{"name":"criticity","kind":"integer","optional":false},{"name":"display","kind":"string","optional":false,"example":"Moderate"}]},{"name":"alert_type","kind":"object","optional":false,"children":[{"name":"value","kind":"string","optional":false,"example":"brute-force"},{"name":"category","kind":"string","optional":false,"example":"intrusion-attempts"}]},{"name":"status","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"8f206505-af6d-433e"},{"name":"name","kind":"string","optional":false,"example":"Acknowledged"},{"name":"description","kind":"string","optional":false,"example":"The alert was checked by an operator"}]},{"name":"rule","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false,"example":"ebcb5113-dcd1-4563"},{"name":"name","kind":"string","optional":false,"example":"Feed Enriched"},{"name":"description","kind":"string","optional":false,"example":"description test"},{"name":"severity","kind":"integer","optional":false},{"name":"type","kind":"string","optional":true},{"name":"pattern","kind":"string","optional":false,"example":"[ipv4-addr:value = '1.2.3.4']"}]},{"name":"detection_type","kind":"string","optional":true},{"name":"source","kind":"ip","optional":false,"example":"1.2.3.4"},{"name":"target","kind":"string","optional":true},{"name":"similar","kind":"integer","optional":false},{"name":"details","kind":"string","optional":false,"example":"details test"},{"name":"ttps","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"adversaries","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"stix","kind":"object","optional":false,"children":[]},{"name":"kill_chain_short_id","kind":"id","optional":false,"example":"KCXKNfnJuuuu"},{"name":"number_of_total_comments","kind":"integer","optional":false},{"name":"first_seen_at","kind":"timestamp","optional":false,"example":"2019-11-21T13:32:39.839600Z","format":"iso"},{"name":"last_seen_at","kind":"timestamp","optional":false,"example":"2019-11-29T13:32:39.839600Z","format":"iso"},{"name":"assets","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"time_to_detect","kind":"string","optional":true},{"name":"time_to_acknowledge","kind":"integer","optional":false},{"name":"time_to_respond","kind":"string","optional":true},{"name":"time_to_resolve","kind":"integer","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"total","kind":"integer","optional":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "sekoiaxdr-sekoiaxdr",
+  "name": "Sekoia XDR",
+  "pack": "SekoiaXDR",
+  "vendor": "Sekoia",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Alert list at /v1/sic/alerts. Fields follow the public get-alert fixture.",
+  "notes": [
+    "The list is { items }. SekoiaXDR_get_alert.json is a single alert with uuid, title, urgency, and alert_type. The list uses that object.",
+    "Vendor HTML was not reloaded in this pass. The path is the public client GET /v1/sic/alerts and the fixture above.",
+    "Event search jobs and cases are not modeled. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SekoiaXDR/Integrations/SekoiaXDR",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "sekoiaxdr-sekoiaxdr",
+      "name": "Sekoia XDR",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content test fixture (MIT).",
+      "sourceUrl": "https://docs.sekoia.io/api/alerts/",
+      "notes": [
+        "The list is { items }. SekoiaXDR_get_alert.json is a single alert with uuid, title, urgency, and alert_type. The list uses that object.",
+        "Vendor HTML was not reloaded in this pass. The path is the public client GET /v1/sic/alerts and the fixture above.",
+        "Event search jobs and cases are not modeled. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.sekoia.io/api/alerts/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The list is { items }. SekoiaXDR_get_alert.json is a single alert with uuid, title, urgency, and alert_type. The list uses that object.",
+          "Vendor HTML was not reloaded in this pass. The path is the public client GET /v1/sic/alerts and the fixture above.",
+          "Event search jobs and cases are not modeled. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "list-alerts",
+        "method": "GET",
+        "pathTemplate": "/v1/sic/alerts",
+        "summary": "List alerts",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "wrapped",
+          "arrayKey": "items"
+        },
+        "record": {
+          "name": "alert",
+          "kind": "object",
+          "children": [
+            {
+              "name": "uuid",
+              "kind": "uuid"
+            },
+            {
+              "name": "title",
+              "kind": "string",
+              "example": "Feed Enriched"
+            },
+            {
+              "name": "created_at",
+              "kind": "timestamp",
+              "format": "unix"
+            },
+            {
+              "name": "short_id",
+              "kind": "id"
+            },
+            {
+              "name": "urgency",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "severity",
+                  "kind": "integer"
+                },
+                {
+                  "name": "display",
+                  "kind": "const",
+                  "constValue": "Moderate"
+                }
+              ]
+            },
+            {
+              "name": "alert_type",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "value",
+                  "kind": "string",
+                  "example": "brute-force"
+                },
+                {
+                  "name": "category",
+                  "kind": "string",
+                  "example": "intrusion-attempts"
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "offset",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "sekoiaxdr-sekoiaxdr",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}
