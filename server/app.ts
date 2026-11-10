@@ -34,7 +34,9 @@ import { listPushDeliveries, pushEndpointNow, pushScheduleHandler } from "./push
 import { recordUpstream } from "./record";
 import { fetchPublicSpec } from "./ssrf";
 import { replayCaptured } from "./replay";
-import { createToken, listTokens, revokeToken, userFromApiToken } from "./tokens";
+import { createToken, listAllTokens, listTokens, revokeToken, revokeTokenAsAdmin, userFromApiToken } from "./tokens";
+import type { ResolvedToken } from "./tokens";
+import { registerV1 } from "./v1";
 import type { AppDb } from "../db/client";
 import { getDb } from "../db/client";
 import {
@@ -98,6 +100,7 @@ export type AppEnv = {
     db: AppDb;
     user: PublicUser;
     ip: string;
+    apiToken?: ResolvedToken | null;
   };
 };
 
@@ -300,8 +303,11 @@ export function createServer(options?: {
     const user = await requireSession(c);
     await limitAuthed(c.get("db"), user.id);
     const body = await readJson(c.req.raw, POLICY.apiJsonBytes);
-    const name = body && typeof body === "object" ? String((body as { name?: unknown }).name || "") : "";
-    const created = await createToken(c.get("db"), user.id, name);
+    const record = body && typeof body === "object" ? body as { name?: unknown; days?: unknown; scopes?: unknown } : {};
+    const name = String(record.name || "");
+    const days = record.days == null ? undefined : Number(record.days);
+    const scopes = Array.isArray(record.scopes) ? record.scopes.filter((scope): scope is string => typeof scope === "string") : undefined;
+    const created = await createToken(c.get("db"), user.id, name, { days, scopes });
     return c.json(created);
   });
 
@@ -317,6 +323,8 @@ export function createServer(options?: {
     await revokeToken(c.get("db"), user.id, c.req.param("tokenId"));
     return c.json({ ok: true });
   });
+
+  registerV1(app);
 
   app.get("/api/endpoints", async (c) => {
     const user = await requireUser(c);
@@ -741,6 +749,19 @@ export function createServer(options?: {
     const user = await requireAdmin(c);
     await limitAuthed(c.get("db"), user.id);
     await revokeUserTokens(c.get("db"), user, c.req.param("userId"));
+    return c.json({ ok: true });
+  });
+
+  app.get("/api/admin/tokens", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    return c.json(await listAllTokens(c.get("db")));
+  });
+
+  app.delete("/api/admin/tokens/:tokenId", async (c) => {
+    const user = await requireAdmin(c);
+    await limitAuthed(c.get("db"), user.id);
+    await revokeTokenAsAdmin(c.get("db"), c.req.param("tokenId"));
     return c.json({ ok: true });
   });
 

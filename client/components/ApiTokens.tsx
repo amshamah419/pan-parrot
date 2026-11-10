@@ -7,13 +7,18 @@ interface TokenRow {
   id: string;
   name: string;
   prefix: string;
+  scopes: string[];
   created: string;
+  expires: string;
   lastUsed: string | null;
 }
 
 export function ApiTokens() {
   const [rows, setRows] = useState<TokenRow[]>([]);
   const [name, setName] = useState("");
+  const [days, setDays] = useState("90");
+  const [readScope, setReadScope] = useState(true);
+  const [writeScope, setWriteScope] = useState(true);
   const [revealed, setRevealed] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -30,7 +35,8 @@ export function ApiTokens() {
     setBusy(true);
     setError("");
     try {
-      const created = await createApiToken(name.trim());
+      const scopes = [readScope ? "mocks:read" : "", writeScope ? "mocks:write" : ""].filter(Boolean);
+      const created = await createApiToken({ name: name.trim(), days: Number(days), scopes });
       setRevealed(created.token);
       setName("");
       load();
@@ -45,16 +51,32 @@ export function ApiTokens() {
     <section className="mb-6 rounded-lg border p-4">
       <h2 className="text-sm font-medium">Personal API tokens</h2>
       <p className="mt-1 text-xs text-muted-foreground">
-        A token can create and export mocks from the CLI. It is shown once and is not stored in the browser. Creating or revoking a token still requires this signed-in session.
+        A token calls <code>/api/v1</code>. It is shown once, stored only as a hash, and expires. The default is 90 days and the maximum is one year. Creating or revoking a token still requires this signed-in session.
       </p>
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="mt-3 flex flex-wrap items-center gap-2">
         <Input
           value={name}
           onChange={(event) => setName(event.target.value)}
           placeholder="laptop"
           className="max-w-xs"
+          aria-label="Token name"
         />
-        <Button type="button" variant="outline" disabled={busy || !name.trim()} onClick={create}>
+        <Input
+          value={days}
+          onChange={(event) => setDays(event.target.value)}
+          inputMode="numeric"
+          className="w-24"
+          aria-label="Expiry in days"
+        />
+        <label className="flex items-center gap-1 text-xs">
+          <input type="checkbox" checked={readScope} onChange={(event) => setReadScope(event.target.checked)} />
+          mocks:read
+        </label>
+        <label className="flex items-center gap-1 text-xs">
+          <input type="checkbox" checked={writeScope} onChange={(event) => setWriteScope(event.target.checked)} />
+          mocks:write
+        </label>
+        <Button type="button" variant="outline" disabled={busy || !name.trim() || (!readScope && !writeScope)} onClick={create}>
           Create token
         </Button>
       </div>
@@ -70,6 +92,9 @@ export function ApiTokens() {
           <li key={row.id} className="flex flex-wrap items-center justify-between gap-2 text-sm">
             <span>
               {row.name} <code className="text-xs text-muted-foreground">{row.prefix}…</code>
+              <span className="ml-2 text-xs text-muted-foreground">
+                {row.scopes.join(" ")} · expires {new Date(row.expires).toLocaleDateString()}
+              </span>
             </span>
             <Button
               type="button"

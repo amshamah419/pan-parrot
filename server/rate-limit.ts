@@ -107,6 +107,15 @@ export async function limitCatch(
   );
 }
 
+export async function limitToken(db: AppDb, tokenId: string): Promise<void> {
+  await enforceRateLimit(
+    db,
+    `api-token:${tokenId}`,
+    rateMax("RATE_API_TOKEN_MAX", 120),
+    ONE_MINUTE,
+  );
+}
+
 export async function limitAuthed(
   db: AppDb,
   userId: string,

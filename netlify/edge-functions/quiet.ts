@@ -2,7 +2,7 @@
 // the deploy if these specifiers omit `.ts`.
 import { verifyGate } from "../../shared/gate-cookie.ts";
 import { ipInCidrs } from "../../shared/cidr.ts";
-import { isAdminSurface, isBadCrawler, isScannerPath } from "../../shared/surface.ts";
+import { agentBearerLooksValid, isAdminSurface, isBadCrawler, isScannerPath } from "../../shared/surface.ts";
 
 const PUBLIC = new Set([
   "/login",
@@ -23,6 +23,10 @@ export default async (request: Request, context: { ip: string; next: () => Promi
     return notFound();
   }
   if (isAdminSurface(path) && !adminAllowed(context.ip)) return notFound();
+  if (path === "/api/v1" || path.startsWith("/api/v1/")) {
+    if (!agentBearerLooksValid(request.headers.get("authorization"))) return notFound();
+    return context.next();
+  }
   if (path.startsWith("/api/") || path.startsWith("/catch/") || PUBLIC.has(path)) {
     return context.next();
   }

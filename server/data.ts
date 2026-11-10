@@ -790,6 +790,8 @@ function toEndpointDto(
         }
       : undefined,
     mockSpec: openSpec(endpoint.mockSpec),
+    integrationId: endpoint.integrationId,
+    integrationVersion: endpoint.integrationVersion,
   };
 }
 

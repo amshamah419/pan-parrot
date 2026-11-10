@@ -202,6 +202,7 @@ export default function Admin() {
             <TabsTrigger value="mocks">Mocks</TabsTrigger>
             <TabsTrigger value="invites">Invites</TabsTrigger>
             <TabsTrigger value="audit">Audit</TabsTrigger>
+            <TabsTrigger value="tokens">Tokens</TabsTrigger>
           </TabsList>
           <TabsContent value="health">
             <HealthPanel />
@@ -323,6 +324,9 @@ export default function Admin() {
           </TabsContent>
           <TabsContent value="audit">
             <AuditPanel />
+          </TabsContent>
+          <TabsContent value="tokens">
+            <AdminTokens onError={setError} />
           </TabsContent>
         </Tabs>
       </div>
@@ -703,6 +707,57 @@ function AuditPanel() {
           <p key={event.id}>{event.action} · {event.actorEmail} · {event.detail}</p>
         ))}
         {audit.length === 0 && <p className="text-muted-foreground">No changes recorded yet.</p>}
+      </CardContent>
+    </Card>
+  );
+}
+
+function AdminTokens({ onError }: { onError: (message: string) => void }) {
+  const [rows, setRows] = useState<Array<{ id: string; name: string; prefix: string; email?: string; scopes: string[]; expires: string; revoked: string | null }>>([]);
+  const load = () => {
+    void fetch("/api/admin/tokens", { credentials: "include" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Could not load tokens");
+        setRows(await response.json());
+      })
+      .catch((error) => onError(error instanceof Error ? error.message : "Could not load tokens"));
+  };
+  useEffect(() => {
+    load();
+  }, []);
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Personal API tokens</CardTitle>
+        <CardDescription>Every token on this site. Revoking one signs that credential out. The secret is not stored.</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-2 text-sm">
+        {rows.map((row) => (
+          <div key={row.id} className="flex flex-wrap items-center justify-between gap-2">
+            <span>
+              {row.email} · {row.name} <code className="text-xs">{row.prefix}…</code>
+              <span className="ml-2 text-xs text-muted-foreground">{row.scopes.join(" ")}{row.revoked ? " · revoked" : ""}</span>
+            </span>
+            {!row.revoked && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  void fetch(`/api/admin/tokens/${row.id}`, { method: "DELETE", credentials: "include" })
+                    .then((response) => {
+                      if (!response.ok) throw new Error("Could not revoke the token");
+                      load();
+                    })
+                    .catch((error) => onError(error instanceof Error ? error.message : "Could not revoke the token"));
+                }}
+              >
+                Revoke
+              </Button>
+            )}
+          </div>
+        ))}
+        {rows.length === 0 && <p className="text-muted-foreground">No tokens yet.</p>}
       </CardContent>
     </Card>
   );
