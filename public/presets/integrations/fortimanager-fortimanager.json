@@ -1,1 +1,164 @@
-{"id":"fortimanager-fortimanager","name":"FortiManager","pack":"FortiManager","fidelity":"shape","curated":false,"summary":"FortiManager is a single console central management system that manages Fortinet devices.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"fortimanager-fortimanager","name":"FortiManager","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/FortiManager/Integrations/FortiManager","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"fortimanager-devices-list","method":"GET","pathTemplate":"/securityconsole/install/package","summary":"List all devices in the ADOM instance.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FortiManager","kind":"object","optional":false,"children":[{"name":"Device","kind":"object","optional":false,"children":[{"name":"adm_pass","kind":"string","optional":false,"example":"adm_pass"},{"name":"adm_usr","kind":"string","optional":false,"example":"adm_usr"},{"name":"app_ver","kind":"string","optional":false,"example":"app_ver"},{"name":"av_ver","kind":"string","optional":false,"example":"av_ver"},{"name":"beta","kind":"number","optional":false},{"name":"branch_pt","kind":"number","optional":false},{"name":"build","kind":"number","optional":false},{"name":"checksum","kind":"string","optional":false,"example":"checksum"},{"name":"conf_status","kind":"string","optional":false,"example":"conf_status"},{"name":"conn_mode","kind":"string","optional":false,"example":"conn_mode"},{"name":"conn_status","kind":"string","optional":false,"example":"conn_status"},{"name":"db_status","kind":"string","optional":false,"example":"db_status"},{"name":"desc","kind":"string","optional":false,"example":"desc"},{"name":"dev_status","kind":"string","optional":false,"example":"dev_status"},{"name":"fap_cnt","kind":"number","optional":false},{"name":"faz","kind":"object","optional":false,"children":[{"name":"full_act","kind":"number","optional":false},{"name":"perm","kind":"number","optional":false},{"name":"quota","kind":"number","optional":false},{"name":"used","kind":"number","optional":false}]},{"name":"fex_cnt","kind":"number","optional":false},{"name":"flags","kind":"string","optional":false,"example":"flags"},{"name":"foslic_cpu","kind":"number","optional":false},{"name":"foslic_dr_site","kind":"string","optional":false,"example":"foslic_dr_site"},{"name":"foslic_inst_time","kind":"number","optional":false},{"name":"foslic_last_sync","kind":"number","optional":false},{"name":"foslic_ram","kind":"number","optional":false},{"name":"foslic_type","kind":"string","optional":false,"example":"foslic_type"},{"name":"foslic_utm","kind":"string","optional":false,"example":"foslic_utm"},{"name":"fsw_cnt","kind":"number","optional":false},{"name":"ha_group_id","kind":"number","optional":false},{"name":"ha_group_name","kind":"string","optional":false,"example":"ha_group_name"},{"name":"ha_mode","kind":"string","optional":false,"example":"ha_mode"},{"name":"hdisk_size","kind":"number","optional":false},{"name":"hostname","kind":"string","optional":false,"example":"hostname"},{"name":"hw_rev_major","kind":"number","optional":false},{"name":"hw_rev_minor","kind":"number","optional":false},{"name":"ip","kind":"string","optional":false,"example":"ip"},{"name":"ips_ext","kind":"number","optional":false},{"name":"ips_ver","kind":"string","optional":false,"example":"ips_ver"},{"name":"last_checked","kind":"number","optional":false},{"name":"last_resync","kind":"number","optional":false},{"name":"latitude","kind":"string","optional":false,"example":"latitude"},{"name":"lic_flags","kind":"number","optional":false}]}]}]}},{"id":"fortimanager-device-groups-list","method":"GET","pathTemplate":"/obj/firewall/service/custom","summary":"List ADOM device groups.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FortiManager","kind":"object","optional":false,"children":[{"name":"DeviceGroup","kind":"object","optional":false,"children":[{"name":"desc","kind":"string","optional":false,"example":"desc"},{"name":"meta_fields","kind":"string","optional":false,"example":"meta_fields"},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"os_type","kind":"string","optional":false,"example":"os_type"},{"name":"type","kind":"string","optional":false,"example":"type"}]}]}]}},{"id":"fortimanager-address-list","method":"GET","pathTemplate":"/obj/firewall/service/group","summary":"List ADOM firewall IPv4 addresses.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"FortiManager","kind":"object","optional":false,"children":[{"name":"Address","kind":"object","optional":false,"children":[{"name":"_image-base64","kind":"string","optional":false,"example":"_image-base64"},{"name":"allow-routing","kind":"string","optional":false,"example":"allow-routing"},{"name":"associated-interface","kind":"string","optional":false,"example":"associated-interface"},{"name":"cache-ttl","kind":"number","optional":false},{"name":"color","kind":"number","optional":false},{"name":"comment","kind":"string","optional":false,"example":"comment"},{"name":"country","kind":"string","optional":false,"example":"country"},{"name":"dynamic_mapping","kind":"string","optional":false,"example":"dynamic_mapping"},{"name":"end-ip","kind":"string","optional":false,"example":"end-ip"},{"name":"epg-name","kind":"string","optional":false,"example":"epg-name"},{"name":"filter","kind":"string","optional":false,"example":"filter"},{"name":"fqdn","kind":"string","optional":false,"example":"fqdn"},{"name":"list","kind":"object","optional":false,"children":[{"name":"ip","kind":"string","optional":false,"example":"ip"}]},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"obj-id","kind":"id","optional":false},{"name":"organization","kind":"string","optional":false,"example":"organization"},{"name":"policy-group","kind":"string","optional":false,"example":"policy-group"},{"name":"sdn","kind":"string","optional":false,"example":"sdn"},{"name":"sdn-tag","kind":"string","optional":false,"example":"sdn-tag"},{"name":"start-ip","kind":"string","optional":false,"example":"start-ip"},{"name":"subnet","kind":"string","optional":false,"example":"subnet"},{"name":"subnet-name","kind":"string","optional":false,"example":"subnet-name"},{"name":"tagging","kind":"object","optional":false,"children":[{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"tags","kind":"string","optional":false,"example":"tags"}]},{"name":"tenant","kind":"string","optional":false,"example":"tenant"},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"uuid","kind":"id","optional":false},{"name":"visibility","kind":"string","optional":false,"example":"visibility"},{"name":"wildcard","kind":"string","optional":false,"example":"wildcard"},{"name":"wildcard-fqdn","kind":"string","optional":false,"example":"wildcard-fqdn"}]}]}]}},{"id":"fortimanager-address-create","method":"GET","pathTemplate":"/sys/login/user","summary":"Add a new IPv4 address.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"adom","kind":"string","optional":false,"example":"adom"},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"policy_group","kind":"string","optional":false,"example":"policy_group"},{"name":"comment","kind":"string","optional":false,"example":"comment"},{"name":"associated_interface","kind":"string","optional":false,"example":"associated_interface"},{"name":"fqdn","kind":"string","optional":false,"example":"fqdn"},{"name":"start_ip","kind":"string","optional":false,"example":"start_ip"},{"name":"end_ip","kind":"string","optional":false,"example":"end_ip"},{"name":"subnet","kind":"string","optional":false,"example":"subnet"},{"name":"subnet_name","kind":"string","optional":false,"example":"subnet_name"},{"name":"sdn","kind":"string","optional":false,"example":"sdn"},{"name":"wildcard","kind":"string","optional":false,"example":"wildcard"},{"name":"wildcard_fqdn","kind":"string","optional":false,"example":"wildcard_fqdn"},{"name":"country","kind":"string","optional":false,"example":"country"}]}},{"id":"fortimanager-address-update","method":"GET","pathTemplate":"/{entity_name}","summary":"Add a new IPv4 address.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"adom","kind":"string","optional":false,"example":"adom"},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"policy_group","kind":"string","optional":false,"example":"policy_group"},{"name":"comment","kind":"string","optional":false,"example":"comment"},{"name":"associated_interface","kind":"string","optional":false,"example":"associated_interface"},{"name":"fqdn","kind":"string","optional":false,"example":"fqdn"},{"name":"start_ip","kind":"string","optional":false,"example":"start_ip"},{"name":"end_ip","kind":"string","optional":false,"example":"end_ip"},{"name":"subnet","kind":"string","optional":false,"example":"subnet"},{"name":"subnet_name","kind":"string","optional":false,"example":"subnet_name"},{"name":"sdn","kind":"string","optional":false,"example":"sdn"},{"name":"wildcard","kind":"string","optional":false,"example":"wildcard"},{"name":"wildcard_fqdn","kind":"string","optional":false,"example":"wildcard_fqdn"},{"name":"country","kind":"string","optional":false,"example":"country"}]}},{"id":"fortimanager-address-delete","method":"GET","pathTemplate":"/pm/config","summary":"Delete an address.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"adom","kind":"string","optional":false,"example":"adom"},{"name":"address","kind":"string","optional":false,"example":"address"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "fortimanager-fortimanager",
+  "name": "FortiManager",
+  "pack": "FortiManager",
+  "vendor": "Fortinet",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "JSON-RPC device list.",
+  "notes": [
+    "The client POSTs jsonrpc. Device reads use /dvmdb/adom/{adom}/device inside the request. This mock returns one device for every POST /jsonrpc.",
+    "Groups and other methods share that route. The request method name is not branched.",
+    "The FortiManager API portal was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FortiManager/Integrations/FortiManager",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "fortimanager-fortimanager",
+      "name": "FortiManager",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://fndn.fortinet.net/index.php?/fortiapi/5-fortimanager/",
+      "notes": [
+        "The client POSTs jsonrpc. Device reads use /dvmdb/adom/{adom}/device inside the request. This mock returns one device for every POST /jsonrpc.",
+        "Groups and other methods share that route. The request method name is not branched.",
+        "The FortiManager API portal was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://fndn.fortinet.net/index.php?/fortiapi/5-fortimanager/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client POSTs jsonrpc. Device reads use /dvmdb/adom/{adom}/device inside the request. This mock returns one device for every POST /jsonrpc.",
+          "Groups and other methods share that route. The request method name is not branched.",
+          "The FortiManager API portal was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "rpc",
+        "method": "POST",
+        "pathTemplate": "/jsonrpc",
+        "summary": "JSON-RPC device list",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "result",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "result",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "status",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "code",
+                        "kind": "const",
+                        "constValue": 0
+                      },
+                      {
+                        "name": "message",
+                        "kind": "const",
+                        "constValue": "OK"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "data",
+                    "kind": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "item": {
+                      "name": "device",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "name",
+                          "kind": "string",
+                          "example": "lab-fw"
+                        },
+                        {
+                          "name": "ip",
+                          "kind": "ip"
+                        },
+                        {
+                          "name": "sn",
+                          "kind": "id"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "fortimanager-fortimanager",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

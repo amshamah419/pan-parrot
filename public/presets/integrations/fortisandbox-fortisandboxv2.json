@@ -1,1 +1,157 @@
-{"id":"fortisandbox-fortisandboxv2","name":"FortiSandbox v2","pack":"FortiSandbox","fidelity":"sample","curated":false,"summary":"FortiSandbox is an advanced security tool that goes beyond standard sandboxing. It combines proactive mitigation, enhanced threat detection, and in-depth reporting, using Fortinet'","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"fortisandbox-fortisandboxv2","name":"FortiSandbox v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/FortiSandbox/Integrations/FortiSandboxv2","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-file-verdict-known-json","method":"GET","pathTemplate":"/scan/result/get-jobs-of-submission","summary":"test_data/file_verdict_known.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"10"},{"name":"ver","kind":"string","optional":false,"example":"2.1"},{"name":"result","kind":"object","optional":false,"children":[{"name":"url","kind":"string","optional":false,"example":"/scan/result/file"},{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"message","kind":"string","optional":false,"example":"OK"}]},{"name":"data","kind":"object","optional":false,"children":[{"name":"start_ts","kind":"integer","optional":false},{"name":"finish_ts","kind":"integer","optional":false},{"name":"untrusted","kind":"integer","optional":false},{"name":"now","kind":"integer","optional":false},{"name":"rating","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Malicious"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"score","kind":"integer","optional":false},{"name":"file_name","kind":"string","optional":false,"example":"pikachu.exe"},{"name":"jid","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"6977873056495878792"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"malware_name","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"N/A"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"vid","kind":"array","optional":false,"item":{"name":"item","kind":"integer","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"behavior_info","kind":"integer","optional":false},{"name":"infected_os","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"detection_os","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"rating_source","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"AV Scan Engine"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"false_positive_negative","kind":"array","optional":false,"item":{"name":"item","kind":"integer","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}]}]}},{"id":"test-data-file-verdict-unknown-json","method":"GET","pathTemplate":"/alert/ondemand/cancel-submission","summary":"test_data/file_verdict_unknown.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"10"},{"name":"ver","kind":"string","optional":false,"example":"2.1"},{"name":"result","kind":"object","optional":false,"children":[{"name":"url","kind":"string","optional":false,"example":"/scan/result/file"},{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"message","kind":"string","optional":false,"example":"DATA_NOT_EXIST"}]}]}]}},{"id":"test-data-job-list-done-json","method":"GET","pathTemplate":"/alert/ondemand/submit-file","summary":"test_data/job_list_done.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"17"},{"name":"ver","kind":"string","optional":false,"example":"2.0"},{"name":"result","kind":"object","optional":false,"children":[{"name":"url","kind":"string","optional":false,"example":"/scan/result/get-jobs-of-submission"},{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"message","kind":"string","optional":false,"example":"OK"}]},{"name":"data","kind":"object","optional":false,"children":[{"name":"jids","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"000"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"total_jids","kind":"integer","optional":false}]}]}]}},{"id":"test-data-job-list-empty-json","method":"GET","pathTemplate":"/scan/result/get-pdf-report","summary":"test_data/job_list_empty.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"17"},{"name":"ver","kind":"string","optional":false,"example":"2.0"},{"name":"result","kind":"object","optional":false,"children":[{"name":"url","kind":"string","optional":false,"example":"/scan/result/get-jobs-of-submission"},{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"message","kind":"string","optional":false,"example":"OK"}]},{"name":"data","kind":"object","optional":false,"children":[{"name":"jids","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"total_jids","kind":"integer","optional":false}]}]}]}},{"id":"test-data-job-list-inprogress-json","method":"GET","pathTemplate":"/scan/result/urlrating","summary":"test_data/job_list_inprogress.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"17"},{"name":"ver","kind":"string","optional":false,"example":"2.0"},{"name":"result","kind":"object","optional":false,"children":[{"name":"url","kind":"string","optional":false,"example":"/scan/result/get-jobs-of-submission"},{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"message","kind":"string","optional":false,"example":"OK"}]},{"name":"data","kind":"object","optional":false,"children":[{"name":"jids","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"000"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"total_jids","kind":"integer","optional":false}]}]}]}},{"id":"test-data-job-report-json","method":"GET","pathTemplate":"/scan/result/file","summary":"test_data/job_report.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"50"},{"name":"ver","kind":"string","optional":false,"example":"2.5"},{"name":"result","kind":"object","optional":false,"children":[{"name":"url","kind":"string","optional":false,"example":"/scan/result/get-pdf-report"},{"name":"status","kind":"object","optional":false,"children":[{"name":"code","kind":"integer","optional":false},{"name":"message","kind":"string","optional":false,"example":"OK"}]},{"name":"data","kind":"object","optional":false,"children":[{"name":"report","kind":"string","optional":false,"example":"\"RGVjb2RlZCBQaWthY2h1\""},{"name":"report_name","kind":"string","optional":false,"example":"pikachu.pdf"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "fortisandbox-fortisandboxv2",
+  "name": "FortiSandbox v2",
+  "pack": "FortiSandbox",
+  "vendor": "Fortinet",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "JSON-RPC scan rating.",
+  "notes": [
+    "The client posts jsonrpc. Scan methods put a url such as /scan/result/urlrating inside the body. This mock returns one result for every POST /jsonrpc.",
+    "File submit and PDF report methods are the same route. The inner url is not branched.",
+    "The FortiSandbox API guide was not reloaded. The bearer token is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FortiSandbox/Integrations/FortiSandboxv2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "fortisandbox-fortisandboxv2",
+      "name": "FortiSandbox v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.fortinet.com/document/fortisandbox/4.4.0/administration-guide/330312/introduction-to-fortisandbox-api",
+      "notes": [
+        "The client posts jsonrpc. Scan methods put a url such as /scan/result/urlrating inside the body. This mock returns one result for every POST /jsonrpc.",
+        "File submit and PDF report methods are the same route. The inner url is not branched.",
+        "The FortiSandbox API guide was not reloaded. The bearer token is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.fortinet.com/document/fortisandbox/4.4.0/administration-guide/330312/introduction-to-fortisandbox-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client posts jsonrpc. Scan methods put a url such as /scan/result/urlrating inside the body. This mock returns one result for every POST /jsonrpc.",
+          "File submit and PDF report methods are the same route. The inner url is not branched.",
+          "The FortiSandbox API guide was not reloaded. The bearer token is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "rpc",
+        "method": "POST",
+        "pathTemplate": "/jsonrpc",
+        "summary": "JSON-RPC scan result",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "integer"
+            },
+            {
+              "name": "ver",
+              "kind": "const",
+              "constValue": "2.0"
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "status",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "code",
+                      "kind": "const",
+                      "constValue": 0
+                    },
+                    {
+                      "name": "message",
+                      "kind": "const",
+                      "constValue": "OK"
+                    }
+                  ]
+                },
+                {
+                  "name": "data",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "rating",
+                      "kind": "enum",
+                      "enumValues": [
+                        "Malicious",
+                        "Clean",
+                        "Unknown"
+                      ]
+                    },
+                    {
+                      "name": "score",
+                      "kind": "integer"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "fortisandbox-fortisandboxv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

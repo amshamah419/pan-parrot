@@ -1,1 +1,151 @@
-{"id":"prismaaccess-prismaaccessegressipfeed","name":"Prisma Access Egress IP feed","pack":"PrismaAccess","fidelity":"shape","curated":false,"summary":"Dynamically retrieve and add to allow list IPs Prisma Access uses to egress traffic to the internet and SaaS apps.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"prismaaccess-prismaaccessegressipfeed","name":"Prisma Access Egress IP feed","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PrismaAccess/Integrations/PrismaAccessEgressIPFeed","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"prisma-access-get-indicators","method":"GET","pathTemplate":"/","summary":"Gets indicators from the feed.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaAccess","kind":"object","optional":false,"children":[{"name":"Egress","kind":"object","optional":false,"children":[{"name":"IP","kind":"object","optional":false,"children":[{"name":"Address","kind":"string","optional":false,"example":"Address"},{"name":"Zone","kind":"string","optional":false,"example":"Zone"}]}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "prismaaccess-prismaaccessegressipfeed",
+  "name": "Prisma Access Egress IP feed",
+  "pack": "PrismaAccess",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "POST /getPrismaAccessIP/v2 returns egress addresses.",
+  "notes": [
+    "The feed client posts https://api.gpcloudservice.com/getPrismaAccessIP/v2. This mock returns status success and a result row with addresses.",
+    "serviceType, addrType, and location in the body are not filtered. The address list is one example.",
+    "The retrieve-IP page was not reloaded. The API key header is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PrismaAccess/Integrations/PrismaAccessEgressIPFeed",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "prismaaccess-prismaaccessegressipfeed",
+      "name": "Prisma Access Egress IP feed",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.paloaltonetworks.com/prisma/prisma-access/prisma-access-panorama-admin/prisma-access-overview/retrieve-ip-addresses-for-prisma-access",
+      "notes": [
+        "The feed client posts https://api.gpcloudservice.com/getPrismaAccessIP/v2. This mock returns status success and a result row with addresses.",
+        "serviceType, addrType, and location in the body are not filtered. The address list is one example.",
+        "The retrieve-IP page was not reloaded. The API key header is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.paloaltonetworks.com/prisma/prisma-access/prisma-access-panorama-admin/prisma-access-overview/retrieve-ip-addresses-for-prisma-access",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The feed client posts https://api.gpcloudservice.com/getPrismaAccessIP/v2. This mock returns status success and a result row with addresses.",
+          "serviceType, addrType, and location in the body are not filtered. The address list is one example.",
+          "The retrieve-IP page was not reloaded. The API key header is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "egress",
+        "method": "POST",
+        "pathTemplate": "/getPrismaAccessIP/v2",
+        "summary": "List Prisma Access egress IPs",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success"
+            },
+            {
+              "name": "result",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "zone",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "zone",
+                    "kind": "string",
+                    "example": "americas"
+                  },
+                  {
+                    "name": "serviceType",
+                    "kind": "const",
+                    "constValue": "gp_gateway"
+                  },
+                  {
+                    "name": "addrType",
+                    "kind": "const",
+                    "constValue": "active"
+                  },
+                  {
+                    "name": "addresses",
+                    "kind": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "item": {
+                      "name": "address",
+                      "kind": "ip"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "prismaaccess-prismaaccessegressipfeed",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "header-api-key",
+        "value": "dummy-prisma-key"
+      }
+    }
+  }
+}

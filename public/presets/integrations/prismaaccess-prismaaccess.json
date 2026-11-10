@@ -1,1 +1,206 @@
-{"id":"prismaaccess-prismaaccess","name":"Prisma Access","pack":"PrismaAccess","fidelity":"shape","curated":false,"summary":"Integrate with Prisma Access to monitor the status of the Service, alert and take actions. ","operations":4,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"prismaaccess-prismaaccess","name":"Prisma Access","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PrismaAccess/Integrations/PrismaAccess","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"prisma-access-logout-user","method":"GET","pathTemplate":"/config/devices/entry/device-group/entry","summary":"Force logout a specific user from Prisma Access.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaAccess","kind":"object","optional":false,"children":[{"name":"LogoutUser","kind":"string","optional":false,"example":"LogoutUser"}]}]}},{"id":"prisma-access-query","method":"GET","pathTemplate":"/config/shared","summary":"Run a query via the Prisma Access CLI.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaAccess","kind":"object","optional":false,"children":[{"name":"QueryResults","kind":"string","optional":false,"example":"QueryResults"}]}]}},{"id":"prisma-access-cli-command","method":"GET","pathTemplate":"/api","summary":"Run a custom CLI command on Prisma Access.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"cmd","kind":"string","optional":false,"example":"cmd"}]}},{"id":"prisma-access-active-users","method":"GET","pathTemplate":"/","summary":"Query currently active users.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PrismaAccess","kind":"object","optional":false,"children":[{"name":"ActiveUsers","kind":"string","optional":false,"example":"ActiveUsers"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "prismaaccess-prismaaccess",
+  "name": "Prisma Access",
+  "pack": "PrismaAccess",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "PAN-OS XML API on the Prisma Access management host.",
+  "notes": [
+    "The client calls GET https://server:port/api/ with type=op and type=config, then parses the XML response. SSH CLI commands are not HTTP and are not modeled.",
+    "type=op returns system info. type=config returns a device-group entry. Commit and logout-mobile-user are on the PAN-OS preset, not here.",
+    "The dummy API key is not a Prisma Access credential. The overview page was not reloaded; the calls are the public client."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PrismaAccess/Integrations/PrismaAccess",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "prismaaccess-prismaaccess",
+      "name": "Prisma Access",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.paloaltonetworks.com/prisma/prisma-access/prisma-access-panorama-admin/prisma-access-overview/prisma-access-overview",
+      "notes": [
+        "The client calls GET https://server:port/api/ with type=op and type=config, then parses the XML response. SSH CLI commands are not HTTP and are not modeled.",
+        "type=op returns system info. type=config returns a device-group entry. Commit and logout-mobile-user are on the PAN-OS preset, not here.",
+        "The dummy API key is not a Prisma Access credential. The overview page was not reloaded; the calls are the public client."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.paloaltonetworks.com/prisma/prisma-access/prisma-access-panorama-admin/prisma-access-overview/prisma-access-overview",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client calls GET https://server:port/api/ with type=op and type=config, then parses the XML response. SSH CLI commands are not HTTP and are not modeled.",
+          "type=op returns system info. type=config returns a device-group entry. Commit and logout-mobile-user are on the PAN-OS preset, not here.",
+          "The dummy API key is not a Prisma Access credential. The overview page was not reloaded; the calls are the public client."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "op",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Operational command",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "queryMatch": {
+          "type": "op"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "system",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "hostname",
+                      "kind": "const",
+                      "constValue": "prisma-access"
+                    },
+                    {
+                      "name": "sw-version",
+                      "kind": "const",
+                      "constValue": "11.1.0"
+                    },
+                    {
+                      "name": "model",
+                      "kind": "const",
+                      "constValue": "PA-VM"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "config",
+        "method": "GET",
+        "pathTemplate": "/api",
+        "summary": "Read device groups",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "queryMatch": {
+          "type": "config"
+        },
+        "record": {
+          "name": "response",
+          "kind": "object",
+          "children": [
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "success",
+              "xml": {
+                "attribute": true
+              }
+            },
+            {
+              "name": "result",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "entry",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "name",
+                      "kind": "const",
+                      "constValue": "lab-device-group",
+                      "xml": {
+                        "attribute": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "prismaaccess-prismaaccess",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "panos-key",
+      "panos": {
+        "username": "lab-admin",
+        "password": "dummy-not-a-real-password",
+        "apiKey": "dummy-panos-api-key"
+      }
+    }
+  }
+}

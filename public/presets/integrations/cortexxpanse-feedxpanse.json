@@ -1,1 +1,140 @@
-{"id":"cortexxpanse-feedxpanse","name":"Xpanse Feed","pack":"CortexXpanse","fidelity":"shape","curated":false,"summary":"Use this feed to retrieve the discovered IPs/domains/certificates from the Cortex Xpanse asset database.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"cortexxpanse-feedxpanse","name":"Xpanse Feed","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CortexXpanse/Integrations/FeedXpanse","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"xpanse-get-indicators","method":"GET","pathTemplate":"/assets/get_assets_internet_exposure","summary":"Retrieves a limited number of indicators.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ASM","kind":"object","optional":false,"children":[{"name":"Indicators","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Type","kind":"string","optional":false,"example":"Type"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "cortexxpanse-feedxpanse",
+  "name": "Xpanse Feed",
+  "pack": "CortexXpanse",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Internet exposure assets for the Xpanse feed.",
+  "notes": [
+    "FeedXpanse.py POSTs /public_api/v1/assets/get_assets_internet_exposure/. This mock returns reply.assets with ip and name.",
+    "Tags and TLP are added by the pack after the call. They are not in this body. Filters are ignored.",
+    "The exposure page was not reloaded. x-xdr-auth-id is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CortexXpanse/Integrations/FeedXpanse",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "cortexxpanse-feedxpanse",
+      "name": "Xpanse Feed",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-Xpanse-REST-API/Get-Assets-Internet-Exposure",
+      "notes": [
+        "FeedXpanse.py POSTs /public_api/v1/assets/get_assets_internet_exposure/. This mock returns reply.assets with ip and name.",
+        "Tags and TLP are added by the pack after the call. They are not in this body. Filters are ignored.",
+        "The exposure page was not reloaded. x-xdr-auth-id is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-Xpanse-REST-API/Get-Assets-Internet-Exposure",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "FeedXpanse.py POSTs /public_api/v1/assets/get_assets_internet_exposure/. This mock returns reply.assets with ip and name.",
+          "Tags and TLP are added by the pack after the call. They are not in this body. Filters are ignored.",
+          "The exposure page was not reloaded. x-xdr-auth-id is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "exposure",
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/assets/get_assets_internet_exposure",
+        "summary": "Get internet-exposed assets",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "reply",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "assets",
+                  "kind": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "item": {
+                    "name": "asset",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "asset_id",
+                        "kind": "id"
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab-web"
+                      },
+                      {
+                        "name": "ip",
+                        "kind": "ip"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "cortexxpanse-feedxpanse",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "x-xdr-auth-id",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

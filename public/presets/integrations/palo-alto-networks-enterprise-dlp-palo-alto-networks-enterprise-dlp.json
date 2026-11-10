@@ -1,1 +1,142 @@
-{"id":"palo-alto-networks-enterprise-dlp-palo-alto-networks-enterprise-dlp","name":"Palo Alto Networks Enterprise DLP","pack":"Palo_Alto_Networks_Enterprise_DLP","fidelity":"shape","curated":false,"summary":"Palo Alto Networks Enterprise DLP discovers and protects company data across every data channel and repository. Integrated Enterprise DLP enables data protection and compliance eve","operations":4,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"palo-alto-networks-enterprise-dlp-palo-alto-networks-enterprise-dlp","name":"Palo Alto Networks Enterprise DLP","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Palo_Alto_Networks_Enterprise_DLP/Integrations/Palo_Alto_Networks_Enterprise_DLP","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"pan-dlp-get-report","method":"GET","pathTemplate":"/headers","summary":"Fetches DLP reports associated with a report ID.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DLP","kind":"object","optional":false,"children":[{"name":"Report","kind":"object","optional":false,"children":[{"name":"DataProfile","kind":"string","optional":false,"example":"DataProfile"},{"name":"DataPatternMatches","kind":"object","optional":false,"children":[{"name":"DataPatternName","kind":"string","optional":false,"example":"DataPatternName"},{"name":"Detections","kind":"string","optional":false,"example":"Detections"},{"name":"HighConfidenceFrequency","kind":"string","optional":false,"example":"HighConfidenceFrequency"},{"name":"MediumConfidenceFrequency","kind":"string","optional":false,"example":"MediumConfidenceFrequency"},{"name":"LowConfidenceFrequency","kind":"string","optional":false,"example":"LowConfidenceFrequency"},{"name":"MatchedConfidenceLevel","kind":"string","optional":false,"example":"MatchedConfidenceLevel"}]},{"name":"DataProfiles","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Id","kind":"id","optional":false},{"name":"Version","kind":"number","optional":false},{"name":"IsTriggered","kind":"boolean","optional":false},{"name":"DataPatterns","kind":"object","optional":false,"children":[{"name":"Id","kind":"id","optional":false},{"name":"IsMatched","kind":"boolean","optional":false},{"name":"ConfidenceLevel","kind":"string","optional":false,"example":"ConfidenceLevel"},{"name":"OccurrenceCount","kind":"number","optional":false},{"name":"OccurrenceOperatorType","kind":"string","optional":false,"example":"OccurrenceOperatorType"},{"name":"OccurrenceLow","kind":"number","optional":false},{"name":"OccurrenceHigh","kind":"number","optional":false}]}]}]}]}]}},{"id":"pan-dlp-update-incident","method":"POST","pathTemplate":"/headers","summary":"Updates a DLP incident with user feedback.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DLP","kind":"object","optional":false,"children":[{"name":"IncidentUpdate","kind":"object","optional":false,"children":[{"name":"success","kind":"boolean","optional":false},{"name":"exemption_duration","kind":"number","optional":false}]}]}]}},{"id":"pan-dlp-exemption-eligible","method":"GET","pathTemplate":"/","summary":"Determines whether exemption can be granted on incidents from a certain data profile.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DLP","kind":"object","optional":false,"children":[{"name":"exemption","kind":"object","optional":false,"children":[{"name":"eligible","kind":"boolean","optional":false}]}]}]}},{"id":"pan-dlp-slack-message","method":"GET","pathTemplate":"/","summary":"Gets the Slack bot message to send to the user for gathering feedback.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DLP","kind":"object","optional":false,"children":[{"name":"slack_message","kind":"string","optional":false,"example":"slack_message"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "palo-alto-networks-enterprise-dlp-palo-alto-networks-enterprise-dlp",
+  "name": "Palo Alto Networks Enterprise DLP",
+  "pack": "Palo_Alto_Networks_Enterprise_DLP",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "POST /v4/api/incidents returns a page of DLP incidents.",
+  "notes": [
+    "The client posts the absolute v4 incidents URL built from the DLP host. This mock is POST /v4/api/incidents with an incidents array.",
+    "The next-page token query is not modeled. OAuth at auth.apps.paloaltonetworks.com is not modeled.",
+    "The Enterprise DLP API page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Palo_Alto_Networks_Enterprise_DLP/Integrations/Palo_Alto_Networks_Enterprise_DLP",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "palo-alto-networks-enterprise-dlp-palo-alto-networks-enterprise-dlp",
+      "name": "Palo Alto Networks Enterprise DLP",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.paloaltonetworks.com/enterprise-dlp/enterprise-dlp-admin/enterprise-dlp-api",
+      "notes": [
+        "The client posts the absolute v4 incidents URL built from the DLP host. This mock is POST /v4/api/incidents with an incidents array.",
+        "The next-page token query is not modeled. OAuth at auth.apps.paloaltonetworks.com is not modeled.",
+        "The Enterprise DLP API page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.paloaltonetworks.com/enterprise-dlp/enterprise-dlp-admin/enterprise-dlp-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client posts the absolute v4 incidents URL built from the DLP host. This mock is POST /v4/api/incidents with an incidents array.",
+          "The next-page token query is not modeled. OAuth at auth.apps.paloaltonetworks.com is not modeled.",
+          "The Enterprise DLP API page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "incidents",
+        "method": "POST",
+        "pathTemplate": "/v4/api/incidents",
+        "summary": "List DLP incidents",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "incidents",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "incident",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "incidentId",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "enum",
+                    "enumValues": [
+                      "low",
+                      "medium",
+                      "high"
+                    ]
+                  },
+                  {
+                    "name": "status",
+                    "kind": "const",
+                    "constValue": "open"
+                  },
+                  {
+                    "name": "createdAt",
+                    "kind": "timestamp",
+                    "format": "iso"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "palo-alto-networks-enterprise-dlp-palo-alto-networks-enterprise-dlp",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

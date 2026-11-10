@@ -1,1 +1,180 @@
-{"id":"elasticsearch-elasticsearcheventcollector","name":"Elasticsearch Event Collector","pack":"Elasticsearch","fidelity":"shape","curated":false,"summary":"Search for and analyze data in real time. Supports version 6 and later.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"elasticsearch-elasticsearcheventcollector","name":"Elasticsearch Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Elasticsearch/Integrations/ElasticsearchEventCollector","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"es-get-events","method":"GET","pathTemplate":"/","summary":"This command is used for developing/ debugging and is to be used with caution, as it can cause the API request limit to be exceeded.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"start_time","kind":"string","optional":false,"example":"start_time"},{"name":"end_time","kind":"string","optional":false,"example":"end_time"},{"name":"time_method","kind":"string","optional":false,"example":"time_method"},{"name":"fetch_size","kind":"string","optional":false,"example":"fetch_size"},{"name":"fetch_index","kind":"string","optional":false,"example":"fetch_index"},{"name":"fetch_time_field","kind":"string","optional":false,"example":"fetch_time_field"},{"name":"fetch_query","kind":"string","optional":false,"example":"fetch_query"},{"name":"raw_query","kind":"string","optional":false,"example":"raw_query"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "elasticsearch-elasticsearcheventcollector",
+  "name": "Elasticsearch Event Collector",
+  "pack": "Elasticsearch",
+  "vendor": "Elastic",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "POST /lab-logs/_search returns hits.hits.",
+  "notes": [
+    "The collector calls es.search on the fetch index. This mock is POST /lab-logs/_search and returns hits.total plus hits.hits._source.",
+    "The query body is not executed. Point-in-time and search_after are not modeled. Use index name lab-logs.",
+    "The search API page was not reloaded. Basic auth is the lab user."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Elasticsearch/Integrations/ElasticsearchEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "elasticsearch-elasticsearcheventcollector",
+      "name": "Elasticsearch Event Collector",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
+      "notes": [
+        "The collector calls es.search on the fetch index. This mock is POST /lab-logs/_search and returns hits.total plus hits.hits._source.",
+        "The query body is not executed. Point-in-time and search_after are not modeled. Use index name lab-logs.",
+        "The search API page was not reloaded. Basic auth is the lab user."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The collector calls es.search on the fetch index. This mock is POST /lab-logs/_search and returns hits.total plus hits.hits._source.",
+          "The query body is not executed. Point-in-time and search_after are not modeled. Use index name lab-logs.",
+          "The search API page was not reloaded. Basic auth is the lab user."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "search",
+        "method": "POST",
+        "pathTemplate": "/lab-logs/_search",
+        "summary": "Search the lab index",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "took",
+              "kind": "integer"
+            },
+            {
+              "name": "timed_out",
+              "kind": "const",
+              "constValue": false
+            },
+            {
+              "name": "hits",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "total",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "value",
+                      "kind": "integer"
+                    },
+                    {
+                      "name": "relation",
+                      "kind": "const",
+                      "constValue": "eq"
+                    }
+                  ]
+                },
+                {
+                  "name": "hits",
+                  "kind": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "item": {
+                    "name": "hit",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "_index",
+                        "kind": "const",
+                        "constValue": "lab-logs"
+                      },
+                      {
+                        "name": "_id",
+                        "kind": "id"
+                      },
+                      {
+                        "name": "_source",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "@timestamp",
+                            "kind": "timestamp",
+                            "format": "iso"
+                          },
+                          {
+                            "name": "message",
+                            "kind": "string",
+                            "example": "user=ada action=login"
+                          },
+                          {
+                            "name": "host",
+                            "kind": "string",
+                            "example": "lab-host"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "elasticsearch-elasticsearcheventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "basic",
+      "basic": {
+        "username": "lab-admin",
+        "password": "dummy-not-a-real-password"
+      }
+    }
+  }
+}

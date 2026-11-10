@@ -5,11 +5,11 @@
   "vendor": "Palo Alto Networks",
   "fidelity": "verified",
   "curated": true,
-  "summary": "POST /publicapi/get/verdict returns the XML verdict document.",
+  "summary": "WildFire verdict, report, and URL submit as XML.",
   "notes": [
     "The public verdict response is XML. Verdict codes are 0 benign, 1 malware, 2 grayware, 4 phishing, 5 C2, and the negative pending codes.",
-    "XSOAR posts to /publicapi/get/verdict with an apikey form field. This mock checks the dummy key. An invalid hash is not turned into HTTP 421.",
-    "File submission and the sample download are not modeled."
+    "XSOAR posts to /publicapi/get/verdict, /publicapi/get/report, and /publicapi/submit/link with an apikey form field. This mock checks the dummy key.",
+    "The report is XML file_info. URL submit returns submit-link-info. File upload and PDF reports are not modeled. An invalid hash is not HTTP 421."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Palo_Alto_Networks_WildFire/Integrations/Palo_Alto_Networks_WildFire_v2",
@@ -29,8 +29,8 @@
         "checkedAt": "2026-11-09",
         "differences": [
           "The public verdict response is XML. Verdict codes are 0 benign, 1 malware, 2 grayware, 4 phishing, 5 C2, and the negative pending codes.",
-          "XSOAR posts to /publicapi/get/verdict with an apikey form field. This mock checks the dummy key. An invalid hash is not turned into HTTP 421.",
-          "File submission and the sample download are not modeled."
+          "XSOAR posts to /publicapi/get/verdict, /publicapi/get/report, and /publicapi/submit/link with an apikey form field. This mock checks the dummy key.",
+          "The report is XML file_info. URL submit returns submit-link-info. File upload and PDF reports are not modeled. An invalid hash is not HTTP 421."
         ]
       }
     },
@@ -88,6 +88,112 @@
             }
           ]
         }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "report",
+        "method": "POST",
+        "pathTemplate": "/publicapi/get/report",
+        "summary": "Get a WildFire XML report",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "wildfire",
+          "kind": "object",
+          "children": [
+            {
+              "name": "file_info",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "md5",
+                  "kind": "id"
+                },
+                {
+                  "name": "sha256",
+                  "kind": "id"
+                },
+                {
+                  "name": "malware",
+                  "kind": "enum",
+                  "enumValues": [
+                    "yes",
+                    "no"
+                  ]
+                },
+                {
+                  "name": "filetype",
+                  "kind": "const",
+                  "constValue": "PE"
+                },
+                {
+                  "name": "size",
+                  "kind": "integer"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/xml; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "submit-link",
+        "method": "POST",
+        "pathTemplate": "/publicapi/submit/link",
+        "summary": "Submit a URL for analysis",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "xml"
+        },
+        "record": {
+          "name": "wildfire",
+          "kind": "object",
+          "children": [
+            {
+              "name": "submit-link-info",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "url",
+                  "kind": "string",
+                  "example": "http://example.test/sample"
+                },
+                {
+                  "name": "sha256",
+                  "kind": "id"
+                },
+                {
+                  "name": "md5",
+                  "kind": "id"
+                }
+              ]
+            }
+          ]
+        }
       }
     ],
     "chaos": {
@@ -115,7 +221,8 @@
       "authExpired": false,
       "authDenied": false,
       "authTokenFailure": false,
-      "authClockSkew": false
+      "authClockSkew": false,
+      "graphqlErrors": false
     },
     "totalRecords": 500,
     "auth": {

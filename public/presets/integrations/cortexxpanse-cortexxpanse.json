@@ -1,1 +1,217 @@
-{"id":"cortexxpanse-cortexxpanse","name":"Cortex Xpanse","pack":"CortexXpanse","fidelity":"shape","curated":false,"summary":"Integration to pull assets and other ASM related information.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"cortexxpanse-cortexxpanse","name":"Cortex Xpanse","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CortexXpanse/Integrations/CortexXpanse","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"asm-list-external-service","method":"GET","pathTemplate":"/assets/get_external_ip_address_ranges","summary":"Get a list of all your external services filtered by business units, externally detected providers, domain, externally inferred CVEs, active classifications, in","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ASM","kind":"object","optional":false,"children":[{"name":"ExternalService","kind":"object","optional":false,"children":[{"name":"service_id","kind":"id","optional":false},{"name":"service_name","kind":"string","optional":false,"example":"service_name"},{"name":"service_type","kind":"string","optional":false,"example":"service_type"},{"name":"ip_address","kind":"string","optional":false,"example":"ip_address"},{"name":"externally_detected_providers","kind":"string","optional":false,"example":"externally_detected_providers"},{"name":"is_active","kind":"string","optional":false,"example":"is_active"},{"name":"first_observed","kind":"timestamp","optional":false,"format":"iso"},{"name":"last_observed","kind":"timestamp","optional":false,"format":"iso"},{"name":"port","kind":"number","optional":false},{"name":"protocol","kind":"string","optional":false,"example":"protocol"},{"name":"inactive_classifications","kind":"string","optional":false,"example":"inactive_classifications"},{"name":"discovery_type","kind":"string","optional":false,"example":"discovery_type"},{"name":"business_units","kind":"string","optional":false,"example":"business_units"},{"name":"externally_inferred_vulnerability_score","kind":"string","optional":false,"example":"externally_inferred_vulnerability_score"}]}]}]}},{"id":"asm-get-external-service","method":"GET","pathTemplate":"/assets/get_external_ip_address_range","summary":"Get service details according to the service ID.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ASM","kind":"object","optional":false,"children":[{"name":"ExternalService","kind":"object","optional":false,"children":[{"name":"service_id","kind":"id","optional":false},{"name":"service_name","kind":"string","optional":false,"example":"service_name"},{"name":"service_type","kind":"string","optional":false,"example":"service_type"},{"name":"ip_address","kind":"string","optional":false,"example":"ip_address"},{"name":"externally_detected_providers","kind":"string","optional":false,"example":"externally_detected_providers"},{"name":"is_active","kind":"string","optional":false,"example":"is_active"},{"name":"first_observed","kind":"timestamp","optional":false,"format":"iso"},{"name":"last_observed","kind":"timestamp","optional":false,"format":"iso"},{"name":"port","kind":"number","optional":false},{"name":"protocol","kind":"string","optional":false,"example":"protocol"},{"name":"inactive_classifications","kind":"string","optional":false,"example":"inactive_classifications"},{"name":"discovery_type","kind":"string","optional":false,"example":"discovery_type"},{"name":"business_units","kind":"string","optional":false,"example":"business_units"},{"name":"externally_inferred_vulnerability_score","kind":"string","optional":false,"example":"externally_inferred_vulnerability_score"},{"name":"details","kind":"string","optional":false,"example":"details"}]}]}]}},{"id":"asm-list-external-ip-address-range","method":"GET","pathTemplate":"/assets/get_assets_internet_exposure","summary":"Get a list of all your internet exposures filtered by business units and organization handles. Maximum result limit is 100 ranges.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ASM","kind":"object","optional":false,"children":[{"name":"ExternalIpAddressRange","kind":"object","optional":false,"children":[{"name":"range_id","kind":"id","optional":false},{"name":"first_ip","kind":"string","optional":false,"example":"first_ip"},{"name":"last_ip","kind":"string","optional":false,"example":"last_ip"},{"name":"ips_count","kind":"number","optional":false},{"name":"active_responsive_ips_count","kind":"number","optional":false},{"name":"date_added","kind":"timestamp","optional":false,"format":"iso"},{"name":"business_units","kind":"string","optional":false,"example":"business_units"},{"name":"organization_handles","kind":"string","optional":false,"example":"organization_handles"}]}]}]}},{"id":"asm-get-external-ip-address-range","method":"GET","pathTemplate":"/assets/get_asset_internet_exposure","summary":"Get the external IP address range details according to the range IDs.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ASM","kind":"object","optional":false,"children":[{"name":"ExternalIpAddressRange","kind":"object","optional":false,"children":[{"name":"range_id","kind":"id","optional":false},{"name":"first_ip","kind":"string","optional":false,"example":"first_ip"},{"name":"last_ip","kind":"string","optional":false,"example":"last_ip"},{"name":"ips_count","kind":"number","optional":false},{"name":"active_responsive_ips_count","kind":"number","optional":false},{"name":"date_added","kind":"timestamp","optional":false,"format":"iso"},{"name":"business_units","kind":"string","optional":false,"example":"business_units"},{"name":"organization_handles","kind":"string","optional":false,"example":"organization_handles"},{"name":"details","kind":"string","optional":false,"example":"details"}]}]}]}},{"id":"asm-list-asset-internet-exposure","method":"GET","pathTemplate":"/alerts/get_alerts_multi_events","summary":"Get a list of all your internet exposures filtered by IP address, domain, type, asm id, IPv6 address, AWS/GCP/Azure tags, has XDR agent, Externally detected pro","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ASM","kind":"object","optional":false,"children":[{"name":"AssetInternetExposure","kind":"object","optional":false,"children":[{"name":"asm_ids","kind":"string","optional":false,"example":"asm_ids"},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"asset_type","kind":"string","optional":false,"example":"asset_type"},{"name":"cloud_provider","kind":"string","optional":false,"example":"cloud_provider"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"last_observed","kind":"string","optional":false,"example":"last_observed"},{"name":"first_observed","kind":"string","optional":false,"example":"first_observed"},{"name":"has_active_externally_services","kind":"boolean","optional":false},{"name":"has_xdr_agent","kind":"string","optional":false,"example":"has_xdr_agent"},{"name":"cloud_id","kind":"id","optional":false},{"name":"domain_resolves","kind":"boolean","optional":false},{"name":"operation_system","kind":"string","optional":false,"example":"operation_system"},{"name":"agent_id","kind":"id","optional":false},{"name":"externally_detected_providers","kind":"string","optional":false,"example":"externally_detected_providers"},{"name":"service_type","kind":"string","optional":false,"example":"service_type"},{"name":"externally_inferred_cves","kind":"string","optional":false,"example":"externally_inferred_cves"},{"name":"ips","kind":"string","optional":false,"example":"ips"}]}]}]}},{"id":"asm-get-asset-internet-exposure","method":"GET","pathTemplate":"/assets/get_external_services","summary":"Get internet exposure asset details according to the asset ID.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ASM","kind":"object","optional":false,"children":[{"name":"AssetInternetExposure","kind":"object","optional":false,"children":[{"name":"asm_ids","kind":"string","optional":false,"example":"asm_ids"},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"last_observed","kind":"string","optional":false,"example":"last_observed"},{"name":"first_observed","kind":"string","optional":false,"example":"first_observed"},{"name":"created","kind":"timestamp","optional":false,"format":"iso"},{"name":"business_units","kind":"string","optional":false,"example":"business_units"},{"name":"domain","kind":"string","optional":false,"example":"domain"},{"name":"certificate_issuer","kind":"string","optional":false,"example":"certificate_issuer"},{"name":"certificate_algorithm","kind":"string","optional":false,"example":"certificate_algorithm"},{"name":"certificate_classifications","kind":"string","optional":false,"example":"certificate_classifications"},{"name":"resolves","kind":"boolean","optional":false},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"externally_inferred_vulnerability_score","kind":"string","optional":false,"example":"externally_inferred_vulnerability_score"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "cortexxpanse-cortexxpanse",
+  "name": "Cortex Xpanse",
+  "pack": "CortexXpanse",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Incidents and external services under public_api/v1.",
+  "notes": [
+    "The client POSTs /public_api/v1/incidents/get_incidents/ and /public_api/v1/assets/get_external_services/. Both return { reply }.",
+    "Alert multi-events, IP ranges, and attack-surface rules are not modeled. Search filters in the body are ignored.",
+    "The Xpanse REST page was not reloaded. x-xdr-auth-id is the dummy key header."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CortexXpanse/Integrations/CortexXpanse",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "cortexxpanse-cortexxpanse",
+      "name": "Cortex Xpanse",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-Xpanse-REST-API/Get-Incidents",
+      "notes": [
+        "The client POSTs /public_api/v1/incidents/get_incidents/ and /public_api/v1/assets/get_external_services/. Both return { reply }.",
+        "Alert multi-events, IP ranges, and attack-surface rules are not modeled. Search filters in the body are ignored.",
+        "The Xpanse REST page was not reloaded. x-xdr-auth-id is the dummy key header."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-Xpanse-REST-API/Get-Incidents",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client POSTs /public_api/v1/incidents/get_incidents/ and /public_api/v1/assets/get_external_services/. Both return { reply }.",
+          "Alert multi-events, IP ranges, and attack-surface rules are not modeled. Search filters in the body are ignored.",
+          "The Xpanse REST page was not reloaded. x-xdr-auth-id is the dummy key header."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "incidents",
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/incidents/get_incidents",
+        "summary": "Get incidents",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "reply",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "total_count",
+                  "kind": "integer"
+                },
+                {
+                  "name": "incidents",
+                  "kind": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "item": {
+                    "name": "incident",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "incident_id",
+                        "kind": "id"
+                      },
+                      {
+                        "name": "severity",
+                        "kind": "enum",
+                        "enumValues": [
+                          "low",
+                          "medium",
+                          "high"
+                        ]
+                      },
+                      {
+                        "name": "status",
+                        "kind": "const",
+                        "constValue": "new"
+                      },
+                      {
+                        "name": "description",
+                        "kind": "string",
+                        "example": "Exposed service"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "services",
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/assets/get_external_services",
+        "summary": "Get external services",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "reply",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "external_services",
+                  "kind": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "item": {
+                    "name": "service",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "service_id",
+                        "kind": "id"
+                      },
+                      {
+                        "name": "ip",
+                        "kind": "ip"
+                      },
+                      {
+                        "name": "port",
+                        "kind": "integer"
+                      },
+                      {
+                        "name": "protocol",
+                        "kind": "const",
+                        "constValue": "tcp"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "cortexxpanse-cortexxpanse",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "x-xdr-auth-id",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

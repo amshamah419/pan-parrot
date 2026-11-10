@@ -1,1 +1,178 @@
-{"id":"paloaltonetworks-prisma-airs-prismaairsruntime","name":"Palo Alto Networks Prisma AIRS - AI Runtime Security","pack":"PaloAltoNetworks_Prisma_AIRs","fidelity":"sample","curated":false,"summary":"Integrate with Palo Alto Networks Prisma AIRS for AI security capabilities including runtime scanning, red teaming, AI supply chain security, and DLP configuration.","operations":1,"origin":"readme","spec":{"version":1,"source":{"kind":"preset","id":"paloaltonetworks-prisma-airs-prismaairsruntime","name":"Palo Alto Networks Prisma AIRS - AI Runtime Security","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Prisma_AIRs/Integrations/PrismaAIRsRuntime","fidelity":"sample","notes":["The response shape comes from a JSON example in the integration README.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"readme","method":"GET","pathTemplate":"/v1/mgmt/dashboard/v2/apps/applicationviolationbreakdown","summary":"README","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"action","kind":"string","optional":false,"example":"allow"},{"name":"category","kind":"string","optional":false,"example":"benign"},{"name":"detected","kind":"boolean","optional":false},{"name":"profile_id","kind":"id","optional":false,"example":"a0e6e9b0-edda-44cc-b1ed-37407ab7098c"},{"name":"profile_name","kind":"string","optional":false,"example":"readme-example-profile"},{"name":"prompt","kind":"string","optional":false,"example":"do you want to play a game mr wolf"},{"name":"prompt_detected","kind":"object","optional":false,"children":[{"name":"injection","kind":"boolean","optional":false},{"name":"url_cats","kind":"boolean","optional":false}]},{"name":"report_id","kind":"id","optional":false,"example":"R0522f0db-d150-44c4-a919-f80fdd70679d"},{"name":"response","kind":"string","optional":true},{"name":"response_detected","kind":"object","optional":false,"children":[]},{"name":"scan_id","kind":"id","optional":false,"example":"0522f0db-d150-44c4-a919-f80fdd70679d"},{"name":"session_id","kind":"id","optional":false,"example":"pan_dbf07dbe-5b19-440d-a715-2a3f39949479"},{"name":"source","kind":"string","optional":false,"example":"AI-Runtime-API"},{"name":"tr_id","kind":"id","optional":false,"example":"pan_dbf07dbe-5b19-440d-a715-2a3f39949479"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "paloaltonetworks-prisma-airs-prismaairsruntime",
+  "name": "Palo Alto Networks Prisma AIRS - AI Runtime Security",
+  "pack": "PaloAltoNetworks_Prisma_AIRs",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Runtime scan plus the management profile list.",
+  "notes": [
+    "Runtime scan posts ai_profile and contents. PrismaAirsApiModule is not in this content checkout. This mock answers POST /v1/scan/sync/request with scan_id, action, and category.",
+    "GET /v1/mgmt/profiles/tsg/lab-tsg is the profiles list the client builds from MGMT_API_V1_PREFIX. API key create and DLP profiles are not modeled.",
+    "The runtime API page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Prisma_AIRs/Integrations/PrismaAIRsRuntime",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "paloaltonetworks-prisma-airs-prismaairsruntime",
+      "name": "Palo Alto Networks Prisma AIRS - AI Runtime Security",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.paloaltonetworks.com/ai-runtime-security/activation-and-onboarding/ai-runtime-security-api",
+      "notes": [
+        "Runtime scan posts ai_profile and contents. PrismaAirsApiModule is not in this content checkout. This mock answers POST /v1/scan/sync/request with scan_id, action, and category.",
+        "GET /v1/mgmt/profiles/tsg/lab-tsg is the profiles list the client builds from MGMT_API_V1_PREFIX. API key create and DLP profiles are not modeled.",
+        "The runtime API page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.paloaltonetworks.com/ai-runtime-security/activation-and-onboarding/ai-runtime-security-api",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Runtime scan posts ai_profile and contents. PrismaAirsApiModule is not in this content checkout. This mock answers POST /v1/scan/sync/request with scan_id, action, and category.",
+          "GET /v1/mgmt/profiles/tsg/lab-tsg is the profiles list the client builds from MGMT_API_V1_PREFIX. API key create and DLP profiles are not modeled.",
+          "The runtime API page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "scan",
+        "method": "POST",
+        "pathTemplate": "/v1/scan/sync/request",
+        "summary": "Scan a prompt",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "scan_id",
+              "kind": "id"
+            },
+            {
+              "name": "action",
+              "kind": "enum",
+              "enumValues": [
+                "allow",
+                "block"
+              ]
+            },
+            {
+              "name": "category",
+              "kind": "const",
+              "constValue": "benign"
+            },
+            {
+              "name": "prompt_detected",
+              "kind": "const",
+              "constValue": false
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "profiles",
+        "method": "GET",
+        "pathTemplate": "/v1/mgmt/profiles/tsg/lab-tsg",
+        "summary": "List runtime profiles",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "profile",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "profile_name",
+                    "kind": "string",
+                    "example": "lab-profile"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "paloaltonetworks-prisma-airs-prismaairsruntime",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

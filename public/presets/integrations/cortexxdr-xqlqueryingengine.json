@@ -1,1 +1,195 @@
-{"id":"cortexxdr-xqlqueryingengine","name":"Cortex XDR - XQL Query Engine","pack":"CortexXDR","fidelity":"shape","curated":false,"summary":"Cortex XDR - XQL Query Engine enables you to run XQL queries on your data sources.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"cortexxdr-xqlqueryingengine","name":"Cortex XDR - XQL Query Engine","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CortexXDR/Integrations/XQLQueryingEngine","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"xdr-xql-generic-query","method":"GET","pathTemplate":"/api/webapp/public_api/v1/xql/get_quota","summary":"Execute an XQL query and retrieve results of an executed XQL query API. The command will be executed every 10 seconds until results are retrieved or until a tim","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PaloAltoNetworksXQL","kind":"object","optional":false,"children":[{"name":"GenericQuery","kind":"object","optional":false,"children":[{"name":"execution_id","kind":"id","optional":false},{"name":"query_name","kind":"string","optional":false,"example":"query_name"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"number_of_results","kind":"number","optional":false},{"name":"query_cost","kind":"string","optional":false,"example":"query_cost"},{"name":"remaining_quota","kind":"number","optional":false},{"name":"results","kind":"object","optional":false,"children":[{"name":"_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"agent_hostname","kind":"string","optional":false,"example":"agent_hostname"},{"name":"agent_ip_addresses","kind":"string","optional":false,"example":"agent_ip_addresses"},{"name":"mac","kind":"string","optional":false,"example":"mac"},{"name":"actor_effective_username","kind":"string","optional":false,"example":"actor_effective_username"},{"name":"actor_process_image_name","kind":"string","optional":false,"example":"actor_process_image_name"},{"name":"actor_process_image_path","kind":"string","optional":false,"example":"actor_process_image_path"},{"name":"actor_process_command_line","kind":"string","optional":false,"example":"actor_process_command_line"},{"name":"actor_process_os_pid","kind":"number","optional":false},{"name":"actor_process_image_sha256","kind":"string","optional":false,"example":"actor_process_image_sha256"},{"name":"actor_process_signature_vendor","kind":"string","optional":false,"example":"actor_process_signature_vendor"},{"name":"actor_process_signature_status","kind":"string","optional":false,"example":"actor_process_signature_status"},{"name":"causality_actor_process_image_name","kind":"string","optional":false,"example":"causality_actor_process_image_name"},{"name":"causality_actor_process_image_path","kind":"string","optional":false,"example":"causality_actor_process_image_path"},{"name":"causality_actor_process_command_line","kind":"string","optional":false,"example":"causality_actor_process_command_line"},{"name":"causality_actor_process_os_pid","kind":"number","optional":false},{"name":"causality_actor_process_image_sha256","kind":"string","optional":false,"example":"causality_actor_process_image_sha256"},{"name":"causality_actor_process_signature_vendor","kind":"string","optional":false,"example":"causality_actor_process_signature_vendor"},{"name":"causality_actor_process_signature_status","kind":"string","optional":false,"example":"causality_actor_process_signature_status"},{"name":"causality_actor_type","kind":"string","optional":false,"example":"causality_actor_type"},{"name":"os_actor_process_image_name","kind":"string","optional":false,"example":"os_actor_process_image_name"},{"name":"os_actor_process_image_path","kind":"string","optional":false,"example":"os_actor_process_image_path"},{"name":"os_actor_process_command_line","kind":"string","optional":false,"example":"os_actor_process_command_line"},{"name":"os_actor_process_os_pid","kind":"number","optional":false},{"name":"action_remote_process_image_sha256","kind":"string","optional":false,"example":"action_remote_process_image_sha256"},{"name":"_vendor","kind":"string","optional":false,"example":"_vendor"},{"name":"_product","kind":"string","optional":false,"example":"_product"},{"name":"agent_install_type","kind":"string","optional":false,"example":"agent_install_type"}]}]}]}]}},{"id":"xdr-xql-get-quota","method":"GET","pathTemplate":"/public_api/v1","summary":"Retrieve the amount of query quota available and used.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PaloAltoNetworksXQL","kind":"object","optional":false,"children":[{"name":"Quota","kind":"object","optional":false,"children":[{"name":"license_quota","kind":"number","optional":false},{"name":"additional_purchased_quota","kind":"number","optional":false},{"name":"used_quota","kind":"number","optional":false},{"name":"eval_quota","kind":"number","optional":false},{"name":"total_daily_running_queries","kind":"number","optional":false},{"name":"total_daily_concurrent_rejected_queries","kind":"number","optional":false},{"name":"current_concurrent_active_queries","kind":"string","optional":false,"example":"current_concurrent_active_queries"},{"name":"current_concurrent_active_queries_count","kind":"number","optional":false},{"name":"max_daily_concurrent_active_query_count","kind":"number","optional":false}]}]}]}},{"id":"xdr-xql-get-query-results","method":"GET","pathTemplate":"/xql/get_quota","summary":"Retrieve results of an executed XQL query API. The command will be executed every 10 seconds until results are retrieved or until a timeout error is raised. Whe","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PaloAltoNetworksXQL","kind":"object","optional":false,"children":[{"name":"GenericQuery","kind":"object","optional":false,"children":[{"name":"execution_id","kind":"id","optional":false},{"name":"query_name","kind":"string","optional":false,"example":"query_name"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"number_of_results","kind":"number","optional":false},{"name":"query_cost","kind":"string","optional":false,"example":"query_cost"},{"name":"remaining_quota","kind":"number","optional":false},{"name":"results","kind":"object","optional":false,"children":[{"name":"_time","kind":"timestamp","optional":false,"format":"iso"},{"name":"agent_hostname","kind":"string","optional":false,"example":"agent_hostname"},{"name":"agent_ip_addresses","kind":"string","optional":false,"example":"agent_ip_addresses"},{"name":"mac","kind":"string","optional":false,"example":"mac"},{"name":"actor_effective_username","kind":"string","optional":false,"example":"actor_effective_username"},{"name":"actor_process_image_name","kind":"string","optional":false,"example":"actor_process_image_name"},{"name":"actor_process_image_path","kind":"string","optional":false,"example":"actor_process_image_path"},{"name":"actor_process_command_line","kind":"string","optional":false,"example":"actor_process_command_line"},{"name":"actor_process_os_pid","kind":"number","optional":false},{"name":"actor_process_image_sha256","kind":"string","optional":false,"example":"actor_process_image_sha256"},{"name":"actor_process_signature_vendor","kind":"string","optional":false,"example":"actor_process_signature_vendor"},{"name":"actor_process_signature_status","kind":"string","optional":false,"example":"actor_process_signature_status"},{"name":"causality_actor_process_image_name","kind":"string","optional":false,"example":"causality_actor_process_image_name"},{"name":"causality_actor_process_image_path","kind":"string","optional":false,"example":"causality_actor_process_image_path"},{"name":"causality_actor_process_command_line","kind":"string","optional":false,"example":"causality_actor_process_command_line"},{"name":"causality_actor_process_os_pid","kind":"number","optional":false},{"name":"causality_actor_process_image_sha256","kind":"string","optional":false,"example":"causality_actor_process_image_sha256"},{"name":"causality_actor_process_signature_vendor","kind":"string","optional":false,"example":"causality_actor_process_signature_vendor"},{"name":"causality_actor_process_signature_status","kind":"string","optional":false,"example":"causality_actor_process_signature_status"},{"name":"causality_actor_type","kind":"string","optional":false,"example":"causality_actor_type"},{"name":"os_actor_process_image_name","kind":"string","optional":false,"example":"os_actor_process_image_name"},{"name":"os_actor_process_image_path","kind":"string","optional":false,"example":"os_actor_process_image_path"},{"name":"os_actor_process_command_line","kind":"string","optional":false,"example":"os_actor_process_command_line"},{"name":"os_actor_process_os_pid","kind":"number","optional":false},{"name":"action_remote_process_image_sha256","kind":"string","optional":false,"example":"action_remote_process_image_sha256"},{"name":"_vendor","kind":"string","optional":false,"example":"_vendor"},{"name":"_product","kind":"string","optional":false,"example":"_product"},{"name":"agent_install_type","kind":"string","optional":false,"example":"agent_install_type"}]}]}]}]}},{"id":"xdr-xql-file-event-query","method":"GET","pathTemplate":"/","summary":"Query file events by the SHA256 file.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PaloAltoNetworksXQL","kind":"object","optional":false,"children":[{"name":"FileEvent","kind":"object","optional":false,"children":[{"name":"query_name","kind":"string","optional":false,"example":"query_name"},{"name":"execution_id","kind":"id","optional":false},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"number_of_results","kind":"number","optional":false},{"name":"query_cost","kind":"string","optional":false,"example":"query_cost"},{"name":"remaining_quota","kind":"number","optional":false},{"name":"results","kind":"object","optional":false,"children":[{"name":"agent_hostname","kind":"string","optional":false,"example":"agent_hostname"},{"name":"agent_ip_addresses","kind":"string","optional":false,"example":"agent_ip_addresses"},{"name":"agent_id","kind":"id","optional":false},{"name":"action_file_path","kind":"string","optional":false,"example":"action_file_path"},{"name":"action_file_sha256","kind":"string","optional":false,"example":"action_file_sha256"},{"name":"actor_process_file_create_time","kind":"string","optional":false,"example":"actor_process_file_create_time"},{"name":"_vendor","kind":"string","optional":false,"example":"_vendor"},{"name":"_time","kind":"string","optional":false,"example":"_time"},{"name":"insert_timestamp","kind":"string","optional":false,"example":"insert_timestamp"},{"name":"_product","kind":"string","optional":false,"example":"_product"}]}]}]}]}},{"id":"xdr-xql-process-event-query","method":"GET","pathTemplate":"/","summary":"Query process events by the SHA256 process.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PaloAltoNetworksXQL","kind":"object","optional":false,"children":[{"name":"ProcessEvent","kind":"object","optional":false,"children":[{"name":"query_name","kind":"string","optional":false,"example":"query_name"},{"name":"execution_id","kind":"id","optional":false},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"number_of_results","kind":"number","optional":false},{"name":"query_cost","kind":"string","optional":false,"example":"query_cost"},{"name":"remaining_quota","kind":"number","optional":false},{"name":"results","kind":"object","optional":false,"children":[{"name":"agent_hostname","kind":"string","optional":false,"example":"agent_hostname"},{"name":"agent_ip_addresses","kind":"string","optional":false,"example":"agent_ip_addresses"},{"name":"agent_id","kind":"id","optional":false},{"name":"action_process_image_sha256","kind":"string","optional":false,"example":"action_process_image_sha256"},{"name":"action_process_image_name","kind":"string","optional":false,"example":"action_process_image_name"},{"name":"action_process_image_path","kind":"string","optional":false,"example":"action_process_image_path"},{"name":"action_process_instance_id","kind":"id","optional":false},{"name":"action_process_causality_id","kind":"id","optional":false},{"name":"action_process_signature_vendor","kind":"string","optional":false,"example":"action_process_signature_vendor"},{"name":"action_process_signature_product","kind":"string","optional":false,"example":"action_process_signature_product"},{"name":"action_process_image_command_line","kind":"string","optional":false,"example":"action_process_image_command_line"},{"name":"actor_process_image_name","kind":"string","optional":false,"example":"actor_process_image_name"},{"name":"actor_process_image_path","kind":"string","optional":false,"example":"actor_process_image_path"},{"name":"actor_process_instance_id","kind":"id","optional":false},{"name":"actor_process_causality_id","kind":"id","optional":false},{"name":"_vendor","kind":"string","optional":false,"example":"_vendor"},{"name":"_time","kind":"string","optional":false,"example":"_time"},{"name":"insert_timestamp","kind":"string","optional":false,"example":"insert_timestamp"},{"name":"_product","kind":"string","optional":false,"example":"_product"}]}]}]}]}},{"id":"xdr-xql-dll-module-query","method":"GET","pathTemplate":"/","summary":"Query DLL module events by the SHA256 DLL.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"PaloAltoNetworksXQL","kind":"object","optional":false,"children":[{"name":"DllModule","kind":"object","optional":false,"children":[{"name":"query_name","kind":"string","optional":false,"example":"query_name"},{"name":"execution_id","kind":"id","optional":false},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"number_of_results","kind":"number","optional":false},{"name":"query_cost","kind":"string","optional":false,"example":"query_cost"},{"name":"remaining_quota","kind":"number","optional":false},{"name":"results","kind":"object","optional":false,"children":[{"name":"agent_hostname","kind":"string","optional":false,"example":"agent_hostname"},{"name":"agent_ip_addresses","kind":"string","optional":false,"example":"agent_ip_addresses"},{"name":"agent_id","kind":"id","optional":false},{"name":"actor_effective_username","kind":"string","optional":false,"example":"actor_effective_username"},{"name":"action_module_sha256","kind":"string","optional":false,"example":"action_module_sha256"},{"name":"action_module_path","kind":"string","optional":false,"example":"action_module_path"},{"name":"action_module_file_info","kind":"string","optional":false,"example":"action_module_file_info"},{"name":"action_module_file_create_time","kind":"string","optional":false,"example":"action_module_file_create_time"},{"name":"actor_process_image_name","kind":"string","optional":false,"example":"actor_process_image_name"},{"name":"actor_process_image_path","kind":"string","optional":false,"example":"actor_process_image_path"},{"name":"actor_process_command_line","kind":"string","optional":false,"example":"actor_process_command_line"},{"name":"actor_process_image_sha256","kind":"string","optional":false,"example":"actor_process_image_sha256"},{"name":"actor_process_instance_id","kind":"id","optional":false},{"name":"actor_process_causality_id","kind":"id","optional":false},{"name":"_vendor","kind":"string","optional":false,"example":"_vendor"},{"name":"_time","kind":"string","optional":false,"example":"_time"},{"name":"insert_timestamp","kind":"string","optional":false,"example":"insert_timestamp"},{"name":"_product","kind":"string","optional":false,"example":"_product"}]}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "cortexxdr-xqlqueryingengine",
+  "name": "Cortex XDR - XQL Query Engine",
+  "pack": "CortexXDR",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Start an XQL query and read its results.",
+  "notes": [
+    "The pack calls start_xql_query. This mock is POST /public_api/v1/xql/start_xql_query and POST /public_api/v1/xql/get_query_results.",
+    "Start returns reply.execution_id. Results return status SUCCESS and one shortened row. Quota and cost are omitted.",
+    "The XQL page was not reloaded. The query text is not executed. x-xdr-auth-id is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CortexXDR/Integrations/XQLQueryingEngine",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "cortexxdr-xqlqueryingengine",
+      "name": "Cortex XDR - XQL Query Engine",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Start-an-XQL-Query",
+      "notes": [
+        "The pack calls start_xql_query. This mock is POST /public_api/v1/xql/start_xql_query and POST /public_api/v1/xql/get_query_results.",
+        "Start returns reply.execution_id. Results return status SUCCESS and one shortened row. Quota and cost are omitted.",
+        "The XQL page was not reloaded. The query text is not executed. x-xdr-auth-id is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Start-an-XQL-Query",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The pack calls start_xql_query. This mock is POST /public_api/v1/xql/start_xql_query and POST /public_api/v1/xql/get_query_results.",
+          "Start returns reply.execution_id. Results return status SUCCESS and one shortened row. Quota and cost are omitted.",
+          "The XQL page was not reloaded. The query text is not executed. x-xdr-auth-id is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "start",
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/xql/start_xql_query",
+        "summary": "Start an XQL query",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "reply",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "execution_id",
+                  "kind": "id"
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "results",
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/xql/get_query_results",
+        "summary": "Get XQL results",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "reply",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "status",
+                  "kind": "const",
+                  "constValue": "SUCCESS"
+                },
+                {
+                  "name": "number_of_results",
+                  "kind": "integer"
+                },
+                {
+                  "name": "results",
+                  "kind": "object",
+                  "children": [
+                    {
+                      "name": "data",
+                      "kind": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "item": {
+                        "name": "row",
+                        "kind": "object",
+                        "children": [
+                          {
+                            "name": "action_process_image_name",
+                            "kind": "string",
+                            "example": "cmd.exe"
+                          },
+                          {
+                            "name": "agent_hostname",
+                            "kind": "string",
+                            "example": "lab-host"
+                          },
+                          {
+                            "name": "_time",
+                            "kind": "timestamp",
+                            "format": "iso"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "cortexxdr-xqlqueryingengine",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "x-xdr-auth-id",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

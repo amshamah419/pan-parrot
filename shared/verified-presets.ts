@@ -3,6 +3,7 @@ import { WIZ_EXAMPLE_QUERY, WIZ_SDL } from "./wiz-schema";
 import { fetchVerifiedPresets } from "./verified-presets-fetch";
 import { intelVerifiedPresets } from "./verified-presets-intel";
 import { awsQueryVerifiedPresets } from "./verified-presets-aws";
+import { panSiemVerifiedPresets } from "./verified-presets-pan";
 import { responseVerifiedPresets } from "./verified-presets-response";
 import { moreVerifiedPresets } from "./verified-presets-more";
 
@@ -849,13 +850,13 @@ const baseVerifiedPresets: VerifiedPresetFile[] = [
     name: "Palo Alto Networks PAN-OS",
     pack: "PAN-OS",
     vendor: "Palo Alto Networks",
-    summary: "XML API for keygen, operational commands, config, and log jobs.",
+    summary: "XML API for keygen, op, config, commit, and job polling.",
     docUrl: "https://docs.paloaltonetworks.com/ngfw/api/pan-os",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/PAN-OS/Integrations/Panorama",
     differences: [
-      "XSOAR calls GET /api/ with type=op, type=config, and type=log. type=keygen is included so you can test the API key exchange.",
-      "Log query returns a job id. action=get with job-id returns log entries. nlogs is capped at 500.",
-      "The dummy user, password, and API key are not a real firewall credential. Commit, export, and user-id commands are not modeled.",
+      "XSOAR calls GET /api/ with type=keygen, type=op, type=config, type=commit, and type=log. The body is the PAN-OS XML response.",
+      "type=commit returns a job id. Poll that job with type=op and job=10. A log query uses type=log, then type=log and action=get. nlogs is capped at 500.",
+      "The real show-jobs command is an XML cmd on type=op. This mock uses job= as a short poll. Export and user-id are not modeled. The dummy key is not a firewall credential.",
     ],
     auth: {
       mode: "panos-key",
@@ -916,6 +917,45 @@ const baseVerifiedPresets: VerifiedPresetFile[] = [
           object("result", [
             object("entry", [
               field("name", "string", { example: "localhost.localdomain", xml: { attribute: true } }),
+            ]),
+          ]),
+        ]),
+      }),
+      op({
+        id: "commit",
+        method: "GET",
+        pathTemplate: "/api",
+        summary: "Commit the candidate config",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        queryMatch: { type: "commit" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("response", [
+          field("status", "const", { constValue: "success", xml: { attribute: true } }),
+          object("result", [field("job", "const", { constValue: "10" })]),
+        ]),
+      }),
+      op({
+        id: "job-poll",
+        method: "GET",
+        pathTemplate: "/api",
+        summary: "Poll a commit or log job",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        queryMatch: { type: "op", job: "10" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("response", [
+          field("status", "const", { constValue: "success", xml: { attribute: true } }),
+          object("result", [
+            object("job", [
+              field("id", "const", { constValue: "10" }),
+              field("status", "const", { constValue: "FIN" }),
+              field("progress", "const", { constValue: "100" }),
+              field("result", "const", { constValue: "OK" }),
             ]),
           ]),
         ]),
@@ -982,13 +1022,13 @@ const baseVerifiedPresets: VerifiedPresetFile[] = [
     name: "Palo Alto Networks WildFire v2",
     pack: "Palo_Alto_Networks_WildFire",
     vendor: "Palo Alto Networks",
-    summary: "POST /publicapi/get/verdict returns the XML verdict document.",
+    summary: "WildFire verdict, report, and URL submit as XML.",
     docUrl: "https://docs.paloaltonetworks.com/wildfire/u-v/wildfire-api/get-wildfire-information-through-the-wildfire-api/get-a-wildfire-verdict-wildfire-api",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/Palo_Alto_Networks_WildFire/Integrations/Palo_Alto_Networks_WildFire_v2",
     differences: [
       "The public verdict response is XML. Verdict codes are 0 benign, 1 malware, 2 grayware, 4 phishing, 5 C2, and the negative pending codes.",
-      "XSOAR posts to /publicapi/get/verdict with an apikey form field. This mock checks the dummy key. An invalid hash is not turned into HTTP 421.",
-      "File submission and the sample download are not modeled.",
+      "XSOAR posts to /publicapi/get/verdict, /publicapi/get/report, and /publicapi/submit/link with an apikey form field. This mock checks the dummy key.",
+      "The report is XML file_info. URL submit returns submit-link-info. File upload and PDF reports are not modeled. An invalid hash is not HTTP 421.",
     ],
     auth: { mode: "api-key", apiKey: { in: "form", name: "apikey", value: "dummy-wildfire-key" } },
     operations: [
@@ -1007,6 +1047,44 @@ const baseVerifiedPresets: VerifiedPresetFile[] = [
             field("md5", "id"),
             field("sha256", "id"),
             field("verdict", "enum", { enumValues: ["0", "1", "2", "4", "5", "-100"] }),
+          ]),
+        ]),
+      }),
+      op({
+        id: "report",
+        method: "POST",
+        pathTemplate: "/publicapi/get/report",
+        summary: "Get a WildFire XML report",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("wildfire", [
+          object("file_info", [
+            field("md5", "id"),
+            field("sha256", "id"),
+            field("malware", "enum", { enumValues: ["yes", "no"] }),
+            field("filetype", "const", { constValue: "PE" }),
+            field("size", "integer"),
+          ]),
+        ]),
+      }),
+      op({
+        id: "submit-link",
+        method: "POST",
+        pathTemplate: "/publicapi/submit/link",
+        summary: "Submit a URL for analysis",
+        status: 200,
+        list: false,
+        envelope: { type: "xml" },
+        contentType: "application/xml; charset=utf-8",
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("wildfire", [
+          object("submit-link-info", [
+            field("url", "string", { example: "http://example.test/sample" }),
+            field("sha256", "id"),
+            field("md5", "id"),
           ]),
         ]),
       }),
@@ -1139,13 +1217,13 @@ const baseVerifiedPresets: VerifiedPresetFile[] = [
     name: "Palo Alto Networks Cortex XDR - Investigation and Response",
     pack: "CortexXDR",
     vendor: "Palo Alto Networks",
-    summary: "POST /public_api/v1/incidents/get_incidents returns reply.incidents.",
+    summary: "Incidents, alerts, endpoints, and isolate as reply JSON.",
     docUrl: "https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR-REST-API/Get-Incidents",
     sourceUrl: "https://github.com/demisto/content/tree/master/Packs/CortexXDR/Integrations/CortexXDRIR",
     differences: [
       "The XSOAR client POSTs to /public_api/v1/incidents/get_incidents, /alerts/get_alerts/, and /endpoints/get_endpoint/. Each body is { reply: { total_count, result_count, ... } }.",
       "The real API takes search_from and search_to inside request_data. This mock reads those names from the query string.",
-      "API key headers are not checked. Incident extra-data and response-action routes are not modeled.",
+      "POST /public_api/v1/endpoints/isolate and /unisolate return reply.action_id. API key headers are not checked. Extra-data and script runs are not modeled.",
     ],
     operations: [
       op({
@@ -1157,22 +1235,24 @@ const baseVerifiedPresets: VerifiedPresetFile[] = [
         list: false,
         envelope: { type: "object" },
         pagination: { style: "offset", limitParam: "search_to", offsetParam: "search_from", defaultLimit: 20, maxLimit: 100 },
-        record: object("reply", [
-          field("total_count", "integer"),
-          field("result_count", "integer"),
-          {
-            name: "incidents",
-            kind: "array",
-            pageItems: true,
-            item: object("incident", [
-              field("incident_id", "id"),
-              field("creation_time", "timestamp", { format: "unix-ms" }),
-              field("modification_time", "timestamp", { format: "unix-ms" }),
-              field("status", "enum", { enumValues: ["new", "under_investigation", "resolved"] }),
-              field("severity", "enum", { enumValues: ["low", "medium", "high"] }),
-              field("description", "string", { example: "Malware detected on a host" }),
-            ]),
-          },
+        record: object("body", [
+          object("reply", [
+            field("total_count", "integer"),
+            field("result_count", "integer"),
+            {
+              name: "incidents",
+              kind: "array",
+              pageItems: true,
+              item: object("incident", [
+                field("incident_id", "id"),
+                field("creation_time", "timestamp", { format: "unix-ms" }),
+                field("modification_time", "timestamp", { format: "unix-ms" }),
+                field("status", "enum", { enumValues: ["new", "under_investigation", "resolved"] }),
+                field("severity", "enum", { enumValues: ["low", "medium", "high"] }),
+                field("description", "string", { example: "Malware detected on a host" }),
+              ]),
+            },
+          ]),
         ]),
       }),
       op({
@@ -1184,21 +1264,23 @@ const baseVerifiedPresets: VerifiedPresetFile[] = [
         list: false,
         envelope: { type: "object" },
         pagination: { style: "offset", limitParam: "search_to", offsetParam: "search_from", defaultLimit: 20, maxLimit: 100 },
-        record: object("reply", [
-          field("total_count", "integer"),
-          field("result_count", "integer"),
-          {
-            name: "alerts",
-            kind: "array",
-            pageItems: true,
-            item: object("alert", [
-              field("alert_id", "id"),
-              field("detection_timestamp", "timestamp", { format: "unix-ms" }),
-              field("severity", "enum", { enumValues: ["low", "medium", "high"] }),
-              field("name", "string", { example: "Suspicious process execution" }),
-              field("category", "string", { example: "Malware" }),
-            ]),
-          },
+        record: object("body", [
+          object("reply", [
+            field("total_count", "integer"),
+            field("result_count", "integer"),
+            {
+              name: "alerts",
+              kind: "array",
+              pageItems: true,
+              item: object("alert", [
+                field("alert_id", "id"),
+                field("detection_timestamp", "timestamp", { format: "unix-ms" }),
+                field("severity", "enum", { enumValues: ["low", "medium", "high"] }),
+                field("name", "string", { example: "Suspicious process execution" }),
+                field("category", "string", { example: "Malware" }),
+              ]),
+            },
+          ]),
         ]),
       }),
       op({
@@ -1210,22 +1292,50 @@ const baseVerifiedPresets: VerifiedPresetFile[] = [
         list: false,
         envelope: { type: "object" },
         pagination: { style: "offset", limitParam: "search_to", offsetParam: "search_from", defaultLimit: 20, maxLimit: 100 },
-        record: object("reply", [
-          field("total_count", "integer"),
-          field("result_count", "integer"),
-          {
-            name: "endpoints",
-            kind: "array",
-            pageItems: true,
-            item: object("endpoint", [
-              field("endpoint_id", "id"),
-              field("endpoint_name", "string", { example: "lab-workstation" }),
-              field("endpoint_status", "enum", { enumValues: ["connected", "disconnected", "lost"] }),
-              field("os_type", "enum", { enumValues: ["windows", "linux", "macos"] }),
-              field("ip", "ip"),
-              field("last_seen", "timestamp", { format: "unix-ms" }),
-            ]),
-          },
+        record: object("body", [
+          object("reply", [
+            field("total_count", "integer"),
+            field("result_count", "integer"),
+            {
+              name: "endpoints",
+              kind: "array",
+              pageItems: true,
+              item: object("endpoint", [
+                field("endpoint_id", "id"),
+                field("endpoint_name", "string", { example: "lab-workstation" }),
+                field("endpoint_status", "enum", { enumValues: ["connected", "disconnected", "lost"] }),
+                field("os_type", "enum", { enumValues: ["windows", "linux", "macos"] }),
+                field("ip", "ip"),
+                field("last_seen", "timestamp", { format: "unix-ms" }),
+              ]),
+            },
+          ]),
+        ]),
+      }),
+      op({
+        id: "isolate",
+        method: "POST",
+        pathTemplate: "/public_api/v1/endpoints/isolate",
+        summary: "Isolate endpoints",
+        status: 200,
+        list: false,
+        envelope: { type: "object" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("body", [
+          object("reply", [field("action_id", "id"), field("endpoints_count", "integer")]),
+        ]),
+      }),
+      op({
+        id: "unisolate",
+        method: "POST",
+        pathTemplate: "/public_api/v1/endpoints/unisolate",
+        summary: "Remove endpoint isolation",
+        status: 200,
+        list: false,
+        envelope: { type: "object" },
+        pagination: { style: "none", defaultLimit: 1, maxLimit: 1 },
+        record: object("body", [
+          object("reply", [field("action_id", "id"), field("endpoints_count", "integer")]),
         ]),
       }),
     ],
@@ -1285,6 +1395,7 @@ export const verifiedPresets: VerifiedPresetFile[] = [
   ...intelVerifiedPresets,
   ...responseVerifiedPresets,
   ...awsQueryVerifiedPresets,
+  ...panSiemVerifiedPresets,
 ];
 
 export const checkedNotUpgraded: Array<{

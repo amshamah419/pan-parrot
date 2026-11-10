@@ -1,1 +1,145 @@
-{"id":"paloaltonetworks-threat-vault-threatvaultv2","name":"Palo Alto Networks Threat Vault v2","pack":"PaloAltoNetworks_Threat_Vault","fidelity":"shape","curated":false,"summary":"Use the Palo Alto Networks Threat Vault to research the latest threats (vulnerabilities/exploits, viruses, and spyware) that Palo Alto Networks next-generation firewalls can detect","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"paloaltonetworks-threat-vault-threatvaultv2","name":"Palo Alto Networks Threat Vault v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Threat_Vault/Integrations/ThreatVaultv2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"ip","method":"GET","pathTemplate":"/","summary":"Returns information about IPs.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Score","kind":"number","optional":false},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"}]},{"name":"IP","kind":"object","optional":false,"children":[{"name":"Address","kind":"string","optional":false,"example":"Address"},{"name":"ASN","kind":"string","optional":false,"example":"ASN"},{"name":"GeoCountry","kind":"string","optional":false,"example":"GeoCountry"}]},{"name":"ThreatVault","kind":"object","optional":false,"children":[{"name":"IP","kind":"object","optional":false,"children":[{"name":"ipaddr","kind":"string","optional":false,"example":"ipaddr"},{"name":"asn","kind":"string","optional":false,"example":"asn"},{"name":"geo","kind":"string","optional":false,"example":"geo"},{"name":"release","kind":"object","optional":false,"children":[{"name":"first_release_version","kind":"string","optional":false,"example":"first_release_version"},{"name":"first_release_time","kind":"string","optional":false,"example":"first_release_time"}]},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"status","kind":"string","optional":false,"example":"status"}]}]}]}},{"id":"file","method":"GET","pathTemplate":"/","summary":"Checks the reputation of an antivirus in Threat Vault.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Score","kind":"number","optional":false},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"}]},{"name":"File","kind":"object","optional":false,"children":[{"name":"MD5","kind":"string","optional":false,"example":"MD5"},{"name":"SHA1","kind":"string","optional":false,"example":"SHA1"},{"name":"SHA256","kind":"string","optional":false,"example":"SHA256"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"}]}]},{"name":"ThreatVault","kind":"object","optional":false,"children":[{"name":"FileInfo","kind":"object","optional":false,"children":[{"name":"filetype","kind":"string","optional":false,"example":"filetype"},{"name":"sha256","kind":"string","optional":false,"example":"sha256"},{"name":"sha1","kind":"string","optional":false,"example":"sha1"},{"name":"md5","kind":"string","optional":false,"example":"md5"},{"name":"size","kind":"string","optional":false,"example":"size"},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"family","kind":"string","optional":false,"example":"family"},{"name":"platform","kind":"string","optional":false,"example":"platform"},{"name":"wildfire_verdict","kind":"string","optional":false,"example":"wildfire_verdict"},{"name":"create_time","kind":"string","optional":false,"example":"create_time"},{"name":"signatures","kind":"string","optional":false,"example":"signatures"}]}]}]}},{"id":"cve","method":"GET","pathTemplate":"/","summary":"Checks the reputation of CVE in Threat Vault.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Score","kind":"number","optional":false},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"}]},{"name":"CVE","kind":"object","optional":false,"children":[{"name":"ID","kind":"id","optional":false},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"CVSS","kind":"object","optional":false,"children":[{"name":"Score","kind":"string","optional":false,"example":"Score"}]},{"name":"Modified","kind":"string","optional":false,"example":"Modified"},{"name":"Published","kind":"string","optional":false,"example":"Published"}]},{"name":"ThreatVault","kind":"object","optional":false,"children":[{"name":"Vulnerability","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"min_version","kind":"string","optional":false,"example":"min_version"},{"name":"max_version","kind":"string","optional":false,"example":"max_version"},{"name":"severity","kind":"string","optional":false,"example":"severity"},{"name":"default_action","kind":"string","optional":false,"example":"default_action"},{"name":"cve","kind":"string","optional":false,"example":"cve"},{"name":"vendor","kind":"string","optional":false,"example":"vendor"},{"name":"reference","kind":"string","optional":false,"example":"reference"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"ori_release_version","kind":"string","optional":false,"example":"ori_release_version"},{"name":"latest_release_version","kind":"string","optional":false,"example":"latest_release_version"},{"name":"ori_release_time","kind":"string","optional":false,"example":"ori_release_time"},{"name":"latest_release_time","kind":"string","optional":false,"example":"latest_release_time"}]}]}]}},{"id":"threatvault-threat-signature-get","method":"GET","pathTemplate":"/","summary":"Gets the antivirus or anti-spyware or files signature.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"DBotScore","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"Score","kind":"number","optional":false},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"}]},{"name":"File","kind":"object","optional":false,"children":[{"name":"MD5","kind":"string","optional":false,"example":"MD5"},{"name":"SHA1","kind":"string","optional":false,"example":"SHA1"},{"name":"SHA256","kind":"string","optional":false,"example":"SHA256"},{"name":"Malicious","kind":"object","optional":false,"children":[{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"}]}]},{"name":"ThreatVault","kind":"object","optional":false,"children":[{"name":"Vulnerability","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"min_version","kind":"string","optional":false,"example":"min_version"},{"name":"max_version","kind":"string","optional":false,"example":"max_version"},{"name":"severity","kind":"string","optional":false,"example":"severity"},{"name":"default_action","kind":"string","optional":false,"example":"default_action"},{"name":"cve","kind":"string","optional":false,"example":"cve"},{"name":"vendor","kind":"string","optional":false,"example":"vendor"},{"name":"reference","kind":"string","optional":false,"example":"reference"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"ori_release_version","kind":"string","optional":false,"example":"ori_release_version"},{"name":"latest_release_version","kind":"string","optional":false,"example":"latest_release_version"},{"name":"ori_release_time","kind":"string","optional":false,"example":"ori_release_time"},{"name":"latest_release_time","kind":"string","optional":false,"example":"latest_release_time"}]},{"name":"Spyware","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"vendor","kind":"string","optional":false,"example":"vendor"},{"name":"severity","kind":"string","optional":false,"example":"severity"},{"name":"default_action","kind":"string","optional":false,"example":"default_action"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"reference","kind":"string","optional":false,"example":"reference"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"min_version","kind":"string","optional":false,"example":"min_version"},{"name":"max_version","kind":"string","optional":false,"example":"max_version"},{"name":"cve","kind":"string","optional":false,"example":"cve"}]},{"name":"Antivirus","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"action","kind":"string","optional":false,"example":"action"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"subtype","kind":"string","optional":false,"example":"subtype"},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"create_time","kind":"string","optional":false,"example":"create_time"},{"name":"related_sha256_hashes","kind":"string","optional":false,"example":"related_sha256_hashes"},{"name":"release","kind":"string","optional":false,"example":"release"}]},{"name":"Fileformat","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"min_version","kind":"string","optional":false,"example":"min_version"}]}]}]}},{"id":"threatvault-release-note-get","method":"GET","pathTemplate":"/","summary":"Retrieve the release notes information by version.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ThreatVault","kind":"object","optional":false,"children":[{"name":"ReleaseNote","kind":"object","optional":false,"children":[{"name":"release_version","kind":"string","optional":false,"example":"release_version"},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"content_version","kind":"string","optional":false,"example":"content_version"},{"name":"notes","kind":"string","optional":false,"example":"notes"},{"name":"decoders","kind":"string","optional":false,"example":"decoders"},{"name":"spyware","kind":"object","optional":false,"children":[{"name":"new","kind":"string","optional":false,"example":"new"},{"name":"modified","kind":"string","optional":false,"example":"modified"},{"name":"disabled","kind":"string","optional":false,"example":"disabled"}]},{"name":"vulnerability","kind":"object","optional":false,"children":[{"name":"new","kind":"string","optional":false,"example":"new"},{"name":"modified","kind":"string","optional":false,"example":"modified"},{"name":"disabled","kind":"string","optional":false,"example":"disabled"}]},{"name":"applications","kind":"object","optional":false,"children":[{"name":"new","kind":"string","optional":false,"example":"new"},{"name":"modified","kind":"string","optional":false,"example":"modified"},{"name":"obsoleted","kind":"string","optional":false,"example":"obsoleted"}]}]}]}]}},{"id":"threatvault-threat-batch-search","method":"GET","pathTemplate":"/","summary":"Retrieve the threats signature metadata by id, name or sample hash (sha256 or md5) in batch mode. Batch limit is 100 entries.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"ThreatVault","kind":"object","optional":false,"children":[{"name":"Vulnerability","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"min_version","kind":"string","optional":false,"example":"min_version"},{"name":"max_version","kind":"string","optional":false,"example":"max_version"},{"name":"severity","kind":"string","optional":false,"example":"severity"},{"name":"default_action","kind":"string","optional":false,"example":"default_action"},{"name":"cve","kind":"string","optional":false,"example":"cve"},{"name":"vendor","kind":"string","optional":false,"example":"vendor"},{"name":"reference","kind":"string","optional":false,"example":"reference"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"ori_release_version","kind":"string","optional":false,"example":"ori_release_version"},{"name":"latest_release_version","kind":"string","optional":false,"example":"latest_release_version"},{"name":"ori_release_time","kind":"string","optional":false,"example":"ori_release_time"},{"name":"latest_release_time","kind":"string","optional":false,"example":"latest_release_time"}]},{"name":"Antivirus","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"action","kind":"string","optional":false,"example":"action"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"subtype","kind":"string","optional":false,"example":"subtype"},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"create_time","kind":"string","optional":false,"example":"create_time"},{"name":"related_sha256_hashes","kind":"string","optional":false,"example":"related_sha256_hashes"},{"name":"release","kind":"string","optional":false,"example":"release"}]},{"name":"FileInfo","kind":"object","optional":false,"children":[{"name":"filetype","kind":"string","optional":false,"example":"filetype"},{"name":"sha256","kind":"string","optional":false,"example":"sha256"},{"name":"sha1","kind":"string","optional":false,"example":"sha1"},{"name":"md5","kind":"string","optional":false,"example":"md5"},{"name":"size","kind":"string","optional":false,"example":"size"},{"name":"type","kind":"string","optional":false,"example":"type"},{"name":"family","kind":"string","optional":false,"example":"family"},{"name":"platform","kind":"string","optional":false,"example":"platform"},{"name":"wildfire_verdict","kind":"string","optional":false,"example":"wildfire_verdict"},{"name":"create_time","kind":"string","optional":false,"example":"create_time"},{"name":"signatures","kind":"string","optional":false,"example":"signatures"}]},{"name":"Spyware","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"vendor","kind":"string","optional":false,"example":"vendor"},{"name":"severity","kind":"string","optional":false,"example":"severity"},{"name":"default_action","kind":"string","optional":false,"example":"default_action"},{"name":"details","kind":"string","optional":false,"example":"details"},{"name":"reference","kind":"string","optional":false,"example":"reference"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"min_version","kind":"string","optional":false,"example":"min_version"},{"name":"max_version","kind":"string","optional":false,"example":"max_version"},{"name":"cve","kind":"string","optional":false,"example":"cve"}]},{"name":"DNS","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false},{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"type","kind":"string","optional":false,"example":"type"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "paloaltonetworks-threat-vault-threatvaultv2",
+  "name": "Palo Alto Networks Threat Vault v2",
+  "pack": "PaloAltoNetworks_Threat_Vault",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET service/v1/threats returns signature data.",
+  "notes": [
+    "The client sets the base to url + service/v1/ and GETs threats. This mock returns { data } with id, name, severity, and category.",
+    "Release notes, batch search, and PCAP download are not modeled. Query arguments are not applied.",
+    "The Threat Vault API page was not reloaded. The API key header is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworks_Threat_Vault/Integrations/ThreatVaultv2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "paloaltonetworks-threat-vault-threatvaultv2",
+      "name": "Palo Alto Networks Threat Vault v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://pan.dev/threat-vault/api/threat-vault-apis/",
+      "notes": [
+        "The client sets the base to url + service/v1/ and GETs threats. This mock returns { data } with id, name, severity, and category.",
+        "Release notes, batch search, and PCAP download are not modeled. Query arguments are not applied.",
+        "The Threat Vault API page was not reloaded. The API key header is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://pan.dev/threat-vault/api/threat-vault-apis/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client sets the base to url + service/v1/ and GETs threats. This mock returns { data } with id, name, severity, and category.",
+          "Release notes, batch search, and PCAP download are not modeled. Query arguments are not applied.",
+          "The Threat Vault API page was not reloaded. The API key header is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "threats",
+        "method": "GET",
+        "pathTemplate": "/service/v1/threats",
+        "summary": "Look up a threat signature",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "threat",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab-signature"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "enum",
+                    "enumValues": [
+                      "low",
+                      "medium",
+                      "high",
+                      "critical"
+                    ]
+                  },
+                  {
+                    "name": "category",
+                    "kind": "const",
+                    "constValue": "vulnerability"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "paloaltonetworks-threat-vault-threatvaultv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "x-api-key",
+        "value": "dummy-threatvault-key"
+      }
+    }
+  }
+}

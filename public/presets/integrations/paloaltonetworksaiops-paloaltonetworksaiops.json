@@ -1,1 +1,153 @@
-{"id":"paloaltonetworksaiops-paloaltonetworksaiops","name":"Palo Alto Networks AIOps","pack":"PaloAltoNetworksAIOps","fidelity":"shape","curated":false,"summary":"Palo Alto Networks Best Practice Assessment (BPA) analyzes NGFW and Panorama configurations and compares them to the best practices.","operations":2,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"paloaltonetworksaiops-paloaltonetworksaiops","name":"Palo Alto Networks AIOps","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworksAIOps/Integrations/PaloAltoNetworksAIOps","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aiops-bpa-report-generate","method":"GET","pathTemplate":"/api","summary":"Generates a bpa report. Steps: - Get configuration file of Pan-OS/Panorama. If the user provided an entry_id to a config file this step is skipped. - Use the in","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AiOps","kind":"object","optional":false,"children":[{"name":"BPAReport","kind":"string","optional":false,"example":"BPAReport"}]}]}},{"id":"aiops-polling-upload-report","method":"GET","pathTemplate":"/","summary":"Polling mechanism to upload report.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"report_id","kind":"string","optional":false,"example":"report_id"},{"name":"hide_polling_output","kind":"string","optional":false,"example":"hide_polling_output"},{"name":"export_as_file","kind":"string","optional":false,"example":"export_as_file"},{"name":"show_in_context","kind":"string","optional":false,"example":"show_in_context"},{"name":"first_round","kind":"string","optional":false,"example":"first_round"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "paloaltonetworksaiops-paloaltonetworksaiops",
+  "name": "Palo Alto Networks AIOps",
+  "pack": "PaloAltoNetworksAIOps",
+  "vendor": "Palo Alto Networks",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Best-practice assessment request and job status.",
+  "notes": [
+    "The client posts https://api.stratacloud.paloaltonetworks.com/aiops/bpa/v1/requests and GETs /aiops/bpa/v1/jobs/{id}. This mock returns a report id and status COMPLETED.",
+    "The report download route is not modeled. The uploaded config is not parsed.",
+    "The AIOps API page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PaloAltoNetworksAIOps/Integrations/PaloAltoNetworksAIOps",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "paloaltonetworksaiops-paloaltonetworksaiops",
+      "name": "Palo Alto Networks AIOps",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://pan.dev/aiops/api/",
+      "notes": [
+        "The client posts https://api.stratacloud.paloaltonetworks.com/aiops/bpa/v1/requests and GETs /aiops/bpa/v1/jobs/{id}. This mock returns a report id and status COMPLETED.",
+        "The report download route is not modeled. The uploaded config is not parsed.",
+        "The AIOps API page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://pan.dev/aiops/api/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client posts https://api.stratacloud.paloaltonetworks.com/aiops/bpa/v1/requests and GETs /aiops/bpa/v1/jobs/{id}. This mock returns a report id and status COMPLETED.",
+          "The report download route is not modeled. The uploaded config is not parsed.",
+          "The AIOps API page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "request",
+        "method": "POST",
+        "pathTemplate": "/aiops/bpa/v1/requests",
+        "summary": "Start a BPA job",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "report_id",
+              "kind": "id"
+            },
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "IN_PROGRESS"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "job",
+        "method": "GET",
+        "pathTemplate": "/aiops/bpa/v1/jobs/{report_id}",
+        "summary": "Read BPA job status",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "report_id",
+              "kind": "id"
+            },
+            {
+              "name": "status",
+              "kind": "const",
+              "constValue": "COMPLETED"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "paloaltonetworksaiops-paloaltonetworksaiops",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

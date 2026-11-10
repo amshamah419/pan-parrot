@@ -5,11 +5,11 @@
   "vendor": "Palo Alto Networks",
   "fidelity": "verified",
   "curated": true,
-  "summary": "POST /public_api/v1/incidents/get_incidents returns reply.incidents.",
+  "summary": "Incidents, alerts, endpoints, and isolate as reply JSON.",
   "notes": [
     "The XSOAR client POSTs to /public_api/v1/incidents/get_incidents, /alerts/get_alerts/, and /endpoints/get_endpoint/. Each body is { reply: { total_count, result_count, ... } }.",
     "The real API takes search_from and search_to inside request_data. This mock reads those names from the query string.",
-    "API key headers are not checked. Incident extra-data and response-action routes are not modeled."
+    "POST /public_api/v1/endpoints/isolate and /unisolate return reply.action_id. API key headers are not checked. Extra-data and script runs are not modeled."
   ],
   "attribution": "Checked against the vendor's public API reference. Sample field names also follow demisto/content (MIT). See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CortexXDR/Integrations/CortexXDRIR",
@@ -30,7 +30,7 @@
         "differences": [
           "The XSOAR client POSTs to /public_api/v1/incidents/get_incidents, /alerts/get_alerts/, and /endpoints/get_endpoint/. Each body is { reply: { total_count, result_count, ... } }.",
           "The real API takes search_from and search_to inside request_data. This mock reads those names from the query string.",
-          "API key headers are not checked. Incident extra-data and response-action routes are not modeled."
+          "POST /public_api/v1/endpoints/isolate and /unisolate return reply.action_id. API key headers are not checked. Extra-data and script runs are not modeled."
         ]
       }
     },
@@ -57,64 +57,70 @@
           "type": "object"
         },
         "record": {
-          "name": "reply",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "total_count",
-              "kind": "integer"
-            },
-            {
-              "name": "result_count",
-              "kind": "integer"
-            },
-            {
-              "name": "incidents",
-              "kind": "array",
-              "pageItems": true,
-              "item": {
-                "name": "incident",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "incident_id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "creation_time",
-                    "kind": "timestamp",
-                    "format": "unix-ms"
-                  },
-                  {
-                    "name": "modification_time",
-                    "kind": "timestamp",
-                    "format": "unix-ms"
-                  },
-                  {
-                    "name": "status",
-                    "kind": "enum",
-                    "enumValues": [
-                      "new",
-                      "under_investigation",
-                      "resolved"
+              "name": "reply",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "total_count",
+                  "kind": "integer"
+                },
+                {
+                  "name": "result_count",
+                  "kind": "integer"
+                },
+                {
+                  "name": "incidents",
+                  "kind": "array",
+                  "pageItems": true,
+                  "item": {
+                    "name": "incident",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "incident_id",
+                        "kind": "id"
+                      },
+                      {
+                        "name": "creation_time",
+                        "kind": "timestamp",
+                        "format": "unix-ms"
+                      },
+                      {
+                        "name": "modification_time",
+                        "kind": "timestamp",
+                        "format": "unix-ms"
+                      },
+                      {
+                        "name": "status",
+                        "kind": "enum",
+                        "enumValues": [
+                          "new",
+                          "under_investigation",
+                          "resolved"
+                        ]
+                      },
+                      {
+                        "name": "severity",
+                        "kind": "enum",
+                        "enumValues": [
+                          "low",
+                          "medium",
+                          "high"
+                        ]
+                      },
+                      {
+                        "name": "description",
+                        "kind": "string",
+                        "example": "Malware detected on a host"
+                      }
                     ]
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  },
-                  {
-                    "name": "description",
-                    "kind": "string",
-                    "example": "Malware detected on a host"
                   }
-                ]
-              }
+                }
+              ]
             }
           ]
         }
@@ -141,55 +147,61 @@
           "type": "object"
         },
         "record": {
-          "name": "reply",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "total_count",
-              "kind": "integer"
-            },
-            {
-              "name": "result_count",
-              "kind": "integer"
-            },
-            {
-              "name": "alerts",
-              "kind": "array",
-              "pageItems": true,
-              "item": {
-                "name": "alert",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "alert_id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "detection_timestamp",
-                    "kind": "timestamp",
-                    "format": "unix-ms"
-                  },
-                  {
-                    "name": "severity",
-                    "kind": "enum",
-                    "enumValues": [
-                      "low",
-                      "medium",
-                      "high"
+              "name": "reply",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "total_count",
+                  "kind": "integer"
+                },
+                {
+                  "name": "result_count",
+                  "kind": "integer"
+                },
+                {
+                  "name": "alerts",
+                  "kind": "array",
+                  "pageItems": true,
+                  "item": {
+                    "name": "alert",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "alert_id",
+                        "kind": "id"
+                      },
+                      {
+                        "name": "detection_timestamp",
+                        "kind": "timestamp",
+                        "format": "unix-ms"
+                      },
+                      {
+                        "name": "severity",
+                        "kind": "enum",
+                        "enumValues": [
+                          "low",
+                          "medium",
+                          "high"
+                        ]
+                      },
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "Suspicious process execution"
+                      },
+                      {
+                        "name": "category",
+                        "kind": "string",
+                        "example": "Malware"
+                      }
                     ]
-                  },
-                  {
-                    "name": "name",
-                    "kind": "string",
-                    "example": "Suspicious process execution"
-                  },
-                  {
-                    "name": "category",
-                    "kind": "string",
-                    "example": "Malware"
                   }
-                ]
-              }
+                }
+              ]
             }
           ]
         }
@@ -216,63 +228,153 @@
           "type": "object"
         },
         "record": {
-          "name": "reply",
+          "name": "body",
           "kind": "object",
           "children": [
             {
-              "name": "total_count",
-              "kind": "integer"
-            },
-            {
-              "name": "result_count",
-              "kind": "integer"
-            },
-            {
-              "name": "endpoints",
-              "kind": "array",
-              "pageItems": true,
-              "item": {
-                "name": "endpoint",
-                "kind": "object",
-                "children": [
-                  {
-                    "name": "endpoint_id",
-                    "kind": "id"
-                  },
-                  {
-                    "name": "endpoint_name",
-                    "kind": "string",
-                    "example": "lab-workstation"
-                  },
-                  {
-                    "name": "endpoint_status",
-                    "kind": "enum",
-                    "enumValues": [
-                      "connected",
-                      "disconnected",
-                      "lost"
+              "name": "reply",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "total_count",
+                  "kind": "integer"
+                },
+                {
+                  "name": "result_count",
+                  "kind": "integer"
+                },
+                {
+                  "name": "endpoints",
+                  "kind": "array",
+                  "pageItems": true,
+                  "item": {
+                    "name": "endpoint",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "endpoint_id",
+                        "kind": "id"
+                      },
+                      {
+                        "name": "endpoint_name",
+                        "kind": "string",
+                        "example": "lab-workstation"
+                      },
+                      {
+                        "name": "endpoint_status",
+                        "kind": "enum",
+                        "enumValues": [
+                          "connected",
+                          "disconnected",
+                          "lost"
+                        ]
+                      },
+                      {
+                        "name": "os_type",
+                        "kind": "enum",
+                        "enumValues": [
+                          "windows",
+                          "linux",
+                          "macos"
+                        ]
+                      },
+                      {
+                        "name": "ip",
+                        "kind": "ip"
+                      },
+                      {
+                        "name": "last_seen",
+                        "kind": "timestamp",
+                        "format": "unix-ms"
+                      }
                     ]
-                  },
-                  {
-                    "name": "os_type",
-                    "kind": "enum",
-                    "enumValues": [
-                      "windows",
-                      "linux",
-                      "macos"
-                    ]
-                  },
-                  {
-                    "name": "ip",
-                    "kind": "ip"
-                  },
-                  {
-                    "name": "last_seen",
-                    "kind": "timestamp",
-                    "format": "unix-ms"
                   }
-                ]
-              }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "isolate",
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/endpoints/isolate",
+        "summary": "Isolate endpoints",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "reply",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "action_id",
+                  "kind": "id"
+                },
+                {
+                  "name": "endpoints_count",
+                  "kind": "integer"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1
+        },
+        "id": "unisolate",
+        "method": "POST",
+        "pathTemplate": "/public_api/v1/endpoints/unisolate",
+        "summary": "Remove endpoint isolation",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "reply",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "action_id",
+                  "kind": "id"
+                },
+                {
+                  "name": "endpoints_count",
+                  "kind": "integer"
+                }
+              ]
             }
           ]
         }
@@ -303,7 +405,8 @@
       "authExpired": false,
       "authDenied": false,
       "authTokenFailure": false,
-      "authClockSkew": false
+      "authClockSkew": false,
+      "graphqlErrors": false
     },
     "totalRecords": 500,
     "auth": {
