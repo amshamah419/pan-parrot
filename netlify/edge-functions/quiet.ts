@@ -1,6 +1,8 @@
-import { verifyGate } from "../../shared/gate-cookie";
-import { ipInCidrs } from "../../shared/cidr";
-import { isAdminSurface, isBadCrawler, isScannerPath } from "../../shared/surface";
+// Deno does not resolve extensionless imports. Netlify's edge bundler fails
+// the deploy if these specifiers omit `.ts`.
+import { verifyGate } from "../../shared/gate-cookie.ts";
+import { ipInCidrs } from "../../shared/cidr.ts";
+import { isAdminSurface, isBadCrawler, isScannerPath } from "../../shared/surface.ts";
 
 const PUBLIC = new Set(["/login", "/login.html", "/login.js", "/login.css", "/robots.txt", "/favicon.ico", "/404.html"]);
 

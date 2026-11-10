@@ -56,4 +56,6 @@ jobs:
       - name: Cross-check verified presets
         run: python3 scripts/crosscheck_presets.py --content content --strict
       - run: npm run build
+      - name: Bundle Netlify functions and edge functions
+        run: npx --yes netlify-cli@23.15.1 build --offline
       - run: npm run test:e2e
