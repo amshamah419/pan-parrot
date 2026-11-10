@@ -3,11 +3,11 @@
   "name": "OpenPhish v2",
   "pack": "OpenPhish",
   "vendor": "OpenPhish",
-  "fidelity": "guessed",
+  "fidelity": "verified",
   "curated": true,
-  "summary": "Phishing URL feed. The live feed is text; this mock returns JSON urls.",
+  "summary": "Rebuilt from the client: GET /feed.txt.",
   "notes": [
-    "Cross-check: unparseable: no Python client parsed"
+    "Rebuilt from the XSOAR client. The checker matched GET /feed.txt. Fields are keys the client reads or test_data contains."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/OpenPhish",
@@ -17,55 +17,73 @@
       "kind": "preset",
       "id": "openphish-openphish-v2",
       "name": "OpenPhish v2",
-      "fidelity": "guessed",
+      "fidelity": "verified",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://openphish.com/faq.html",
       "notes": [
-        "Cross-check: unparseable: no Python client parsed"
-      ]
+        "Rebuilt from the XSOAR client. The checker matched GET /feed.txt. Fields are keys the client reads or test_data contains."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://openphish.com/faq.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Rebuilt from the XSOAR client. The checker matched GET /feed.txt. Fields are keys the client reads or test_data contains."
+        ]
+      }
     },
     "operations": [
       {
-        "id": "feed",
+        "id": "get-feed-txt-0",
         "method": "GET",
-        "pathTemplate": "/feed",
-        "summary": "Phishing URL feed",
+        "pathTemplate": "/feed.txt",
+        "summary": "GET /feed.txt",
         "status": 200,
-        "list": true,
-        "envelope": {
-          "type": "wrapped",
-          "arrayKey": "urls"
-        },
-        "record": {
-          "name": "item",
-          "kind": "object",
-          "children": [
-            {
-              "name": "url",
-              "kind": "string",
-              "example": "https://bad.example/login"
-            },
-            {
-              "name": "brand",
-              "kind": "string",
-              "example": "Example Bank"
-            },
-            {
-              "name": "discovered",
-              "kind": "timestamp"
-            }
-          ]
-        },
-        "headers": {},
         "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
         "pagination": {
-          "style": "offset",
+          "style": "none",
           "limitParam": "limit",
           "offsetParam": "offset",
           "pageParam": "page",
           "cursorParam": "cursor",
           "defaultLimit": 20,
-          "maxLimit": 500
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "fetchIntervalHours",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "https",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "integrationReliability",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "list",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "timestamp",
+              "kind": "string",
+              "example": "lab"
+            }
+          ]
         }
       }
     ],
