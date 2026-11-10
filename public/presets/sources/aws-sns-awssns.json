@@ -1,0 +1,58 @@
+{
+  "id": "aws-sns-awssns",
+  "retrievedAt": "2026-11-10",
+  "sourceType": "vendor-example",
+  "docUrl": "https://docs.aws.amazon.com/sns/latest/api/API_Subscribe.html",
+  "operations": [
+    {
+      "operationId": "aws-sns-create-subscription",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/sns/latest/api/API_Subscribe.html",
+      "sourceType": "vendor-example",
+      "excerpt": "<SubscribeResponse xmlns=\"http://sns.amazonaws.com/doc/2010-03-31/\">\n    <SubscribeResult>\n        <SubscriptionArn>\n            arn:aws:sns:us-west-2:123456789012:MyTopic:\n            6b0e71bd-7e97-4d97-80ce-4a0994e55286\n        </SubscriptionArn>\n    </SubscribeResult>\n    <ResponseMetadata>\n        <RequestId>c4407779-24a4-56fa-982c-3d927f93a775</RequestId>\n    </ResponseMetadata>\n</SubscribeResponse>",
+      "scrubs": []
+    },
+    {
+      "operationId": "aws-sns-send-message",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/sns/latest/api/API_Publish.html",
+      "sourceType": "vendor-example",
+      "excerpt": "<PublishResponse xmlns=\"https://sns.amazonaws.com/doc/2010-03-31/\">\n    <PublishResult>\n        <MessageId>567910cd-659e-55d4-8ccb-5aaf14679dc0</MessageId>\n    </PublishResult>\n    <ResponseMetadata>\n        <RequestId>d74b8436-ae13-5ab4-a9ff-ce54dfea72a0</RequestId>\n    </ResponseMetadata>\n</PublishResponse>",
+      "scrubs": []
+    },
+    {
+      "operationId": "aws-sns-create-topic",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/sns/latest/api/API_CreateTopic.html",
+      "sourceType": "vendor-example",
+      "excerpt": "<CreateTopicResponse xmlns=\"https://sns.amazonaws.com/doc/2010-03-31/\">\n    <CreateTopicResult>\n        <TopicArn>arn:aws:sns:us-east-2:123456789012:My-Topic</TopicArn>\n    </CreateTopicResult>\n    <ResponseMetadata>\n        <RequestId>a8dec8b3-33a4-11df-8963-01868b7c937a</RequestId>\n    </ResponseMetadata>\n</CreateTopicResponse>",
+      "scrubs": []
+    },
+    {
+      "operationId": "aws-sns-delete-topic",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/sns/latest/api/API_DeleteTopic.html",
+      "sourceType": "vendor-example",
+      "excerpt": "<DeleteTopicResponse xmlns=\"https://sns.amazonaws.com/doc/2010-03-31/\">\n    <ResponseMetadata>\n        <RequestId>f3aa9ac9-3c3d-11df-8235-9dab105e9c32</RequestId>\n    </ResponseMetadata>\n</DeleteTopicResponse>",
+      "scrubs": []
+    },
+    {
+      "operationId": "aws-sns-list-subscriptions-by-topic",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/sns/latest/api/API_ListSubscriptionsByTopic.html",
+      "sourceType": "vendor-example",
+      "excerpt": "<ListSubscriptionsByTopicResponse xmlns=\"https://sns.amazonaws.com/doc/2010-03-31/\">\n    <ListSubscriptionsByTopicResult>\n        <Subscriptions>\n            <member>\n                <TopicArn>arn:aws:sns:us-east-2:123456789012:My-Topic</TopicArn>\n                <Protocol>email</Protocol>\n                <SubscriptionArn>arn:aws:sns:us-east-2:123456789012:My-Topic:80289ba6-0fd4-4079-afb4-ce8c8260f0ca</SubscriptionArn>\n                <Owner>123456789012</Owner>\n                <Endpoint>example@amazon.com</Endpoint>\n            </member>\n        </Subscriptions>\n    </ListSubscriptionsByTopicResult>\n    <ResponseMetadata>\n        <RequestId>b9275252-3774-11df-9540-99d0768312d3</RequestId>\n    </ResponseMetadata>\n</ListSubscriptionsByTopicResponse>",
+      "scrubs": [
+        {
+          "find": "example@amazon.com",
+          "replace": "user@example.invalid"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,300 @@
+{
+  "id": "aws-lambda-aws-lambda",
+  "retrievedAt": "2026-11-10",
+  "sourceType": "vendor-example",
+  "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json",
+  "operations": [
+    {
+      "operationId": "lambda-list-functions",
+      "method": "GET",
+      "path": "/2015-03-31/functions",
+      "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Functions": [
+          {
+            "CodeSha256": "dBG9m8SGdmlEjw/JYXlhhvCrAv5TxvXsbL/RMr0fT/I=",
+            "CodeSize": 294,
+            "Description": "",
+            "FunctionArn": "arn:aws:lambda:us-west-2:123456789012:function:helloworld",
+            "FunctionName": "helloworld",
+            "Handler": "helloworld.handler",
+            "LastModified": "2019-09-23T18:32:33.857+0000",
+            "MemorySize": 128,
+            "RevisionId": "1718e831-badf-4253-9518-d0644210af7b",
+            "Role": "arn:aws:iam::123456789012:role/service-role/MyTestFunction-role-zgur6bf4",
+            "Runtime": "nodejs10.x",
+            "Timeout": 3,
+            "TracingConfig": {
+              "Mode": "PassThrough"
+            },
+            "Version": "$LATEST"
+          },
+          {
+            "CodeSha256": "sU0cJ2/hOZevwV/lTxCuQqK3gDZP3i8gUoqUUVRmY6E=",
+            "CodeSize": 266,
+            "Description": "",
+            "FunctionArn": "arn:aws:lambda:us-west-2:123456789012:function:my-function",
+            "FunctionName": "my-function",
+            "Handler": "index.handler",
+            "LastModified": "2019-10-01T16:47:28.490+0000",
+            "MemorySize": 256,
+            "RevisionId": "93017fc9-59cb-41dc-901b-4845ce4bf668",
+            "Role": "arn:aws:iam::123456789012:role/service-role/helloWorldPython-role-uy3l9qyq",
+            "Runtime": "nodejs10.x",
+            "Timeout": 3,
+            "TracingConfig": {
+              "Mode": "PassThrough"
+            },
+            "Version": "$LATEST",
+            "VpcConfig": {
+              "SecurityGroupIds": [],
+              "SubnetIds": [],
+              "VpcId": ""
+            }
+          }
+        ],
+        "NextMarker": ""
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "lambda-list-aliases",
+      "method": "GET",
+      "path": "/2015-03-31/functions/{FunctionName}/aliases",
+      "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Aliases": [
+          {
+            "AliasArn": "arn:aws:lambda:us-west-2:123456789012:function:my-function:BETA",
+            "Description": "Production environment BLUE.",
+            "FunctionVersion": "2",
+            "Name": "BLUE",
+            "RevisionId": "a410117f-xmpl-494e-8035-7e204bb7933b",
+            "RoutingConfig": {
+              "AdditionalVersionWeights": {
+                "1": 0.7
+              }
+            }
+          },
+          {
+            "AliasArn": "arn:aws:lambda:us-west-2:123456789012:function:my-function:LIVE",
+            "Description": "Production environment GREEN.",
+            "FunctionVersion": "1",
+            "Name": "GREEN",
+            "RevisionId": "21d40116-xmpl-40ba-9360-3ea284da1bb5"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "lambda-invoke",
+      "method": "POST",
+      "path": "/2015-03-31/functions/{FunctionName}/invocations",
+      "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Payload": "200 SUCCESS",
+        "StatusCode": 200
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "lambda-get-account-settings",
+      "method": "GET",
+      "path": "/2016-08-19/account-settings",
+      "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "AccountLimit": {
+          "CodeSizeUnzipped": 262144000,
+          "CodeSizeZipped": 52428800,
+          "ConcurrentExecutions": 1000,
+          "TotalCodeSize": 80530636800,
+          "UnreservedConcurrentExecutions": 1000
+        },
+        "AccountUsage": {
+          "FunctionCount": 4,
+          "TotalCodeSize": 9426
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "lambda-get-policy",
+      "method": "GET",
+      "path": "/2015-03-31/functions/{FunctionName}/policy",
+      "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Policy": "{\"Version\":\"2012-10-17\",\"Id\":\"default\",\"Statement\":[{\"Sid\":\"xaccount\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::123456789012:root\"},\"Action\":\"lambda:InvokeFunction\",\"Resource\":\"arn:aws:lambda:us-east-2:123456789012:function:my-function:1\"}]}",
+        "RevisionId": "4843f2f6-7c59-4fda-b484-afd0bc0e22b8"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "lambda-list-versions-by-function",
+      "method": "GET",
+      "path": "/2015-03-31/functions/{FunctionName}/versions",
+      "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Versions": [
+          {
+            "CodeSha256": "YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=",
+            "CodeSize": 5797206,
+            "Description": "Process image objects from Amazon S3.",
+            "Environment": {
+              "Variables": {
+                "BUCKET": "my-bucket-1xpuxmplzrlbh",
+                "PREFIX": "inbound"
+              }
+            },
+            "FunctionArn": "arn:aws:lambda:us-west-2:123456789012:function:my-function",
+            "FunctionName": "my-function",
+            "Handler": "index.handler",
+            "KMSKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b0844d6c-xmpl-4463-97a4-d49f50839966",
+            "LastModified": "2020-04-10T19:06:32.563+0000",
+            "MemorySize": 256,
+            "RevisionId": "850ca006-2d98-4ff4-86db-8766e9d32fe9",
+            "Role": "arn:aws:iam::123456789012:role/lambda-role",
+            "Runtime": "nodejs12.x",
+            "Timeout": 15,
+            "TracingConfig": {
+              "Mode": "Active"
+            },
+            "Version": "$LATEST"
+          },
+          {
+            "CodeSha256": "YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=",
+            "CodeSize": 5797206,
+            "Description": "Process image objects from Amazon S3.",
+            "Environment": {
+              "Variables": {
+                "BUCKET": "my-bucket-1xpuxmplzrlbh",
+                "PREFIX": "inbound"
+              }
+            },
+            "FunctionArn": "arn:aws:lambda:us-west-2:123456789012:function:my-function",
+            "FunctionName": "my-function",
+            "Handler": "index.handler",
+            "KMSKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b0844d6c-xmpl-4463-97a4-d49f50839966",
+            "LastModified": "2020-04-10T19:06:32.563+0000",
+            "MemorySize": 256,
+            "RevisionId": "b75dcd81-xmpl-48a8-a75a-93ba8b5b9727",
+            "Role": "arn:aws:iam::123456789012:role/lambda-role",
+            "Runtime": "nodejs12.x",
+            "Timeout": 5,
+            "TracingConfig": {
+              "Mode": "Active"
+            },
+            "Version": "1"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "lambda-get-function-configuration",
+      "method": "GET",
+      "path": "/2015-03-31/functions/{FunctionName}/configuration",
+      "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "CodeSha256": "YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=",
+        "CodeSize": 5797206,
+        "Description": "Process image objects from Amazon S3.",
+        "Environment": {
+          "Variables": {
+            "BUCKET": "my-bucket-1xpuxmplzrlbh",
+            "PREFIX": "inbound"
+          }
+        },
+        "FunctionArn": "arn:aws:lambda:us-west-2:123456789012:function:my-function",
+        "FunctionName": "my-function",
+        "Handler": "index.handler",
+        "KMSKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b0844d6c-xmpl-4463-97a4-d49f50839966",
+        "LastModified": "2020-04-10T19:06:32.563+0000",
+        "LastUpdateStatus": "Successful",
+        "MemorySize": 256,
+        "RevisionId": "b75dcd81-xmpl-48a8-a75a-93ba8b5b9727",
+        "Role": "arn:aws:iam::123456789012:role/lambda-role",
+        "Runtime": "nodejs12.x",
+        "State": "Active",
+        "Timeout": 15,
+        "TracingConfig": {
+          "Mode": "Active"
+        },
+        "Version": "$LATEST"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "lambda-create-function",
+      "method": "POST",
+      "path": "/2015-03-31/functions",
+      "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "CodeSha256": "YFgDgEKG3ugvF1+pX64gV6tu9qNuIYNUdgJm8nCxsm4=",
+        "CodeSize": 5797206,
+        "Description": "Process image objects from Amazon S3.",
+        "Environment": {
+          "Variables": {
+            "BUCKET": "my-bucket-1xpuxmplzrlbh",
+            "PREFIX": "inbound"
+          }
+        },
+        "FunctionArn": "arn:aws:lambda:us-west-2:123456789012:function:my-function",
+        "FunctionName": "my-function",
+        "Handler": "index.handler",
+        "KMSKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b0844d6c-xmpl-4463-97a4-d49f50839966",
+        "LastModified": "2020-04-10T19:06:32.563+0000",
+        "LastUpdateStatus": "Successful",
+        "MemorySize": 256,
+        "RevisionId": "b75dcd81-xmpl-48a8-a75a-93ba8b5b9727",
+        "Role": "arn:aws:iam::123456789012:role/lambda-role",
+        "Runtime": "nodejs12.x",
+        "State": "Active",
+        "Timeout": 15,
+        "TracingConfig": {
+          "Mode": "Active"
+        },
+        "Version": "1"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "lambda-list-layer-versions",
+      "method": "GET",
+      "path": "/2018-10-31/layers/{LayerName}/versions",
+      "docUrl": "https://raw.githubusercontent.com/boto/botocore/1.43.127/botocore/data/lambda/2015-03-31/examples-1.json",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "LayerVersions": [
+          {
+            "CompatibleRuntimes": [
+              "java8"
+            ],
+            "CreatedDate": "2020-03-18T23:38:42.284+0000",
+            "Description": "Dependencies for the blank-java sample app.",
+            "LayerVersionArn": "arn:aws:lambda:us-east-2:123456789012:layer:blank-java-lib:7",
+            "Version": 7
+          },
+          {
+            "CompatibleRuntimes": [
+              "java8"
+            ],
+            "CreatedDate": "2020-03-17T07:24:21.960+0000",
+            "Description": "Dependencies for the blank-java sample app.",
+            "LayerVersionArn": "arn:aws:lambda:us-east-2:123456789012:layer:blank-java-lib:6",
+            "Version": 6
+          }
+        ]
+      },
+      "scrubs": []
+    }
+  ]
+}

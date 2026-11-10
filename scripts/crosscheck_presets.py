@@ -85,6 +85,7 @@ class Val:
     seq: list["Val"] | None = None
     alts: list["Val"] | None = None
     boto3: bool = False
+    action: str = ""
     chain: tuple[str, ...] | None = None
     response: bool = False
 
@@ -100,6 +101,7 @@ class Val:
             None if self.alts is None else list(self.alts),
         )
         copied.boto3 = self.boto3
+        copied.action = self.action
         copied.chain = self.chain
         copied.response = self.response
         return copied
@@ -113,6 +115,7 @@ class HttpCall:
     params_dynamic: bool
     func: str
     boto3: bool = False
+    action: str = ""
     keys: set[str] = field(default_factory=set)
     nav: set[str] = field(default_factory=set)
     local_keys: set[str] = field(default_factory=set)
@@ -306,7 +309,15 @@ def check_preset(preset: dict, content: Path) -> dict:
     fixtures = [command_fixtures(item) for item in fixture_folders(folder, modules)]
     for operation in preset["spec"]["operations"]:
         # A copied vendor example includes fields the client never reads. Approximate operations still do.
-        findings.extend(check_operation(operation, calls, fixtures, skip_fields=bool(operation.get("fixture"))))
+        findings.extend(
+            check_operation(
+                operation,
+                calls,
+                fixtures,
+                skip_fields=bool(operation.get("fixture")),
+                source_text=folder_source(folder),
+            )
+        )
     status = "mismatch" if findings else "match"
     return result(preset, status, findings, len(calls))
 
@@ -544,6 +555,7 @@ def decode_calls(blob: str) -> list[HttpCall]:
             params_dynamic=row["dynamic"],
             func=row["func"],
             boto3=row.get("boto3", False),
+            action=str(row.get("action") or ""),
             stack=list(row.get("stack") or [row["func"]]),
         )
         for row in rows
@@ -966,6 +978,18 @@ def handle_call(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func, depth
     if isinstance(call.func, ast.Attribute):
         owner = eval_expr(call.func.value, env, mod, func.cls)
         if owner.text.startswith("boto3:"):
+            attr = call.func.attr
+            skipped = {
+                "get_paginator",
+                "get_waiter",
+                "can_paginate",
+                "generate_presigned_url",
+                "get_available_regions",
+                "close",
+            }
+            action = ""
+            if attr not in skipped and not attr.startswith("_"):
+                action = "".join(part[:1].upper() + part[1:] for part in attr.split("_") if part)
             store_call(
                 mod,
                 {
@@ -975,6 +999,7 @@ def handle_call(call: ast.Call, env: dict[str, Val], mod: Mod, func: Func, depth
                     "dynamic": True,
                     "func": func.qual,
                     "boto3": True,
+                    "action": action,
                 },
             )
             return owner
@@ -2416,18 +2441,66 @@ def fixture_scope(
     return paths, types
 
 
+def folder_source(folder: Path) -> str:
+    parts = []
+    for path in sorted(folder.glob("*.py")):
+        if path.name.endswith("_test.py") or path.name.startswith("test_"):
+            continue
+        parts.append(path.read_text(errors="replace"))
+    return "\n".join(parts)
+
+
+def operation_action(operation: dict) -> str:
+    action = str(operation.get("awsAction") or "")
+    if action:
+        return action
+    query = operation.get("queryMatch") or {}
+    if isinstance(query, dict) and query.get("Action"):
+        return str(query["Action"])
+    headers = operation.get("headerMatch") or {}
+    if isinstance(headers, dict):
+        for key, value in headers.items():
+            if str(key).lower() == "x-amz-target" and isinstance(value, str) and "." in value:
+                return value.rsplit(".", 1)[-1]
+    return ""
+
+
+def snake_action(action: str) -> str:
+    return re.sub(r"(?<!^)(?=[A-Z])", "_", action).lower()
+
+
 def check_operation(
     operation: dict,
     calls: list[HttpCall],
     fixtures: list[dict[str, tuple[set[str], dict[str, set[str]]]]],
     skip_fields: bool = False,
+    source_text: str = "",
 ) -> list[str]:
     method = str(operation.get("method", "")).upper()
     preset_path = norm_path(str(operation.get("pathTemplate", "/")))
     matched = [call for call in calls if call.method == method and any(paths_match(preset_path, path) for path in call.paths)]
     findings = []
     label = f"{method} {preset_path}"
+    action = operation_action(operation)
+    if action:
+        by_action = [call for call in calls if call.boto3 and call.action == action]
+        if by_action:
+            matched = by_action
+        elif not matched and snake_action(action) in source_text:
+            # boto3 method call. The wire path comes from the AWS action, not a REST url_suffix.
+            return []
     if not matched:
+        query = operation.get("queryMatch") or {}
+        headers = operation.get("headerMatch") or {}
+        guessed_shape = (
+            not action
+            and not operation.get("fixture")
+            and not query
+            and not headers
+            and ("boto3" in source_text or "aws_session" in source_text)
+        )
+        if guessed_shape:
+            return []
         same = [call for call in calls if call.method == method]
         pool = same or calls
         hint, score = best_aligned(preset_path, pool)

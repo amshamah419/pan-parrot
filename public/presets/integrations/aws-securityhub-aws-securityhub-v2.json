@@ -12,7 +12,7 @@
     "SigV4 is not checked."
   ],
   "attribution": "Checked against a public vendor reference or, when that page is blocked, the integration test fixture plus the public client. See /presets/ATTRIBUTION.md.",
-  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-SecurityHub/Integrations/AWS_SecurityHub",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-SecurityHub/Integrations/AWS_SecurityHub_V2",
   "spec": {
     "version": 1,
     "source": {
@@ -21,7 +21,7 @@
       "name": "AWS - Security Hub v2",
       "fidelity": "approximate",
       "attribution": "Public API reference or demisto/content client (MIT).",
-      "sourceUrl": "https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_GetFindings.html",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-SecurityHub/Integrations/AWS_SecurityHub_V2",
       "notes": [
         "POST / with X-Amz-Target SecurityHub_2018-10-26.GetFindings returns { Findings }.",
         "Resources and compliance are omitted, matching the v1 Security Hub preset.",
@@ -29,14 +29,61 @@
       ],
       "verification": {
         "status": "approximate",
-        "docUrl": "https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_GetFindings.html",
         "checkedAt": "2026-11-10",
         "differences": [
+          "1 of 7 commands from vendor docs, 0 approximate, 6 missing.",
           "POST / with X-Amz-Target SecurityHub_2018-10-26.GetFindings returns { Findings }.",
           "Resources and compliance are omitted, matching the v1 Security Hub preset.",
           "SigV4 is not checked."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "aws-securityhub-v2-security-hub-enable",
+          "calls": [
+            "securityhub:EnableSecurityHubV2"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-securityhub-v2-security-hub-disable",
+          "calls": [
+            "securityhub:DisableSecurityHubV2"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-securityhub-v2-findings-get",
+          "calls": [
+            "securityhub:GetFindingsV2"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-securityhub-v2-findings-batch-update",
+          "calls": [
+            "securityhub:BatchUpdateFindingsV2"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "get-remote-data",
+          "calls": [
+            "securityhub:GetFindingsV2"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "get-mapping-fields",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "update-remote-system",
+          "calls": [],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {

@@ -1,0 +1,759 @@
+{
+  "id": "aws-systemmanager-awssystemmanager",
+  "retrievedAt": "2026-11-10",
+  "sourceType": "vendor-example",
+  "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListTagsForResource.html",
+  "operations": [
+    {
+      "operationId": "ssm-list-tags-for-resource",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListTagsForResource.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "TagList": [
+          {
+            "Key": "Platform",
+            "Value": "Windows Server"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Production"
+          },
+          {
+            "Key": "Region",
+            "Value": "EMEA"
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-get-inventory",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_GetInventory.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Entities": [
+          {
+            "Data": {
+              "Id": "i-04bf6ad63bEXAMPLE",
+              "AWS:InstanceInformation": {
+                "TypeName": "AWS:InstanceInformation",
+                "SchemaVersion": "1.0",
+                "CaptureTime": "2024-03-30T14:00:57Z",
+                "Content": [
+                  {
+                    "AgentType": "amazon-ssm-agent",
+                    "AgentVersion": "2.3.930.0",
+                    "ComputerName": "EC2AMAZ-EXAMPLE.WORKGROUP",
+                    "InstanceId": "i-04bf6ad63bEXAMPLE",
+                    "InstanceStatus": "Stopped",
+                    "IpAddress": "172.16.0.4",
+                    "PlatformName": "Microsoft Windows Server 2016 Datacenter",
+                    "PlatformType": "Windows",
+                    "PlatformVersion": "10.0.14393",
+                    "ResourceType": "EC2Instance"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-list-inventory-entries",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListInventoryEntries.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "CaptureTime": "2020-03-30T15:45:32Z",
+        "Entries": [
+          {
+            "Architecture": "i386",
+            "InstalledTime": "2020-01-15T00:00:00Z",
+            "Name": "AWS Tools for Windows",
+            "PackageId": "{2088D019-97CC-4349-BA45-9777568EAE94}",
+            "Publisher": "Amazon Web Services Developer Relations",
+            "Version": "3.15.925"
+          },
+          {
+            "Architecture": "i386",
+            "Name": "Amazon SSM Agent",
+            "PackageId": "{2a4673c2-68c6-4a4c-9be6-c3b1be96fdff}",
+            "Publisher": "Amazon Web Services",
+            "Version": "2.3.930.0"
+          },
+          {
+            "Architecture": "x86_64",
+            "InstalledTime": "2018-10-14T00:00:00Z",
+            "Name": "aws-cfn-bootstrap",
+            "PackageId": "{34CD0CCF-195B-4BC5-B409-D44EB9A129C8}",
+            "Publisher": "Amazon Web Services",
+            "Version": "1.4.31"
+          },
+          {
+            "Architecture": "x86_64",
+            "InstalledTime": "2020-03-10T00:00:00Z",
+            "Name": "PowerShell 7-x64",
+            "PackageId": "{B324E508-9AAE-446A-BC4C-BB446E8C2A18}",
+            "Publisher": "Microsoft Corporation",
+            "Version": "7.0.0.0"
+          },
+          {
+            "Architecture": "x86_64",
+            "InstalledTime": "2019-09-06T00:00:00Z",
+            "Name": "AWS PV Drivers",
+            "PackageId": "{C1F68A8D-F235-4886-87B0-150107C07EDA}",
+            "Publisher": "Amazon Web Services",
+            "Version": "8.3.2"
+          }
+        ],
+        "InstanceId": "i-04bf6ad63bEXAMPLE",
+        "SchemaVersion": "1.1",
+        "TypeName": "AWS:Application"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-list-associations",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListAssociations.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Associations": [
+          {
+            "AssociationId": "fa94c678-85c6-4d40-926b-7c791EXAMPLE",
+            "AssociationVersion": "1",
+            "LastExecutionDate": 1582037438.692,
+            "Name": "AWS-UpdateSSMAgent",
+            "Overview": {
+              "AssociationStatusAggregatedCount": {
+                "Success": 3
+              },
+              "DetailedStatus": "Success",
+              "Status": "Success"
+            },
+            "Targets": [
+              {
+                "Key": "tag:ssm",
+                "Values": [
+                  "true"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-describe-association",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_DescribeAssociation.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "AssociationDescription": {
+          "ApplyOnlyAtCronInterval": false,
+          "AssociationId": "fa94c678-85c6-4d40-926b-7c791EXAMPLE",
+          "AssociationVersion": "1",
+          "ComplianceSeverity": "UNSPECIFIED",
+          "Date": 1561053271.583,
+          "DocumentVersion": "$DEFAULT",
+          "LastExecutionDate": 1582037438.692,
+          "LastSuccessfulExecutionDate": 1582037438.692,
+          "LastUpdateAssociationDate": 1561053271.583,
+          "Name": "AWS-UpdateSSMAgent",
+          "Overview": {
+            "AssociationStatusAggregatedCount": {
+              "Success": 3
+            },
+            "DetailedStatus": "Success",
+            "Status": "Success"
+          },
+          "Parameters": {
+            "allowDowngrade": [
+              "false"
+            ],
+            "version": [
+              ""
+            ]
+          },
+          "Targets": [
+            {
+              "Key": "tag:ssm",
+              "Values": [
+                "true"
+              ]
+            }
+          ]
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-list-association-versions",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListAssociationVersions.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "AssociationVersions": [
+          {
+            "ApplyOnlyAtCronInterval": false,
+            "AssociationId": "fa94c678-85c6-4d40-926b-7c791EXAMPLE",
+            "AssociationVersion": "1",
+            "CreatedDate": 1561053271.583,
+            "Name": "AWS-UpdateSSMAgent",
+            "Parameters": {
+              "allowDowngrade": [
+                "false"
+              ],
+              "version": [
+                ""
+              ]
+            },
+            "Targets": [
+              {
+                "Key": "tag:ssm",
+                "Values": [
+                  "true"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-list-documents",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListDocuments.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "DocumentIdentifiers": [
+          {
+            "CreatedDate": 1486594364.541,
+            "DocumentFormat": "YAML",
+            "DocumentType": "Automation",
+            "DocumentVersion": "1",
+            "DisplayName": "ExampleDoc",
+            "Name": "Example",
+            "Owner": "111122223333",
+            "PlatformTypes": [
+              "Windows",
+              "Linux"
+            ],
+            "SchemaVersion": "0.3",
+            "Tags": [
+              {
+                "Key": "DocUse",
+                "Value": "Testing"
+              }
+            ]
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-describe-document",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_DescribeDocument.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Document": {
+          "CreatedDate": 1585061514.204,
+          "DefaultVersion": "1",
+          "Description": "Example",
+          "DocumentFormat": "YAML",
+          "DocumentType": "Automation",
+          "DocumentVersion": "1",
+          "DisplayName": "ExampleDoc",
+          "Hash": "68b196e538f5a895f87a0cc15eb74614021f44b47329aa95ccc0f4f71EXAMPLE",
+          "HashType": "Sha256",
+          "LatestVersion": "1",
+          "Name": "Example",
+          "Owner": "111122223333",
+          "Parameters": [
+            {
+              "DefaultValue": "",
+              "Description": "(Required) The ARN of the role that allows Automation to perform the actions on your behalf. If no role is specified, Systems Manager Automation uses your IAM permissions to execute this document.",
+              "Name": "AutomationAssumeRole",
+              "Type": "String"
+            },
+            {
+              "DefaultValue": "",
+              "Description": "(Required) The Instance Id to create an image of.",
+              "Name": "InstanceId",
+              "Type": "String"
+            }
+          ],
+          "PlatformTypes": [
+            "Windows",
+            "Linux"
+          ],
+          "SchemaVersion": "0.3",
+          "Status": "Active",
+          "Tags": []
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-start-automation-execution",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_StartAutomationExecution.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "AutomationExecutionId": "832a6fba-f4f0-4b2a-ab85-587adEXAMPLE"
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-get-automation-execution",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_GetAutomationExecution.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "AutomationExecution": {
+          "AutomationExecutionId": "8a5f5be8-5d93-437a-adbb-394f7EXAMPLE",
+          "AutomationExecutionStatus": "Success",
+          "DocumentName": "CreateImage",
+          "DocumentVersion": "1",
+          "ExecutedBy": "arn:aws:sts::111122223333:assumed-role/Example",
+          "ExecutionEndTime": 1585062669.053,
+          "ExecutionStartTime": 1585061570.827,
+          "Mode": "Auto",
+          "Outputs": {},
+          "Parameters": {
+            "InstanceId": [
+              "i-02573cafcfEXAMPLE"
+            ]
+          },
+          "ResolvedTargets": {
+            "ParameterValues": [],
+            "Truncated": false
+          },
+          "StepExecutions": [
+            {
+              "Action": "aws:createImage",
+              "ExecutionEndTime": 1585062668.968,
+              "ExecutionStartTime": 1585061571.144,
+              "Inputs": {
+                "ImageDescription": "\"AMI for i-02573cafcfEXAMPLE created on 2020-03-24_14.52.51\"",
+                "ImageName": "\"i-02573cafcfEXAMPLE-2020-03-24_14.52.51\"",
+                "InstanceId": "\"i-02573cafcfEXAMPLE\"",
+                "NoReboot": "false"
+              },
+              "OnFailure": "Abort",
+              "Outputs": {
+                "ImageId": [
+                  "ami-0f4706cb37EXAMPLE"
+                ],
+                "ImageState": [
+                  "available"
+                ],
+                "OutputPayload": [
+                  "{\"ImageId\":\"ami-0f4706cb37EXAMPLE\",\"ImageState\":\"available\"}"
+                ]
+              },
+              "OverriddenParameters": {},
+              "StepExecutionId": "eff80946-356d-4128-97b2-6a0f5EXAMPLE",
+              "StepName": "createImage",
+              "StepStatus": "Success"
+            }
+          ],
+          "StepExecutionsTruncated": false,
+          "Targets": []
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-get-automation-execution",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_GetAutomationExecution.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "AutomationExecution": {
+          "AutomationExecutionId": "8a5f5be8-5d93-437a-adbb-394f7EXAMPLE",
+          "AutomationExecutionStatus": "Success",
+          "DocumentName": "CreateImage",
+          "DocumentVersion": "1",
+          "ExecutedBy": "arn:aws:sts::111122223333:assumed-role/Example",
+          "ExecutionEndTime": 1585062669.053,
+          "ExecutionStartTime": 1585061570.827,
+          "Mode": "Auto",
+          "Outputs": {},
+          "Parameters": {
+            "InstanceId": [
+              "i-02573cafcfEXAMPLE"
+            ]
+          },
+          "ResolvedTargets": {
+            "ParameterValues": [],
+            "Truncated": false
+          },
+          "StepExecutions": [
+            {
+              "Action": "aws:createImage",
+              "ExecutionEndTime": 1585062668.968,
+              "ExecutionStartTime": 1585061571.144,
+              "Inputs": {
+                "ImageDescription": "\"AMI for i-02573cafcfEXAMPLE created on 2020-03-24_14.52.51\"",
+                "ImageName": "\"i-02573cafcfEXAMPLE-2020-03-24_14.52.51\"",
+                "InstanceId": "\"i-02573cafcfEXAMPLE\"",
+                "NoReboot": "false"
+              },
+              "OnFailure": "Abort",
+              "Outputs": {
+                "ImageId": [
+                  "ami-0f4706cb37EXAMPLE"
+                ],
+                "ImageState": [
+                  "available"
+                ],
+                "OutputPayload": [
+                  "{\"ImageId\":\"ami-0f4706cb37EXAMPLE\",\"ImageState\":\"available\"}"
+                ]
+              },
+              "OverriddenParameters": {},
+              "StepExecutionId": "eff80946-356d-4128-97b2-6a0f5EXAMPLE",
+              "StepName": "createImage",
+              "StepStatus": "Success"
+            }
+          ],
+          "StepExecutionsTruncated": false,
+          "Targets": []
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-get-automation-execution",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_GetAutomationExecution.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "AutomationExecution": {
+          "AutomationExecutionId": "8a5f5be8-5d93-437a-adbb-394f7EXAMPLE",
+          "AutomationExecutionStatus": "Success",
+          "DocumentName": "CreateImage",
+          "DocumentVersion": "1",
+          "ExecutedBy": "arn:aws:sts::111122223333:assumed-role/Example",
+          "ExecutionEndTime": 1585062669.053,
+          "ExecutionStartTime": 1585061570.827,
+          "Mode": "Auto",
+          "Outputs": {},
+          "Parameters": {
+            "InstanceId": [
+              "i-02573cafcfEXAMPLE"
+            ]
+          },
+          "ResolvedTargets": {
+            "ParameterValues": [],
+            "Truncated": false
+          },
+          "StepExecutions": [
+            {
+              "Action": "aws:createImage",
+              "ExecutionEndTime": 1585062668.968,
+              "ExecutionStartTime": 1585061571.144,
+              "Inputs": {
+                "ImageDescription": "\"AMI for i-02573cafcfEXAMPLE created on 2020-03-24_14.52.51\"",
+                "ImageName": "\"i-02573cafcfEXAMPLE-2020-03-24_14.52.51\"",
+                "InstanceId": "\"i-02573cafcfEXAMPLE\"",
+                "NoReboot": "false"
+              },
+              "OnFailure": "Abort",
+              "Outputs": {
+                "ImageId": [
+                  "ami-0f4706cb37EXAMPLE"
+                ],
+                "ImageState": [
+                  "available"
+                ],
+                "OutputPayload": [
+                  "{\"ImageId\":\"ami-0f4706cb37EXAMPLE\",\"ImageState\":\"available\"}"
+                ]
+              },
+              "OverriddenParameters": {},
+              "StepExecutionId": "eff80946-356d-4128-97b2-6a0f5EXAMPLE",
+              "StepName": "createImage",
+              "StepStatus": "Success"
+            }
+          ],
+          "StepExecutionsTruncated": false,
+          "Targets": []
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-list-commands",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListCommands.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Commands": [
+          {
+            "CloudWatchOutputConfig": {
+              "CloudWatchLogGroupName": "my-log-group",
+              "CloudWatchOutputEnabled": true
+            },
+            "CommandId": "088e4813-f292-48b3-8180-d8be9EXAMPLE",
+            "Comment": "",
+            "CompletedCount": 0,
+            "DeliveryTimedOutCount": 0,
+            "DocumentName": "AWS-InstallMissingWindowsUpdates",
+            "DocumentVersion": "1",
+            "ErrorCount": 0,
+            "ExpiresAfter": 1582248743.188,
+            "InstanceIds": [],
+            "Interactive": false,
+            "MaxConcurrency": "2",
+            "MaxErrors": "3",
+            "NotificationConfig": {
+              "NotificationArn": "arn:aws:sns:us-east-2:111122223333:my-us-east-2-notification-arn",
+              "NotificationEvents": [
+                "All"
+              ],
+              "NotificationType": "Command"
+            },
+            "OutputS3BucketName": "amzn-s3-demo-bucket",
+            "OutputS3KeyPrefix": "my-prefix",
+            "Parameters": {
+              "ExcludeKbArticleIds": [
+                ""
+              ],
+              "UpdateLevel": [
+                "All"
+              ]
+            },
+            "RequestedDateTime": 1582244543.188,
+            "ServiceRole": "arn:aws:iam::111122223333:role/my-SNS-notifications-role",
+            "Status": "InProgress",
+            "StatusDetails": "InProgress",
+            "TargetCount": 5,
+            "Targets": [
+              {
+                "Key": "InstanceIds",
+                "Values": [
+                  "i-09c350ed76EXAMPLE",
+                  "i-07be1baa4aEXAMPLE",
+                  "i-00ec29b21eEXAMPLE",
+                  "i-09911ddd90EXAMPLE",
+                  "i-017431b35cEXAMPLE"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-send-command",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_SendCommand.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Command": {
+          "CommandId": "b94bf1dc-fe7d-4e88-851d-e85e5EXAMPLE",
+          "DocumentName": "AWS-ConfigureCloudWatch",
+          "DocumentVersion": "1",
+          "Comment": "",
+          "ExpiresAfter": 1582250177.7,
+          "Parameters": {
+            "properties": [
+              ""
+            ],
+            "status": [
+              "Enabled"
+            ]
+          },
+          "InstanceIds": [],
+          "Targets": [
+            {
+              "Key": "InstanceIds",
+              "Values": [
+                "i-07be1baa4aEXAMPLE",
+                "i-017431b35cEXAMPLE",
+                "i-09c350ed76EXAMPLE"
+              ]
+            }
+          ],
+          "RequestedDateTime": 1582245977.7,
+          "Status": "Pending",
+          "StatusDetails": "Pending",
+          "OutputS3BucketName": "amzn-s3-demo-bucket",
+          "OutputS3KeyPrefix": "my-prefix",
+          "MaxConcurrency": "2",
+          "MaxErrors": "1",
+          "TargetCount": 0,
+          "CompletedCount": 0,
+          "ErrorCount": 0,
+          "DeliveryTimedOutCount": 0,
+          "ServiceRole": "arn:aws:iam::111122223333:role/my-SNS-notifications-role",
+          "NotificationConfig": {
+            "NotificationArn": "arn:aws:sns:us-east-2:111122223333:my-us-east-2-notification-arn",
+            "NotificationEvents": [
+              "Failed",
+              "Success"
+            ],
+            "NotificationType": "Command"
+          },
+          "CloudWatchOutputConfig": {
+            "CloudWatchLogGroupName": "my-log-group",
+            "CloudWatchOutputEnabled": true
+          }
+        }
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-list-commands",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListCommands.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Commands": [
+          {
+            "CloudWatchOutputConfig": {
+              "CloudWatchLogGroupName": "my-log-group",
+              "CloudWatchOutputEnabled": true
+            },
+            "CommandId": "088e4813-f292-48b3-8180-d8be9EXAMPLE",
+            "Comment": "",
+            "CompletedCount": 0,
+            "DeliveryTimedOutCount": 0,
+            "DocumentName": "AWS-InstallMissingWindowsUpdates",
+            "DocumentVersion": "1",
+            "ErrorCount": 0,
+            "ExpiresAfter": 1582248743.188,
+            "InstanceIds": [],
+            "Interactive": false,
+            "MaxConcurrency": "2",
+            "MaxErrors": "3",
+            "NotificationConfig": {
+              "NotificationArn": "arn:aws:sns:us-east-2:111122223333:my-us-east-2-notification-arn",
+              "NotificationEvents": [
+                "All"
+              ],
+              "NotificationType": "Command"
+            },
+            "OutputS3BucketName": "amzn-s3-demo-bucket",
+            "OutputS3KeyPrefix": "my-prefix",
+            "Parameters": {
+              "ExcludeKbArticleIds": [
+                ""
+              ],
+              "UpdateLevel": [
+                "All"
+              ]
+            },
+            "RequestedDateTime": 1582244543.188,
+            "ServiceRole": "arn:aws:iam::111122223333:role/my-SNS-notifications-role",
+            "Status": "InProgress",
+            "StatusDetails": "InProgress",
+            "TargetCount": 5,
+            "Targets": [
+              {
+                "Key": "InstanceIds",
+                "Values": [
+                  "i-09c350ed76EXAMPLE",
+                  "i-07be1baa4aEXAMPLE",
+                  "i-00ec29b21eEXAMPLE",
+                  "i-09911ddd90EXAMPLE",
+                  "i-017431b35cEXAMPLE"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "scrubs": []
+    },
+    {
+      "operationId": "ssm-list-commands",
+      "method": "POST",
+      "path": "/",
+      "docUrl": "https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_ListCommands.html",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "Commands": [
+          {
+            "CloudWatchOutputConfig": {
+              "CloudWatchLogGroupName": "my-log-group",
+              "CloudWatchOutputEnabled": true
+            },
+            "CommandId": "088e4813-f292-48b3-8180-d8be9EXAMPLE",
+            "Comment": "",
+            "CompletedCount": 0,
+            "DeliveryTimedOutCount": 0,
+            "DocumentName": "AWS-InstallMissingWindowsUpdates",
+            "DocumentVersion": "1",
+            "ErrorCount": 0,
+            "ExpiresAfter": 1582248743.188,
+            "InstanceIds": [],
+            "Interactive": false,
+            "MaxConcurrency": "2",
+            "MaxErrors": "3",
+            "NotificationConfig": {
+              "NotificationArn": "arn:aws:sns:us-east-2:111122223333:my-us-east-2-notification-arn",
+              "NotificationEvents": [
+                "All"
+              ],
+              "NotificationType": "Command"
+            },
+            "OutputS3BucketName": "amzn-s3-demo-bucket",
+            "OutputS3KeyPrefix": "my-prefix",
+            "Parameters": {
+              "ExcludeKbArticleIds": [
+                ""
+              ],
+              "UpdateLevel": [
+                "All"
+              ]
+            },
+            "RequestedDateTime": 1582244543.188,
+            "ServiceRole": "arn:aws:iam::111122223333:role/my-SNS-notifications-role",
+            "Status": "InProgress",
+            "StatusDetails": "InProgress",
+            "TargetCount": 5,
+            "Targets": [
+              {
+                "Key": "InstanceIds",
+                "Values": [
+                  "i-09c350ed76EXAMPLE",
+                  "i-07be1baa4aEXAMPLE",
+                  "i-00ec29b21eEXAMPLE",
+                  "i-09911ddd90EXAMPLE",
+                  "i-017431b35cEXAMPLE"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "scrubs": []
+    }
+  ]
+}

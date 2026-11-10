@@ -1,1 +1,1662 @@
-{"id":"aws-aws","name":"Amazon Web Services","pack":"AWS","fidelity":"shape","curated":false,"summary":"Cloud integrations are installed from the **Data Sources** page. To configure a cloud integration, go to Settings > Data Sources and click \"Add Data Source\", select AWS, then in Ad","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-aws","name":"Amazon Web Services","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS/Integrations/AWS","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-s3-public-access-block-update","method":"GET","pathTemplate":"/POST","summary":"Creates or modifies the PublicAccessBlock configuration for an Amazon S3 bucket. Required IAM permission: s3:PutBucketPublicAccessBlock.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"account_id","kind":"string","optional":false,"example":"account_id"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"bucket","kind":"string","optional":false,"example":"bucket"},{"name":"block_public_acls","kind":"string","optional":false,"example":"block_public_acls"},{"name":"ignore_public_acls","kind":"string","optional":false,"example":"ignore_public_acls"},{"name":"block_public_policy","kind":"string","optional":false,"example":"block_public_policy"},{"name":"restrict_public_buckets","kind":"string","optional":false,"example":"restrict_public_buckets"}]}},{"id":"aws-s3-bucket-delete","method":"PUT","pathTemplate":"/DELETE","summary":"Delete AWS S3 bucket, the bucket must be empty from files. Required IAM Permission: s3:DeleteBucket.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"bucket","kind":"string","optional":false,"example":"bucket"},{"name":"account_id","kind":"string","optional":false,"example":"account_id"},{"name":"region","kind":"string","optional":false,"example":"region"}]}},{"id":"aws-s3-bucket-objects-list","method":"GET","pathTemplate":"/","summary":"Returns some or all (up to 1,000) of the objects in a bucket. Required IAM Permission: s3:ListBucket.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"S3","kind":"object","optional":false,"children":[{"name":"Buckets","kind":"object","optional":false,"children":[{"name":"BucketName","kind":"string","optional":false,"example":"BucketName"},{"name":"Objects","kind":"object","optional":false,"children":[{"name":"Key","kind":"string","optional":false,"example":"Key"},{"name":"Size","kind":"number","optional":false},{"name":"LastModified","kind":"string","optional":false,"example":"LastModified"},{"name":"StorageClass","kind":"string","optional":false,"example":"StorageClass"},{"name":"ChecksumType","kind":"string","optional":false,"example":"ChecksumType"},{"name":"ETag","kind":"string","optional":false,"example":"ETag"}]},{"name":"ObjectsNextToken","kind":"string","optional":false,"example":"ObjectsNextToken"}]}]}]}]}},{"id":"aws-s3-bucket-objects-list-v2","method":"GET","pathTemplate":"/","summary":"Returns some or all (up to 1,000) of the objects in a bucket using the ListObjectsV2 API. Unlike aws-s3-bucket-objects-list, this command consistently returns a","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"S3","kind":"object","optional":false,"children":[{"name":"Buckets","kind":"object","optional":false,"children":[{"name":"BucketName","kind":"string","optional":false,"example":"BucketName"},{"name":"ObjectsV2","kind":"object","optional":false,"children":[{"name":"Key","kind":"string","optional":false,"example":"Key"},{"name":"Size","kind":"number","optional":false},{"name":"LastModified","kind":"string","optional":false,"example":"LastModified"},{"name":"StorageClass","kind":"string","optional":false,"example":"StorageClass"},{"name":"ChecksumType","kind":"string","optional":false,"example":"ChecksumType"},{"name":"ETag","kind":"string","optional":false,"example":"ETag"}]},{"name":"ObjectsV2NextToken","kind":"string","optional":false,"example":"ObjectsV2NextToken"}]}]}]}]}},{"id":"aws-s3-bucket-acl-put","method":"GET","pathTemplate":"/","summary":"Sets the access control list (ACL) permissions for an existing Amazon S3 bucket. This command allows you to define who can access the bucket and what actions th","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"account_id","kind":"string","optional":false,"example":"account_id"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"acl","kind":"string","optional":false,"example":"acl"},{"name":"bucket","kind":"string","optional":false,"example":"bucket"}]}},{"id":"aws-s3-bucket-acl-set-to-private-quick-action","method":"GET","pathTemplate":"/","summary":"Sets the Access Control List (ACL) for the S3 bucket to private. Required IAM permission: s3:PutBucketAcl.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"account_id","kind":"string","optional":false,"example":"account_id"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"bucket","kind":"string","optional":false,"example":"bucket"},{"name":"acl","kind":"string","optional":false,"example":"acl"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-aws",
+  "name": "Amazon Web Services",
+  "pack": "AWS",
+  "fidelity": "shape",
+  "curated": false,
+  "summary": "Cloud integrations are installed from the **Data Sources** page. To configure a cloud integration, go to Settings > Data Sources and click \"Add Data Source\", select AWS, then in Ad",
+  "operations": 6,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-aws",
+      "name": "Amazon Web Services",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS/Integrations/AWS",
+      "fidelity": "shape",
+      "notes": [
+        "Field names come from the integration YAML command outputs, not a captured vendor response.",
+        "No HTTP path was recovered from the client. The shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-s3-public-access-block-update",
+          "calls": [],
+          "status": "approximate",
+          "operationIds": [
+            "aws-s3-public-access-block-update"
+          ]
+        },
+        {
+          "command": "aws-s3-bucket-delete",
+          "calls": [],
+          "status": "approximate",
+          "operationIds": [
+            "aws-s3-bucket-delete"
+          ]
+        },
+        {
+          "command": "aws-s3-bucket-objects-list",
+          "calls": [],
+          "status": "approximate",
+          "operationIds": [
+            "aws-s3-bucket-objects-list"
+          ]
+        },
+        {
+          "command": "aws-s3-bucket-objects-list-v2",
+          "calls": [],
+          "status": "approximate",
+          "operationIds": [
+            "aws-s3-bucket-objects-list-v2"
+          ]
+        },
+        {
+          "command": "aws-s3-bucket-acl-put",
+          "calls": [],
+          "status": "approximate",
+          "operationIds": [
+            "aws-s3-bucket-acl-put"
+          ]
+        },
+        {
+          "command": "aws-s3-bucket-acl-set-to-private-quick-action",
+          "calls": [],
+          "status": "approximate",
+          "operationIds": [
+            "aws-s3-bucket-acl-set-to-private-quick-action"
+          ]
+        },
+        {
+          "command": "aws-s3-bucket-logging-put",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-enable-bucket-access-logging-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-versioning-put",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-versioning-enable-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-policy-put",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-policy-put-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-website-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-website-disable-hosting-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-ownership-controls-put",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-ownership-controls-put-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-website-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-acl-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-iam-account-password-policy-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-iam-account-password-policy-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-iam-role-policy-put",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-iam-login-profile-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-iam-user-policy-put",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-iam-role-from-instance-profile-remove",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-iam-access-key-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-eks-cluster-config-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-eks-enable-control-plane-logging-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-eks-disable-public-access-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-eks-cluster-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-eks-access-policy-associate",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-eks-access-entry-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-eks-access-entry-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-eks-clusters-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-cluster-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-cluster-enable-iam-auth-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-cluster-snapshot-attribute-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-cluster-snapshot-set-to-private-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-cluster-enable-deletion-protection-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-instance-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-instance-modify-publicly-accessible-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-instance-modify-copy-tags-on-rds-snapshot-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-instance-modify-enable-automatic-backup-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-instance-enable-iam-auth-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-instance-enable-deletion-protection-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-instance-enable-auto-upgrade-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-instance-enable-multi-az-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-instances-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-snapshot-attribute-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-event-subscription-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-event-subscription-modify-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-rds-db-snapshot-attribute-set-snapshot-to-private-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-redshift-cluster-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-security-group-ingress-revoke",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-security-group-ingress-authorize",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-security-group-egress-revoke",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-security-group-egress-authorize",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-snapshot-attribute-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instance-attribute-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instance-attribute-modify-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-image-attribute-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-image-attribute-set-ami-to-private-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instance-metadata-options-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-snapshot-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-snapshot-permission-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-set-snapshot-to-private-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ecs-cluster-settings-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-subnet-attribute-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-vpcs-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-subnets-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-ipam-resource-discoveries-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-ipam-resource-discovery-associations-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-cloudtrail-trail-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-cloudtrail-trail-enable-log-validation-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-cloudtrail-logging-start",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-cloudtrail-logging-start-enable-logging-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instances-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instances-start",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instances-stop",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instances-terminate",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instances-run",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-latest-ami-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-network-acl-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-ipam-discovered-public-addresses-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-tags-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-cloudtrail-trails-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-policy-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-public-access-block-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-images-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-image-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-image-deregister",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-image-copy",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-image-available-waiter",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-snapshots-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-snapshot-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-snapshot-copy",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-snapshot-completed-waiter",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-encryption-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-policy-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-function-configuration-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-function-url-config-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-policy-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-invoke",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-function-url-config-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-function-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-functions-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-aliases-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-account-settings-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-function-versions-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-function-url-config-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-function-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-layer-version-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-function-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-layer-version-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-layer-version-publish",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-lambda-function-configuration-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-file-upload",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-file-download",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-billing-cost-usage-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-billing-forecast-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-billing-budgets-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-billing-budget-notification-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-kms-key-rotation-enable",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-elb-load-balancer-attributes-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-public-access-block-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-enable-imdsv2-quick-action",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-acm-certificate-options-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-network-interface-attribute-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-regions-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-bucket-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-s3-buckets-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-inventory-entries-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-command-run",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-security-group-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-security-group-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-security-groups-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-addresses-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-address-allocate",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-address-associate",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-address-disassociate",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-address-release",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instances-monitor",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instances-unmonitor",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instances-reboot",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instance-running-waiter",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instance-status-ok-waiter",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instance-stopped-waiter",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-instance-terminated-waiter",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-iam-instance-profile-associations-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-password-data-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-reserved-instances-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-volumes-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-volume-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-volume-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-volume-attach",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-volume-detach",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-volume-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-launch-templates-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-launch-template-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-launch-template-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-fleet-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-fleet-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-fleets-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-fleet-instances-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-fleet-modify",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-key-pairs-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-hosts-allocate",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-hosts-release",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-traffic-mirror-session-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-vpc-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-vpc-endpoint-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-internet-gateway-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-internet-gateway-detach",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-internet-gateway-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-subnet-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ec2-network-acl-entry-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-log-group-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-log-stream-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-log-group-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-log-stream-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-log-events-filter",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-log-groups-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-log-streams-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-retention-policy-put",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-retention-policy-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-log-event-put",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-metric-filter-put",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-metric-filter-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-metric-filters-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-association-versions-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-association-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-associations-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-inventory-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-tag-add",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-tags-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-documents-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-document-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-automation-executions-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-automation-execution-run",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-automation-execution-cancel",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-commands-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-command-cancel",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-ssm-tag-remove",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewall-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewalls-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewall-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewall-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewall-delete-protection-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewall-description-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewall-policies-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewall-policy-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewall-policy-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewall-policy-associate",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewall-policy-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewall-policy-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-firewall-policy-change-protection-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-subnet-change-protection-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-subnets-associate",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-subnets-disassociate",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-rule-group-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-rule-group-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-rule-group-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-rule-groups-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-rule-group-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-resource-policy-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-resource-policy-put",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-resource-policy-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-tags-for-resource-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-resource-tag",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-resource-untag",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-logging-configuration-describe",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-network-firewall-logging-configuration-update",
+          "calls": [],
+          "status": "missing"
+        }
+      ]
+    },
+    "operations": [
+      {
+        "id": "aws-s3-public-access-block-update",
+        "method": "GET",
+        "pathTemplate": "/POST",
+        "summary": "Creates or modifies the PublicAccessBlock configuration for an Amazon S3 bucket. Required IAM permission: s3:PutBucketPublicAccessBlock.",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "account_id",
+              "kind": "string",
+              "optional": false,
+              "example": "account_id"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            },
+            {
+              "name": "bucket",
+              "kind": "string",
+              "optional": false,
+              "example": "bucket"
+            },
+            {
+              "name": "block_public_acls",
+              "kind": "string",
+              "optional": false,
+              "example": "block_public_acls"
+            },
+            {
+              "name": "ignore_public_acls",
+              "kind": "string",
+              "optional": false,
+              "example": "ignore_public_acls"
+            },
+            {
+              "name": "block_public_policy",
+              "kind": "string",
+              "optional": false,
+              "example": "block_public_policy"
+            },
+            {
+              "name": "restrict_public_buckets",
+              "kind": "string",
+              "optional": false,
+              "example": "restrict_public_buckets"
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-s3-bucket-delete",
+        "method": "PUT",
+        "pathTemplate": "/DELETE",
+        "summary": "Delete AWS S3 bucket, the bucket must be empty from files. Required IAM Permission: s3:DeleteBucket.",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "bucket",
+              "kind": "string",
+              "optional": false,
+              "example": "bucket"
+            },
+            {
+              "name": "account_id",
+              "kind": "string",
+              "optional": false,
+              "example": "account_id"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-s3-bucket-objects-list",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Returns some or all (up to 1,000) of the objects in a bucket. Required IAM Permission: s3:ListBucket.",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "S3",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Buckets",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "BucketName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "BucketName"
+                        },
+                        {
+                          "name": "Objects",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Key",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Key"
+                            },
+                            {
+                              "name": "Size",
+                              "kind": "number",
+                              "optional": false
+                            },
+                            {
+                              "name": "LastModified",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "LastModified"
+                            },
+                            {
+                              "name": "StorageClass",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "StorageClass"
+                            },
+                            {
+                              "name": "ChecksumType",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ChecksumType"
+                            },
+                            {
+                              "name": "ETag",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ETag"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ObjectsNextToken",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "ObjectsNextToken"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-s3-bucket-objects-list-v2",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Returns some or all (up to 1,000) of the objects in a bucket using the ListObjectsV2 API. Unlike aws-s3-bucket-objects-list, this command consistently returns a",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "S3",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Buckets",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "BucketName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "BucketName"
+                        },
+                        {
+                          "name": "ObjectsV2",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Key",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Key"
+                            },
+                            {
+                              "name": "Size",
+                              "kind": "number",
+                              "optional": false
+                            },
+                            {
+                              "name": "LastModified",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "LastModified"
+                            },
+                            {
+                              "name": "StorageClass",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "StorageClass"
+                            },
+                            {
+                              "name": "ChecksumType",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ChecksumType"
+                            },
+                            {
+                              "name": "ETag",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ETag"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ObjectsV2NextToken",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "ObjectsV2NextToken"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-s3-bucket-acl-put",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Sets the access control list (ACL) permissions for an existing Amazon S3 bucket. This command allows you to define who can access the bucket and what actions th",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "account_id",
+              "kind": "string",
+              "optional": false,
+              "example": "account_id"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            },
+            {
+              "name": "acl",
+              "kind": "string",
+              "optional": false,
+              "example": "acl"
+            },
+            {
+              "name": "bucket",
+              "kind": "string",
+              "optional": false,
+              "example": "bucket"
+            }
+          ]
+        }
+      },
+      {
+        "id": "aws-s3-bucket-acl-set-to-private-quick-action",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "Sets the Access Control List (ACL) for the S3 bucket to private. Required IAM permission: s3:PutBucketAcl.",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "account_id",
+              "kind": "string",
+              "optional": false,
+              "example": "account_id"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            },
+            {
+              "name": "bucket",
+              "kind": "string",
+              "optional": false,
+              "example": "bucket"
+            },
+            {
+              "name": "acl",
+              "kind": "string",
+              "optional": false,
+              "example": "acl"
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

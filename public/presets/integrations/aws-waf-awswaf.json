@@ -1,1 +1,787 @@
-{"id":"aws-waf-awswaf","name":"AWS-WAF","pack":"AWS_WAF","fidelity":"shape","curated":false,"summary":"Amazon Web Services Web Application Firewall (WAF).","operations":5,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"aws-waf-awswaf","name":"AWS-WAF","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS_WAF/Integrations/AWSWAF","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-get-ip-set-response-json","method":"GET","pathTemplate":"/","summary":"test_data/get_ip_set_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"IPSet","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"name"},{"name":"Id","kind":"id","optional":false,"example":"id"},{"name":"ARN","kind":"string","optional":false,"example":"arn"},{"name":"Description","kind":"string","optional":false,"example":"description"},{"name":"IPAddressVersion","kind":"string","optional":false,"example":"IPV4"},{"name":"Addresses","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"1.1.2.2/32"},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"LockToken","kind":"string","optional":false,"example":"redacted"}]}},{"id":"test-data-get-regex-set-response-json","method":"GET","pathTemplate":"/","summary":"test_data/get_regex_set_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"RegexPatternSet","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"name"},{"name":"Id","kind":"id","optional":false,"example":"id"},{"name":"ARN","kind":"string","optional":false,"example":"arn"},{"name":"Description","kind":"string","optional":false,"example":"description"},{"name":"RegularExpressionList","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"RegexString","kind":"string","optional":false,"example":"regex_pattern"}]},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"LockToken","kind":"string","optional":false,"example":"redacted"}]}},{"id":"test-data-rule-group-json","method":"GET","pathTemplate":"/","summary":"test_data/rule_group.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"RuleGroup","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"nme"},{"name":"Id","kind":"id","optional":false,"example":"id"},{"name":"Capacity","kind":"integer","optional":false},{"name":"ARN","kind":"string","optional":false,"example":"string"},{"name":"Description","kind":"string","optional":false,"example":"string"},{"name":"Rules","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"test_1"},{"name":"Priority","kind":"integer","optional":false},{"name":"Statement","kind":"object","optional":false,"children":[{"name":"IPSetReferenceStatement","kind":"object","optional":false,"children":[{"name":"ARN","kind":"string","optional":false,"example":"nested"}]}]},{"name":"Action","kind":"object","optional":false,"children":[{"name":"Block","kind":"object","optional":false,"children":[]}]},{"name":"VisibilityConfig","kind":"object","optional":false,"children":[{"name":"SampledRequestsEnabled","kind":"boolean","optional":false},{"name":"CloudWatchMetricsEnabled","kind":"boolean","optional":false},{"name":"MetricName","kind":"string","optional":false,"example":"string"}]}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"VisibilityConfig","kind":"object","optional":false,"children":[{"name":"SampledRequestsEnabled","kind":"boolean","optional":false},{"name":"CloudWatchMetricsEnabled","kind":"boolean","optional":false},{"name":"MetricName","kind":"string","optional":false,"example":"string"}]}]},{"name":"LockToken","kind":"string","optional":false,"example":"redacted"}]}},{"id":"test-data-rule-one-statement-json","method":"GET","pathTemplate":"/","summary":"test_data/rule_one_statement.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"test_1"},{"name":"Priority","kind":"integer","optional":false},{"name":"Statement","kind":"object","optional":false,"children":[{"name":"IPSetReferenceStatement","kind":"object","optional":false,"children":[{"name":"ARN","kind":"string","optional":false,"example":"ip_arn"}]}]},{"name":"Action","kind":"object","optional":false,"children":[{"name":"Block","kind":"object","optional":false,"children":[]}]},{"name":"VisibilityConfig","kind":"object","optional":false,"children":[{"name":"SampledRequestsEnabled","kind":"boolean","optional":false},{"name":"CloudWatchMetricsEnabled","kind":"boolean","optional":false},{"name":"MetricName","kind":"string","optional":false,"example":"test_1"}]}]}},{"id":"test-data-rule-two-statements-json","method":"GET","pathTemplate":"/","summary":"test_data/rule_two_statements.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"test_1"},{"name":"Priority","kind":"integer","optional":false},{"name":"Statement","kind":"object","optional":false,"children":[{"name":"OrStatement","kind":"object","optional":false,"children":[{"name":"Statements","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"GeoMatchStatement","kind":"object","optional":false,"children":[{"name":"CountryCodes","kind":"string","optional":false,"example":"nested"}]}]},"minItems":0,"maxItems":2,"pageItems":false}]}]},{"name":"Action","kind":"object","optional":false,"children":[{"name":"Allow","kind":"object","optional":false,"children":[]}]},{"name":"VisibilityConfig","kind":"object","optional":false,"children":[{"name":"SampledRequestsEnabled","kind":"boolean","optional":false},{"name":"CloudWatchMetricsEnabled","kind":"boolean","optional":false},{"name":"MetricName","kind":"string","optional":false,"example":"test_1"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-waf-awswaf",
+  "name": "AWS-WAF",
+  "pack": "AWS_WAF",
+  "fidelity": "shape",
+  "curated": false,
+  "summary": "Amazon Web Services Web Application Firewall (WAF).",
+  "operations": 5,
+  "origin": "sample",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-waf-awswaf",
+      "name": "AWS-WAF",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS_WAF/Integrations/AWSWAF",
+      "fidelity": "shape",
+      "notes": [
+        "Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.",
+        "No HTTP path was recovered from the client. The sample shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-waf-ip-set-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-ip-set-get",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-ip-set-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-ip-set-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-ip-set-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-regex-set-create",
+          "calls": [
+            "wafv2:CreateRegexPatternSet"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-regex-set-get",
+          "calls": [
+            "wafv2:GetRegexPatternSet"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-regex-set-update",
+          "calls": [
+            "wafv2:GetRegexPatternSet",
+            "wafv2:UpdateRegexPatternSet"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-regex-set-list",
+          "calls": [
+            "wafv2:ListRegexPatternSets"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-regex-set-delete",
+          "calls": [
+            "wafv2:GetRegexPatternSet",
+            "wafv2:DeleteRegexPatternSet"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-rule-group-list",
+          "calls": [
+            "wafv2:ListRuleGroups"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-rule-group-get",
+          "calls": [
+            "wafv2:GetRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-rule-group-delete",
+          "calls": [
+            "wafv2:GetRuleGroup",
+            "wafv2:DeleteRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-rule-group-create",
+          "calls": [
+            "wafv2:CreateRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-ip-rule-create",
+          "calls": [
+            "wafv2:GetRuleGroup",
+            "wafv2:UpdateRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-country-rule-create",
+          "calls": [
+            "wafv2:GetRuleGroup",
+            "wafv2:UpdateRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-string-match-rule-create",
+          "calls": [
+            "wafv2:GetRuleGroup",
+            "wafv2:UpdateRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-rule-delete",
+          "calls": [
+            "wafv2:GetRuleGroup",
+            "wafv2:UpdateRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-ip-statement-add",
+          "calls": [
+            "wafv2:GetRuleGroup",
+            "wafv2:UpdateRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-country-statement-add",
+          "calls": [
+            "wafv2:GetRuleGroup",
+            "wafv2:UpdateRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-string-match-statement-add",
+          "calls": [
+            "wafv2:GetRuleGroup",
+            "wafv2:UpdateRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-statement-json-add",
+          "calls": [
+            "wafv2:GetRuleGroup",
+            "wafv2:UpdateRuleGroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-waf-statement-json-template-get",
+          "calls": [],
+          "status": "missing"
+        }
+      ],
+      "verification": {
+        "status": "shape",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "0 of 23 commands from vendor docs, 9 approximate, 14 missing."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "test-data-get-ip-set-response-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/get_ip_set_response.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "IPSet",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Name",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "name"
+                },
+                {
+                  "name": "Id",
+                  "kind": "id",
+                  "optional": false,
+                  "example": "id"
+                },
+                {
+                  "name": "ARN",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "arn"
+                },
+                {
+                  "name": "Description",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "description"
+                },
+                {
+                  "name": "IPAddressVersion",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "IPV4"
+                },
+                {
+                  "name": "Addresses",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "optional": false,
+                    "example": "1.1.2.2/32"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1,
+                  "pageItems": false
+                }
+              ]
+            },
+            {
+              "name": "LockToken",
+              "kind": "string",
+              "optional": false,
+              "example": "redacted"
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-get-regex-set-response-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/get_regex_set_response.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "RegexPatternSet",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Name",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "name"
+                },
+                {
+                  "name": "Id",
+                  "kind": "id",
+                  "optional": false,
+                  "example": "id"
+                },
+                {
+                  "name": "ARN",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "arn"
+                },
+                {
+                  "name": "Description",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "description"
+                },
+                {
+                  "name": "RegularExpressionList",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "optional": false,
+                    "children": [
+                      {
+                        "name": "RegexString",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "regex_pattern"
+                      }
+                    ]
+                  },
+                  "minItems": 0,
+                  "maxItems": 1,
+                  "pageItems": false
+                }
+              ]
+            },
+            {
+              "name": "LockToken",
+              "kind": "string",
+              "optional": false,
+              "example": "redacted"
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-rule-group-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/rule_group.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "RuleGroup",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Name",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "nme"
+                },
+                {
+                  "name": "Id",
+                  "kind": "id",
+                  "optional": false,
+                  "example": "id"
+                },
+                {
+                  "name": "Capacity",
+                  "kind": "integer",
+                  "optional": false
+                },
+                {
+                  "name": "ARN",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "string"
+                },
+                {
+                  "name": "Description",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "string"
+                },
+                {
+                  "name": "Rules",
+                  "kind": "array",
+                  "optional": false,
+                  "item": {
+                    "name": "item",
+                    "kind": "object",
+                    "optional": false,
+                    "children": [
+                      {
+                        "name": "Name",
+                        "kind": "string",
+                        "optional": false,
+                        "example": "test_1"
+                      },
+                      {
+                        "name": "Priority",
+                        "kind": "integer",
+                        "optional": false
+                      },
+                      {
+                        "name": "Statement",
+                        "kind": "object",
+                        "optional": false,
+                        "children": [
+                          {
+                            "name": "IPSetReferenceStatement",
+                            "kind": "object",
+                            "optional": false,
+                            "children": [
+                              {
+                                "name": "ARN",
+                                "kind": "string",
+                                "optional": false,
+                                "example": "nested"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "Action",
+                        "kind": "object",
+                        "optional": false,
+                        "children": [
+                          {
+                            "name": "Block",
+                            "kind": "object",
+                            "optional": false,
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "VisibilityConfig",
+                        "kind": "object",
+                        "optional": false,
+                        "children": [
+                          {
+                            "name": "SampledRequestsEnabled",
+                            "kind": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "name": "CloudWatchMetricsEnabled",
+                            "kind": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "name": "MetricName",
+                            "kind": "string",
+                            "optional": false,
+                            "example": "string"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 0,
+                  "maxItems": 2,
+                  "pageItems": false
+                },
+                {
+                  "name": "VisibilityConfig",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "SampledRequestsEnabled",
+                      "kind": "boolean",
+                      "optional": false
+                    },
+                    {
+                      "name": "CloudWatchMetricsEnabled",
+                      "kind": "boolean",
+                      "optional": false
+                    },
+                    {
+                      "name": "MetricName",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "string"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "LockToken",
+              "kind": "string",
+              "optional": false,
+              "example": "redacted"
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-rule-one-statement-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/rule_one_statement.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "Name",
+              "kind": "string",
+              "optional": false,
+              "example": "test_1"
+            },
+            {
+              "name": "Priority",
+              "kind": "integer",
+              "optional": false
+            },
+            {
+              "name": "Statement",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "IPSetReferenceStatement",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "ARN",
+                      "kind": "string",
+                      "optional": false,
+                      "example": "ip_arn"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Action",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Block",
+                  "kind": "object",
+                  "optional": false,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "VisibilityConfig",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "SampledRequestsEnabled",
+                  "kind": "boolean",
+                  "optional": false
+                },
+                {
+                  "name": "CloudWatchMetricsEnabled",
+                  "kind": "boolean",
+                  "optional": false
+                },
+                {
+                  "name": "MetricName",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "test_1"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "test-data-rule-two-statements-json",
+        "method": "GET",
+        "pathTemplate": "/",
+        "summary": "test_data/rule_two_statements.json",
+        "status": 200,
+        "contentType": "application/json; charset=utf-8",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "Name",
+              "kind": "string",
+              "optional": false,
+              "example": "test_1"
+            },
+            {
+              "name": "Priority",
+              "kind": "integer",
+              "optional": false
+            },
+            {
+              "name": "Statement",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "OrStatement",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Statements",
+                      "kind": "array",
+                      "optional": false,
+                      "item": {
+                        "name": "item",
+                        "kind": "object",
+                        "optional": false,
+                        "children": [
+                          {
+                            "name": "GeoMatchStatement",
+                            "kind": "object",
+                            "optional": false,
+                            "children": [
+                              {
+                                "name": "CountryCodes",
+                                "kind": "string",
+                                "optional": false,
+                                "example": "nested"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "minItems": 0,
+                      "maxItems": 2,
+                      "pageItems": false
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Action",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "Allow",
+                  "kind": "object",
+                  "optional": false,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "VisibilityConfig",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "SampledRequestsEnabled",
+                  "kind": "boolean",
+                  "optional": false
+                },
+                {
+                  "name": "CloudWatchMetricsEnabled",
+                  "kind": "boolean",
+                  "optional": false
+                },
+                {
+                  "name": "MetricName",
+                  "kind": "string",
+                  "optional": false,
+                  "example": "test_1"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS_WAF/Integrations/AWSWAF"
+}

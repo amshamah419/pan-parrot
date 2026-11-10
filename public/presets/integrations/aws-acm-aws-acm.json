@@ -1,1 +1,843 @@
-{"id":"aws-acm-aws-acm","name":"AWS - ACM","pack":"AWS-ACM","fidelity":"shape","curated":false,"summary":"Amazon Web Services Certificate Manager Service (ACM).","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-acm-aws-acm","name":"AWS - ACM","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-ACM/Integrations/AWS-ACM","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-acm-describe-certificate","method":"GET","pathTemplate":"/","summary":"Returns detailed metadata about the specified ACM certificate.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"ACM","kind":"object","optional":false,"children":[{"name":"Certificates","kind":"object","optional":false,"children":[{"name":"CertificateArn","kind":"string","optional":false,"example":"CertificateArn"},{"name":"DomainName","kind":"string","optional":false,"example":"DomainName"},{"name":"SubjectAlternativeNames","kind":"string","optional":false,"example":"SubjectAlternativeNames"},{"name":"DomainValidationOptions","kind":"object","optional":false,"children":[{"name":"DomainName","kind":"string","optional":false,"example":"DomainName"},{"name":"ValidationEmails","kind":"string","optional":false,"example":"ValidationEmails"},{"name":"ValidationDomain","kind":"string","optional":false,"example":"ValidationDomain"},{"name":"ValidationStatu","kind":"string","optional":false,"example":"ValidationStatu"},{"name":"ResourceRecord","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Value","kind":"string","optional":false,"example":"Value"}]},{"name":"ValidationMethod","kind":"string","optional":false,"example":"ValidationMethod"}]},{"name":"Serial","kind":"string","optional":false,"example":"Serial"},{"name":"Subject","kind":"string","optional":false,"example":"Subject"},{"name":"Issuer","kind":"string","optional":false,"example":"Issuer"},{"name":"CreatedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"IssuedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"ImportedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"Status","kind":"string","optional":false,"example":"Status"},{"name":"RevokedAt","kind":"timestamp","optional":false,"format":"iso"},{"name":"RevocationReason","kind":"string","optional":false,"example":"RevocationReason"},{"name":"NotBefore","kind":"timestamp","optional":false,"format":"iso"},{"name":"NotAfter","kind":"timestamp","optional":false,"format":"iso"},{"name":"KeyAlgorithm","kind":"string","optional":false,"example":"KeyAlgorithm"},{"name":"SignatureAlgorithm","kind":"string","optional":false,"example":"SignatureAlgorithm"},{"name":"InUseBy","kind":"string","optional":false,"example":"InUseBy"},{"name":"FailureReason","kind":"string","optional":false,"example":"FailureReason"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"RenewalSummary","kind":"object","optional":false,"children":[{"name":"RenewalStatus","kind":"string","optional":false,"example":"RenewalStatus"},{"name":"DomainValidationOptions","kind":"object","optional":false,"children":[{"name":"DomainName","kind":"string","optional":false,"example":"DomainName"},{"name":"ValidationEmails","kind":"string","optional":false,"example":"ValidationEmails"},{"name":"ValidationDomain","kind":"string","optional":false,"example":"ValidationDomain"},{"name":"ValidationStatus","kind":"string","optional":false,"example":"ValidationStatus"},{"name":"ResourceRecord","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"Type","kind":"string","optional":false,"example":"Type"},{"name":"Value","kind":"string","optional":false,"example":"Value"}]},{"name":"ValidationMethod","kind":"string","optional":false,"example":"ValidationMethod"}]}]},{"name":"KeyUsages","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"}]},{"name":"ExtendedKeyUsages","kind":"object","optional":false,"children":[{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"OID","kind":"id","optional":false}]},{"name":"CertificateAuthorityArn","kind":"string","optional":false,"example":"CertificateAuthorityArn"},{"name":"RenewalEligibility","kind":"string","optional":false,"example":"RenewalEligibility"},{"name":"Options","kind":"object","optional":false,"children":[{"name":"CertificateTransparencyLoggingPreference","kind":"string","optional":false,"example":"CertificateTransparencyLoggingPreference"}]}]}]}]}]}},{"id":"aws-acm-list-certificates","method":"GET","pathTemplate":"/","summary":"Retrieves a list of certificate ARNs and domain names. You can request that only certificates that match a specific status be listed. You can also filter by spe","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"ACM","kind":"object","optional":false,"children":[{"name":"Certificates","kind":"object","optional":false,"children":[{"name":"CertificateArn","kind":"string","optional":false,"example":"CertificateArn"},{"name":"DomainName","kind":"string","optional":false,"example":"DomainName"},{"name":"Region","kind":"string","optional":false,"example":"Region"}]}]}]}]}},{"id":"aws-acm-add-tags-to-certificate","method":"GET","pathTemplate":"/","summary":"Adds one or more tags to an ACM certificate.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"certificateArn","kind":"string","optional":false,"example":"certificateArn"},{"name":"tags","kind":"string","optional":false,"example":"tags"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}},{"id":"aws-acm-remove-tags-from-certificate","method":"GET","pathTemplate":"/","summary":"Remove one or more tags from an ACM certificate.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"certificateArn","kind":"string","optional":false,"example":"certificateArn"},{"name":"tags","kind":"string","optional":false,"example":"tags"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}},{"id":"aws-acm-list-tags-for-certificate","method":"GET","pathTemplate":"/","summary":"Lists the tags that have been applied to the ACM certificate. Use the certificate's Amazon Resource Name (ARN) to specify the certificate.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"ACM","kind":"object","optional":false,"children":[{"name":"Certificates","kind":"object","optional":false,"children":[{"name":"Tags","kind":"object","optional":false,"children":[{"name":"Key","kind":"string","optional":false,"example":"Key"},{"name":"Value","kind":"string","optional":false,"example":"Value"}]}]}]}]}]}},{"id":"aws-acm-get-certificate","method":"GET","pathTemplate":"/","summary":"Retrieves a certificate specified by an ARN and its certificate chain . The chain is an ordered list of certificates that contains the end entity certificate, i","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"ACM","kind":"object","optional":false,"children":[{"name":"Certificates","kind":"object","optional":false,"children":[{"name":"Certificate","kind":"string","optional":false,"example":"Certificate"},{"name":"CertificateChain","kind":"string","optional":false,"example":"CertificateChain"}]}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-acm-aws-acm",
+  "name": "AWS - ACM",
+  "pack": "AWS-ACM",
+  "fidelity": "vendor",
+  "curated": false,
+  "summary": "From vendor docs. Amazon Web Services Certificate Manager Service (ACM).",
+  "operations": 6,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-acm-aws-acm",
+      "name": "AWS - ACM",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-ACM/Integrations/AWS-ACM",
+      "fidelity": "vendor",
+      "notes": [
+        "Field names come from the integration YAML command outputs, not a captured vendor response.",
+        "No HTTP path was recovered from the client. The shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-acm-describe-certificate",
+          "calls": [
+            "acm:DescribeCertificate"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-acm-describe-certificate"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/acm/latest/APIReference/API_DescribeCertificate.html"
+        },
+        {
+          "command": "aws-acm-list-certificates",
+          "calls": [
+            "acm:ListCertificates"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-acm-list-certificates"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/acm/latest/APIReference/API_ListCertificates.html"
+        },
+        {
+          "command": "aws-acm-add-tags-to-certificate",
+          "calls": [
+            "acm:AddTagsToCertificate"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "aws-acm-add-tags-to-certificate"
+          ]
+        },
+        {
+          "command": "aws-acm-remove-tags-from-certificate",
+          "calls": [
+            "acm:RemoveTagsFromCertificate"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "aws-acm-remove-tags-from-certificate"
+          ]
+        },
+        {
+          "command": "aws-acm-list-tags-for-certificate",
+          "calls": [
+            "acm:ListTagsForCertificate"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-acm-list-tags-for-certificate"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/acm/latest/APIReference/API_ListTagsForCertificate.html"
+        },
+        {
+          "command": "aws-acm-get-certificate",
+          "calls": [
+            "acm:GetCertificate"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "aws-acm-get-certificate"
+          ]
+        }
+      ],
+      "verification": {
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/acm/latest/APIReference/API_DescribeCertificate.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "3 of 6 commands from vendor docs, 3 approximate, 0 missing.",
+          "6 of 6 commands from vendor docs, 0 approximate, 0 missing."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "aws-acm-describe-certificate",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Returns detailed metadata about the specified ACM certificate.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "ACM",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Certificates",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "CertificateArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "CertificateArn"
+                        },
+                        {
+                          "name": "DomainName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "DomainName"
+                        },
+                        {
+                          "name": "SubjectAlternativeNames",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "SubjectAlternativeNames"
+                        },
+                        {
+                          "name": "DomainValidationOptions",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "DomainName",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "DomainName"
+                            },
+                            {
+                              "name": "ValidationEmails",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ValidationEmails"
+                            },
+                            {
+                              "name": "ValidationDomain",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ValidationDomain"
+                            },
+                            {
+                              "name": "ValidationStatu",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ValidationStatu"
+                            },
+                            {
+                              "name": "ResourceRecord",
+                              "kind": "object",
+                              "optional": false,
+                              "children": [
+                                {
+                                  "name": "Name",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "Name"
+                                },
+                                {
+                                  "name": "Type",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "Type"
+                                },
+                                {
+                                  "name": "Value",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "Value"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ValidationMethod",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "ValidationMethod"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Serial",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Serial"
+                        },
+                        {
+                          "name": "Subject",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Subject"
+                        },
+                        {
+                          "name": "Issuer",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Issuer"
+                        },
+                        {
+                          "name": "CreatedAt",
+                          "kind": "timestamp",
+                          "optional": false,
+                          "format": "iso"
+                        },
+                        {
+                          "name": "IssuedAt",
+                          "kind": "timestamp",
+                          "optional": false,
+                          "format": "iso"
+                        },
+                        {
+                          "name": "ImportedAt",
+                          "kind": "timestamp",
+                          "optional": false,
+                          "format": "iso"
+                        },
+                        {
+                          "name": "Status",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Status"
+                        },
+                        {
+                          "name": "RevokedAt",
+                          "kind": "timestamp",
+                          "optional": false,
+                          "format": "iso"
+                        },
+                        {
+                          "name": "RevocationReason",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "RevocationReason"
+                        },
+                        {
+                          "name": "NotBefore",
+                          "kind": "timestamp",
+                          "optional": false,
+                          "format": "iso"
+                        },
+                        {
+                          "name": "NotAfter",
+                          "kind": "timestamp",
+                          "optional": false,
+                          "format": "iso"
+                        },
+                        {
+                          "name": "KeyAlgorithm",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "KeyAlgorithm"
+                        },
+                        {
+                          "name": "SignatureAlgorithm",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "SignatureAlgorithm"
+                        },
+                        {
+                          "name": "InUseBy",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "InUseBy"
+                        },
+                        {
+                          "name": "FailureReason",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "FailureReason"
+                        },
+                        {
+                          "name": "Type",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Type"
+                        },
+                        {
+                          "name": "RenewalSummary",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "RenewalStatus",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "RenewalStatus"
+                            },
+                            {
+                              "name": "DomainValidationOptions",
+                              "kind": "object",
+                              "optional": false,
+                              "children": [
+                                {
+                                  "name": "DomainName",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "DomainName"
+                                },
+                                {
+                                  "name": "ValidationEmails",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "ValidationEmails"
+                                },
+                                {
+                                  "name": "ValidationDomain",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "ValidationDomain"
+                                },
+                                {
+                                  "name": "ValidationStatus",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "ValidationStatus"
+                                },
+                                {
+                                  "name": "ResourceRecord",
+                                  "kind": "object",
+                                  "optional": false,
+                                  "children": [
+                                    {
+                                      "name": "Name",
+                                      "kind": "string",
+                                      "optional": false,
+                                      "example": "Name"
+                                    },
+                                    {
+                                      "name": "Type",
+                                      "kind": "string",
+                                      "optional": false,
+                                      "example": "Type"
+                                    },
+                                    {
+                                      "name": "Value",
+                                      "kind": "string",
+                                      "optional": false,
+                                      "example": "Value"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "ValidationMethod",
+                                  "kind": "string",
+                                  "optional": false,
+                                  "example": "ValidationMethod"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "KeyUsages",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Name",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Name"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ExtendedKeyUsages",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Name",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Name"
+                            },
+                            {
+                              "name": "OID",
+                              "kind": "id",
+                              "optional": false
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CertificateAuthorityArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "CertificateAuthorityArn"
+                        },
+                        {
+                          "name": "RenewalEligibility",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "RenewalEligibility"
+                        },
+                        {
+                          "name": "Options",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "CertificateTransparencyLoggingPreference",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "CertificateTransparencyLoggingPreference"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "DescribeCertificate",
+        "fixture": "{\n  \"Certificate\": {\n    \"CertificateArn\": \"arn:aws:acm:us-east-1:111122223333:certificate/12345678-1234-1234-1234-123456789012\",\n    \"CreatedAt\": 1450212224.0,\n    \"DomainName\": \"example.com\",\n    \"DomainValidationOptions\": [\n      {\n        \"DomainName\": \"example.com\",\n        \"ValidationDomain\": \"example.com\",\n        \"ValidationEmails\": [\n          \"hostmaster@example.com\",\n          \"admin@example.com\",\n          \"postmaster@example.com\",\n          \"webmaster@example.com\",\n          \"administrator@example.com\"\n        ]\n      },\n      {\n        \"DomainName\": \"www.example.com\",\n        \"ValidationDomain\": \"www.example.com\",\n        \"ValidationEmails\": [\n          \"hostmaster@example.com\",\n          \"admin@example.com\",\n          \"postmaster@example.com\",\n          \"webmaster@example.com\",\n          \"administrator@example.com\"\n        ]\n      }\n    ],\n    \"InUseBy\": [\n      \"arn:aws:cloudfront::111122223333:distribution/E12KXPQHVLSYVC\"\n    ],\n    \"IssuedAt\": 1450212292.0,\n    \"Issuer\": \"Amazon\",\n    \"KeyAlgorithm\": \"RSA-2048\",\n    \"NotAfter\": 1484481600.0,\n    \"NotBefore\": 1450137600.0,\n    \"Renewal Elegibility\": \"ELIGIBLE\",\n    \"RenewalSummary\": {\n      \"DomainValidationOptions\": [\n        {\n          \"DomainName\": \"www.example.com\",\n          \"ResourceRecord\": {\n            \"Name\": \"example\",\n            \"Type\": \"CNAME\",\n            \"Value\": \"example\"\n          },\n          \"ValidationDomain\": \"www.amazon.com\",\n          \"ValidationEmails\": [\n            \"user@example.invalid\"\n          ],\n          \"ValidationMethod\": \"DNS\",\n          \"ValidationStatus\": \"SUCCESS\"\n        }\n      ],\n      \"RenewalStatus\": \"SUCCESS\",\n      \"UpdatedAt\": 1450212224.0\n    },\n    \"Serial\": \"07:71:71:f4:6b:e7:bf:63:87:e6:ad:3c:b2:0f:d0:5b\",\n    \"SignatureAlgorithm\": \"SHA256WITHRSA\",\n    \"Status\": \"ISSUED\",\n    \"Subject\": \"CN=example.com\",\n    \"SubjectAlternativeNames\": [\n      \"example.com\",\n      \"www.example.com\"\n    ]\n  }\n}\n",
+        "headerMatch": {
+          "x-amz-target": "CertificateManager.DescribeCertificate"
+        }
+      },
+      {
+        "id": "aws-acm-list-certificates",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Retrieves a list of certificate ARNs and domain names. You can request that only certificates that match a specific status be listed. You can also filter by spe",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "ACM",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Certificates",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "CertificateArn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "CertificateArn"
+                        },
+                        {
+                          "name": "DomainName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "DomainName"
+                        },
+                        {
+                          "name": "Region",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Region"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "ListCertificates",
+        "fixture": "{\n  \"CertificateSummaryList\": [\n    {\n      \"CertificateArn\": \"arn:aws:acm:region:account:certificate/12345678-1234-1234-1234-123456789012\",\n      \"DomainName\": \"www.example.com\"\n    },\n    {\n      \"CertificateArn\": \"arn:aws:acm:region:account:certificate/12345678-1234-1234-1234-123456789012\",\n      \"DomainName\": \"www.corp.net\"\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "CertificateManager.ListCertificates"
+        }
+      },
+      {
+        "id": "aws-acm-add-tags-to-certificate",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Adds one or more tags to an ACM certificate.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "certificateArn",
+              "kind": "string",
+              "optional": false,
+              "example": "certificateArn"
+            },
+            {
+              "name": "tags",
+              "kind": "string",
+              "optional": false,
+              "example": "tags"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            },
+            {
+              "name": "roleArn",
+              "kind": "string",
+              "optional": false,
+              "example": "roleArn"
+            },
+            {
+              "name": "roleSessionName",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionName"
+            },
+            {
+              "name": "roleSessionDuration",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionDuration"
+            }
+          ]
+        },
+        "awsAction": "AddTagsToCertificate",
+        "headerMatch": {
+          "x-amz-target": "CertificateManager.AddTagsToCertificate"
+        }
+      },
+      {
+        "id": "aws-acm-remove-tags-from-certificate",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Remove one or more tags from an ACM certificate.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "certificateArn",
+              "kind": "string",
+              "optional": false,
+              "example": "certificateArn"
+            },
+            {
+              "name": "tags",
+              "kind": "string",
+              "optional": false,
+              "example": "tags"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            },
+            {
+              "name": "roleArn",
+              "kind": "string",
+              "optional": false,
+              "example": "roleArn"
+            },
+            {
+              "name": "roleSessionName",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionName"
+            },
+            {
+              "name": "roleSessionDuration",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionDuration"
+            }
+          ]
+        },
+        "awsAction": "RemoveTagsFromCertificate",
+        "headerMatch": {
+          "x-amz-target": "CertificateManager.RemoveTagsFromCertificate"
+        }
+      },
+      {
+        "id": "aws-acm-list-tags-for-certificate",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Lists the tags that have been applied to the ACM certificate. Use the certificate's Amazon Resource Name (ARN) to specify the certificate.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "ACM",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Certificates",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Tags",
+                          "kind": "object",
+                          "optional": false,
+                          "children": [
+                            {
+                              "name": "Key",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Key"
+                            },
+                            {
+                              "name": "Value",
+                              "kind": "string",
+                              "optional": false,
+                              "example": "Value"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "ListTagsForCertificate",
+        "fixture": "{\n  \"Tags\": [\n    {\n      \"Key\": \"stack\",\n      \"Value\": \"production\"\n    },\n    {\n      \"Key\": \"website\",\n      \"Value\": \"example.com\"\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "CertificateManager.ListTagsForCertificate"
+        }
+      },
+      {
+        "id": "aws-acm-get-certificate",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Retrieves a certificate specified by an ARN and its certificate chain . The chain is an ordered list of certificates that contains the end entity certificate, i",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "ACM",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Certificates",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "Certificate",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Certificate"
+                        },
+                        {
+                          "name": "CertificateChain",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "CertificateChain"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "GetCertificate",
+        "headerMatch": {
+          "x-amz-target": "CertificateManager.GetCertificate"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-ACM/Integrations/AWS-ACM"
+}

@@ -1,1 +1,736 @@
-{"id":"aws-cloudwatchlogs-aws-cloudwatchlogs","name":"AWS - CloudWatchLogs","pack":"AWS-CloudWatchLogs","fidelity":"shape","curated":false,"summary":"Amazon Web Services CloudWatch Logs (logs).","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"aws-cloudwatchlogs-aws-cloudwatchlogs","name":"AWS - CloudWatchLogs","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/AWS-CloudWatchLogs/Integrations/AWS-CloudWatchLogs","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"aws-logs-create-log-group","method":"GET","pathTemplate":"/","summary":"Creates a log group with the specified name.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"logGroupName","kind":"string","optional":false,"example":"logGroupName"},{"name":"kmsKeyId","kind":"string","optional":false,"example":"kmsKeyId"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}},{"id":"aws-logs-create-log-stream","method":"GET","pathTemplate":"/","summary":"Creates a log stream for the specified log group.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"logGroupName","kind":"string","optional":false,"example":"logGroupName"},{"name":"logStreamName","kind":"string","optional":false,"example":"logStreamName"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}},{"id":"aws-logs-delete-log-group","method":"GET","pathTemplate":"/","summary":"Deletes the specified log group and permanently deletes all the archived log events associated with the log group.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"logGroupName","kind":"string","optional":false,"example":"logGroupName"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}},{"id":"aws-logs-delete-log-stream","method":"GET","pathTemplate":"/","summary":"Deletes the specified log stream and permanently deletes all the archived log events associated with the log stream.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"logGroupName","kind":"string","optional":false,"example":"logGroupName"},{"name":"logStreamName","kind":"string","optional":false,"example":"logStreamName"},{"name":"region","kind":"string","optional":false,"example":"region"},{"name":"roleArn","kind":"string","optional":false,"example":"roleArn"},{"name":"roleSessionName","kind":"string","optional":false,"example":"roleSessionName"},{"name":"roleSessionDuration","kind":"string","optional":false,"example":"roleSessionDuration"}]}},{"id":"aws-logs-filter-log-events","method":"GET","pathTemplate":"/","summary":"Lists log events from the specified log group. You can list all the log events or filter the results using a filter pattern, a time range, and the name of the l","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"CloudWatchLogs","kind":"object","optional":false,"children":[{"name":"Events","kind":"object","optional":false,"children":[{"name":"LogStreamName","kind":"string","optional":false,"example":"LogStreamName"},{"name":"Timestamp","kind":"timestamp","optional":false,"format":"iso"},{"name":"Message","kind":"string","optional":false,"example":"Message"},{"name":"IngestionTime","kind":"timestamp","optional":false,"format":"iso"},{"name":"EventId","kind":"id","optional":false}]}]}]}]}},{"id":"aws-logs-describe-log-groups","method":"GET","pathTemplate":"/","summary":"Lists the specified log groups. You can list all your log groups or filter the results by prefix. The results are ASCII-sorted by log group name.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"AWS","kind":"object","optional":false,"children":[{"name":"CloudWatchLogs","kind":"object","optional":false,"children":[{"name":"LogGroups","kind":"object","optional":false,"children":[{"name":"LogGroupName","kind":"string","optional":false,"example":"LogGroupName"},{"name":"CreationTime","kind":"number","optional":false},{"name":"RetentionInDays","kind":"number","optional":false},{"name":"MetricFilterCount","kind":"number","optional":false},{"name":"Arn","kind":"string","optional":false,"example":"Arn"},{"name":"StoredBytes","kind":"number","optional":false},{"name":"KmsKeyId","kind":"id","optional":false}]}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "aws-cloudwatchlogs-aws-cloudwatchlogs",
+  "name": "AWS - CloudWatchLogs",
+  "pack": "AWS-CloudWatchLogs",
+  "fidelity": "vendor",
+  "curated": false,
+  "summary": "From vendor docs. Amazon Web Services CloudWatch Logs (logs).",
+  "operations": 6,
+  "origin": "yaml",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "aws-cloudwatchlogs-aws-cloudwatchlogs",
+      "name": "AWS - CloudWatchLogs",
+      "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-CloudWatchLogs/Integrations/AWS-CloudWatchLogs",
+      "fidelity": "vendor",
+      "notes": [
+        "Field names come from the integration YAML command outputs, not a captured vendor response.",
+        "No HTTP path was recovered from the client. The shape is served at the catch URL root."
+      ],
+      "commandDocs": [
+        {
+          "command": "aws-logs-create-log-group",
+          "calls": [
+            "logs:CreateLogGroup"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "aws-logs-create-log-group"
+          ]
+        },
+        {
+          "command": "aws-logs-create-log-stream",
+          "calls": [
+            "logs:CreateLogStream"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "aws-logs-create-log-stream"
+          ]
+        },
+        {
+          "command": "aws-logs-delete-log-group",
+          "calls": [
+            "logs:DeleteLogGroup"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "aws-logs-delete-log-group"
+          ]
+        },
+        {
+          "command": "aws-logs-delete-log-stream",
+          "calls": [
+            "logs:DeleteLogStream"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "aws-logs-delete-log-stream"
+          ]
+        },
+        {
+          "command": "aws-logs-filter-log-events",
+          "calls": [
+            "logs:FilterLogEvents"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-logs-filter-log-events"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_FilterLogEvents.html"
+        },
+        {
+          "command": "aws-logs-describe-log-groups",
+          "calls": [
+            "logs:DescribeLogGroups"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "aws-logs-describe-log-groups"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeLogGroups.html"
+        },
+        {
+          "command": "aws-logs-describe-log-streams",
+          "calls": [
+            "logs:DescribeLogStreams"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "logs-describe-log-streams"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeLogStreams.html"
+        },
+        {
+          "command": "aws-logs-put-retention-policy",
+          "calls": [
+            "logs:PutRetentionPolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-delete-retention-policy",
+          "calls": [
+            "logs:DeleteRetentionPolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-put-log-events",
+          "calls": [
+            "logs:PutLogEvents"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "logs-put-log-events"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutLogEvents.html"
+        },
+        {
+          "command": "aws-logs-put-metric-filter",
+          "calls": [
+            "logs:PutMetricFilter"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-delete-metric-filter",
+          "calls": [
+            "logs:DeleteMetricFilter"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "aws-logs-describe-metric-filters",
+          "calls": [
+            "logs:DescribeMetricFilters"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "logs-describe-metric-filters"
+          ],
+          "docUrl": "https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeMetricFilters.html"
+        }
+      ],
+      "verification": {
+        "status": "vendor",
+        "docUrl": "https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_FilterLogEvents.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "5 of 13 commands from vendor docs, 4 approximate, 4 missing.",
+          "9 of 13 commands from vendor docs, 0 approximate, 4 missing.",
+          "13 of 13 commands from vendor docs, 0 approximate, 0 missing."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "aws-logs-create-log-group",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Creates a log group with the specified name.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "logGroupName",
+              "kind": "string",
+              "optional": false,
+              "example": "logGroupName"
+            },
+            {
+              "name": "kmsKeyId",
+              "kind": "string",
+              "optional": false,
+              "example": "kmsKeyId"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            },
+            {
+              "name": "roleArn",
+              "kind": "string",
+              "optional": false,
+              "example": "roleArn"
+            },
+            {
+              "name": "roleSessionName",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionName"
+            },
+            {
+              "name": "roleSessionDuration",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionDuration"
+            }
+          ]
+        },
+        "awsAction": "CreateLogGroup",
+        "headerMatch": {
+          "x-amz-target": "Logs_20140328.CreateLogGroup"
+        }
+      },
+      {
+        "id": "aws-logs-create-log-stream",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Creates a log stream for the specified log group.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "logGroupName",
+              "kind": "string",
+              "optional": false,
+              "example": "logGroupName"
+            },
+            {
+              "name": "logStreamName",
+              "kind": "string",
+              "optional": false,
+              "example": "logStreamName"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            },
+            {
+              "name": "roleArn",
+              "kind": "string",
+              "optional": false,
+              "example": "roleArn"
+            },
+            {
+              "name": "roleSessionName",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionName"
+            },
+            {
+              "name": "roleSessionDuration",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionDuration"
+            }
+          ]
+        },
+        "awsAction": "CreateLogStream",
+        "headerMatch": {
+          "x-amz-target": "Logs_20140328.CreateLogStream"
+        }
+      },
+      {
+        "id": "aws-logs-delete-log-group",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Deletes the specified log group and permanently deletes all the archived log events associated with the log group.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "logGroupName",
+              "kind": "string",
+              "optional": false,
+              "example": "logGroupName"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            },
+            {
+              "name": "roleArn",
+              "kind": "string",
+              "optional": false,
+              "example": "roleArn"
+            },
+            {
+              "name": "roleSessionName",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionName"
+            },
+            {
+              "name": "roleSessionDuration",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionDuration"
+            }
+          ]
+        },
+        "awsAction": "DeleteLogGroup",
+        "headerMatch": {
+          "x-amz-target": "Logs_20140328.DeleteLogGroup"
+        }
+      },
+      {
+        "id": "aws-logs-delete-log-stream",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Deletes the specified log stream and permanently deletes all the archived log events associated with the log stream.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "logGroupName",
+              "kind": "string",
+              "optional": false,
+              "example": "logGroupName"
+            },
+            {
+              "name": "logStreamName",
+              "kind": "string",
+              "optional": false,
+              "example": "logStreamName"
+            },
+            {
+              "name": "region",
+              "kind": "string",
+              "optional": false,
+              "example": "region"
+            },
+            {
+              "name": "roleArn",
+              "kind": "string",
+              "optional": false,
+              "example": "roleArn"
+            },
+            {
+              "name": "roleSessionName",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionName"
+            },
+            {
+              "name": "roleSessionDuration",
+              "kind": "string",
+              "optional": false,
+              "example": "roleSessionDuration"
+            }
+          ]
+        },
+        "awsAction": "DeleteLogStream",
+        "headerMatch": {
+          "x-amz-target": "Logs_20140328.DeleteLogStream"
+        }
+      },
+      {
+        "id": "aws-logs-filter-log-events",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Lists log events from the specified log group. You can list all the log events or filter the results using a filter pattern, a time range, and the name of the l",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "CloudWatchLogs",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "Events",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "LogStreamName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "LogStreamName"
+                        },
+                        {
+                          "name": "Timestamp",
+                          "kind": "timestamp",
+                          "optional": false,
+                          "format": "iso"
+                        },
+                        {
+                          "name": "Message",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Message"
+                        },
+                        {
+                          "name": "IngestionTime",
+                          "kind": "timestamp",
+                          "optional": false,
+                          "format": "iso"
+                        },
+                        {
+                          "name": "EventId",
+                          "kind": "id",
+                          "optional": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "FilterLogEvents",
+        "fixture": "{\n  \"events\": [\n    {\n      \"ingestionTime\": 1396035394997,\n      \"timestamp\": 1396035378989,\n      \"message\": \"ERROR Event 3\",\n      \"logStreamName\": \"my-log-stream-3\",\n      \"eventId\": \"31132629274945519779805322857203735586824454643391594505\"\n    },\n    {\n      \"ingestionTime\": 1396035394997,\n      \"timestamp\": 1396035378988,\n      \"message\": \"ERROR Event 2\",\n      \"logStreamName\": \"my-log-stream-2\",\n      \"eventId\": \"31132629274945519779805322857203735586814454643391594505\"\n    },\n    {\n      \"ingestionTime\": 1396035394997,\n      \"timestamp\": 1396035378988,\n      \"message\": \"ERROR Event 1\",\n      \"logStreamName\": \"my-log-stream-1\",\n      \"eventId\": \"31132629274945519779805322857203735586714454643391594505\"\n    }\n  ],\n  \"nextToken\": \"eJxExampleTokenwjR\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "Logs_20140328.FilterLogEvents"
+        }
+      },
+      {
+        "id": "aws-logs-describe-log-groups",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "Lists the specified log groups. You can list all your log groups or filter the results by prefix. The results are ASCII-sorted by log group name.",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 1,
+          "maxLimit": 1,
+          "timeOverridesOffset": false
+        },
+        "record": {
+          "name": "record",
+          "kind": "object",
+          "optional": false,
+          "children": [
+            {
+              "name": "AWS",
+              "kind": "object",
+              "optional": false,
+              "children": [
+                {
+                  "name": "CloudWatchLogs",
+                  "kind": "object",
+                  "optional": false,
+                  "children": [
+                    {
+                      "name": "LogGroups",
+                      "kind": "object",
+                      "optional": false,
+                      "children": [
+                        {
+                          "name": "LogGroupName",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "LogGroupName"
+                        },
+                        {
+                          "name": "CreationTime",
+                          "kind": "number",
+                          "optional": false
+                        },
+                        {
+                          "name": "RetentionInDays",
+                          "kind": "number",
+                          "optional": false
+                        },
+                        {
+                          "name": "MetricFilterCount",
+                          "kind": "number",
+                          "optional": false
+                        },
+                        {
+                          "name": "Arn",
+                          "kind": "string",
+                          "optional": false,
+                          "example": "Arn"
+                        },
+                        {
+                          "name": "StoredBytes",
+                          "kind": "number",
+                          "optional": false
+                        },
+                        {
+                          "name": "KmsKeyId",
+                          "kind": "id",
+                          "optional": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "awsAction": "DescribeLogGroups",
+        "fixture": "{\n  \"logGroups\": [\n    {\n      \"arn\": \"arn:aws:logs:us-east-1:123456789012:log-group:monitoring-logGroup-1234:*\",\n      \"creationTime\": 1393545600000,\n      \"logGroupName\": \"monitoring-logGroup-1234\"\n    },\n    {\n      \"arn\": \"arn:aws:logs:us-east-1:012345678901:log-group:source-loggroup-5678:*\",\n      \"creationTime\": 1396224000000,\n      \"logGroupName\": \"source-loggroup-5678\"\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "Logs_20140328.DescribeLogGroups"
+        }
+      },
+      {
+        "id": "logs-describe-log-streams",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "logs DescribeLogStreams",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DescribeLogStreams",
+        "fixture": "{\n  \"logStreams\": [\n    {\n      \"storedBytes\": 0,\n      \"arn\": \"arn:aws:logs:us-east-1:123456789012:log-group:my-log-group-1:log-stream:my-log-stream-1\",\n      \"creationTime\": 1393545600000,\n      \"firstEventTimestamp\": 1393545600000,\n      \"lastEventTimestamp\": 1393567800000,\n      \"lastIngestionTime\": 1393589200000,\n      \"logStreamName\": \"my-log-stream-1\"\n    },\n    {\n      \"storedBytes\": 0,\n      \"arn\": \"arn:aws:logs:us-east-1:123456789012:log-group:my-log-group-2:log-stream:my-log-stream-2\",\n      \"creationTime\": 1396224000000,\n      \"firstEventTimestamp\": 1396224000000,\n      \"lastEventTimestamp\": 1396235500000,\n      \"lastIngestionTime\": 1396225560000,\n      \"logStreamName\": \"my-log-stream-2\"\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "Logs_20140328.DescribeLogStreams"
+        }
+      },
+      {
+        "id": "logs-put-log-events",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "logs PutLogEvents",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "PutLogEvents",
+        "fixture": "{\n  \"nextSequenceToken\": \"49536701251539826331025683274032969384950891766572122113\"\n}\n",
+        "headerMatch": {
+          "x-amz-target": "Logs_20140328.PutLogEvents"
+        }
+      },
+      {
+        "id": "logs-describe-metric-filters",
+        "method": "POST",
+        "pathTemplate": "/",
+        "summary": "logs DescribeMetricFilters",
+        "status": 200,
+        "contentType": "application/x-amz-json-1.1",
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "awsAction": "DescribeMetricFilters",
+        "fixture": "{\n  \"metricFilters\": [\n    {\n      \"applyOnTransformedLogs\": true,\n      \"creationTime\": 1396224000000,\n      \"filterName\": \"my-metric-filter\",\n      \"filterPattern\": \"[ip, identity, user_id, timestamp, request, status_code, size]\",\n      \"logGroupName\": \"my-log-group\",\n      \"metricTransformations\": [\n        {\n          \"defaultValue\": \"0\",\n          \"metricValue\": \"$size\",\n          \"metricNamespace\": \"my-app\",\n          \"metricName\": \"Volume\"\n        }\n      ]\n    }\n  ]\n}\n",
+        "headerMatch": {
+          "x-amz-target": "Logs_20140328.DescribeMetricFilters"
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "xsoar",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none"
+    },
+    "totalRecords": 200,
+    "auth": {
+      "mode": "none"
+    }
+  },
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AWS-CloudWatchLogs/Integrations/AWS-CloudWatchLogs"
+}
