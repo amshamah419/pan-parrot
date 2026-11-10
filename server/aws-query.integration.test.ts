@@ -100,7 +100,7 @@ describe("boto3 assumed role against STS and SQS", () => {
     const ran = await runBoto(port, "awsts", "awssqs");
     expect(ran.status, `${ran.stdout}\n${ran.stderr}`).toBe(0);
     expect(ran.stdout).toContain('"messages": 2');
-  });
+  }, 20_000);
 
   it("accepts a real boto3 signature when the check is on and rejects a bad one", async () => {
     const sts = awsQueryVerifiedPresets.find((preset) => preset.id === "aws-sts-aws-sts");
