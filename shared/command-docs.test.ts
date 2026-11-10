@@ -28,10 +28,18 @@ describe("AWS command coverage", () => {
       }
       return { vendor, approximate, missing };
     };
-    const aws = sums(covered.filter((preset) => !preset.id.startsWith("microsoftgraph")));
+    const aws = sums(covered.filter((preset) => preset.id.startsWith("aws-") || preset.id === "feedaws-feedaws"));
     expect(aws).toEqual({ vendor: 419, approximate: 34, missing: 219 });
     const graph = sums(covered.filter((preset) => preset.id.startsWith("microsoftgraph")));
-    expect(graph).toEqual({ vendor: 91, approximate: 5, missing: 194 });
+    expect(graph).toEqual({ vendor: 98, approximate: 5, missing: 187 });
+    const defender = sums(
+      covered.filter(
+        (preset) =>
+          preset.id === "microsoftdefenderadvancedthreatprotection-microsoftdefenderadvancedthreatprotect" ||
+          preset.id === "azuresentinel-azuresentinel",
+      ),
+    );
+    expect(defender).toEqual({ vendor: 38, approximate: 0, missing: 79 });
 
     const iam = JSON.parse(readFileSync("public/presets/integrations/aws-iam-aws-iam.json", "utf8")) as {
       spec: Parameters<typeof validateMockSpec>[0];

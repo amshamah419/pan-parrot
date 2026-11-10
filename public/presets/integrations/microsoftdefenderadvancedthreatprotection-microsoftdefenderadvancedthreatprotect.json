@@ -3,9 +3,9 @@
   "name": "Microsoft Defender for Endpoint",
   "pack": "MicrosoftDefenderAdvancedThreatProtection",
   "vendor": "Microsoft",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "The checker matched GET /api/alerts.",
+  "summary": "From vendor docs. The checker matched GET /api/alerts.",
   "notes": [
     "The checker matched GET /api/alerts. Domain-scoped alerts are not modeled."
   ],
@@ -17,20 +17,600 @@
       "kind": "preset",
       "id": "microsoftdefenderadvancedthreatprotection-microsoftdefenderadvancedthreatprotect",
       "name": "Microsoft Defender for Endpoint",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Vendor public API reference plus demisto/content (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/defender-endpoint/api/get-alerts",
       "notes": [
         "The checker matched GET /api/alerts. Domain-scoped alerts are not modeled."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://learn.microsoft.com/en-us/defender-endpoint/api/get-alerts",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/defender-endpoint/api/alerts",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The checker matched GET /api/alerts. Domain-scoped alerts are not modeled."
+          "13 of 81 commands from vendor docs, 0 approximate, 68 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "microsoft-atp-get-machine-by-ip",
+          "calls": [
+            "GET /api/machines/findbyip(ip='{ip}',timestamp={timestamp})"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-test",
+          "calls": [
+            "GET /api/alerts"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-isolate-machine",
+          "calls": [
+            "POST /api/machines/{machine_id}/isolate"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-unisolate-machine",
+          "calls": [
+            "POST /api/machines/{machine_id}/unisolate"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-machines",
+          "calls": [
+            "GET /api/machines"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-file-related-machines",
+          "calls": [
+            "GET /api/files/{file}/machines"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-machine-details",
+          "calls": [
+            "GET /api/machines/{machine_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-run-antivirus-scan",
+          "calls": [
+            "POST /api/machines/{machine_id}/runAntiVirusScan"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-list-alerts",
+          "calls": [
+            "GET /api/alerts"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-update-alert",
+          "calls": [
+            "PATCH /api/alerts/{alert_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-advanced-hunting",
+          "calls": [
+            "POST /api/advancedqueries/run"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--api-advancedqueries-run"
+          ]
+        },
+        {
+          "command": "microsoft-atp-create-alert",
+          "calls": [
+            "POST /api/alerts/CreateAlertByReference"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-alert-related-user",
+          "calls": [
+            "GET /api/alerts/{id}/user"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-alert-related-files",
+          "calls": [
+            "GET /api/alerts/{id}/files"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-alert-related-ips",
+          "calls": [
+            "GET /api/alerts/{id}/ips"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-alert-related-domains",
+          "calls": [
+            "GET /api/alerts/{id}/domains"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-list-machine-actions-details",
+          "calls": [
+            "GET /api/machineactions/{id}",
+            "GET /api/machineactions",
+            "GET /api/machineactions/{action_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-collect-investigation-package",
+          "calls": [
+            "POST /api/machines/{machine_id}/collectInvestigationPackage"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-investigation-package-sas-uri",
+          "calls": [
+            "GET /api/machineactions/{action_id}/getPackageUri"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-restrict-app-execution",
+          "calls": [
+            "POST /api/machines/{machine_id}/restrictCodeExecution"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-remove-app-restriction",
+          "calls": [
+            "POST /api/machines/{machine_id}/unrestrictCodeExecution"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-stop-and-quarantine-file",
+          "calls": [
+            "GET /api/investigations/{id}",
+            "GET /api/investigations"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-list-investigations",
+          "calls": [
+            "GET /api/investigations/{id}",
+            "GET /api/investigations"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-start-investigation",
+          "calls": [
+            "POST /api/machines/{machine_id}/startInvestigation"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-domain-statistics",
+          "calls": [
+            "GET /api/domains/{domain}/stats"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--api-domains-domain-stats"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/defender-endpoint/api/get-domain-statistics"
+        },
+        {
+          "command": "microsoft-atp-get-domain-alerts",
+          "calls": [
+            "GET /api/domains/{domain}/alerts"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-domain-machines",
+          "calls": [
+            "GET /api/domains/{domain}/machines"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-file-statistics",
+          "calls": [
+            "GET /api/files/{file_hash}/stats"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-file-alerts",
+          "calls": [
+            "GET /api/files/{file_hash}/alerts"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-ip-statistics",
+          "calls": [
+            "GET /api/ips/{ip}/stats"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--api-ips-ip-stats"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/defender-endpoint/api/get-ip-statistics"
+        },
+        {
+          "command": "microsoft-atp-get-ip-alerts",
+          "calls": [
+            "GET /api/ips/{ip}/alerts"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-user-alerts",
+          "calls": [
+            "GET /api/users/{username}/alerts"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-user-machines",
+          "calls": [
+            "GET /api/users/{username}/machines"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-add-remove-machine-tag",
+          "calls": [
+            "POST /api/machines/{machine_id}/tags"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-indicator-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-indicator-get-by-id",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-indicator-create-file",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-indicator-create-network",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-indicator-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-indicator-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-sc-indicator-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-sc-indicator-create",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-sc-indicator-delete",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-sc-indicator-list",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-sc-indicator-get-by-id",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-list-machines-by-software",
+          "calls": [
+            "GET /api/Software/{software_id}/machineReferences"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-list-missing-kb-by-software",
+          "calls": [
+            "GET /api/Software/{software_id}/getmissingkbs"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-list-vulnerabilities-by-software",
+          "calls": [
+            "GET /api/Software/{software_id}/vulnerabilities"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-list-software",
+          "calls": [
+            "GET /api/Software"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-list-vulnerabilities-by-machine",
+          "calls": [
+            "GET /api/vulnerabilities/machinesVulnerabilities"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-list-vulnerabilities",
+          "calls": [
+            "GET /api/vulnerabilities"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-list-software-version-distribution",
+          "calls": [
+            "GET /api/Software/{software_id}/distributions"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-list-machines-by-vulnerability",
+          "calls": [
+            "GET /api/vulnerabilities/{cve_id}/machineReferences"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-file-info",
+          "calls": [
+            "GET /api/files/{file_hash}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--api-files-file-hash"
+          ],
+          "docUrl": "https://learn.microsoft.com/en-us/defender-endpoint/api/get-file-information"
+        },
+        {
+          "command": "endpoint",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-indicator-batch-update",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-alert-by-id",
+          "calls": [
+            "GET /api/alerts/{alert_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--api-alerts-alert-id"
+          ]
+        },
+        {
+          "command": "microsoft-atp-live-response-get-file",
+          "calls": [
+            "POST /api/machineactions/{action_id}/cancel"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-live-response-run-script",
+          "calls": [
+            "POST /api/machineactions/{action_id}/cancel"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-live-response-put-file",
+          "calls": [
+            "POST /api/machineactions/{action_id}/cancel"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-live-response-result",
+          "calls": [
+            "GET /api/machineactions/{machine_action_id}/GetLiveResponseResultDownloadLink(index={command_index})",
+            "GET /value"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-live-response-cancel-action",
+          "calls": [
+            "POST /api/machineactions/{action_id}/cancel"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-advanced-hunting-lateral-movement-evidence",
+          "calls": [
+            "POST /api/advancedqueries/run"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--api-advancedqueries-run"
+          ]
+        },
+        {
+          "command": "microsoft-atp-advanced-hunting-persistence-evidence",
+          "calls": [
+            "POST /api/advancedqueries/run"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--api-advancedqueries-run"
+          ]
+        },
+        {
+          "command": "microsoft-atp-advanced-hunting-file-origin",
+          "calls": [
+            "POST /api/advancedqueries/run"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--api-advancedqueries-run"
+          ]
+        },
+        {
+          "command": "microsoft-atp-advanced-hunting-process-details",
+          "calls": [
+            "POST /api/advancedqueries/run"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--api-advancedqueries-run"
+          ]
+        },
+        {
+          "command": "microsoft-atp-advanced-hunting-network-connections",
+          "calls": [
+            "POST /api/advancedqueries/run"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--api-advancedqueries-run"
+          ]
+        },
+        {
+          "command": "microsoft-atp-advanced-hunting-privilege-escalation",
+          "calls": [
+            "POST /api/advancedqueries/run"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--api-advancedqueries-run"
+          ]
+        },
+        {
+          "command": "microsoft-atp-advanced-hunting-tampering",
+          "calls": [
+            "POST /api/advancedqueries/run"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--api-advancedqueries-run"
+          ]
+        },
+        {
+          "command": "microsoft-atp-advanced-hunting-cover-up",
+          "calls": [
+            "POST /api/advancedqueries/run"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "post--api-advancedqueries-run"
+          ]
+        },
+        {
+          "command": "microsoft-atp-get-machine-users",
+          "calls": [
+            "GET /api/machines/{machine_id}/logonusers"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-machine-alerts",
+          "calls": [
+            "GET /api/machines/{machine_id}/alerts"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-request-and-download-investigation-package",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-offboard-machine",
+          "calls": [
+            "POST /api/machines/{machine_id}/offboard"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-generate-login-url",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-auth-reset",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-list-auth-permissions",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-machine-software",
+          "calls": [
+            "GET /api/machines/{machine_id}/software"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-machine-missing-kbs",
+          "calls": [
+            "GET /api/machines/{machine_id}/getmissingkbs"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "file",
+          "calls": [],
+          "status": "missing"
+        },
+        {
+          "command": "microsoft-atp-get-machine-vulnerabilities",
+          "calls": [
+            "GET /api/machines/{machine_id}/vulnerabilities"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
@@ -108,6 +688,151 @@
             }
           ]
         }
+      },
+      {
+        "id": "get--api-alerts-alert-id",
+        "summary": "GET /api/alerts/{alert_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/alerts/{alert_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"da637472900382838869_1364969609\",\n  \"incidentId\": 1126093,\n  \"investigationId\": null,\n  \"assignedTo\": null,\n  \"severity\": \"Low\",\n  \"status\": \"New\",\n  \"classification\": null,\n  \"determination\": null,\n  \"investigationState\": \"Queued\",\n  \"detectionSource\": \"WindowsDefenderAtp\",\n  \"detectorId\": \"17e10bbc-3a68-474a-8aad-faef14d43952\",\n  \"category\": \"Execution\",\n  \"threatFamilyName\": null,\n  \"title\": \"Low-reputation arbitrary code executed by signed executable\",\n  \"description\": \"Binaries signed by Microsoft can be used to run low-reputation arbitrary code. This technique hides the execution of malicious code within a trusted process. As a result, the trusted process might exhibit suspicious behaviors, such as opening a listening port or connecting to a command-and-control (C&C) server.\",\n  \"alertCreationTime\": \"2021-01-26T20:33:57.7220239Z\",\n  \"firstEventTime\": \"2021-01-26T20:31:32.9562661Z\",\n  \"lastEventTime\": \"2021-01-26T20:31:33.0577322Z\",\n  \"lastUpdateTime\": \"2021-01-26T20:33:59.2Z\",\n  \"resolvedTime\": null,\n  \"machineId\": \"111e6dd8c833c8a052ea231ec1b19adaf497b625\",\n  \"computerDnsName\": \"temp123.middleeast.corp.microsoft.com\",\n  \"rbacGroupName\": \"A\",\n  \"aadTenantId\": \"a839b112-1253-6432-9bf6-94542403f21c\",\n  \"threatName\": null,\n  \"mitreTechniques\": [\n    \"T1064\",\n    \"T1085\",\n    \"T1220\"\n  ],\n  \"relatedUser\": {\n    \"userName\": \"temp123\",\n    \"domainName\": \"DOMAIN\"\n  },\n  \"comments\": [\n    {\n      \"comment\": \"test comment for docs\",\n      \"createdBy\": \"user2@example.invalid\",\n      \"createdTime\": \"2021-01-26T01:00:37.8404534Z\"\n    }\n  ],\n  \"evidence\": [\n    {\n      \"entityType\": \"User\",\n      \"evidenceCreationTime\": \"2021-01-26T20:33:58.42Z\",\n      \"sha1\": null,\n      \"sha256\": null,\n      \"fileName\": null,\n      \"filePath\": null,\n      \"processId\": null,\n      \"processCommandLine\": null,\n      \"processCreationTime\": null,\n      \"parentProcessId\": null,\n      \"parentProcessCreationTime\": null,\n      \"parentProcessFileName\": null,\n      \"parentProcessFilePath\": null,\n      \"ipAddress\": null,\n      \"url\": null,\n      \"registryKey\": null,\n      \"registryHive\": null,\n      \"registryValueType\": null,\n      \"registryValue\": null,\n      \"accountName\": \"name\",\n      \"domainName\": \"DOMAIN\",\n      \"userSid\": \"S-1-5-21-11111607-1111760036-109187956-75141\",\n      \"aadUserId\": \"11118379-2a59-1111-ac3c-a51eb4a3c627\",\n      \"userPrincipalName\": \"user@example.invalid\",\n      \"detectionStatus\": null\n    },\n    {\n      \"entityType\": \"Process\",\n      \"evidenceCreationTime\": \"2021-01-26T20:33:58.6133333Z\",\n      \"sha1\": \"ff836cfb1af40252bd2a2ea843032e99a5b262ed\",\n      \"sha256\": \"a4752c71d81afd3d5865d24ddb11a6b0c615062fcc448d24050c2172d2cbccd6\",\n      \"fileName\": \"rundll32.exe\",\n      \"filePath\": \"C:\\\\Windows\\\\SysWOW64\",\n      \"processId\": 3276,\n      \"processCommandLine\": \"rundll32.exe  c:\\\\temp\\\\suspicious.dll,RepeatAfterMe\",\n      \"processCreationTime\": \"2021-01-26T20:31:32.9581596Z\",\n      \"parentProcessId\": 8420,\n      \"parentProcessCreationTime\": \"2021-01-26T20:31:32.9004163Z\",\n      \"parentProcessFileName\": \"rundll32.exe\",\n      \"parentProcessFilePath\": \"C:\\\\Windows\\\\System32\",\n      \"ipAddress\": null,\n      \"url\": null,\n      \"registryKey\": null,\n      \"registryHive\": null,\n      \"registryValueType\": null,\n      \"registryValue\": null,\n      \"accountName\": null,\n      \"domainName\": null,\n      \"userSid\": null,\n      \"aadUserId\": null,\n      \"userPrincipalName\": null,\n      \"detectionStatus\": \"Detected\"\n    },\n    {\n      \"entityType\": \"File\",\n      \"evidenceCreationTime\": \"2021-01-26T20:33:58.42Z\",\n      \"sha1\": \"8563f95b2f8a284fc99da44500cd51a77c1ff36c\",\n      \"sha256\": \"dc0ade0c95d6db98882bc8fa6707e64353cd6f7767ff48d6a81a6c2aef21c608\",\n      \"fileName\": \"suspicious.dll\",\n      \"filePath\": \"c:\\\\temp\",\n      \"processId\": null,\n      \"processCommandLine\": null,\n      \"processCreationTime\": null,\n      \"parentProcessId\": null,\n      \"parentProcessCreationTime\": null,\n      \"parentProcessFileName\": null,\n      \"parentProcessFilePath\": null,\n      \"ipAddress\": null,\n      \"url\": null,\n      \"registryKey\": null,\n      \"registryHive\": null,\n      \"registryValueType\": null,\n      \"registryValue\": null,\n      \"accountName\": null,\n      \"domainName\": null,\n      \"userSid\": null,\n      \"aadUserId\": null,\n      \"userPrincipalName\": null,\n      \"detectionStatus\": \"Detected\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "post--api-advancedqueries-run",
+        "summary": "POST /api/advancedqueries/run",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/api/advancedqueries/run",
+        "contentType": "application/json",
+        "fixture": "{\n  \"Schema\": [\n    {\n      \"Name\": \"Timestamp\",\n      \"Type\": \"DateTime\"\n    },\n    {\n      \"Name\": \"FileName\",\n      \"Type\": \"String\"\n    },\n    {\n      \"Name\": \"InitiatingProcessFileName\",\n      \"Type\": \"String\"\n    },\n    {\n      \"Name\": \"DeviceId\",\n      \"Type\": \"String\"\n    }\n  ],\n  \"Results\": [\n    {\n      \"Timestamp\": \"2020-02-05T01:10:26.2648757Z\",\n      \"FileName\": \"csc.exe\",\n      \"InitiatingProcessFileName\": \"powershell.exe\",\n      \"DeviceId\": \"10cbf9182d4e95660362f65cfa67c7731f62fdb3\"\n    },\n    {\n      \"Timestamp\": \"2020-02-05T01:10:26.5614772Z\",\n      \"FileName\": \"csc.exe\",\n      \"InitiatingProcessFileName\": \"powershell.exe\",\n      \"DeviceId\": \"10cbf9182d4e95660362f65cfa67c7731f62fdb3\"\n    }\n  ]\n}\n"
+      },
+      {
+        "id": "get--api-domains-domain-stats",
+        "summary": "GET /api/domains/{domain}/stats",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/domains/{domain}/stats",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://api.security.microsoft.com/api/$metadata#microsoft.windowsDefenderATP.api.InOrgDomainStats\",\n  \"host\": \"example.com\",\n  \"organizationPrevalence\": 4070,\n  \"orgFirstSeen\": \"2017-07-30T13:23:48Z\",\n  \"orgLastSeen\": \"2017-08-29T13:09:05Z\"\n}\n"
+      },
+      {
+        "id": "get--api-ips-ip-stats",
+        "summary": "GET /api/ips/{ip}/stats",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/ips/{ip}/stats",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://api.security.microsoft.com/api/$metadata#microsoft.windowsDefenderATP.api.InOrgIPStats\",\n  \"ipAddress\": \"10.209.67.177\",\n  \"organizationPrevalence\": 63515,\n  \"orgFirstSeen\": \"2017-07-30T13:36:06Z\",\n  \"orgLastSeen\": \"2017-08-29T13:32:59Z\"\n}\n"
+      },
+      {
+        "id": "get--api-files-file-hash",
+        "summary": "GET /api/files/{file_hash}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/files/{file_hash}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"@odata.context\": \"https://api.security.microsoft.com/api/$metadata#Files/$entity\",\n  \"sha1\": \"4388963aaa83afe2042a46a3c017ad50bdcdafb3\",\n  \"sha256\": \"413c58c8267d2c8648d8f6384bacc2ae9c929b2b96578b6860b5087cd1bd6462\",\n  \"globalPrevalence\": 180022,\n  \"globalFirstObserved\": \"2017-09-19T03:51:27.6785431Z\",\n  \"globalLastObserved\": \"2020-01-06T03:59:21.3229314Z\",\n  \"size\": 22139496,\n  \"fileType\": \"APP\",\n  \"isPeFile\": true,\n  \"filePublisher\": \"CHENGDU YIWO Tech Development Co., Ltd.\",\n  \"fileProductName\": \"EaseUS MobiSaver for Android\",\n  \"signer\": \"CHENGDU YIWO Tech Development Co., Ltd.\",\n  \"issuer\": \"VeriSign Class 3 Code Signing 2010 CA\",\n  \"signerHash\": \"6c3245d4a9bc0244d99dff27af259cbbae2e2d16\",\n  \"isValidCertificate\": false,\n  \"determinationType\": \"Pua\",\n  \"determinationValue\": \"PUA:Win32/FusionCore\"\n}\n"
       }
     ],
     "chaos": {
