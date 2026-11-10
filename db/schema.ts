@@ -78,6 +78,8 @@ export const endpoints = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
+    integrationId: text("integration_id"),
+    integrationVersion: text("integration_version"),
   },
   (table) => [index("endpoints_user_idx").on(table.userId)],
 );
@@ -187,6 +189,8 @@ export const apiTokens = pgTable(
     name: text("name").notNull(),
     tokenHash: text("token_hash").notNull(),
     prefix: text("prefix").notNull(),
+    scopes: text("scopes").notNull().default("mocks:read,mocks:write"),
+    expiresAt: timestamp("expires_at", { withTimezone: true, mode: "date" }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
       .notNull()
       .defaultNow(),

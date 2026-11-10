@@ -83,9 +83,13 @@ export default function Docs() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-muted-foreground">
-              <pre className="overflow-auto rounded bg-muted p-3 text-xs text-foreground">{`npm run parrot -- login --url https://your-site --token pp_...
-npm run parrot -- create --name "Hello" --yaml HelloWorld.yml
-npm run parrot -- export <endpoint-id> --out ./tests`}</pre>
+              <pre className="overflow-auto rounded bg-muted p-3 text-xs text-foreground">{`panparrot --json login --url https://your-site --token pp_...
+panparrot --json mocks create --from-yml HelloWorld.yml --test-data ./test_data
+panparrot --json instance-config --mock <id>
+panparrot --json xsiam configure-instance --mock <id> --integration HelloWorld --instance-name lab --dry-run`}</pre>
+              <p>
+                Tokens expire (90 days unless you choose otherwise, one year at most) and carry <code>mocks:read</code> and <code>mocks:write</code>. <code>/api/v1</code> is a quiet 404 without a live bearer token. The copy-paste agent recipe is in <code>docs/agent-usage.md</code>. XSIAM credentials stay on your machine. XSIAM has to reach the catch URL.
+              </p>
               <p>
                 <code>create --preset &lt;id&gt;</code> uses a catalog preset. <code>mocks</code> lists what you already have.
                 Export writes <code>test_pan_parrot.py</code> and <code>test_data.json</code> for <code>requests_mock</code>. The tests do not call the live catch URL, and dummy mock credentials are not included.

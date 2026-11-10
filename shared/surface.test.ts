@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ipInCidrs, validCidrList } from "./cidr";
-import { CATCH_ID_BYTES, catchIdBits, isAdminSurface, isBadCrawler, isScannerPath } from "./surface";
+import { CATCH_ID_BYTES, agentBearerLooksValid, catchIdBits, isAdminSurface, isBadCrawler, isScannerPath } from "./surface";
 import { signGate, verifyGate } from "./gate-cookie";
 
 describe("public surface", () => {
@@ -23,6 +23,13 @@ describe("public surface", () => {
     expect(isBadCrawler("sqlmap/1.7")).toBe(true);
     expect(isBadCrawler("Mozilla/5.0")).toBe(false);
     expect(isBadCrawler("python-requests/2.31")).toBe(false);
+  });
+
+  it("accepts only a shaped personal token for the agent API", () => {
+    const token = `pp_${"a".repeat(43)}`;
+    expect(agentBearerLooksValid(`Bearer ${token}`)).toBe(true);
+    expect(agentBearerLooksValid("Bearer short")).toBe(false);
+    expect(agentBearerLooksValid(null)).toBe(false);
   });
 
   it("recognizes the admin surface", () => {

@@ -71,6 +71,11 @@ export function isBadCrawler(userAgent: string | null | undefined): boolean {
   return BAD_UA.some((name) => ua.includes(name));
 }
 
+/** A personal token is `pp_` plus 32 bytes of base64url. The edge only checks the shape. */
+export function agentBearerLooksValid(header: string | null | undefined): boolean {
+  return /^Bearer pp_[A-Za-z0-9_-]{43,80}$/.test((header || "").trim());
+}
+
 export function isAdminSurface(pathname: string): boolean {
   return pathname === "/admin" || pathname.startsWith("/admin/") || pathname.startsWith("/api/admin");
 }

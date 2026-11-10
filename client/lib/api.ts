@@ -114,13 +114,17 @@ export async function recordUpstreamCall(input: {
 }
 
 export async function listApiTokens(): Promise<
-  Array<{ id: string; name: string; prefix: string; created: string; lastUsed: string | null }>
+  Array<{ id: string; name: string; prefix: string; scopes: string[]; created: string; expires: string; lastUsed: string | null }>
 > {
   return apiRequest("/api/tokens");
 }
 
-export async function createApiToken(name: string): Promise<{ id: string; name: string; prefix: string; token: string }> {
-  return apiRequest("/api/tokens", { method: "POST", body: JSON.stringify({ name }) });
+export async function createApiToken(input: {
+  name: string;
+  days?: number;
+  scopes?: string[];
+}): Promise<{ id: string; name: string; prefix: string; token: string; scopes: string[]; expires: string }> {
+  return apiRequest("/api/tokens", { method: "POST", body: JSON.stringify(input) });
 }
 
 export async function revokeApiToken(tokenId: string): Promise<{ ok: boolean }> {

@@ -12,6 +12,7 @@ export interface InstanceGuide {
   brand: string;
   display: string;
   rows: InstanceRow[];
+  values: Array<{ name: string; value: unknown }>;
   download: { filename: string; json: string } | null;
 }
 
@@ -207,6 +208,7 @@ export function instanceGuide(
     brand: integration.brand,
     display: integration.display,
     rows,
+    values: data,
     download: data.length
       ? { filename: `${safeBrand}-instance.json`, json: JSON.stringify(body, null, 2) }
       : null,
