@@ -1,1 +1,191 @@
-{"id":"cloudflarewaf-cloudflarewaf","name":"Cloudflare WAF","pack":"CloudflareWAF","fidelity":"sample","curated":false,"summary":"Cloudflare WAF integration allows customers to manage firewall rules, filters, and IP-lists. It also allows to retrieve zones list for each account.","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"cloudflarewaf-cloudflarewaf","name":"Cloudflare WAF","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CloudflareWAF/Integrations/CloudflareWAF","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-by-tag-match-json","method":"GET","pathTemplate":"/client/v4/accounts/{arg_account}/rulesets/{ruleset_id}/versions/{version}/by_tag/{tag}","summary":"test_data/by_tag_match.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"result","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"managed_ruleset_id_1"},{"name":"name","kind":"string","optional":false,"example":"Cloudflare Managed Ruleset"},{"name":"description","kind":"string","optional":false,"example":"Managed ruleset created by Cloudflare"},{"name":"kind","kind":"string","optional":false,"example":"managed"},{"name":"phase","kind":"string","optional":false,"example":"http_request_firewall_managed"},{"name":"source","kind":"string","optional":false,"example":"firewall_managed"},{"name":"version","kind":"string","optional":false,"example":"2"},{"name":"last_updated","kind":"timestamp","optional":false,"example":"2023-02-20T14:30:00Z","format":"iso"},{"name":"rules","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"rule_id_1"},{"name":"description","kind":"string","optional":false,"example":"Detect WordPress attacks"},{"name":"action","kind":"string","optional":false,"example":"block"},{"name":"categories","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"wordpress"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"enabled","kind":"boolean","optional":false}]},"minItems":0,"maxItems":2,"pageItems":false}]},{"name":"success","kind":"boolean","optional":false},{"name":"errors","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"messages","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-by-tag-no-match-json","method":"GET","pathTemplate":"/client/v4/accounts/{ACCOUNT_ID}/rulesets/{ruleset_id}/versions/{version}/by_tag/{tag}","summary":"test_data/by_tag_no_match.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"result","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"managed_ruleset_id_1"},{"name":"name","kind":"string","optional":false,"example":"Cloudflare Managed Ruleset"},{"name":"description","kind":"string","optional":false,"example":"Managed ruleset created by Cloudflare"},{"name":"kind","kind":"string","optional":false,"example":"managed"},{"name":"phase","kind":"string","optional":false,"example":"http_request_firewall_managed"},{"name":"source","kind":"string","optional":false,"example":"firewall_managed"},{"name":"version","kind":"string","optional":false,"example":"2"},{"name":"last_updated","kind":"timestamp","optional":false,"example":"2023-02-20T14:30:00Z","format":"iso"}]},{"name":"success","kind":"boolean","optional":false},{"name":"errors","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"messages","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-create-filter-json","method":"GET","pathTemplate":"/client/v4/zones/{ZONE_ID}/rulesets/phases/{phase}/entrypoint/versions/{version}","summary":"test_data/create_filter.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"result","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"filter_id"},{"name":"paused","kind":"boolean","optional":false},{"name":"expression","kind":"string","optional":false,"example":"(ip.src eq 120.2.2.8)"}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"success","kind":"boolean","optional":false},{"name":"errors","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"messages","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-create-firewall-rule-json","method":"GET","pathTemplate":"/client/v4/accounts/{arg_account}/rulesets/phases/{phase}/entrypoint/versions","summary":"test_data/create_firewall_rule.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"result","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"firewall_rule_id"},{"name":"paused","kind":"boolean","optional":false},{"name":"action","kind":"string","optional":false,"example":"block"},{"name":"priority","kind":"integer","optional":false},{"name":"filter","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"f72dc275945a44038ba19be51a0b3438"},{"name":"expression","kind":"string","optional":false,"example":"(ip.src eq 120.2.2.8)"},{"name":"paused","kind":"boolean","optional":false}]},{"name":"created_on","kind":"timestamp","optional":false,"example":"2022-04-25T13:48:50Z","format":"iso"},{"name":"modified_on","kind":"timestamp","optional":false,"example":"2022-04-25T13:48:50Z","format":"iso"},{"name":"index","kind":"integer","optional":false}]},"minItems":0,"maxItems":1,"pageItems":false},{"name":"success","kind":"boolean","optional":false},{"name":"errors","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"messages","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-create-ip-list-json","method":"GET","pathTemplate":"/client/v4/accounts/{arg_account}/rulesets/{ruleset_id}/versions/{version}","summary":"test_data/create_ip_list.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"result","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"list_id"},{"name":"name","kind":"string","optional":false,"example":"list_name"},{"name":"kind","kind":"string","optional":false,"example":"ip"},{"name":"num_items","kind":"integer","optional":false},{"name":"num_referencing_filters","kind":"integer","optional":false},{"name":"created_on","kind":"timestamp","optional":false,"example":"2022-04-26T11:42:55Z","format":"iso"},{"name":"modified_on","kind":"timestamp","optional":false,"example":"2022-04-26T11:42:55Z","format":"iso"}]},{"name":"success","kind":"boolean","optional":false},{"name":"errors","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"messages","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-create-ruleset-json","method":"GET","pathTemplate":"/client/v4/accounts/{arg_account}/rulesets/{ruleset_id}/rules/{rule_id}","summary":"test_data/create_ruleset.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"result","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"ruleset_id_new"},{"name":"name","kind":"string","optional":false,"example":"New Custom Ruleset"},{"name":"kind","kind":"string","optional":false,"example":"custom"},{"name":"phase","kind":"string","optional":false,"example":"http_request_firewall_custom"},{"name":"description","kind":"string","optional":false,"example":"A new custom ruleset"},{"name":"version","kind":"string","optional":false,"example":"1"},{"name":"last_updated","kind":"timestamp","optional":false,"example":"2023-03-10T08:00:00Z","format":"iso"},{"name":"rules","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"id","optional":false,"example":"rule_id_1"},{"name":"action","kind":"string","optional":false,"example":"block"},{"name":"expression","kind":"string","optional":false,"example":"(ip.src eq 10.0.0.1)"},{"name":"description","kind":"string","optional":false,"example":"Block internal IP"},{"name":"enabled","kind":"boolean","optional":false},{"name":"version","kind":"string","optional":false,"example":"1"},{"name":"ref","kind":"string","optional":false,"example":"ref_new_1"}]},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"success","kind":"boolean","optional":false},{"name":"errors","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false},{"name":"messages","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "cloudflarewaf-cloudflarewaf",
+  "name": "Cloudflare WAF",
+  "pack": "CloudflareWAF",
+  "vendor": "Cloudflare",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Zones and firewall rules.",
+  "notes": [
+    "The client base defaults to https://api.cloudflare.com/client/v4/. This mock lists zones and firewall rules for zone lab-zone.",
+    "Create, update, and filters are not modeled. The result array is one item.",
+    "The firewall rules page was not reloaded. Authorization is the dummy bearer."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CloudflareWAF/Integrations/CloudflareWAF",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "cloudflarewaf-cloudflarewaf",
+      "name": "Cloudflare WAF",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developers.cloudflare.com/api/resources/firewall/subresources/rules/methods/list/",
+      "notes": [
+        "The client base defaults to https://api.cloudflare.com/client/v4/. This mock lists zones and firewall rules for zone lab-zone.",
+        "Create, update, and filters are not modeled. The result array is one item.",
+        "The firewall rules page was not reloaded. Authorization is the dummy bearer."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developers.cloudflare.com/api/resources/firewall/subresources/rules/methods/list/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client base defaults to https://api.cloudflare.com/client/v4/. This mock lists zones and firewall rules for zone lab-zone.",
+          "Create, update, and filters are not modeled. The result array is one item.",
+          "The firewall rules page was not reloaded. Authorization is the dummy bearer."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "zones",
+        "method": "GET",
+        "pathTemplate": "/client/v4/zones",
+        "summary": "List zones",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "success",
+              "kind": "const",
+              "constValue": true
+            },
+            {
+              "name": "result",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "zone",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab.example"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      },
+      {
+        "id": "rules",
+        "method": "GET",
+        "pathTemplate": "/client/v4/zones/lab-zone/firewall/rules",
+        "summary": "List firewall rules",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "success",
+              "kind": "const",
+              "constValue": true
+            },
+            {
+              "name": "result",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "rule",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "action",
+                    "kind": "enum",
+                    "enumValues": [
+                      "block",
+                      "challenge",
+                      "allow"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "cloudflarewaf-cloudflarewaf",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

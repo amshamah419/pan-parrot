@@ -1,1 +1,134 @@
-{"id":"identityrecordedfuture-identityrecordedfuture","name":"Recorded Future Identity","pack":"IdentityRecordedFuture","fidelity":"sample","curated":false,"summary":"Fetch & triage | Search & Lookup | Access Recorded Future Identity data and Playbook Alerts.","operations":2,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"identityrecordedfuture-identityrecordedfuture","name":"Recorded Future Identity","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/IdentityRecordedFuture/Integrations/IdentityRecordedFuture","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-identity-lookup-response-json","method":"GET","pathTemplate":"/v2/identity/credentials/search","summary":"test_data/identity_lookup_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"identities","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"identity","kind":"object","optional":false,"children":[{"name":"subjects","kind":"array","optional":false,"item":{"name":"item","kind":"email","optional":false},"minItems":0,"maxItems":1,"pageItems":false}]},{"name":"count","kind":"integer","optional":false},{"name":"credentials","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"subject","kind":"email","optional":false},{"name":"dumps","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":1,"pageItems":false},{"name":"first_downloaded","kind":"timestamp","optional":false,"example":"2018-06-07T00:00:00.000Z","format":"iso"},{"name":"latest_downloaded","kind":"timestamp","optional":false,"example":"2018-06-07T00:00:00.000Z","format":"iso"},{"name":"exposed_secret","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"nested"},{"name":"hashes","kind":"string","optional":false,"example":"nested"},{"name":"details","kind":"string","optional":false,"example":"nested"},{"name":"effectively_clear","kind":"string","optional":false,"example":"nested"}]}]},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":2,"pageItems":false},{"name":"count","kind":"integer","optional":false}]}},{"id":"test-data-identity-search-response-json","method":"GET","pathTemplate":"/v2/identity/credentials/lookup","summary":"test_data/identity_search_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":true,"envelope":{"type":"array"},"pagination":{"style":"offset","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"login","kind":"email","optional":false},{"name":"domain","kind":"string","optional":false,"example":"fake1.com"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "identityrecordedfuture-identityrecordedfuture",
+  "name": "Recorded Future Identity",
+  "pack": "IdentityRecordedFuture",
+  "vendor": "Recorded Future",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Credential search.",
+  "notes": [
+    "The client POSTs /v2/identity/credentials/search. This mock returns one credential hit.",
+    "Lookup and password lookup are not modeled. The search body is ignored.",
+    "The support article was not reloaded. The X-RFToken header is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/IdentityRecordedFuture/Integrations/IdentityRecordedFuture",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "identityrecordedfuture-identityrecordedfuture",
+      "name": "Recorded Future Identity",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
+      "notes": [
+        "The client POSTs /v2/identity/credentials/search. This mock returns one credential hit.",
+        "Lookup and password lookup are not modeled. The search body is ignored.",
+        "The support article was not reloaded. The X-RFToken header is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client POSTs /v2/identity/credentials/search. This mock returns one credential hit.",
+          "Lookup and password lookup are not modeled. The search body is ignored.",
+          "The support article was not reloaded. The X-RFToken header is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "search",
+        "method": "POST",
+        "pathTemplate": "/v2/identity/credentials/search",
+        "summary": "Search credentials",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "credential",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "login",
+                    "kind": "email"
+                  },
+                  {
+                    "name": "domain",
+                    "kind": "string",
+                    "example": "lab.example"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "identityrecordedfuture-identityrecordedfuture",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "X-RFToken",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

@@ -1,1 +1,132 @@
-{"id":"onelogin-onelogineventcollector","name":"OneLogin Event Collector","pack":"OneLogin","fidelity":"sample","curated":false,"summary":"Simple customer authentication and streamlined workforce identity operations.","operations":2,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"onelogin-onelogineventcollector","name":"OneLogin Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/OneLogin/Integrations/OneLoginEventCollector","fidelity":"sample","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","HTTP paths were guessed from the integration client and may not match every command."]},"operations":[{"id":"test-data-mock-event-types-json","method":"GET","pathTemplate":"/auth/oauth2/v2/token","summary":"test_data/mock_event_types.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"status","kind":"object","optional":false,"children":[{"name":"error","kind":"boolean","optional":false},{"name":"code","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"success"},{"name":"message","kind":"string","optional":false,"example":"Success"}]},{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"EVENT_TYPE_NUMBER_1"},{"name":"id","kind":"integer","optional":false}]},"minItems":0,"maxItems":3,"pageItems":false}]}},{"id":"test-data-mock-events-json","method":"GET","pathTemplate":"/api/1/events/types","summary":"test_data/mock_events.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"status","kind":"object","optional":false,"children":[{"name":"error","kind":"boolean","optional":false},{"name":"code","kind":"integer","optional":false},{"name":"type","kind":"string","optional":false,"example":"success"},{"name":"message","kind":"string","optional":false,"example":"Success"}]},{"name":"pagination","kind":"object","optional":false,"children":[{"name":"before_cursor","kind":"string","optional":true},{"name":"after_cursor","kind":"string","optional":false,"example":"aftercursor123"},{"name":"previous_link","kind":"string","optional":true},{"name":"next_link","kind":"string","optional":false,"example":"https://api.onelogin.com/api/1/events?after_cursor=aftercursor123"}]},{"name":"data","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"id","kind":"integer","optional":false},{"name":"created_at","kind":"timestamp","optional":false,"example":"2022-08-08T11:00:00.000Z","format":"iso"},{"name":"account_id","kind":"integer","optional":false},{"name":"user_id","kind":"integer","optional":false},{"name":"event_type_id","kind":"integer","optional":false},{"name":"notes","kind":"string","optional":false,"example":"Authentication method: Login App.\nTransitions: username -> password\nCorrelation_id: 1"},{"name":"actor_user_id","kind":"integer","optional":false},{"name":"assuming_acting_user_id","kind":"string","optional":true},{"name":"role_id","kind":"string","optional":true},{"name":"app_id","kind":"string","optional":true},{"name":"group_id","kind":"string","optional":true},{"name":"otp_device_id","kind":"string","optional":true},{"name":"policy_id","kind":"integer","optional":false},{"name":"actor_system","kind":"string","optional":true},{"name":"custom_message","kind":"string","optional":true},{"name":"role_name","kind":"string","optional":true},{"name":"app_name","kind":"string","optional":true},{"name":"group_name","kind":"string","optional":true},{"name":"actor_user_name","kind":"string","optional":false,"example":"John Doe"},{"name":"user_name","kind":"string","optional":false,"example":"John Doe"},{"name":"policy_name","kind":"string","optional":false,"example":"Default policy"},{"name":"otp_device_name","kind":"string","optional":true}]},"minItems":0,"maxItems":3,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "onelogin-onelogineventcollector",
+  "name": "OneLogin Event Collector",
+  "pack": "OneLogin",
+  "vendor": "OneLogin",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /api/1/events returns events.",
+  "notes": [
+    "The collector GETs /api/1/events after OAuth at /auth/oauth2/v2/token. This mock returns { data } with one event.",
+    "Event types and the token route are not modeled. The query is ignored.",
+    "The get-events page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/OneLogin/Integrations/OneLoginEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "onelogin-onelogineventcollector",
+      "name": "OneLogin Event Collector",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developers.onelogin.com/api-docs/1/events/get-events",
+      "notes": [
+        "The collector GETs /api/1/events after OAuth at /auth/oauth2/v2/token. This mock returns { data } with one event.",
+        "Event types and the token route are not modeled. The query is ignored.",
+        "The get-events page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developers.onelogin.com/api-docs/1/events/get-events",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The collector GETs /api/1/events after OAuth at /auth/oauth2/v2/token. This mock returns { data } with one event.",
+          "Event types and the token route are not modeled. The query is ignored.",
+          "The get-events page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "events",
+        "method": "GET",
+        "pathTemplate": "/api/1/events",
+        "summary": "List events",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "event",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "event_type_id",
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "created_at",
+                    "kind": "timestamp",
+                    "format": "iso"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "onelogin-onelogineventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

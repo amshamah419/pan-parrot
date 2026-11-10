@@ -1,1 +1,138 @@
-{"id":"pingidentity-pingone","name":"PingOne","pack":"PingIdentity","fidelity":"shape","curated":false,"summary":"Integrates with the PingOne Management API to unlock, create, delete and update users. ","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"pingidentity-pingone","name":"PingOne","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/PingIdentity/Integrations/PingOne","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"pingone-unlock-user","method":"GET","pathTemplate":"/v1/environments/{environment_id}","summary":"Unlock a user's account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"username","kind":"string","optional":false,"example":"username"}]}},{"id":"pingone-deactivate-user","method":"GET","pathTemplate":"/{environment_id}/as/token","summary":"Deactivate a user's account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"username","kind":"string","optional":false,"example":"username"}]}},{"id":"pingone-activate-user","method":"GET","pathTemplate":"/","summary":"Activate a user's account.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"username","kind":"string","optional":false,"example":"username"}]}},{"id":"pingone-set-password","method":"GET","pathTemplate":"/","summary":"Sets a user's password. Further password details available here: https://apidocs.pingidentity.com/pingone/platform/v1/api/#put-update-password-self .","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"username","kind":"string","optional":false,"example":"username"},{"name":"password","kind":"string","optional":false,"example":"password"}]}},{"id":"pingone-password-force-change","method":"GET","pathTemplate":"/","summary":"Force a user's password change on next login.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"username","kind":"string","optional":false,"example":"username"}]}},{"id":"pingone-read-password-state","method":"GET","pathTemplate":"/","summary":"Read a user's password state.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"username","kind":"string","optional":false,"example":"username"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "pingidentity-pingone",
+  "name": "PingOne",
+  "pack": "PingIdentity",
+  "vendor": "Ping Identity",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Users in a PingOne environment.",
+  "notes": [
+    "The client base is /v1/environments/{environment_id}/ and GETs users. This mock uses environment lab-env and returns _embedded.users.",
+    "Create, update, and population calls are not modeled.",
+    "The PingOne API resources page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/PingIdentity/Integrations/PingOne",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "pingidentity-pingone",
+      "name": "PingOne",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://docs.pingidentity.com/pingone/main/p1_apiResources.html",
+      "notes": [
+        "The client base is /v1/environments/{environment_id}/ and GETs users. This mock uses environment lab-env and returns _embedded.users.",
+        "Create, update, and population calls are not modeled.",
+        "The PingOne API resources page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://docs.pingidentity.com/pingone/main/p1_apiResources.html",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client base is /v1/environments/{environment_id}/ and GETs users. This mock uses environment lab-env and returns _embedded.users.",
+          "Create, update, and population calls are not modeled.",
+          "The PingOne API resources page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "users",
+        "method": "GET",
+        "pathTemplate": "/v1/environments/lab-env/users",
+        "summary": "List users",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "_embedded",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "users",
+                  "kind": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "item": {
+                    "name": "user",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "id"
+                      },
+                      {
+                        "name": "username",
+                        "kind": "string",
+                        "example": "ada"
+                      },
+                      {
+                        "name": "email",
+                        "kind": "email"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "pingidentity-pingone",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

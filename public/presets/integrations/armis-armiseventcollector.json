@@ -1,1 +1,138 @@
-{"id":"armis-armiseventcollector","name":"Armis Event Collector","pack":"Armis","fidelity":"shape","curated":false,"summary":"Collects alerts, devices and activities from Armis resources.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"armis-armiseventcollector","name":"Armis Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Armis/Integrations/ArmisEventCollector","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"armis-get-events","method":"GET","pathTemplate":"/params","summary":"Manual command to fetch and display events. This command is used for developing/debugging and is to be used with caution, as it can create events, leading to ev","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"should_push_events","kind":"string","optional":false,"example":"should_push_events"},{"name":"from_date","kind":"string","optional":false,"example":"from_date"},{"name":"event_type","kind":"string","optional":false,"example":"event_type"},{"name":"aql","kind":"string","optional":false,"example":"aql"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "armis-armiseventcollector",
+  "name": "Armis Event Collector",
+  "pack": "Armis",
+  "vendor": "Armis",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "The same device search used by the collector.",
+  "notes": [
+    "The collector GETs /search/ on /api/v1 after POST /access_token/. This mock returns one device from the search.",
+    "The token route is not modeled. The AQL string is ignored.",
+    "The Armis platform page was not an API reference. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Armis/Integrations/ArmisEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "armis-armiseventcollector",
+      "name": "Armis Event Collector",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://www.armis.com/platform/",
+      "notes": [
+        "The collector GETs /search/ on /api/v1 after POST /access_token/. This mock returns one device from the search.",
+        "The token route is not modeled. The AQL string is ignored.",
+        "The Armis platform page was not an API reference. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.armis.com/platform/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The collector GETs /search/ on /api/v1 after POST /access_token/. This mock returns one device from the search.",
+          "The token route is not modeled. The AQL string is ignored.",
+          "The Armis platform page was not an API reference. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "search",
+        "method": "GET",
+        "pathTemplate": "/api/v1/search",
+        "summary": "Search devices",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "results",
+                  "kind": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "item": {
+                    "name": "device",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "id"
+                      },
+                      {
+                        "name": "ipAddress",
+                        "kind": "ip"
+                      },
+                      {
+                        "name": "type",
+                        "kind": "const",
+                        "constValue": "PLC"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "armis-armiseventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

@@ -1,1 +1,134 @@
-{"id":"infobloxbloxone-infobloxbloxonethreatdefenseeventcollector","name":"Infoblox BloxOne Threat Defense Event Collector","pack":"InfobloxBloxOne","fidelity":"shape","curated":false,"summary":"BloxOne Threat Defense is a hybrid cybersecurity solution that leverages DNS as the first line of defense to detect and block cyber threats.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"infobloxbloxone-infobloxbloxonethreatdefenseeventcollector","name":"Infoblox BloxOne Threat Defense Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/InfobloxBloxOne/Integrations/InfobloxBloxOneThreatDefenseEventCollector","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"bloxone-td-event-collector-get-events","method":"GET","pathTemplate":"/api/dnsdata/v2/dns_event","summary":"Gets events. This command is for debugging purposes.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"TestGetEvents","kind":"string","optional":false,"example":"TestGetEvents"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "infobloxbloxone-infobloxbloxonethreatdefenseeventcollector",
+  "name": "Infoblox BloxOne Threat Defense Event Collector",
+  "pack": "InfobloxBloxOne",
+  "vendor": "Infoblox",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "DNS security events.",
+  "notes": [
+    "The collector GETs /api/dnsdata/v2/dns_event. The CSP console was not loaded as an API reference.",
+    "This mock returns one DNS event. The query window is ignored.",
+    "The Authorization header is the dummy key. Dossier and TIDE commands stay on the other Infoblox presets."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/InfobloxBloxOne/Integrations/InfobloxBloxOneThreatDefenseEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "infobloxbloxone-infobloxbloxonethreatdefenseeventcollector",
+      "name": "Infoblox BloxOne Threat Defense Event Collector",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://csp.infoblox.com",
+      "notes": [
+        "The collector GETs /api/dnsdata/v2/dns_event. The CSP console was not loaded as an API reference.",
+        "This mock returns one DNS event. The query window is ignored.",
+        "The Authorization header is the dummy key. Dossier and TIDE commands stay on the other Infoblox presets."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://csp.infoblox.com",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The collector GETs /api/dnsdata/v2/dns_event. The CSP console was not loaded as an API reference.",
+          "This mock returns one DNS event. The query window is ignored.",
+          "The Authorization header is the dummy key. Dossier and TIDE commands stay on the other Infoblox presets."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "events",
+        "method": "GET",
+        "pathTemplate": "/api/dnsdata/v2/dns_event",
+        "summary": "List DNS events",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "result",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "event",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "qname",
+                    "kind": "string",
+                    "example": "lab.example"
+                  },
+                  {
+                    "name": "src_ip",
+                    "kind": "ip"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "infobloxbloxone-infobloxbloxonethreatdefenseeventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "Authorization",
+        "value": "dummy-key"
+      }
+    }
+  }
+}
