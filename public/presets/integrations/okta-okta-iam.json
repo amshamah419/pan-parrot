@@ -3,9 +3,9 @@
   "name": "Okta IAM",
   "pack": "Okta",
   "vendor": "Okta",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: GET /users.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /users.",
   "notes": [
     "Sample fields are the ones GET /users reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,20 +17,195 @@
       "kind": "preset",
       "id": "okta-okta-iam",
       "name": "Okta IAM",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.okta.com/docs/reference/api/users/",
       "notes": [
         "Sample fields are the ones GET /users reads in the matched command. Lists the command iterates are arrays."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://developer.okta.com/docs/reference/api/users/",
+        "status": "vendor",
+        "docUrl": "https://raw.githubusercontent.com/okta/okta-management-openapi-spec/master/dist/2025.08.0/management-minimal.yaml",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /users reads in the matched command. Lists the command iterates are arrays."
+          "8 of 12 commands from vendor docs, 3 approximate, 1 missing."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "iam-create-user",
+          "calls": [
+            "GET /users",
+            "POST /users/{id}/lifecycle/activate",
+            "POST /users/{id}",
+            "POST /users",
+            "GET /api/v1/users",
+            "POST /api/v1/users/{id}/lifecycle/activate",
+            "POST /api/v1/users/{id}",
+            "POST /api/v1/users"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "get-users-0",
+            "post--users-id",
+            "post--users",
+            "get--api-v1-users",
+            "post--api-v1-users-id",
+            "post--api-v1-users"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/okta/okta-management-openapi-spec/master/dist/2025.08.0/management-minimal.yaml"
+        },
+        {
+          "command": "iam-update-user",
+          "calls": [
+            "GET /users",
+            "POST /users/{id}/lifecycle/activate",
+            "POST /users/{id}",
+            "POST /users",
+            "GET /api/v1/users",
+            "POST /api/v1/users/{id}/lifecycle/activate",
+            "POST /api/v1/users/{id}",
+            "POST /api/v1/users"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "get-users-0",
+            "post--users-id",
+            "post--users",
+            "get--api-v1-users",
+            "post--api-v1-users-id",
+            "post--api-v1-users"
+          ]
+        },
+        {
+          "command": "iam-get-user",
+          "calls": [
+            "GET /users",
+            "GET /api/v1/users"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get-users-0",
+            "get--api-v1-users"
+          ]
+        },
+        {
+          "command": "iam-disable-user",
+          "calls": [
+            "GET /users",
+            "POST /users/{id}/lifecycle/deactivate",
+            "GET /api/v1/users",
+            "POST /api/v1/users/{id}/lifecycle/deactivate"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "get-users-0",
+            "get--api-v1-users"
+          ]
+        },
+        {
+          "command": "get-mapping-fields",
+          "calls": [
+            "GET /meta/schemas/user/default",
+            "GET /api/v1/meta/schemas/user/default"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "okta-get-app-user-assignment",
+          "calls": [
+            "GET /apps/{application_id}/users/{user_id}",
+            "GET /api/v1/apps/{application_id}/users/{user_id}"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--apps-application-id-users-user-id",
+            "get--api-v1-apps-application-id-users-user-id"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/okta/okta-management-openapi-spec/master/dist/2025.08.0/management-minimal.yaml"
+        },
+        {
+          "command": "okta-iam-list-applications",
+          "calls": [
+            "GET /apps",
+            "GET /api/v1/apps"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--apps",
+            "get--api-v1-apps"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/okta/okta-management-openapi-spec/master/dist/2025.08.0/management-minimal.yaml"
+        },
+        {
+          "command": "okta-iam-set-configuration",
+          "calls": [
+            "GET /groups",
+            "GET /groups/{id}",
+            "GET /groups/{id}/users"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--groups",
+            "get--groups-id",
+            "get--groups-id-users"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/okta/okta-management-openapi-spec/master/dist/2025.08.0/management-minimal.yaml"
+        },
+        {
+          "command": "okta-iam-get-configuration",
+          "calls": [
+            "GET /groups",
+            "GET /groups/{id}",
+            "GET /groups/{id}/users"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--groups",
+            "get--groups-id",
+            "get--groups-id-users"
+          ]
+        },
+        {
+          "command": "okta-iam-list-user-applications",
+          "calls": [
+            "GET /apps",
+            "GET /api/v1/apps"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--apps",
+            "get--api-v1-apps"
+          ]
+        },
+        {
+          "command": "iam-get-group",
+          "calls": [
+            "GET /groups",
+            "GET /groups/{id}",
+            "GET /groups/{id}/users"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--groups",
+            "get--groups-id",
+            "get--groups-id-users"
+          ]
+        },
+        {
+          "command": "okta-get-logs",
+          "calls": [
+            "GET /logs",
+            "GET /api/v1/logs"
+          ],
+          "status": "vendor",
+          "operationIds": [
+            "get--logs",
+            "get--api-v1-logs"
+          ],
+          "docUrl": "https://raw.githubusercontent.com/okta/okta-management-openapi-spec/master/dist/2025.08.0/management-minimal.yaml"
+        }
+      ]
     },
     "operations": [
       {
@@ -39,7 +214,7 @@
         "pathTemplate": "/users",
         "summary": "GET /users",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "application/json",
         "headers": {},
         "list": false,
         "envelope": {
@@ -186,7 +361,414 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "[\n  {\n    \"id\": \"00u118oQYT4TBGuay0g4\",\n    \"status\": \"ACTIVE\",\n    \"created\": \"2022-04-04T15:56:05.000Z\",\n    \"activated\": null,\n    \"statusChanged\": null,\n    \"lastLogin\": \"2022-05-04T19:50:52.000Z\",\n    \"lastUpdated\": \"2022-05-05T18:15:44.000Z\",\n    \"passwordChanged\": \"2022-04-04T16:00:22.000Z\",\n    \"type\": {\n      \"id\": \"oty1162QAr8hJjTaq0g4\"\n    },\n    \"profile\": {\n      \"firstName\": \"Alice\",\n      \"lastName\": \"Smith\",\n      \"mobilePhone\": null,\n      \"secondEmail\": null,\n      \"login\": \"alice.smith@example.com\",\n      \"email\": \"alice.smith@example.com\"\n    },\n    \"realmId\": \"guo1afiNtSnZYILxO0g4\",\n    \"credentials\": {\n      \"password\": {},\n      \"provider\": {\n        \"type\": \"OKTA\",\n        \"name\": \"OKTA\"\n      }\n    },\n    \"_links\": {\n      \"self\": {\n        \"href\": \"http://your-subdomain.okta.com/api/v1/users/00u118oQYT4TBGuay0g4\"\n      }\n    }\n  }\n]\n"
+      },
+      {
+        "id": "post--users-id",
+        "summary": "POST /users/{id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/users/{id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"00ub0oNGTSWTBKOLGLNR\",\n  \"status\": \"ACTIVE\",\n  \"created\": \"2013-06-24T16:39:18.000Z\",\n  \"activated\": \"2013-06-24T16:39:19.000Z\",\n  \"statusChanged\": \"2013-06-24T16:39:19.000Z\",\n  \"lastLogin\": \"2013-06-24T17:39:19.000Z\",\n  \"lastUpdated\": \"2013-07-02T21:36:25.344Z\",\n  \"passwordChanged\": \"2013-07-02T21:36:25.344Z\",\n  \"profile\": {\n    \"login\": \"isaac.brock@example.com\",\n    \"firstName\": \"Isaac\",\n    \"lastName\": \"Brock\",\n    \"nickName\": \"issac\",\n    \"displayName\": \"Isaac Brock\",\n    \"email\": \"isaac.brock@example.com\",\n    \"secondEmail\": \"user@example.invalid\",\n    \"profileUrl\": \"http://www.example.com/profile\",\n    \"preferredLanguage\": \"en-US\",\n    \"userType\": \"Employee\",\n    \"organization\": \"Okta\",\n    \"title\": \"Director\",\n    \"division\": \"R&D\",\n    \"department\": \"Engineering\",\n    \"costCenter\": \"10\",\n    \"employeeNumber\": \"187\",\n    \"mobilePhone\": \"+1-555-415-1337\",\n    \"primaryPhone\": \"+1-555-514-1337\",\n    \"streetAddress\": \"301 Brannan St.\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"zipCode\": \"94107\",\n    \"countryCode\": \"US\"\n  },\n  \"credentials\": {\n    \"password\": {},\n    \"recovery_question\": {\n      \"question\": \"What's my childhood elementary school?\"\n    },\n    \"provider\": {\n      \"type\": \"OKTA\",\n      \"name\": \"OKTA\"\n    }\n  },\n  \"_links\": {\n    \"self\": {\n      \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1f96ECLNVOKVMUSEA\"\n    }\n  }\n}\n"
+      },
+      {
+        "id": "post--users",
+        "summary": "POST /users",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/users",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"00ub0oNGTSWTBKOLGLNR\",\n  \"status\": \"STAGED\",\n  \"created\": \"2013-07-02T21:36:25.344Z\",\n  \"activated\": null,\n  \"statusChanged\": null,\n  \"lastLogin\": null,\n  \"lastUpdated\": \"2013-07-02T21:36:25.344Z\",\n  \"passwordChanged\": null,\n  \"profile\": {\n    \"firstName\": \"Isaac\",\n    \"lastName\": \"Brock\",\n    \"email\": \"isaac.brock@example.com\",\n    \"login\": \"isaac.brock@example.com\",\n    \"mobilePhone\": \"555-415-1337\"\n  },\n  \"credentials\": {\n    \"provider\": {\n      \"type\": \"OKTA\",\n      \"name\": \"OKTA\"\n    }\n  },\n  \"_links\": {\n    \"activate\": {\n      \"href\": \"https://{yourOktaDomain}/api/v1/users/00ub0oNGTSWTBKOLGLNR/lifecycle/activate\"\n    },\n    \"self\": {\n      \"href\": \"https://{yourOktaDomain}/api/v1/users/00ub0oNGTSWTBKOLGLNR\"\n    }\n  }\n}\n"
+      },
+      {
+        "id": "get--api-v1-users",
+        "summary": "GET /api/v1/users",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/v1/users",
+        "contentType": "application/json",
+        "fixture": "[\n  {\n    \"id\": \"00u118oQYT4TBGuay0g4\",\n    \"status\": \"ACTIVE\",\n    \"created\": \"2022-04-04T15:56:05.000Z\",\n    \"activated\": null,\n    \"statusChanged\": null,\n    \"lastLogin\": \"2022-05-04T19:50:52.000Z\",\n    \"lastUpdated\": \"2022-05-05T18:15:44.000Z\",\n    \"passwordChanged\": \"2022-04-04T16:00:22.000Z\",\n    \"type\": {\n      \"id\": \"oty1162QAr8hJjTaq0g4\"\n    },\n    \"profile\": {\n      \"firstName\": \"Alice\",\n      \"lastName\": \"Smith\",\n      \"mobilePhone\": null,\n      \"secondEmail\": null,\n      \"login\": \"alice.smith@example.com\",\n      \"email\": \"alice.smith@example.com\"\n    },\n    \"realmId\": \"guo1afiNtSnZYILxO0g4\",\n    \"credentials\": {\n      \"password\": {},\n      \"provider\": {\n        \"type\": \"OKTA\",\n        \"name\": \"OKTA\"\n      }\n    },\n    \"_links\": {\n      \"self\": {\n        \"href\": \"http://your-subdomain.okta.com/api/v1/users/00u118oQYT4TBGuay0g4\"\n      }\n    }\n  }\n]\n"
+      },
+      {
+        "id": "post--api-v1-users-id",
+        "summary": "POST /api/v1/users/{id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/api/v1/users/{id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"00ub0oNGTSWTBKOLGLNR\",\n  \"status\": \"ACTIVE\",\n  \"created\": \"2013-06-24T16:39:18.000Z\",\n  \"activated\": \"2013-06-24T16:39:19.000Z\",\n  \"statusChanged\": \"2013-06-24T16:39:19.000Z\",\n  \"lastLogin\": \"2013-06-24T17:39:19.000Z\",\n  \"lastUpdated\": \"2013-07-02T21:36:25.344Z\",\n  \"passwordChanged\": \"2013-07-02T21:36:25.344Z\",\n  \"profile\": {\n    \"login\": \"isaac.brock@example.com\",\n    \"firstName\": \"Isaac\",\n    \"lastName\": \"Brock\",\n    \"nickName\": \"issac\",\n    \"displayName\": \"Isaac Brock\",\n    \"email\": \"isaac.brock@example.com\",\n    \"secondEmail\": \"user@example.invalid\",\n    \"profileUrl\": \"http://www.example.com/profile\",\n    \"preferredLanguage\": \"en-US\",\n    \"userType\": \"Employee\",\n    \"organization\": \"Okta\",\n    \"title\": \"Director\",\n    \"division\": \"R&D\",\n    \"department\": \"Engineering\",\n    \"costCenter\": \"10\",\n    \"employeeNumber\": \"187\",\n    \"mobilePhone\": \"+1-555-415-1337\",\n    \"primaryPhone\": \"+1-555-514-1337\",\n    \"streetAddress\": \"301 Brannan St.\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"zipCode\": \"94107\",\n    \"countryCode\": \"US\"\n  },\n  \"credentials\": {\n    \"password\": {},\n    \"recovery_question\": {\n      \"question\": \"What's my childhood elementary school?\"\n    },\n    \"provider\": {\n      \"type\": \"OKTA\",\n      \"name\": \"OKTA\"\n    }\n  },\n  \"_links\": {\n    \"self\": {\n      \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1f96ECLNVOKVMUSEA\"\n    }\n  }\n}\n"
+      },
+      {
+        "id": "post--api-v1-users",
+        "summary": "POST /api/v1/users",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "POST",
+        "pathTemplate": "/api/v1/users",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"00ub0oNGTSWTBKOLGLNR\",\n  \"status\": \"STAGED\",\n  \"created\": \"2013-07-02T21:36:25.344Z\",\n  \"activated\": null,\n  \"statusChanged\": null,\n  \"lastLogin\": null,\n  \"lastUpdated\": \"2013-07-02T21:36:25.344Z\",\n  \"passwordChanged\": null,\n  \"profile\": {\n    \"firstName\": \"Isaac\",\n    \"lastName\": \"Brock\",\n    \"email\": \"isaac.brock@example.com\",\n    \"login\": \"isaac.brock@example.com\",\n    \"mobilePhone\": \"555-415-1337\"\n  },\n  \"credentials\": {\n    \"provider\": {\n      \"type\": \"OKTA\",\n      \"name\": \"OKTA\"\n    }\n  },\n  \"_links\": {\n    \"activate\": {\n      \"href\": \"https://{yourOktaDomain}/api/v1/users/00ub0oNGTSWTBKOLGLNR/lifecycle/activate\"\n    },\n    \"self\": {\n      \"href\": \"https://{yourOktaDomain}/api/v1/users/00ub0oNGTSWTBKOLGLNR\"\n    }\n  }\n}\n"
+      },
+      {
+        "id": "get--apps-application-id-users-user-id",
+        "summary": "GET /apps/{application_id}/users/{user_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/apps/{application_id}/users/{user_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"00u1dnq5S0CfjlkpABCD\",\n  \"externalId\": \"00u5edt3PNbbjzvIABCD\",\n  \"created\": \"2024-01-31T18:25:01.000Z\",\n  \"lastUpdated\": \"2024-01-31T18:25:03.000Z\",\n  \"scope\": \"USER\",\n  \"status\": \"PROVISIONED\",\n  \"statusChanged\": \"2024-01-31T18:25:03.000Z\",\n  \"passwordChanged\": null,\n  \"syncState\": \"SYNCHRONIZED\",\n  \"lastSync\": \"2024-01-31T18:25:03.000Z\",\n  \"credentials\": {\n    \"userName\": \"saml.test@example.com\"\n  },\n  \"profile\": {\n    \"secondEmail\": null,\n    \"lastName\": \"Test\",\n    \"mobilePhone\": null,\n    \"displayName\": \"Saml O Test\",\n    \"email\": \"saml.test@example.com\",\n    \"salesforceGroups\": [],\n    \"role\": \"Tester\",\n    \"firstName\": \"Saml\",\n    \"streetAddress\": null,\n    \"profile\": \"Standard Platform User\"\n  },\n  \"_links\": {\n    \"app\": {\n      \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oajiqIRNXPPJBNZMGYL\"\n    },\n    \"user\": {\n      \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD\"\n    }\n  },\n  \"_embedded\": {\n    \"user\": {\n      \"id\": \"00u1dnq5S0CfjlkpABCD\",\n      \"status\": \"ACTIVE\",\n      \"created\": \"2024-01-09T15:36:04.000Z\",\n      \"activated\": \"2024-01-09T15:36:05.000Z\",\n      \"statusChanged\": \"2024-01-09T15:36:05.000Z\",\n      \"lastLogin\": null,\n      \"lastUpdated\": \"2024-01-09T15:36:05.000Z\",\n      \"passwordChanged\": \"2024-01-09T15:36:05.000Z\",\n      \"type\": {\n        \"id\": \"otyzhh29g7Python90g3\"\n      },\n      \"profile\": {\n        \"firstName\": \"Saml\",\n        \"lastName\": \"Test\",\n        \"mobilePhone\": null,\n        \"secondEmail\": null,\n        \"login\": \"saml.test@example.com\",\n        \"email\": \"saml.test@example.com\"\n      },\n      \"credentials\": {\n        \"password\": {},\n        \"provider\": {\n          \"type\": \"OKTA\",\n          \"name\": \"OKTA\"\n        }\n      },\n      \"_links\": {\n        \"suspend\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD/lifecycle/suspend\",\n          \"method\": \"POST\"\n        },\n        \"schema\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/meta/schemas/user/oscarho9g7PythoN23z9\"\n        },\n        \"resetPassword\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD/lifecycle/reset_password\",\n          \"method\": \"POST\"\n        },\n        \"expirePassword\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD/lifecycle/expire_password\",\n          \"method\": \"POST\"\n        },\n        \"changeRecoveryQuestion\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD/credentials/change_recovery_question\",\n          \"method\": \"POST\"\n        },\n        \"self\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD\"\n        },\n        \"type\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/meta/types/user/otyzhh29g7Python90g3\"\n        },\n        \"changePassword\": {\n          \"href\": \"https://rain.okta1.com/api/v1/users/00u1dnq5S0CfjlkpABCD/credentials/change_password\",\n          \"method\": \"POST\"\n        },\n        \"deactivate\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD/lifecycle/deactivate\",\n          \"method\": \"POST\"\n        }\n      }\n    }\n  }\n}\n"
+      },
+      {
+        "id": "get--api-v1-apps-application-id-users-user-id",
+        "summary": "GET /api/v1/apps/{application_id}/users/{user_id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/v1/apps/{application_id}/users/{user_id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"00u1dnq5S0CfjlkpABCD\",\n  \"externalId\": \"00u5edt3PNbbjzvIABCD\",\n  \"created\": \"2024-01-31T18:25:01.000Z\",\n  \"lastUpdated\": \"2024-01-31T18:25:03.000Z\",\n  \"scope\": \"USER\",\n  \"status\": \"PROVISIONED\",\n  \"statusChanged\": \"2024-01-31T18:25:03.000Z\",\n  \"passwordChanged\": null,\n  \"syncState\": \"SYNCHRONIZED\",\n  \"lastSync\": \"2024-01-31T18:25:03.000Z\",\n  \"credentials\": {\n    \"userName\": \"saml.test@example.com\"\n  },\n  \"profile\": {\n    \"secondEmail\": null,\n    \"lastName\": \"Test\",\n    \"mobilePhone\": null,\n    \"displayName\": \"Saml O Test\",\n    \"email\": \"saml.test@example.com\",\n    \"salesforceGroups\": [],\n    \"role\": \"Tester\",\n    \"firstName\": \"Saml\",\n    \"streetAddress\": null,\n    \"profile\": \"Standard Platform User\"\n  },\n  \"_links\": {\n    \"app\": {\n      \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oajiqIRNXPPJBNZMGYL\"\n    },\n    \"user\": {\n      \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD\"\n    }\n  },\n  \"_embedded\": {\n    \"user\": {\n      \"id\": \"00u1dnq5S0CfjlkpABCD\",\n      \"status\": \"ACTIVE\",\n      \"created\": \"2024-01-09T15:36:04.000Z\",\n      \"activated\": \"2024-01-09T15:36:05.000Z\",\n      \"statusChanged\": \"2024-01-09T15:36:05.000Z\",\n      \"lastLogin\": null,\n      \"lastUpdated\": \"2024-01-09T15:36:05.000Z\",\n      \"passwordChanged\": \"2024-01-09T15:36:05.000Z\",\n      \"type\": {\n        \"id\": \"otyzhh29g7Python90g3\"\n      },\n      \"profile\": {\n        \"firstName\": \"Saml\",\n        \"lastName\": \"Test\",\n        \"mobilePhone\": null,\n        \"secondEmail\": null,\n        \"login\": \"saml.test@example.com\",\n        \"email\": \"saml.test@example.com\"\n      },\n      \"credentials\": {\n        \"password\": {},\n        \"provider\": {\n          \"type\": \"OKTA\",\n          \"name\": \"OKTA\"\n        }\n      },\n      \"_links\": {\n        \"suspend\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD/lifecycle/suspend\",\n          \"method\": \"POST\"\n        },\n        \"schema\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/meta/schemas/user/oscarho9g7PythoN23z9\"\n        },\n        \"resetPassword\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD/lifecycle/reset_password\",\n          \"method\": \"POST\"\n        },\n        \"expirePassword\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD/lifecycle/expire_password\",\n          \"method\": \"POST\"\n        },\n        \"changeRecoveryQuestion\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD/credentials/change_recovery_question\",\n          \"method\": \"POST\"\n        },\n        \"self\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD\"\n        },\n        \"type\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/meta/types/user/otyzhh29g7Python90g3\"\n        },\n        \"changePassword\": {\n          \"href\": \"https://rain.okta1.com/api/v1/users/00u1dnq5S0CfjlkpABCD/credentials/change_password\",\n          \"method\": \"POST\"\n        },\n        \"deactivate\": {\n          \"href\": \"https://{yourOktaDomain}/api/v1/users/00u1dnq5S0CfjlkpABCD/lifecycle/deactivate\",\n          \"method\": \"POST\"\n        }\n      }\n    }\n  }\n}\n"
+      },
+      {
+        "id": "get--apps",
+        "summary": "GET /apps",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/apps",
+        "contentType": "application/json",
+        "fixture": "[\n  {\n    \"id\": \"0oa1gjh63g214q0Hq0g4\",\n    \"orn\": \"orn:okta:idp:00o1n8sbwArJ7OQRw406:apps:testorgone_customsaml20app_1:0oa1gjh63g214q0Hq0g4\",\n    \"name\": \"testorgone_customsaml20app_1\",\n    \"label\": \"Custom Saml 2.0 App\",\n    \"status\": \"ACTIVE\",\n    \"lastUpdated\": \"2016-08-09T20:12:19.000Z\",\n    \"created\": \"2016-08-09T20:12:19.000Z\",\n    \"accessibility\": {\n      \"selfService\": false,\n      \"errorRedirectUrl\": null,\n      \"loginRedirectUrl\": null\n    },\n    \"visibility\": {\n      \"autoSubmitToolbar\": false,\n      \"hide\": {\n        \"iOS\": false,\n        \"web\": false\n      },\n      \"appLinks\": {\n        \"testorgone_customsaml20app_1_link\": true\n      }\n    },\n    \"features\": [],\n    \"signOnMode\": \"SAML_2_0\",\n    \"credentials\": {\n      \"userNameTemplate\": {\n        \"template\": \"${fn:substringBefore(source.login, \\\"@\\\")}\",\n        \"type\": \"BUILT_IN\"\n      },\n      \"signing\": {}\n    },\n    \"settings\": {\n      \"app\": {},\n      \"notifications\": {\n        \"vpn\": {\n          \"network\": {\n            \"connection\": \"DISABLED\"\n          },\n          \"message\": null,\n          \"helpUrl\": null\n        }\n      },\n      \"signOn\": {\n        \"defaultRelayState\": \"\",\n        \"ssoAcsUrl\": \"https://{yourOktaDomain}\",\n        \"idpIssuer\": \"https://www.okta.com/${org.externalKey}\",\n        \"audience\": \"https://example.com/tenant/123\",\n        \"recipient\": \"https://recipient.okta.com\",\n        \"destination\": \"https://destination.okta.com\",\n        \"subjectNameIdTemplate\": \"${user.userName}\",\n        \"subjectNameIdFormat\": \"urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress\",\n        \"responseSigned\": true,\n        \"assertionSigned\": true,\n        \"signatureAlgorithm\": \"RSA_SHA256\",\n        \"digestAlgorithm\": \"SHA256\",\n        \"honorForceAuthn\": true,\n        \"authnContextClassRef\": \"urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport\",\n        \"slo\": {\n          \"enabled\": true,\n          \"spIssuer\": \"https://testorgone.okta.com\",\n          \"logoutUrl\": \"https://testorgone.okta.com/logout\"\n        },\n        \"participateSlo\": {\n          \"enabled\": true,\n          \"logoutRequestUrl\": \"https://testorgone.okta.com/logout/participate\",\n          \"sessionIndexRequired\": true,\n          \"bindingType\": \"REDIRECT\"\n        },\n        \"spCertificate\": {\n          \"x5c\": [\n            \"MIIFnDCCA4QCCQDBSLbiON2T1zANBgkqhkiG9w0BAQsFADCBjzELMAkGA1UEBhMCVVMxDjAMBgNV\\r\\n\"\n          ]\n        },\n        \"assertionEncryption\": {\n          \"enabled\": false,\n          \"requestCompressed\": false,\n          \"allowMultipleAcsEndpoints\": false,\n          \"acsEndpoints\": [],\n          \"attributeStatements\": [],\n          \"_links\": {\n            \"logo\": [\n              {\n                \"name\": \"medium\",\n                \"href\": \"https://testorgone.okta.com/assets/img/logos/default.6770228fb0dab49a1695ef440a5279bb.png\",\n                \"type\": \"image/png\"\n              }\n            ],\n            \"appLinks\": [\n              {\n                \"name\": \"testorgone_customsaml20app_1_link\",\n                \"href\": \"https://testorgone.okta.com/home/testorgone_customsaml20app_1/0oa1gjh63g214q0Hq0g4/aln1gofChJaerOVfY0g4\",\n                \"type\": \"text/html\"\n              }\n            ],\n            \"help\": {\n              \"href\": \"https://testorgone-admin.okta.com/app/testorgone_customsaml20app_1/0oa1gjh63g214q0Hq0g4/setup/help/SAML_2_0/instructions\",\n              \"type\": \"text/html\"\n            },\n            \"users\": {\n              \"href\": \"https://testorgone.okta.com/api/v1/apps/0oa1gjh63g214q0Hq0g4/users\"\n            },\n            \"deactivate\": {\n              \"href\": \"https://testorgone.okta.com/api/v1/apps/0oa1gjh63g214q0Hq0g4/lifecycle/deactivate\"\n            },\n            \"groups\": {\n              \"href\": \"https://testorgone.okta.com/api/v1/apps/0oa1gjh63g214q0Hq0g4/groups\"\n            },\n            \"metadata\": {\n              \"href\": \"https://testorgone.okta.com/api/v1/apps/0oa1gjh63g214q0Hq0g4/sso/saml/metadata\",\n              \"type\": \"application/xml\"\n            }\n          },\n          \"_embedded\": {\n            \"user\": {\n              \"id\": \"00ucw2RPGIUNTDQOYPOF\",\n              \"externalId\": null,\n              \"created\": \"2014-03-21T23:31:35.000Z\",\n              \"lastUpdated\": \"2014-03-21T23:31:35.000Z\",\n              \"scope\": \"USER\",\n              \"status\": \"ACTIVE\",\n              \"statusChanged\": \"2014-03-21T23:31:35.000Z\",\n              \"passwordChanged\": null,\n              \"syncState\": \"DISABLED\",\n              \"lastSync\": null,\n              \"credentials\": {\n                \"userName\": \"user@example.com\"\n              },\n              \"_links\": {\n                \"app\": {\n                  \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oabizCHPNYALCHDUIOD\"\n                },\n                \"user\": {\n                  \"href\": \"https://{yourOktaDomain}/api/v1/users/00ucw2RPGIUNTDQOYPOF\"\n                }\n              }\n            },\n            \"id\": \"0oabkvBLDEKCNXBGYUAS\",\n            \"name\": \"template_swa\",\n            \"label\": \"Sample Plugin App\",\n            \"status\": \"ACTIVE\",\n            \"lastUpdated\": \"2013-09-11T17:58:54.000Z\",\n            \"created\": \"2013-09-11T17:46:08.000Z\",\n            \"accessibility\": {\n              \"selfService\": false,\n              \"errorRedirectUrl\": null\n            },\n            \"visibility\": {\n              \"autoSubmitToolbar\": false,\n              \"hide\": {\n                \"iOS\": false,\n                \"web\": false\n              },\n              \"appLinks\": {\n                \"login\": true\n              }\n            },\n            \"features\": [],\n            \"signOnMode\": \"BROWSER_PLUGIN\",\n            \"credentials\": {\n              \"scheme\": \"EDIT_USERNAME_AND_PASSWORD\",\n              \"userNameTemplate\": {\n                \"template\": \"${source.login}\",\n                \"type\": \"BUILT_IN\"\n              }\n            },\n            \"settings\": {\n              \"app\": {\n                \"buttonField\": \"btn-login\",\n                \"passwordField\": \"txtbox-password\",\n                \"usernameField\": \"txtbox-username\",\n                \"url\": \"https://example.com/login.html\"\n              }\n            },\n            \"_links\": {\n              \"logo\": [\n                {\n                  \"href\": \"https://example.okta.com/img/logos/logo_1.png\",\n                  \"name\": \"medium\",\n                  \"type\": \"image/png\"\n                }\n              ],\n              \"users\": {\n                \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oabkvBLDEKCNXBGYUAS/users\"\n              },\n              \"groups\": {\n                \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oabkvBLDEKCNXBGYUAS/groups\"\n              },\n              \"self\": {\n                \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oabkvBLDEKCNXBGYUAS\"\n              },\n              \"deactivate\": {\n                \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oabkvBLDEKCNXBGYUAS/lifecycle/deactivate\"\n              }\n            },\n            \"_embedded\": {\n              \"user\": {\n                \"id\": \"00ucw2RPGIUNTDQOYPOF\",\n                \"externalId\": null,\n                \"created\": \"2014-06-10T15:16:01.000Z\",\n                \"lastUpdated\": \"2014-06-10T15:17:38.000Z\",\n                \"scope\": \"USER\",\n                \"status\": \"ACTIVE\",\n                \"statusChanged\": \"2014-06-10T15:16:01.000Z\",\n                \"passwordChanged\": \"2014-06-10T15:17:38.000Z\",\n                \"syncState\": \"DISABLED\",\n                \"lastSync\": null,\n                \"credentials\": {\n                  \"userName\": \"user@example.com\",\n                  \"password\": {}\n                },\n                \"_links\": {\n                  \"app\": {\n                    \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oabkvBLDEKCNXBGYUAS\"\n                  },\n                  \"user\": {\n                    \"href\": \"https://{yourOktaDomain}/api/v1/users/00ucw2RPGIUNTDQOYPOF\"\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n]\n"
+      },
+      {
+        "id": "get--api-v1-apps",
+        "summary": "GET /api/v1/apps",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/v1/apps",
+        "contentType": "application/json",
+        "fixture": "[\n  {\n    \"id\": \"0oa1gjh63g214q0Hq0g4\",\n    \"orn\": \"orn:okta:idp:00o1n8sbwArJ7OQRw406:apps:testorgone_customsaml20app_1:0oa1gjh63g214q0Hq0g4\",\n    \"name\": \"testorgone_customsaml20app_1\",\n    \"label\": \"Custom Saml 2.0 App\",\n    \"status\": \"ACTIVE\",\n    \"lastUpdated\": \"2016-08-09T20:12:19.000Z\",\n    \"created\": \"2016-08-09T20:12:19.000Z\",\n    \"accessibility\": {\n      \"selfService\": false,\n      \"errorRedirectUrl\": null,\n      \"loginRedirectUrl\": null\n    },\n    \"visibility\": {\n      \"autoSubmitToolbar\": false,\n      \"hide\": {\n        \"iOS\": false,\n        \"web\": false\n      },\n      \"appLinks\": {\n        \"testorgone_customsaml20app_1_link\": true\n      }\n    },\n    \"features\": [],\n    \"signOnMode\": \"SAML_2_0\",\n    \"credentials\": {\n      \"userNameTemplate\": {\n        \"template\": \"${fn:substringBefore(source.login, \\\"@\\\")}\",\n        \"type\": \"BUILT_IN\"\n      },\n      \"signing\": {}\n    },\n    \"settings\": {\n      \"app\": {},\n      \"notifications\": {\n        \"vpn\": {\n          \"network\": {\n            \"connection\": \"DISABLED\"\n          },\n          \"message\": null,\n          \"helpUrl\": null\n        }\n      },\n      \"signOn\": {\n        \"defaultRelayState\": \"\",\n        \"ssoAcsUrl\": \"https://{yourOktaDomain}\",\n        \"idpIssuer\": \"https://www.okta.com/${org.externalKey}\",\n        \"audience\": \"https://example.com/tenant/123\",\n        \"recipient\": \"https://recipient.okta.com\",\n        \"destination\": \"https://destination.okta.com\",\n        \"subjectNameIdTemplate\": \"${user.userName}\",\n        \"subjectNameIdFormat\": \"urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress\",\n        \"responseSigned\": true,\n        \"assertionSigned\": true,\n        \"signatureAlgorithm\": \"RSA_SHA256\",\n        \"digestAlgorithm\": \"SHA256\",\n        \"honorForceAuthn\": true,\n        \"authnContextClassRef\": \"urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport\",\n        \"slo\": {\n          \"enabled\": true,\n          \"spIssuer\": \"https://testorgone.okta.com\",\n          \"logoutUrl\": \"https://testorgone.okta.com/logout\"\n        },\n        \"participateSlo\": {\n          \"enabled\": true,\n          \"logoutRequestUrl\": \"https://testorgone.okta.com/logout/participate\",\n          \"sessionIndexRequired\": true,\n          \"bindingType\": \"REDIRECT\"\n        },\n        \"spCertificate\": {\n          \"x5c\": [\n            \"MIIFnDCCA4QCCQDBSLbiON2T1zANBgkqhkiG9w0BAQsFADCBjzELMAkGA1UEBhMCVVMxDjAMBgNV\\r\\n\"\n          ]\n        },\n        \"assertionEncryption\": {\n          \"enabled\": false,\n          \"requestCompressed\": false,\n          \"allowMultipleAcsEndpoints\": false,\n          \"acsEndpoints\": [],\n          \"attributeStatements\": [],\n          \"_links\": {\n            \"logo\": [\n              {\n                \"name\": \"medium\",\n                \"href\": \"https://testorgone.okta.com/assets/img/logos/default.6770228fb0dab49a1695ef440a5279bb.png\",\n                \"type\": \"image/png\"\n              }\n            ],\n            \"appLinks\": [\n              {\n                \"name\": \"testorgone_customsaml20app_1_link\",\n                \"href\": \"https://testorgone.okta.com/home/testorgone_customsaml20app_1/0oa1gjh63g214q0Hq0g4/aln1gofChJaerOVfY0g4\",\n                \"type\": \"text/html\"\n              }\n            ],\n            \"help\": {\n              \"href\": \"https://testorgone-admin.okta.com/app/testorgone_customsaml20app_1/0oa1gjh63g214q0Hq0g4/setup/help/SAML_2_0/instructions\",\n              \"type\": \"text/html\"\n            },\n            \"users\": {\n              \"href\": \"https://testorgone.okta.com/api/v1/apps/0oa1gjh63g214q0Hq0g4/users\"\n            },\n            \"deactivate\": {\n              \"href\": \"https://testorgone.okta.com/api/v1/apps/0oa1gjh63g214q0Hq0g4/lifecycle/deactivate\"\n            },\n            \"groups\": {\n              \"href\": \"https://testorgone.okta.com/api/v1/apps/0oa1gjh63g214q0Hq0g4/groups\"\n            },\n            \"metadata\": {\n              \"href\": \"https://testorgone.okta.com/api/v1/apps/0oa1gjh63g214q0Hq0g4/sso/saml/metadata\",\n              \"type\": \"application/xml\"\n            }\n          },\n          \"_embedded\": {\n            \"user\": {\n              \"id\": \"00ucw2RPGIUNTDQOYPOF\",\n              \"externalId\": null,\n              \"created\": \"2014-03-21T23:31:35.000Z\",\n              \"lastUpdated\": \"2014-03-21T23:31:35.000Z\",\n              \"scope\": \"USER\",\n              \"status\": \"ACTIVE\",\n              \"statusChanged\": \"2014-03-21T23:31:35.000Z\",\n              \"passwordChanged\": null,\n              \"syncState\": \"DISABLED\",\n              \"lastSync\": null,\n              \"credentials\": {\n                \"userName\": \"user@example.com\"\n              },\n              \"_links\": {\n                \"app\": {\n                  \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oabizCHPNYALCHDUIOD\"\n                },\n                \"user\": {\n                  \"href\": \"https://{yourOktaDomain}/api/v1/users/00ucw2RPGIUNTDQOYPOF\"\n                }\n              }\n            },\n            \"id\": \"0oabkvBLDEKCNXBGYUAS\",\n            \"name\": \"template_swa\",\n            \"label\": \"Sample Plugin App\",\n            \"status\": \"ACTIVE\",\n            \"lastUpdated\": \"2013-09-11T17:58:54.000Z\",\n            \"created\": \"2013-09-11T17:46:08.000Z\",\n            \"accessibility\": {\n              \"selfService\": false,\n              \"errorRedirectUrl\": null\n            },\n            \"visibility\": {\n              \"autoSubmitToolbar\": false,\n              \"hide\": {\n                \"iOS\": false,\n                \"web\": false\n              },\n              \"appLinks\": {\n                \"login\": true\n              }\n            },\n            \"features\": [],\n            \"signOnMode\": \"BROWSER_PLUGIN\",\n            \"credentials\": {\n              \"scheme\": \"EDIT_USERNAME_AND_PASSWORD\",\n              \"userNameTemplate\": {\n                \"template\": \"${source.login}\",\n                \"type\": \"BUILT_IN\"\n              }\n            },\n            \"settings\": {\n              \"app\": {\n                \"buttonField\": \"btn-login\",\n                \"passwordField\": \"txtbox-password\",\n                \"usernameField\": \"txtbox-username\",\n                \"url\": \"https://example.com/login.html\"\n              }\n            },\n            \"_links\": {\n              \"logo\": [\n                {\n                  \"href\": \"https://example.okta.com/img/logos/logo_1.png\",\n                  \"name\": \"medium\",\n                  \"type\": \"image/png\"\n                }\n              ],\n              \"users\": {\n                \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oabkvBLDEKCNXBGYUAS/users\"\n              },\n              \"groups\": {\n                \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oabkvBLDEKCNXBGYUAS/groups\"\n              },\n              \"self\": {\n                \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oabkvBLDEKCNXBGYUAS\"\n              },\n              \"deactivate\": {\n                \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oabkvBLDEKCNXBGYUAS/lifecycle/deactivate\"\n              }\n            },\n            \"_embedded\": {\n              \"user\": {\n                \"id\": \"00ucw2RPGIUNTDQOYPOF\",\n                \"externalId\": null,\n                \"created\": \"2014-06-10T15:16:01.000Z\",\n                \"lastUpdated\": \"2014-06-10T15:17:38.000Z\",\n                \"scope\": \"USER\",\n                \"status\": \"ACTIVE\",\n                \"statusChanged\": \"2014-06-10T15:16:01.000Z\",\n                \"passwordChanged\": \"2014-06-10T15:17:38.000Z\",\n                \"syncState\": \"DISABLED\",\n                \"lastSync\": null,\n                \"credentials\": {\n                  \"userName\": \"user@example.com\",\n                  \"password\": {}\n                },\n                \"_links\": {\n                  \"app\": {\n                    \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oabkvBLDEKCNXBGYUAS\"\n                  },\n                  \"user\": {\n                    \"href\": \"https://{yourOktaDomain}/api/v1/users/00ucw2RPGIUNTDQOYPOF\"\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n]\n"
+      },
+      {
+        "id": "get--groups",
+        "summary": "GET /groups",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/groups",
+        "contentType": "application/json",
+        "fixture": "[\n  {\n    \"id\": \"00g1emaKYZTWRYYRRTSK\",\n    \"created\": \"2015-02-06T10:11:28.000Z\",\n    \"lastUpdated\": \"2015-10-05T19:16:43.000Z\",\n    \"lastMembershipUpdated\": \"2015-11-28T19:15:32.000Z\",\n    \"objectClass\": [\n      \"okta:user_group\"\n    ],\n    \"type\": \"OKTA_GROUP\",\n    \"profile\": {\n      \"name\": \"West Coast users\",\n      \"description\": \"All users West of The Rockies\"\n    },\n    \"_links\": {\n      \"logo\": [\n        {\n          \"name\": \"medium\",\n          \"href\": \"https://{yourOktaDomain}/img/logos/groups/okta-medium.png\",\n          \"type\": \"image/png\"\n        },\n        {\n          \"name\": \"large\",\n          \"href\": \"https://{yourOktaDomain}/img/logos/groups/okta-large.png\",\n          \"type\": \"image/png\"\n        }\n      ],\n      \"users\": {\n        \"href\": \"https://{yourOktaDomain}/api/v1/groups/00g1emaKYZTWRYYRRTSK/users\"\n      },\n      \"apps\": {\n        \"href\": \"https://{yourOktaDomain}/api/v1/groups/00g1emaKYZTWRYYRRTSK/apps\"\n      }\n    }\n  },\n  {\n    \"id\": \"00garwpuyxHaWOkdV0g4\",\n    \"created\": \"2015-08-15T19:15:17.000Z\",\n    \"lastUpdated\": \"2015-11-18T04:02:19.000Z\",\n    \"lastMembershipUpdated\": \"2015-08-15T19:15:17.000Z\",\n    \"objectClass\": [\n      \"okta:windows_security_principal\"\n    ],\n    \"type\": \"APP_GROUP\",\n    \"profile\": {\n      \"name\": \"Engineering users\",\n      \"description\": \"All users in the engineering department\",\n      \"groupType\": \"Security\",\n      \"samAccountName\": \"Engineering users\",\n      \"objectSid\": \"S-1-5-21-717838489-685202119-709183397-1177\",\n      \"groupScope\": \"Global\",\n      \"dn\": \"CN=Engineering users,OU=Engineering,DC=corp,DC=example,DC=com\",\n      \"windowsDomainQualifiedName\": \"CORP\\\\Engineering users\",\n      \"externalId\": \"OZJdWdONCU6h7WjQKp+LPA==\"\n    },\n    \"source\": {\n      \"id\": \"0oa2v0el0gP90aqjJ0g7\"\n    },\n    \"_links\": {\n      \"logo\": [\n        {\n          \"name\": \"medium\",\n          \"href\": \"https://{yourOktaDomain}/img/logos/groups/active_directory-medium.png\",\n          \"type\": \"image/png\"\n        },\n        {\n          \"name\": \"large\",\n          \"href\": \"https://{yourOktaDomain}/img/logos/groups/active_directory-large.png\",\n          \"type\": \"image/png\"\n        }\n      ],\n      \"source\": {\n        \"href\": \"https://{yourOktaDomain}/api/v1/apps/0oa2v0el0gP90aqjJ0g7\"\n      },\n      \"users\": {\n        \"href\": \"https://{yourOktaDomain}/api/v1/groups/00garwpuyxHaWOkdV0g4/users\"\n      },\n      \"apps\": {\n        \"href\": \"https://{yourOktaDomain}/api/v1/groups/00garwpuyxHaWOkdV0g4/apps\"\n      }\n    }\n  }\n]\n"
+      },
+      {
+        "id": "get--groups-id",
+        "summary": "GET /groups/{id}",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/groups/{id}",
+        "contentType": "application/json",
+        "fixture": "{\n  \"id\": \"00g1emaKYZTWRYYRRTSK\",\n  \"created\": \"2015-02-06T10:11:28.000Z\",\n  \"lastUpdated\": \"2015-10-05T19:16:43.000Z\",\n  \"lastMembershipUpdated\": \"2015-11-28T19:15:32.000Z\",\n  \"objectClass\": [\n    \"okta:user_group\"\n  ],\n  \"type\": \"OKTA_GROUP\",\n  \"profile\": {\n    \"name\": \"West Coast users\",\n    \"description\": \"All users West of The Rockies\"\n  },\n  \"_links\": {\n    \"logo\": [\n      {\n        \"name\": \"medium\",\n        \"href\": \"https://{yourOktaDomain}/img/logos/groups/okta-medium.png\",\n        \"type\": \"image/png\"\n      },\n      {\n        \"name\": \"large\",\n        \"href\": \"https://{yourOktaDomain}/img/logos/groups/okta-large.png\",\n        \"type\": \"image/png\"\n      }\n    ],\n    \"users\": {\n      \"href\": \"https://{yourOktaDomain}/api/v1/groups/00g1emaKYZTWRYYRRTSK/users\"\n    },\n    \"apps\": {\n      \"href\": \"https://{yourOktaDomain}/api/v1/groups/00g1emaKYZTWRYYRRTSK/apps\"\n    }\n  }\n}\n"
+      },
+      {
+        "id": "get--groups-id-users",
+        "summary": "GET /groups/{id}/users",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/groups/{id}/users",
+        "contentType": "application/json",
+        "fixture": "[\n  {\n    \"id\": \"00u118oQYT4TBTemp0g4\",\n    \"status\": \"ACTIVE\",\n    \"created\": \"2022-04-04T15:56:05.000Z\",\n    \"activated\": null,\n    \"statusChanged\": null,\n    \"lastLogin\": \"2022-05-04T19:50:52.000Z\",\n    \"lastUpdated\": \"2022-05-05T18:15:44.000Z\",\n    \"passwordChanged\": \"2022-04-04T16:00:22.000Z\",\n    \"type\": {\n      \"id\": \"oty1162QAr8hJjTaq0g4\"\n    },\n    \"profile\": {\n      \"firstName\": \"Alice\",\n      \"lastName\": \"Smith\",\n      \"mobilePhone\": null,\n      \"secondEmail\": null,\n      \"login\": \"alice.smith@example.com\",\n      \"email\": \"alice.smith@example.com\"\n    },\n    \"credentials\": {\n      \"password\": {},\n      \"provider\": {\n        \"type\": \"OKTA\",\n        \"name\": \"OKTA\"\n      }\n    },\n    \"_links\": {\n      \"self\": {\n        \"href\": \"http://your-subdomain.okta.com/api/v1/users/00u118oQYT4TBGuay0g4\"\n      }\n    }\n  }\n]\n"
+      },
+      {
+        "id": "get--logs",
+        "summary": "GET /logs",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/logs",
+        "contentType": "application/json",
+        "fixture": "[\n  {\n    \"actor\": {\n      \"id\": \"00uttidj01jqL21aM1d6\",\n      \"type\": \"User\",\n      \"alternateId\": \"john.doe@example.com\",\n      \"displayName\": \"John Doe\",\n      \"detailEntry\": null\n    },\n    \"client\": {\n      \"userAgent\": {\n        \"rawUserAgent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36\",\n        \"os\": \"Mac OS X\",\n        \"browser\": \"CHROME\"\n      },\n      \"zone\": null,\n      \"device\": \"Computer\",\n      \"id\": null,\n      \"ipAddress\": \"10.0.0.1\",\n      \"geographicalContext\": {\n        \"city\": \"New York\",\n        \"state\": \"New York\",\n        \"country\": \"United States\",\n        \"postalCode\": 10013,\n        \"geolocation\": {\n          \"lat\": 40.3157,\n          \"lon\": -74.01\n        }\n      }\n    },\n    \"device\": {\n      \"id\": \"guofdhyjex1feOgbN1d9\",\n      \"name\": \"Mac15,6\",\n      \"os_platform\": \"OSX\",\n      \"os_version\": \"14.6.0\",\n      \"managed\": false,\n      \"registered\": true,\n      \"device_integrator\": null,\n      \"disk_encryption_type\": \"ALL_INTERNAL_VOLUMES\",\n      \"screen_lock_type\": \"BIOMETRIC\",\n      \"jailbreak\": null,\n      \"secure_hardware_present\": true\n    },\n    \"authenticationContext\": {\n      \"authenticationProvider\": null,\n      \"credentialProvider\": null,\n      \"credentialType\": null,\n      \"issuer\": null,\n      \"interface\": null,\n      \"authenticationStep\": 0,\n      \"rootSessionId\": \"idxBager62CSveUkTxvgRtonA\",\n      \"externalSessionId\": \"idxBager62CSveUkTxvgRtonA\"\n    },\n    \"displayMessage\": \"User login to Okta\",\n    \"eventType\": \"user.session.start\",\n    \"outcome\": {\n      \"result\": \"SUCCESS\",\n      \"reason\": null\n    },\n    \"published\": \"2024-08-13T15:58:20.353Z\",\n    \"securityContext\": {\n      \"asNumber\": 394089,\n      \"asOrg\": \"ASN 0000\",\n      \"isp\": \"google\",\n      \"domain\": null,\n      \"isProxy\": false\n    },\n    \"severity\": \"INFO\",\n    \"debugContext\": {\n      \"debugData\": {\n        \"requestId\": \"ab609228fe84ce59cdcbfa690bcce016\",\n        \"requestUri\": \"/idp/idx/authenticators/poll\",\n        \"url\": \"/idp/idx/authenticators/poll\"\n      }\n    },\n    \"legacyEventType\": \"core.user_auth.login_success\",\n    \"transaction\": {\n      \"type\": \"WEB\",\n      \"id\": \"ab609228fe84ce59cdcbfa690bgce016\",\n      \"detail\": null\n    },\n    \"uuid\": \"dc9fd3c0-598c-11ef-8478-2b7584bf8d5a\",\n    \"version\": 0,\n    \"request\": {\n      \"ipChain\": [\n        {\n          \"ip\": \"10.0.0.1\",\n          \"geographicalContext\": {\n            \"city\": \"New York\",\n            \"state\": \"New York\",\n            \"country\": \"United States\",\n            \"postalCode\": 10013,\n            \"geolocation\": {\n              \"lat\": 40.3157,\n              \"lon\": -74.01\n            }\n          },\n          \"version\": \"V4\",\n          \"source\": null\n        }\n      ]\n    },\n    \"target\": [\n      {\n        \"id\": \"pfdfdhyjf0HMbkP2e1d7\",\n        \"type\": \"AuthenticatorEnrollment\",\n        \"alternateId\": \"unknown\",\n        \"displayName\": \"Okta Verify\",\n        \"detailEntry\": null\n      },\n      {\n        \"id\": \"0oatxlef9sQvvqInq5d6\",\n        \"type\": \"AppInstance\",\n        \"alternateId\": \"Okta Admin Console\",\n        \"displayName\": \"Okta Admin Console\",\n        \"detailEntry\": null\n      }\n    ]\n  }\n]\n"
+      },
+      {
+        "id": "get--api-v1-logs",
+        "summary": "GET /api/v1/logs",
+        "status": 200,
+        "headers": {},
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "record": {
+          "name": "body",
+          "kind": "string",
+          "optional": false,
+          "example": "vendor"
+        },
+        "method": "GET",
+        "pathTemplate": "/api/v1/logs",
+        "contentType": "application/json",
+        "fixture": "[\n  {\n    \"actor\": {\n      \"id\": \"00uttidj01jqL21aM1d6\",\n      \"type\": \"User\",\n      \"alternateId\": \"john.doe@example.com\",\n      \"displayName\": \"John Doe\",\n      \"detailEntry\": null\n    },\n    \"client\": {\n      \"userAgent\": {\n        \"rawUserAgent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36\",\n        \"os\": \"Mac OS X\",\n        \"browser\": \"CHROME\"\n      },\n      \"zone\": null,\n      \"device\": \"Computer\",\n      \"id\": null,\n      \"ipAddress\": \"10.0.0.1\",\n      \"geographicalContext\": {\n        \"city\": \"New York\",\n        \"state\": \"New York\",\n        \"country\": \"United States\",\n        \"postalCode\": 10013,\n        \"geolocation\": {\n          \"lat\": 40.3157,\n          \"lon\": -74.01\n        }\n      }\n    },\n    \"device\": {\n      \"id\": \"guofdhyjex1feOgbN1d9\",\n      \"name\": \"Mac15,6\",\n      \"os_platform\": \"OSX\",\n      \"os_version\": \"14.6.0\",\n      \"managed\": false,\n      \"registered\": true,\n      \"device_integrator\": null,\n      \"disk_encryption_type\": \"ALL_INTERNAL_VOLUMES\",\n      \"screen_lock_type\": \"BIOMETRIC\",\n      \"jailbreak\": null,\n      \"secure_hardware_present\": true\n    },\n    \"authenticationContext\": {\n      \"authenticationProvider\": null,\n      \"credentialProvider\": null,\n      \"credentialType\": null,\n      \"issuer\": null,\n      \"interface\": null,\n      \"authenticationStep\": 0,\n      \"rootSessionId\": \"idxBager62CSveUkTxvgRtonA\",\n      \"externalSessionId\": \"idxBager62CSveUkTxvgRtonA\"\n    },\n    \"displayMessage\": \"User login to Okta\",\n    \"eventType\": \"user.session.start\",\n    \"outcome\": {\n      \"result\": \"SUCCESS\",\n      \"reason\": null\n    },\n    \"published\": \"2024-08-13T15:58:20.353Z\",\n    \"securityContext\": {\n      \"asNumber\": 394089,\n      \"asOrg\": \"ASN 0000\",\n      \"isp\": \"google\",\n      \"domain\": null,\n      \"isProxy\": false\n    },\n    \"severity\": \"INFO\",\n    \"debugContext\": {\n      \"debugData\": {\n        \"requestId\": \"ab609228fe84ce59cdcbfa690bcce016\",\n        \"requestUri\": \"/idp/idx/authenticators/poll\",\n        \"url\": \"/idp/idx/authenticators/poll\"\n      }\n    },\n    \"legacyEventType\": \"core.user_auth.login_success\",\n    \"transaction\": {\n      \"type\": \"WEB\",\n      \"id\": \"ab609228fe84ce59cdcbfa690bgce016\",\n      \"detail\": null\n    },\n    \"uuid\": \"dc9fd3c0-598c-11ef-8478-2b7584bf8d5a\",\n    \"version\": 0,\n    \"request\": {\n      \"ipChain\": [\n        {\n          \"ip\": \"10.0.0.1\",\n          \"geographicalContext\": {\n            \"city\": \"New York\",\n            \"state\": \"New York\",\n            \"country\": \"United States\",\n            \"postalCode\": 10013,\n            \"geolocation\": {\n              \"lat\": 40.3157,\n              \"lon\": -74.01\n            }\n          },\n          \"version\": \"V4\",\n          \"source\": null\n        }\n      ]\n    },\n    \"target\": [\n      {\n        \"id\": \"pfdfdhyjf0HMbkP2e1d7\",\n        \"type\": \"AuthenticatorEnrollment\",\n        \"alternateId\": \"unknown\",\n        \"displayName\": \"Okta Verify\",\n        \"detailEntry\": null\n      },\n      {\n        \"id\": \"0oatxlef9sQvvqInq5d6\",\n        \"type\": \"AppInstance\",\n        \"alternateId\": \"Okta Admin Console\",\n        \"displayName\": \"Okta Admin Console\",\n        \"detailEntry\": null\n      }\n    ]\n  }\n]\n"
       }
     ],
     "chaos": {
