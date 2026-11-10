@@ -8,7 +8,7 @@ from pathlib import Path
 from panparrot import __version__
 from panparrot.config import load_credentials, save_credentials
 from panparrot.expect import check_expectations, load_expectations
-from panparrot.xsiam import configure_instance
+from panparrot.xsiam import configure_instance, manual_command_seen
 
 
 class FailedAssertions(Exception):
@@ -474,9 +474,22 @@ def xsiam(args: list[str]) -> dict:
     mock_id = flag(args, "--mock")
     integration = flag(args, "--integration")
     instance = flag(args, "--instance-name")
+    enable_fetch = "--fetch" in args
     config = api("GET", "/api/v1/mocks/" + quote(mock_id) + "/instance-config")
-    result = configure_instance(config, integration, instance, "--dry-run" in args)
-    return {"xsiam": result}
+    warning = ""
+    if enable_fetch:
+        logs = api("GET", "/api/v1/mocks/" + quote(mock_id) + "/logs?limit=50").get("logs", [])
+        if not manual_command_seen(logs):
+            warning = "No manual command has called this mock yet. Fetch incidents is on because --fetch was set."
+    result = configure_instance(config, integration, instance, "--dry-run" in args, enable_fetch)
+    if warning:
+        result["warning"] = warning
+    text = ""
+    if enable_fetch:
+        text = "Fetch incidents is on."
+        if warning:
+            text = warning + "\n" + text
+    return {"xsiam": result, **({"text": text} if text else {})}
 
 
 def mock_body(args: list[str]) -> dict:
@@ -561,7 +574,7 @@ HELP = """panparrot [--json] <command>
   assert --mock <id> --file expectations.json
   assert --mock <id> --method GET --path /hello [--query name=value]
   instance-config --mock <id>
-  xsiam configure-instance --mock <id> --integration <id> --instance-name <n> [--dry-run]
+  xsiam configure-instance --mock <id> --integration <id> --instance-name <n> [--fetch] [--dry-run]
 
 --json prints one JSON object on stdout. XSIAM credentials stay in
 DEMISTO_BASE_URL, DEMISTO_API_KEY, and XSIAM_AUTH_ID and are not sent to PAN Parrot.

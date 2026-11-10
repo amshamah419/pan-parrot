@@ -95,7 +95,7 @@ panparrot --json mock scenario --mock <id> --step 202 --step 200:{"job":"done"} 
 panparrot --json assert --mock <id> --method GET --path /hello
 panparrot --json mocks create --from-yml HelloWorld.yml --test-data ./test_data
 panparrot --json instance-config --mock <id>
-panparrot --json xsiam configure-instance --mock <id> --integration HelloWorld --instance-name lab --dry-run`}</pre>
+panparrot --json xsiam configure-instance --mock <id> --integration HelloWorld --instance-name lab --fetch --dry-run`}</pre>
               <p>
                 Tokens expire (90 days unless you choose otherwise, one year at most) and carry <code>mocks:read</code> and <code>mocks:write</code>. The install command uses a separate <code>cli:download</code> token that lasts 1 hour and cannot read or change mocks. The CLI wheel is not on public PyPI. <code>/api/v1</code> is a quiet 404 without a live token or, for the wheel only, this signed-in session. The copy-paste agent recipe is in <code>docs/agent-usage.md</code>. XSIAM credentials stay on your machine. XSIAM has to reach the catch URL.
               </p>

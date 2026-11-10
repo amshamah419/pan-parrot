@@ -25,6 +25,7 @@ Status: **done**, **in progress**, **todo**.
 | 17 | Download-only install token | done | The API tokens page mints a `cli:download` token that expires in 1 hour and puts that token in the `pipx` URL. The token can download the wheel and cannot read or change mocks. It does not count toward the 5 active mock tokens. Existing `mocks:read` and `mocks:write` tokens keep working, including a wheel download. A missing or expired token is still a quiet 404. |
 | 18 | Scenario steps from the CLI | done | `panparrot mock scenario --mock <id> --step 202 --step 200:{"job":"done"}` sets an ordered response list. `--loop` starts again after the last step. Without `--loop`, the last response repeats. `--reset` clears the call index. The Flow tab exposes the same sequence, an Add step button, and a Loop switch. |
 | 19 | Coverage for a local integration | done | `panparrot coverage <integration.yml>` and `panparrot mock from-integration` print vendor, approximate, or missing for each command. The match is the scored catalog preset for that integration. A command the catalog does not list is missing. An integration that is not scored is labeled unscored instead of missing. |
+| 20 | Opt-in Fetch incidents | done | `xsiam configure-instance --fetch` sets `isFetch` on the instance payload. Without `--fetch`, Fetch incidents stays off. If no manual command has called the mock yet, the command warns and still sets it. A fetch poll (`since` or `first_fetch`) does not count as that manual command. XSIAM credentials stay on the machine. |
 
 ## Defaults chosen without waiting
 
@@ -55,6 +56,8 @@ Status: **done**, **in progress**, **todo**.
 - The request log searches method, status, path, headers, and body, copies a call as cURL or Python, replays it through the same public-https checks as Push, and diffs two calls side by side. `?` lists the shortcuts. Color theme follows the system until a Light or Dark choice is saved in the browser.
 
 ## Done through this PR
+
+`panparrot xsiam configure-instance --fetch` sets `isFetch` on the XSIAM instance. Without the flag, Fetch incidents stays off. If the mock log has no manual command yet, the command warns and still turns fetch on, because the flag was explicit. A call whose query is only `since` or `first_fetch` does not count as that manual command. XSIAM credentials are still sent only to the tenant.
 
 `panparrot coverage <integration.yml>` scores the commands in a local integration YAML. `POST /api/v1/coverage` returns vendor, approximate, or missing for each command, using the scored catalog preset that matches the integration. A command that preset does not list is missing. An integration that is not in the scored catalog is unscored, not missing. `panparrot mock from-integration` prints the same lines. The catalog totals stay 952 vendor, 412 approximate, and 1936 missing.
 

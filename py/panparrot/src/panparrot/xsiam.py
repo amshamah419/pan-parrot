@@ -101,7 +101,7 @@ def build_instance_body(metadata: dict, values: dict, instance_name: str) -> dic
     return body
 
 
-def configure_instance(config: dict, integration_id: str, instance_name: str, dry_run: bool) -> dict:
+def configure_instance(config: dict, integration_id: str, instance_name: str, dry_run: bool, enable_fetch: bool = False) -> dict:
     env = xsiam_env()
     found = xsiam_request(env, "POST", "/settings/integration/search", {})
     metadata = None
@@ -113,6 +113,8 @@ def configure_instance(config: dict, integration_id: str, instance_name: str, dr
         raise SystemExit(f"XSIAM has no installed integration id {integration_id}")
     existing = next((item for item in found.get("instances") or [] if item.get("name") == instance_name), None)
     payload = build_instance_body(metadata, values_from_config(config), instance_name)
+    if enable_fetch:
+        set_fetch(payload)
     result = {
         "method": "PUT",
         "url": env["root"] + "/settings/integration",
@@ -126,3 +128,24 @@ def configure_instance(config: dict, integration_id: str, instance_name: str, dr
         xsiam_request(env, "DELETE", "/settings/integration/" + urllib.parse.quote(str(existing["id"]), safe=""))
     created = xsiam_request(env, "PUT", "/settings/integration", payload)
     return {"dryRun": False, "replaced": bool(existing), "response": created}
+
+
+def set_fetch(payload: dict) -> None:
+    for param in payload.get("data") or []:
+        if param.get("name") == "isFetch":
+            param["value"] = True
+            param["hasvalue"] = True
+            return
+    payload.setdefault("data", []).append({"name": "isFetch", "value": True, "hasvalue": True})
+
+
+def manual_command_seen(logs: list) -> bool:
+    fetch_names = {"since", "first_fetch", "firstfetch"}
+    for log in logs or []:
+        query = log.get("query") or {}
+        if not isinstance(query, dict):
+            return True
+        names = {str(key).lower() for key in query}
+        if names.isdisjoint(fetch_names):
+            return True
+    return False

@@ -28,7 +28,7 @@ The dashboard lists calls that hit your catch URLs.
 - Check two calls and choose **Compare two calls** for a side-by-side diff.
 - Press `?` for the shortcut list. The color theme control on the notice follows your system setting until you pick Light or Dark. That choice stays in this browser. `t` cycles System, Light, and Dark.
 
-If the mock came from a preset or an integration YAML, the same screen lists the XSOAR instance fields: the server parameter (the catch URL), the dummy credential in that integration's own parameter name, Trust any certificate, Use system proxy, and fetch. Copy one field or download the instance JSON. The JSON is the `{ brand, data: [{ name, value }] }` object XSOAR imports. Leave Fetch incidents off until a manual command shows up in the log.
+If the mock came from a preset or an integration YAML, the same screen lists the XSOAR instance fields: the server parameter (the catch URL), the dummy credential in that integration's own parameter name, Trust any certificate, Use system proxy, and fetch. Copy one field or download the instance JSON. The JSON is the `{ brand, data: [{ name, value }] }` object XSOAR imports. Leave Fetch incidents off until a manual command shows up in the log. `panparrot xsiam configure-instance --fetch` is the opt-in that sets it. Without `--fetch`, it stays off. If no manual command has called the mock yet, the command warns.
 
 ## Integrations in progress
 
