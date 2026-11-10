@@ -45,6 +45,10 @@ export function IntegrationPicker({
   const [sample, setSample] = useState("");
   const [specText, setSpecText] = useState("");
   const [specUrl, setSpecUrl] = useState("");
+  const [progressYaml, setProgressYaml] = useState("");
+  const [contentPath, setContentPath] = useState("");
+  const [clientSource, setClientSource] = useState("");
+  const [testData, setTestData] = useState<{ name: string; text: string }[]>([]);
 
   useEffect(() => {
     if (!open || catalogState === "loading" || catalogState === "ready") return;
@@ -95,6 +99,33 @@ export function IntegrationPicker({
     }
   };
 
+  const importProgress = async () => {
+    setBusy(true);
+    setError("");
+    try {
+      const result = await importSpec({
+        kind: "spec",
+        text: progressYaml,
+        contentPath: contentPath.trim() || undefined,
+        clientSource: clientSource.trim() || undefined,
+        testData,
+      });
+      const mockSpec = result.mockSpec as { source?: { name?: string } } | undefined;
+      if (!mockSpec) throw new Error("Import did not return a mock");
+      const endpoint = await createEndpoint({
+        name: mockSpec.source?.name || "Integration",
+        mockSpec,
+      });
+      onCreated?.(endpoint);
+      setOpen(false);
+      navigate(`/mock/${endpoint.id}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Import failed");
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const importText = async (kind: "sample" | "spec", text: string, url?: string, zipBase64?: string) => {
     setBusy(true);
     setError("");
@@ -136,6 +167,7 @@ export function IntegrationPicker({
             <TabsTrigger value="catalog">Catalog</TabsTrigger>
             <TabsTrigger value="sample">Sample JSON</TabsTrigger>
             <TabsTrigger value="spec">API spec</TabsTrigger>
+            <TabsTrigger value="progress">In progress</TabsTrigger>
           </TabsList>
           <TabsContent value="catalog" className="space-y-3">
             <Button
@@ -258,6 +290,65 @@ export function IntegrationPicker({
                 />
               </label>
             </div>
+          </TabsContent>
+          <TabsContent value="progress" className="space-y-3">
+            <p className="text-sm text-muted-foreground">
+              Paste the integration YAML, or give a demisto/content path such as Packs/HelloWorld/Integrations/HelloWorld. Add test_data JSON files or the Python client when you have them. Each command becomes one operation. A matching test_data file is the response. Otherwise the outputs context paths are the shape. The path is taken from the Python client when the command can be found.
+            </p>
+            <Label htmlFor="progress-yaml">Integration YAML</Label>
+            <Textarea
+              id="progress-yaml"
+              value={progressYaml}
+              onChange={(event) => setProgressYaml(event.target.value)}
+              rows={6}
+              className="font-mono text-xs"
+              placeholder="name: MyIntegration"
+            />
+            <Label htmlFor="content-path">Or a demisto/content path</Label>
+            <Input
+              id="content-path"
+              value={contentPath}
+              onChange={(event) => setContentPath(event.target.value)}
+              placeholder="Packs/HelloWorld/Integrations/HelloWorld"
+            />
+            <Label htmlFor="client-source">Python client, if it is not in that path</Label>
+            <Textarea
+              id="client-source"
+              value={clientSource}
+              onChange={(event) => setClientSource(event.target.value)}
+              rows={4}
+              className="font-mono text-xs"
+              placeholder="def hello_world_command(client, args):"
+            />
+            <label className="flex max-w-full flex-col gap-1 text-sm">
+              test_data JSON files
+              <input
+                type="file"
+                accept=".json,application/json"
+                multiple
+                className="max-w-full text-sm"
+                onChange={async (event) => {
+                  const chosen = [...(event.target.files || [])].slice(0, 12);
+                  const loaded: { name: string; text: string }[] = [];
+                  for (const file of chosen) {
+                    if (file.size > 100_000) continue;
+                    loaded.push({ name: file.name, text: await file.text() });
+                  }
+                  setTestData(loaded);
+                }}
+              />
+            </label>
+            {testData.length > 0 && (
+              <p className="text-xs text-muted-foreground">{testData.length} test_data file{testData.length === 1 ? "" : "s"} ready.</p>
+            )}
+            <Button
+              disabled={busy || (!progressYaml.trim() && !contentPath.trim())}
+              onClick={() =>
+                importProgress()
+              }
+            >
+              Build command mocks
+            </Button>
           </TabsContent>
         </Tabs>
         {error && <p className="text-sm text-destructive">{error}</p>}

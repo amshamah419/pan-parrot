@@ -171,6 +171,25 @@ export function generateMockResponse(input: GenerateInput): GenerateResult {
     };
   }
 
+  if (operation.fixture && !chaosOn) {
+    return {
+      status: operation.status,
+      headers: {
+        "content-type": operation.contentType || "application/json; charset=utf-8",
+        "x-pan-parrot-request": String(input.requestIndex),
+        "x-pan-parrot-seed": spec.chaos.seed,
+        "x-pan-parrot-records": "1",
+      },
+      body: operation.fixture,
+      recordCount: 1,
+      chaosEffects: [],
+      delayMs: 0,
+      dripMs: 0,
+      stream: false,
+      capped: false,
+    };
+  }
+
   if (operation.envelope.type === "graphql") {
     const answered = answerGraphql({
       spec,
