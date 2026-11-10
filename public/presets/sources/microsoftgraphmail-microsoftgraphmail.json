@@ -1,0 +1,60 @@
+{
+  "id": "microsoftgraphmail-microsoftgraphmail",
+  "retrievedAt": "2026-11-10",
+  "sourceType": "vendor-example",
+  "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-messages?view=graph-rest-1.0&tabs=http",
+  "operations": [
+    {
+      "operationId": "get-users-mailbox-to-fetch-messages-0",
+      "method": "GET",
+      "path": "/users/{_mailbox_to_fetch}/messages",
+      "docUrl": "https://learn.microsoft.com/en-us/graph/api/user-list-messages?view=graph-rest-1.0&tabs=http",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('bb8775a4-4d8c-42cf-a1d4-4d58c2bb668f')/messages(sender,subject)",
+        "value": [
+          {
+            "@odata.etag": "W/\"CQAAABYAAADHcgC8Hl9tRZ/hc1wEUs1TAAAwR4Hg\"",
+            "id": "AAMkAGUAAAwTW09AAA=",
+            "subject": "You have late tasks!",
+            "sender": {
+              "emailAddress": {
+                "name": "Microsoft Planner",
+                "address": "noreply@Planner.Office365.com"
+              }
+            }
+          }
+        ]
+      },
+      "scrubs": [
+        {
+          "find": "noreply@Planner.Office365.com",
+          "replace": "user@example.invalid"
+        }
+      ]
+    },
+    {
+      "operationId": "get-users-mailbox-to-fetch-mailfolders-folde-1",
+      "method": "GET",
+      "path": "/users/{_mailbox_to_fetch}/mailFolders/{folder_id}/messages",
+      "docUrl": "https://learn.microsoft.com/en-us/graph/api/mailfolder-list-messages?view=graph-rest-1.0&tabs=http",
+      "sourceType": "vendor-example",
+      "excerpt": {
+        "value": [
+          {
+            "receivedDateTime": "2018-02-13T03:53:55Z",
+            "sentDateTime": "2018-02-13T03:53:55Z",
+            "hasAttachments": true,
+            "subject": "MyAnalytics | Your past week",
+            "body": {
+              "contentType": "html",
+              "content": "<html lang=\"en\">\r\n<head></head>\r\n<body> </body>\r\n</html>\r\n"
+            },
+            "bodyPreview": "February 4-10, 2018\r\n\r\n\r\nHi Megan Bowen,\r\n\r\nWe've got your highlights from last week\r\n\r\n\r\n\r\nYour time\r\n\r\n\r\nEmail hours\r\n\r\n\r\n\r\n\r\n0 hrs\r\n\r\n\r\n\r\nMeeting hours\r\n\r\n\r\n\r\n\r\n12 hrs\r\n\r\n\r\n\r\n\r\nFocus hours\r\n\r\n\r\n\r\n\r\n30 hrs\r\n\r\n\r\n\r\n\r\n\r\nGoals keep you motivated. Set them"
+          }
+        ]
+      },
+      "scrubs": []
+    }
+  ]
+}

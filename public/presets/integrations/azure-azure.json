@@ -2,9 +2,9 @@
   "id": "azure-azure",
   "name": "Azure",
   "pack": "Azure",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPo",
+  "summary": "From vendor docs. Rebuilt from the client: GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPo",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "Azure",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Azure/Integrations/Azure",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "notes": [
-        "Sample fields are the ones GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPolicies/default reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPolicies/default reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Azure/Integrations/Azure",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/rest/api/sql/database-security-alert-policies/get?view=rest-sql-2021-11-01&tabs=HTTP",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{server_name}/databases/{db_name}/securityAlertPolicies/default reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -76,7 +77,8 @@
               ]
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"id\": \"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/securityalert-6852/providers/Microsoft.Sql/servers/securityalert-2080/databases/testdb\",\n  \"name\": \"default\",\n  \"type\": \"Microsoft.Sql/servers/databases/securityAlertPolicies\",\n  \"systemData\": {\n    \"createdBy\": \"string\",\n    \"createdByType\": \"User\",\n    \"createdAt\": \"2020-04-03T04:41:33.937Z\",\n    \"lastModifiedBy\": \"string\",\n    \"lastModifiedByType\": \"User\",\n    \"lastModifiedAt\": \"2020-04-03T04:41:33.937Z\"\n  },\n  \"properties\": {\n    \"state\": \"Enabled\",\n    \"emailAccountAdmins\": true,\n    \"emailAddresses\": [\n      \"user@example.invalid\",\n      \"user2@example.invalid\"\n    ],\n    \"disabledAlerts\": [\n      \"Usage_Anomaly\"\n    ],\n    \"retentionDays\": 0,\n    \"creationTime\": \"2020-04-03T04:41:33.937Z\"\n  }\n}\n"
       }
     ],
     "chaos": {

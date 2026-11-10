@@ -2,9 +2,9 @@
   "id": "github-github-iam",
   "name": "GitHub IAM",
   "pack": "GitHub",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /scim/v2/organizations/{org}/Users.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /scim/v2/organizations/{org}/Users.",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "GitHub IAM",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GitHub/Integrations/GitHub_IAM",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "notes": [
-        "Sample fields are the ones GET /scim/v2/organizations/{org}/Users reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /scim/v2/organizations/{org}/Users reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/GitHub/Integrations/GitHub_IAM",
+        "status": "vendor",
+        "docUrl": "https://docs.github.com/en/rest/enterprise-admin/scim",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /scim/v2/organizations/{org}/Users reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -105,7 +106,8 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"schemas\": [\n    \"urn:ietf:params:scim:api:messages:2.0:ListResponse\"\n  ],\n  \"totalResults\": 1,\n  \"Resources\": [\n    {\n      \"schemas\": [\n        \"urn:ietf:params:scim:schemas:core:2.0:User\"\n      ],\n      \"externalId\": \"E012345\",\n      \"id\": \"7fce0092-d52e-4f76-b727-3955bd72c939\",\n      \"active\": true,\n      \"userName\": \"E012345\",\n      \"name\": {\n        \"formatted\": \"Ms. Mona Lisa Octocat\",\n        \"familyName\": \"Octocat\",\n        \"givenName\": \"Mona\",\n        \"middleName\": \"Lisa\"\n      },\n      \"displayName\": \"Mona Lisa\",\n      \"emails\": [\n        {\n          \"value\": \"mlisa@example.com\",\n          \"type\": \"work\",\n          \"primary\": true\n        }\n      ],\n      \"roles\": [\n        {\n          \"value\": \"User\",\n          \"primary\": false\n        }\n      ]\n    }\n  ],\n  \"startIndex\": 1,\n  \"itemsPerPage\": 20\n}\n"
       }
     ],
     "chaos": {

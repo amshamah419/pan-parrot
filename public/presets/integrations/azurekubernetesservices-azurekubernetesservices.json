@@ -2,9 +2,9 @@
   "id": "azurekubernetesservices-azurekubernetesservices",
   "name": "Azure Kubernetes Services",
   "pack": "AzureKubernetesServices",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /subscriptions/{subscription_id}/providers/Microsoft.ContainerService/managedClusters.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /subscriptions/{subscription_id}/providers/Microsoft.ContainerService/managedClusters.",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "Azure Kubernetes Services",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureKubernetesServices/Integrations/AzureKubernetesServices",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "notes": [
-        "Sample fields are the ones GET /subscriptions/{subscription_id}/providers/Microsoft.ContainerService/managedClusters reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /subscriptions/{subscription_id}/providers/Microsoft.ContainerService/managedClusters reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureKubernetesServices/Integrations/AzureKubernetesServices",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/rest/api/aks/managed-clusters/list?view=rest-aks-2024-09-01&tabs=HTTP",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /subscriptions/{subscription_id}/providers/Microsoft.ContainerService/managedClusters reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -64,7 +65,8 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.ContainerService/managedClusters/clustername1\",\n      \"location\": \"location1\",\n      \"name\": \"clustername1\",\n      \"tags\": {\n        \"archv2\": \"\",\n        \"tier\": \"production\"\n      },\n      \"type\": \"Microsoft.ContainerService/ManagedClusters\",\n      \"eTag\": \"nvweuib\",\n      \"properties\": {\n        \"provisioningState\": \"Succeeded\",\n        \"kubernetesVersion\": \"1.9.6\",\n        \"currentKubernetesVersion\": \"1.9.6\",\n        \"maxAgentPools\": 1,\n        \"dnsPrefix\": \"dnsprefix1\",\n        \"fqdn\": \"dnsprefix1-abcd1234.hcp.eastus.azmk8s.io\",\n        \"agentPoolProfiles\": [\n          {\n            \"name\": \"nodepool1\",\n            \"count\": 3,\n            \"vmSize\": \"Standard_DS1_v2\",\n            \"maxPods\": 110,\n            \"osType\": \"Linux\",\n            \"provisioningState\": \"Succeeded\",\n            \"orchestratorVersion\": \"1.9.6\",\n            \"currentOrchestratorVersion\": \"1.9.6\",\n            \"eTag\": \"byuefvwi\"\n          }\n        ],\n        \"linuxProfile\": {\n          \"adminUsername\": \"azureuser\",\n          \"ssh\": {\n            \"publicKeys\": [\n              {\n                \"keyData\": \"keydata\"\n              }\n            ]\n          }\n        },\n        \"servicePrincipalProfile\": {\n          \"clientId\": \"clientid\"\n        },\n        \"nodeResourceGroup\": \"MC_rg1_clustername1_location1\",\n        \"enableRBAC\": false,\n        \"diskEncryptionSetID\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/diskEncryptionSets/des\",\n        \"networkProfile\": {\n          \"networkPlugin\": \"kubenet\",\n          \"podCidr\": \"10.244.0.0/16\",\n          \"serviceCidr\": \"10.0.0.0/16\",\n          \"dnsServiceIP\": \"10.0.0.10\"\n        }\n      }\n    }\n  ]\n}\n"
       }
     ],
     "chaos": {

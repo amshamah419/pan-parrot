@@ -3,9 +3,9 @@
   "name": "Sophos Central",
   "pack": "SophosCentral",
   "vendor": "Sophos",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Common alerts list used by fetch. Items match the public alerts route.",
+  "summary": "From vendor docs. Common alerts list used by fetch. Items match the public alerts route.",
   "notes": [
     "GET /common/v1/alerts returns items. The fixture test_data/alert_list.json uses the same id, category, severity, raisedAt, and type fields.",
     "Sophos pages with pages.nextKey. This mock accepts a cursor query and writes nextOffset.",
@@ -19,22 +19,21 @@
       "kind": "preset",
       "id": "sophoscentral-sophoscentral",
       "name": "Sophos Central",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://developer.sophos.com/docs/common-v1/1/routes/alerts/get",
       "notes": [
         "GET /common/v1/alerts returns items. The fixture test_data/alert_list.json uses the same id, category, severity, raisedAt, and type fields.",
         "Sophos pages with pages.nextKey. This mock accepts a cursor query and writes nextOffset.",
-        "Whoami and the data-region host lookup are not modeled. A bearer token is required."
+        "Whoami and the data-region host lookup are not modeled. A bearer token is required.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://developer.sophos.com/docs/common-v1/1/routes/alerts/get",
+        "status": "vendor",
+        "docUrl": "https://developer.sophos.com/reference/common-v1/alerts/get-alerts/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "GET /common/v1/alerts returns items. The fixture test_data/alert_list.json uses the same id, category, severity, raisedAt, and type fields.",
-          "Sophos pages with pages.nextKey. This mock accepts a cursor query and writes nextOffset.",
-          "Whoami and the data-region host lookup are not modeled. A bearer token is required."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -107,7 +106,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "{\n  \"items\": [\n    {\n      \"id\": \"a5ded91c-6575-435c-a6b4-64b94f9048ff\",\n      \"allowedActions\": [\n        \"acknowledge\"\n      ],\n      \"category\": \"updating\",\n      \"description\": \"John-PC is out of date.\",\n      \"groupKey\": \"MSxFdmVudDo6RW5kcG9pbnQ6Ok91dE9mRGF0ZSw1MTMs\",\n      \"managedAgent\": {\n        \"id\": \"bb90527d-73a8-4e6e-85c6-20c2e0c5bc6f\",\n        \"type\": \"computer\"\n      },\n      \"person\": {\n        \"id\": \"17dd896f-ee9f-4f7d-a2a2-6a8c0b48ff15\"\n      },\n      \"product\": \"endpoint\",\n      \"raisedAt\": \"2021-02-12T15:04:53.780\",\n      \"severity\": \"medium\",\n      \"tenant\": {\n        \"id\": \"79067fa3-e4d0-4769-a5f7-8d6550b3b68b\",\n        \"name\": \"Acme Corp\"\n      },\n      \"type\": \"Event::Endpoint::OutOfDate\",\n      \"lastCorrelatedAt\": \"2021-02-12T16:30:45.123Z\",\n      \"updatedAt\": \"2021-02-12T16:30:45.123Z\",\n      \"eventCount\": 5,\n      \"status\": \"open\"\n    },\n    {\n      \"id\": \"f9415c5f-e0e9-41d7-8126-1956223a66f1\",\n      \"allowedActions\": [\n        \"acknowledge\",\n        \"cleanPua\"\n      ],\n      \"category\": \"updating\",\n      \"description\": \"Generic reputation PUA detected C:\\\\Temp\\\\WinExeSvc.exe\",\n      \"groupKey\": \"MSxFdmVudDo6RW5kcG9pbnQ6Ok91dE9mRGF0ZSw1MTMs\",\n      \"managedAgent\": {\n        \"id\": \"bb90527d-73a8-4e6e-85c6-20c2e0c5bc6f\",\n        \"type\": \"computer\"\n      },\n      \"person\": {\n        \"id\": \"17dd896f-ee9f-4f7d-a2a2-6a8c0b48ff15\"\n      },\n      \"product\": \"endpoint\",\n      \"raisedAt\": \"2021-02-12T15:04:53.780\",\n      \"severity\": \"medium\",\n      \"tenant\": {\n        \"id\": \"79067fa3-e4d0-4769-a5f7-8d6550b3b68b\",\n        \"name\": \"Acme Corp\"\n      },\n      \"type\": \"Event::Endpoint::PUADetected\",\n      \"lastCorrelatedAt\": \"2021-02-12T15:04:53.780Z\",\n      \"updatedAt\": \"2021-02-12T15:04:53.780Z\",\n      \"eventCount\": 1,\n      \"status\": \"open\"\n    }\n  ],\n  \"pages\": {\n    \"nextKey\": \"2000818931339\",\n    \"total\": 1,\n    \"items\": 2,\n    \"size\": 50,\n    \"maxSize\": 1000\n  }\n}\n"
       }
     ],
     "chaos": {

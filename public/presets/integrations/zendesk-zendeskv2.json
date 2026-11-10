@@ -3,9 +3,9 @@
   "name": "Zendesk v2",
   "pack": "Zendesk",
   "vendor": "Zendesk",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: POST /api/v2/tickets.",
+  "summary": "From vendor docs. Rebuilt from the client: POST /api/v2/tickets.",
   "notes": [
     "Sample fields are the ones POST /api/v2/tickets reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,18 +17,19 @@
       "kind": "preset",
       "id": "zendesk-zendeskv2",
       "name": "Zendesk v2",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://developer.zendesk.com/api-reference/ticketing/tickets/tickets/#list-tickets",
       "notes": [
-        "Sample fields are the ones POST /api/v2/tickets reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones POST /api/v2/tickets reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://developer.zendesk.com/api-reference/ticketing/tickets/tickets/#list-tickets",
+        "status": "vendor",
+        "docUrl": "https://developer.zendesk.com/api-reference/ticketing/tickets/tickets/",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones POST /api/v2/tickets reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -64,7 +65,8 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"ticket\": {\n    \"assignee_id\": 235323,\n    \"collaborator_ids\": [\n      35334,\n      234\n    ],\n    \"created_at\": \"2009-07-20T22:55:29Z\",\n    \"custom_fields\": [\n      {\n        \"id\": 27642,\n        \"value\": \"745\"\n      },\n      {\n        \"id\": 27648,\n        \"value\": \"yes\"\n      }\n    ],\n    \"custom_status_id\": 123,\n    \"description\": \"The fire is very colorful.\",\n    \"due_at\": null,\n    \"external_id\": \"ahg35h3jh\",\n    \"follower_ids\": [\n      35334,\n      234\n    ],\n    \"from_messaging_channel\": false,\n    \"generated_timestamp\": 1304553600,\n    \"group_id\": 98738,\n    \"has_incidents\": false,\n    \"id\": 35436,\n    \"organization_id\": 509974,\n    \"priority\": \"high\",\n    \"problem_id\": 9873764,\n    \"raw_subject\": \"{{dc.printer_on_fire}}\",\n    \"recipient\": \" [email protected] \",\n    \"requester_id\": 20978392,\n    \"satisfaction_rating\": {\n      \"comment\": \"Great support!\",\n      \"id\": 1234,\n      \"score\": \"good\"\n    },\n    \"sharing_agreement_ids\": [\n      84432\n    ],\n    \"status\": \"open\",\n    \"subject\": \"Help, my printer is on fire!\",\n    \"submitter_id\": 76872,\n    \"tags\": [\n      \"enterprise\",\n      \"other_tag\"\n    ],\n    \"type\": \"incident\",\n    \"updated_at\": \"2011-05-05T10:38:52Z\",\n    \"url\": \"https://company.zendesk.com/api/v2/tickets/35436\",\n    \"via\": {\n      \"channel\": \"web\"\n    }\n  }\n}\n"
       }
     ],
     "chaos": {

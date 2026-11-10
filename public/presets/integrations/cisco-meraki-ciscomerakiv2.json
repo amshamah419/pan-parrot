@@ -3,9 +3,9 @@
   "name": "Cisco Meraki v2",
   "pack": "cisco-meraki",
   "vendor": "Cisco",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: GET /organizations/{organization_id}/networks.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /organizations/{organization_id}/networks.",
   "notes": [
     "Sample fields are the ones GET /organizations/{organization_id}/networks, GET /organizations reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,18 +17,19 @@
       "kind": "preset",
       "id": "cisco-meraki-ciscomerakiv2",
       "name": "Cisco Meraki v2",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content client (MIT).",
       "sourceUrl": "https://developer.cisco.com/meraki/api-v1/get-organizations/",
       "notes": [
-        "Sample fields are the ones GET /organizations/{organization_id}/networks, GET /organizations reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /organizations/{organization_id}/networks, GET /organizations reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://developer.cisco.com/meraki/api-v1/get-organizations/",
+        "status": "vendor",
+        "docUrl": "https://raw.githubusercontent.com/meraki/openapi/master/openapi/spec3.json",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /organizations/{organization_id}/networks, GET /organizations reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -64,7 +65,8 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "[\n  {\n    \"id\": \"N_24329156\",\n    \"organizationId\": \"2930418\",\n    \"name\": \"Main Office\",\n    \"productTypes\": [\n      \"appliance\",\n      \"switch\",\n      \"wireless\"\n    ],\n    \"timeZone\": \"America/Los_Angeles\",\n    \"tags\": [\n      \"tag1\",\n      \"tag2\"\n    ],\n    \"enrollmentString\": \"my-enrollment-string\",\n    \"url\": \"https://n1.meraki.com//n//manage/nodes/list\",\n    \"notes\": \"Additional description of the network\",\n    \"isBoundToConfigTemplate\": false\n  }\n]\n"
       },
       {
         "id": "get-organizations-1",
@@ -97,7 +99,8 @@
               "example": "lab"
             }
           ]
-        }
+        },
+        "fixture": "[\n  {\n    \"id\": \"2930418\",\n    \"name\": \"My organization\",\n    \"url\": \"https://dashboard.meraki.com/o/VjjsAd/manage/organization/overview\",\n    \"api\": {\n      \"enabled\": true\n    },\n    \"licensing\": {\n      \"model\": \"co-term\"\n    },\n    \"cloud\": {\n      \"region\": {\n        \"name\": \"North America\",\n        \"host\": {\n          \"name\": \"United States\"\n        }\n      }\n    },\n    \"management\": {\n      \"details\": [\n        {\n          \"name\": \"MSP ID\",\n          \"value\": \"123456\"\n        }\n      ]\n    }\n  }\n]\n"
       }
     ],
     "chaos": {

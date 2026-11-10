@@ -304,10 +304,9 @@ def check_preset(preset: dict, content: Path) -> dict:
         findings.append("unparseable: client built requests without a readable method and path")
         return result(preset, "unparseable", findings)
     fixtures = [command_fixtures(item) for item in fixture_folders(folder, modules)]
-    # A vendor example includes fields the client never reads. Keep the method and path check.
-    skip_fields = preset.get("fidelity") == "vendor"
     for operation in preset["spec"]["operations"]:
-        findings.extend(check_operation(operation, calls, fixtures, skip_fields=skip_fields))
+        # A copied vendor example includes fields the client never reads. Approximate operations still do.
+        findings.extend(check_operation(operation, calls, fixtures, skip_fields=bool(operation.get("fixture"))))
     status = "mismatch" if findings else "match"
     return result(preset, status, findings, len(calls))
 

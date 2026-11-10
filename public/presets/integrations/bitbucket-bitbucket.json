@@ -2,9 +2,9 @@
   "id": "bitbucket-bitbucket",
   "name": "Bitbucket",
   "pack": "Bitbucket",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /workspaces/{workspace}/members.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /workspaces/{workspace}/members.",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -15,16 +15,17 @@
       "name": "Bitbucket",
       "attribution": "Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Bitbucket/Integrations/Bitbucket",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "notes": [
-        "Sample fields are the ones GET /workspaces/{workspace}/members reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /workspaces/{workspace}/members reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Bitbucket/Integrations/Bitbucket",
+        "status": "vendor",
+        "docUrl": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-members-get",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /workspaces/{workspace}/members reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -106,7 +107,8 @@
               ]
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"pagelen\": 10,\n  \"values\": [\n    {\n      \"permission\": \"owner\",\n      \"type\": \"workspace_membership\",\n      \"user\": {\n        \"type\": \"user\",\n        \"uuid\": \"{470c176d-3574-44ea-bb41-89e8638bcca4}\",\n        \"display_name\": \"Erik van Zijst\"\n      },\n      \"workspace\": {\n        \"type\": \"workspace\",\n        \"uuid\": \"{a15fb181-db1f-48f7-b41f-e1eff06929d6}\",\n        \"slug\": \"bbworkspace1\",\n        \"name\": \"Atlassian Bitbucket\"\n      }\n    },\n    {\n      \"permission\": \"member\",\n      \"type\": \"workspace_membership\",\n      \"user\": {\n        \"type\": \"user\",\n        \"nickname\": \"seanaty\",\n        \"display_name\": \"Sean Conaty\",\n        \"uuid\": \"{504c3b62-8120-4f0c-a7bc-87800b9d6f70}\"\n      },\n      \"workspace\": {\n        \"type\": \"workspace\",\n        \"uuid\": \"{a15fb181-db1f-48f7-b41f-e1eff06929d6}\",\n        \"slug\": \"bbworkspace1\",\n        \"name\": \"Atlassian Bitbucket\"\n      }\n    }\n  ],\n  \"page\": 1,\n  \"size\": 2\n}\n"
       }
     ],
     "chaos": {

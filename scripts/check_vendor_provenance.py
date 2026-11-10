@@ -26,6 +26,25 @@ def scrub(value, scrubs: list[dict]):
     return value
 
 
+def match_operation(operations: list[dict], entry: dict):
+    wanted = entry.get("operationId")
+    if wanted:
+        for operation in operations:
+            if operation.get("id") == wanted:
+                return operation
+        return None
+    matches = [
+        operation
+        for operation in operations
+        if operation.get("method") == entry.get("method") and operation.get("pathTemplate") == entry.get("path")
+    ]
+    if len(matches) == 1:
+        return matches[0]
+    if len(matches) > 1:
+        return "ambiguous"
+    return None
+
+
 def emails(value) -> list[str]:
     import re
 
@@ -73,15 +92,20 @@ def check() -> list[str]:
             errors.append(f"{path.stem}: index fidelity is not vendor")
         elif (catalog.get("verification") or {}).get("docUrl") != doc:
             errors.append(f"{path.stem}: index docUrl does not match the provenance file")
-        operations = { (op.get("method"), op.get("pathTemplate")): op for op in preset["spec"]["operations"] }
-        seen = set()
+        operations = preset["spec"]["operations"]
+        seen_ids = set()
         for entry in source.get("operations") or []:
-            key = (entry.get("method"), entry.get("path"))
-            seen.add(key)
-            operation = operations.get(key)
-            if operation is None:
-                errors.append(f"{path.stem}: provenance path {key} is not an operation")
+            operation = match_operation(operations, entry)
+            if operation == "ambiguous":
+                errors.append(f"{path.stem}: {entry.get('method')} {entry.get('path')} matches more than one operation; set operationId")
                 continue
+            if operation is None:
+                errors.append(f"{path.stem}: provenance path {entry.get('method')} {entry.get('path')} is not an operation")
+                continue
+            seen_ids.add(operation.get("id"))
+            entry_type = entry.get("sourceType") or source.get("sourceType")
+            if entry_type not in {"vendor-example", "vendor-schema"}:
+                errors.append(f"{path.stem}: operation sourceType must be vendor-example or vendor-schema")
             scrubs = entry.get("scrubs") or []
             if not isinstance(scrubs, list):
                 errors.append(f"{path.stem}: scrubs must be a list")
@@ -96,23 +120,29 @@ def check() -> list[str]:
                     errors.append(f"{path.stem}: scrub {item['find']!r} is not in the excerpt")
             expected = scrub(excerpt, scrubs)
             raw = operation.get("fixture")
+            label = f"{entry.get('method')} {entry.get('path')}"
             if not isinstance(raw, str) or not raw.strip():
-                errors.append(f"{path.stem}: {key} has no fixture")
+                errors.append(f"{path.stem}: {label} has no fixture")
                 continue
-            try:
-                got = json.loads(raw)
-            except json.JSONDecodeError as exc:
-                errors.append(f"{path.stem}: fixture is not JSON ({exc})")
-                continue
-            if got != expected:
-                errors.append(f"{path.stem}: fixture does not deep-equal the scrubbed excerpt for {key}")
+            if isinstance(excerpt, str):
+                if raw.strip() != str(expected).strip():
+                    errors.append(f"{path.stem}: fixture does not match the scrubbed excerpt for {label}")
+                got = raw
+            else:
+                try:
+                    got = json.loads(raw)
+                except json.JSONDecodeError as exc:
+                    errors.append(f"{path.stem}: fixture is not JSON ({exc})")
+                    continue
+                if got != expected:
+                    errors.append(f"{path.stem}: fixture does not deep-equal the scrubbed excerpt for {label}")
             for address in emails(got):
                 host = address.rsplit("@", 1)[-1].lower()
                 if host not in EMAIL_HOSTS:
                     errors.append(f"{path.stem}: fixture still contains {address}")
-        missing = set(operations) - seen
-        if missing:
-            errors.append(f"{path.stem}: operations without an excerpt: {sorted(missing)}")
+        for operation in operations:
+            if operation.get("fixture") and operation.get("id") not in seen_ids:
+                errors.append(f"{path.stem}: {operation.get('id')} has a fixture without an excerpt")
     orphan = source_ids - vendor_ids
     for preset_id in sorted(orphan):
         errors.append(f"{preset_id}: provenance file has no vendor preset")

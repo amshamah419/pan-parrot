@@ -3,9 +3,9 @@
   "name": "Entra ID Applications",
   "pack": "MicrosoftGraphApplications",
   "vendor": "Microsoft",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Rebuilt from the client: GET /v1.0/servicePrincipals.",
+  "summary": "From vendor docs. Rebuilt from the client: GET /v1.0/servicePrincipals.",
   "notes": [
     "Sample fields are the ones GET /v1.0/servicePrincipals, PATCH /beta/applications/{service_id} reads in the matched command. Lists the command iterates are arrays."
   ],
@@ -17,18 +17,20 @@
       "kind": "preset",
       "id": "microsoftgraphapplications-microsoftgraphapplications",
       "name": "Entra ID Applications",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/application-list",
       "notes": [
-        "Sample fields are the ones GET /v1.0/servicePrincipals, PATCH /beta/applications/{service_id} reads in the matched command. Lists the command iterates are arrays."
+        "Sample fields are the ones GET /v1.0/servicePrincipals, PATCH /beta/applications/{service_id} reads in the matched command. Lists the command iterates are arrays.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://learn.microsoft.com/en-us/graph/api/application-list",
+        "status": "vendor",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list?view=graph-rest-1.0&tabs=http",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Sample fields are the ones GET /v1.0/servicePrincipals, PATCH /beta/applications/{service_id} reads in the matched command. Lists the command iterates are arrays."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file.",
+          "These operations stay approximate: PATCH /beta/applications/{service_id}."
         ]
       }
     },
@@ -68,7 +70,8 @@
               }
             }
           ]
-        }
+        },
+        "fixture": "{\n  \"value\": [\n    {\n      \"accountEnabled\": true,\n      \"displayName\": \"amasf\",\n      \"servicePrincipalType\": \"Application\",\n      \"signInAudience\": \"AzureADMyOrg\"\n    }\n  ]\n}\n"
       },
       {
         "id": "patch-beta-applications-service-id-1",

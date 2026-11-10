@@ -3,9 +3,9 @@
   "name": "ThreatQ v2",
   "pack": "ThreatQ",
   "vendor": "ThreatQuotient",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Indicator search. data[] from /api/indicators.",
+  "summary": "From vendor docs. Indicator search. data[] from /api/indicators.",
   "notes": [
     "ThreatQ API docs require a customer login. GET /api/indicators is the public client path and returns { data }.",
     "Each indicator keeps id, value, type, and status.",
@@ -19,22 +19,21 @@
       "kind": "preset",
       "id": "threatq-threatq-v2",
       "name": "ThreatQ v2",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/ThreatQ/Integrations/ThreatQ_v2",
       "notes": [
         "ThreatQ API docs require a customer login. GET /api/indicators is the public client path and returns { data }.",
         "Each indicator keeps id, value, type, and status.",
-        "POST /api/token is not modeled. A bearer token is required."
+        "POST /api/token is not modeled. A bearer token is required.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://github.com/demisto/content/tree/master/Packs/ThreatQ/Integrations/ThreatQ_v2",
+        "status": "vendor",
+        "docUrl": "https://helpcenter.threatq.com/assets/HTML/api2/ThreatQ_REST_API_Reference_v6.13.0_beta.html",
         "checkedAt": "2026-11-10",
         "differences": [
-          "ThreatQ API docs require a customer login. GET /api/indicators is the public client path and returns { data }.",
-          "Each indicator keeps id, value, type, and status.",
-          "POST /api/token is not modeled. A bearer token is required."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -93,7 +92,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "{\n  \"data\": [\n    {\n      \"id\": 54,\n      \"hash\": \"4aba5ab07a3bda558d5d725a09d93ba6\",\n      \"last_detected_at\": \"2020-02-28 13:42:51\",\n      \"expires_at\": \"2020-04-01 03:17:23\",\n      \"expired_at\": null,\n      \"expired_needs_calc\": \"N\",\n      \"expires_calculated_at\": \"2020-02-28 18:36:24\",\n      \"type_id\": 11,\n      \"status_id\": 2,\n      \"class\": \"network\",\n      \"value\": \"www.danger-doom.com\",\n      \"description\": \"Website encountered during incident investigation.\",\n      \"created_at\": \"2021-07-29 13:58:03\",\n      \"updated_at\": \"2022-04-12 08:32:16\",\n      \"touched_at\": \"2021-11-13 15:28:17\"\n    }\n  ],\n  \"total\": 1\n}\n"
       }
     ],
     "chaos": {

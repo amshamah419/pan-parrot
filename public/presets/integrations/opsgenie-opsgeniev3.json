@@ -3,9 +3,9 @@
   "name": "OpsGenie v3",
   "pack": "OpsGenie",
   "vendor": "Atlassian",
-  "fidelity": "approximate",
+  "fidelity": "vendor",
   "curated": true,
-  "summary": "Alert list. data[] and the v2 alerts path.",
+  "summary": "From vendor docs. Alert list. data[] and the v2 alerts path.",
   "notes": [
     "GET /v2/alerts returns { data }. Each alert keeps id, message, status, priority, and createdAt.",
     "paging.next is a full URL. This mock pages with offset.",
@@ -19,22 +19,21 @@
       "kind": "preset",
       "id": "opsgenie-opsgeniev3",
       "name": "OpsGenie v3",
-      "fidelity": "approximate",
+      "fidelity": "vendor",
       "attribution": "Public API reference or demisto/content test fixture (MIT).",
       "sourceUrl": "https://docs.opsgenie.com/docs/alert-api#list-alerts",
       "notes": [
         "GET /v2/alerts returns { data }. Each alert keeps id, message, status, priority, and createdAt.",
         "paging.next is a full URL. This mock pages with offset.",
-        "Authorization is GenieKey dummy-key."
+        "Authorization is GenieKey dummy-key.",
+        "Response bodies with a vendor example were copied from the vendor's documentation on 2026-11-10."
       ],
       "verification": {
-        "status": "approximate",
-        "docUrl": "https://docs.opsgenie.com/docs/alert-api#list-alerts",
+        "status": "vendor",
+        "docUrl": "https://docs.opsgenie.com/docs/alert-api",
         "checkedAt": "2026-11-10",
         "differences": [
-          "GET /v2/alerts returns { data }. Each alert keeps id, message, status, priority, and createdAt.",
-          "paging.next is a full URL. This mock pages with offset.",
-          "Authorization is GenieKey dummy-key."
+          "Each listed operation returns the vendor's documented example, or a body built only from the documented schema. Emails and secret-looking tokens in those examples are replaced, and the replacements are in the provenance file."
         ]
       }
     },
@@ -102,7 +101,8 @@
           "cursorParam": "cursor",
           "defaultLimit": 20,
           "maxLimit": 500
-        }
+        },
+        "fixture": "{\n  \"data\": [\n    {\n      \"id\": \"70413a06-38d6-4c85-92b8-5ebc900d42e2\",\n      \"tinyId\": \"1791\",\n      \"alias\": \"event_573\",\n      \"message\": \"Our servers are in danger\",\n      \"status\": \"closed\",\n      \"acknowledged\": false,\n      \"isSeen\": true,\n      \"tags\": [\n        \"OverwriteQuietHours\",\n        \"Critical\"\n      ],\n      \"snoozed\": true,\n      \"snoozedUntil\": \"2017-04-03T20:32:35.143Z\",\n      \"count\": 79,\n      \"lastOccurredAt\": \"2017-04-03T20:05:50.894Z\",\n      \"createdAt\": \"2017-03-21T20:32:52.353Z\",\n      \"updatedAt\": \"2017-04-03T20:32:57.301Z\",\n      \"source\": \"Isengard\",\n      \"owner\": \"[email protected]\",\n      \"priority\": \"P4\",\n      \"responders\": [\n        {\n          \"id\": \"4513b7ea-3b91-438f-b7e4-e3e54af9147c\",\n          \"type\": \"team\"\n        },\n        {\n          \"id\": \"bb4d9938-c3c2-455d-aaab-727aa701c0d8\",\n          \"type\": \"user\"\n        },\n        {\n          \"id\": \"aee8a0de-c80f-4515-a232-501c0bc9d715\",\n          \"type\": \"escalation\"\n        },\n        {\n          \"id\": \"80564037-1984-4f38-b98e-8a1f662df552\",\n          \"type\": \"schedule\"\n        }\n      ],\n      \"integration\": {\n        \"id\": \"4513b7ea-3b91-438f-b7e4-e3e54af9147c\",\n        \"name\": \"Nebuchadnezzar\",\n        \"type\": \"API\"\n      },\n      \"report\": {\n        \"ackTime\": 15702,\n        \"closeTime\": 60503,\n        \"acknowledgedBy\": \"[email protected]\",\n        \"closedBy\": \"[email protected]\"\n      }\n    },\n    {\n      \"id\": \"70413a06-38d6-4c85-92b8-5ebc900d42e2\",\n      \"tinyId\": \"1791\",\n      \"alias\": \"event_573\",\n      \"message\": \"Sample Message\",\n      \"status\": \"open\",\n      \"acknowledged\": false,\n      \"isSeen\": false,\n      \"tags\": [\n        \"RandomTag\"\n      ],\n      \"snoozed\": false,\n      \"count\": 1,\n      \"lastOccurredAt\": \"2017-03-21T20:32:52.353Z\",\n      \"createdAt\": \"2017-03-21T20:32:52.353Z\",\n      \"updatedAt\": \"2017-04-03T20:32:57.301Z\",\n      \"source\": \"Zion\",\n      \"owner\": \"\",\n      \"priority\": \"P5\",\n      \"responders\": [],\n      \"integration\": {\n        \"id\": \"4513b7ea-3b91-b7e4-438f-e3e54af9147c\",\n        \"name\": \"My_Lovely_Amazon\",\n        \"type\": \"CloudWatch\"\n      }\n    }\n  ],\n  \"paging\": {\n    \"next\": \"https://api.opsgenie.com/v2/alerts?query=status%3Aopen&offset=20&limit=10&sort=createdAt&order=desc\",\n    \"first\": \"https://api.opsgenie.com/v2/alerts?query=status%3Aopen&offset=0&limit=10&sort=createdAt&order=desc\",\n    \"last\": \"https://api.opsgenie.com/v2/alerts?query=status%3Aopen&offset=100&limit=10&sort=createdAt&order=desc\"\n  },\n  \"took\": 0.605,\n  \"requestId\": \"9ae63dd7-ed00-4c81-86f0-c4ffd33142c9\"\n}\n"
       }
     ],
     "chaos": {
