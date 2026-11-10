@@ -30,6 +30,7 @@ import {
 import { listPushDeliveries, pushEndpointNow, pushScheduleHandler } from "./push";
 import { recordUpstream } from "./record";
 import { fetchPublicSpec } from "./ssrf";
+import { replayCaptured } from "./replay";
 import { createToken, listTokens, revokeToken, userFromApiToken } from "./tokens";
 import type { AppDb } from "../db/client";
 import { getDb } from "../db/client";
@@ -556,6 +557,24 @@ export function createServer(options?: {
     return c.json(
       await getRequest(c.get("db"), user.id, c.req.param("requestId")),
     );
+  });
+
+  app.post("/api/requests/:requestId/replay", async (c) => {
+    const user = await requireUser(c);
+    await limitAuthed(c.get("db"), user.id);
+    const parsed = z
+      .object({ url: z.string().trim().min(8).max(2000) })
+      .safeParse(await readJson(c.req.raw, POLICY.apiJsonBytes));
+    if (!parsed.success) throw new HttpError(400, "Invalid request");
+    const captured = await getRequest(c.get("db"), user.id, c.req.param("requestId"));
+    const result = await replayCaptured(captured, parsed.data.url);
+    const body = result.body.length > 8000 ? result.body.slice(0, 8000) : result.body;
+    return c.json({
+      status: result.status,
+      contentType: result.contentType,
+      body,
+      truncated: result.truncated || result.body.length > 8000,
+    });
   });
 
   app.get("/api/admin/signals", async (c) => {

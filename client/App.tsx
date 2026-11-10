@@ -16,6 +16,9 @@ import Admin from "./pages/Admin";
 import Docs from "./pages/Docs";
 import NotFound from "./pages/NotFound";
 import MockStudio from "./pages/MockStudio";
+import { applyThemeChoice, readThemeChoice } from "./hooks/use-theme";
+
+applyThemeChoice(readThemeChoice());
 
 const queryClient = new QueryClient();
 

@@ -30,6 +30,8 @@ import {
 import { Logo } from "@/components/Logo";
 import { CreateEndpointDialog } from "@/components/CreateEndpointDialog";
 import { RequestReplayDialog } from "@/components/RequestReplayDialog";
+import { RequestDiffDialog } from "@/components/RequestDiffDialog";
+import { InspectorHelp } from "@/components/InspectorHelp";
 import { MockResponseDialog } from "@/components/MockResponseDialog";
 import { IntegrationPicker } from "@/components/IntegrationPicker";
 import { ApiTokens } from "@/components/ApiTokens";
@@ -43,16 +45,18 @@ import {
 } from "@/lib/api";
 import { UserEndpoint, CapturedRequest } from "@shared/api";
 import {
-  Plus,
-  Globe,
+  emptyInspectorFilters,
+  matchesInspector,
+  toCurl,
+  toPythonRequests,
+  type InspectorFilters,
+} from "@shared/inspector";
+import {
   Play,
   Pause,
-  Filter,
   Search,
   Copy,
-  RotateCcw,
   Trash2,
-  Clock,
   Monitor,
   LogOut,
   User,
@@ -63,8 +67,11 @@ export default function Dashboard() {
   const [isStreaming, setIsStreaming] = useState(true);
   const [selectedRequest, setSelectedRequest] =
     useState<CapturedRequest | null>(null);
-  const [filterMethod, setFilterMethod] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState<InspectorFilters>(emptyInspectorFilters);
+  const [compareIds, setCompareIds] = useState<string[]>([]);
+  const [diffOpen, setDiffOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [replayOpen, setReplayOpen] = useState(false);
   const [userEndpoints, setUserEndpoints] = useState<UserEndpoint[]>([]);
   const [capturedRequests, setCapturedRequests] = useState<CapturedRequest[]>(
     [],
@@ -118,6 +125,47 @@ export default function Dashboard() {
     };
   }, [isStreaming]);
 
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      const target = event.target;
+      const typing =
+        target instanceof HTMLElement &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.tagName === "SELECT" ||
+          target.isContentEditable);
+      if (typing) return;
+      if (event.key === "?") {
+        event.preventDefault();
+        setHelpOpen(true);
+        return;
+      }
+      if (event.key === "/") {
+        event.preventDefault();
+        document.getElementById("request-search")?.focus();
+        return;
+      }
+      if (typing || document.querySelector("[role='dialog']")) return;
+      if (!selectedRequest) return;
+      if (event.key === "c") {
+        event.preventDefault();
+        copyCurl(selectedRequest);
+      } else if (event.key === "p") {
+        event.preventDefault();
+        copyPython(selectedRequest);
+      } else if (event.key === "r") {
+        event.preventDefault();
+        setReplayOpen(true);
+      } else if (event.key === "d") {
+        event.preventDefault();
+        toggleCompare(selectedRequest.id, true);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
+
   const getMethodColor = (method: string) => {
     switch (method) {
       case "GET":
@@ -147,25 +195,21 @@ export default function Dashboard() {
   };
 
   const copyCurl = (request: CapturedRequest) => {
-    const url = new URL(request.endpoint, window.location.origin).toString();
-    const lines = [`curl -X ${request.method} '${url}'`];
-    for (const [key, value] of Object.entries(request.headers || {})) {
-      if (value === "[redacted]") continue;
-      lines.push(`  -H '${key}: ${String(value).replace(/'/g, "'\\''")}'`);
-    }
-    if (request.body != null) {
-      const raw =
-        typeof request.body === "string"
-          ? request.body
-          : typeof request.body === "object" &&
-              request.body &&
-              "raw" in request.body &&
-              typeof (request.body as { raw?: unknown }).raw === "string"
-            ? (request.body as { raw: string }).raw
-            : JSON.stringify(request.body);
-      lines.push(`  --data '${raw.replace(/'/g, "'\\''")}'`);
-    }
-    navigator.clipboard.writeText(lines.join(" \\\n"));
+    copyToClipboard(toCurl(request, window.location.origin), "Copied as cURL.");
+  };
+
+  const copyPython = (request: CapturedRequest) => {
+    copyToClipboard(toPythonRequests(request, window.location.origin), "Copied as Python requests.");
+  };
+
+  const toggleCompare = (id: string, openDiff: boolean) => {
+    setCompareIds((current) => {
+      const next = current.includes(id)
+        ? current.filter((item) => item !== id)
+        : [...current, id].slice(-2);
+      if (openDiff && next.length === 2) setDiffOpen(true);
+      return next;
+    });
   };
 
   const handleEndpointCreated = (endpoint: UserEndpoint) => {
@@ -183,21 +227,13 @@ export default function Dashboard() {
     }
   };
 
-  // Filter requests based on search and method
-  const filteredRequests = capturedRequests.filter((request) => {
-    const matchesMethod =
-      filterMethod === "all" || request.method === filterMethod;
-    const matchesSearch =
-      searchQuery === "" ||
-      request.endpoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      JSON.stringify(request.body)
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      Object.values(request.headers).some((value) =>
-        String(value).toLowerCase().includes(searchQuery.toLowerCase()),
-      );
-    return matchesMethod && matchesSearch;
-  });
+  const filteredRequests = capturedRequests.filter((request) => matchesInspector(request, filters));
+  const compared = compareIds
+    .map((id) => capturedRequests.find((request) => request.id === id))
+    .filter((request): request is CapturedRequest => Boolean(request));
+  const setFilter = (key: keyof InspectorFilters, value: string) => {
+    setFilters((current) => ({ ...current, [key]: value }));
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -251,7 +287,7 @@ export default function Dashboard() {
       </header>
 
       <div className="container mx-auto py-6">
-        {copyNote && <p className="mb-3 text-sm text-green-700" role="status">{copyNote}</p>}
+        {copyNote && <p className="mb-3 text-sm text-emerald-700 dark:text-emerald-300" role="status">{copyNote}</p>}
         {/* Endpoints Section */}
         <div className="mb-6">
           <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
@@ -411,29 +447,73 @@ export default function Dashboard() {
               </CardHeader>
               <CardContent className="p-0">
                 {/* Filters */}
-                <div className="space-y-4 p-4 border-b">
+                <div className="space-y-3 border-b p-4">
                   <div className="relative">
                     <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Input
-                      placeholder="Search requests..."
+                      id="request-search"
+                      placeholder="Search method, status, path, headers, or body"
                       aria-label="Search captured requests"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      value={filters.search}
+                      onChange={(e) => setFilter("search", e.target.value)}
                       className="pl-10"
                     />
                   </div>
-                  <Select value={filterMethod} onValueChange={setFilterMethod}>
-                    <SelectTrigger aria-label="Filter by method">
-                      <SelectValue placeholder="Filter by method" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Methods</SelectItem>
-                      <SelectItem value="GET">GET</SelectItem>
-                      <SelectItem value="POST">POST</SelectItem>
-                      <SelectItem value="PUT">PUT</SelectItem>
-                      <SelectItem value="DELETE">DELETE</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <Select value={filters.method} onValueChange={(value) => setFilter("method", value)}>
+                      <SelectTrigger aria-label="Filter by method">
+                        <SelectValue placeholder="Filter by method" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All methods</SelectItem>
+                        <SelectItem value="GET">GET</SelectItem>
+                        <SelectItem value="POST">POST</SelectItem>
+                        <SelectItem value="PUT">PUT</SelectItem>
+                        <SelectItem value="PATCH">PATCH</SelectItem>
+                        <SelectItem value="DELETE">DELETE</SelectItem>
+                        <SelectItem value="HEAD">HEAD</SelectItem>
+                        <SelectItem value="OPTIONS">OPTIONS</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Input
+                      aria-label="Filter by status"
+                      placeholder="Status"
+                      value={filters.status}
+                      onChange={(e) => setFilter("status", e.target.value)}
+                    />
+                    <Input
+                      aria-label="Filter by path"
+                      placeholder="Path"
+                      value={filters.path}
+                      onChange={(e) => setFilter("path", e.target.value)}
+                    />
+                    <Input
+                      aria-label="Filter by header"
+                      placeholder="Header"
+                      value={filters.header}
+                      onChange={(e) => setFilter("header", e.target.value)}
+                    />
+                  </div>
+                  <Input
+                    aria-label="Filter by body text"
+                    placeholder="Body text"
+                    value={filters.body}
+                    onChange={(e) => setFilter("body", e.target.value)}
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      disabled={compared.length !== 2}
+                      onClick={() => setDiffOpen(true)}
+                    >
+                      Compare two calls
+                    </Button>
+                    <Button type="button" variant="ghost" size="sm" onClick={() => setHelpOpen(true)}>
+                      Shortcuts
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Request List */}
@@ -451,35 +531,45 @@ export default function Dashboard() {
                       </div>
                     ) : (
                       filteredRequests.map((request) => (
-                        <button
+                        <div
                           key={request.id}
-                          type="button"
-                          className={`w-full rounded-lg border p-3 text-left transition-colors hover:bg-muted/50 ${
-                            selectedRequest?.id === request.id
-                              ? "bg-muted border-primary"
-                              : ""
+                          className={`flex gap-2 rounded-lg border p-3 ${
+                            selectedRequest?.id === request.id ? "border-primary bg-muted" : ""
                           }`}
-                          onClick={() => setSelectedRequest(request)}
                         >
-                          <div className="flex items-center justify-between">
-                            <Badge className={getMethodColor(request.method)}>
-                              {request.method}
-                            </Badge>
-                            <span className="text-xs text-muted-foreground">
-                              {new Date(request.timestamp).toLocaleTimeString()}
-                            </span>
-                          </div>
-                          <div className="mt-1 min-w-0">
-                            <code className="break-all text-sm">{request.endpoint}</code>
-                          </div>
-                          <div className="mt-1 text-xs text-muted-foreground">
-                            {request.status}
-                            {request.recordCount != null ? ` · ${request.recordCount} records` : ""}
-                            {request.chaosEffects?.length
-                              ? ` · ${request.chaosEffects.join(", ")}`
-                              : ""}
-                          </div>
-                        </button>
+                          <input
+                            type="checkbox"
+                            className="mt-1 h-4 w-4"
+                            checked={compareIds.includes(request.id)}
+                            aria-label={`Compare ${request.method} ${request.endpoint}`}
+                            onChange={() => toggleCompare(request.id, false)}
+                          />
+                          <button
+                            type="button"
+                            className="min-w-0 flex-1 text-left"
+                            aria-pressed={selectedRequest?.id === request.id}
+                            onClick={() => setSelectedRequest(request)}
+                          >
+                            <div className="flex items-center justify-between gap-2">
+                              <Badge className={getMethodColor(request.method)}>
+                                {request.method}
+                              </Badge>
+                              <span className="text-xs text-muted-foreground">
+                                {new Date(request.timestamp).toLocaleTimeString()}
+                              </span>
+                            </div>
+                            <div className="mt-1 min-w-0">
+                              <code className="break-all text-sm">{request.endpoint}</code>
+                            </div>
+                            <div className="mt-1 text-xs text-muted-foreground">
+                              {request.status}
+                              {request.recordCount != null ? ` · ${request.recordCount} records` : ""}
+                              {request.chaosEffects?.length
+                                ? ` · ${request.chaosEffects.join(", ")}`
+                                : ""}
+                            </div>
+                          </button>
+                        </div>
                       ))
                     )}
                   </div>
@@ -495,15 +585,31 @@ export default function Dashboard() {
                 <div className="flex items-center justify-between">
                   <CardTitle>Request Details</CardTitle>
                   {selectedRequest && (
-                    <div className="flex space-x-2">
-                      <RequestReplayDialog request={selectedRequest} />
+                    <div className="flex flex-wrap gap-2">
+                      <RequestReplayDialog
+                        request={selectedRequest}
+                        open={replayOpen}
+                        onOpenChange={setReplayOpen}
+                      />
                       <Button
                         variant="outline"
                         size="sm"
+                        aria-keyshortcuts="c"
+                        aria-label="Copy this call as cURL"
                         onClick={() => copyCurl(selectedRequest)}
                       >
                         <Copy className="mr-2 h-4 w-4" />
                         Copy as cURL
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        aria-keyshortcuts="p"
+                        aria-label="Copy this call as Python requests"
+                        onClick={() => copyPython(selectedRequest)}
+                      >
+                        <Copy className="mr-2 h-4 w-4" />
+                        Copy as Python
                       </Button>
                     </div>
                   )}
@@ -626,6 +732,13 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      <InspectorHelp open={helpOpen} onOpenChange={setHelpOpen} />
+      <RequestDiffDialog
+        left={compared[0] ?? null}
+        right={compared[1] ?? null}
+        open={diffOpen && compared.length === 2}
+        onOpenChange={setDiffOpen}
+      />
     </div>
   );
 }

@@ -64,7 +64,7 @@ export default function Docs() {
               <ol className="list-decimal space-y-2 pl-5 text-sm text-muted-foreground">
                 <li>Choose Mock an integration and start with Akamai WAF SIEM, or paste one JSON sample.</li>
                 <li>Copy the catch URL. It looks like https://&lt;site&gt;/catch/&lt;path&gt;.</li>
-                <li>Paste it into the XSOAR server field and send one call. The dashboard log shows what arrived.</li>
+                <li>Paste it into the XSOAR server field and send one call. The dashboard log shows what arrived. Search it, copy it as cURL or Python, replay it to a public https URL, or compare two calls. Press ? for shortcuts. The theme control follows your system setting until you pick Light or Dark.</li>
               </ol>
               <p className="mt-4 text-sm text-muted-foreground">
                 A guessed-shape preset is a starting point. The badge says when a preset was checked against a public vendor reference. On the mock page, the buttons under the catch URL jump to chaos, auth, flow, and push. Presets and integration YAML imports also list the XSOAR instance fields, with copy buttons and an instance JSON download. A normal page stops at 500 records and 2 MB. Set Virtual records into the thousands when you want a load test, then page through. The catch URL is public; sharing only changes who can edit the studio. The same notes are in docs/USER_GUIDE.md.

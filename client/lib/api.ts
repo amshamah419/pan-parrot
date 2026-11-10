@@ -174,6 +174,16 @@ export async function revertVersion(endpointId: string, versionId: string): Prom
   return apiRequest(`/api/endpoints/${endpointId}/versions/${versionId}/revert`, { method: "POST" });
 }
 
+export async function replayRequest(
+  requestId: string,
+  url: string,
+): Promise<{ status: number; contentType: string; body: string; truncated: boolean }> {
+  return apiRequest(`/api/requests/${requestId}/replay`, {
+    method: "POST",
+    body: JSON.stringify({ url }),
+  });
+}
+
 export async function getCapturedRequests(): Promise<CapturedRequest[]> {
   return apiRequest<CapturedRequest[]>("/api/requests");
 }

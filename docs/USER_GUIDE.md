@@ -12,6 +12,16 @@ Sign-in is an 8-digit code emailed to a `@paloaltonetworks.com` address. There i
 
 The studio also shows a "try" URL with the path the integration will append, such as `/siem/v1/configs/{configId}`.
 
+## Request log
+
+The dashboard lists calls that hit your catch URLs.
+
+- Search matches method, status, path, headers, and body. The filters under it narrow one of those at a time.
+- **Copy as cURL** and **Copy as Python** leave out headers stored as `[redacted]`.
+- **Replay** sends that captured call to a public `https` URL. Localhost, private addresses, and ports other than 443 are rejected, the same checks used by Push. Redacted headers are not sent.
+- Check two calls and choose **Compare two calls** for a side-by-side diff.
+- Press `?` for the shortcut list. The color theme control on the notice follows your system setting until you pick Light or Dark. That choice stays in this browser. `t` cycles System, Light, and Dark.
+
 If the mock came from a preset or an integration YAML, the same screen lists the XSOAR instance fields: the server parameter (the catch URL), the dummy credential in that integration's own parameter name, Trust any certificate, Use system proxy, and fetch. Copy one field or download the instance JSON. The JSON is the `{ brand, data: [{ name, value }] }` object XSOAR imports. Leave Fetch incidents off until a manual command shows up in the log.
 
 ## Integrations in progress
