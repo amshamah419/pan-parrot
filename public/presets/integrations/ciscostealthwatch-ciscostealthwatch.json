@@ -34,9 +34,92 @@
         "differences": [
           "The client GETs /sw-reporting/v1/tenants. This mock returns a data array with id and displayName.",
           "Tags, flows, and the SMC configuration routes are not modeled.",
-          "The Stealthwatch OpenAPI page was not reloaded. A bearer token is required."
+          "The Stealthwatch OpenAPI page was not reloaded. A bearer token is required.",
+          "Command coverage is 0 from vendor docs, 1 approximate, and 10 missing, out of 11. The Stealthwatch OpenAPI URL stored on this preset returned 404."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "cisco-stealthwatch-query-flows-initialize",
+          "calls": [
+            "POST /sw-reporting/v2/tenants/{tenant_id}/flows/queries"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-stealthwatch-query-flows-status",
+          "calls": [
+            "GET /sw-reporting/v2/tenants/{tenant_id}/flows/queries/{search_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-stealthwatch-query-flows-results",
+          "calls": [
+            "GET /sw-reporting/v2/tenants/{tenant_id}/flows/queries/{search_id}/results"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-stealthwatch-list-tags",
+          "calls": [
+            "GET /sw-reporting/v1/tenants/{tenant_id}/internalHosts/tags"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-stealthwatch-get-tag",
+          "calls": [
+            "GET /smc-configuration/rest/v1/tenants/{tenant_id}/tags/{tag_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-stealthwatch-list-tenants",
+          "calls": [
+            "GET /sw-reporting/v1/tenants"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "tenants"
+          ]
+        },
+        {
+          "command": "cisco-stealthwatch-get-tag-hourly-traffic-report",
+          "calls": [
+            "GET /sw-reporting/v1/tenants/{tenant_id}/internalHosts/tags/{tag_id}/traffic/hourly"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-stealthwatch-get-top-alarming-tags",
+          "calls": [
+            "GET /sw-reporting/v1/tenants/{tenant_id}/internalHosts/alarms/topHosts"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-stealthwatch-list-security-events-initialize",
+          "calls": [
+            "POST /sw-reporting/v1/tenants/{tenant_id}/security-events/queries"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-stealthwatch-list-security-events-status",
+          "calls": [
+            "GET /sw-reporting/v1/tenants/{tenant_id}/security-events/queries/{search_id}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-stealthwatch-list-security-events-results",
+          "calls": [
+            "GET /sw-reporting/v1/tenants/{tenant_id}/security-events/results/{search_id}"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {

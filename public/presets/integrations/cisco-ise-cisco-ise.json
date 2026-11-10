@@ -28,9 +28,154 @@
         "docUrl": "https://developer.cisco.com/docs/identity-services-engine/latest/#!endpoint",
         "checkedAt": "2026-11-10",
         "differences": [
-          "The checker matched GET /ers/config/endpoint. The client builds that path after the instance host and port, so :{serverPort} is not part of the route."
+          "The checker matched GET /ers/config/endpoint. The client builds that path after the instance host and port, so :{serverPort} is not part of the route.",
+          "Command coverage is 0 from vendor docs, 5 approximate, and 12 missing, out of 17. The public ISE endpoint page is a documentation shell and does not include an ERS response body."
         ]
-      }
+      },
+      "commandDocs": [
+        {
+          "command": "cisco-ise-get-endpoint-id",
+          "calls": [
+            "GET /ers/config/endpoint"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "endpoints"
+          ]
+        },
+        {
+          "command": "cisco-ise-get-endpoint-details",
+          "calls": [
+            "GET /ers/config/endpoint",
+            "GET /ers/config/endpoint/{id}",
+            "GET /ers/config/identitygroup/{group_id}"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "endpoints"
+          ]
+        },
+        {
+          "command": "cisco-ise-reauthenticate-endpoint",
+          "calls": [
+            "GET /admin/API/mnt/AuthStatus/MACAddress/{mac_address}/86400/0/0",
+            "GET /admin/API/mnt/CoA/Reauth/{acs_server}/{mac_address}/1"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-ise-get-endpoints",
+          "calls": [
+            "GET /ers/config/endpoint"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "endpoints"
+          ]
+        },
+        {
+          "command": "cisco-ise-update-endpoint-custom-attribute",
+          "calls": [
+            "GET /ers/config/endpoint",
+            "GET /ers/config/endpoint/{id}",
+            "PUT /ers/config/endpoint/{id}"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "endpoints"
+          ]
+        },
+        {
+          "command": "cisco-ise-update-endpoint-group",
+          "calls": [
+            "GET /ers/config/endpoint",
+            "GET /ers/config/endpoint/{id}",
+            "PUT /ers/config/endpoint/{id}"
+          ],
+          "status": "approximate",
+          "operationIds": [
+            "endpoints"
+          ]
+        },
+        {
+          "command": "cisco-ise-get-groups",
+          "calls": [
+            "GET /ers/config/endpointgroup"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-ise-get-policies",
+          "calls": [
+            "GET /ers/config/ancpolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-ise-get-policy",
+          "calls": [
+            "GET /ers/config/ancpolicy/name/{policy_name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-ise-create-policy",
+          "calls": [
+            "POST /ers/config/ancpolicy"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-ise-assign-policy",
+          "calls": [
+            "POST /ers/config/endpoint"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-ise-get-blacklist-endpoints",
+          "calls": [
+            "POST /ers/config/endpoint"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-ise-create-endpoint",
+          "calls": [
+            "POST /ers/config/endpoint"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-ise-get-nodes",
+          "calls": [
+            "GET /ers/config/node",
+            "GET /ers/config/node/name/{name}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-ise-get-endpoint-id-by-name",
+          "calls": [
+            "GET /ers/config/endpoint/name/{mac_address}"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-ise-remove-policy",
+          "calls": [
+            "POST /ers/config/endpoint"
+          ],
+          "status": "missing"
+        },
+        {
+          "command": "cisco-ise-get-session-data-by-ip",
+          "calls": [
+            "GET /admin/API/mnt/Session/EndPointIPAddress/{ip_address}"
+          ],
+          "status": "missing"
+        }
+      ]
     },
     "operations": [
       {
