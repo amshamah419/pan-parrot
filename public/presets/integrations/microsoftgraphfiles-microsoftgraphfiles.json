@@ -4,7 +4,7 @@
   "pack": "MicrosoftGraphFiles",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /v1.0/sites.",
+  "summary": "GET /v1.0/sites",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -17,27 +17,27 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphFiles/Integrations/MicrosoftGraphFiles",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /v1.0/sites. Fields are keys the client reads or test_data contains."
+        "GET /v1.0/sites returns value[] of sites. The command reads id, name, displayName, and webUrl, plus the OData links."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphFiles/Integrations/MicrosoftGraphFiles",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /v1.0/sites. Fields are keys the client reads or test_data contains."
+          "GET /v1.0/sites returns value[] of sites. The command reads id, name, displayName, and webUrl, plus the OData links."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-v1-0-sites-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/v1.0/sites",
         "summary": "GET /v1.0/sites",
         "status": 200,
         "contentType": "application/json; charset=utf-8",
         "headers": {},
-        "list": false,
+        "list": true,
         "envelope": {
           "type": "object"
         },
@@ -56,80 +56,41 @@
           "children": [
             {
               "name": "value",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "@deprecated",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "grantedToIdentities",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "displayName",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "webUrl",
                     "kind": "string",
                     "example": "lab"
                   }
-                },
-                {
-                  "name": "grantedToIdentitiesV2",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
-                    "kind": "string",
-                    "example": "lab"
-                  }
-                },
-                {
-                  "name": "id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "roles",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
-                    "kind": "string",
-                    "example": "lab"
-                  }
-                }
-              ]
+                ]
+              }
             },
             {
-              "name": "@odata",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "context",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "nextLink",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "Action",
+              "name": "@odata.context",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "ActionCount",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "ActivityDateTime",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "Actor",
+              "name": "@odata.nextLink",
               "kind": "string",
               "example": "lab"
             }
@@ -162,6 +123,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphFiles/Integrations/MicrosoftGraphFiles",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /v1.0/sites. Fields are keys the client reads or test_data contains."
+    "GET /v1.0/sites returns value[] of sites. The command reads id, name, displayName, and webUrl, plus the OData links."
   ]
 }

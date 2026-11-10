@@ -4,7 +4,7 @@
   "pack": "AzureNetworkSecurityGroups",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/networkSecurityGroups.",
+  "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/networkSecurityGroups",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -17,27 +17,27 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureNetworkSecurityGroups/Integrations/AzureNetworkSecurityGroups",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/networkSecurityGroups. Fields are keys the client reads or test_data contains."
+        "GET networkSecurityGroups returns value[]. The list command reads the groups and drops properties, which the rules command returns separately."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureNetworkSecurityGroups/Integrations/AzureNetworkSecurityGroups",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/networkSecurityGroups. Fields are keys the client reads or test_data contains."
+          "GET networkSecurityGroups returns value[]. The list command reads the groups and drops properties, which the rules command returns separately."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-subscriptions-subscription-id-resourcegr-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/networkSecurityGroups",
         "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/networkSecurityGroups",
         "status": 200,
         "contentType": "application/json; charset=utf-8",
         "headers": {},
-        "list": false,
+        "list": true,
         "envelope": {
           "type": "object"
         },
@@ -56,93 +56,33 @@
           "children": [
             {
               "name": "value",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "etag",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "kind",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "location",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "name",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "etag",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "id",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "ipConfigurations",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "properties",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "access",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "destinationAddressPrefix",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "destinationAddressPrefixes",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "name",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "location",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "etag",
                     "kind": "string",
                     "example": "lab"
                   }
-                },
-                {
-                  "name": "destinationPortRange",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "destinationPortRanges",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
-                    "kind": "string",
-                    "example": "lab"
-                  }
-                }
-              ]
-            },
-            {
-              "name": "subnetProperties",
-              "kind": "string",
-              "example": "lab"
+                ]
+              }
             }
           ]
         }
@@ -173,6 +113,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureNetworkSecurityGroups/Integrations/AzureNetworkSecurityGroups",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Network/networkSecurityGroups. Fields are keys the client reads or test_data contains."
+    "GET networkSecurityGroups returns value[]. The list command reads the groups and drops properties, which the rules command returns separately."
   ]
 }

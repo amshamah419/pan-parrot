@@ -4,7 +4,7 @@
   "pack": "BeyondTrust",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /management-api/v3/Events/FromStartDate.",
+  "summary": "GET /management-api/v3/Events/FromStartDate",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -17,27 +17,27 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/BeyondTrust/Integrations/BeyondTrustPrivilegeManagementCloud",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /management-api/v3/Events/FromStartDate. Fields are keys the client reads or test_data contains."
+        "GET /management-api/v3/Events/FromStartDate returns events[]. The command reads id, created, @timestamp, and source_log_type. last_audit_time is fetch state."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/BeyondTrust/Integrations/BeyondTrustPrivilegeManagementCloud",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /management-api/v3/Events/FromStartDate. Fields are keys the client reads or test_data contains."
+          "GET /management-api/v3/Events/FromStartDate returns events[]. The command reads id, created, @timestamp, and source_log_type. last_audit_time is fetch state."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-management-api-v3-events-fromstartdate-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/management-api/v3/Events/FromStartDate",
         "summary": "GET /management-api/v3/Events/FromStartDate",
         "status": 200,
         "contentType": "application/json; charset=utf-8",
         "headers": {},
-        "list": false,
+        "list": true,
         "envelope": {
           "type": "object"
         },
@@ -55,34 +55,34 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "@timestamp",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "created",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "events",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "id",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "last_audit_time",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "created",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "@timestamp",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "source_log_type",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -113,6 +113,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/BeyondTrust/Integrations/BeyondTrustPrivilegeManagementCloud",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /management-api/v3/Events/FromStartDate. Fields are keys the client reads or test_data contains."
+    "GET /management-api/v3/Events/FromStartDate returns events[]. The command reads id, created, @timestamp, and source_log_type. last_audit_time is fetch state."
   ]
 }

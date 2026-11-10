@@ -44,6 +44,21 @@ NAV_KEYS = {
 }
 PAGING_STYLES = {"offset", "cursor", "page", "link", "header"}
 SKIP_FIELD_ENVELOPES = {"xml", "aws-query", "graphql", "soap", "splunk-export", "ndjson"}
+STATE_OR_SECRET_ROOTS = {
+    "authorization",
+    "appauth",
+    "boxappsettings",
+    "clientid",
+    "clientsecret",
+    "jwt",
+    "password",
+    "apikey",
+    "api_key",
+    "last_fetch_time",
+    "last_fetch_pid",
+    "last_audit_time",
+    "last_event_time",
+}
 READ_IGNORE = re.compile(
     r"arg|param|config|header|setting|secret|credential|proxy|token|demisto|kwargs|options",
     re.I,
@@ -89,6 +104,7 @@ class HttpCall:
     boto3: bool = False
     keys: set[str] = field(default_factory=set)
     nav: set[str] = field(default_factory=set)
+    local_keys: set[str] = field(default_factory=set)
 
 
 @dataclass
@@ -491,6 +507,7 @@ def module_calls(mod: Mod) -> list[HttpCall]:
             scope |= binder.reads
         call.keys = scope
         call.nav = set(all_reads)
+        call.local_keys = set(binder.reads) if binder else set()
     return calls
 
 
@@ -2039,6 +2056,15 @@ def field_findings(
     if preset_roots and allowed_roots and not (preset_roots & allowed_roots):
         findings.append(
             f"field: {label} root keys {sorted(preset_roots)} are not read by the client or present in test_data {sorted(list(allowed_roots)[:8])}."
+        )
+    local: set[str] = set()
+    for call in calls:
+        local |= call.local_keys
+    local_roots = {name.lower() for name in children(local, ())}
+    junk = sorted(name for name in preset_roots if name.lower() in STATE_OR_SECRET_ROOTS and name.lower() not in local_roots)
+    if junk:
+        findings.append(
+            f"field: {label} includes {junk}, which are credentials or fetch state rather than this call's response."
         )
     for path in nav_paths:
         last = path.split(".")[-1].lower()

@@ -4,7 +4,7 @@
   "pack": "Ironscales",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /appapi/incident/{company_id}/open.",
+  "summary": "GET /appapi/incident/{company_id}/open",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -17,20 +17,20 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Ironscales/Integrations/Ironscales",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /appapi/incident/{company_id}/open. Fields are keys the client reads or test_data contains."
+        "GET /appapi/incident/{company_id}/open returns incident_ids. jwt and scopes are the login, not this body."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Ironscales/Integrations/Ironscales",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /appapi/incident/{company_id}/open. Fields are keys the client reads or test_data contains."
+          "GET /appapi/incident/{company_id}/open returns incident_ids. jwt and scopes are the login, not this body."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-appapi-incident-company-id-open-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/appapi/incident/{company_id}/open",
         "summary": "GET /appapi/incident/{company_id}/open",
@@ -55,34 +55,13 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "company_id",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "first_reported_date",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
               "name": "incident_ids",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "jwt",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "scopes",
-              "kind": "string",
-              "example": "lab"
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
             }
           ]
         }
@@ -113,6 +92,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Ironscales/Integrations/Ironscales",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /appapi/incident/{company_id}/open. Fields are keys the client reads or test_data contains."
+    "GET /appapi/incident/{company_id}/open returns incident_ids. jwt and scopes are the login, not this body."
   ]
 }

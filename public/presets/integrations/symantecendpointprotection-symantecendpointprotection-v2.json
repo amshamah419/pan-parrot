@@ -4,7 +4,7 @@
   "pack": "SymantecEndpointProtection",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /sepm/api/v1/computers.",
+  "summary": "GET /sepm/api/v1/computers",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -17,27 +17,27 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecEndpointProtection/Integrations/SymantecEndpointProtection_V2",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /sepm/api/v1/computers. Fields are keys the client reads or test_data contains."
+        "GET /sepm/api/v1/computers returns content[]. The command reads computerName, ipAddresses, group.name, hardwareKey, operatingSystem, and macAddresses."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecEndpointProtection/Integrations/SymantecEndpointProtection_V2",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /sepm/api/v1/computers. Fields are keys the client reads or test_data contains."
+          "GET /sepm/api/v1/computers returns content[]. The command reads computerName, ipAddresses, group.name, hardwareKey, operatingSystem, and macAddresses."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-sepm-api-v1-computers-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/sepm/api/v1/computers",
         "summary": "GET /sepm/api/v1/computers",
         "status": 200,
         "contentType": "application/json; charset=utf-8",
         "headers": {},
-        "list": false,
+        "list": true,
         "envelope": {
           "type": "object"
         },
@@ -55,34 +55,63 @@
           "kind": "object",
           "children": [
             {
-              "name": "AssignedCloudGroups",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "AssignedLocations",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "Discription",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "Enabled",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "ID",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "PolicyName",
-              "kind": "string",
-              "example": "lab"
+              "name": "content",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "computerName",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "ipAddresses",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "group",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "name",
+                        "kind": "string",
+                        "example": "lab"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "hardwareKey",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "operatingSystem",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "macAddresses",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "domainOrWorkgroup",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -113,6 +142,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecEndpointProtection/Integrations/SymantecEndpointProtection_V2",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /sepm/api/v1/computers. Fields are keys the client reads or test_data contains."
+    "GET /sepm/api/v1/computers returns content[]. The command reads computerName, ipAddresses, group.name, hardwareKey, operatingSystem, and macAddresses."
   ]
 }

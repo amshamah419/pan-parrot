@@ -4,7 +4,7 @@
   "pack": "MicrosoftGraphSearch",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: POST /v1.0/search/query.",
+  "summary": "POST /v1.0/search/query",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -17,20 +17,20 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSearch/Integrations/MicrosoftGraphSearch",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /v1.0/search/query. Fields are keys the client reads or test_data contains."
+        "POST /v1.0/search/query returns value[].hitsContainers[].hits[]. The command reads summary, resource.webUrl, resource.name, and resource.displayName."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSearch/Integrations/MicrosoftGraphSearch",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /v1.0/search/query. Fields are keys the client reads or test_data contains."
+          "POST /v1.0/search/query returns value[].hitsContainers[].hits[]. The command reads summary, resource.webUrl, resource.name, and resource.displayName."
         ]
       }
     },
     "operations": [
       {
-        "id": "post-v1-0-search-query-0",
+        "id": "audited-call",
         "method": "POST",
         "pathTemplate": "/v1.0/search/query",
         "summary": "POST /v1.0/search/query",
@@ -55,6 +55,71 @@
           "kind": "object",
           "children": [
             {
+              "name": "value",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "hitsContainers",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "total",
+                          "kind": "integer"
+                        },
+                        {
+                          "name": "hits",
+                          "kind": "array",
+                          "item": {
+                            "name": "item",
+                            "kind": "object",
+                            "children": [
+                              {
+                                "name": "summary",
+                                "kind": "string",
+                                "example": "lab"
+                              },
+                              {
+                                "name": "resource",
+                                "kind": "object",
+                                "children": [
+                                  {
+                                    "name": "webUrl",
+                                    "kind": "string",
+                                    "example": "lab"
+                                  },
+                                  {
+                                    "name": "name",
+                                    "kind": "string",
+                                    "example": "lab"
+                                  },
+                                  {
+                                    "name": "displayName",
+                                    "kind": "string",
+                                    "example": "lab"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "summary",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
               "name": "hits",
               "kind": "string",
               "example": "lab"
@@ -64,7 +129,7 @@
               "kind": "object",
               "children": [
                 {
-                  "name": "displayName",
+                  "name": "webUrl",
                   "kind": "string",
                   "example": "lab"
                 },
@@ -74,16 +139,11 @@
                   "example": "lab"
                 },
                 {
-                  "name": "webUrl",
+                  "name": "displayName",
                   "kind": "string",
                   "example": "lab"
                 }
               ]
-            },
-            {
-              "name": "summary",
-              "kind": "string",
-              "example": "lab"
             }
           ]
         }
@@ -114,6 +174,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftGraphSearch/Integrations/MicrosoftGraphSearch",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /v1.0/search/query. Fields are keys the client reads or test_data contains."
+    "POST /v1.0/search/query returns value[].hitsContainers[].hits[]. The command reads summary, resource.webUrl, resource.name, and resource.displayName."
   ]
 }

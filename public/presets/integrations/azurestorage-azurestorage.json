@@ -4,7 +4,7 @@
   "pack": "AzureStorage",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default.",
+  "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -17,20 +17,20 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureStorage/Integrations/AzureStorage",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default. Fields are keys the client reads or test_data contains."
+        "GET blobServices/default returns one resource. The command reads id, name, and properties.changeFeed, deleteRetentionPolicy, and isVersioningEnabled."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/AzureStorage/Integrations/AzureStorage",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default. Fields are keys the client reads or test_data contains."
+          "GET blobServices/default returns one resource. The command reads id, name, and properties.changeFeed, deleteRetentionPolicy, and isVersioningEnabled."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-subscriptions-subscription-id-resourcegr-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default",
         "summary": "GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default",
@@ -55,43 +55,7 @@
           "kind": "object",
           "children": [
             {
-              "name": "value",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "kind",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "location",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "name",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "properties",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "kind",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "location",
+              "name": "id",
               "kind": "string",
               "example": "lab"
             },
@@ -105,29 +69,14 @@
               "kind": "object",
               "children": [
                 {
-                  "name": "allowBlobPublicAccess",
-                  "kind": "boolean"
-                },
-                {
                   "name": "changeFeed",
                   "kind": "object",
                   "children": [
                     {
                       "name": "enabled",
-                      "kind": "string",
-                      "example": "lab"
+                      "kind": "boolean"
                     }
                   ]
-                },
-                {
-                  "name": "cors",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "creationTime",
-                  "kind": "string",
-                  "example": "lab"
                 },
                 {
                   "name": "deleteRetentionPolicy",
@@ -135,40 +84,13 @@
                   "children": [
                     {
                       "name": "enabled",
-                      "kind": "string",
-                      "example": "lab"
+                      "kind": "boolean"
                     }
                   ]
                 },
                 {
                   "name": "isVersioningEnabled",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "lastModifiedTime",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "leaseState",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "publicAccess",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "statusOfPrimary",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "statusOfSecondary",
-                  "kind": "string",
-                  "example": "lab"
+                  "kind": "boolean"
                 }
               ]
             }
@@ -201,6 +123,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/AzureStorage/Integrations/AzureStorage",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Storage/storageAccounts/{account_name}/blobServices/default. Fields are keys the client reads or test_data contains."
+    "GET blobServices/default returns one resource. The command reads id, name, and properties.changeFeed, deleteRetentionPolicy, and isVersioningEnabled."
   ]
 }

@@ -4,7 +4,7 @@
   "pack": "Darktrace",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /aianalyst/incidentevents.",
+  "summary": "GET /aianalyst/incidentevents",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -17,29 +17,29 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceAIA",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /aianalyst/incidentevents. Fields are keys the client reads or test_data contains."
+        "GET /aianalyst/incidentevents returns a list. The command reads id, createdAt, title, mitreTactics, aiaScore, category, and breachDevices."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceAIA",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /aianalyst/incidentevents. Fields are keys the client reads or test_data contains."
+          "GET /aianalyst/incidentevents returns a list. The command reads id, createdAt, title, mitreTactics, aiaScore, category, and breachDevices."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-aianalyst-incidentevents-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/aianalyst/incidentevents",
         "summary": "GET /aianalyst/incidentevents",
         "status": 200,
         "contentType": "application/json; charset=utf-8",
         "headers": {},
-        "list": false,
+        "list": true,
         "envelope": {
-          "type": "object"
+          "type": "array"
         },
         "pagination": {
           "style": "none",
@@ -55,43 +55,31 @@
           "kind": "object",
           "children": [
             {
-              "name": "acknowledged",
+              "name": "id",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "aiaScore",
+              "name": "createdAt",
               "kind": "integer"
             },
             {
-              "name": "breachDevices",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "did",
-                  "kind": "integer"
-                },
-                {
-                  "name": "hostname",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "identifier",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "ip",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "mac",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
+              "name": "title",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "mitreTactics",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "string",
+                "example": "lab"
+              }
+            },
+            {
+              "name": "aiaScore",
+              "kind": "integer"
             },
             {
               "name": "category",
@@ -99,40 +87,24 @@
               "example": "lab"
             },
             {
-              "name": "comments",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "eventId",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "incident_id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "message",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "time",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "username",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "createdAt",
-              "kind": "string",
-              "example": "lab"
+              "name": "breachDevices",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "hostname",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "ip",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -163,6 +135,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Darktrace/Integrations/DarktraceAIA",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /aianalyst/incidentevents. Fields are keys the client reads or test_data contains."
+    "GET /aianalyst/incidentevents returns a list. The command reads id, createdAt, title, mitreTactics, aiaScore, category, and breachDevices."
   ]
 }

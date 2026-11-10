@@ -4,7 +4,7 @@
   "pack": "CheckPointDome9",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /Compliance/Finding/{finding_id}.",
+  "summary": "GET /Compliance/Finding/{finding_id}",
   "operations": 1,
   "origin": "sample",
   "spec": {
@@ -17,20 +17,20 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointDome9/Integrations/CheckPointDome9",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /Compliance/Finding/{finding_id}. Fields are keys the client reads or test_data contains."
+        "GET /Compliance/Finding/{finding_id} returns the finding itself. The command reads id, alertType, severity, region, status, action, cloudAccountId, and description."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointDome9/Integrations/CheckPointDome9",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /Compliance/Finding/{finding_id}. Fields are keys the client reads or test_data contains."
+          "GET /Compliance/Finding/{finding_id} returns the finding itself. The command reads id, alertType, severity, region, status, action, cloudAccountId, and description."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-compliance-finding-finding-id-0",
+        "id": "audited-call",
         "method": "GET",
         "pathTemplate": "/Compliance/Finding/{finding_id}",
         "summary": "GET /Compliance/Finding/{finding_id}",
@@ -55,46 +55,7 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "findings",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "acknowledged",
-                  "kind": "boolean"
-                },
-                {
-                  "name": "action",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "additionalFields",
-                  "kind": "array",
-                  "item": {
-                    "name": "item",
-                    "kind": "string",
-                    "example": "lab"
-                  }
-                },
-                {
-                  "name": "alertType",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "bundleId",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
-            },
-            {
-              "name": "accountId",
+              "name": "id",
               "kind": "string",
               "example": "lab"
             },
@@ -104,44 +65,34 @@
               "example": "lab"
             },
             {
-              "name": "alerts",
-              "kind": "array",
-              "item": {
-                "name": "item",
-                "kind": "string",
-                "example": "lab"
-              }
+              "name": "severity",
+              "kind": "string",
+              "example": "lab"
             },
             {
-              "name": "aws",
-              "kind": "object",
-              "children": [
-                {
-                  "name": "accountId",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "cloudAccountId",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "created",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "id",
-                  "kind": "string",
-                  "example": "lab"
-                },
-                {
-                  "name": "ip",
-                  "kind": "string",
-                  "example": "lab"
-                }
-              ]
+              "name": "region",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "status",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "action",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "cloudAccountId",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "description",
+              "kind": "string",
+              "example": "lab"
             }
           ]
         }
@@ -172,6 +123,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CheckPointDome9/Integrations/CheckPointDome9",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /Compliance/Finding/{finding_id}. Fields are keys the client reads or test_data contains."
+    "GET /Compliance/Finding/{finding_id} returns the finding itself. The command reads id, alertType, severity, region, status, action, cloudAccountId, and description."
   ]
 }

@@ -4,7 +4,7 @@
   "pack": "FortiSIEM",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: GET /phoenix/rest/query/events/0/1000.",
+  "summary": "POST /phoenix/rest/h5/report/resultByReport",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -17,23 +17,23 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FortiSIEM/Integrations/FortiSIEM",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched GET /phoenix/rest/query/events/0/1000. Fields are keys the client reads or test_data contains."
+        "Event results are POST /phoenix/rest/h5/report/resultByReport. The client reads headerData.columnNames and lightValueObjects."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/FortiSIEM/Integrations/FortiSIEM",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched GET /phoenix/rest/query/events/0/1000. Fields are keys the client reads or test_data contains."
+          "Event results are POST /phoenix/rest/h5/report/resultByReport. The client reads headerData.columnNames and lightValueObjects."
         ]
       }
     },
     "operations": [
       {
-        "id": "get-phoenix-rest-query-events-0-1000-0",
-        "method": "GET",
-        "pathTemplate": "/phoenix/rest/query/events/0/1000",
-        "summary": "GET /phoenix/rest/query/events/0/1000",
+        "id": "audited-call",
+        "method": "POST",
+        "pathTemplate": "/phoenix/rest/h5/report/resultByReport",
+        "summary": "POST /phoenix/rest/h5/report/resultByReport",
         "status": 200,
         "contentType": "application/json; charset=utf-8",
         "headers": {},
@@ -55,34 +55,63 @@
           "kind": "object",
           "children": [
             {
-              "name": "data",
-              "kind": "string",
-              "example": "lab"
+              "name": "headerData",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "columnNames",
+                  "kind": "array",
+                  "item": {
+                    "name": "item",
+                    "kind": "string",
+                    "example": "lab"
+                  }
+                }
+              ]
             },
             {
-              "name": "accessIp",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "approved",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "attributeId",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "children",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "creationMethod",
-              "kind": "string",
-              "example": "lab"
+              "name": "lightValueObjects",
+              "kind": "array",
+              "item": {
+                "name": "item",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "naturalId",
+                    "kind": "string",
+                    "example": "lab"
+                  },
+                  {
+                    "name": "data",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "string",
+                      "example": "lab"
+                    }
+                  },
+                  {
+                    "name": "extData",
+                    "kind": "array",
+                    "item": {
+                      "name": "item",
+                      "kind": "object",
+                      "children": [
+                        {
+                          "name": "left",
+                          "kind": "string",
+                          "example": "lab"
+                        },
+                        {
+                          "name": "right",
+                          "kind": "string",
+                          "example": "lab"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
             }
           ]
         }
@@ -113,6 +142,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FortiSIEM/Integrations/FortiSIEM",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched GET /phoenix/rest/query/events/0/1000. Fields are keys the client reads or test_data contains."
+    "Event results are POST /phoenix/rest/h5/report/resultByReport. The client reads headerData.columnNames and lightValueObjects."
   ]
 }

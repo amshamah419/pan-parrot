@@ -4,7 +4,7 @@
   "pack": "SymantecMSS",
   "fidelity": "verified",
   "curated": false,
-  "summary": "Rebuilt from the client: POST /SWS/incidents.asmx.",
+  "summary": "POST /SWS/incidents.asmx",
   "operations": 1,
   "origin": "yaml",
   "spec": {
@@ -17,29 +17,29 @@
       "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecMSS/Integrations/SymantecMSS",
       "fidelity": "verified",
       "notes": [
-        "Rebuilt from the XSOAR client. The checker matched POST /SWS/incidents.asmx. Fields are keys the client reads or test_data contains."
+        "POST /SWS/incidents.asmx returns XML. The list command reads IncidentNumber, Classification, TimeCreated, Severity, Category, and SourceIPString."
       ],
       "verification": {
         "status": "verified",
         "docUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecMSS/Integrations/SymantecMSS",
         "checkedAt": "2026-11-10",
         "differences": [
-          "Rebuilt from the XSOAR client. The checker matched POST /SWS/incidents.asmx. Fields are keys the client reads or test_data contains."
+          "POST /SWS/incidents.asmx returns XML. The list command reads IncidentNumber, Classification, TimeCreated, Severity, Category, and SourceIPString."
         ]
       }
     },
     "operations": [
       {
-        "id": "post-sws-incidents-asmx-0",
+        "id": "audited-call",
         "method": "POST",
         "pathTemplate": "/SWS/incidents.asmx",
         "summary": "POST /SWS/incidents.asmx",
         "status": 200,
-        "contentType": "application/json; charset=utf-8",
+        "contentType": "text/xml; charset=utf-8",
         "headers": {},
         "list": false,
         "envelope": {
-          "type": "object"
+          "type": "xml"
         },
         "pagination": {
           "style": "none",
@@ -55,17 +55,7 @@
           "kind": "object",
           "children": [
             {
-              "name": "AnalystAssessment",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "AssignedOrganization",
-              "kind": "string",
-              "example": "lab"
-            },
-            {
-              "name": "AssignedPerson",
+              "name": "IncidentNumber",
               "kind": "string",
               "example": "lab"
             },
@@ -75,12 +65,22 @@
               "example": "lab"
             },
             {
-              "name": "CountryCode",
+              "name": "TimeCreated",
               "kind": "string",
               "example": "lab"
             },
             {
-              "name": "CountryName",
+              "name": "Severity",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "Category",
+              "kind": "string",
+              "example": "lab"
+            },
+            {
+              "name": "SourceIPString",
               "kind": "string",
               "example": "lab"
             }
@@ -113,6 +113,6 @@
   },
   "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/SymantecMSS/Integrations/SymantecMSS",
   "notes": [
-    "Rebuilt from the XSOAR client. The checker matched POST /SWS/incidents.asmx. Fields are keys the client reads or test_data contains."
+    "POST /SWS/incidents.asmx returns XML. The list command reads IncidentNumber, Classification, TimeCreated, Severity, Category, and SourceIPString."
   ]
 }
