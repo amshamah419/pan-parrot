@@ -1,4 +1,5 @@
-import { POLICY } from "./policy";
+// `.ts` is required so the Netlify edge bundler (Deno) can load this module.
+import { POLICY } from "./policy.ts";
 
 export const GATE_COOKIE = "pp_gate";
 
