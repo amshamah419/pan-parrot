@@ -1,1 +1,137 @@
-{"id":"claroty-claroty","name":"Claroty","pack":"Claroty","fidelity":"shape","curated":false,"summary":"Use the Claroty CTD integration to manage assets and alerts.","operations":4,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"claroty-claroty","name":"Claroty","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Claroty/Integrations/Claroty","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"claroty-get-assets","method":"GET","pathTemplate":"/","summary":"Gets all assets from CTD. You can apply one or more filters.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Claroty","kind":"object","optional":false,"children":[{"name":"Asset","kind":"object","optional":false,"children":[{"name":"AssetID","kind":"number","optional":false},{"name":"AssetType","kind":"string","optional":false,"example":"AssetType"},{"name":"CVE","kind":"object","optional":false,"children":[{"name":"CVSS","kind":"string","optional":false,"example":"CVSS"},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"ID","kind":"id","optional":false},{"name":"Modified","kind":"timestamp","optional":false,"format":"iso"},{"name":"Published","kind":"timestamp","optional":false,"format":"iso"}]},{"name":"ClassType","kind":"string","optional":false,"example":"ClassType"},{"name":"Criticality","kind":"string","optional":false,"example":"Criticality"},{"name":"FirmwareVersion","kind":"string","optional":false,"example":"FirmwareVersion"},{"name":"HighestCVEScore","kind":"number","optional":false},{"name":"IP","kind":"string","optional":false,"example":"IP"},{"name":"InsightName","kind":"string","optional":false,"example":"InsightName"},{"name":"LastSeen","kind":"timestamp","optional":false,"format":"iso"},{"name":"MAC","kind":"string","optional":false,"example":"MAC"},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"ResourceID","kind":"id","optional":false},{"name":"RiskLevel","kind":"number","optional":false},{"name":"SiteID","kind":"number","optional":false},{"name":"SiteName","kind":"string","optional":false,"example":"SiteName"},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"VirtualZone","kind":"string","optional":false,"example":"VirtualZone"},{"name":"WasParsed","kind":"string","optional":false,"example":"WasParsed"}]}]},{"name":"CVE","kind":"object","optional":false,"children":[{"name":"CVSS","kind":"string","optional":false,"example":"CVSS"},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"ID","kind":"id","optional":false},{"name":"Modified","kind":"timestamp","optional":false,"format":"iso"},{"name":"Published","kind":"timestamp","optional":false,"format":"iso"}]}]}},{"id":"claroty-query-alerts","method":"GET","pathTemplate":"/","summary":"Gets alerts from CTD.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Claroty","kind":"object","optional":false,"children":[{"name":"Alert","kind":"object","optional":false,"children":[{"name":"AlertType","kind":"string","optional":false,"example":"AlertType"},{"name":"AlertTypeID","kind":"number","optional":false},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"NetworkID","kind":"number","optional":false},{"name":"RelatedAssets","kind":"object","optional":false,"children":[{"name":"AssetID","kind":"number","optional":false},{"name":"AssetType","kind":"string","optional":false,"example":"AssetType"},{"name":"ClassType","kind":"string","optional":false,"example":"ClassType"},{"name":"Criticality","kind":"string","optional":false,"example":"Criticality"},{"name":"FirmwareVersion","kind":"string","optional":false,"example":"FirmwareVersion"},{"name":"IP","kind":"string","optional":false,"example":"IP"},{"name":"InsightName","kind":"string","optional":false,"example":"InsightName"},{"name":"LastSeen","kind":"timestamp","optional":false,"format":"iso"},{"name":"MAC","kind":"string","optional":false,"example":"MAC"},{"name":"Name","kind":"string","optional":false,"example":"Name"},{"name":"ResourceID","kind":"id","optional":false},{"name":"RiskLevel","kind":"number","optional":false},{"name":"SiteID","kind":"number","optional":false},{"name":"SiteName","kind":"string","optional":false,"example":"SiteName"},{"name":"Vendor","kind":"string","optional":false,"example":"Vendor"},{"name":"VirtualZone","kind":"string","optional":false,"example":"VirtualZone"},{"name":"WasParsed","kind":"string","optional":false,"example":"WasParsed"}]},{"name":"Resolved","kind":"number","optional":false},{"name":"ResourceID","kind":"id","optional":false},{"name":"Severity","kind":"string","optional":false,"example":"Severity"},{"name":"Category","kind":"string","optional":false,"example":"Category"},{"name":"InitialArrFlowCompleted","kind":"boolean","optional":false}]}]}]}},{"id":"claroty-resolve-alert","method":"GET","pathTemplate":"/","summary":"Resolves alerts.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Claroty","kind":"object","optional":false,"children":[{"name":"Resolve_out","kind":"object","optional":false,"children":[{"name":"success","kind":"string","optional":false,"example":"success"}]}]}]}},{"id":"claroty-get-single-alert","method":"GET","pathTemplate":"/","summary":"Get a single alert from CTD.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Claroty","kind":"object","optional":false,"children":[{"name":"Alert","kind":"object","optional":false,"children":[{"name":"AlertType","kind":"string","optional":false,"example":"AlertType"},{"name":"AlertTypeID","kind":"number","optional":false},{"name":"Description","kind":"string","optional":false,"example":"Description"},{"name":"Indicator","kind":"string","optional":false,"example":"Indicator"},{"name":"NetworkID","kind":"number","optional":false},{"name":"RelatedAssets","kind":"string","optional":false,"example":"RelatedAssets"},{"name":"Resolved","kind":"number","optional":false},{"name":"ResourceID","kind":"id","optional":false},{"name":"Severity","kind":"string","optional":false,"example":"Severity"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "claroty-claroty",
+  "name": "Claroty",
+  "pack": "Claroty",
+  "vendor": "Claroty",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Ranger alerts.",
+  "notes": [
+    "Claroty API pages were not loaded. The client GETs ranger/alerts after auth/authenticate.",
+    "This mock returns one alert. Assets and the login route are not modeled.",
+    "A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Claroty/Integrations/Claroty",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "claroty-claroty",
+      "name": "Claroty",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Claroty/Integrations/Claroty",
+      "notes": [
+        "Claroty API pages were not loaded. The client GETs ranger/alerts after auth/authenticate.",
+        "This mock returns one alert. Assets and the login route are not modeled.",
+        "A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Claroty/Integrations/Claroty",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "Claroty API pages were not loaded. The client GETs ranger/alerts after auth/authenticate.",
+          "This mock returns one alert. Assets and the login route are not modeled.",
+          "A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "alerts",
+        "method": "GET",
+        "pathTemplate": "/ranger/alerts",
+        "summary": "List alerts",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "alerts",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "alert",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "severity",
+                    "kind": "enum",
+                    "enumValues": [
+                      "low",
+                      "medium",
+                      "high"
+                    ]
+                  },
+                  {
+                    "name": "type",
+                    "kind": "string",
+                    "example": "network"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "claroty-claroty",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

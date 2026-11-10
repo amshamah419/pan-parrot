@@ -1,1 +1,133 @@
-{"id":"microsoftdefenderthreatintelligence-microsoftdefenderthreatintelligence","name":"Microsoft Defender Threat Intelligence","pack":"MicrosoftDefenderThreatIntelligence","fidelity":"shape","curated":false,"summary":"Use the Microsoft Defender Threat Intelligence integration to query enriched threat intelligence data such as articles, threat actor profiles, WHOIS records, and host-related infra","operations":6,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"microsoftdefenderthreatintelligence-microsoftdefenderthreatintelligence","name":"Microsoft Defender Threat Intelligence","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/MicrosoftDefenderThreatIntelligence/Integrations/MicrosoftDefenderThreatIntelligence","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-article-indicators-list-missing-artifact","method":"GET","pathTemplate":"/","summary":"test_data/article_indicators_list_missing_artifact.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"value","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"@odata.type","kind":"string","optional":false,"example":"#microsoft.graph.security.articleIndicator"},{"name":"id","kind":"id","optional":false,"example":"indicator_no_artifact"},{"name":"source","kind":"string","optional":false,"example":"microsoft"}]},"minItems":0,"maxItems":3,"pageItems":false}]}},{"id":"test-data-article-indicators-list-with-article-id-","method":"GET","pathTemplate":"/","summary":"test_data/article_indicators_list_with_article_id.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"value","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"@odata.type","kind":"string","optional":false,"example":"#microsoft.graph.security.articleIndicator"},{"name":"id","kind":"id","optional":false,"example":"indicator1"},{"name":"source","kind":"string","optional":false,"example":"microsoft"},{"name":"artifact","kind":"object","optional":false,"children":[{"name":"@odata.type","kind":"string","optional":false,"example":"#microsoft.graph.security.hostname"},{"name":"id","kind":"id","optional":false,"example":"artifact1"}]}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-article-indicators-list-with-article-ind","method":"GET","pathTemplate":"/","summary":"test_data/article_indicators_list_with_article_indicator_id.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"@odata.type","kind":"string","optional":false,"example":"#microsoft.graph.security.articleIndicator"},{"name":"id","kind":"id","optional":false,"example":"specific_indicator"},{"name":"source","kind":"string","optional":false,"example":"microsoft"},{"name":"artifact","kind":"object","optional":false,"children":[{"name":"@odata.type","kind":"string","optional":false,"example":"#microsoft.graph.security.hostname"},{"name":"id","kind":"id","optional":false,"example":"specific_artifact"}]}]}},{"id":"test-data-article-list-default-json","method":"GET","pathTemplate":"/","summary":"test_data/article_list_default.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"value","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"@odata.context","kind":"string","optional":false,"example":"$metadata#articles/$entity"},{"name":"id","kind":"id","optional":false,"example":"12345"},{"name":"createdDateTime","kind":"timestamp","optional":false,"example":"2023-03-03T18:20:22.677Z","format":"iso"},{"name":"lastUpdatedDateTime","kind":"timestamp","optional":false,"example":"2023-03-03T18:20:22.677Z","format":"iso"},{"name":"title","kind":"string","optional":false,"example":"Test Article 1"},{"name":"summary","kind":"object","optional":false,"children":[{"name":"content","kind":"string","optional":false,"example":"Trend Micro discusses Batloader campaigns that were observed in the last quarter of 2022."},{"name":"format","kind":"string","optional":false,"example":"markdown"}]},{"name":"isFeatured","kind":"string","optional":false,"example":"False"},{"name":"body","kind":"object","optional":false,"children":[{"name":"content","kind":"string","optional":false,"example":"#### Description\r\nTrend Micro discusses Batloader..."},{"name":"format","kind":"string","optional":false,"example":"markdown"}]},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"OSINT"},"minItems":0,"maxItems":3,"pageItems":false},{"name":"imageUrl","kind":"string","optional":false,"example":"None"}]},"minItems":0,"maxItems":2,"pageItems":false}]}},{"id":"test-data-article-list-with-id-json","method":"GET","pathTemplate":"/","summary":"test_data/article_list_with_id.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"@odata.context","kind":"string","optional":false,"example":"$metadata#articles/$entity"},{"name":"id","kind":"id","optional":false,"example":"specific123"},{"name":"createdDateTime","kind":"timestamp","optional":false,"example":"2023-03-03T18:20:22.677Z","format":"iso"},{"name":"lastUpdatedDateTime","kind":"timestamp","optional":false,"example":"2023-03-03T18:20:22.677Z","format":"iso"},{"name":"title","kind":"string","optional":false,"example":"Specific Article"},{"name":"summary","kind":"object","optional":false,"children":[{"name":"content","kind":"string","optional":false,"example":"Targeted article description"},{"name":"format","kind":"string","optional":false,"example":"markdown"}]},{"name":"isFeatured","kind":"string","optional":false,"example":"False"},{"name":"body","kind":"object","optional":false,"children":[{"name":"content","kind":"string","optional":false,"example":"#### Description\r\nTargeted article content..."},{"name":"format","kind":"string","optional":false,"example":"markdown"}]},{"name":"tags","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"Targeted"},"minItems":0,"maxItems":2,"pageItems":false},{"name":"imageUrl","kind":"string","optional":false,"example":"None"}]}},{"id":"test-data-host-reputation-json","method":"GET","pathTemplate":"/","summary":"test_data/host_reputation.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"@odata.type","kind":"string","optional":false,"example":"#microsoft.graph.security.hostReputation"},{"name":"id","kind":"id","optional":false,"example":"1e3b9ded-abb6-1828-c4ef-a5ca48b287a0"},{"name":"classification","kind":"string","optional":false,"example":"malicious"},{"name":"score","kind":"integer","optional":false},{"name":"rules","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"Microsoft Defender Threat Intelligence Intel Article"},{"name":"description","kind":"string","optional":false,"example":"Activity Snapshot: DPRK Actors Target Maritime Sector"},{"name":"severity","kind":"string","optional":false,"example":"high"},{"name":"relatedDetailsUrl","kind":"string","optional":false,"example":"https://ti.defender.microsoft.com/article/831b70a4"}]},"minItems":0,"maxItems":3,"pageItems":false}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "microsoftdefenderthreatintelligence-microsoftdefenderthreatintelligence",
+  "name": "Microsoft Defender Threat Intelligence",
+  "pack": "MicrosoftDefenderThreatIntelligence",
+  "vendor": "Microsoft",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Threat intelligence articles.",
+  "notes": [
+    "The client GETs v1.0/security/threatIntelligence/articles on Microsoft Graph. This mock returns { value } with one article.",
+    "Indicators, intel profiles, and a single article are not modeled.",
+    "The list-articles page was not reloaded. A bearer token is required. 365 Defender incidents stay on their earlier preset."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/MicrosoftDefenderThreatIntelligence/Integrations/MicrosoftDefenderThreatIntelligence",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "microsoftdefenderthreatintelligence-microsoftdefenderthreatintelligence",
+      "name": "Microsoft Defender Threat Intelligence",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://learn.microsoft.com/en-us/graph/api/security-threatintelligence-list-articles",
+      "notes": [
+        "The client GETs v1.0/security/threatIntelligence/articles on Microsoft Graph. This mock returns { value } with one article.",
+        "Indicators, intel profiles, and a single article are not modeled.",
+        "The list-articles page was not reloaded. A bearer token is required. 365 Defender incidents stay on their earlier preset."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://learn.microsoft.com/en-us/graph/api/security-threatintelligence-list-articles",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client GETs v1.0/security/threatIntelligence/articles on Microsoft Graph. This mock returns { value } with one article.",
+          "Indicators, intel profiles, and a single article are not modeled.",
+          "The list-articles page was not reloaded. A bearer token is required. 365 Defender incidents stay on their earlier preset."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "articles",
+        "method": "GET",
+        "pathTemplate": "/v1.0/security/threatIntelligence/articles",
+        "summary": "List articles",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "value",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "article",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "title",
+                    "kind": "string",
+                    "example": "Lab threat article"
+                  },
+                  {
+                    "name": "createdDateTime",
+                    "kind": "timestamp",
+                    "format": "iso"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "microsoftdefenderthreatintelligence-microsoftdefenderthreatintelligence",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

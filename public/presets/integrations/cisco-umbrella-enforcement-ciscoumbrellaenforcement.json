@@ -1,1 +1,118 @@
-{"id":"cisco-umbrella-enforcement-ciscoumbrellaenforcement","name":"Cisco Umbrella Enforcement","pack":"Cisco-umbrella-enforcement","fidelity":"shape","curated":false,"summary":"Add and remove domains in Cisco OpenDNS.","operations":3,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"cisco-umbrella-enforcement-ciscoumbrellaenforcement","name":"Cisco Umbrella Enforcement","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Cisco-umbrella-enforcement/Integrations/CiscoUmbrellaEnforcement","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"umbrella-domain-event-add","method":"GET","pathTemplate":"/","summary":"Posts a malware event to the API for processing and optionally adding to a customer's domain lists.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"alert_time","kind":"string","optional":false,"example":"alert_time"},{"name":"device_id","kind":"string","optional":false,"example":"device_id"},{"name":"destination_domain","kind":"string","optional":false,"example":"destination_domain"},{"name":"destination_url","kind":"string","optional":false,"example":"destination_url"},{"name":"device_version","kind":"string","optional":false,"example":"device_version"},{"name":"destination_ip","kind":"string","optional":false,"example":"destination_ip"},{"name":"event_severity","kind":"string","optional":false,"example":"event_severity"},{"name":"event_type","kind":"string","optional":false,"example":"event_type"},{"name":"event_description","kind":"string","optional":false,"example":"event_description"},{"name":"file_name","kind":"string","optional":false,"example":"file_name"},{"name":"file_hash","kind":"string","optional":false,"example":"file_hash"},{"name":"source","kind":"string","optional":false,"example":"source"}]}},{"id":"umbrella-domains-list","method":"GET","pathTemplate":"/","summary":"List of domains.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"UmbrellaEnforcement","kind":"object","optional":false,"children":[{"name":"Domains","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"},{"name":"id","kind":"id","optional":false},{"name":"IsDeleted","kind":"boolean","optional":false}]}]}]}},{"id":"umbrella-domain-delete","method":"GET","pathTemplate":"/","summary":"Delete domain.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"id","kind":"string","optional":false,"example":"id"},{"name":"name","kind":"string","optional":false,"example":"name"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "cisco-umbrella-enforcement-ciscoumbrellaenforcement",
+  "name": "Cisco Umbrella Enforcement",
+  "pack": "Cisco-umbrella-enforcement",
+  "vendor": "Cisco",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Enforcement domain list.",
+  "notes": [
+    "The client GETs domains with customerKey. This mock returns a JSON array of one domain.",
+    "Add and delete are not modeled. customerKey is not checked.",
+    "The enforcement domains page was not reloaded."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Cisco-umbrella-enforcement/Integrations/CiscoUmbrellaEnforcement",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "cisco-umbrella-enforcement-ciscoumbrellaenforcement",
+      "name": "Cisco Umbrella Enforcement",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-reference-enforcement-domains/",
+      "notes": [
+        "The client GETs domains with customerKey. This mock returns a JSON array of one domain.",
+        "Add and delete are not modeled. customerKey is not checked.",
+        "The enforcement domains page was not reloaded."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.cisco.com/docs/cloud-security/umbrella-api-reference-enforcement-domains/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client GETs domains with customerKey. This mock returns a JSON array of one domain.",
+          "Add and delete are not modeled. customerKey is not checked.",
+          "The enforcement domains page was not reloaded."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "domains",
+        "method": "GET",
+        "pathTemplate": "/domains",
+        "summary": "List enforcement domains",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "domain",
+          "kind": "object",
+          "children": [
+            {
+              "name": "id",
+              "kind": "id"
+            },
+            {
+              "name": "name",
+              "kind": "string",
+              "example": "lab.example"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "cisco-umbrella-enforcement-ciscoumbrellaenforcement",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "customerKey",
+        "value": "dummy-umbrella-key"
+      }
+    }
+  }
+}

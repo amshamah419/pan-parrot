@@ -1,1 +1,141 @@
-{"id":"hoxhunt-hoxhuntv2","name":"Hoxhunt v2","pack":"Hoxhunt","fidelity":"shape","curated":false,"summary":"Use the Hoxhunt integration to send feedback to reporters of incidents, set incident sensitivity, and apply SOC classification to incidents.","operations":6,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"hoxhunt-hoxhuntv2","name":"Hoxhunt v2","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Hoxhunt/Integrations/HoxhuntV2","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"hoxhunt-current-user-get","method":"GET","pathTemplate":"/","summary":"Gets the current user information from Hoxhunt.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"HoxHunt","kind":"object","optional":false,"children":[{"name":"CurrentUser","kind":"string","optional":false,"example":"CurrentUser"}]}]}},{"id":"hoxhunt-incident-threats-get","method":"GET","pathTemplate":"/","summary":"Gets threats from Hoxhunt.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Hoxhunt","kind":"object","optional":false,"children":[{"name":"Threats","kind":"string","optional":false,"example":"Threats"}]}]}},{"id":"hoxhunt-incident-note-add","method":"GET","pathTemplate":"/","summary":"Add Incident note.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Hoxhunt","kind":"object","optional":false,"children":[{"name":"addIncidentNode","kind":"string","optional":false,"example":"addIncidentNode"}]}]}},{"id":"hoxhunt-incident-threats-remove","method":"GET","pathTemplate":"/","summary":"Remove all threats that belong to an incident.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Hoxhunt","kind":"object","optional":false,"children":[{"name":"removeIncidentThreats","kind":"number","optional":false}]}]}},{"id":"hoxhunt-incident-soc-feedback-send","method":"GET","pathTemplate":"/","summary":"Send feedback to reporters of incident about whether the reported email was safe, spam or malicious.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Hoxhunt","kind":"object","optional":false,"children":[{"name":"sendIncidentSocFeedback","kind":"string","optional":false,"example":"sendIncidentSocFeedback"}]}]}},{"id":"hoxhunt-incident-set-sensitive","method":"GET","pathTemplate":"/","summary":"Set incident to contain sensitive information.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Hoxhunt","kind":"object","optional":false,"children":[{"name":"setIncidentSensitive","kind":"string","optional":false,"example":"setIncidentSensitive"}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "hoxhunt-hoxhuntv2",
+  "name": "Hoxhunt v2",
+  "pack": "Hoxhunt",
+  "vendor": "Hoxhunt",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GraphQL incidents.",
+  "notes": [
+    "The pack posts a GraphQL query to the configured base URL. This mock answers POST /graphql with data.incidents. The query is not executed.",
+    "Point the instance URL at the catch URL plus /graphql if the client uses an empty suffix. Incident updates are not modeled.",
+    "Hoxhunt API pages were not loaded. Authorization is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Hoxhunt/Integrations/HoxhuntV2",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "hoxhunt-hoxhuntv2",
+      "name": "Hoxhunt v2",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Hoxhunt/Integrations/HoxhuntV2",
+      "notes": [
+        "The pack posts a GraphQL query to the configured base URL. This mock answers POST /graphql with data.incidents. The query is not executed.",
+        "Point the instance URL at the catch URL plus /graphql if the client uses an empty suffix. Incident updates are not modeled.",
+        "Hoxhunt API pages were not loaded. Authorization is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://github.com/demisto/content/tree/master/Packs/Hoxhunt/Integrations/HoxhuntV2",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The pack posts a GraphQL query to the configured base URL. This mock answers POST /graphql with data.incidents. The query is not executed.",
+          "Point the instance URL at the catch URL plus /graphql if the client uses an empty suffix. Incident updates are not modeled.",
+          "Hoxhunt API pages were not loaded. Authorization is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "graphql",
+        "method": "POST",
+        "pathTemplate": "/graphql",
+        "summary": "Query incidents",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "object",
+              "children": [
+                {
+                  "name": "incidents",
+                  "kind": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "item": {
+                    "name": "incident",
+                    "kind": "object",
+                    "children": [
+                      {
+                        "name": "id",
+                        "kind": "id"
+                      },
+                      {
+                        "name": "state",
+                        "kind": "const",
+                        "constValue": "OPEN"
+                      },
+                      {
+                        "name": "updatedAt",
+                        "kind": "timestamp",
+                        "format": "iso"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "hoxhunt-hoxhuntv2",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "Authorization",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

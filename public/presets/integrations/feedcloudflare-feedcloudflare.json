@@ -1,1 +1,121 @@
-{"id":"feedcloudflare-feedcloudflare","name":"Cloudflare Feed","pack":"FeedCloudflare","fidelity":"shape","curated":false,"summary":"Use the Cloudflare feed integration to fetch indicators from the feed.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"feedcloudflare-feedcloudflare","name":"Cloudflare Feed","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/FeedCloudflare/Integrations/FeedCloudflare","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"cloudflare-get-indicators","method":"GET","pathTemplate":"/","summary":"Gets the feed indicators.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"limit","kind":"string","optional":false,"example":"limit"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "feedcloudflare-feedcloudflare",
+  "name": "Cloudflare Feed",
+  "pack": "FeedCloudflare",
+  "vendor": "Cloudflare",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Cloudflare published IP ranges.",
+  "notes": [
+    "The feed downloads https://www.cloudflare.com/ips-v4 as newline-separated text. This mock returns JSON { addresses } so the studio can page it.",
+    "IPv6 ranges are not modeled. One example address is returned.",
+    "The IPs page was not reloaded. No API key is required on the public list."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/FeedCloudflare/Integrations/FeedCloudflare",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "feedcloudflare-feedcloudflare",
+      "name": "Cloudflare Feed",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://www.cloudflare.com/ips/",
+      "notes": [
+        "The feed downloads https://www.cloudflare.com/ips-v4 as newline-separated text. This mock returns JSON { addresses } so the studio can page it.",
+        "IPv6 ranges are not modeled. One example address is returned.",
+        "The IPs page was not reloaded. No API key is required on the public list."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://www.cloudflare.com/ips/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The feed downloads https://www.cloudflare.com/ips-v4 as newline-separated text. This mock returns JSON { addresses } so the studio can page it.",
+          "IPv6 ranges are not modeled. One example address is returned.",
+          "The IPs page was not reloaded. No API key is required on the public list."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "v4",
+        "method": "GET",
+        "pathTemplate": "/ips-v4",
+        "summary": "List IPv4 ranges",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "addresses",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "address",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "cidr",
+                    "kind": "const",
+                    "constValue": "1.1.1.1/32"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "feedcloudflare-feedcloudflare",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "none"
+    }
+  }
+}

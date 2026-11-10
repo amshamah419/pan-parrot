@@ -1,1 +1,132 @@
-{"id":"gsuiteauditor-gsuiteauditor","name":"G Suite Auditor","pack":"GsuiteAuditor","fidelity":"shape","curated":false,"summary":"G Suite Auditor is an integration that receives Audit logs from G Suite's different applications - admin, drive, calender, and more.","operations":2,"origin":"sample","spec":{"version":1,"source":{"kind":"preset","id":"gsuiteauditor-gsuiteauditor","name":"G Suite Auditor","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/GsuiteAuditor/Integrations/GsuiteAuditor","fidelity":"shape","notes":["Identifier and timestamp fields are generated so pages stay unique. Other fields keep an example from the XSOAR fixture.","No HTTP path was recovered from the client. The sample shape is served at the catch URL root."]},"operations":[{"id":"test-data-activities-list-response-json","method":"GET","pathTemplate":"/","summary":"test_data/activities_list_response.json","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"kind","kind":"string","optional":false,"example":"admin#reports#activities"},{"name":"etag","kind":"string","optional":false,"example":"\"UU7ZVXZP4ba7JkjgJfj1hAMrbEvzbxchfTG8hqR_ZdI/GFO8XQAECGa7vdHpORj9OqWqXkU\""},{"name":"items","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"kind","kind":"string","optional":false,"example":"admin#reports#activity"},{"name":"id","kind":"object","optional":false,"children":[{"name":"time","kind":"timestamp","optional":false,"example":"2021-08-17T03:01:02.653Z","format":"iso"},{"name":"uniqueQualifier","kind":"string","optional":false,"example":"-7041622916518163767"},{"name":"applicationName","kind":"string","optional":false,"example":"admin"},{"name":"customerId","kind":"id","optional":false,"example":"000"}]},{"name":"etag","kind":"string","optional":false,"example":"\"UU7ZVXZP4ba7JkjgJfj1hAMrbEvzbxchfTG8hqR_ZdI/_kv_RgBYss1V6BGnCp5mkyahw_s\""},{"name":"actor","kind":"object","optional":false,"children":[{"name":"callerType","kind":"string","optional":false,"example":"KEY"},{"name":"key","kind":"string","optional":false,"example":"SYSTEM"}]},{"name":"events","kind":"array","optional":false,"item":{"name":"item","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"LICENSES_SETTINGS"},{"name":"name","kind":"string","optional":false,"example":"USER_LICENSE_REVOKE"},{"name":"parameters","kind":"array","optional":false,"item":{"name":"item","kind":"string","optional":false,"example":"nested"},"minItems":0,"maxItems":3,"pageItems":false}]},"minItems":0,"maxItems":1,"pageItems":false}]},"minItems":0,"maxItems":1,"pageItems":false}]}},{"id":"test-data-service-account-json-txt","method":"GET","pathTemplate":"/","summary":"test_data/service_account_json.txt","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":20,"maxLimit":500,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"type","kind":"string","optional":false,"example":"service_account"},{"name":"project_id","kind":"id","optional":false,"example":"XXXX INVALID KEY USED FOR TESTING XXXX"},{"name":"private_key_id","kind":"id","optional":false,"example":"private key"},{"name":"private_key","kind":"string","optional":false,"example":"-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC9MdaYXFxrroqo\nTX0aYyKJqqn3UJtNWoUu2DG/B/T"},{"name":"client_email","kind":"string","optional":false,"example":"test.iam.gserviceaccount.com"},{"name":"client_id","kind":"id","optional":false,"example":"client id"},{"name":"auth_uri","kind":"string","optional":false,"example":"https://accounts.google.com/o/oauth2/auth"},{"name":"token_uri","kind":"string","optional":false,"example":"redacted"},{"name":"auth_provider_x509_cert_url","kind":"string","optional":false,"example":"https://www.googleapis.com/oauth2/v1/certs"},{"name":"client_x509_cert_url","kind":"string","optional":false,"example":"https://www.googleapis.com/robot/v1/metadata/x509/test.iam.gserviceaccount.com"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "gsuiteauditor-gsuiteauditor",
+  "name": "G Suite Auditor",
+  "pack": "GsuiteAuditor",
+  "vendor": "Google",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Admin reports login activity.",
+  "notes": [
+    "The client GETs /reports/v1/activity/users/{user}/applications/{app} on admin.googleapis.com. This mock is users/all and application login.",
+    "Other application names do not match. nextPageToken is omitted.",
+    "The activities.list page was not reloaded. A bearer token is required. Security alerts stay on the G Suite Security Alert Center preset."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/GsuiteAuditor/Integrations/GsuiteAuditor",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "gsuiteauditor-gsuiteauditor",
+      "name": "G Suite Auditor",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developers.google.com/admin-sdk/reports/reference/rest/v1/activities/list",
+      "notes": [
+        "The client GETs /reports/v1/activity/users/{user}/applications/{app} on admin.googleapis.com. This mock is users/all and application login.",
+        "Other application names do not match. nextPageToken is omitted.",
+        "The activities.list page was not reloaded. A bearer token is required. Security alerts stay on the G Suite Security Alert Center preset."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developers.google.com/admin-sdk/reports/reference/rest/v1/activities/list",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client GETs /reports/v1/activity/users/{user}/applications/{app} on admin.googleapis.com. This mock is users/all and application login.",
+          "Other application names do not match. nextPageToken is omitted.",
+          "The activities.list page was not reloaded. A bearer token is required. Security alerts stay on the G Suite Security Alert Center preset."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "login",
+        "method": "GET",
+        "pathTemplate": "/reports/v1/activity/users/all/applications/login",
+        "summary": "List login activity",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "items",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "activity",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "actor",
+                    "kind": "email"
+                  },
+                  {
+                    "name": "event",
+                    "kind": "string",
+                    "example": "login_success"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "gsuiteauditor-gsuiteauditor",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

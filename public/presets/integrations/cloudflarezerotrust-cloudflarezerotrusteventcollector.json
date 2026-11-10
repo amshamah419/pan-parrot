@@ -1,1 +1,137 @@
-{"id":"cloudflarezerotrust-cloudflarezerotrusteventcollector","name":"Cloudflare Zero Trust","pack":"CloudflareZeroTrust","fidelity":"shape","curated":false,"summary":"Cloudflare provides network and security products for consumers and businesses, utilizing reverse proxies for web traffic, edge computing, and a content distribution network to pro","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"cloudflarezerotrust-cloudflarezerotrusteventcollector","name":"Cloudflare Zero Trust","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/CloudflareZeroTrust/Integrations/CloudflareZeroTrustEventCollector","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"cloudflare-zero-trust-get-events","method":"GET","pathTemplate":"/client/v4/accounts/{self.account_id}/access/logs/access_requests","summary":"Gets events from Cloudflare Zero Trust.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"limit","kind":"string","optional":false,"example":"limit"},{"name":"should_push_events","kind":"string","optional":false,"example":"should_push_events"},{"name":"start_date","kind":"string","optional":false,"example":"start_date"},{"name":"event_types_to_fetch","kind":"string","optional":false,"example":"event_types_to_fetch"}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "cloudflarezerotrust-cloudflarezerotrusteventcollector",
+  "name": "Cloudflare Zero Trust",
+  "pack": "CloudflareZeroTrust",
+  "vendor": "Cloudflare",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Access request logs.",
+  "notes": [
+    "The collector GETs /client/v4/accounts/{account}/access/logs/access_requests. This mock uses account lab-account.",
+    "Gateway logs are not modeled. The result array is one request.",
+    "The Access logs page was not reloaded. A bearer token is required."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/CloudflareZeroTrust/Integrations/CloudflareZeroTrustEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "cloudflarezerotrust-cloudflarezerotrusteventcollector",
+      "name": "Cloudflare Zero Trust",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developers.cloudflare.com/api/resources/zero_trust/subresources/access/subresources/logs/",
+      "notes": [
+        "The collector GETs /client/v4/accounts/{account}/access/logs/access_requests. This mock uses account lab-account.",
+        "Gateway logs are not modeled. The result array is one request.",
+        "The Access logs page was not reloaded. A bearer token is required."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developers.cloudflare.com/api/resources/zero_trust/subresources/access/subresources/logs/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The collector GETs /client/v4/accounts/{account}/access/logs/access_requests. This mock uses account lab-account.",
+          "Gateway logs are not modeled. The result array is one request.",
+          "The Access logs page was not reloaded. A bearer token is required."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "access",
+        "method": "GET",
+        "pathTemplate": "/client/v4/accounts/lab-account/access/logs/access_requests",
+        "summary": "List access requests",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "success",
+              "kind": "const",
+              "constValue": true
+            },
+            {
+              "name": "result",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "request",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "user_email",
+                    "kind": "email"
+                  },
+                  {
+                    "name": "action",
+                    "kind": "const",
+                    "constValue": "allow"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "cloudflarezerotrust-cloudflarezerotrusteventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "bearer",
+      "bearer": {
+        "token": "dummy-bearer"
+      }
+    }
+  }
+}

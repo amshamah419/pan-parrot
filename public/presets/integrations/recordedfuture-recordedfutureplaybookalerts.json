@@ -1,1 +1,135 @@
-{"id":"recordedfuture-recordedfutureplaybookalerts","name":"Recorded Future - Playbook Alerts","pack":"RecordedFuture","fidelity":"shape","curated":false,"summary":"Deprecated. Use \"Recorded Future Alerts\" from \"Recorded Future\" pack instead.","operations":3,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"recordedfuture-recordedfutureplaybookalerts","name":"Recorded Future - Playbook Alerts","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/RecordedFuture/Integrations/RecordedFuturePlaybookAlerts","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"recordedfuture-playbook-alerts-details","method":"GET","pathTemplate":"/v2/playbook_alert/search","summary":"Get Playbook alert details by id.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"RecordedFuture","kind":"object","optional":false,"children":[{"name":"PlaybookAlerts","kind":"object","optional":false,"children":[{"name":"playbook_alert_id","kind":"id","optional":false},{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"priority","kind":"string","optional":false,"example":"priority"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"title","kind":"string","optional":false,"example":"title"},{"name":"updated","kind":"timestamp","optional":false,"format":"iso"},{"name":"created","kind":"timestamp","optional":false,"format":"iso"},{"name":"organization_id","kind":"id","optional":false},{"name":"organization_name","kind":"string","optional":false,"example":"organization_name"},{"name":"assignee_id","kind":"id","optional":false},{"name":"assignee_name","kind":"string","optional":false,"example":"assignee_name"},{"name":"owner_id","kind":"id","optional":false},{"name":"owner_name","kind":"string","optional":false,"example":"owner_name"},{"name":"panel_status","kind":"object","optional":false,"children":[{"name":"playbook_alert_id","kind":"id","optional":false},{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"priority","kind":"string","optional":false,"example":"priority"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"title","kind":"string","optional":false,"example":"title"},{"name":"updated","kind":"timestamp","optional":false,"format":"iso"},{"name":"created","kind":"timestamp","optional":false,"format":"iso"},{"name":"organization_id","kind":"id","optional":false},{"name":"organization_name","kind":"string","optional":false,"example":"organization_name"},{"name":"assignee_id","kind":"id","optional":false},{"name":"assignee_name","kind":"string","optional":false,"example":"assignee_name"},{"name":"owner_id","kind":"id","optional":false},{"name":"owner_name","kind":"string","optional":false,"example":"owner_name"},{"name":"case_rule_id","kind":"id","optional":false},{"name":"case_rule_label","kind":"string","optional":false,"example":"case_rule_label"},{"name":"context_list","kind":"object","optional":false,"children":[{"name":"context","kind":"string","optional":false,"example":"context"}]},{"name":"entity_criticality","kind":"string","optional":false,"example":"entity_criticality"},{"name":"entity_id","kind":"id","optional":false},{"name":"entity_name","kind":"string","optional":false,"example":"entity_name"},{"name":"risk_score","kind":"string","optional":false,"example":"risk_score"},{"name":"targets","kind":"string","optional":false,"example":"targets"},{"name":"lifecycle_stage","kind":"string","optional":false,"example":"lifecycle_stage"}]},{"name":"panel_summary","kind":"object","optional":false,"children":[{"name":"explanation","kind":"string","optional":false,"example":"explanation"},{"name":"resolved_record_list","kind":"object","optional":false,"children":[{"name":"context_list","kind":"object","optional":false,"children":[{"name":"context","kind":"string","optional":false,"example":"context"}]},{"name":"criticality","kind":"string","optional":false,"example":"criticality"},{"name":"entity","kind":"string","optional":false,"example":"entity"},{"name":"record_type","kind":"string","optional":false,"example":"record_type"},{"name":"risk_score","kind":"string","optional":false,"example":"risk_score"}]},{"name":"screenshots","kind":"object","optional":false,"children":[{"name":"description","kind":"string","optional":false,"example":"description"},{"name":"image_id","kind":"id","optional":false},{"name":"tag","kind":"string","optional":false,"example":"tag"},{"name":"created","kind":"string","optional":false,"example":"created"},{"name":"base64","kind":"string","optional":false,"example":"base64"}]},{"name":"summary","kind":"object","optional":false,"children":[{"name":"targets","kind":"object","optional":false,"children":[{"name":"name","kind":"string","optional":false,"example":"name"}]},{"name":"lifecycle_stage","kind":"string","optional":false,"example":"lifecycle_stage"},{"name":"riskrules","kind":"object","optional":false,"children":[]}]}]}]}]}]}},{"id":"recordedfuture-playbook-alerts-update","method":"GET","pathTemplate":"/v2/playbook_alert/lookup","summary":"Update the status of one or multiple Playbook alerts.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"RecordedFuture","kind":"object","optional":false,"children":[{"name":"PlaybookAlerts","kind":"object","optional":false,"children":[{"name":"playbook_alert_id","kind":"id","optional":false},{"name":"current_status","kind":"string","optional":false,"example":"current_status"},{"name":"title","kind":"string","optional":false,"example":"title"},{"name":"status_message","kind":"string","optional":false,"example":"status_message"}]}]}]}},{"id":"recordedfuture-playbook-alerts-search","method":"GET","pathTemplate":"/v2/playbook_alert/update","summary":"Search playbook alerts based on filters.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"RecordedFuture","kind":"object","optional":false,"children":[{"name":"PlaybookAlerts","kind":"object","optional":false,"children":[{"name":"playbook_alert_id","kind":"id","optional":false},{"name":"category","kind":"string","optional":false,"example":"category"},{"name":"priority","kind":"string","optional":false,"example":"priority"},{"name":"status","kind":"string","optional":false,"example":"status"},{"name":"title","kind":"string","optional":false,"example":"title"},{"name":"updated","kind":"timestamp","optional":false,"format":"iso"},{"name":"created","kind":"timestamp","optional":false,"format":"iso"},{"name":"organization_id","kind":"id","optional":false},{"name":"organization_name","kind":"string","optional":false,"example":"organization_name"},{"name":"assignee_id","kind":"id","optional":false},{"name":"assignee_name","kind":"string","optional":false,"example":"assignee_name"},{"name":"owner_id","kind":"id","optional":false},{"name":"owner_name","kind":"string","optional":false,"example":"owner_name"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "recordedfuture-recordedfutureplaybookalerts",
+  "name": "Recorded Future - Playbook Alerts",
+  "pack": "RecordedFuture",
+  "vendor": "Recorded Future",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "Search playbook alerts.",
+  "notes": [
+    "The client POSTs /v2/playbook_alert/search. This mock returns one playbook alert.",
+    "Fetch, lookup, and update are not modeled.",
+    "The support article was not reloaded. The X-RFToken header is the dummy key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/RecordedFuture/Integrations/RecordedFuturePlaybookAlerts",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "recordedfuture-recordedfutureplaybookalerts",
+      "name": "Recorded Future - Playbook Alerts",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
+      "notes": [
+        "The client POSTs /v2/playbook_alert/search. This mock returns one playbook alert.",
+        "Fetch, lookup, and update are not modeled.",
+        "The support article was not reloaded. The X-RFToken header is the dummy key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://support.recordedfuture.com/hc/en-us/articles/115000894468-API-Documentation",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The client POSTs /v2/playbook_alert/search. This mock returns one playbook alert.",
+          "Fetch, lookup, and update are not modeled.",
+          "The support article was not reloaded. The X-RFToken header is the dummy key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "search",
+        "method": "POST",
+        "pathTemplate": "/v2/playbook_alert/search",
+        "summary": "Search playbook alerts",
+        "status": 200,
+        "list": false,
+        "envelope": {
+          "type": "object"
+        },
+        "record": {
+          "name": "body",
+          "kind": "object",
+          "children": [
+            {
+              "name": "data",
+              "kind": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "item": {
+                "name": "alert",
+                "kind": "object",
+                "children": [
+                  {
+                    "name": "id",
+                    "kind": "id"
+                  },
+                  {
+                    "name": "title",
+                    "kind": "string",
+                    "example": "Playbook alert"
+                  },
+                  {
+                    "name": "status",
+                    "kind": "const",
+                    "constValue": "New"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "recordedfuture-recordedfutureplaybookalerts",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "X-RFToken",
+        "value": "dummy-key"
+      }
+    }
+  }
+}

@@ -1,1 +1,123 @@
-{"id":"okta-oktaeventcollector","name":"Okta Event Collector","pack":"Okta","fidelity":"shape","curated":false,"summary":"Collects the events log for authentication and Audit provided by Okta admin API.","operations":1,"origin":"yaml","spec":{"version":1,"source":{"kind":"preset","id":"okta-oktaeventcollector","name":"Okta Event Collector","attribution":"Derived from demisto/content (MIT). See /presets/ATTRIBUTION.md.","sourceUrl":"https://github.com/demisto/content/tree/master/Packs/Okta/Integrations/OktaEventCollector","fidelity":"shape","notes":["Field names come from the integration YAML command outputs, not a captured vendor response.","No HTTP path was recovered from the client. The shape is served at the catch URL root."]},"operations":[{"id":"okta-get-events","method":"GET","pathTemplate":"/api/v1/logs","summary":"Manual command to fetch events and display them. Use for development and debugging only, as it may produce duplicate events or disrupt the fetch mechanism.","status":200,"contentType":"application/json; charset=utf-8","headers":{},"list":false,"envelope":{"type":"object"},"pagination":{"style":"none","limitParam":"limit","offsetParam":"offset","pageParam":"page","cursorParam":"cursor","defaultLimit":1,"maxLimit":1,"timeOverridesOffset":false},"record":{"name":"record","kind":"object","optional":false,"children":[{"name":"Okta","kind":"object","optional":false,"children":[{"name":"Event","kind":"object","optional":false,"children":[{"name":"uuid","kind":"id","optional":false},{"name":"published","kind":"timestamp","optional":false,"format":"iso"},{"name":"eventType","kind":"string","optional":false,"example":"eventType"},{"name":"displayMessage","kind":"string","optional":false,"example":"displayMessage"},{"name":"severity","kind":"string","optional":false,"example":"severity"}]}]}]}}],"chaos":{"enabled":false,"seed":"xsoar","mode":"probability","probability":0.25,"everyNth":5,"duplicateRecords":false,"missingFields":false,"mixedTimestamps":false,"outOfOrder":false,"wrongTypes":false,"truncatedJson":false,"malformedJson":false,"wrongContentType":false,"randomErrors":false,"latency":false,"paginationGlitch":"none"},"totalRecords":200,"auth":{"mode":"none"}}}
+{
+  "id": "okta-oktaeventcollector",
+  "name": "Okta Event Collector",
+  "pack": "Okta",
+  "vendor": "Okta",
+  "fidelity": "verified",
+  "curated": true,
+  "summary": "GET /api/v1/logs returns system log events.",
+  "notes": [
+    "The collector GETs /api/v1/logs. Okta returns a JSON array. This mock returns one event.",
+    "The since filter and the Link header page are not modeled. Okta v2 user and group commands stay on the Okta v2 preset.",
+    "The system log page was not reloaded. The SSWS token is the dummy API key."
+  ],
+  "attribution": "Checked against a public vendor reference or, when that page was not reloaded, the demisto/content client. See /presets/ATTRIBUTION.md.",
+  "sourceUrl": "https://github.com/demisto/content/tree/master/Packs/Okta/Integrations/OktaEventCollector",
+  "spec": {
+    "version": 1,
+    "source": {
+      "kind": "preset",
+      "id": "okta-oktaeventcollector",
+      "name": "Okta Event Collector",
+      "fidelity": "verified",
+      "attribution": "Public API reference or demisto/content client (MIT).",
+      "sourceUrl": "https://developer.okta.com/docs/reference/api/system-log/",
+      "notes": [
+        "The collector GETs /api/v1/logs. Okta returns a JSON array. This mock returns one event.",
+        "The since filter and the Link header page are not modeled. Okta v2 user and group commands stay on the Okta v2 preset.",
+        "The system log page was not reloaded. The SSWS token is the dummy API key."
+      ],
+      "verification": {
+        "status": "verified",
+        "docUrl": "https://developer.okta.com/docs/reference/api/system-log/",
+        "checkedAt": "2026-11-10",
+        "differences": [
+          "The collector GETs /api/v1/logs. Okta returns a JSON array. This mock returns one event.",
+          "The since filter and the Link header page are not modeled. Okta v2 user and group commands stay on the Okta v2 preset.",
+          "The system log page was not reloaded. The SSWS token is the dummy API key."
+        ]
+      }
+    },
+    "operations": [
+      {
+        "id": "logs",
+        "method": "GET",
+        "pathTemplate": "/api/v1/logs",
+        "summary": "List system log events",
+        "status": 200,
+        "list": true,
+        "envelope": {
+          "type": "array"
+        },
+        "record": {
+          "name": "event",
+          "kind": "object",
+          "children": [
+            {
+              "name": "uuid",
+              "kind": "id"
+            },
+            {
+              "name": "eventType",
+              "kind": "string",
+              "example": "user.session.start"
+            },
+            {
+              "name": "published",
+              "kind": "timestamp",
+              "format": "iso"
+            }
+          ]
+        },
+        "headers": {},
+        "contentType": "application/json; charset=utf-8",
+        "pagination": {
+          "style": "none",
+          "limitParam": "limit",
+          "offsetParam": "offset",
+          "pageParam": "page",
+          "cursorParam": "cursor",
+          "defaultLimit": 20,
+          "maxLimit": 500
+        }
+      }
+    ],
+    "chaos": {
+      "enabled": false,
+      "seed": "okta-oktaeventcollector",
+      "mode": "probability",
+      "probability": 0.25,
+      "everyNth": 5,
+      "duplicateRecords": false,
+      "missingFields": false,
+      "mixedTimestamps": false,
+      "outOfOrder": false,
+      "wrongTypes": false,
+      "truncatedJson": false,
+      "slowDrip": false,
+      "partial": false,
+      "malformedJson": false,
+      "wrongContentType": false,
+      "randomErrors": false,
+      "latency": false,
+      "paginationGlitch": "none",
+      "malformedXml": false,
+      "wrongNamespace": false,
+      "soapFault": false,
+      "authExpired": false,
+      "authDenied": false,
+      "authTokenFailure": false,
+      "authClockSkew": false,
+      "graphqlErrors": false
+    },
+    "totalRecords": 40,
+    "auth": {
+      "mode": "api-key",
+      "apiKey": {
+        "in": "header",
+        "name": "Authorization",
+        "value": "SSWS dummy-okta-key"
+      }
+    }
+  }
+}
