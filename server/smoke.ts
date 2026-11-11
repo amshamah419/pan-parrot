@@ -127,7 +127,9 @@ async function exerciseToken(
 function healthProblem(text: string): string | null {
   try {
     const body = JSON.parse(text) as { ok?: boolean; database?: string };
-    if (body.ok !== true || body.database !== "up") return `unexpected body ${text.slice(0, 180)}`;
+    if (body.ok !== true || (body.database !== "up" && body.database !== "idle")) {
+      return `unexpected body ${text.slice(0, 180)}`;
+    }
     return null;
   } catch {
     return "health body was not JSON";

@@ -1,11 +1,4 @@
-import type { Config } from "@netlify/functions";
-import { maintenanceHandler } from "../../server/app";
-
-/** Deletes expired captures, sessions, and rate-limit rows. Production deploys only. */
+/** The daily cleanup job is off. It is not needed to keep the app correct, and it woke the database. */
 export default function handler() {
-  return maintenanceHandler();
+  return new Response(null, { status: 204, headers: { "cache-control": "no-store" } });
 }
-
-export const config: Config = {
-  schedule: "@daily",
-};

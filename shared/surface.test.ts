@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ipInCidrs, validCidrList } from "./cidr";
-import { CATCH_ID_BYTES, agentBearerLooksValid, catchIdBits, isAdminSurface, isBadCrawler, isScannerPath } from "./surface";
+import { CATCH_ID_BYTES, agentBearerLooksValid, catchIdBits, catchIdLooksReal, isAdminSurface, isBadCrawler, isScannerPath } from "./surface";
 import { signGate, verifyGate } from "./gate-cookie";
 
 describe("public surface", () => {
@@ -30,6 +30,15 @@ describe("public surface", () => {
     expect(agentBearerLooksValid(`Bearer ${token}`)).toBe(true);
     expect(agentBearerLooksValid("Bearer short")).toBe(false);
     expect(agentBearerLooksValid(null)).toBe(false);
+  });
+
+  it("rejects catch paths that cannot be a mock id", () => {
+    expect(catchIdLooksReal("/catch/abcdefghij")).toBe(true);
+    expect(catchIdLooksReal("/catch/abcdefghij/hello")).toBe(true);
+    expect(catchIdLooksReal("/catch/wp-login.php")).toBe(false);
+    expect(catchIdLooksReal("/catch/.env")).toBe(false);
+    expect(catchIdLooksReal("/catch/ab")).toBe(false);
+    expect(catchIdLooksReal("/api/health")).toBe(false);
   });
 
   it("recognizes the admin surface", () => {

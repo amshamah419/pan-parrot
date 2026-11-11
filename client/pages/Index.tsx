@@ -50,7 +50,7 @@ export default function Index() {
       icon: Settings,
       title: "Outbound push",
       description:
-        "Send generated events to a public https listener, on a schedule or when you click Push now.",
+        "Send generated events to a public https listener when you click Push now.",
     },
     {
       icon: Search,

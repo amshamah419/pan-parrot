@@ -69,7 +69,7 @@ export function PushPanel({
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        Send generated events to a public https webhook or long-running listener. Private and internal addresses are rejected. A schedule runs every 15 minutes on the published site and sends one event. Push now can send up to three events, each retried on a 5xx or a network error. Redirects are not followed.
+        Send generated events to a public https webhook or long-running listener. Private and internal addresses are rejected. The published site does not poll on a schedule, so the database can sleep. Push now can send up to three events, each retried on a 5xx or a network error. Redirects are not followed.
       </p>
       <div className="flex items-center justify-between rounded border px-3 py-2">
         <span className="text-sm">Send on the schedule</span>

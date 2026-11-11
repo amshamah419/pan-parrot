@@ -7,7 +7,7 @@ import { specFromXml } from "../shared/wsdl";
 import { looksLikeGraphql, mockFromGraphql } from "../shared/graphql-mock";
 import { readZip, zipEntries } from "./pack";
 import { POLICY } from "../shared/policy";
-import { isAdminSurface, isBadCrawler, isScannerPath } from "../shared/surface";
+import { catchIdLooksReal, isAdminSurface, isBadCrawler, isScannerPath } from "../shared/surface";
 import { ipInCidrs } from "../shared/cidr";
 import { GATE_COOKIE, gateCookieMaxAge, signGate } from "../shared/gate-cookie";
 import { parse as parseYaml } from "yaml";
@@ -38,7 +38,7 @@ import { createToken, listAllTokens, listTokens, revokeToken, revokeTokenAsAdmin
 import type { ResolvedToken } from "./tokens";
 import { registerV1 } from "./v1";
 import type { AppDb } from "../db/client";
-import { getDb } from "../db/client";
+import { getDb, hostedDatabaseSkipped } from "../db/client";
 import {
   acceptInvite,
   destroySession,
@@ -91,7 +91,7 @@ import {
   revokeInvite,
   setInviteOnly,
 } from "./invites";
-import { enforceRateLimit, limitAuthed, limitPing } from "./rate-limit";
+import { enforceRateLimit, limitAuthed } from "./rate-limit";
 import { guardCatchResponseHeaders } from "./headers";
 import { sessionCookieOptions } from "./session";
 
@@ -168,7 +168,6 @@ export function createServer(options?: {
   });
 
   app.use("*", async (c, next) => {
-    c.set("db", options?.db ?? (await getDb()));
     c.set("ip", clientIp(c.req.raw.headers));
     const path = new URL(c.req.url).pathname;
     if (isScannerPath(path) || (isBadCrawler(c.req.header("user-agent")) && !path.startsWith("/catch/"))) {
@@ -176,6 +175,15 @@ export function createServer(options?: {
     }
     if (isAdminSurface(path) && !adminIpAllowed(c.get("ip"))) {
       return quietNotFound(c);
+    }
+    if (path.startsWith("/catch/") && !catchIdLooksReal(path)) {
+      return quietNotFound(c);
+    }
+    if (path !== "/api/health" && path !== "/api/ping") {
+      if (!options?.db && hostedDatabaseSkipped()) {
+        return quietNotFound(c);
+      }
+      c.set("db", options?.db ?? (await getDb()));
     }
     await next();
     applySecurityHeaders(c);
@@ -221,17 +229,9 @@ export function createServer(options?: {
     return app;
   }
 
-  const health = async (c: Context<AppEnv>) => {
-    const db = c.get("db");
-    try {
-      await limitPing(db, c.get("ip"));
-    } catch (error) {
-      if (error instanceof HttpError) throw error;
-      console.error("health check failed");
-      return c.json({ ok: false, database: "down" }, 503);
-    }
-    const body = await readHealth(db);
-    return c.json(body, body.ok ? 200 : 503);
+  const health = (c: Context<AppEnv>) => {
+    // Public probes must not wake Netlify Database. The signed-in admin page runs the real check.
+    return c.json({ ok: true, database: "idle" });
   };
   app.get("/api/health", health);
   app.get("/api/ping", health);

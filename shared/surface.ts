@@ -80,6 +80,16 @@ export function isAdminSurface(pathname: string): boolean {
   return pathname === "/admin" || pathname.startsWith("/admin/") || pathname.startsWith("/api/admin");
 }
 
+/** A catch id is 4–64 letters, numbers, hyphens, or underscores. Anything else is a scanner. */
+const CATCH_ID_RE = /^[A-Za-z0-9_-]{4,64}$/;
+
+/** True only when /catch/<id> could be a real mock. Junk paths must not open the database. */
+export function catchIdLooksReal(pathname: string): boolean {
+  if (!pathname.startsWith("/catch/")) return false;
+  const id = pathname.slice("/catch/".length).split("/")[0] || "";
+  return CATCH_ID_RE.test(id);
+}
+
 /** Generated catch ids are 16 bytes (128 bits), base64url without padding (22 chars). */
 export const CATCH_ID_BYTES = 16;
 

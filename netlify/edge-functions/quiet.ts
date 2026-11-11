@@ -2,7 +2,7 @@
 // the deploy if these specifiers omit `.ts`.
 import { verifyGate } from "../../shared/gate-cookie.ts";
 import { ipInCidrs } from "../../shared/cidr.ts";
-import { agentBearerLooksValid, isAdminSurface, isBadCrawler, isScannerPath } from "../../shared/surface.ts";
+import { agentBearerLooksValid, catchIdLooksReal, isAdminSurface, isBadCrawler, isScannerPath } from "../../shared/surface.ts";
 
 const PUBLIC = new Set([
   "/login",
@@ -27,7 +27,11 @@ export default async (request: Request, context: { ip: string; next: () => Promi
     if (!agentBearerLooksValid(request.headers.get("authorization"))) return notFound();
     return context.next();
   }
-  if (path.startsWith("/api/") || path.startsWith("/catch/") || PUBLIC.has(path)) {
+  if (path.startsWith("/catch/")) {
+    if (!catchIdLooksReal(path)) return notFound();
+    return context.next();
+  }
+  if (path.startsWith("/api/") || PUBLIC.has(path)) {
     return context.next();
   }
   const gate = await verifyGate(readCookie(request, "pp_gate"), secret);

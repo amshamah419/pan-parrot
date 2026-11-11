@@ -209,8 +209,8 @@ Netlify's rate limiting rules are a Firewall feature, not a `netlify.toml` key. 
 
 Three places, and nothing else:
 
-1. **Netlify function logs** (Project → Logs → Functions). Search for `health check failed`, `request failed`, `Email provider rejected the sign-in message`, and `maintenance deleted_requests=`. The push schedule logs from `netlify/functions/push-schedule.ts` every 15 minutes on production.
-2. **`GET /api/health`** (and `/api/ping`, the same check). It runs `select 1` and returns 200 or 503. It does not require a session and does not say whether email is configured. It is rate limited (`RATE_PING_MAX`, 60 per minute per IP).
+1. **Netlify function logs** (Project → Logs → Functions). Search for `request failed` and `Email provider rejected the sign-in message`. There is no 15-minute job and no daily cleanup job. See `docs/COST.md`.
+2. **`GET /api/health`** (and `/api/ping`). It returns `{ "ok": true, "database": "idle" }` and does not query the database. The signed-in admin Health page runs the real database check.
 3. **Admin → Health** (`GET /api/admin/health`, admin session only), which includes the Signals checks. Database, email, and the catch handler, plus 24-hour and 7-day catch latency, error rate, 4xx/5xx counts, rate-limit hits, sign-in attempts, failures, lockouts, storage against the quotas, top mocks and people, recent errors, and the app version and commit (`COMMIT_REF` on Netlify).
 
 A failed health check is the page you curl after a deploy. There is no pager integration. If you want a human to notice an outage, run the smoke script after each production deploy and look at Health when you sign in.
