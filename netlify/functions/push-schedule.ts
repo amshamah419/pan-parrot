@@ -1,11 +1,4 @@
-import type { Config } from "@netlify/functions";
-import { pushScheduleHandler } from "../../server/push";
-
-/** Sends due webhook pushes. Production deploys only. One event per mock. */
+/** The 15-minute push job is off. It woke Netlify Database often enough to stop autosuspend. */
 export default function handler() {
-  return pushScheduleHandler();
+  return new Response(null, { status: 204, headers: { "cache-control": "no-store" } });
 }
-
-export const config: Config = {
-  schedule: "*/15 * * * *",
-};

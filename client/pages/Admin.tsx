@@ -471,7 +471,7 @@ function HealthPanel() {
         <Card>
           <CardHeader>
             <CardTitle>Signals</CardTitle>
-            <CardDescription>The same checks as GET /api/health, plus email and the session secret.</CardDescription>
+            <CardDescription>Database, email, and the session secret. The public health URL does not query the database.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-1 text-sm">
             <p>Database: {signals.database}</p>

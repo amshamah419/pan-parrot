@@ -3,21 +3,29 @@ import * as schema from "./schema";
 
 export type AppDb = NodePgDatabase<typeof schema>;
 
-let singleton: Promise<AppDb> | null = null;
+/**
+ * Deploy previews and branch deploys must not open Netlify Database.
+ * Each preview otherwise gets its own compute endpoint.
+ */
+export function hostedDatabaseSkipped(): boolean {
+  const context = process.env.CONTEXT || "";
+  return context === "deploy-preview" || context === "branch-deploy";
+}
 
 /**
- * Netlify Database (via the drizzle netlify adapter) when the function
- * runtime injected NETLIFY_DB_URL. A plain DATABASE_URL is only for a
- * Postgres the maintainer runs locally — never point it at production.
+ * A new short-lived client per call. Do not cache a pg or Neon Pool:
+ * an open connection keeps Netlify Database compute from suspending.
+ * Hosted queries use the Neon HTTP driver, which does not hold a socket.
  */
 export function getDb(): Promise<AppDb> {
-  if (!singleton) singleton = openDb();
-  return singleton;
+  return openDb();
 }
 
 async function openDb(): Promise<AppDb> {
-  const onNetlify =
-    process.env.NETLIFY === "true" || Boolean(process.env.NETLIFY_DB_URL);
+  if (hostedDatabaseSkipped()) {
+    throw new Error("Database is disabled for this deploy preview");
+  }
+  const onNetlify = process.env.NETLIFY === "true" || Boolean(process.env.NETLIFY_DB_URL);
   if (!onNetlify && process.env.DATABASE_URL) {
     const { drizzle } = await import("drizzle-orm/node-postgres");
     const pgModule = await import("pg");
@@ -25,10 +33,15 @@ async function openDb(): Promise<AppDb> {
     const pool = new Pool({
       connectionString: process.env.DATABASE_URL,
       max: 1,
+      idleTimeoutMillis: 1_000,
+      allowExitOnIdle: true,
     });
     return drizzle({ client: pool, schema }) as unknown as AppDb;
   }
 
-  const { drizzle } = await import("drizzle-orm/netlify-db");
-  return drizzle({ schema }) as unknown as AppDb;
+  const connectionString = process.env.NETLIFY_DB_URL;
+  if (!connectionString) throw new Error("NETLIFY_DB_URL is not set");
+  const { neon } = await import("@neondatabase/serverless");
+  const { drizzle } = await import("drizzle-orm/neon-http");
+  return drizzle({ client: neon(connectionString), schema }) as unknown as AppDb;
 }
