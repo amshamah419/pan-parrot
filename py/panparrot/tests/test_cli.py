@@ -3,7 +3,7 @@ import os
 
 from panparrot.cli import main
 from panparrot.expect import check_expectations
-from panparrot.xsiam import build_instance_body
+from panparrot.xsiam import build_instance_body, manual_command_seen
 
 
 def test_login_writes_a_private_file(tmp_path, monkeypatch, capsys):
@@ -250,6 +250,68 @@ def test_dry_run_builds_the_demisto_sdk_payload(monkeypatch, capsys, tmp_path):
     assert xsiam and xsiam[0][1].endswith("/settings/integration/search")
     assert xsiam[0][2] == "xsiam-secret"
     assert not any(item[1].endswith("/settings/integration") for item in xsiam)
+
+
+def test_fetch_flag_sets_is_fetch_and_warns_before_a_manual_call(monkeypatch, capsys, tmp_path):
+    config = tmp_path / "credentials.json"
+    config.write_text(json.dumps({"url": "https://panparrot.example", "token": "pp_abc"}))
+    monkeypatch.setenv("PANPARROT_CONFIG", str(config))
+    monkeypatch.setenv("DEMISTO_BASE_URL", "https://tenant.example")
+    monkeypatch.setenv("DEMISTO_API_KEY", "xsiam-secret")
+    monkeypatch.setenv("XSIAM_AUTH_ID", "42")
+    calls = []
+
+    class Response:
+        status = 200
+
+        def __init__(self, payload):
+            self.payload = payload
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return json.dumps(self.payload).encode()
+
+    def urlopen(request, timeout=0):
+        kind = "parrot" if "panparrot.example" in request.full_url else "xsiam"
+        calls.append((kind, request.full_url, request.get_header("Authorization")))
+        if kind == "parrot" and request.full_url.endswith("/logs?limit=50"):
+            return Response({"logs": [{"method": "GET", "path": "abc/incidents", "query": {"since": "2020-01-01T00:00:00Z"}}]})
+        if kind == "parrot":
+            return Response({"params": [
+                {"name": "url", "value": "https://panparrot.example/catch/abc"},
+                {"name": "isFetch", "value": False},
+            ]})
+        return Response({
+            "configurations": [{
+                "id": "HelloWorld",
+                "name": "HelloWorld",
+                "category": "Utilities",
+                "configuration": [
+                    {"name": "url", "display": "Server URL"},
+                    {"name": "isFetch", "display": "Fetch incidents", "type": 8},
+                ],
+            }],
+            "instances": [],
+        })
+
+    monkeypatch.setattr("urllib.request.urlopen", urlopen)
+    warned = main([
+        "--json", "xsiam", "configure-instance",
+        "--mock", "m1", "--integration", "HelloWorld", "--instance-name", "lab", "--fetch", "--dry-run",
+    ])
+    assert warned == 0
+    body = json.loads(capsys.readouterr().out)
+    fetch = next(item for item in body["xsiam"]["body"]["data"] if item["name"] == "isFetch")
+    assert fetch["value"] is True
+    assert "No manual command" in body["xsiam"]["warning"]
+    assert "xsiam-secret" not in str([item for item in calls if item[0] == "parrot"])
+    assert manual_command_seen([{"query": {}}]) is True
+    assert manual_command_seen([{"query": {"since": "2020-01-01T00:00:00Z"}}]) is False
 
 
 def test_mock_fetch_sends_the_window(tmp_path, monkeypatch, capsys):

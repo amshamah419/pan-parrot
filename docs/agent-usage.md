@@ -26,13 +26,13 @@ You are testing the XSOAR integration in this directory against PAN Parrot. Do t
    panparrot --json mock state --mock <mock.id> --reset
    panparrot --json mock scenario --mock <mock.id> --step 202 --step 200:{"job":"done"} --loop --reset
    Use scenario when a command polls: the first call is accepted, the next call is done, then it repeats. Skip this command when the integration does not poll.
-   Stop if either ok is not true. Fetch answers since and first_fetch polls with one time window each. State stores a POST and serves that copy on GET, PUT, and DELETE. Leave the XSOAR Fetch incidents checkbox off.
+   Stop if any command's ok is not true. Fetch answers since and first_fetch polls with one time window each. State stores a POST and serves that copy on GET, PUT, and DELETE. Leave the XSOAR Fetch incidents checkbox off unless you pass --fetch in the next step.
 
 5. Check that DEMISTO_BASE_URL, DEMISTO_API_KEY, and XSIAM_AUTH_ID are already exported. If one is missing, stop and ask the user to export it. Do not print the API key. Do not pass those values to panparrot.
 
 6. Read commonfields.id from the YAML. That is the integration id. Run:
    panparrot --json xsiam configure-instance --mock <mock.id> --integration <integration id> --instance-name panparrot-lab --dry-run
-   Show the user the payload. Wait until they say yes. Then run the same command without --dry-run. Stop if ok is not true. The tenant must be able to reach mock.url.
+   Show the user the payload. Fetch incidents stays off. After a manual command has called the mock, you may add --fetch. That sets isFetch. If no manual command is in the log, the command warns and still sets it. Wait until they say yes. Then run the same command without --dry-run. Stop if ok is not true. The tenant must be able to reach mock.url.
 
 7. Run the integration commands on the tenant. Set ROOT to DEMISTO_BASE_URL with any trailing slash removed. If ROOT does not end with /xsoar, append /xsoar. Send the API key only to that host.
 
@@ -94,6 +94,7 @@ panparrot --json mocks push --from-yml Integrations/HelloWorld/HelloWorld.yml
 panparrot --json mocks logs --mock <id>
 panparrot --json instance-config --mock <id>
 panparrot --json xsiam configure-instance --mock <id> --integration HelloWorld --instance-name lab --dry-run
+panparrot --json xsiam configure-instance --mock <id> --integration HelloWorld --instance-name lab --fetch --dry-run
 ```
 
 Every command accepts `--json` and prints one object on stdout. `login` stores the token in the OS keyring when that library is installed, and otherwise in `~/.config/panparrot/credentials.json` mode `0600`.
